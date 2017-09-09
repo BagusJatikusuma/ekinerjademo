@@ -8,7 +8,7 @@ public class RincianEKinerjaWrapper {
     private String satuan;
     private Integer volume;
     private Integer normaWaktu;
-    private Long bebanKerja;
+    private Integer bebanKerja;
     private String peralatan;
     private String keterangan;
 
@@ -18,7 +18,7 @@ public class RincianEKinerjaWrapper {
             String satuan,
             Integer volume,
             Integer normaWaktu,
-            Long bebanKerja,
+            Integer bebanKerja,
             String peralatan,
             String keterangan) {
         this.uraianTugas = uraianTugas;
@@ -62,11 +62,11 @@ public class RincianEKinerjaWrapper {
         this.normaWaktu = normaWaktu;
     }
 
-    public Long getBebanKerja() {
+    public Integer getBebanKerja() {
         return bebanKerja;
     }
 
-    public void setBebanKerja(Long bebanKerja) {
+    public void setBebanKerja(Integer bebanKerja) {
         this.bebanKerja = bebanKerja;
     }
 

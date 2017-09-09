@@ -5,6 +5,7 @@ import com.pemda.ekinerjademo.repository.ekinerjarepository.AkunPegawaiDao;
 import com.pemda.ekinerjademo.service.AkunPegawaiService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -12,6 +13,7 @@ import java.util.List;
  * Created by bagus on 08/09/17.
  */
 @Service("AkunPegawaiService")
+@Transactional
 public class AkunPegawaiServiceImpl implements AkunPegawaiService {
     @Autowired private AkunPegawaiDao akunPegawaiDao;
 

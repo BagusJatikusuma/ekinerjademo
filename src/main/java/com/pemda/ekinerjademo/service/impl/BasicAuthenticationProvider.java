@@ -9,11 +9,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
 /**
  * Created by bagus on 07/09/17.
  */
 @Service("BasicAuthenticationProvider")
+@Transactional
 public class BasicAuthenticationProvider implements AuthenticationProvider {
     public static final Logger LOGGER = LoggerFactory.getLogger(BasicAuthenticationProvider.class);
 

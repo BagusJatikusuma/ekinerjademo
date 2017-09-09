@@ -16,7 +16,7 @@ public class AkunPegawai {
     @Column(name = "password")
     private String password;
 
-    @OneToMany(mappedBy = "akunPegawai")
+    @OneToMany(fetch = FetchType.EAGER,mappedBy = "akunPegawai", cascade = CascadeType.ALL)
     private List<RincianEKinerja> rincianEKinerjaList;
 
     public AkunPegawai() {}

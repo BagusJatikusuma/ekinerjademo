@@ -22,8 +22,7 @@ import java.util.HashMap;
 @EnableJpaRepositories(
         basePackages = "com.pemda.ekinerjademo.repository.bismarepository",
         entityManagerFactoryRef = "bismaEntityManager",
-        transactionManagerRef = "bismaTransactionManager"
-)
+        transactionManagerRef = "bismaTransactionManager")
 public class BismaRepositoryConfig {
     @Autowired
     private Environment env;

@@ -22,8 +22,7 @@ import java.util.HashMap;
 @EnableJpaRepositories(
         basePackages = "com.pemda.ekinerjademo.repository.ekinerjarepository",
         entityManagerFactoryRef = "ekinerjaEntityManager",
-        transactionManagerRef = "ekinerjaTransactionManager"
-)
+        transactionManagerRef = "ekinerjaTransactionManager")
 public class EkinerjaRepositoryConfig {
     @Autowired
     private Environment env;
