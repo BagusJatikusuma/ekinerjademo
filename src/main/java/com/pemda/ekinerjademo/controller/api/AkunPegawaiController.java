@@ -1,7 +1,9 @@
 package com.pemda.ekinerjademo.controller.api;
 
+import com.pemda.ekinerjademo.model.bismamodel.QutPegawai;
 import com.pemda.ekinerjademo.model.bismamodel.TkdJabatan;
 import com.pemda.ekinerjademo.model.ekinerjamodel.AkunPegawai;
+import com.pemda.ekinerjademo.repository.bismarepository.QutPegawaiDao;
 import com.pemda.ekinerjademo.repository.bismarepository.TkdJabatanDao;
 import com.pemda.ekinerjademo.repository.ekinerjarepository.AkunPegawaiDao;
 import org.slf4j.Logger;
@@ -23,6 +25,7 @@ public class AkunPegawaiController {
     public static final Logger LOGGER = LoggerFactory.getLogger(AkunPegawaiController.class);
 
     @Autowired private TkdJabatanDao tkdJabatanDao;
+    @Autowired private QutPegawaiDao qutPegawaiDao;
     @Autowired private AkunPegawaiDao akunPegawaiDao;
 
     @RequestMapping(value = "/test", method = RequestMethod.GET)
@@ -41,6 +44,16 @@ public class AkunPegawaiController {
         //test
         List<AkunPegawai> akunPegawai = akunPegawaiDao.findAll();
         LOGGER.info("get "+akunPegawai.get(0).getNipPegawai()+" - "+akunPegawai.get(0).getPassword());
+
+        return new ResponseEntity<Object>("cek log", HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/test-qutpegawai-database", method = RequestMethod.GET)
+    @Transactional("ekinerjaTransactionManager")
+    ResponseEntity<?> testQutPegawaiDatabase() {
+        //test
+        QutPegawai qutPegawai = qutPegawaiDao.findByNip("195405011982032007");
+        LOGGER.info("get "+qutPegawai.getNama()+" - "+qutPegawai.getJabatan()+" - "+qutPegawai.getUnitKerja());
 
         return new ResponseEntity<Object>("cek log", HttpStatus.OK);
     }
