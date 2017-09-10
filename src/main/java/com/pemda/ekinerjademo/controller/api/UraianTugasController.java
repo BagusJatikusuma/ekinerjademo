@@ -26,6 +26,7 @@ import java.util.List;
  * Created by bagus on 10/09/17.
  */
 @RestController
+@CrossOrigin(allowCredentials = "false")
 @RequestMapping(value = "/api")
 public class UraianTugasController {
     public static final Logger LOGGER = LoggerFactory.getLogger(UraianTugasController.class);
@@ -37,6 +38,7 @@ public class UraianTugasController {
     @Autowired
     private UraianTugasService uraianTugasService;
 
+    @CrossOrigin(allowCredentials = "false")
     @RequestMapping(value = "/get-urtug-by-nip/{nipPegawai}", method = RequestMethod.GET)
     ResponseEntity<?> getUraianTugasList(@PathVariable("nipPegawai") String nipPegawai) {
         LOGGER.info("get "+nipPegawai+" uraian tugas ");
@@ -79,6 +81,7 @@ public class UraianTugasController {
         return new ResponseEntity<Object>(uraianTugasEKinerjaWrapper, HttpStatus.OK);
     }
 
+    @CrossOrigin(allowCredentials = "false")
     @RequestMapping(value = "/create-urtug", method = RequestMethod.POST)
     @Transactional //only for development phase
     ResponseEntity<?> saveUraianTugas(@RequestBody UraianTugasInputWrapper uraianTugasInputWrapper) {
@@ -108,10 +111,33 @@ public class UraianTugasController {
         return null;
     }
 
+
     @RequestMapping(value = "/delete-urtug/{kdUrtug}", method = RequestMethod.DELETE)
     ResponseEntity<?> deleteUraianTugas(@PathVariable("kdUrtug") String kdUrtug) {
         LOGGER.info("delete "+kdUrtug);
-        return null;
+        uraianTugasService.delete(kdUrtug);
+        return new ResponseEntity<Object>(new CustomMessage("urtug deleted"), HttpStatus.OK);
+    }
+
+    @CrossOrigin(allowCredentials = "false")
+    @RequestMapping(value = "/get-all-urtug", method = RequestMethod.GET)
+    ResponseEntity<?> getAllUraianTugas(){
+        List<UraianTugasWrapper> uraianTugasWrappers = new ArrayList<>();
+        List<UraianTugas> uraianTugases= uraianTugasService.getAllUraianTugas();
+
+        for (UraianTugas uraianTugas : uraianTugases){
+            uraianTugasWrappers.add(new UraianTugasWrapper(
+                    uraianTugas.getKdUrtug(),
+                    uraianTugas.getDeskripsi(),
+                    uraianTugas.getSatuan(),
+                    uraianTugas.getVolumeKerja(),
+                    uraianTugas.getNormaWaktu(),
+                    uraianTugas.getBebanKerja(),
+                    uraianTugas.getPeralatan(),
+                    uraianTugas.getKeterangan()
+            ));
+        }
+        return new ResponseEntity<Object>(uraianTugasWrappers, HttpStatus.OK);
     }
 
 }

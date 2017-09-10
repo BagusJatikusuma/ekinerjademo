@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 /**
  * Created by bagus on 10/09/17.
  */
@@ -34,4 +36,7 @@ public class UraianTugasServiceImpl implements UraianTugasService {
     public void delete(String kdUrtug) {
         uraianTugasDao.deleteByKdUrtug(kdUrtug);
     }
+
+    @Override
+    public List<UraianTugas> getAllUraianTugas(){ return uraianTugasDao.findAllByOrderByKdUrtugDesc(); }
 }
