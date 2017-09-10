@@ -7,4 +7,7 @@ import com.pemda.ekinerjademo.model.ekinerjamodel.UraianTugas;
  */
 public interface UraianTugasService {
     UraianTugas getUraianTugas(String kdUrtug);
+    void save(UraianTugas uraianTugas);
+    void update(UraianTugas uraianTugas);
+    void delete(String kdUrtug);
 }

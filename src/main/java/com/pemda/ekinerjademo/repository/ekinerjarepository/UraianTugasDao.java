@@ -13,4 +13,5 @@ import java.util.List;
 public interface UraianTugasDao extends JpaRepository<UraianTugas, Long> {
     List<UraianTugas> findAll();
     UraianTugas findByKdUrtug(String kdUrtug);
+    void deleteByKdUrtug(String kdUrtug);
 }

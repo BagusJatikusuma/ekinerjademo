@@ -14,8 +14,24 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional("ekinerjaTransactionManager")
 public class UraianTugasServiceImpl implements UraianTugasService {
     @Autowired private UraianTugasDao uraianTugasDao;
+
     @Override
     public UraianTugas getUraianTugas(String kdUrtug) {
         return uraianTugasDao.findByKdUrtug(kdUrtug);
+    }
+
+    @Override
+    public void save(UraianTugas uraianTugas) {
+        uraianTugasDao.save(uraianTugas);
+    }
+
+    @Override
+    public void update(UraianTugas uraianTugas) {
+        uraianTugasDao.save(uraianTugas);
+    }
+
+    @Override
+    public void delete(String kdUrtug) {
+        uraianTugasDao.deleteByKdUrtug(kdUrtug);
     }
 }
