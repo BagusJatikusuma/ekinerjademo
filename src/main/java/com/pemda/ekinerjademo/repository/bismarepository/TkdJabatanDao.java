@@ -1,6 +1,7 @@
 package com.pemda.ekinerjademo.repository.bismarepository;
 
 import com.pemda.ekinerjademo.model.bismamodel.TkdJabatan;
+import com.pemda.ekinerjademo.wrapper.BismaModelWrapper.KdNmJabatanProjection;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

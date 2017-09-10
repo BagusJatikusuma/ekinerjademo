@@ -1,5 +1,6 @@
 package com.pemda.ekinerjademo.wrapper.output;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -13,6 +14,7 @@ public class UraianTugasJabatanWrapper {
     //list uraiantugas yang tidak dimiliki jabatan
     private List<UraianTugasWrapper> notJabatanUraianTugasList;
 
+    public UraianTugasJabatanWrapper() {}
     public UraianTugasJabatanWrapper(
             String kdJabatan,
             String jabatan,
