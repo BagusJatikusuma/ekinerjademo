@@ -31,4 +31,5 @@ public class UraianTugasJabatan implements Serializable {
     public void setUraianTugas(UraianTugas uraianTugas) {
         this.uraianTugas = uraianTugas;
     }
+
 }

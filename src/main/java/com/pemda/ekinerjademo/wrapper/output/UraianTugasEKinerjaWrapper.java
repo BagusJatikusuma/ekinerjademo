@@ -11,7 +11,7 @@ public class UraianTugasEKinerjaWrapper {
     private JabatanWrapper jabatan;
     private UnitOrganisasiWrapper unitOrganisasi;
     private UnitKerjaWrapper unitKerja;
-    private List<RincianEKinerjaWrapper> rincianEKinerjaList;
+    private List<UraianTugasWrapper> uraianTugasWrapperList;
 
     public UraianTugasEKinerjaWrapper() {}
     public UraianTugasEKinerjaWrapper(
@@ -20,13 +20,13 @@ public class UraianTugasEKinerjaWrapper {
             JabatanWrapper jabatan,
             UnitOrganisasiWrapper unitOrganisasi,
             UnitKerjaWrapper unitKerja,
-            List<RincianEKinerjaWrapper> rincianEKinerjaList) {
+            List<UraianTugasWrapper> uraianTugasWrapperList) {
         this.nipPegawai = nipPegawai;
         this.namaPegawai = namaPegawai;
         this.jabatan = jabatan;
         this.unitOrganisasi = unitOrganisasi;
         this.unitKerja = unitKerja;
-        this.rincianEKinerjaList = rincianEKinerjaList;
+        this.uraianTugasWrapperList = uraianTugasWrapperList;
     }
 
     public String getNipPegawai() {
@@ -69,11 +69,11 @@ public class UraianTugasEKinerjaWrapper {
         this.unitKerja = unitKerja;
     }
 
-    public List<RincianEKinerjaWrapper> getRincianEKinerjaList() {
-        return rincianEKinerjaList;
+    public List<UraianTugasWrapper> getUraianTugasWrapperList() {
+        return uraianTugasWrapperList;
     }
 
-    public void setRincianEKinerjaList(List<RincianEKinerjaWrapper> rincianEKinerjaList) {
-        this.rincianEKinerjaList = rincianEKinerjaList;
+    public void setUraianTugasWrapperList(List<UraianTugasWrapper> uraianTugasWrapperList) {
+        this.uraianTugasWrapperList = uraianTugasWrapperList;
     }
 }

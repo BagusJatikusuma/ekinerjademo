@@ -1,16 +1,18 @@
 package com.pemda.ekinerjademo.wrapper.output;
 
+import com.pemda.ekinerjademo.model.ekinerjamodel.Role;
+
 /**
  * Created by bagus on 09/09/17.
  */
 public class PegawaiCredential {
     private String nipPegawai;
     private String namaPegawai;
-    private String role;
+    private Role role;
     private String token;
 
     public PegawaiCredential() {}
-    public PegawaiCredential(String nipPegawai, String namaPegawai, String role, String token) {
+    public PegawaiCredential(String nipPegawai, String namaPegawai, Role role, String token) {
         this.nipPegawai = nipPegawai;
         this.namaPegawai = namaPegawai;
         this.role = role;
@@ -33,19 +35,19 @@ public class PegawaiCredential {
         this.namaPegawai = namaPegawai;
     }
 
-    public String getRole() {
-        return role;
-    }
-
-    public void setRole(String role) {
-        this.role = role;
-    }
-
     public String getToken() {
         return token;
     }
 
     public void setToken(String token) {
         this.token = token;
+    }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
     }
 }

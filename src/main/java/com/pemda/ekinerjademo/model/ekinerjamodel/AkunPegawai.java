@@ -16,6 +16,10 @@ public class AkunPegawai {
     @Column(name = "password")
     private String password;
 
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "role_id")
+    private Role role;
+
     @OneToMany(fetch = FetchType.EAGER,mappedBy = "akunPegawai", cascade = CascadeType.ALL)
     private List<RincianEKinerja> rincianEKinerjaList;
 
@@ -43,5 +47,13 @@ public class AkunPegawai {
 
     public void setRincianEKinerjaList(List<RincianEKinerja> rincianEKinerjaList) {
         this.rincianEKinerjaList = rincianEKinerjaList;
+    }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
     }
 }

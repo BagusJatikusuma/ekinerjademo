@@ -3,9 +3,9 @@ package com.pemda.ekinerjademo.controller.api;
 import com.pemda.ekinerjademo.model.bismamodel.QutPegawai;
 import com.pemda.ekinerjademo.model.ekinerjamodel.AkunPegawai;
 import com.pemda.ekinerjademo.model.ekinerjamodel.RincianEKinerja;
-import com.pemda.ekinerjademo.service.AuthenticationProvider;
-import com.pemda.ekinerjademo.service.EKinerjaService;
-import com.pemda.ekinerjademo.service.QutPegawaiService;
+import com.pemda.ekinerjademo.model.ekinerjamodel.UraianTugas;
+import com.pemda.ekinerjademo.model.ekinerjamodel.UraianTugasJabatan;
+import com.pemda.ekinerjademo.service.*;
 import com.pemda.ekinerjademo.util.exception.AuthenticationCredentialsNotFoundExcecption;
 import com.pemda.ekinerjademo.util.exception.BadCredentialsException;
 import com.pemda.ekinerjademo.wrapper.output.*;
@@ -14,6 +14,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -34,9 +35,6 @@ public class AuthenticationController {
     private AuthenticationProvider authenticationProvider;
     @Autowired
     private QutPegawaiService qutPegawaiService;
-    @Autowired
-    private EKinerjaService eKinerjaService;
-
 
     /**
      * this method used for receive pegawai authentication request
@@ -45,6 +43,7 @@ public class AuthenticationController {
      */
 //    @CrossOrigin(allowCredentials = "false") //just for testing. remove when frontend app is ready
     @RequestMapping(value = "/authentication", method = RequestMethod.POST)
+    @Transactional
     ResponseEntity<?> validateAkunPegawai(@RequestBody AkunPegawai akunPegawai) {
         LOGGER.info("receive "+akunPegawai.getNipPegawai()+" authetication request");
 
@@ -64,53 +63,17 @@ public class AuthenticationController {
 
         }
 
-//        HashMap<String, String> map = new HashMap<>();
-//        map.put("nip_pegawai", akunPegawaiAuthenticated.getNipPegawai());
-//        map.put("password", akunPegawaiAuthenticated.getPassword());
-//
-//        String uraianTugasDeskripsi =
-//                akunPegawaiAuthenticated.getRincianEKinerjaList().get(0).getUraianTugas().getDeskripsi();
+        QutPegawai qutPegawai =
+                qutPegawaiService.getQutPegawai(akunPegawaiAuthenticated.getNipPegawai());
 
-        //set this logic in difference layer
-        String nipPegawai = akunPegawaiAuthenticated.getNipPegawai();
-        QutPegawai qutPegawai = qutPegawaiService.getQutPegawai(nipPegawai);
-        String namaPegawai = qutPegawai.getNama();
-        JabatanWrapper jabatan =
-                new JabatanWrapper(qutPegawai.getKdJabatan(),qutPegawai.getJabatan());
-        UnitOrganisasiWrapper unitOrganisasi =
-                new UnitOrganisasiWrapper("dummyId", "dummyOrganisasi");
-        UnitKerjaWrapper unitKerja =
-                new UnitKerjaWrapper(qutPegawai.getKdUnitKerja(), qutPegawai.getUnitKerja());
-        List<RincianEKinerja> rincianEKinerjaList =
-                eKinerjaService.getRincianEKinerjaByNip(nipPegawai);
-        List<RincianEKinerjaWrapper> rincianEKinerjaWrapperList = new ArrayList<>();
+        PegawaiCredential pegawaiCredential =
+                new PegawaiCredential(
+                        akunPegawaiAuthenticated.getNipPegawai(),
+                        qutPegawai.getNama(),
+                        akunPegawaiAuthenticated.getRole(),
+                        "IniTokenDUmmy");
 
-        for (RincianEKinerja rincianEKinerja : rincianEKinerjaList) {
-            UraianTugasWrapper uraianTugasWrapper =
-                    new UraianTugasWrapper(
-                            rincianEKinerja.getUraianTugas().getKdUrtug(),
-                            rincianEKinerja.getUraianTugas().getDeskripsi());
-            rincianEKinerjaWrapperList
-                    .add(new RincianEKinerjaWrapper(
-                            uraianTugasWrapper,
-                            rincianEKinerja.getSatuan(),
-                            rincianEKinerja.getVolumeKerja(),
-                            rincianEKinerja.getNormaWaktu(),
-                            rincianEKinerja.getBebanKerja(),
-                            rincianEKinerja.getPeralatan(),
-                            rincianEKinerja.getKeterangan()));
-        }
-
-        UraianTugasEKinerjaWrapper uraianTugasEKinerjaWrapper =
-                new UraianTugasEKinerjaWrapper(
-                        nipPegawai,
-                        namaPegawai,
-                        jabatan,
-                        unitOrganisasi,
-                        unitKerja,
-                        rincianEKinerjaWrapperList);
-
-        return new ResponseEntity<Object>(uraianTugasEKinerjaWrapper, HttpStatus.OK);
+        return new ResponseEntity<Object>(pegawaiCredential, HttpStatus.OK);
 
     }
 
