@@ -5,6 +5,7 @@ import com.pemda.ekinerjademo.repository.ekinerjarepository.UraianTugasJabatanDa
 import com.pemda.ekinerjademo.service.UraianTugasJabatanService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -17,6 +18,22 @@ import java.util.List;
 public class UraianTugasJabatanServiceImpl implements UraianTugasJabatanService {
     @Autowired
     private UraianTugasJabatanDao uraianTugasJabatanDao;
+
+    @Override
+    public void save(UraianTugasJabatan uraianTugasJabatan) {
+        uraianTugasJabatanDao.save(uraianTugasJabatan);
+    }
+
+    @Override
+    public void save(String kdUrtug, String kdJabatan) {
+        uraianTugasJabatanDao.saveNativeQuery(kdUrtug, kdJabatan);
+    }
+
+    @Override
+    public void deleteAllUraianTugasJabatanByJabatan(String kdJabatan) {
+        uraianTugasJabatanDao
+                .deleteAllByUraianTugasJabatanIdKdJabatan(kdJabatan);
+    }
 
     @Override
     public UraianTugasJabatan getUraianTugasJabatan(String kdUrtug, String kdJabatan) {

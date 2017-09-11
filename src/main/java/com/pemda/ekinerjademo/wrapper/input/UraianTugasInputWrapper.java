@@ -11,6 +11,7 @@ public class UraianTugasInputWrapper {
     private Integer bebanKerja;
     private String peralatan;
     private  String keterangan;
+    private String createdBy;
 
     public String getDeskripsi() {
         return deskripsi;
@@ -66,5 +67,13 @@ public class UraianTugasInputWrapper {
 
     public void setKeterangan(String keterangan) {
         this.keterangan = keterangan;
+    }
+
+    public String getCreatedBy() {
+        return createdBy;
+    }
+
+    public void setCreatedBy(String createdBy) {
+        this.createdBy = createdBy;
     }
 }
