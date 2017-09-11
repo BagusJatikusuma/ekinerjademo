@@ -19,6 +19,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -362,6 +364,32 @@ public class UraianTugasController {
         return new ResponseEntity<Object>(
                 new CustomMessage("rincian kinerja submitted"),
                 HttpStatus.OK);
+
+    }
+
+    @RequestMapping(value = "/get-rincian-ekinerja-by-nip-date/{nip}/{date}", method = RequestMethod.GET)
+    @Transactional
+    ResponseEntity<?> getRincianEKinerjaByDate(
+            @PathVariable("nip") String nipPegawai,
+            @PathVariable("date") Long dateInMiliSecond) {
+        LOGGER.info("get rincian ekinerja "+nipPegawai+" in "+new Date(dateInMiliSecond));
+
+        Date date = new Date(dateInMiliSecond);
+
+        List<RincianEKinerja> rincianEKinerjaList =
+                eKinerjaService.getRincianEKinerjaByNipAndDate(nipPegawai, date);
+        List<RincianKinerjaWrapper> rincianKinerjaWrapperList =
+                new ArrayList<>();
+
+        for (RincianEKinerja rincianEKinerja : rincianEKinerjaList) {
+            rincianKinerjaWrapperList
+                    .add(new RincianKinerjaWrapper(
+                            rincianEKinerja.getUraianTugas().getKdUrtug(),
+                            rincianEKinerja.getUraianTugas().getDeskripsi(),
+                            rincianEKinerja.getCapaianMenit()));
+        }
+
+        return new ResponseEntity<Object>(rincianKinerjaWrapperList, HttpStatus.OK);
 
     }
 
