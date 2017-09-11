@@ -1,6 +1,7 @@
 package com.pemda.ekinerjademo.service.impl;
 
 import com.pemda.ekinerjademo.model.ekinerjamodel.RincianEKinerja;
+import com.pemda.ekinerjademo.model.ekinerjamodel.RincianEKinerjaId;
 import com.pemda.ekinerjademo.repository.ekinerjarepository.RincianEKinerjaDao;
 import com.pemda.ekinerjademo.service.EKinerjaService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,11 @@ public class EKinerjaServiceImpl implements EKinerjaService {
     @Override
     public void save(RincianEKinerja rincianEKinerja) {
         rincianEKinerjaDao.save(rincianEKinerja);
+    }
+
+    @Override
+    public RincianEKinerja getRincianEKinerjaById(RincianEKinerjaId rincianEKinerjaId) {
+        return rincianEKinerjaDao.findByRincianEKinerjaId(rincianEKinerjaId);
     }
 
     @Override

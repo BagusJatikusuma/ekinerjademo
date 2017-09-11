@@ -355,6 +355,16 @@ public class UraianTugasController {
                         rincianEKinerjaInputWrapper.getNipPegawai(),
                         rincianEKinerjaInputWrapper.getKdUrtug());
 
+
+        RincianEKinerja rincianEKinerjaDatabase
+                = eKinerjaService.getRincianEKinerjaById(rincianEKinerjaId);
+
+        if (rincianEKinerjaDatabase != null) {
+            rincianEKinerjaInputWrapper
+                    .setCapaianMenit(
+                            rincianEKinerjaInputWrapper.getCapaianMenit() + rincianEKinerjaDatabase.getCapaianMenit());
+        }
+
         RincianEKinerja rincianEKinerja = new RincianEKinerja();
         rincianEKinerja.setRincianEKinerjaId(rincianEKinerjaId);
         rincianEKinerja.setCapaianMenit(rincianEKinerjaInputWrapper.getCapaianMenit());

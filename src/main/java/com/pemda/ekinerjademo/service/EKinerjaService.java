@@ -1,6 +1,7 @@
 package com.pemda.ekinerjademo.service;
 
 import com.pemda.ekinerjademo.model.ekinerjamodel.RincianEKinerja;
+import com.pemda.ekinerjademo.model.ekinerjamodel.RincianEKinerjaId;
 
 import java.util.Date;
 import java.util.List;
@@ -10,6 +11,7 @@ import java.util.List;
  */
 public interface EKinerjaService {
     void save(RincianEKinerja rincianEKinerja);
+    RincianEKinerja getRincianEKinerjaById(RincianEKinerjaId rincianEKinerjaId);
     RincianEKinerja getRincianEKinerja(String kdUrtug, String nipPegawai);
     List<RincianEKinerja> getRincianEKinerjaByUrtug(String kdUrtug);
     List<RincianEKinerja> getRincianEKinerjaByNip(String nipPegawai);
