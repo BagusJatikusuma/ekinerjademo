@@ -57,6 +57,9 @@ public class BismaRepositoryConfig {
         properties.put(
                 "spring.datasource.validationQuery",
                 env.getProperty("spring.bismaDatasource.validationQuery"));
+        properties.put(
+                "hibernate.connection.zeroDateTimeBehavior",
+                env.getProperty("hibernate.connection.zeroDateTimeBehavior"));
 
         em.setJpaPropertyMap(properties);
 

@@ -1,10 +1,7 @@
 package com.pemda.ekinerjademo.controller.api;
 
 import com.pemda.ekinerjademo.model.bismamodel.QutPegawai;
-import com.pemda.ekinerjademo.model.ekinerjamodel.AkunPegawai;
-import com.pemda.ekinerjademo.model.ekinerjamodel.RincianEKinerja;
-import com.pemda.ekinerjademo.model.ekinerjamodel.UraianTugas;
-import com.pemda.ekinerjademo.model.ekinerjamodel.UraianTugasJabatan;
+import com.pemda.ekinerjademo.model.ekinerjamodel.*;
 import com.pemda.ekinerjademo.service.*;
 import com.pemda.ekinerjademo.util.exception.AuthenticationCredentialsNotFoundExcecption;
 import com.pemda.ekinerjademo.util.exception.BadCredentialsException;
@@ -66,14 +63,23 @@ public class AuthenticationController {
         QutPegawai qutPegawai =
                 qutPegawaiService.getQutPegawai(akunPegawaiAuthenticated.getNipPegawai());
 
+//        PegawaiCredential pegawaiCredential =
+//                new PegawaiCredential(
+//                        akunPegawaiAuthenticated.getNipPegawai(),
+//                        qutPegawai.getNama(),
+//                        akunPegawaiAuthenticated.getRole(),
+//                        "IniTokenDUmmy",
+//                        qutPegawai.getJabatan(),
+//                        qutPegawai.getUnitKerja());
+
         PegawaiCredential pegawaiCredential =
                 new PegawaiCredential(
                         akunPegawaiAuthenticated.getNipPegawai(),
-                        qutPegawai.getNama(),
+                        "nama",
                         akunPegawaiAuthenticated.getRole(),
                         "IniTokenDUmmy",
-                        qutPegawai.getJabatan(),
-                        qutPegawai.getUnitKerja());
+                        "nama",
+                        "nama");
 
         return new ResponseEntity<Object>(pegawaiCredential, HttpStatus.OK);
 
