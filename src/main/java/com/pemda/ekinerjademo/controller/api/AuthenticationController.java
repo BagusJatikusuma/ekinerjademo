@@ -41,7 +41,7 @@ public class AuthenticationController {
      * @param akunPegawai in JSON Format
      * @return RincianEKinerja JSON Format
      */
-//    @CrossOrigin(allowCredentials = "false") //just for testing. remove when frontend app is ready
+    @CrossOrigin(allowCredentials = "false") //just for testing. remove when frontend app is ready
     @RequestMapping(value = "/authentication", method = RequestMethod.POST)
     @Transactional
     ResponseEntity<?> validateAkunPegawai(@RequestBody AkunPegawai akunPegawai) {

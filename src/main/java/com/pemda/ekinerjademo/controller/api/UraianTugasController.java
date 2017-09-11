@@ -38,6 +38,7 @@ public class UraianTugasController {
     private UraianTugasJabatanService uraianTugasJabatanService;
     @Autowired
     private UraianTugasService uraianTugasService;
+
     @Autowired
     private TkdJabatanService tkdJabatanService;
 
@@ -84,7 +85,7 @@ public class UraianTugasController {
         return new ResponseEntity<Object>(uraianTugasEKinerjaWrapper, HttpStatus.OK);
     }
 
-    @CrossOrigin(allowCredentials = "false")
+//    @CrossOrigin(allowCredentials = "false")
     @RequestMapping(value = "/create-urtug", method = RequestMethod.POST)
     @Transactional //only for development phase
     ResponseEntity<?> saveUraianTugas(@RequestBody UraianTugasInputWrapper uraianTugasInputWrapper) {
@@ -107,11 +108,25 @@ public class UraianTugasController {
 
         return new ResponseEntity<Object>(new CustomMessage("urtug created"), HttpStatus.OK);
     }
+
+//    @CrossOrigin(allowCredentials = "false")
     @RequestMapping(value = "/update-urtug", method = RequestMethod.PUT)
     @Transactional //only for development phase
     ResponseEntity<?> updateUraianTugas(@RequestBody UraianTugas uraianTugas) {
         LOGGER.info("update "+uraianTugas.getKdUrtug());
-        return null;
+        UraianTugas newUraianTugas =
+                uraianTugasService.getUraianTugas(uraianTugas.getKdUrtug());
+        newUraianTugas.setBebanKerja(uraianTugas.getBebanKerja());
+        newUraianTugas.setDeskripsi(uraianTugas.getDeskripsi());
+        newUraianTugas.setKeterangan(uraianTugas.getKeterangan());
+        newUraianTugas.setNormaWaktu(uraianTugas.getNormaWaktu());
+        newUraianTugas.setPeralatan(uraianTugas.getPeralatan());
+        newUraianTugas.setSatuan(uraianTugas.getSatuan());
+        newUraianTugas.setVolumeKerja(uraianTugas.getVolumeKerja());
+
+        uraianTugasService.update(newUraianTugas);
+        return new ResponseEntity<Object>(
+                new CustomMessage("urtug updated"), HttpStatus.OK);
     }
 
 
