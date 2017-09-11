@@ -2,10 +2,8 @@ package com.pemda.ekinerjademo.controller.api;
 
 import com.pemda.ekinerjademo.model.bismamodel.QutPegawai;
 import com.pemda.ekinerjademo.model.bismamodel.TkdJabatan;
-import com.pemda.ekinerjademo.model.ekinerjamodel.UraianTugas;
-import com.pemda.ekinerjademo.model.ekinerjamodel.UraianTugasJabatan;
+import com.pemda.ekinerjademo.model.ekinerjamodel.*;
 
-import com.pemda.ekinerjademo.model.ekinerjamodel.UraianTugasJabatanId;
 import com.pemda.ekinerjademo.service.*;
 //import com.pemda.ekinerjademo.service.UraianTugasJabatanService;
 //import com.pemda.ekinerjademo.service.UraianTugasService;
@@ -42,6 +40,8 @@ public class UraianTugasController {
     private UraianTugasService uraianTugasService;
     @Autowired
     private TkdJabatanService tkdJabatanService;
+    @Autowired
+    private EKinerjaService eKinerjaService;
 
     @CrossOrigin(allowCredentials = "false")
     @RequestMapping(value = "/get-urtug-by-nip/{nipPegawai}", method = RequestMethod.GET)
@@ -323,7 +323,45 @@ public class UraianTugasController {
             uraianTugasJabatanService.save(uraianTugasJabatan);
         }
 
+        return new ResponseEntity<Object>(
+                new CustomMessage("uraian tugas added"),
+                HttpStatus.OK);
+
+    }
+
+    @RequestMapping(value = "/delete-uraian-tugas-jabatan/{kdJabatan}/{kdUrtug}", method = RequestMethod.DELETE)
+    @Transactional
+    ResponseEntity<?> deleteUraianTugasJabatan(
+            @PathVariable("kdJabatan") String kdJabatan,
+            @PathVariable("kdurtug") String kdUrtug) {
+        LOGGER.info("delete urtug "+kdUrtug+" in "+kdJabatan);
+
         return null;
+    }
+
+    @RequestMapping(value = "/save-rincian-ekinerja", method = RequestMethod.POST)
+    @Transactional
+    ResponseEntity<?> saveRincianEKinerja(
+            @RequestBody RincianEKinerjaInputWrapper rincianEKinerjaInputWrapper) {
+        LOGGER.info("save rincian kinerja "
+                + rincianEKinerjaInputWrapper.getNipPegawai()
+                + " terhadap tugas "
+                + rincianEKinerjaInputWrapper.getKdUrtug());
+
+        RincianEKinerjaId rincianEKinerjaId =
+                new RincianEKinerjaId(
+                        rincianEKinerjaInputWrapper.getNipPegawai(),
+                        rincianEKinerjaInputWrapper.getKdUrtug());
+
+        RincianEKinerja rincianEKinerja = new RincianEKinerja();
+        rincianEKinerja.setRincianEKinerjaId(rincianEKinerjaId);
+        rincianEKinerja.setCapaianMenit(rincianEKinerjaInputWrapper.getCapaianMenit());
+
+        eKinerjaService.save(rincianEKinerja);
+
+        return new ResponseEntity<Object>(
+                new CustomMessage("rincian kinerja submitted"),
+                HttpStatus.OK);
 
     }
 
