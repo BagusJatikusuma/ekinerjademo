@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -35,5 +36,11 @@ public class EKinerjaServiceImpl implements EKinerjaService {
     @Override
     public List<RincianEKinerja> getRincianEKinerjaByNip(String nipPegawai) {
         return rincianEKinerjaDao.findByAkunPegawai_NipPegawai(nipPegawai);
+    }
+
+    @Override
+    public List<RincianEKinerja> getRincianEKinerjaByNipAndDate(String nipPegawai, Date date) {
+        return rincianEKinerjaDao
+                .findByRincianEKinerjaId_NipPegawaiAndRincianEKinerjaId_TglSubmit(nipPegawai, date);
     }
 }

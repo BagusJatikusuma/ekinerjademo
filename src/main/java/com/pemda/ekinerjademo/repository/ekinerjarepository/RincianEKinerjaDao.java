@@ -5,6 +5,7 @@ import com.pemda.ekinerjademo.model.ekinerjamodel.RincianEKinerjaId;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -14,4 +15,6 @@ import java.util.List;
 public interface RincianEKinerjaDao extends JpaRepository<RincianEKinerja, Long> {
     RincianEKinerja findByRincianEKinerjaId(RincianEKinerjaId rincianEKinerjaId);
     List<RincianEKinerja> findByAkunPegawai_NipPegawai(String nipPegawai);
+    List<RincianEKinerja>
+        findByRincianEKinerjaId_NipPegawaiAndRincianEKinerjaId_TglSubmit(String nipPegawai, Date tglSubmit);
 }

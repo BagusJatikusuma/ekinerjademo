@@ -17,7 +17,7 @@ public class RincianEKinerja {
     @Column(name = "capaian_menit")
     private Integer capaianMenit;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "kd_urtug", insertable = false, updatable = false)
     private UraianTugas uraianTugas;
 
