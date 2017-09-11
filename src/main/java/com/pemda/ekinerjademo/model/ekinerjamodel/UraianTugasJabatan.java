@@ -7,16 +7,16 @@ import java.io.Serializable;
  * Created by bagus on 08/09/17.
  */
 @Entity
-@NamedNativeQuery(
-        name = "UraianTugasJabatan.findByUraianTugasJabatanIdKdJabatan",
-        query = "SELECT * FROM uraian_tugas_jabatan WHERE kd_jabatan = ?1")
 @Table(name = "uraian_tugas_jabatan")
 public class UraianTugasJabatan implements Serializable {
     @EmbeddedId
     private UraianTugasJabatanId uraianTugasJabatanId;
 
+    @Column(name = "created_by")
+    private String createdBy;
+
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "kd_urtug", insertable = false, updatable = false)
+    @JoinColumn(name = "kd_urtug", insertable = false, updatable = false, referencedColumnName = "kd_urtug")
     private UraianTugas uraianTugas;
 
     public UraianTugasJabatanId getUraianTugasJabatanId() {
@@ -35,4 +35,11 @@ public class UraianTugasJabatan implements Serializable {
         this.uraianTugas = uraianTugas;
     }
 
+    public String getCreatedBy() {
+        return createdBy;
+    }
+
+    public void setCreatedBy(String createdBy) {
+        this.createdBy = createdBy;
+    }
 }

@@ -34,6 +34,9 @@ public class UraianTugas {
     @Column(name = "keterangan")
     private  String keterangan;
 
+    @Column(name = "created_by")
+    private String createdBy;
+
     @OneToMany(mappedBy = "uraianTugas")
     private List<RincianEKinerja> rincianEKinerjaList;
 
@@ -126,4 +129,11 @@ public class UraianTugas {
         this.keterangan = keterangan;
     }
 
+    public String getCreatedBy() {
+        return createdBy;
+    }
+
+    public void setCreatedBy(String createdBy) {
+        this.createdBy = createdBy;
+    }
 }

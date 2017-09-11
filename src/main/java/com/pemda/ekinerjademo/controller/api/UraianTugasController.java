@@ -5,12 +5,14 @@ import com.pemda.ekinerjademo.model.bismamodel.TkdJabatan;
 import com.pemda.ekinerjademo.model.ekinerjamodel.UraianTugas;
 import com.pemda.ekinerjademo.model.ekinerjamodel.UraianTugasJabatan;
 
+import com.pemda.ekinerjademo.model.ekinerjamodel.UraianTugasJabatanId;
 import com.pemda.ekinerjademo.service.*;
 //import com.pemda.ekinerjademo.service.UraianTugasJabatanService;
 //import com.pemda.ekinerjademo.service.UraianTugasService;
 
-import com.pemda.ekinerjademo.wrapper.input.UraianTugasInputWrapper;
+import com.pemda.ekinerjademo.wrapper.input.*;
 import com.pemda.ekinerjademo.wrapper.output.*;
+import com.pemda.ekinerjademo.wrapper.output.UraianTugasJabatanWrapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,7 +40,6 @@ public class UraianTugasController {
     private UraianTugasJabatanService uraianTugasJabatanService;
     @Autowired
     private UraianTugasService uraianTugasService;
-
     @Autowired
     private TkdJabatanService tkdJabatanService;
 
@@ -85,7 +86,6 @@ public class UraianTugasController {
         return new ResponseEntity<Object>(uraianTugasEKinerjaWrapper, HttpStatus.OK);
     }
 
-//    @CrossOrigin(allowCredentials = "false")
     @RequestMapping(value = "/create-urtug", method = RequestMethod.POST)
     @Transactional //only for development phase
     ResponseEntity<?> saveUraianTugas(@RequestBody UraianTugasInputWrapper uraianTugasInputWrapper) {
@@ -103,13 +103,13 @@ public class UraianTugasController {
         uraianTugas.setBebanKerja(uraianTugasInputWrapper.getBebanKerja());
         uraianTugas.setPeralatan(uraianTugasInputWrapper.getPeralatan());
         uraianTugas.setKeterangan(uraianTugasInputWrapper.getKeterangan());
+        uraianTugas.setCreatedBy(uraianTugasInputWrapper.getCreatedBy());
 
         uraianTugasService.save(uraianTugas);
 
         return new ResponseEntity<Object>(new CustomMessage("urtug created"), HttpStatus.OK);
     }
 
-//    @CrossOrigin(allowCredentials = "false")
     @RequestMapping(value = "/update-urtug", method = RequestMethod.PUT)
     @Transactional //only for development phase
     ResponseEntity<?> updateUraianTugas(@RequestBody UraianTugas uraianTugas) {
@@ -137,7 +137,6 @@ public class UraianTugasController {
         return new ResponseEntity<Object>(new CustomMessage("urtug deleted"), HttpStatus.OK);
     }
 
-    @CrossOrigin(allowCredentials = "false")
     @RequestMapping(value = "/get-all-urtug", method = RequestMethod.GET)
     ResponseEntity<?> getAllUraianTugas(){
         List<UraianTugasWrapper> uraianTugasWrappers = new ArrayList<>();
@@ -158,7 +157,28 @@ public class UraianTugasController {
         return new ResponseEntity<Object>(uraianTugasWrappers, HttpStatus.OK);
     }
 
-    @CrossOrigin(allowCredentials = "false")
+    @RequestMapping(value = "/get-all-urtug-by-jabatan/{kdJabatan}", method = RequestMethod.GET)
+    ResponseEntity<?> getAllUraianTugasByJabatan(@PathVariable("kdJabatan") String kdJabatan){
+        List<UraianTugasWrapper> uraianTugasWrappers = new ArrayList<>();
+        List<UraianTugasJabatan> uraianTugasJabatanList =
+                uraianTugasJabatanService.getUraianTugasJabatanByJabatan(kdJabatan);
+
+        for (UraianTugasJabatan uraianTugasJabatan : uraianTugasJabatanList) {
+            uraianTugasWrappers.add(new UraianTugasWrapper(
+                    uraianTugasJabatan.getUraianTugas().getKdUrtug(),
+                    uraianTugasJabatan.getUraianTugas().getDeskripsi(),
+                    uraianTugasJabatan.getUraianTugas().getSatuan(),
+                    uraianTugasJabatan.getUraianTugas().getVolumeKerja(),
+                    uraianTugasJabatan.getUraianTugas().getNormaWaktu(),
+                    uraianTugasJabatan.getUraianTugas().getBebanKerja(),
+                    uraianTugasJabatan.getUraianTugas().getPeralatan(),
+                    uraianTugasJabatan.getUraianTugas().getKeterangan()
+            ));
+        }
+
+        return new ResponseEntity<Object>(uraianTugasWrappers, HttpStatus.OK);
+    }
+
     @RequestMapping(value = "/get-jabatan-list", method = RequestMethod.GET)
     @Transactional
     ResponseEntity<?> getJabatanList() {
@@ -175,7 +195,6 @@ public class UraianTugasController {
         return new ResponseEntity<Object>(jabatanWrapperList, HttpStatus.OK);
     }
 
-    @CrossOrigin(allowCredentials = "false")
     @RequestMapping(value = "/get-uraian-tugas-by-jabatan/{kdJabatan}", method = RequestMethod.GET)
     @Transactional
     ResponseEntity<?> getUraianTugasByJabatan(@PathVariable("kdJabatan") String kdJabatan) {
@@ -189,7 +208,8 @@ public class UraianTugasController {
         UraianTugasJabatanWrapper uraianTugasJabatanWrapper
                 = new UraianTugasJabatanWrapper();
 
-        List<UraianTugasJabatan> uraianTugasJabatanList = uraianTugasJabatanService.getUraianTugasJabatanByJabatan(kdJabatan);
+        List<UraianTugasJabatan> uraianTugasJabatanList =
+                uraianTugasJabatanService.getUraianTugasJabatanByJabatan(kdJabatan);
 
         List<UraianTugas> uraianTugasList =
                 uraianTugasService.getAllUraianTugas();
@@ -270,5 +290,65 @@ public class UraianTugasController {
 
         return new ResponseEntity<Object>(uraianTugasJabatanWrapper, HttpStatus.OK);
     }
+
+    @RequestMapping(value = "/set-uraian-tugas-jabatan", method = RequestMethod.POST)
+    @Transactional
+    ResponseEntity<?> setUraianTugasJabatan(
+            @RequestBody UraianTugasJabatanInputWrapper uraianTugasJabatanInputWrapper) {
+        LOGGER.info("set uraian tugas into jabatan "+uraianTugasJabatanInputWrapper.getKdJabatan());
+
+        String kdJabatan = uraianTugasJabatanInputWrapper.getKdJabatan();
+        List<UraianTugasJabatan> uraianTugasJabatanList =
+                uraianTugasJabatanService.getUraianTugasJabatanByJabatan(kdJabatan);
+        //first destroy jabatan uraian tugas if jabatan already has uraian tugas if not
+        if (!uraianTugasJabatanList.isEmpty()) {
+            LOGGER.info("destroy now");
+            uraianTugasJabatanService
+                    .deleteAllUraianTugasJabatanByJabatan(kdJabatan);
+        }
+        //loop as long as uraian tugas in uraianTugasJabatanInput wrapper and save Uraian tugas Jabatan
+        for (KdUraianTugasWrapper kdUraianTugasWrapper :
+                uraianTugasJabatanInputWrapper.getKdUraianTugasList()) {
+//            LOGGER.info("masuk");
+            UraianTugasJabatan uraianTugasJabatan = new UraianTugasJabatan();
+            uraianTugasJabatan
+                    .setUraianTugasJabatanId(
+                            new UraianTugasJabatanId(
+                                    kdUraianTugasWrapper.getKdUrtug(),
+                                    uraianTugasJabatanInputWrapper.getKdJabatan()
+                            ));
+            uraianTugasJabatan
+                    .setCreatedBy(uraianTugasJabatanInputWrapper.getCreatedBy());
+
+            uraianTugasJabatanService.save(uraianTugasJabatan);
+        }
+
+        return null;
+
+    }
+
+//    @RequestMapping(value = "/create-uraian-tugas-jabatan", method = RequestMethod.POST)
+//    @Transactional("ekinerjaTransactionManager")
+//    ResponseEntity<?> createUraianTugasJabatan(@RequestBody UraianTugasJabatanInputWrapper uraianTugasJabatanInputWrapper) {
+//        for (KdUraianTugasWrapper kdUraianTugasWrapper :
+//                uraianTugasJabatanInputWrapper.getKdUraianTugasList()) {
+//            LOGGER.info(
+//                    "masuk "
+//                    +uraianTugasJabatanInputWrapper.getKdJabatan()+ " : "
+//                    +kdUraianTugasWrapper.getKdUrtug()
+//            );
+//
+//            UraianTugasJabatan uraianTugasJabatan = new UraianTugasJabatan();
+//            uraianTugasJabatan
+//                    .setUraianTugasJabatanId(
+//                            new UraianTugasJabatanId(
+//                                    kdUraianTugasWrapper.getKdUrtug(),
+//                                    uraianTugasJabatanInputWrapper.getKdJabatan()
+//                                    ));
+//
+//            uraianTugasJabatanService.save(uraianTugasJabatan);
+//        }
+//        return null;
+//    }
 
 }
