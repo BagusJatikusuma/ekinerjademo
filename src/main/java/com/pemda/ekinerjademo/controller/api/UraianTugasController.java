@@ -291,21 +291,21 @@ public class UraianTugasController {
         return new ResponseEntity<Object>(uraianTugasJabatanWrapper, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/set-uraian-tugas-jabatan", method = RequestMethod.POST)
+    @RequestMapping(value = "/add-uraian-tugas-jabatan", method = RequestMethod.POST)
     @Transactional
-    ResponseEntity<?> setUraianTugasJabatan(
+    ResponseEntity<?> addUraianTugasJabatan(
             @RequestBody UraianTugasJabatanInputWrapper uraianTugasJabatanInputWrapper) {
         LOGGER.info("set uraian tugas into jabatan "+uraianTugasJabatanInputWrapper.getKdJabatan());
 
         String kdJabatan = uraianTugasJabatanInputWrapper.getKdJabatan();
-        List<UraianTugasJabatan> uraianTugasJabatanList =
-                uraianTugasJabatanService.getUraianTugasJabatanByJabatan(kdJabatan);
+//        List<UraianTugasJabatan> uraianTugasJabatanList =
+//                uraianTugasJabatanService.getUraianTugasJabatanByJabatan(kdJabatan);
         //first destroy jabatan uraian tugas if jabatan already has uraian tugas if not
-        if (!uraianTugasJabatanList.isEmpty()) {
-            LOGGER.info("destroy now");
-            uraianTugasJabatanService
-                    .deleteAllUraianTugasJabatanByJabatan(kdJabatan);
-        }
+//        if (!uraianTugasJabatanList.isEmpty()) {
+//            LOGGER.info("destroy now");
+//            uraianTugasJabatanService
+//                    .deleteAllUraianTugasJabatanByJabatan(kdJabatan);
+//        }
         //loop as long as uraian tugas in uraianTugasJabatanInput wrapper and save Uraian tugas Jabatan
         for (KdUraianTugasWrapper kdUraianTugasWrapper :
                 uraianTugasJabatanInputWrapper.getKdUraianTugasList()) {
