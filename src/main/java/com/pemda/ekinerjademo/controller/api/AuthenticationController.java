@@ -73,7 +73,8 @@ public class AuthenticationController {
                         akunPegawaiAuthenticated.getRole(),
                         "IniTokenDUmmy",
                         qutPegawai.getJabatan(),
-                        qutPegawai.getUnitKerja());
+                        qutPegawai.getUnitKerja(),
+                        qutPegawai.getKdJabatan());
 
         return new ResponseEntity<Object>(pegawaiCredential, HttpStatus.OK);
 

@@ -14,8 +14,13 @@ public class PegawaiCredential {
     private String unit;
 
     public PegawaiCredential() {}
-    public PegawaiCredential(String nipPegawai, String namaPegawai, Role role, String token,
-                             String jabatan, String unit) {
+    public PegawaiCredential(
+            String nipPegawai,
+            String namaPegawai,
+            Role role,
+            String token,
+            String jabatan,
+            String unit) {
         this.nipPegawai = nipPegawai;
         this.namaPegawai = namaPegawai;
         this.role = role;

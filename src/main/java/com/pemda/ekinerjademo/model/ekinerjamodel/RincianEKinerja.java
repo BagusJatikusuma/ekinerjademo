@@ -14,6 +14,9 @@ public class RincianEKinerja {
     @EmbeddedId
     private RincianEKinerjaId rincianEKinerjaId;
 
+    @Column(name = "capaian_menit")
+    private Integer capaianMenit;
+
     @ManyToOne
     @JoinColumn(name = "kd_urtug", insertable = false, updatable = false)
     private UraianTugas uraianTugas;
@@ -48,5 +51,13 @@ public class RincianEKinerja {
 
     public void setAkunPegawai(AkunPegawai akunPegawai) {
         this.akunPegawai = akunPegawai;
+    }
+
+    public Integer getCapaianMenit() {
+        return capaianMenit;
+    }
+
+    public void setCapaianMenit(Integer capaianMenit) {
+        this.capaianMenit = capaianMenit;
     }
 }

@@ -8,6 +8,7 @@ import java.util.List;
  * Created by bagus on 09/09/17.
  */
 public interface EKinerjaService {
+    void save(RincianEKinerja rincianEKinerja);
     RincianEKinerja getRincianEKinerja(String kdUrtug, String nipPegawai);
     List<RincianEKinerja> getRincianEKinerjaByUrtug(String kdUrtug);
     List<RincianEKinerja> getRincianEKinerjaByNip(String nipPegawai);

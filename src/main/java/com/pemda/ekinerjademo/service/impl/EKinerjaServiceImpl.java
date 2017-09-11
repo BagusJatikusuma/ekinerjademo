@@ -18,6 +18,11 @@ public class EKinerjaServiceImpl implements EKinerjaService {
     @Autowired private RincianEKinerjaDao rincianEKinerjaDao;
 
     @Override
+    public void save(RincianEKinerja rincianEKinerja) {
+        rincianEKinerjaDao.save(rincianEKinerja);
+    }
+
+    @Override
     public RincianEKinerja getRincianEKinerja(String kdUrtug, String nipPegawai) {
         return null;
     }
