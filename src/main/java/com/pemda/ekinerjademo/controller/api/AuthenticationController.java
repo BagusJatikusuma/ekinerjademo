@@ -1,10 +1,7 @@
 package com.pemda.ekinerjademo.controller.api;
 
 import com.pemda.ekinerjademo.model.bismamodel.QutPegawai;
-import com.pemda.ekinerjademo.model.ekinerjamodel.AkunPegawai;
-import com.pemda.ekinerjademo.model.ekinerjamodel.RincianEKinerja;
-import com.pemda.ekinerjademo.model.ekinerjamodel.UraianTugas;
-import com.pemda.ekinerjademo.model.ekinerjamodel.UraianTugasJabatan;
+import com.pemda.ekinerjademo.model.ekinerjamodel.*;
 import com.pemda.ekinerjademo.service.*;
 import com.pemda.ekinerjademo.util.exception.AuthenticationCredentialsNotFoundExcecption;
 import com.pemda.ekinerjademo.util.exception.BadCredentialsException;
