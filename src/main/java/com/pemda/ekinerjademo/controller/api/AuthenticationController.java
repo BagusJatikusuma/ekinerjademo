@@ -63,23 +63,14 @@ public class AuthenticationController {
         QutPegawai qutPegawai =
                 qutPegawaiService.getQutPegawai(akunPegawaiAuthenticated.getNipPegawai());
 
-//        PegawaiCredential pegawaiCredential =
-//                new PegawaiCredential(
-//                        akunPegawaiAuthenticated.getNipPegawai(),
-//                        qutPegawai.getNama(),
-//                        akunPegawaiAuthenticated.getRole(),
-//                        "IniTokenDUmmy",
-//                        qutPegawai.getJabatan(),
-//                        qutPegawai.getUnitKerja());
-
         PegawaiCredential pegawaiCredential =
                 new PegawaiCredential(
                         akunPegawaiAuthenticated.getNipPegawai(),
-                        "nama",
+                        qutPegawai.getNama(),
                         akunPegawaiAuthenticated.getRole(),
                         "IniTokenDUmmy",
-                        "nama",
-                        "nama");
+                        qutPegawai.getJabatan(),
+                        qutPegawai.getUnitKerja());
 
         return new ResponseEntity<Object>(pegawaiCredential, HttpStatus.OK);
 
