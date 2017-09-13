@@ -44,6 +44,10 @@ public class UraianTugasController {
     private TkdJabatanService tkdJabatanService;
     @Autowired
     private EKinerjaService eKinerjaService;
+    @Autowired
+    private AkunPegawaiService akunPegawaiService;
+    @Autowired
+    private RoleService roleService;
 
     @CrossOrigin(allowCredentials = "false")
     @RequestMapping(value = "/get-urtug-by-nip/{nipPegawai}", method = RequestMethod.GET)
@@ -401,6 +405,75 @@ public class UraianTugasController {
 
         return new ResponseEntity<Object>(rincianKinerjaWrapperList, HttpStatus.OK);
 
+    }
+
+    @RequestMapping(value = "/set-role", method = RequestMethod.POST)
+    @Transactional
+    ResponseEntity<?> setAkunPegawaiRole(
+            @RequestBody AkunPegawaiRoleInputWrapper akunPegawaiRoleInputWrapper) {
+        LOGGER.info("set role "+akunPegawaiRoleInputWrapper.getRoleId()+" for "+akunPegawaiRoleInputWrapper.getNipPegawai());
+
+//        akunPegawaiService
+//                .setPegawaiRole(
+//                        akunPegawaiRoleInputWrapper.getRoleId(),
+//                        akunPegawaiRoleInputWrapper.getNipPegawai());
+
+        AkunPegawai akunPegawai = akunPegawaiService.getAkunPegawai(akunPegawaiRoleInputWrapper.getNipPegawai());
+        Role role = roleService.getRole(akunPegawaiRoleInputWrapper.getRoleId());
+
+        if (role == null) {
+            LOGGER.info("role not found");
+        }
+
+        if (akunPegawai == null) {
+            LOGGER.info("akun pegawai is null");
+        }
+
+        akunPegawai.setRole(role);
+        akunPegawaiService.save(akunPegawai);
+
+        return new ResponseEntity<Object>(new CustomMessage("success set role"), HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/get-pegawai", method = RequestMethod.GET)
+    @Transactional
+    ResponseEntity<?> getPegawai() {
+        LOGGER.info("get akun pegawai with role");
+
+        List<QutPegawaiWrapper> qutPegawaiWrappers
+                = new ArrayList<>();
+        List<QutPegawai> qutPegawaiList
+                = qutPegawaiService.getQutPegawai();
+
+//        for (AkunPegawai akunPegawai : akunPegawaiList) {
+//            for (QutPegawai qutPegawai : qutPegawaiList) {
+//                if (akunPegawai.getNipPegawai()
+//                        .equals(qutPegawai.getNip())) {
+//                    AkunPegawaiWrapper akunPegawaiWrapper = new AkunPegawaiWrapper();
+//
+//                    akunPegawaiWrapper.setNipPegawai(akunPegawai.getNipPegawai());
+//                    akunPegawaiWrapper.setNama(qutPegawai.getNama());
+//                    akunPegawaiWrapper.setRole(akunPegawai.getRole().getRole());
+//
+//                    akunPegawaiWrappers.add(akunPegawaiWrapper);
+//                }
+//
+//            }
+//
+//        }
+
+        for (QutPegawai qutPegawai : qutPegawaiList) {
+            qutPegawaiWrappers
+                    .add(new QutPegawaiWrapper(
+                            qutPegawai.getNip(),
+                            qutPegawai.getNama(),
+                            qutPegawai.getJabatan(),
+                            qutPegawai.getUnitKerja()));
+        }
+
+        LOGGER.info("finsih");
+
+        return new ResponseEntity<Object>(qutPegawaiWrappers, HttpStatus.OK);
     }
 
 //    @RequestMapping(value = "/create-uraian-tugas-jabatan", method = RequestMethod.POST)

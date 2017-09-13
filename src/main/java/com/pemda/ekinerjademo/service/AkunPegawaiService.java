@@ -10,4 +10,6 @@ import java.util.List;
 public interface AkunPegawaiService {
     List<AkunPegawai> getAkunPegawaiList();
     AkunPegawai getAkunPegawai(String nipPegawai);
+    void setPegawaiRole(String role, String nipPegawai);
+    void save(AkunPegawai akunPegawai);
 }
