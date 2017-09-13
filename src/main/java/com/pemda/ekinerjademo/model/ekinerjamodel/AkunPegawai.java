@@ -20,7 +20,7 @@ public class AkunPegawai {
     @JoinColumn(name = "role_id")
     private Role role;
 
-    @OneToMany(fetch = FetchType.LAZY,mappedBy = "akunPegawai", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "akunPegawai", cascade = CascadeType.ALL)
     private List<RincianEKinerja> rincianEKinerjaList;
 
     public AkunPegawai() {}
