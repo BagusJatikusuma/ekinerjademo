@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 /**
  * Created by bagus on 09/09/17.
  */
@@ -18,6 +20,11 @@ public class QutPegawaiServiceImpl implements QutPegawaiService {
     @Override
     public QutPegawai getQutPegawai(String nip) {
         return qutPegawaiDao.findByNip(nip);
+    }
+
+    @Override
+    public List<QutPegawai> getQutPegawai() {
+        return qutPegawaiDao.findAll();
     }
 
 }

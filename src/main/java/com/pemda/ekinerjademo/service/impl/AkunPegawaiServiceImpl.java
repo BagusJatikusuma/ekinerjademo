@@ -26,4 +26,14 @@ public class AkunPegawaiServiceImpl implements AkunPegawaiService {
     public AkunPegawai getAkunPegawai(String nipPegawai) {
         return akunPegawaiDao.findByNipPegawai(nipPegawai);
     }
+
+    @Override
+    public void setPegawaiRole(String role, String nipPegawai) {
+        akunPegawaiDao.updatePegawaiRole(role, nipPegawai);
+    }
+
+    @Override
+    public void save(AkunPegawai akunPegawai) {
+        akunPegawaiDao.save(akunPegawai);
+    }
 }
