@@ -407,30 +407,54 @@ public class UraianTugasController {
 
     }
 
+    @RequestMapping(value = "/get-pegawai-roles/{nipPegawai}", method = RequestMethod.GET)
+    ResponseEntity<?> getRoles(@PathVariable("nipPegawai") String nipPegawai) {
+        LOGGER.info("get roles");
+        PegawaiRoleWrapper pegawaiRoleWrapper = new PegawaiRoleWrapper();
+
+        List<Role> roles = roleService.getRoles();
+        AkunPegawai akunPegawai = akunPegawaiService.getAkunPegawai(nipPegawai);
+
+        RoleWrapper currentRoleWrapper =
+                new RoleWrapper(akunPegawai.getRole().getId(), akunPegawai.getRole().getRole());
+        List<RoleWrapper> roleWrapperList =
+                new ArrayList<>();
+
+        for (Role role : roles) {
+            roleWrapperList
+                    .add(new RoleWrapper(role.getId(), role.getRole()));
+        }
+
+        pegawaiRoleWrapper.setCurrentRole(currentRoleWrapper);
+        pegawaiRoleWrapper.setRoles(roleWrapperList);
+
+        return new ResponseEntity<Object>(pegawaiRoleWrapper, HttpStatus.OK);
+    }
+
     @RequestMapping(value = "/set-role", method = RequestMethod.POST)
-    @Transactional
+    @Transactional("ekinerjaTransactionManager")
     ResponseEntity<?> setAkunPegawaiRole(
             @RequestBody AkunPegawaiRoleInputWrapper akunPegawaiRoleInputWrapper) {
         LOGGER.info("set role "+akunPegawaiRoleInputWrapper.getRoleId()+" for "+akunPegawaiRoleInputWrapper.getNipPegawai());
 
-//        akunPegawaiService
-//                .setPegawaiRole(
-//                        akunPegawaiRoleInputWrapper.getRoleId(),
-//                        akunPegawaiRoleInputWrapper.getNipPegawai());
+        akunPegawaiService
+                .setPegawaiRole(
+                        akunPegawaiRoleInputWrapper.getRoleId(),
+                        akunPegawaiRoleInputWrapper.getNipPegawai());
 
-        AkunPegawai akunPegawai = akunPegawaiService.getAkunPegawai(akunPegawaiRoleInputWrapper.getNipPegawai());
-        Role role = roleService.getRole(akunPegawaiRoleInputWrapper.getRoleId());
-
-        if (role == null) {
-            LOGGER.info("role not found");
-        }
-
-        if (akunPegawai == null) {
-            LOGGER.info("akun pegawai is null");
-        }
-
-        akunPegawai.setRole(role);
-        akunPegawaiService.save(akunPegawai);
+//        AkunPegawai akunPegawai = akunPegawaiService.getAkunPegawai(akunPegawaiRoleInputWrapper.getNipPegawai());
+//        Role role = roleService.getRole(akunPegawaiRoleInputWrapper.getRoleId());
+//
+//        if (role == null) {
+//            LOGGER.info("role not found");
+//        }
+//
+//        if (akunPegawai == null) {
+//            LOGGER.info("akun pegawai is null");
+//        }
+//
+//        akunPegawai.setRole(role);
+//        akunPegawaiService.save(akunPegawai);
 
         return new ResponseEntity<Object>(new CustomMessage("success set role"), HttpStatus.OK);
     }
