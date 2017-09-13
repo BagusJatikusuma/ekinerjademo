@@ -6,6 +6,8 @@ import com.pemda.ekinerjademo.service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * Created by bagus on 13/09/17.
  */
@@ -16,5 +18,10 @@ public class RoleServiceImpl implements RoleService {
     @Override
     public Role getRole(String roleId) {
         return roleDao.findById(roleId);
+    }
+
+    @Override
+    public List<Role> getRoles() {
+        return roleDao.findAll();
     }
 }
