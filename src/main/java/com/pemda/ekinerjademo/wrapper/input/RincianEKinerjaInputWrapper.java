@@ -1,5 +1,7 @@
 package com.pemda.ekinerjademo.wrapper.input;
 
+import java.util.Date;
+
 /**
  * Created by bagus on 11/09/17.
  */
@@ -8,6 +10,7 @@ public class RincianEKinerjaInputWrapper {
     private String kdUrtug;
     private Integer statusEkinerja;
     private Integer capaianMenit;
+    private Date tglSubmit;
 
     public String getNipPegawai() {
         return nipPegawai;
@@ -39,5 +42,13 @@ public class RincianEKinerjaInputWrapper {
 
     public void setStatusEkinerja(Integer statusEkinerja) {
         this.statusEkinerja = statusEkinerja;
+    }
+
+    public Date getTglSubmit() {
+        return tglSubmit;
+    }
+
+    public void setTglSubmit(Date tglSubmit) {
+        this.tglSubmit = tglSubmit;
     }
 }
