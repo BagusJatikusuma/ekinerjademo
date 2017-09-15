@@ -27,4 +27,9 @@ public class QutPegawaiServiceImpl implements QutPegawaiService {
         return qutPegawaiDao.findAll();
     }
 
+    @Override
+    public List<QutPegawai> getQutPegawaiByUnitKerja(String kdUnitKerja) {
+        return qutPegawaiDao.findByKdUnitKerja(kdUnitKerja);
+    }
+
 }

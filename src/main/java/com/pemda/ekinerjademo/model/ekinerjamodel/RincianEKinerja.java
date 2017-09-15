@@ -14,6 +14,9 @@ public class RincianEKinerja {
     @EmbeddedId
     private RincianEKinerjaId rincianEKinerjaId;
 
+    @Column(name = "status_ekinerja")
+    private Integer statusEkinerja;
+
     @Column(name = "capaian_menit")
     private Integer capaianMenit;
 
@@ -59,5 +62,13 @@ public class RincianEKinerja {
 
     public void setCapaianMenit(Integer capaianMenit) {
         this.capaianMenit = capaianMenit;
+    }
+
+    public Integer getStatusEkinerja() {
+        return statusEkinerja;
+    }
+
+    public void setStatusEkinerja(Integer statusEkinerja) {
+        this.statusEkinerja = statusEkinerja;
     }
 }

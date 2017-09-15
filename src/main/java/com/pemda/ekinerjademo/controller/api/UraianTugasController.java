@@ -372,6 +372,7 @@ public class UraianTugasController {
         RincianEKinerja rincianEKinerja = new RincianEKinerja();
         rincianEKinerja.setRincianEKinerjaId(rincianEKinerjaId);
         rincianEKinerja.setCapaianMenit(rincianEKinerjaInputWrapper.getCapaianMenit());
+        rincianEKinerja.setStatusEkinerja(rincianEKinerjaInputWrapper.getStatusEkinerja());
 
         eKinerjaService.save(rincianEKinerja);
 
@@ -400,6 +401,7 @@ public class UraianTugasController {
                     .add(new RincianKinerjaWrapper(
                             rincianEKinerja.getUraianTugas().getKdUrtug(),
                             rincianEKinerja.getUraianTugas().getDeskripsi(),
+                            rincianEKinerja.getStatusEkinerja(),
                             rincianEKinerja.getCapaianMenit()));
         }
 
@@ -485,6 +487,7 @@ public class UraianTugasController {
 //            }
 //
 //        }
+        LOGGER.info("finish get pegawai from database kepegawaian");
 
         for (QutPegawai qutPegawai : qutPegawaiList) {
             qutPegawaiWrappers
@@ -495,7 +498,33 @@ public class UraianTugasController {
                             qutPegawai.getUnitKerja()));
         }
 
-        LOGGER.info("finsih");
+        LOGGER.info("finish");
+
+        return new ResponseEntity<Object>(qutPegawaiWrappers, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/get-pegawai/{kdUnitKerja}", method = RequestMethod.GET)
+    @Transactional
+    ResponseEntity<?> getPegawaiByUnitKerja(@PathVariable("kdUnitKerja") String kdUnitKerja) {
+        LOGGER.info("get pegawai in "+kdUnitKerja);
+
+        List<QutPegawaiWrapper> qutPegawaiWrappers
+                = new ArrayList<>();
+        List<QutPegawai> qutPegawaiList
+                = qutPegawaiService.getQutPegawaiByUnitKerja(kdUnitKerja);
+
+        LOGGER.info("finish get pegawai from database kepegawaian");
+
+        for (QutPegawai qutPegawai : qutPegawaiList) {
+            qutPegawaiWrappers
+                    .add(new QutPegawaiWrapper(
+                            qutPegawai.getNip(),
+                            qutPegawai.getNama(),
+                            qutPegawai.getJabatan(),
+                            qutPegawai.getUnitKerja()));
+        }
+
+        LOGGER.info("finish");
 
         return new ResponseEntity<Object>(qutPegawaiWrappers, HttpStatus.OK);
     }

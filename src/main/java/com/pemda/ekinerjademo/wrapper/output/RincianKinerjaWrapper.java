@@ -6,12 +6,19 @@ package com.pemda.ekinerjademo.wrapper.output;
 public class RincianKinerjaWrapper {
     private String kdUrtug;
     private String namaUrtug;
+    private Integer statusEkinerja;
     private Integer capaianMenit;
 
     public RincianKinerjaWrapper() {}
     public RincianKinerjaWrapper(String kdUrtug, String namaUrtug, Integer capaianMenit) {
         this.kdUrtug = kdUrtug;
         this.namaUrtug = namaUrtug;
+        this.capaianMenit = capaianMenit;
+    }
+    public RincianKinerjaWrapper(String kdUrtug, String namaUrtug, Integer statusEkinerja, Integer capaianMenit) {
+        this.kdUrtug = kdUrtug;
+        this.namaUrtug = namaUrtug;
+        this.statusEkinerja = statusEkinerja;
         this.capaianMenit = capaianMenit;
     }
 
@@ -37,5 +44,13 @@ public class RincianKinerjaWrapper {
 
     public void setCapaianMenit(Integer capaianMenit) {
         this.capaianMenit = capaianMenit;
+    }
+
+    public Integer getStatusEkinerja() {
+        return statusEkinerja;
+    }
+
+    public void setStatusEkinerja(Integer statusEkinerja) {
+        this.statusEkinerja = statusEkinerja;
     }
 }
