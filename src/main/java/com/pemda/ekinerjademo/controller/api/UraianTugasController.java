@@ -503,6 +503,32 @@ public class UraianTugasController {
         return new ResponseEntity<Object>(qutPegawaiWrappers, HttpStatus.OK);
     }
 
+    @RequestMapping(value = "/get-pegawai/{kdUnitKerja}", method = RequestMethod.GET)
+    @Transactional
+    ResponseEntity<?> getPegawaiByUnitKerja(@PathVariable("kdUnitKerja") String kdUnitKerja) {
+        LOGGER.info("get pegawai in "+kdUnitKerja);
+
+        List<QutPegawaiWrapper> qutPegawaiWrappers
+                = new ArrayList<>();
+        List<QutPegawai> qutPegawaiList
+                = qutPegawaiService.getQutPegawaiByUnitKerja(kdUnitKerja);
+
+        LOGGER.info("finish get pegawai from database kepegawaian");
+
+        for (QutPegawai qutPegawai : qutPegawaiList) {
+            qutPegawaiWrappers
+                    .add(new QutPegawaiWrapper(
+                            qutPegawai.getNip(),
+                            qutPegawai.getNama(),
+                            qutPegawai.getJabatan(),
+                            qutPegawai.getUnitKerja()));
+        }
+
+        LOGGER.info("finish");
+
+        return new ResponseEntity<Object>(qutPegawaiWrappers, HttpStatus.OK);
+    }
+
 //    @RequestMapping(value = "/create-uraian-tugas-jabatan", method = RequestMethod.POST)
 //    @Transactional("ekinerjaTransactionManager")
 //    ResponseEntity<?> createUraianTugasJabatan(@RequestBody UraianTugasJabatanInputWrapper uraianTugasJabatanInputWrapper) {

@@ -10,4 +10,5 @@ import java.util.List;
 public interface QutPegawaiService {
     QutPegawai getQutPegawai(String nip);
     List<QutPegawai> getQutPegawai();
+    List<QutPegawai> getQutPegawaiByUnitKerja(String kdUnitKerja);
 }

@@ -6,7 +6,9 @@ package com.pemda.ekinerjademo.wrapper.output;
 public class QutPegawaiWrapper {
     private String nipPegawai;
     private String nama;
+    private String kdJabatan;
     private String jabatan;
+    private String kdUnitKerja;
     private String unitKerja;
 
     public QutPegawaiWrapper() {}
@@ -47,5 +49,21 @@ public class QutPegawaiWrapper {
 
     public void setUnitKerja(String unitKerja) {
         this.unitKerja = unitKerja;
+    }
+
+    public String getKdJabatan() {
+        return kdJabatan;
+    }
+
+    public void setKdJabatan(String kdJabatan) {
+        this.kdJabatan = kdJabatan;
+    }
+
+    public String getKdUnitKerja() {
+        return kdUnitKerja;
+    }
+
+    public void setKdUnitKerja(String kdUnitKerja) {
+        this.kdUnitKerja = kdUnitKerja;
     }
 }
