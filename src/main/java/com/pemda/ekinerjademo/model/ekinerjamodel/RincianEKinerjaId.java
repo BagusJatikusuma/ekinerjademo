@@ -30,6 +30,12 @@ public class RincianEKinerjaId implements Serializable {
         this.tglSubmit = new Date();
     }
 
+    public RincianEKinerjaId(String nipPegawai, String kdUrtug, Date tglSubmit) {
+        this.nipPegawai = nipPegawai;
+        this.kdUrtug = kdUrtug;
+        this.tglSubmit = tglSubmit;
+    }
+
     public String getNipPegawai() {
         return nipPegawai;
     }

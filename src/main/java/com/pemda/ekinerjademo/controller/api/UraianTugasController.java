@@ -382,6 +382,44 @@ public class UraianTugasController {
 
     }
 
+    @RequestMapping(value = "/save-rincian-ekinerja-date", method = RequestMethod.POST)
+    @Transactional
+    ResponseEntity<?> saveRincianEKinerjaDate(
+            @RequestBody RincianEKinerjaInputWrapper rincianEKinerjaInputWrapper) {
+        LOGGER.info("save rincian kinerja "
+                + rincianEKinerjaInputWrapper.getNipPegawai()
+                + " terhadap tugas "
+                + rincianEKinerjaInputWrapper.getKdUrtug());
+
+        RincianEKinerjaId rincianEKinerjaId =
+                new RincianEKinerjaId(
+                        rincianEKinerjaInputWrapper.getNipPegawai(),
+                        rincianEKinerjaInputWrapper.getKdUrtug(),
+                        rincianEKinerjaInputWrapper.getTglSubmit());
+
+
+        RincianEKinerja rincianEKinerjaDatabase
+                = eKinerjaService.getRincianEKinerjaById(rincianEKinerjaId);
+
+        if (rincianEKinerjaDatabase != null) {
+            rincianEKinerjaInputWrapper
+                    .setCapaianMenit(
+                            rincianEKinerjaInputWrapper.getCapaianMenit() + rincianEKinerjaDatabase.getCapaianMenit());
+        }
+
+        RincianEKinerja rincianEKinerja = new RincianEKinerja();
+        rincianEKinerja.setRincianEKinerjaId(rincianEKinerjaId);
+        rincianEKinerja.setCapaianMenit(rincianEKinerjaInputWrapper.getCapaianMenit());
+        rincianEKinerja.setStatusEkinerja(rincianEKinerjaInputWrapper.getStatusEkinerja());
+
+        eKinerjaService.save(rincianEKinerja);
+
+        return new ResponseEntity<Object>(
+                new CustomMessage("rincian kinerja submitted"),
+                HttpStatus.OK);
+
+    }
+
     @RequestMapping(value = "/get-rincian-ekinerja-by-nip-date/{nip}/{date}", method = RequestMethod.GET)
     @Transactional
     ResponseEntity<?> getRincianEKinerjaByDate(
