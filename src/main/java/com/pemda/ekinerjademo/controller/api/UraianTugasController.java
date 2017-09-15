@@ -372,6 +372,7 @@ public class UraianTugasController {
         RincianEKinerja rincianEKinerja = new RincianEKinerja();
         rincianEKinerja.setRincianEKinerjaId(rincianEKinerjaId);
         rincianEKinerja.setCapaianMenit(rincianEKinerjaInputWrapper.getCapaianMenit());
+        rincianEKinerja.setStatusEkinerja(rincianEKinerjaInputWrapper.getStatusEkinerja());
 
         eKinerjaService.save(rincianEKinerja);
 
@@ -400,6 +401,7 @@ public class UraianTugasController {
                     .add(new RincianKinerjaWrapper(
                             rincianEKinerja.getUraianTugas().getKdUrtug(),
                             rincianEKinerja.getUraianTugas().getDeskripsi(),
+                            rincianEKinerja.getStatusEkinerja(),
                             rincianEKinerja.getCapaianMenit()));
         }
 
@@ -485,6 +487,7 @@ public class UraianTugasController {
 //            }
 //
 //        }
+        LOGGER.info("finish get pegawai from database kepegawaian");
 
         for (QutPegawai qutPegawai : qutPegawaiList) {
             qutPegawaiWrappers
@@ -495,7 +498,7 @@ public class UraianTugasController {
                             qutPegawai.getUnitKerja()));
         }
 
-        LOGGER.info("finsih");
+        LOGGER.info("finish");
 
         return new ResponseEntity<Object>(qutPegawaiWrappers, HttpStatus.OK);
     }

@@ -6,6 +6,7 @@ package com.pemda.ekinerjademo.wrapper.input;
 public class RincianEKinerjaInputWrapper {
     private String nipPegawai;
     private String kdUrtug;
+    private Integer statusEkinerja;
     private Integer capaianMenit;
 
     public String getNipPegawai() {
@@ -30,5 +31,13 @@ public class RincianEKinerjaInputWrapper {
 
     public void setCapaianMenit(Integer capaianMenit) {
         this.capaianMenit = capaianMenit;
+    }
+
+    public Integer getStatusEkinerja() {
+        return statusEkinerja;
+    }
+
+    public void setStatusEkinerja(Integer statusEkinerja) {
+        this.statusEkinerja = statusEkinerja;
     }
 }
