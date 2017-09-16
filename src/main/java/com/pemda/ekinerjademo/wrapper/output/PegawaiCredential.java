@@ -12,6 +12,7 @@ public class PegawaiCredential {
     private String token;
     private String jabatan;
     private String unit;
+    private String kdUnitKerja;
     private String kdJabatan;
 
     public PegawaiCredential() {}
@@ -29,6 +30,16 @@ public class PegawaiCredential {
         this.token = token;
         this.jabatan = jabatan;
         this.unit = unit;
+        this.kdJabatan = kdJabatan;
+    }
+    public PegawaiCredential(String nipPegawai, String namaPegawai, Role role, String token, String jabatan, String unit, String kdUnitKerja, String kdJabatan) {
+        this.nipPegawai = nipPegawai;
+        this.namaPegawai = namaPegawai;
+        this.role = role;
+        this.token = token;
+        this.jabatan = jabatan;
+        this.unit = unit;
+        this.kdUnitKerja = kdUnitKerja;
         this.kdJabatan = kdJabatan;
     }
 
@@ -86,5 +97,13 @@ public class PegawaiCredential {
 
     public void setKdJabatan(String kdJabatan) {
         this.kdJabatan = kdJabatan;
+    }
+
+    public String getKdUnitKerja() {
+        return kdUnitKerja;
+    }
+
+    public void setKdUnitKerja(String kdUnitKerja) {
+        this.kdUnitKerja = kdUnitKerja;
     }
 }

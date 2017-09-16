@@ -71,6 +71,7 @@ public class AuthenticationController {
                         "IniTokenDUmmy",
                         qutPegawai.getJabatan(),
                         qutPegawai.getUnitKerja(),
+                        qutPegawai.getKdUnitKerja(),
                         qutPegawai.getKdJabatan());
 
         return new ResponseEntity<Object>(pegawaiCredential, HttpStatus.OK);
