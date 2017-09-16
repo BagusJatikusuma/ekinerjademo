@@ -13,5 +13,6 @@ import java.util.List;
 @Repository
 public interface TkdJabatanDao extends JpaRepository<TkdJabatan, Long> {
     List<TkdJabatan> findAll();
+    List<TkdJabatan> findByKdUnitKerja(String kdUnitKerja);
     TkdJabatan findByKdJabatan(String KdJabatan);
 }

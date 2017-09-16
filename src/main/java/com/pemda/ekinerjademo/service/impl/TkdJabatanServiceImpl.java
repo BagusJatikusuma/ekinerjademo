@@ -27,4 +27,9 @@ public class TkdJabatanServiceImpl implements TkdJabatanService {
     public List<TkdJabatan> getAll() {
         return tkdJabatanDao.findAll();
     }
+
+    @Override
+    public List<TkdJabatan> getJabatanByUnitKerja(String kdUnitKerja) {
+        return tkdJabatanDao.findByKdUnitKerja(kdUnitKerja);
+    }
 }

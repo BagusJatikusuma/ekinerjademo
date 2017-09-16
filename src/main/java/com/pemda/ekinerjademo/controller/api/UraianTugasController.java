@@ -55,7 +55,9 @@ public class UraianTugasController {
         LOGGER.info("get "+nipPegawai+" uraian tugas ");
 
         //set this logic in difference layer (databindirg/dataconvert layer)
+        LOGGER.info("fetch data pegawai by nipPegawai");
         QutPegawai qutPegawai = qutPegawaiService.getQutPegawai(nipPegawai);
+        LOGGER.info("finish fetch data pegawai by nipPegawai");
         String namaPegawai = qutPegawai.getNama();
         JabatanWrapper jabatan =
                 new JabatanWrapper(qutPegawai.getKdJabatan(),qutPegawai.getJabatan());
@@ -63,8 +65,10 @@ public class UraianTugasController {
                 new UnitOrganisasiWrapper("dummyId", "dummyOrganisasi");
         UnitKerjaWrapper unitKerja =
                 new UnitKerjaWrapper(qutPegawai.getKdUnitKerja(), qutPegawai.getUnitKerja());
+        LOGGER.info("fetch data urtug by jabatan");
         List<UraianTugasJabatan> uraianTugasJabatanList =
                 uraianTugasJabatanService.getUraianTugasJabatanByJabatan(qutPegawai.getKdJabatan());
+        LOGGER.info("finish fetch data urtug by jabatan");
         List<UraianTugasWrapper> uraianTugasWrapperList = new ArrayList<>();
 
         for (UraianTugasJabatan uraianTugasJabatan : uraianTugasJabatanList) {
@@ -88,7 +92,7 @@ public class UraianTugasController {
                         unitOrganisasi,
                         unitKerja,
                         uraianTugasWrapperList);
-
+        LOGGER.info("finish");
         return new ResponseEntity<Object>(uraianTugasEKinerjaWrapper, HttpStatus.OK);
     }
 
@@ -191,7 +195,9 @@ public class UraianTugasController {
         LOGGER.info("get all jabatan");
 
         List<JabatanWrapper> jabatanWrapperList = new ArrayList<>();
+        LOGGER.info("fetch data jabatan by jabatan");
         List<TkdJabatan> tkdJabatanList = tkdJabatanService.getAll();
+        LOGGER.info("finish fetch data jabatan by jabatan");
 
         for (TkdJabatan tkdJabatan : tkdJabatanList) {
             jabatanWrapperList
@@ -206,7 +212,9 @@ public class UraianTugasController {
     ResponseEntity<?> getUraianTugasByJabatan(@PathVariable("kdJabatan") String kdJabatan) {
         LOGGER.info("get uraian tugas list by jabatan");
 
+        LOGGER.info("fetch data jabatan by kd jabatan");
         TkdJabatan tkdJabatan = tkdJabatanService.getTkdJabatan(kdJabatan);
+        LOGGER.info("finish fetch data jabatan by kd jabatan");
 
         List<UraianTugasJabatanWrapper> uraianTugasJabatanWrapperList =
                 new ArrayList<>();
@@ -293,7 +301,7 @@ public class UraianTugasController {
         uraianTugasJabatanWrapper.setJabatan(tkdJabatan.getJabatan());
         uraianTugasJabatanWrapper.setJabatanUraianTugasList(jabatanUraianTugasWrapperList);
         uraianTugasJabatanWrapper.setNotJabatanUraianTugasList(notJabatanUraianTugasWrapperList);
-
+        LOGGER.info("finish");
         return new ResponseEntity<Object>(uraianTugasJabatanWrapper, HttpStatus.OK);
     }
 
@@ -565,6 +573,24 @@ public class UraianTugasController {
         LOGGER.info("finish");
 
         return new ResponseEntity<Object>(qutPegawaiWrappers, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/get-jabatan-by-unit-kerja/{kdUnitKerja}", method = RequestMethod.GET)
+    ResponseEntity<?> getJabatanByUnitKerja(@PathVariable("kdUnitKerja") String kdUnitKerja) {
+        LOGGER.info("get jabatan in "+kdUnitKerja);
+
+        List<JabatanWrapper> jabatanWrapperList = new ArrayList<>();
+        LOGGER.info("fetch data jabatan by unit kerja");
+        List<TkdJabatan> tkdJabatanList = tkdJabatanService.getJabatanByUnitKerja(kdUnitKerja);
+        LOGGER.info("finish fetch data jabatan by unit kerja");
+
+        for (TkdJabatan tkdJabatan : tkdJabatanList) {
+            jabatanWrapperList
+                    .add(new JabatanWrapper(tkdJabatan.getKdJabatan(),tkdJabatan.getJabatan()));
+        }
+
+        LOGGER.info("finish");
+        return new ResponseEntity<Object>(jabatanWrapperList, HttpStatus.OK);
     }
 
 //    @RequestMapping(value = "/create-uraian-tugas-jabatan", method = RequestMethod.POST)
