@@ -10,4 +10,5 @@ import java.util.List;
 public interface TkdJabatanService {
     TkdJabatan getTkdJabatan(String kdJabatan);
     List<TkdJabatan> getAll();
+    List<TkdJabatan> getJabatanByUnitKerja(String kdUnitKerja);
 }
