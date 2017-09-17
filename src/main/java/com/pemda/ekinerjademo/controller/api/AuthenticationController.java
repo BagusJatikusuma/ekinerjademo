@@ -63,6 +63,12 @@ public class AuthenticationController {
         QutPegawai qutPegawai =
                 qutPegawaiService.getQutPegawai(akunPegawaiAuthenticated.getNipPegawai());
 
+        if (qutPegawai == null) {
+            return new ResponseEntity<Object>(
+                    new CustomMessage("pegawai not found in database kepegawaian"),
+                    HttpStatus.UNAUTHORIZED);
+        }
+
         PegawaiCredential pegawaiCredential =
                 new PegawaiCredential(
                         akunPegawaiAuthenticated.getNipPegawai(),
