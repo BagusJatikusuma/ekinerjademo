@@ -38,5 +38,5 @@ public class UraianTugasServiceImpl implements UraianTugasService {
     }
 
     @Override
-    public List<UraianTugas> getAllUraianTugas(){ return uraianTugasDao.findAllByOrderByKdUrtugDesc(); }
+    public List<UraianTugas> getAllUraianTugas(){ return uraianTugasDao.findAll(); }
 }

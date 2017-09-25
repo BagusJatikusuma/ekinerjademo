@@ -59,6 +59,16 @@ public class EkinerjaRepositoryConfig {
         properties.put(
                 "hibernate.connection.zeroDateTimeBehavior",
                 env.getProperty("hibernate.connection.zeroDateTimeBehavior"));
+        //for sql query debugging
+        properties.put("hibernate.show_sql",
+                env.getRequiredProperty("spring.jpa.properties.hibernate.show_sql")
+        );
+        properties.put("hibernate.format_sql",
+                env.getRequiredProperty("spring.jpa.properties.hibernate.format_sql")
+        );
+        properties.put("hibernate.generate_statistics",
+                env.getRequiredProperty("spring.jpa.properties.hibernate.generate_statistics")
+        );
 
         em.setJpaPropertyMap(properties);
 
