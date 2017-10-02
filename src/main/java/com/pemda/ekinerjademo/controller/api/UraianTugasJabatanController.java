@@ -1,13 +1,13 @@
 package com.pemda.ekinerjademo.controller.api;
 
 import com.pemda.ekinerjademo.model.bismamodel.TkdJabatan;
-import com.pemda.ekinerjademo.model.ekinerjamodel.JenisUrtugUrtug;
-import com.pemda.ekinerjademo.model.ekinerjamodel.UraianTugas;
-import com.pemda.ekinerjademo.model.ekinerjamodel.UraianTugasJabatan;
+import com.pemda.ekinerjademo.model.ekinerjamodel.*;
 import com.pemda.ekinerjademo.service.JenisUrtugUrtugService;
 import com.pemda.ekinerjademo.service.TkdJabatanService;
 import com.pemda.ekinerjademo.service.UraianTugasJabatanService;
 import com.pemda.ekinerjademo.service.UraianTugasService;
+import com.pemda.ekinerjademo.wrapper.input.UraianTugasJabatanInputWrapper;
+import com.pemda.ekinerjademo.wrapper.output.CustomMessage;
 import com.pemda.ekinerjademo.wrapper.output.UraianTugasJabatanWrapper;
 import com.pemda.ekinerjademo.wrapper.output.UraianTugasWrapper;
 import org.slf4j.Logger;
@@ -16,10 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -150,5 +147,89 @@ public class UraianTugasJabatanController {
 
         return null;
     }
+
+    @RequestMapping(value = "/add-uraian-tugas-jabatan", method = RequestMethod.POST)
+    @Transactional
+    ResponseEntity<?> addUraianTugasJabatan(@RequestBody UraianTugasJabatanInputWrapper urtugJabatanWrapper) {
+        LOGGER.info("add urtug jabatan");
+
+        UraianTugasJabatan urtugJabatan = new UraianTugasJabatan();
+
+        urtugJabatan.setUraianTugasJabatanId(
+                        new UraianTugasJabatanId(
+                                urtugJabatanWrapper.getKdUrtug(),
+                                urtugJabatanWrapper.getKdJabatan()));
+        urtugJabatan.setSatuan(urtugJabatanWrapper.getSatuan());
+        urtugJabatan.setVolumeKerja(urtugJabatanWrapper.getVolumeKerja());
+        urtugJabatan.setNormaWaktu(urtugJabatanWrapper.getNormaWaktu());
+        urtugJabatan.setBebanKerja(urtugJabatanWrapper.getBebanKerja());
+        urtugJabatan.setPeralatan(urtugJabatanWrapper.getPeralatan());
+        urtugJabatan.setKeterangan(urtugJabatanWrapper.getKeterangan());
+        urtugJabatan.setCreatedBy(new AkunPegawai(urtugJabatanWrapper.getCreatedBy()));
+
+        uraianTugasJabatanService.save(urtugJabatan);
+
+        return new ResponseEntity<Object>(new CustomMessage("urtug jabatan created"), HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/update-uraian-tugas-jabatan", method = RequestMethod.POST)
+    @Transactional
+    ResponseEntity<?> updateUraianTugasJabatan(@RequestBody UraianTugasJabatanInputWrapper urtugJabatanWrapper) {
+        LOGGER.info("add urtug jabatan");
+
+        uraianTugasJabatanService.update(urtugJabatanWrapper);
+
+        return new ResponseEntity<Object>(new CustomMessage("urtug jabatan created"), HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/delete-uraian-tugas-jabatan/{kdJabatan}/{kdUrtug}", method = RequestMethod.DELETE)
+    @Transactional
+    ResponseEntity<?> deleteUraianTugasJabatan(
+            @PathVariable("kdJabatan") String kdJabatan,
+            @PathVariable("kdUrtug") String kdUrtug) {
+        LOGGER.info("delete urtug jabatan");
+
+        uraianTugasJabatanService.delete(kdUrtug, kdJabatan);
+
+        return new ResponseEntity<Object>(new CustomMessage("uraian tugas jabatan deleted"), HttpStatus.OK);
+    }
+
+    //    @RequestMapping(value = "/add-uraian-tugas-jabatan", method = RequestMethod.POST)
+//    @Transactional
+//    ResponseEntity<?> addUraianTugasJabatan(
+//            @RequestBody UraianTugasJabatanInputWrapper uraianTugasJabatanInputWrapper) {
+//        LOGGER.info("set uraian tugas into jabatan "+uraianTugasJabatanInputWrapper.getKdJabatan());
+//
+//        String kdJabatan = uraianTugasJabatanInputWrapper.getKdJabatan();
+//        List<UraianTugasJabatanController> uraianTugasJabatanList =
+//                uraianTugasJabatanService.getUraianTugasJabatanByJabatan(kdJabatan);
+//        //first destroy jabatan uraian tugas if jabatan already has uraian tugas if not
+//        if (!uraianTugasJabatanList.isEmpty()) {
+//            LOGGER.info("destroy now");
+//            uraianTugasJabatanService
+//                    .deleteAllUraianTugasJabatanByJabatan(kdJabatan);
+//        }
+//        //loop as long as uraian tugas in uraianTugasJabatanInput wrapper and save Uraian tugas Jabatan
+//        for (KdUraianTugasWrapper kdUraianTugasWrapper :
+//                uraianTugasJabatanInputWrapper.getKdUraianTugasList()) {
+////            LOGGER.info("masuk");
+//            UraianTugasJabatanController uraianTugasJabatan = new UraianTugasJabatanController();
+//            uraianTugasJabatan
+//                    .setUraianTugasJabatanId(
+//                            new UraianTugasJabatanId(
+//                                    kdUraianTugasWrapper.getKdUrtug(),
+//                                    uraianTugasJabatanInputWrapper.getKdJabatan()
+//                            ));
+//            uraianTugasJabatan
+//                    .setCreatedBy(uraianTugasJabatanInputWrapper.getCreatedBy());
+//
+//            uraianTugasJabatanService.save(uraianTugasJabatan);
+//        }
+//
+//        return new ResponseEntity<Object>(
+//                new CustomMessage("uraian tugas added"),
+//                HttpStatus.OK);
+//
+//    }
 
 }

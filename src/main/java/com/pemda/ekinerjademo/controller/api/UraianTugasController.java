@@ -359,7 +359,7 @@ public class UraianTugasController {
 //                HttpStatus.OK);
 //
 //    }
-//
+
 //    @RequestMapping(value = "/delete-uraian-tugas-jabatan/{kdJabatan}/{kdUrtug}", method = RequestMethod.DELETE)
 //    @Transactional
 //    ResponseEntity<?> deleteUraianTugasJabatan(

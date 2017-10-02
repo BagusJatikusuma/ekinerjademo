@@ -14,7 +14,8 @@ import java.util.List;
 @Repository
 public interface UraianTugasJabatanDao extends JpaRepository<UraianTugasJabatan, Long> {
     List<UraianTugasJabatan> findByUraianTugasJabatanIdKdJabatan(String kdJabatan);
-//    UraianTugasJabatanController findByUraianTugasJabatanId(UraianTugasJabatanId uraianTugasJabatanId);
+    UraianTugasJabatan findByUraianTugasJabatanId(UraianTugasJabatanId uraianTugasJabatanId);
+    void deleteByUraianTugasJabatanId(UraianTugasJabatanId uraianTugasJabatanId);
 //    @Query(name = "SELECT * FROM uraian_tugas_jabatan WHERE kd_jabatan = ?1", nativeQuery = true)
 //    void deleteAllByUraianTugasJabatanIdKdJabatan(String kdJabatan);
 //    @Query(value = "INSERT INTO uraian_tugas_jabatan VALUES (?1,?2)", nativeQuery = true)
