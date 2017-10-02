@@ -13,10 +13,10 @@ import java.util.List;
  */
 @Repository
 public interface UraianTugasJabatanDao extends JpaRepository<UraianTugasJabatan, Long> {
-    UraianTugasJabatan findByUraianTugasJabatanId(UraianTugasJabatanId uraianTugasJabatanId);
-    @Query(name = "SELECT * FROM uraian_tugas_jabatan WHERE kd_jabatan = ?1", nativeQuery = true)
     List<UraianTugasJabatan> findByUraianTugasJabatanIdKdJabatan(String kdJabatan);
-    void deleteAllByUraianTugasJabatanIdKdJabatan(String kdJabatan);
-    @Query(value = "INSERT INTO uraian_tugas_jabatan VALUES (?1,?2)", nativeQuery = true)
-    void saveNativeQuery(String kdUrtug, String kdJabatan);
+//    UraianTugasJabatanController findByUraianTugasJabatanId(UraianTugasJabatanId uraianTugasJabatanId);
+//    @Query(name = "SELECT * FROM uraian_tugas_jabatan WHERE kd_jabatan = ?1", nativeQuery = true)
+//    void deleteAllByUraianTugasJabatanIdKdJabatan(String kdJabatan);
+//    @Query(value = "INSERT INTO uraian_tugas_jabatan VALUES (?1,?2)", nativeQuery = true)
+//    void saveNativeQuery(String kdUrtug, String kdJabatan);
 }

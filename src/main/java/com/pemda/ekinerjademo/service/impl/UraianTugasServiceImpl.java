@@ -3,6 +3,7 @@ package com.pemda.ekinerjademo.service.impl;
 import com.pemda.ekinerjademo.model.ekinerjamodel.UraianTugas;
 import com.pemda.ekinerjademo.repository.ekinerjarepository.UraianTugasDao;
 import com.pemda.ekinerjademo.service.UraianTugasService;
+import com.pemda.ekinerjademo.wrapper.input.UpdateUraianTugasInputWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,20 +17,16 @@ import java.util.List;
 @Transactional("ekinerjaTransactionManager")
 public class UraianTugasServiceImpl implements UraianTugasService {
     @Autowired private UraianTugasDao uraianTugasDao;
-
-    @Override
+//
+//    @Override
     public UraianTugas getUraianTugas(String kdUrtug) {
         return uraianTugasDao.findByKdUrtug(kdUrtug);
     }
 
     @Override
-    public void save(UraianTugas uraianTugas) {
-        uraianTugasDao.save(uraianTugas);
-    }
-
-    @Override
-    public void update(UraianTugas uraianTugas) {
-        uraianTugasDao.save(uraianTugas);
+    public void update(UpdateUraianTugasInputWrapper urtugWrapper) {
+        UraianTugas uraianTugas = getUraianTugas(urtugWrapper.getKdUrtug());
+        uraianTugas.setDeskripsi(urtugWrapper.getDeskripsi());
     }
 
     @Override
@@ -38,5 +35,13 @@ public class UraianTugasServiceImpl implements UraianTugasService {
     }
 
     @Override
-    public List<UraianTugas> getAllUraianTugas(){ return uraianTugasDao.findAll(); }
+    public List<UraianTugas> getAllUraianTugas(){
+        return uraianTugasDao.findAll();
+    }
+
+    @Override
+    public void save(UraianTugas uraianTugas) {
+        uraianTugasDao.save(uraianTugas);
+    }
+
 }

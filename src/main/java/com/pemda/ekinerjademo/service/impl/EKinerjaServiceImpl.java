@@ -17,36 +17,36 @@ import java.util.List;
 @Service("EkinerjaService")
 @Transactional("ekinerjaTransactionManager")
 public class EKinerjaServiceImpl implements EKinerjaService {
-    @Autowired private RincianEKinerjaDao rincianEKinerjaDao;
-
-    @Override
-    public void save(RincianEKinerja rincianEKinerja) {
-        rincianEKinerjaDao.save(rincianEKinerja);
-    }
-
-    @Override
-    public RincianEKinerja getRincianEKinerjaById(RincianEKinerjaId rincianEKinerjaId) {
-        return rincianEKinerjaDao.findByRincianEKinerjaId(rincianEKinerjaId);
-    }
-
-    @Override
-    public RincianEKinerja getRincianEKinerja(String kdUrtug, String nipPegawai) {
-        return null;
-    }
-
-    @Override
-    public List<RincianEKinerja> getRincianEKinerjaByUrtug(String kdUrtug) {
-        return null;
-    }
-
-    @Override
-    public List<RincianEKinerja> getRincianEKinerjaByNip(String nipPegawai) {
-        return rincianEKinerjaDao.findByAkunPegawai_NipPegawai(nipPegawai);
-    }
-
-    @Override
-    public List<RincianEKinerja> getRincianEKinerjaByNipAndDate(String nipPegawai, Date date) {
-        return rincianEKinerjaDao
-                .findByRincianEKinerjaId_NipPegawaiAndRincianEKinerjaId_TglSubmit(nipPegawai, date);
-    }
+//    @Autowired private RincianEKinerjaDao rincianEKinerjaDao;
+//
+//    @Override
+//    public void save(RincianEKinerja rincianEKinerja) {
+//        rincianEKinerjaDao.save(rincianEKinerja);
+//    }
+//
+//    @Override
+//    public RincianEKinerja getRincianEKinerjaById(RincianEKinerjaId rincianEKinerjaId) {
+//        return rincianEKinerjaDao.findByRincianEKinerjaId(rincianEKinerjaId);
+//    }
+//
+//    @Override
+//    public RincianEKinerja getRincianEKinerja(String kdUrtug, String nipPegawai) {
+//        return null;
+//    }
+//
+//    @Override
+//    public List<RincianEKinerja> getRincianEKinerjaByUrtug(String kdUrtug) {
+//        return null;
+//    }
+//
+//    @Override
+//    public List<RincianEKinerja> getRincianEKinerjaByNip(String nipPegawai) {
+//        return rincianEKinerjaDao.findByAkunPegawai_NipPegawai(nipPegawai);
+//    }
+//
+//    @Override
+//    public List<RincianEKinerja> getRincianEKinerjaByNipAndDate(String nipPegawai, Date date) {
+//        return rincianEKinerjaDao
+//                .findByRincianEKinerjaId_NipPegawaiAndRincianEKinerjaId_TglSubmit(nipPegawai, date);
+//    }
 }

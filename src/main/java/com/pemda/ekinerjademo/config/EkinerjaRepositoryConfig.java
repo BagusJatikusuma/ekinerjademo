@@ -27,6 +27,7 @@ public class EkinerjaRepositoryConfig {
     @Autowired
     private Environment env;
 
+    @Primary
     @Bean
     public LocalContainerEntityManagerFactoryBean ekinerjaEntityManager() {
         LocalContainerEntityManagerFactoryBean em
@@ -59,6 +60,9 @@ public class EkinerjaRepositoryConfig {
         properties.put(
                 "hibernate.connection.zeroDateTimeBehavior",
                 env.getProperty("hibernate.connection.zeroDateTimeBehavior"));
+        properties.put(
+                "spring.jpa.hibernate.ddl-auto",
+                env.getProperty("spring.jpa.hibernate.ddl-auto"));
         //for sql query debugging
         properties.put("hibernate.show_sql",
                 env.getRequiredProperty("spring.jpa.properties.hibernate.show_sql")
@@ -75,6 +79,7 @@ public class EkinerjaRepositoryConfig {
         return em;
     }
 
+    @Primary
     @Bean
     public DataSource ekinerjaDataSource() {
         DriverManagerDataSource dataSource
@@ -88,6 +93,7 @@ public class EkinerjaRepositoryConfig {
         return dataSource;
     }
 
+    @Primary
     @Bean
     public PlatformTransactionManager ekinerjaTransactionManager() {
         JpaTransactionManager transactionManager

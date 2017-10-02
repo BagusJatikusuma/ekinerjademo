@@ -20,33 +20,39 @@ public class UraianTugasJabatanServiceImpl implements UraianTugasJabatanService 
     private UraianTugasJabatanDao uraianTugasJabatanDao;
 
     @Override
-    public void save(UraianTugasJabatan uraianTugasJabatan) {
-        uraianTugasJabatanDao.save(uraianTugasJabatan);
-    }
-
-    @Override
-    public void save(String kdUrtug, String kdJabatan) {
-        uraianTugasJabatanDao.saveNativeQuery(kdUrtug, kdJabatan);
-    }
-
-    @Override
-    public void deleteAllUraianTugasJabatanByJabatan(String kdJabatan) {
-        uraianTugasJabatanDao
-                .deleteAllByUraianTugasJabatanIdKdJabatan(kdJabatan);
-    }
-
-    @Override
-    public UraianTugasJabatan getUraianTugasJabatan(String kdUrtug, String kdJabatan) {
-        return null;
+    public List<UraianTugasJabatan> getUraianTugasJabatan() {
+        return uraianTugasJabatanDao.findAll();
     }
 
     @Override
     public List<UraianTugasJabatan> getUraianTugasJabatanByJabatan(String kdJabatan) {
         return uraianTugasJabatanDao.findByUraianTugasJabatanIdKdJabatan(kdJabatan);
     }
-
-    @Override
-    public List<UraianTugasJabatan> getUraianTugasJabatanByUrtug(String kdUrtug) {
-        return null;
-    }
+//
+//    @Override
+//    public void save(UraianTugasJabatanController uraianTugasJabatan) {
+//        uraianTugasJabatanDao.save(uraianTugasJabatan);
+//    }
+//
+//    @Override
+//    public void save(String kdUrtug, String kdJabatan) {
+//        uraianTugasJabatanDao.saveNativeQuery(kdUrtug, kdJabatan);
+//    }
+//
+//    @Override
+//    public void deleteAllUraianTugasJabatanByJabatan(String kdJabatan) {
+//        uraianTugasJabatanDao
+//                .deleteAllByUraianTugasJabatanIdKdJabatan(kdJabatan);
+//    }
+//
+//    @Override
+//    public UraianTugasJabatanController getUraianTugasJabatan(String kdUrtug, String kdJabatan) {
+//        return null;
+//    }
+//
+//
+//    @Override
+//    public List<UraianTugasJabatanController> getUraianTugasJabatanByUrtug(String kdUrtug) {
+//        return null;
+//    }
 }

@@ -32,11 +32,13 @@ public class AuthenticationController {
     private AuthenticationProvider authenticationProvider;
     @Autowired
     private QutPegawaiService qutPegawaiService;
+    @Autowired
+    private AkunPegawaiService akunPegawaiService;
 
     /**
      * this method used for receive pegawai authentication request
      * @param akunPegawai in JSON Format
-     * @return RincianEKinerja JSON Format
+     * @return Role JSON Format
      */
     @CrossOrigin(allowCredentials = "false") //just for testing. remove when frontend app is ready
     @RequestMapping(value = "/authentication", method = RequestMethod.POST)

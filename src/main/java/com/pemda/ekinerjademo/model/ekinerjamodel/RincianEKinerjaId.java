@@ -23,17 +23,25 @@ public class RincianEKinerjaId implements Serializable {
     @Temporal(TemporalType.DATE)
     private Date tglSubmit;
 
+    @Column(name = "kd_jenis_urtug")
+    private String kdJenisUrtug;
+
     public RincianEKinerjaId() {}
     public RincianEKinerjaId(String nipPegawai, String kdUrtug) {
         this.nipPegawai = nipPegawai;
         this.kdUrtug = kdUrtug;
         this.tglSubmit = new Date();
     }
-
     public RincianEKinerjaId(String nipPegawai, String kdUrtug, Date tglSubmit) {
         this.nipPegawai = nipPegawai;
         this.kdUrtug = kdUrtug;
         this.tglSubmit = tglSubmit;
+    }
+    public RincianEKinerjaId(String nipPegawai, String kdUrtug, Date tglSubmit, String kdJenisUrtug) {
+        this.nipPegawai = nipPegawai;
+        this.kdUrtug = kdUrtug;
+        this.tglSubmit = tglSubmit;
+        this.kdJenisUrtug = kdJenisUrtug;
     }
 
     public String getNipPegawai() {
@@ -60,19 +68,48 @@ public class RincianEKinerjaId implements Serializable {
         this.tglSubmit = tglSubmit;
     }
 
+//    @Override
+//    public boolean equals(Object o) {
+//        if (this == o) return true;
+//        if (!(o instanceof RincianEKinerjaId)) return false;
+//        RincianEKinerjaId that = (RincianEKinerjaId) o;
+//        return Objects.equals(getNipPegawai(), that.getNipPegawai()) &&
+//                Objects.equals(getKdUrtug(), that.getKdUrtug()) &&
+//                Objects.equals(getTglSubmit(), that.getTglSubmit());
+//    }
+//
+//    @Override
+//    public int hashCode() {
+//        return Objects.hash(getNipPegawai(), getKdUrtug(), getTglSubmit());
+//    }
+
+    public String getKdJenisUrtug() {
+        return kdJenisUrtug;
+    }
+
+    public void setKdJenisUrtug(String kdJenisUrtug) {
+        this.kdJenisUrtug = kdJenisUrtug;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof RincianEKinerjaId)) return false;
+        if (o == null || getClass() != o.getClass()) return false;
+
         RincianEKinerjaId that = (RincianEKinerjaId) o;
-        return Objects.equals(getNipPegawai(), that.getNipPegawai()) &&
-                Objects.equals(getKdUrtug(), that.getKdUrtug()) &&
-                Objects.equals(getTglSubmit(), that.getTglSubmit());
+
+        if (!nipPegawai.equals(that.nipPegawai)) return false;
+        if (!kdUrtug.equals(that.kdUrtug)) return false;
+        if (!tglSubmit.equals(that.tglSubmit)) return false;
+        return kdJenisUrtug.equals(that.kdJenisUrtug);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getNipPegawai(), getKdUrtug(), getTglSubmit());
+        int result = nipPegawai.hashCode();
+        result = 31 * result + kdUrtug.hashCode();
+        result = 31 * result + tglSubmit.hashCode();
+        result = 31 * result + kdJenisUrtug.hashCode();
+        return result;
     }
-
 }

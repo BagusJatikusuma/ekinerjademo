@@ -10,17 +10,13 @@ import javax.persistence.*;
 @Entity
 @Table(name = "rincian_e_kinerja")
 public class RincianEKinerja {
-
     @EmbeddedId
     private RincianEKinerjaId rincianEKinerjaId;
-
-    @Column(name = "status_ekinerja")
-    private Integer statusEkinerja;
 
     @Column(name = "capaian_menit")
     private Integer capaianMenit;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne
     @JoinColumn(name = "kd_urtug", insertable = false, updatable = false)
     private UraianTugas uraianTugas;
 
@@ -64,11 +60,4 @@ public class RincianEKinerja {
         this.capaianMenit = capaianMenit;
     }
 
-    public Integer getStatusEkinerja() {
-        return statusEkinerja;
-    }
-
-    public void setStatusEkinerja(Integer statusEkinerja) {
-        this.statusEkinerja = statusEkinerja;
-    }
 }

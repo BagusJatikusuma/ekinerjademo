@@ -1,5 +1,8 @@
 package com.pemda.ekinerjademo.model.ekinerjamodel;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -16,7 +19,7 @@ public class AkunPegawai {
     @Column(name = "password")
     private String password;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "role_id")
     private Role role;
 
@@ -24,6 +27,9 @@ public class AkunPegawai {
     private List<RincianEKinerja> rincianEKinerjaList;
 
     public AkunPegawai() {}
+    public AkunPegawai(String nipPegawai) {
+        this.nipPegawai = nipPegawai;
+    }
 
     public String getNipPegawai() {
         return nipPegawai;

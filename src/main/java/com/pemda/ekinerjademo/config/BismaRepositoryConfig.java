@@ -27,7 +27,6 @@ public class BismaRepositoryConfig {
     @Autowired
     private Environment env;
 
-    @Primary
     @Bean
     public LocalContainerEntityManagerFactoryBean bismaEntityManager() {
         LocalContainerEntityManagerFactoryBean em
@@ -76,7 +75,6 @@ public class BismaRepositoryConfig {
         return em;
     }
 
-    @Primary
     @Bean
     public DataSource bismaDataSource() {
         DriverManagerDataSource dataSource
@@ -90,7 +88,6 @@ public class BismaRepositoryConfig {
         return dataSource;
     }
 
-    @Primary
     @Bean
     public PlatformTransactionManager bismaTransactionManager() {
         JpaTransactionManager transactionManager

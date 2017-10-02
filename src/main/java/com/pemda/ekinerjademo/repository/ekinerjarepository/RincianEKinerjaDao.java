@@ -13,8 +13,8 @@ import java.util.List;
  */
 @Repository
 public interface RincianEKinerjaDao extends JpaRepository<RincianEKinerja, Long> {
-    RincianEKinerja findByRincianEKinerjaId(RincianEKinerjaId rincianEKinerjaId);
-    List<RincianEKinerja> findByAkunPegawai_NipPegawai(String nipPegawai);
-    List<RincianEKinerja>
-        findByRincianEKinerjaId_NipPegawaiAndRincianEKinerjaId_TglSubmit(String nipPegawai, Date tglSubmit);
+//    RincianEKinerja findByRincianEKinerjaId(RincianEKinerjaId rincianEKinerjaId);
+//    List<RincianEKinerja> findByAkunPegawai_NipPegawai(String nipPegawai);
+//    List<RincianEKinerja>
+//        findByRincianEKinerjaId_NipPegawaiAndRincianEKinerjaId_TglSubmit(String nipPegawai, Date tglSubmit);
 }

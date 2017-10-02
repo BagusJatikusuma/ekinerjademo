@@ -10,10 +10,10 @@ import java.util.List;
  * Created by bagus on 09/09/17.
  */
 public interface EKinerjaService {
-    void save(RincianEKinerja rincianEKinerja);
-    RincianEKinerja getRincianEKinerjaById(RincianEKinerjaId rincianEKinerjaId);
-    RincianEKinerja getRincianEKinerja(String kdUrtug, String nipPegawai);
-    List<RincianEKinerja> getRincianEKinerjaByUrtug(String kdUrtug);
-    List<RincianEKinerja> getRincianEKinerjaByNip(String nipPegawai);
-    List<RincianEKinerja> getRincianEKinerjaByNipAndDate(String nipPegawai, Date date);
+//    void save(RincianEKinerja rincianEKinerja);
+//    RincianEKinerja getRincianEKinerjaById(RincianEKinerjaId rincianEKinerjaId);
+//    RincianEKinerja getRincianEKinerja(String kdUrtug, String nipPegawai);
+//    List<RincianEKinerja> getRincianEKinerjaByUrtug(String kdUrtug);
+//    List<RincianEKinerja> getRincianEKinerjaByNip(String nipPegawai);
+//    List<RincianEKinerja> getRincianEKinerjaByNipAndDate(String nipPegawai, Date date);
 }

@@ -1,6 +1,7 @@
 package com.pemda.ekinerjademo.service.impl;
 
 import com.pemda.ekinerjademo.model.ekinerjamodel.AkunPegawai;
+import com.pemda.ekinerjademo.projection.ekinerjaprojection.PasswordAkunPegawaiProjection;
 import com.pemda.ekinerjademo.repository.ekinerjarepository.AkunPegawaiDao;
 import com.pemda.ekinerjademo.service.AkunPegawaiService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +30,6 @@ public class AkunPegawaiServiceImpl implements AkunPegawaiService {
     }
 
     @Override
-    @Transactional("ekinerjaTransactionManager")
     public void setPegawaiRole(String role, String nipPegawai) {
         akunPegawaiDao.updatePegawaiRole(role, nipPegawai);
     }
@@ -38,4 +38,9 @@ public class AkunPegawaiServiceImpl implements AkunPegawaiService {
     public void save(AkunPegawai akunPegawai) {
         akunPegawaiDao.save(akunPegawai);
     }
+
+//    @Override
+//    public PasswordAkunPegawaiProjection getPasswordAkunPegawai(String nipPegawai) {
+//        return akunPegawaiDao.findPasswordByNipPegawai(nipPegawai);
+//    }
 }
