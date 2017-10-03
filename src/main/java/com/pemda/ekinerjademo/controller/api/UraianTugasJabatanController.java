@@ -154,21 +154,7 @@ public class UraianTugasJabatanController {
     ResponseEntity<?> addUraianTugasJabatan(@RequestBody UraianTugasJabatanInputWrapper urtugJabatanWrapper) {
         LOGGER.info("add urtug jabatan");
 
-        UraianTugasJabatan urtugJabatan = new UraianTugasJabatan();
-
-        urtugJabatan.setUraianTugasJabatanId(
-                        new UraianTugasJabatanId(
-                                urtugJabatanWrapper.getKdUrtug(),
-                                urtugJabatanWrapper.getKdJabatan()));
-        urtugJabatan.setSatuan(urtugJabatanWrapper.getSatuan());
-        urtugJabatan.setVolumeKerja(urtugJabatanWrapper.getVolumeKerja());
-        urtugJabatan.setNormaWaktu(urtugJabatanWrapper.getNormaWaktu());
-        urtugJabatan.setBebanKerja(urtugJabatanWrapper.getBebanKerja());
-        urtugJabatan.setPeralatan(urtugJabatanWrapper.getPeralatan());
-        urtugJabatan.setKeterangan(urtugJabatanWrapper.getKeterangan());
-        urtugJabatan.setCreatedBy(new AkunPegawai(urtugJabatanWrapper.getCreatedBy()));
-
-        uraianTugasJabatanService.save(urtugJabatan);
+        uraianTugasJabatanService.createUrtugJabatan(urtugJabatanWrapper);
 
         return new ResponseEntity<Object>(new CustomMessage("urtug jabatan created"), HttpStatus.OK);
     }

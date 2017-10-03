@@ -1,9 +1,8 @@
 package com.pemda.ekinerjademo.service.impl;
 
-import com.pemda.ekinerjademo.model.ekinerjamodel.AkunPegawai;
-import com.pemda.ekinerjademo.model.ekinerjamodel.UraianTugasJabatan;
-import com.pemda.ekinerjademo.model.ekinerjamodel.UraianTugasJabatanId;
+import com.pemda.ekinerjademo.model.ekinerjamodel.*;
 import com.pemda.ekinerjademo.repository.ekinerjarepository.UraianTugasJabatanDao;
+import com.pemda.ekinerjademo.service.JenisUrtugUrtugService;
 import com.pemda.ekinerjademo.service.UraianTugasJabatanService;
 import com.pemda.ekinerjademo.wrapper.input.UraianTugasJabatanInputWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +20,8 @@ import java.util.List;
 public class UraianTugasJabatanServiceImpl implements UraianTugasJabatanService {
     @Autowired
     private UraianTugasJabatanDao uraianTugasJabatanDao;
+    @Autowired
+    private JenisUrtugUrtugService jenisUrtugUrtugService;
 
     @Override
     public List<UraianTugasJabatan> getUraianTugasJabatan() {
@@ -52,6 +53,35 @@ public class UraianTugasJabatanServiceImpl implements UraianTugasJabatanService 
     }
 
     @Override
+    public void createUrtugJabatan(UraianTugasJabatanInputWrapper urtugJabatanWrapper) {
+        UraianTugasJabatan urtugJabatan = new UraianTugasJabatan();
+
+        urtugJabatan.setUraianTugasJabatanId(
+                new UraianTugasJabatanId(
+                        urtugJabatanWrapper.getKdUrtug(),
+                        urtugJabatanWrapper.getKdJabatan()));
+        urtugJabatan.setSatuan(urtugJabatanWrapper.getSatuan());
+        urtugJabatan.setVolumeKerja(urtugJabatanWrapper.getVolumeKerja());
+        urtugJabatan.setNormaWaktu(urtugJabatanWrapper.getNormaWaktu());
+        urtugJabatan.setBebanKerja(urtugJabatanWrapper.getBebanKerja());
+        urtugJabatan.setPeralatan(urtugJabatanWrapper.getPeralatan());
+        urtugJabatan.setKeterangan(urtugJabatanWrapper.getKeterangan());
+        urtugJabatan.setCreatedBy(new AkunPegawai(urtugJabatanWrapper.getCreatedBy()));
+
+        save(urtugJabatan);
+
+        JenisUrtugUrtug jenisUrtugUrtug = new JenisUrtugUrtug();
+        jenisUrtugUrtug.setJenisUrtugUrtugId(
+                        new JenisUrtugUrtugId(
+                                urtugJabatanWrapper.getKdJenisUrtug(),
+                                urtugJabatanWrapper.getKdUrtug(),
+                                urtugJabatanWrapper.getKdJabatan()));
+        jenisUrtugUrtugService.save(jenisUrtugUrtug);
+
+    }
+
+    @Override
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
     public void save(UraianTugasJabatan uraianTugasJabatan) {
         uraianTugasJabatanDao.save(uraianTugasJabatan);
     }

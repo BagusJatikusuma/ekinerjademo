@@ -23,6 +23,11 @@ public class JenisUrtugUrtugServiceImpl implements JenisUrtugUrtugService {
     private JenisUrtugUrtugDao jenisUrtugUrtugDao;
 
     @Override
+    public void save(JenisUrtugUrtug jenisUrtugUrtug) {
+        jenisUrtugUrtugDao.save(jenisUrtugUrtug);
+    }
+
+    @Override
 //    @Transactional(readOnly = true)
     public List<JenisUrtugUrtug> getJenisUrtugUrtug() {
         return jenisUrtugUrtugDao.findAll();

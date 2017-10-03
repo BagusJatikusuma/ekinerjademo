@@ -9,6 +9,7 @@ import java.util.List;
  * Created by bagus on 09/09/17.
  */
 public interface UraianTugasJabatanService {
+    void createUrtugJabatan(UraianTugasJabatanInputWrapper urtugJabatanWrapper);
     void save(UraianTugasJabatan uraianTugasJabatan);
 //    void save(String kdUrtug, String kdJabatan);
 //    void deleteAllUraianTugasJabatanByJabatan(String kdJabatan);

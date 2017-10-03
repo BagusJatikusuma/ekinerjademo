@@ -15,6 +15,7 @@ public class UraianTugasJabatanInputWrapper {
     private String peralatan;
     private String keterangan;
     private String createdBy;
+    private String kdJenisUrtug;
 
     public String getKdUrtug() {
         return kdUrtug;
@@ -88,4 +89,11 @@ public class UraianTugasJabatanInputWrapper {
         this.createdBy = createdBy;
     }
 
+    public String getKdJenisUrtug() {
+        return kdJenisUrtug;
+    }
+
+    public void setKdJenisUrtug(String kdJenisUrtug) {
+        this.kdJenisUrtug = kdJenisUrtug;
+    }
 }
