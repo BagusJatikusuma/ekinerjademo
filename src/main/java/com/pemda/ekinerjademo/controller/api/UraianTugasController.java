@@ -59,7 +59,7 @@ public class UraianTugasController {
         return new ResponseEntity<Object>(new CustomMessage("urtug created"), HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/update-urtug", method = RequestMethod.POST)
+    @RequestMapping(value = "/update-urtug", method = RequestMethod.PUT)
     @Transactional
     ResponseEntity<?> updateUrtug(@RequestBody UpdateUraianTugasInputWrapper urtugWrapper) {
         LOGGER.info("update urtug "+urtugWrapper.getKdUrtug());

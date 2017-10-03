@@ -8,13 +8,11 @@ import com.pemda.ekinerjademo.repository.bismarepository.QutPegawaiDao;
 import com.pemda.ekinerjademo.repository.bismarepository.TkdJabatanDao;
 import com.pemda.ekinerjademo.repository.ekinerjarepository.AkunPegawaiDao;
 import com.pemda.ekinerjademo.service.AkunPegawaiService;
+import com.pemda.ekinerjademo.service.QutPegawaiService;
 import com.pemda.ekinerjademo.service.RoleService;
 import com.pemda.ekinerjademo.service.TkdJabatanService;
 import com.pemda.ekinerjademo.wrapper.input.AkunPegawaiRoleInputWrapper;
-import com.pemda.ekinerjademo.wrapper.output.CustomMessage;
-import com.pemda.ekinerjademo.wrapper.output.JabatanWrapper;
-import com.pemda.ekinerjademo.wrapper.output.PegawaiRoleWrapper;
-import com.pemda.ekinerjademo.wrapper.output.RoleWrapper;
+import com.pemda.ekinerjademo.wrapper.output.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +28,7 @@ import java.util.List;
  * Created by bagus on 06/09/17.
  */
 @RestController
+@CrossOrigin(allowCredentials = "false")
 @RequestMapping(value = "/api")
 public class AkunPegawaiController {
     public static final Logger LOGGER = LoggerFactory.getLogger(AkunPegawaiController.class);
@@ -40,6 +39,7 @@ public class AkunPegawaiController {
     private AkunPegawaiService akunPegawaiService;
     private RoleService roleService;
     private TkdJabatanService tkdJabatanService;
+    private QutPegawaiService qutPegawaiService;
 
     @Autowired
     public AkunPegawaiController(
@@ -48,13 +48,15 @@ public class AkunPegawaiController {
             AkunPegawaiDao akunPegawaiDao,
             AkunPegawaiService akunPegawaiService,
             RoleService roleService,
-            TkdJabatanService tkdJabatanService) {
+            TkdJabatanService tkdJabatanService,
+            QutPegawaiService qutPegawaiService) {
         this.tkdJabatanDao = tkdJabatanDao;
         this.qutPegawaiDao = qutPegawaiDao;
         this.akunPegawaiDao = akunPegawaiDao;
         this.akunPegawaiService = akunPegawaiService;
         this.roleService = roleService;
         this.tkdJabatanService = tkdJabatanService;
+        this.qutPegawaiService = qutPegawaiService;
     }
 
     @RequestMapping(value = "/test", method = RequestMethod.GET)
@@ -139,6 +141,74 @@ public class AkunPegawaiController {
         }
 
         return new ResponseEntity<Object>(jabatanWrapperList, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/get-pegawai", method = RequestMethod.GET)
+    @Transactional
+    ResponseEntity<?> getPegawai() {
+        LOGGER.info("get akun pegawai with role");
+
+        List<QutPegawaiWrapper> qutPegawaiWrappers
+                = new ArrayList<>();
+        List<QutPegawai> qutPegawaiList
+                = qutPegawaiService.getQutPegawai();
+
+//        for (AkunPegawai akunPegawai : akunPegawaiList) {
+//            for (QutPegawai qutPegawai : qutPegawaiList) {
+//                if (akunPegawai.getNipPegawai()
+//                        .equals(qutPegawai.getNip())) {
+//                    AkunPegawaiWrapper akunPegawaiWrapper = new AkunPegawaiWrapper();
+//
+//                    akunPegawaiWrapper.setNipPegawai(akunPegawai.getNipPegawai());
+//                    akunPegawaiWrapper.setNama(qutPegawai.getNama());
+//                    akunPegawaiWrapper.setRole(akunPegawai.getRole().getRole());
+//
+//                    akunPegawaiWrappers.add(akunPegawaiWrapper);
+//                }
+//
+//            }
+//
+//        }
+        LOGGER.info("finish get pegawai from database kepegawaian");
+
+        for (QutPegawai qutPegawai : qutPegawaiList) {
+            qutPegawaiWrappers
+                    .add(new QutPegawaiWrapper(
+                            qutPegawai.getNip(),
+                            qutPegawai.getNama(),
+                            qutPegawai.getJabatan(),
+                            qutPegawai.getUnitKerja()));
+        }
+
+        LOGGER.info("finish");
+
+        return new ResponseEntity<Object>(qutPegawaiWrappers, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/get-pegawai/{kdUnitKerja}", method = RequestMethod.GET)
+    @Transactional
+    ResponseEntity<?> getPegawaiByUnitKerja(@PathVariable("kdUnitKerja") String kdUnitKerja) {
+        LOGGER.info("get pegawai in "+kdUnitKerja);
+
+        List<QutPegawaiWrapper> qutPegawaiWrappers
+                = new ArrayList<>();
+        List<QutPegawai> qutPegawaiList
+                = qutPegawaiService.getQutPegawaiByUnitKerja(kdUnitKerja);
+
+        LOGGER.info("finish get pegawai from database kepegawaian");
+
+        for (QutPegawai qutPegawai : qutPegawaiList) {
+            qutPegawaiWrappers
+                    .add(new QutPegawaiWrapper(
+                            qutPegawai.getNip(),
+                            qutPegawai.getNama(),
+                            qutPegawai.getJabatan(),
+                            qutPegawai.getUnitKerja()));
+        }
+
+        LOGGER.info("finish");
+
+        return new ResponseEntity<Object>(qutPegawaiWrappers, HttpStatus.OK);
     }
 
     //sampai disini

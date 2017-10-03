@@ -25,6 +25,7 @@ import java.util.List;
  * Created by bagus on 26/09/17.
  */
 @RestController
+@CrossOrigin(allowCredentials = "false")
 @RequestMapping(value = "/api")
 public class UraianTugasJabatanController {
     public static final Logger LOGGER = LoggerFactory.getLogger(UraianTugasJabatanController.class);
@@ -172,7 +173,7 @@ public class UraianTugasJabatanController {
         return new ResponseEntity<Object>(new CustomMessage("urtug jabatan created"), HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/update-uraian-tugas-jabatan", method = RequestMethod.POST)
+    @RequestMapping(value = "/update-uraian-tugas-jabatan", method = RequestMethod.PUT)
     @Transactional
     ResponseEntity<?> updateUraianTugasJabatan(@RequestBody UraianTugasJabatanInputWrapper urtugJabatanWrapper) {
         LOGGER.info("add urtug jabatan");

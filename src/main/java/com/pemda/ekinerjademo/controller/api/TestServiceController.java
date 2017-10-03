@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -20,6 +21,7 @@ import java.util.List;
  * Created by bagus on 27/09/17.
  */
 @RestController
+@CrossOrigin(allowCredentials = "false")
 @RequestMapping(value = "/api")
 public class TestServiceController {
     public static final Logger LOGGER = LoggerFactory.getLogger(TestServiceController.class);

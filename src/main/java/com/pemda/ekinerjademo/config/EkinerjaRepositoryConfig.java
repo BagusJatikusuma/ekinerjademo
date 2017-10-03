@@ -49,7 +49,7 @@ public class EkinerjaRepositoryConfig {
                 "spring.jpa.hibernate.naming.physical-strategy",
                 env.getProperty("spring.jpa.hibernate.naming.physical-strategy"));
         properties.put(
-                "spring.jpa.properties.hibernate.dialect",
+                "hibernate.dialect",
                 env.getProperty("spring.jpa.properties.hibernate.dialect"));
         properties.put(
                 "spring.datasource.testWhileIdle",

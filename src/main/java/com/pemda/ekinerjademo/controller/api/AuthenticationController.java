@@ -23,8 +23,8 @@ import java.util.List;
  * Created by bagus on 09/09/17.
  */
 @RestController
+@CrossOrigin(allowCredentials = "false")
 @RequestMapping(value = "/api")
-//@CrossOrigin(origins = {"http://192.168.1.219:3000", "http://localhost:3000"}, maxAge = 500000, allowCredentials = "false")
 public class AuthenticationController {
     public static final Logger LOGGER = LoggerFactory.getLogger(AuthenticationController.class);
 
@@ -40,7 +40,6 @@ public class AuthenticationController {
      * @param akunPegawai in JSON Format
      * @return Role JSON Format
      */
-    @CrossOrigin(allowCredentials = "false") //just for testing. remove when frontend app is ready
     @RequestMapping(value = "/authentication", method = RequestMethod.POST)
     @Transactional
     ResponseEntity<?> validateAkunPegawai(@RequestBody AkunPegawai akunPegawai) {
