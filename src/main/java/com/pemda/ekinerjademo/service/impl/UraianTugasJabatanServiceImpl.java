@@ -4,6 +4,7 @@ import com.pemda.ekinerjademo.model.ekinerjamodel.*;
 import com.pemda.ekinerjademo.repository.ekinerjarepository.UraianTugasJabatanDao;
 import com.pemda.ekinerjademo.service.JenisUrtugUrtugService;
 import com.pemda.ekinerjademo.service.UraianTugasJabatanService;
+import com.pemda.ekinerjademo.wrapper.input.JenisUrtugUrtugInputWrapper;
 import com.pemda.ekinerjademo.wrapper.input.UraianTugasJabatanInputWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -32,13 +33,6 @@ public class UraianTugasJabatanServiceImpl implements UraianTugasJabatanService 
     public void update(UraianTugasJabatanInputWrapper urtugWrapper) {
         UraianTugasJabatan urtugJabatan =
                 getUraianTugasJabatan(urtugWrapper.getKdUrtug(), urtugWrapper.getKdJabatan());
-        urtugJabatan.setSatuan(urtugWrapper.getSatuan());
-        urtugJabatan.setVolumeKerja(urtugWrapper.getVolumeKerja());
-        urtugJabatan.setNormaWaktu(urtugWrapper.getNormaWaktu());
-        urtugJabatan.setBebanKerja(urtugWrapper.getBebanKerja());
-        urtugJabatan.setPeralatan(urtugWrapper.getPeralatan());
-        urtugJabatan.setKeterangan(urtugWrapper.getKeterangan());
-
         urtugJabatan.setCreatedBy(new AkunPegawai(urtugWrapper.getCreatedBy()));
     }
 
@@ -60,23 +54,30 @@ public class UraianTugasJabatanServiceImpl implements UraianTugasJabatanService 
                 new UraianTugasJabatanId(
                         urtugJabatanWrapper.getKdUrtug(),
                         urtugJabatanWrapper.getKdJabatan()));
-        urtugJabatan.setSatuan(urtugJabatanWrapper.getSatuan());
-        urtugJabatan.setVolumeKerja(urtugJabatanWrapper.getVolumeKerja());
-        urtugJabatan.setNormaWaktu(urtugJabatanWrapper.getNormaWaktu());
-        urtugJabatan.setBebanKerja(urtugJabatanWrapper.getBebanKerja());
-        urtugJabatan.setPeralatan(urtugJabatanWrapper.getPeralatan());
-        urtugJabatan.setKeterangan(urtugJabatanWrapper.getKeterangan());
         urtugJabatan.setCreatedBy(new AkunPegawai(urtugJabatanWrapper.getCreatedBy()));
 
         save(urtugJabatan);
 
-        JenisUrtugUrtug jenisUrtugUrtug = new JenisUrtugUrtug();
-        jenisUrtugUrtug.setJenisUrtugUrtugId(
+        List<JenisUrtugUrtugInputWrapper> jenisUrtugWrapperList =
+                urtugJabatanWrapper.getJenisUrtugList();
+
+        for (JenisUrtugUrtugInputWrapper jenisUrtugWrapper : jenisUrtugWrapperList) {
+            JenisUrtugUrtug jenisUrtugUrtug = new JenisUrtugUrtug();
+
+            jenisUrtugUrtug.setJenisUrtugUrtugId(
                         new JenisUrtugUrtugId(
-                                urtugJabatanWrapper.getKdJenisUrtug(),
+                                jenisUrtugWrapper.getKdJenisUrtug(),
                                 urtugJabatanWrapper.getKdUrtug(),
                                 urtugJabatanWrapper.getKdJabatan()));
-        jenisUrtugUrtugService.save(jenisUrtugUrtug);
+            jenisUrtugUrtug.setSatuan(jenisUrtugWrapper.getSatuan());
+            jenisUrtugUrtug.setNormaWaktu(jenisUrtugWrapper.getNormaWaktu());
+            jenisUrtugUrtug.setVolumeKerja(jenisUrtugWrapper.getVolumeKerja());
+            jenisUrtugUrtug.setBebanKerja(jenisUrtugWrapper.getBebanKerja());
+            jenisUrtugUrtug.setPeralatan(jenisUrtugWrapper.getPeralatan());
+            jenisUrtugUrtug.setKeterangan(jenisUrtugWrapper.getKeterangan());
+
+            jenisUrtugUrtugService.save(jenisUrtugUrtug);
+        }
 
     }
 

@@ -130,21 +130,21 @@ public class UraianTugasJabatanController {
     ResponseEntity<?> getUraianJenisTugasJabatan(@PathVariable("kdJabatan") String kdJabatan) {
         LOGGER.info("Get uraian jenis tugas jabatan");
 
-        List<JenisUrtugUrtug> jenisUrtugUrtugList
-                = jenisUrtugUrtugService.getJenisUrtugUrtugByJabatan(kdJabatan);
-
-        if (jenisUrtugUrtugList.isEmpty()) {
-            return null;
-        }
-
-        for (JenisUrtugUrtug urtugJabatan : jenisUrtugUrtugList) {
-            LOGGER.info(
-                    urtugJabatan.getJenisUrtug().getJenisUrtug()+
-                    " : "+
-                    urtugJabatan.getUraianTugasJabatan().getUraianTugas().getDeskripsi()+
-                    " : "+
-                    urtugJabatan.getUraianTugasJabatan().getBebanKerja());
-        }
+//        List<JenisUrtugUrtug> jenisUrtugUrtugList
+//                = jenisUrtugUrtugService.getJenisUrtugUrtugByJabatan(kdJabatan);
+//
+//        if (jenisUrtugUrtugList.isEmpty()) {
+//            return null;
+//        }
+//
+//        for (JenisUrtugUrtug urtugJabatan : jenisUrtugUrtugList) {
+//            LOGGER.info(
+//                    urtugJabatan.getJenisUrtug().getJenisUrtug()+
+//                    " : "+
+//                    urtugJabatan.getUraianTugasJabatan().getUraianTugas().getDeskripsi()+
+//                    " : "+
+//                    urtugJabatan.getUraianTugasJabatan().getBebanKerja());
+//        }
 
         return null;
     }

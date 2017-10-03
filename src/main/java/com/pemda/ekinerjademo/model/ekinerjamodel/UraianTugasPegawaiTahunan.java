@@ -11,6 +11,12 @@ public class UraianTugasPegawaiTahunan {
     @EmbeddedId
     private UraianTugasPegawaiTahunanId uraianTugasPegawaiTahunanId;
 
+    @Column(name = "tahun_uraian_tugas")
+    private Long tahunUraianTugas;
+
+    @Column(name = "status_pengerjaan")
+    private Integer statusPengerjaan;
+
     @ManyToOne
     @JoinColumn(name = "nip_pegawai", insertable = false, updatable = false)
     private AkunPegawai akunPegawai;
@@ -59,4 +65,19 @@ public class UraianTugasPegawaiTahunan {
         this.jenisUrtugUrtug = jenisUrtugUrtug;
     }
 
+    public Long getTahunUraianTugas() {
+        return tahunUraianTugas;
+    }
+
+    public void setTahunUraianTugas(Long tahunUraianTugas) {
+        this.tahunUraianTugas = tahunUraianTugas;
+    }
+
+    public Integer getStatusPengerjaan() {
+        return statusPengerjaan;
+    }
+
+    public void setStatusPengerjaan(Integer statusPengerjaan) {
+        this.statusPengerjaan = statusPengerjaan;
+    }
 }
