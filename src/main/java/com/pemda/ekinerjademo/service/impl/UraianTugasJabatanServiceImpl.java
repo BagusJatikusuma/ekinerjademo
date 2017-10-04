@@ -2,9 +2,7 @@ package com.pemda.ekinerjademo.service.impl;
 
 import com.pemda.ekinerjademo.model.ekinerjamodel.*;
 import com.pemda.ekinerjademo.repository.ekinerjarepository.UraianTugasJabatanDao;
-import com.pemda.ekinerjademo.service.JenisUrtugUrtugService;
 import com.pemda.ekinerjademo.service.UraianTugasJabatanService;
-import com.pemda.ekinerjademo.wrapper.input.JenisUrtugUrtugInputWrapper;
 import com.pemda.ekinerjademo.wrapper.input.UraianTugasJabatanInputWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,7 +20,7 @@ public class UraianTugasJabatanServiceImpl implements UraianTugasJabatanService 
     @Autowired
     private UraianTugasJabatanDao uraianTugasJabatanDao;
     @Autowired
-    private JenisUrtugUrtugService jenisUrtugUrtugService;
+    private UraianTugasJabatanTransactionService urtugJabatanTransactionalService;
 
     @Override
     public List<UraianTugasJabatan> getUraianTugasJabatan() {
@@ -32,13 +30,25 @@ public class UraianTugasJabatanServiceImpl implements UraianTugasJabatanService 
     @Override
     public void update(UraianTugasJabatanInputWrapper urtugWrapper) {
         UraianTugasJabatan urtugJabatan =
-                getUraianTugasJabatan(urtugWrapper.getKdUrtug(), urtugWrapper.getKdJabatan());
+                uraianTugasJabatanDao
+                        .findByUraianTugasJabatanId(new UraianTugasJabatanId(
+                                urtugWrapper.getKdUrtug(),
+                                urtugWrapper.getKdJabatan(),
+                                urtugWrapper.getKdJenisUrtug()));
+
+        urtugJabatan.setSatuan(urtugWrapper.getSatuan());
+        urtugJabatan.setNormaWaktu(urtugWrapper.getNormaWaktu());
+        urtugJabatan.setVolumeKerja(urtugWrapper.getVolumeKerja());
+        urtugJabatan.setBebanKerja(urtugWrapper.getBebanKerja());
+        urtugJabatan.setPeralatan(urtugWrapper.getPeralatan());
+        urtugJabatan.setKeterangan(urtugWrapper.getKeterangan());
         urtugJabatan.setCreatedBy(new AkunPegawai(urtugWrapper.getCreatedBy()));
     }
 
     @Override
-    public void delete(String kdUrtug, String kdJabatan) {
-        uraianTugasJabatanDao.deleteByUraianTugasJabatanId(new UraianTugasJabatanId(kdUrtug, kdJabatan));
+    public void delete(String kdUrtug, String kdJabatan, String kdJenisUrtug) {
+        uraianTugasJabatanDao
+                .deleteByUraianTugasJabatanId(new UraianTugasJabatanId(kdUrtug, kdJabatan, kdJenisUrtug));
     }
 
     @Override
@@ -53,32 +63,17 @@ public class UraianTugasJabatanServiceImpl implements UraianTugasJabatanService 
         urtugJabatan.setUraianTugasJabatanId(
                 new UraianTugasJabatanId(
                         urtugJabatanWrapper.getKdUrtug(),
-                        urtugJabatanWrapper.getKdJabatan()));
+                        urtugJabatanWrapper.getKdJabatan(),
+                        urtugJabatanWrapper.getKdJenisUrtug()));
+        urtugJabatan.setSatuan(urtugJabatanWrapper.getSatuan());
+        urtugJabatan.setNormaWaktu(urtugJabatanWrapper.getNormaWaktu());
+        urtugJabatan.setVolumeKerja(urtugJabatanWrapper.getVolumeKerja());
+        urtugJabatan.setBebanKerja(urtugJabatanWrapper.getBebanKerja());
+        urtugJabatan.setPeralatan(urtugJabatanWrapper.getPeralatan());
+        urtugJabatan.setKeterangan(urtugJabatanWrapper.getKeterangan());
         urtugJabatan.setCreatedBy(new AkunPegawai(urtugJabatanWrapper.getCreatedBy()));
 
-        save(urtugJabatan);
-
-        List<JenisUrtugUrtugInputWrapper> jenisUrtugWrapperList =
-                urtugJabatanWrapper.getJenisUrtugList();
-
-        for (JenisUrtugUrtugInputWrapper jenisUrtugWrapper : jenisUrtugWrapperList) {
-            JenisUrtugUrtug jenisUrtugUrtug = new JenisUrtugUrtug();
-
-            jenisUrtugUrtug.setJenisUrtugUrtugId(
-                        new JenisUrtugUrtugId(
-                                jenisUrtugWrapper.getKdJenisUrtug(),
-                                urtugJabatanWrapper.getKdUrtug(),
-                                urtugJabatanWrapper.getKdJabatan()));
-            jenisUrtugUrtug.setSatuan(jenisUrtugWrapper.getSatuan());
-            jenisUrtugUrtug.setNormaWaktu(jenisUrtugWrapper.getNormaWaktu());
-            jenisUrtugUrtug.setVolumeKerja(jenisUrtugWrapper.getVolumeKerja());
-            jenisUrtugUrtug.setBebanKerja(jenisUrtugWrapper.getBebanKerja());
-            jenisUrtugUrtug.setPeralatan(jenisUrtugWrapper.getPeralatan());
-            jenisUrtugUrtug.setKeterangan(jenisUrtugWrapper.getKeterangan());
-
-            jenisUrtugUrtugService.save(jenisUrtugUrtug);
-        }
-
+        urtugJabatanTransactionalService.save(urtugJabatan);
     }
 
     @Override
@@ -88,9 +83,9 @@ public class UraianTugasJabatanServiceImpl implements UraianTugasJabatanService 
     }
 
     @Override
-    public UraianTugasJabatan getUraianTugasJabatan(String kdUrtug, String kdJabatan) {
+    public UraianTugasJabatan getUraianTugasJabatan(String kdUrtug, String kdJabatan, String kdJenisUrtug) {
         return uraianTugasJabatanDao
-                .findByUraianTugasJabatanId(new UraianTugasJabatanId(kdUrtug, kdJabatan));
+                .findByUraianTugasJabatanId(new UraianTugasJabatanId(kdUrtug, kdJabatan, kdJenisUrtug));
     }
 
 //    @Override

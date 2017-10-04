@@ -13,6 +13,10 @@ import java.util.List;
  */
 @Repository
 public interface UraianTugasJabatanDao extends JpaRepository<UraianTugasJabatan, Long> {
+    @Query("select u from UraianTugasJabatan u " +
+            "left join fetch u.uraianTugas " +
+            "left join fetch u.jenisUrtug " +
+            "where u.uraianTugasJabatanId.kdJabatan = ?1")
     List<UraianTugasJabatan> findByUraianTugasJabatanIdKdJabatan(String kdJabatan);
     UraianTugasJabatan findByUraianTugasJabatanId(UraianTugasJabatanId uraianTugasJabatanId);
     void deleteByUraianTugasJabatanId(UraianTugasJabatanId uraianTugasJabatanId);

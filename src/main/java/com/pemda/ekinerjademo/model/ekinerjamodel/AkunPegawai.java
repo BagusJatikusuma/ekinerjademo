@@ -23,7 +23,7 @@ public class AkunPegawai {
     @JoinColumn(name = "role_id")
     private Role role;
 
-    @OneToMany(mappedBy = "akunPegawai", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "akunPegawai")
     private List<RincianEKinerja> rincianEKinerjaList;
 
     public AkunPegawai() {}

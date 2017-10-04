@@ -11,12 +11,13 @@ import java.util.List;
 public interface UraianTugasJabatanService {
     void createUrtugJabatan(UraianTugasJabatanInputWrapper urtugJabatanWrapper);
     void save(UraianTugasJabatan uraianTugasJabatan);
-//    void save(String kdUrtug, String kdJabatan);
-//    void deleteAllUraianTugasJabatanByJabatan(String kdJabatan);
-//    List<UraianTugasJabatanController> getUraianTugasJabatanByUrtug(String kdUrtug);
-    UraianTugasJabatan getUraianTugasJabatan(String kdUrtug, String kdJabatan);
+    UraianTugasJabatan getUraianTugasJabatan(String kdUrtug, String kdJabatan, String kdJenisUrtug);
     List<UraianTugasJabatan> getUraianTugasJabatanByJabatan(String kdJabatan);
     List<UraianTugasJabatan> getUraianTugasJabatan();
     void update(UraianTugasJabatanInputWrapper urtugWrapper);
-    void delete(String kdUrtug, String kdJabatan);
+    void delete(String kdUrtug, String kdJabatan, String kdJenisUrtug);
 }
+
+//    void save(String kdUrtug, String kdJabatan);
+//    void deleteAllUraianTugasJabatanByJabatan(String kdJabatan);
+//    List<UraianTugasJabatanController> getUraianTugasJabatanByUrtug(String kdUrtug);

@@ -2,14 +2,11 @@ package com.pemda.ekinerjademo.controller.api;
 
 import com.pemda.ekinerjademo.model.bismamodel.TkdJabatan;
 import com.pemda.ekinerjademo.model.ekinerjamodel.*;
-import com.pemda.ekinerjademo.service.JenisUrtugUrtugService;
 import com.pemda.ekinerjademo.service.TkdJabatanService;
 import com.pemda.ekinerjademo.service.UraianTugasJabatanService;
 import com.pemda.ekinerjademo.service.UraianTugasService;
 import com.pemda.ekinerjademo.wrapper.input.UraianTugasJabatanInputWrapper;
-import com.pemda.ekinerjademo.wrapper.output.CustomMessage;
-import com.pemda.ekinerjademo.wrapper.output.UraianTugasJabatanWrapper;
-import com.pemda.ekinerjademo.wrapper.output.UraianTugasWrapper;
+import com.pemda.ekinerjademo.wrapper.output.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,18 +30,15 @@ public class UraianTugasJabatanController {
     private TkdJabatanService tkdJabatanService;
     private UraianTugasJabatanService uraianTugasJabatanService;
     private UraianTugasService uraianTugasService;
-    private JenisUrtugUrtugService jenisUrtugUrtugService;
 
     @Autowired
     public UraianTugasJabatanController(
             TkdJabatanService tkdJabatanService,
             UraianTugasJabatanService uraianTugasJabatanService,
-            UraianTugasService uraianTugasService,
-            JenisUrtugUrtugService jenisUrtugUrtugService) {
+            UraianTugasService uraianTugasService) {
         this.tkdJabatanService = tkdJabatanService;
         this.uraianTugasJabatanService = uraianTugasJabatanService;
-        this.uraianTugasService = uraianTugasService;
-        this.jenisUrtugUrtugService = jenisUrtugUrtugService;
+        this.uraianTugasService = uraianTugasService;;
     }
 
     @RequestMapping(value = "/get-uraian-tugas-by-jabatan/{kdJabatan}", method = RequestMethod.GET)
@@ -64,7 +58,7 @@ public class UraianTugasJabatanController {
                 uraianTugasJabatanService.getUraianTugasJabatanByJabatan(kdJabatan);
         List<UraianTugas> uraianTugasList =
                 uraianTugasService.getAllUraianTugas();
-        List<UraianTugasWrapper> jabatanUraianTugasWrapperList =
+        List<UraianTugasJenisWrapper> jabatanUraianTugasWrapperList =
                 new ArrayList<>();
         List<UraianTugasWrapper> notJabatanUraianTugasWrapperList
                 = new ArrayList<>();
@@ -82,10 +76,6 @@ public class UraianTugasJabatanController {
             }
 
         } else {
-            jabatanUraianTugasWrapperList =
-                    new ArrayList<>();
-            notJabatanUraianTugasWrapperList
-                    = new ArrayList<>();
 
             for (UraianTugas uraianTugas : uraianTugasList) {
                 boolean found = false;
@@ -95,12 +85,21 @@ public class UraianTugasJabatanController {
                         LOGGER.info(uraianTugas.getKdUrtug()+" sama "+uraianTugasJabatan.getUraianTugas().getKdUrtug());
 
                         jabatanUraianTugasWrapperList
-                                .add(new UraianTugasWrapper(
-                                        uraianTugas.getKdUrtug(),
-                                        uraianTugas.getDeskripsi()));
+                                .add(new UraianTugasJenisWrapper(
+                                        new UraianTugasWrapper(uraianTugas.getKdUrtug(), uraianTugas.getDeskripsi()),
+                                        new JenisUrtugWrapper(
+                                                uraianTugasJabatan.getJenisUrtug().getKdJenisUrtug(),
+                                                uraianTugasJabatan.getJenisUrtug().getJenisUrtug()),
+                                        uraianTugasJabatan.getSatuan(),
+                                        uraianTugasJabatan.getVolumeKerja(),
+                                        uraianTugasJabatan.getNormaWaktu(),
+                                        uraianTugasJabatan.getBebanKerja(),
+                                        uraianTugasJabatan.getPeralatan(),
+                                        uraianTugasJabatan.getKeterangan()
+                                ));
 
                         found = true;
-                        break;
+//                        break;
                     }
 
                 }
@@ -169,14 +168,14 @@ public class UraianTugasJabatanController {
         return new ResponseEntity<Object>(new CustomMessage("urtug jabatan created"), HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/delete-uraian-tugas-jabatan/{kdJabatan}/{kdUrtug}", method = RequestMethod.DELETE)
-    @Transactional
+    @RequestMapping(value = "/delete-uraian-tugas-jabatan/{kdJabatan}/{kdUrtug}/{kdJenisUrtug}", method = RequestMethod.DELETE)
     ResponseEntity<?> deleteUraianTugasJabatan(
             @PathVariable("kdJabatan") String kdJabatan,
-            @PathVariable("kdUrtug") String kdUrtug) {
+            @PathVariable("kdUrtug") String kdUrtug,
+            @PathVariable("kdJenisUrtug") String kdJenisUrtug) {
         LOGGER.info("delete urtug jabatan");
 
-        uraianTugasJabatanService.delete(kdUrtug, kdJabatan);
+        uraianTugasJabatanService.delete(kdUrtug, kdJabatan, kdJenisUrtug);
 
         return new ResponseEntity<Object>(new CustomMessage("uraian tugas jabatan deleted"), HttpStatus.OK);
     }

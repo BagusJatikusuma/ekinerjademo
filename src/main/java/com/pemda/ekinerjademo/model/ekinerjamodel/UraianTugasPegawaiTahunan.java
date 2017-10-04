@@ -18,28 +18,32 @@ public class UraianTugasPegawaiTahunan {
     private Integer statusPengerjaan;
 
     @ManyToOne
-    @JoinColumn(name = "nip_pegawai", insertable = false, updatable = false)
+    @JoinColumn(
+            name = "nip_pegawai",
+            insertable = false,
+            updatable = false,
+            referencedColumnName = "nip_pegawai")
     private AkunPegawai akunPegawai;
 
-    @ManyToOne
-    @JoinColumns({
-            @JoinColumn(
-                    name = "kd_jenis_urtug",
-                    referencedColumnName = "kd_jenis_urtug",
-                    insertable = false,
-                    updatable = false),
-            @JoinColumn(
-                    name = "kd_urtug",
-                    referencedColumnName = "kd_urtug",
-                    insertable = false,
-                    updatable = false),
-            @JoinColumn(
-                    name = "kd_jabatan",
-                    referencedColumnName = "kd_jabatan",
-                    insertable = false,
-                    updatable = false)
-    })
-    private JenisUrtugUrtug jenisUrtugUrtug;
+//    @ManyToOne
+//    @JoinColumns({
+//            @JoinColumn(
+//                    name = "kd_jenis_urtug",
+//                    referencedColumnName = "kd_jenis_urtug",
+//                    insertable = false,
+//                    updatable = false),
+//            @JoinColumn(
+//                    name = "kd_urtug",
+//                    referencedColumnName = "kd_urtug",
+//                    insertable = false,
+//                    updatable = false),
+//            @JoinColumn(
+//                    name = "kd_jabatan",
+//                    referencedColumnName = "kd_jabatan",
+//                    insertable = false,
+//                    updatable = false)
+//    })
+//    private JenisUrtugUrtug jenisUrtugUrtug;
 
     public UraianTugasPegawaiTahunanId getUraianTugasPegawaiTahunanId() {
         return uraianTugasPegawaiTahunanId;
@@ -55,14 +59,6 @@ public class UraianTugasPegawaiTahunan {
 
     public void setAkunPegawai(AkunPegawai akunPegawai) {
         this.akunPegawai = akunPegawai;
-    }
-
-    public JenisUrtugUrtug getJenisUrtugUrtug() {
-        return jenisUrtugUrtug;
-    }
-
-    public void setJenisUrtugUrtug(JenisUrtugUrtug jenisUrtugUrtug) {
-        this.jenisUrtugUrtug = jenisUrtugUrtug;
     }
 
     public Long getTahunUraianTugas() {

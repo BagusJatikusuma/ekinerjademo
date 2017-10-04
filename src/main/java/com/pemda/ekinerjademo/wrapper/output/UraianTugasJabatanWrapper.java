@@ -10,7 +10,7 @@ public class UraianTugasJabatanWrapper {
     private String kdJabatan;
     private String jabatan;
     //list uraiantugas yang dimiliki jabatan
-    private List<UraianTugasWrapper> jabatanUraianTugasList;
+    private List<UraianTugasJenisWrapper> jabatanUraianTugasList;
     //list uraiantugas yang tidak dimiliki jabatan
     private List<UraianTugasWrapper> notJabatanUraianTugasList;
 
@@ -18,7 +18,7 @@ public class UraianTugasJabatanWrapper {
     public UraianTugasJabatanWrapper(
             String kdJabatan,
             String jabatan,
-            List<UraianTugasWrapper> jabatanUraianTugasList,
+            List<UraianTugasJenisWrapper> jabatanUraianTugasList,
             List<UraianTugasWrapper> notJabatanUraianTugasList) {
         this.kdJabatan = kdJabatan;
         this.jabatan = jabatan;
@@ -42,11 +42,11 @@ public class UraianTugasJabatanWrapper {
         this.jabatan = jabatan;
     }
 
-    public List<UraianTugasWrapper> getJabatanUraianTugasList() {
+    public List<UraianTugasJenisWrapper> getJabatanUraianTugasList() {
         return jabatanUraianTugasList;
     }
 
-    public void setJabatanUraianTugasList(List<UraianTugasWrapper> jabatanUraianTugasList) {
+    public void setJabatanUraianTugasList(List<UraianTugasJenisWrapper> jabatanUraianTugasList) {
         this.jabatanUraianTugasList = jabatanUraianTugasList;
     }
 

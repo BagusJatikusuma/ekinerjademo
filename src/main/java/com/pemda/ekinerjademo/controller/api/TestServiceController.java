@@ -28,8 +28,6 @@ public class TestServiceController {
 
     private AkunPegawaiService akunPegawaiService;
     private JenisUrtugService jenisUrtugService;
-    private JenisUrtugUrtugService jenisUrtugUrtugService;
-    private SopJenisUrtugUrtugService sopJenisUrtugUrtugService;
     private SopService sopService;
     private UraianTugasService uraianTugasService;
     private UraianTugasJabatanService uraianTugasJabatanService;
@@ -43,15 +41,11 @@ public class TestServiceController {
     public TestServiceController(
             AkunPegawaiService akunPegawaiService,
             JenisUrtugService jenisUrtugService,
-            JenisUrtugUrtugService jenisUrtugUrtugService,
-            SopJenisUrtugUrtugService sopJenisUrtugUrtugService,
             SopService sopService,
             UraianTugasService uraianTugasService,
             UraianTugasJabatanService uraianTugasJabatanService) {
         this.akunPegawaiService = akunPegawaiService;
         this.jenisUrtugService = jenisUrtugService;
-        this.jenisUrtugUrtugService = jenisUrtugUrtugService;
-        this.sopJenisUrtugUrtugService = sopJenisUrtugUrtugService;
         this.sopService = sopService;
         this.uraianTugasService = uraianTugasService;
         this.uraianTugasJabatanService = uraianTugasJabatanService;
@@ -68,12 +62,12 @@ public class TestServiceController {
 //                akunPegawai -> LOGGER.info(akunPegawai.getNipPegawai()+" : "+akunPegawai.getRole().getRole())
 //        );
 //        List<JenisUrtug> jenisUrtugs = jenisUrtugService.getJenisUrtug();
-        List<JenisUrtugUrtug> jenisUrtugUrtugs = jenisUrtugUrtugService.getJenisUrtugUrtug();
-        for (JenisUrtugUrtug jenisUrtugUrtug : jenisUrtugUrtugs) {
-            LOGGER.info(
-                    jenisUrtugUrtug.getJenisUrtug().getJenisUrtug()+" : "+jenisUrtugUrtug.getUraianTugasJabatan().getUraianTugas().getDeskripsi()
-            );
-        }
+//        List<JenisUrtugUrtug> jenisUrtugUrtugs = jenisUrtugUrtugService.getJenisUrtugUrtug();
+//        for (JenisUrtugUrtug jenisUrtugUrtug : jenisUrtugUrtugs) {
+//            LOGGER.info(
+//                    jenisUrtugUrtug.getJenisUrtug().getJenisUrtug()+" : "+jenisUrtugUrtug.getUraianTugasJabatan().getUraianTugas().getDeskripsi()
+//            );
+//        }
 //        List<SopJenisUrtugUrtug> sopJenisUrtugUrtugs = sopJenisUrtugUrtugService.getSopJenisUrtugUrtug();
 //        List<Sop> sops = sopService.getSop();
 //        List<UraianTugas> uraianTugasList = uraianTugasService.getAllUraianTugas();
