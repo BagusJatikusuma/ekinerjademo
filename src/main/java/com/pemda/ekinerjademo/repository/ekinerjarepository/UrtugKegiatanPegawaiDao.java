@@ -1,0 +1,22 @@
+package com.pemda.ekinerjademo.repository.ekinerjarepository;
+
+import com.pemda.ekinerjademo.model.ekinerjamodel.UrtugKegiatanPegawai;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.stereotype.Repository;
+
+import java.util.List;
+
+/**
+ * Created by bagus on 05/10/17.
+ */
+@Repository
+public interface UrtugKegiatanPegawaiDao extends JpaRepository<UrtugKegiatanPegawai, String> {
+    @Query("select ukp from UrtugKegiatanPegawai ukp " +
+            "left join fetch ukp.urtugKegiatan uk " +
+            "left join fetch uk.uraianTugasJabatan utj " +
+            "left join fetch utj.uraianTugas " +
+            "left join fetch utj.jenisUrtug " +
+            "where ukp.urtugKegiatanPegawaiId.nipPegawai = ?1")
+    List<UrtugKegiatanPegawai> findUrtugKegiatanPegawaiByNipPegawai(String nipPegawai);
+}

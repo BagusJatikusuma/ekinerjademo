@@ -51,6 +51,9 @@ public class UraianTugasJabatan implements Serializable {
             referencedColumnName = "kd_urtug")
     private UraianTugas uraianTugas;
 
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "uraianTugasJabatan")
+    private List<UrtugKegiatan> urtugKegiatanList;
+
 
     public UraianTugasJabatanId getUraianTugasJabatanId() {
         return uraianTugasJabatanId;
