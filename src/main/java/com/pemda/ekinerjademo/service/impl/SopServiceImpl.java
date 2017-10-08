@@ -19,9 +19,29 @@ public class SopServiceImpl implements SopService {
     private SopDao sopDao;
 
     @Override
-    @Transactional(readOnly = true)
     public List<Sop> getSop() {
         return sopDao.findAll();
+    }
+
+    @Override
+    public Sop get(String kdSop) {
+        return sopDao.findByKdSop(kdSop);
+    }
+
+    @Override
+    public void save(Sop sop) {
+        sopDao.save(sop);
+    }
+
+    @Override
+    public void update(Sop sop) {
+        Sop currentSop = sopDao.findByKdSop(sop.getKdSop());
+        currentSop.setSop(sop.getSop());
+    }
+
+    @Override
+    public void delete(String kdSop) {
+        sopDao.deleteByKdSop(kdSop);
     }
 
 }

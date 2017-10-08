@@ -1,9 +1,7 @@
 package com.pemda.ekinerjademo.model.ekinerjamodel;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.List;
 
 /**
  * Created by bagus on 26/09/17.
@@ -17,6 +15,9 @@ public class Sop {
 
     @Column(name = "sop")
     private String sop;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "sop")
+    private List<SopTemplate> sopTemplates;
 
     public String getKdSop() {
         return kdSop;

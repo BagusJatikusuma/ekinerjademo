@@ -95,7 +95,13 @@ public class UraianTugasJabatanController {
                                         uraianTugasJabatan.getNormaWaktu(),
                                         uraianTugasJabatan.getBebanKerja(),
                                         uraianTugasJabatan.getPeralatan(),
-                                        uraianTugasJabatan.getKeterangan()
+                                        uraianTugasJabatan.getKeterangan(),
+                                        uraianTugasJabatan.getKuantitas(),
+                                        uraianTugasJabatan.getSatuanKuantitas(),
+                                        uraianTugasJabatan.getKualitas(),
+                                        uraianTugasJabatan.getWaktu(),
+                                        uraianTugasJabatan.getSatuanWaktu(),
+                                        uraianTugasJabatan.getBiaya()
                                 ));
 
                         found = true;

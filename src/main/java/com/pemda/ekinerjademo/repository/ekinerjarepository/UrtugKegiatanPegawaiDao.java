@@ -1,6 +1,9 @@
 package com.pemda.ekinerjademo.repository.ekinerjarepository;
 
+import com.pemda.ekinerjademo.model.ekinerjamodel.UrtugKegiatan;
+import com.pemda.ekinerjademo.model.ekinerjamodel.UrtugKegiatanId;
 import com.pemda.ekinerjademo.model.ekinerjamodel.UrtugKegiatanPegawai;
+import com.pemda.ekinerjademo.model.ekinerjamodel.UrtugKegiatanPegawaiId;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -19,4 +22,12 @@ public interface UrtugKegiatanPegawaiDao extends JpaRepository<UrtugKegiatanPega
             "left join fetch utj.jenisUrtug " +
             "where ukp.urtugKegiatanPegawaiId.nipPegawai = ?1")
     List<UrtugKegiatanPegawai> findUrtugKegiatanPegawaiByNipPegawai(String nipPegawai);
+    @Query("select ukp from UrtugKegiatanPegawai ukp " +
+            "left join fetch ukp.urtugKegiatan uk " +
+            "left join fetch uk.uraianTugasJabatan utj " +
+            "left join fetch utj.uraianTugas " +
+            "left join fetch utj.jenisUrtug " +
+            "where ukp.urtugKegiatan.urtugKegiatanId = ?1")
+    List<UrtugKegiatanPegawai> findUrtugKegiatanPegawaiByUrtugKegiatan(UrtugKegiatanId urtugKegiatanId);
+    void deleteByUrtugKegiatanPegawaiId(UrtugKegiatanPegawaiId urtugKegiatanPegawaiId);
 }

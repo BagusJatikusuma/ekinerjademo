@@ -14,6 +14,8 @@ public class PegawaiCredential {
     private String unit;
     private String kdUnitKerja;
     private String kdJabatan;
+    private String pangkat;
+    private String golongan;
 
     public PegawaiCredential() {}
     public PegawaiCredential(
@@ -32,7 +34,15 @@ public class PegawaiCredential {
         this.unit = unit;
         this.kdJabatan = kdJabatan;
     }
-    public PegawaiCredential(String nipPegawai, String namaPegawai, Role role, String token, String jabatan, String unit, String kdUnitKerja, String kdJabatan) {
+    public PegawaiCredential(
+            String nipPegawai,
+            String namaPegawai,
+            Role role,
+            String token,
+            String jabatan,
+            String unit,
+            String kdUnitKerja,
+            String kdJabatan) {
         this.nipPegawai = nipPegawai;
         this.namaPegawai = namaPegawai;
         this.role = role;
@@ -41,6 +51,28 @@ public class PegawaiCredential {
         this.unit = unit;
         this.kdUnitKerja = kdUnitKerja;
         this.kdJabatan = kdJabatan;
+    }
+    public PegawaiCredential(
+            String nipPegawai,
+            String namaPegawai,
+            Role role,
+            String token,
+            String jabatan,
+            String unit,
+            String kdUnitKerja,
+            String kdJabatan,
+            String pangkat,
+            String golongan) {
+        this.nipPegawai = nipPegawai;
+        this.namaPegawai = namaPegawai;
+        this.role = role;
+        this.token = token;
+        this.jabatan = jabatan;
+        this.unit = unit;
+        this.kdUnitKerja = kdUnitKerja;
+        this.kdJabatan = kdJabatan;
+        this.pangkat = pangkat;
+        this.golongan = golongan;
     }
 
     public String getNipPegawai() {
@@ -105,5 +137,21 @@ public class PegawaiCredential {
 
     public void setKdUnitKerja(String kdUnitKerja) {
         this.kdUnitKerja = kdUnitKerja;
+    }
+
+    public String getPangkat() {
+        return pangkat;
+    }
+
+    public void setPangkat(String pangkat) {
+        this.pangkat = pangkat;
+    }
+
+    public String getGolongan() {
+        return golongan;
+    }
+
+    public void setGolongan(String golongan) {
+        this.golongan = golongan;
     }
 }

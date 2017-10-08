@@ -8,5 +8,7 @@ import org.springframework.stereotype.Repository;
  * Created by bagus on 27/09/17.
  */
 @Repository
-public interface SopDao extends JpaRepository<Sop, Long> {
+public interface SopDao extends JpaRepository<Sop, String> {
+    Sop findByKdSop(String kdSop);
+    void deleteByKdSop(String kdSop);
 }

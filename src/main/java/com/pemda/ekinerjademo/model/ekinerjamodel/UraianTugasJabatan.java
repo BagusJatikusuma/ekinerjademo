@@ -31,6 +31,28 @@ public class UraianTugasJabatan implements Serializable {
     @Column(name = "keterangan")
     private  String keterangan;
 
+    @Column(name = "kuantitas")
+    private Integer kuantitas;
+
+    @Column(name = "satuan_kuantitas")
+    private String satuanKuantitas;
+
+    @Column(name = "kualitas")
+    private Integer kualitas;
+
+    @Column(name = "waktu")
+    private Integer waktu;
+
+    @Column(name = "satuan_waktu")
+    private String satuanWaktu;
+
+    @Column(name = "biaya")
+    private Long biaya;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "created_by")
+    private AkunPegawai createdBy;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(
             name = "kd_jenis_urtug",
@@ -38,10 +60,6 @@ public class UraianTugasJabatan implements Serializable {
             updatable = false,
             referencedColumnName = "kd_jenis_urtug")
     private JenisUrtug jenisUrtug;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "created_by")
-    private AkunPegawai createdBy;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(
@@ -53,6 +71,9 @@ public class UraianTugasJabatan implements Serializable {
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "uraianTugasJabatan")
     private List<UrtugKegiatan> urtugKegiatanList;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "uraianTugasJabatan")
+    private List<SopUraianTugasJabatan> sopUraianTugasJabatanList;
 
 
     public UraianTugasJabatanId getUraianTugasJabatanId() {
@@ -132,5 +153,69 @@ public class UraianTugasJabatan implements Serializable {
 
     public void setJenisUrtug(JenisUrtug jenisUrtug) {
         this.jenisUrtug = jenisUrtug;
+    }
+
+    public List<UrtugKegiatan> getUrtugKegiatanList() {
+        return urtugKegiatanList;
+    }
+
+    public void setUrtugKegiatanList(List<UrtugKegiatan> urtugKegiatanList) {
+        this.urtugKegiatanList = urtugKegiatanList;
+    }
+
+    public List<SopUraianTugasJabatan> getSopUraianTugasJabatanList() {
+        return sopUraianTugasJabatanList;
+    }
+
+    public void setSopUraianTugasJabatanList(List<SopUraianTugasJabatan> sopUraianTugasJabatanList) {
+        this.sopUraianTugasJabatanList = sopUraianTugasJabatanList;
+    }
+
+    public Integer getKuantitas() {
+        return kuantitas;
+    }
+
+    public void setKuantitas(Integer kuantitas) {
+        this.kuantitas = kuantitas;
+    }
+
+    public String getSatuanKuantitas() {
+        return satuanKuantitas;
+    }
+
+    public void setSatuanKuantitas(String satuanKuantitas) {
+        this.satuanKuantitas = satuanKuantitas;
+    }
+
+    public Integer getKualitas() {
+        return kualitas;
+    }
+
+    public void setKualitas(Integer kualitas) {
+        this.kualitas = kualitas;
+    }
+
+    public Integer getWaktu() {
+        return waktu;
+    }
+
+    public void setWaktu(Integer waktu) {
+        this.waktu = waktu;
+    }
+
+    public String getSatuanWaktu() {
+        return satuanWaktu;
+    }
+
+    public void setSatuanWaktu(String satuanWaktu) {
+        this.satuanWaktu = satuanWaktu;
+    }
+
+    public Long getBiaya() {
+        return biaya;
+    }
+
+    public void setBiaya(Long biaya) {
+        this.biaya = biaya;
     }
 }

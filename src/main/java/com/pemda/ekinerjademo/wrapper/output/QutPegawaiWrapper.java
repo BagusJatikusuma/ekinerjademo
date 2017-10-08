@@ -10,13 +10,37 @@ public class QutPegawaiWrapper {
     private String jabatan;
     private String kdUnitKerja;
     private String unitKerja;
+    private String pangkat;
+    private String golongan;
 
     public QutPegawaiWrapper() {}
-    public QutPegawaiWrapper(String nipPegawai, String nama, String jabatan, String unitKerja) {
+    public QutPegawaiWrapper(
+            String nipPegawai,
+            String nama,
+            String jabatan,
+            String unitKerja) {
         this.nipPegawai = nipPegawai;
         this.nama = nama;
         this.jabatan = jabatan;
         this.unitKerja = unitKerja;
+    }
+    public QutPegawaiWrapper(
+            String nipPegawai,
+            String nama,
+            String kdJabatan,
+            String jabatan,
+            String kdUnitKerja,
+            String unitKerja,
+            String pangkat,
+            String golongan) {
+        this.nipPegawai = nipPegawai;
+        this.nama = nama;
+        this.kdJabatan = kdJabatan;
+        this.jabatan = jabatan;
+        this.kdUnitKerja = kdUnitKerja;
+        this.unitKerja = unitKerja;
+        this.pangkat = pangkat;
+        this.golongan = golongan;
     }
 
     public String getNipPegawai() {
@@ -65,5 +89,21 @@ public class QutPegawaiWrapper {
 
     public void setKdUnitKerja(String kdUnitKerja) {
         this.kdUnitKerja = kdUnitKerja;
+    }
+
+    public String getPangkat() {
+        return pangkat;
+    }
+
+    public void setPangkat(String pangkat) {
+        this.pangkat = pangkat;
+    }
+
+    public String getGolongan() {
+        return golongan;
+    }
+
+    public void setGolongan(String golongan) {
+        this.golongan = golongan;
     }
 }

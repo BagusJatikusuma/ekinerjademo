@@ -15,6 +15,12 @@ public class UraianTugasJabatanInputWrapper {
     private Integer bebanKerja;
     private String peralatan;
     private String keterangan;
+    private Integer kuantitas;
+    private String satuanKuantitas;
+    private Integer kualitas;
+    private Integer waktu;
+    private String satuanWaktu;
+    private Long biaya;
     private String createdBy;
 
     public String getKdUrtug() {
@@ -97,4 +103,51 @@ public class UraianTugasJabatanInputWrapper {
         this.kdJenisUrtug = kdJenisUrtug;
     }
 
+    public Integer getKuantitas() {
+        return kuantitas;
+    }
+
+    public void setKuantitas(Integer kuantitas) {
+        this.kuantitas = kuantitas;
+    }
+
+    public String getSatuanKuantitas() {
+        return satuanKuantitas;
+    }
+
+    public void setSatuanKuantitas(String satuanKuantitas) {
+        this.satuanKuantitas = satuanKuantitas;
+    }
+
+    public Integer getKualitas() {
+        return kualitas;
+    }
+
+    public void setKualitas(Integer kualitas) {
+        this.kualitas = kualitas;
+    }
+
+    public Integer getWaktu() {
+        return waktu;
+    }
+
+    public void setWaktu(Integer waktu) {
+        this.waktu = waktu;
+    }
+
+    public String getSatuanWaktu() {
+        return satuanWaktu;
+    }
+
+    public void setSatuanWaktu(String satuanWaktu) {
+        this.satuanWaktu = satuanWaktu;
+    }
+
+    public Long getBiaya() {
+        return biaya;
+    }
+
+    public void setBiaya(Long biaya) {
+        this.biaya = biaya;
+    }
 }

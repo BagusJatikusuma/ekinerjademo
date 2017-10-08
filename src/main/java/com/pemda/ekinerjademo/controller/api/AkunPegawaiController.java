@@ -176,8 +176,12 @@ public class AkunPegawaiController {
                     .add(new QutPegawaiWrapper(
                             qutPegawai.getNip(),
                             qutPegawai.getNama(),
+                            qutPegawai.getKdJabatan(),
                             qutPegawai.getJabatan(),
-                            qutPegawai.getUnitKerja()));
+                            qutPegawai.getKdUnitKerja(),
+                            qutPegawai.getUnitKerja(),
+                            qutPegawai.getPangkat(),
+                            qutPegawai.getGol()));
         }
 
         LOGGER.info("finish");
@@ -202,8 +206,12 @@ public class AkunPegawaiController {
                     .add(new QutPegawaiWrapper(
                             qutPegawai.getNip(),
                             qutPegawai.getNama(),
+                            qutPegawai.getKdJabatan(),
                             qutPegawai.getJabatan(),
-                            qutPegawai.getUnitKerja()));
+                            qutPegawai.getKdUnitKerja(),
+                            qutPegawai.getUnitKerja(),
+                            qutPegawai.getPangkat(),
+                            qutPegawai.getGol()));
         }
 
         LOGGER.info("finish");

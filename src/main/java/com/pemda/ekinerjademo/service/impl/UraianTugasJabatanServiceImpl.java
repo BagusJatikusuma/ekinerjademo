@@ -42,6 +42,12 @@ public class UraianTugasJabatanServiceImpl implements UraianTugasJabatanService 
         urtugJabatan.setBebanKerja(urtugWrapper.getBebanKerja());
         urtugJabatan.setPeralatan(urtugWrapper.getPeralatan());
         urtugJabatan.setKeterangan(urtugWrapper.getKeterangan());
+        urtugJabatan.setKuantitas(urtugWrapper.getKuantitas());
+        urtugJabatan.setSatuanKuantitas(urtugWrapper.getSatuanKuantitas());
+        urtugJabatan.setKualitas(urtugWrapper.getKualitas());
+        urtugJabatan.setWaktu(urtugWrapper.getWaktu());
+        urtugJabatan.setSatuanWaktu(urtugWrapper.getSatuanWaktu());
+        urtugJabatan.setBiaya(urtugWrapper.getBiaya());
         urtugJabatan.setCreatedBy(new AkunPegawai(urtugWrapper.getCreatedBy()));
     }
 
@@ -71,6 +77,12 @@ public class UraianTugasJabatanServiceImpl implements UraianTugasJabatanService 
         urtugJabatan.setBebanKerja(urtugJabatanWrapper.getBebanKerja());
         urtugJabatan.setPeralatan(urtugJabatanWrapper.getPeralatan());
         urtugJabatan.setKeterangan(urtugJabatanWrapper.getKeterangan());
+        urtugJabatan.setKuantitas(urtugJabatanWrapper.getKuantitas());
+        urtugJabatan.setSatuanKuantitas(urtugJabatanWrapper.getSatuanKuantitas());
+        urtugJabatan.setKualitas(urtugJabatanWrapper.getKualitas());
+        urtugJabatan.setWaktu(urtugJabatanWrapper.getWaktu());
+        urtugJabatan.setSatuanWaktu(urtugJabatanWrapper.getSatuanWaktu());
+        urtugJabatan.setBiaya(urtugJabatanWrapper.getBiaya());
         urtugJabatan.setCreatedBy(new AkunPegawai(urtugJabatanWrapper.getCreatedBy()));
 
         urtugJabatanTransactionalService.save(urtugJabatan);

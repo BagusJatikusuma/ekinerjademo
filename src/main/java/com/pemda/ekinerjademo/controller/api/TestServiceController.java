@@ -3,6 +3,7 @@ package com.pemda.ekinerjademo.controller.api;
 import com.pemda.ekinerjademo.model.ekinerjamodel.*;
 import com.pemda.ekinerjademo.model.simdamodel.TaKegiatan;
 import com.pemda.ekinerjademo.repository.ekinerjarepository.AkunPegawaiDao;
+import com.pemda.ekinerjademo.repository.ekinerjarepository.UnitKerjaKegiatanDao;
 import com.pemda.ekinerjademo.repository.simdarepository.TaKegiatanDao;
 import com.pemda.ekinerjademo.service.*;
 import org.slf4j.Logger;
@@ -10,10 +11,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -36,6 +34,8 @@ public class TestServiceController {
     private AkunPegawaiDao akunPegawaiDao;
     @Autowired
     private TaKegiatanDao taKegiatanDao;
+    @Autowired
+    private UnitKerjaKegiatanDao unitKerjaKegiatanDao;
 
     @Autowired
     public TestServiceController(
@@ -96,21 +96,95 @@ public class TestServiceController {
     }
 
     @RequestMapping(value = "/kegiatan-simda")
-    @Transactional("simdaTransactionManager")
     ResponseEntity<?> kegiatanSimda() {
         LOGGER.info("get kegiatan simda");
 
         List<TaKegiatan> taKegiatan = taKegiatanDao.findAllByQuery();
 
+        for (int i = 0; i < 30 ; i++) {
+            LOGGER.info(i+1+" : "+
+                    taKegiatan.get(i).getTaKegiatanId().getKdKegiatan().toString() +
+                    " : "+
+                    taKegiatan.get(i).getKetKegiatan()+
+                    " : "+
+                    taKegiatan.get(i).getPaguAnggaran());
+            LOGGER.info(i+1+" : "+
+                    taKegiatan.get(i).getTaProgram().getTaProgramId().getIdProg()+
+                    " : "
+                    + taKegiatan.get(i).getTaProgram().getKetProgram());
+            LOGGER.info(i+1+" : "+
+                    taKegiatan.get(i).getTaProgram().getTaSubUnit().getTaSubUnitId().getKdSub()+
+                    " : " +
+                    taKegiatan.get(i).getTaProgram().getTaSubUnit().getNmPimpinan() +
+                    " : "+
+                    taKegiatan.get(i).getTaProgram().getTaSubUnit().getRefSubUnit().getNmSubUnit());
+            LOGGER.info(i+1+" : "+
+                    taKegiatan.get(i).getTaProgram().getTaSubUnit().getRefSubUnit().getRefUnit().getRefUnitId().getKdUnit()+
+                    " : " +
+                    taKegiatan.get(i).getTaProgram().getTaSubUnit().getRefSubUnit().getRefUnit().getNmUnit());
+            LOGGER.info(i+1+" : "+
+                    taKegiatan.get(i).getTaProgram().getTaSubUnit().getRefSubUnit().getRefUnit().getRefBidang().getRefBidangId().getKdBIdang()+
+                    " : " +
+                    taKegiatan.get(i).getTaProgram().getTaSubUnit().getRefSubUnit().getRefUnit().getRefBidang().getNmBidang());
+        }
+
+//        LOGGER.info(
+//                taKegiatan.get(0)
+//                        .getTaProgram()
+//                        .getTaSubUnit()
+//                        .getRefSubUnit()
+//                        .getRefUnit()
+//                        .getRefBidang()
+//                        .getRefUrusan()
+//                        .getNmUrusan());
+
+        return null;
+    }
+
+    @RequestMapping(value = "/kegiatan-simda-unit-kerja/{kdUnitKerja}")
+    @Transactional("simdaTransactionManager")
+    ResponseEntity<?> kegiatanSimdaUnitKerja(@PathVariable("kdUnitKerja") String kdUnitKerja) {
+        LOGGER.info("get kegiatan simda");
+
+        UnitKerjaKegiatan unitKerjaKegiatan = unitKerjaKegiatanDao.findByKdUnitKerja(kdUnitKerja);
+
         LOGGER.info(
-                taKegiatan.get(0)
-                        .getTaProgram()
-                        .getTaSubUnit()
-                        .getRefSubUnit()
-                        .getRefUnit()
-                        .getRefBidang()
-                        .getRefUrusan()
-                        .getNmUrusan());
+                "kdUrusan : "+unitKerjaKegiatan.getKdUrusan()+
+                ", kdBidang : "+unitKerjaKegiatan.getKdBidang()+
+                ", kdUnit : "+unitKerjaKegiatan.getKdUnit());
+
+        List<TaKegiatan> taKegiatan = taKegiatanDao
+                .findAllByKdUnitKerja(
+                        unitKerjaKegiatan.getKdUrusan(),
+                        unitKerjaKegiatan.getKdBidang(),
+                        unitKerjaKegiatan.getKdUnit());
+
+        for (int i = 0; i < taKegiatan.size() ; i++) {
+            LOGGER.info(i+1+" : "+
+                    taKegiatan.get(i).getTaKegiatanId().getKdKegiatan().toString() +
+                    " : "+
+                    taKegiatan.get(i).getKetKegiatan()+
+                    " : "+
+                    taKegiatan.get(i).getPaguAnggaran());
+            LOGGER.info(i+1+" : "+
+                    taKegiatan.get(i).getTaProgram().getTaProgramId().getIdProg()+
+                    " : "
+                    + taKegiatan.get(i).getTaProgram().getKetProgram());
+            LOGGER.info(i+1+" : "+
+                    taKegiatan.get(i).getTaProgram().getTaSubUnit().getTaSubUnitId().getKdSub()+
+                    " : " +
+                    taKegiatan.get(i).getTaProgram().getTaSubUnit().getNmPimpinan() +
+                    " : "+
+                    taKegiatan.get(i).getTaProgram().getTaSubUnit().getRefSubUnit().getNmSubUnit());
+            LOGGER.info(i+1+" : "+
+                    taKegiatan.get(i).getTaProgram().getTaSubUnit().getRefSubUnit().getRefUnit().getRefUnitId().getKdUnit()+
+                    " : " +
+                    taKegiatan.get(i).getTaProgram().getTaSubUnit().getRefSubUnit().getRefUnit().getNmUnit());
+            LOGGER.info(i+1+" : "+
+                    taKegiatan.get(i).getTaProgram().getTaSubUnit().getRefSubUnit().getRefUnit().getRefBidang().getRefBidangId().getKdBIdang()+
+                    " : " +
+                    taKegiatan.get(i).getTaProgram().getTaSubUnit().getRefSubUnit().getRefUnit().getRefBidang().getNmBidang());
+        }
 
         return null;
     }

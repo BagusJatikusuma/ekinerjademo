@@ -9,4 +9,8 @@ import java.util.List;
  */
 public interface SopService {
     List<Sop> getSop();
+    Sop get(String kdSop);
+    void save(Sop sop);
+    void update(Sop sop);
+    void delete(String kdSop);
 }
