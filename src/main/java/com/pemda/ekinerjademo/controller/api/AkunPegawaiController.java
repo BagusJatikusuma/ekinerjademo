@@ -152,6 +152,8 @@ public class AkunPegawaiController {
                 = new ArrayList<>();
         List<QutPegawai> qutPegawaiList
                 = qutPegawaiService.getQutPegawai();
+        List<AkunPegawai> akunPegawaiList
+                = akunPegawaiService.getAkunPegawaiList();
 
 //        for (AkunPegawai akunPegawai : akunPegawaiList) {
 //            for (QutPegawai qutPegawai : qutPegawaiList) {
@@ -172,16 +174,25 @@ public class AkunPegawaiController {
         LOGGER.info("finish get pegawai from database kepegawaian");
 
         for (QutPegawai qutPegawai : qutPegawaiList) {
-            qutPegawaiWrappers
-                    .add(new QutPegawaiWrapper(
-                            qutPegawai.getNip(),
-                            qutPegawai.getNama(),
-                            qutPegawai.getKdJabatan(),
-                            qutPegawai.getJabatan(),
-                            qutPegawai.getKdUnitKerja(),
-                            qutPegawai.getUnitKerja(),
-                            qutPegawai.getPangkat(),
-                            qutPegawai.getGol()));
+            for (AkunPegawai akunPegawai : akunPegawaiList) {
+                if (qutPegawai.getNip()
+                        .equals(akunPegawai.getNipPegawai())) {
+                    qutPegawaiWrappers
+                            .add(new QutPegawaiWrapper(
+                                    qutPegawai.getNip(),
+                                    qutPegawai.getNama(),
+                                    qutPegawai.getKdJabatan(),
+                                    qutPegawai.getJabatan(),
+                                    qutPegawai.getKdUnitKerja(),
+                                    qutPegawai.getUnitKerja(),
+                                    qutPegawai.getPangkat(),
+                                    qutPegawai.getGol(),
+                                    akunPegawai.getRole().getRole()));
+                    break;
+                }
+
+            }
+
         }
 
         LOGGER.info("finish");
