@@ -10,7 +10,7 @@ import java.util.List;
  */
 public interface UrtugKegiatanService {
     List<UrtugKegiatan> findAll();
-    List<UrtugKegiatan> findAllByUraianTugasJabatan(String kdUrtug, String kdJabatan, String kdJenisUrtug);
+    List<UrtugKegiatan> findAllByUraianTugasJabatan(String kdUrtug, String kdJabatan, String kdJenisUrtug, Integer tahunUrtug);
     UrtugKegiatan find(UrtugKegiatanId urtugKegiatanId);
     void save(UrtugKegiatan urtugKegiatan);
     void update(UrtugKegiatan urtugKegiatan);

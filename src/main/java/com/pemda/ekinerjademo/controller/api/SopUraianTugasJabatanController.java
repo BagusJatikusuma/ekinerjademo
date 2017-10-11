@@ -3,7 +3,7 @@ package com.pemda.ekinerjademo.controller.api;
 import com.pemda.ekinerjademo.model.ekinerjamodel.SopUraianTugasJabatan;
 import com.pemda.ekinerjademo.model.ekinerjamodel.SopUraianTugasJabatanId;
 import com.pemda.ekinerjademo.service.SopUraianTugasJabatanService;
-import com.pemda.ekinerjademo.wrapper.output.CustomMessage;
+import com.pemda.ekinerjademo.wrapper.output.*;
 import com.pemda.ekinerjademo.wrapper.output.SopUraianTugasJabatanWrapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,8 +34,7 @@ public class SopUraianTugasJabatanController {
                         new SopUraianTugasJabatanId(
                                 sopUraianTugasJabatanWrapper.getKdSop(),
                                 sopUraianTugasJabatanWrapper.getKdUrtug(),
-                                sopUraianTugasJabatanWrapper.getKdJabatan(),
-                                sopUraianTugasJabatanWrapper.getKdJenisUrtug()));
+                                sopUraianTugasJabatanWrapper.getKdJabatan()));
 
         sopUraianTugasJabatanService.save(sopUraianTugasJabatan);
 
@@ -51,8 +50,7 @@ public class SopUraianTugasJabatanController {
                 .delete(new SopUraianTugasJabatanId(
                         sopUraianTugasJabatanWrapper.getKdSop(),
                         sopUraianTugasJabatanWrapper.getKdUrtug(),
-                        sopUraianTugasJabatanWrapper.getKdJabatan(),
-                        sopUraianTugasJabatanWrapper.getKdJenisUrtug()));
+                        sopUraianTugasJabatanWrapper.getKdJabatan()));
 
         return new ResponseEntity<Object>(new CustomMessage("sop uraian tugas jabatan deleted"), HttpStatus.OK);
     }

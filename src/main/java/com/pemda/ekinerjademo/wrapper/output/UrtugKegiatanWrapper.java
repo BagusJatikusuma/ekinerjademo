@@ -10,6 +10,7 @@ public class UrtugKegiatanWrapper {
     private String kdUrtug;
     private String kdJabatan;
     private String kdJenisUrtug;
+    private Integer tahunUrtug;
     private Integer kdUrusan;
     private Integer kdBidang;
     private Integer kdUnit;
@@ -22,10 +23,12 @@ public class UrtugKegiatanWrapper {
     private BigDecimal paguAnggaran;
 
     public UrtugKegiatanWrapper() {}
+
     public UrtugKegiatanWrapper(
             String kdUrtug,
             String kdJabatan,
             String kdJenisUrtug,
+            Integer tahunUrtug,
             Integer kdUrusan,
             Integer kdBidang,
             Integer kdUnit,
@@ -39,6 +42,7 @@ public class UrtugKegiatanWrapper {
         this.kdUrtug = kdUrtug;
         this.kdJabatan = kdJabatan;
         this.kdJenisUrtug = kdJenisUrtug;
+        this.tahunUrtug = tahunUrtug;
         this.kdUrusan = kdUrusan;
         this.kdBidang = kdBidang;
         this.kdUnit = kdUnit;
@@ -153,5 +157,13 @@ public class UrtugKegiatanWrapper {
 
     public void setPaguAnggaran(BigDecimal paguAnggaran) {
         this.paguAnggaran = paguAnggaran;
+    }
+
+    public Integer getTahunUrtug() {
+        return tahunUrtug;
+    }
+
+    public void setTahunUrtug(Integer tahunUrtug) {
+        this.tahunUrtug = tahunUrtug;
     }
 }

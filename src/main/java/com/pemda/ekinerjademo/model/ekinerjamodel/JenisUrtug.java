@@ -16,6 +16,13 @@ public class JenisUrtug {
     @Column(name = "jenis_urtug")
     private String jenisUrtug;
 
+    @OneToMany(
+            mappedBy = "jenisUrtug",
+            orphanRemoval = true,
+            cascade = { CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH, CascadeType.REMOVE},
+            targetEntity = UraianTugasJabatanJenisUrtug.class)
+    private List<UraianTugasJabatanJenisUrtug> uraianTugasJabatanJenisUrtugList;
+
     public String getKdJenisUrtug() {
         return kdJenisUrtug;
     }
@@ -30,5 +37,13 @@ public class JenisUrtug {
 
     public void setJenisUrtug(String jenisUrtug) {
         this.jenisUrtug = jenisUrtug;
+    }
+
+    public List<UraianTugasJabatanJenisUrtug> getUraianTugasJabatanJenisUrtugList() {
+        return uraianTugasJabatanJenisUrtugList;
+    }
+
+    public void setUraianTugasJabatanJenisUrtugList(List<UraianTugasJabatanJenisUrtug> uraianTugasJabatanJenisUrtugList) {
+        this.uraianTugasJabatanJenisUrtugList = uraianTugasJabatanJenisUrtugList;
     }
 }

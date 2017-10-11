@@ -1,12 +1,10 @@
 package com.pemda.ekinerjademo.service.impl;
 
 import com.pemda.ekinerjademo.model.ekinerjamodel.AkunPegawai;
-import com.pemda.ekinerjademo.projection.ekinerjaprojection.PasswordAkunPegawaiProjection;
 import com.pemda.ekinerjademo.repository.ekinerjarepository.AkunPegawaiDao;
 import com.pemda.ekinerjademo.service.AkunPegawaiService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;

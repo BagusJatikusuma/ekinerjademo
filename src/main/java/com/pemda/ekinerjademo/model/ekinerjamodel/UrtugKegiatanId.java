@@ -18,6 +18,9 @@ public class UrtugKegiatanId implements Serializable {
     @Column(name = "kd_jenis_urtug")
     private String kdJenisUrtug;
 
+    @Column(name = "tahun_urtug")
+    private Integer tahunUrtug;
+
     @Column(name = "kd_urusan")
     private Integer kdUrusan;
 
@@ -48,6 +51,7 @@ public class UrtugKegiatanId implements Serializable {
             String kdUrtug,
             String kdJabatan,
             String kdJenisUrtug,
+            Integer tahunUrtug,
             Integer kdUrusan,
             Integer kdBidang,
             Integer kdUnit,
@@ -59,6 +63,7 @@ public class UrtugKegiatanId implements Serializable {
         this.kdUrtug = kdUrtug;
         this.kdJabatan = kdJabatan;
         this.kdJenisUrtug = kdJenisUrtug;
+        this.tahunUrtug = tahunUrtug;
         this.kdUrusan = kdUrusan;
         this.kdBidang = kdBidang;
         this.kdUnit = kdUnit;
@@ -91,6 +96,14 @@ public class UrtugKegiatanId implements Serializable {
 
     public void setKdJenisUrtug(String kdJenisUrtug) {
         this.kdJenisUrtug = kdJenisUrtug;
+    }
+
+    public Integer getTahunUrtug() {
+        return tahunUrtug;
+    }
+
+    public void setTahunUrtug(Integer tahunUrtug) {
+        this.tahunUrtug = tahunUrtug;
     }
 
     public Integer getKdUrusan() {
@@ -167,6 +180,7 @@ public class UrtugKegiatanId implements Serializable {
         if (!kdUrtug.equals(that.kdUrtug)) return false;
         if (!kdJabatan.equals(that.kdJabatan)) return false;
         if (!kdJenisUrtug.equals(that.kdJenisUrtug)) return false;
+        if (!tahunUrtug.equals(that.tahunUrtug)) return false;
         if (!kdUrusan.equals(that.kdUrusan)) return false;
         if (!kdBidang.equals(that.kdBidang)) return false;
         if (!kdUnit.equals(that.kdUnit)) return false;
@@ -182,6 +196,7 @@ public class UrtugKegiatanId implements Serializable {
         int result = kdUrtug.hashCode();
         result = 31 * result + kdJabatan.hashCode();
         result = 31 * result + kdJenisUrtug.hashCode();
+        result = 31 * result + tahunUrtug.hashCode();
         result = 31 * result + kdUrusan.hashCode();
         result = 31 * result + kdBidang.hashCode();
         result = 31 * result + kdUnit.hashCode();

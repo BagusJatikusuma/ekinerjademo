@@ -15,7 +15,7 @@ public interface UraianTugasJabatanService {
     List<UraianTugasJabatan> getUraianTugasJabatanByJabatan(String kdJabatan);
     List<UraianTugasJabatan> getUraianTugasJabatan();
     void update(UraianTugasJabatanInputWrapper urtugWrapper);
-    void delete(String kdUrtug, String kdJabatan, String kdJenisUrtug);
+    void delete(String kdUrtug, String kdJabatan);
 }
 
 //    void save(String kdUrtug, String kdJabatan);

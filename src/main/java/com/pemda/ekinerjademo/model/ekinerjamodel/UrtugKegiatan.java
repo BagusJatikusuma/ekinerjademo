@@ -27,9 +27,14 @@ public class UrtugKegiatan {
                     name = "kd_jenis_urtug",
                     insertable = false,
                     updatable = false,
-                    referencedColumnName = "kd_jenis_urtug")
+                    referencedColumnName = "kd_jenis_urtug"),
+            @JoinColumn(
+                    name = "tahun_urtug",
+                    insertable = false,
+                    updatable = false,
+                    referencedColumnName = "tahun_urtug")
     })
-    private UraianTugasJabatan uraianTugasJabatan;
+    private UraianTugasJabatanJenisUrtug uraianTugasJabatanJenisUrtug;
 
     public UrtugKegiatanId getUrtugKegiatanId() {
         return urtugKegiatanId;
@@ -39,12 +44,11 @@ public class UrtugKegiatan {
         this.urtugKegiatanId = urtugKegiatanId;
     }
 
-    public UraianTugasJabatan getUraianTugasJabatan() {
-        return uraianTugasJabatan;
+    public UraianTugasJabatanJenisUrtug getUraianTugasJabatanJenisUrtug() {
+        return uraianTugasJabatanJenisUrtug;
     }
 
-    public void setUraianTugasJabatan(UraianTugasJabatan uraianTugasJabatan) {
-        this.uraianTugasJabatan = uraianTugasJabatan;
+    public void setUraianTugasJabatanJenisUrtug(UraianTugasJabatanJenisUrtug uraianTugasJabatanJenisUrtug) {
+        this.uraianTugasJabatanJenisUrtug = uraianTugasJabatanJenisUrtug;
     }
-
 }

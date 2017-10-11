@@ -9,6 +9,7 @@ public class UrtugKegiatanPegawaiWrapper {
     private String kdUrtug;
     private String kdJabatan;
     private String kdJenisUrtug;
+    private Integer tahunUrtug;
     private Integer kdUrusan;
     private Integer kdBidang;
     private Integer kdUnit;
@@ -29,6 +30,7 @@ public class UrtugKegiatanPegawaiWrapper {
             String kdUrtug,
             String kdJabatan,
             String kdJenisUrtug,
+            Integer tahunUrtug,
             Integer kdUrusan,
             Integer kdBidang,
             Integer kdUnit,
@@ -45,6 +47,7 @@ public class UrtugKegiatanPegawaiWrapper {
         this.kdUrtug = kdUrtug;
         this.kdJabatan = kdJabatan;
         this.kdJenisUrtug = kdJenisUrtug;
+        this.tahunUrtug = tahunUrtug;
         this.kdUrusan = kdUrusan;
         this.kdBidang = kdBidang;
         this.kdUnit = kdUnit;
@@ -186,5 +189,13 @@ public class UrtugKegiatanPegawaiWrapper {
 
     public void setStatusPenanggungJawab(String statusPenanggungJawab) {
         this.statusPenanggungJawab = statusPenanggungJawab;
+    }
+
+    public Integer getTahunUrtug() {
+        return tahunUrtug;
+    }
+
+    public void setTahunUrtug(Integer tahunUrtug) {
+        this.tahunUrtug = tahunUrtug;
     }
 }

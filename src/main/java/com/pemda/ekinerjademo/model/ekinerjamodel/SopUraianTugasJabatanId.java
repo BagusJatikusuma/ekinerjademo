@@ -18,20 +18,15 @@ public class SopUraianTugasJabatanId implements Serializable {
     @Column(name = "kd_jabatan")
     private String kdJabatan;
 
-    @Column(name = "kd_jenis_urtug")
-    private String kdJenisUrtug;
-
     public SopUraianTugasJabatanId() {
     }
     public SopUraianTugasJabatanId(
             String kdSop,
             String kdUrtug,
-            String kdJabatan,
-            String kdJenisUrtug) {
+            String kdJabatan) {
         this.kdSop = kdSop;
         this.kdUrtug = kdUrtug;
         this.kdJabatan = kdJabatan;
-        this.kdJenisUrtug = kdJenisUrtug;
     }
 
     public String getKdSop() {
@@ -58,14 +53,6 @@ public class SopUraianTugasJabatanId implements Serializable {
         this.kdJabatan = kdJabatan;
     }
 
-    public String getKdJenisUrtug() {
-        return kdJenisUrtug;
-    }
-
-    public void setKdJenisUrtug(String kdJenisUrtug) {
-        this.kdJenisUrtug = kdJenisUrtug;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -75,8 +62,7 @@ public class SopUraianTugasJabatanId implements Serializable {
 
         if (!kdSop.equals(that.kdSop)) return false;
         if (!kdUrtug.equals(that.kdUrtug)) return false;
-        if (!kdJabatan.equals(that.kdJabatan)) return false;
-        return kdJenisUrtug.equals(that.kdJenisUrtug);
+        return kdJabatan.equals(that.kdJabatan);
     }
 
     @Override
@@ -84,8 +70,6 @@ public class SopUraianTugasJabatanId implements Serializable {
         int result = kdSop.hashCode();
         result = 31 * result + kdUrtug.hashCode();
         result = 31 * result + kdJabatan.hashCode();
-        result = 31 * result + kdJenisUrtug.hashCode();
         return result;
     }
-
 }

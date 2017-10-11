@@ -4,13 +4,11 @@ import com.pemda.ekinerjademo.model.bismamodel.QutPegawai;
 import com.pemda.ekinerjademo.model.bismamodel.TkdJabatan;
 import com.pemda.ekinerjademo.model.ekinerjamodel.AkunPegawai;
 import com.pemda.ekinerjademo.model.ekinerjamodel.Role;
+import com.pemda.ekinerjademo.model.ekinerjamodel.StatusPenanggungJawabKegiatan;
 import com.pemda.ekinerjademo.repository.bismarepository.QutPegawaiDao;
 import com.pemda.ekinerjademo.repository.bismarepository.TkdJabatanDao;
 import com.pemda.ekinerjademo.repository.ekinerjarepository.AkunPegawaiDao;
-import com.pemda.ekinerjademo.service.AkunPegawaiService;
-import com.pemda.ekinerjademo.service.QutPegawaiService;
-import com.pemda.ekinerjademo.service.RoleService;
-import com.pemda.ekinerjademo.service.TkdJabatanService;
+import com.pemda.ekinerjademo.service.*;
 import com.pemda.ekinerjademo.wrapper.input.AkunPegawaiRoleInputWrapper;
 import com.pemda.ekinerjademo.wrapper.output.*;
 import org.slf4j.Logger;
@@ -40,6 +38,7 @@ public class AkunPegawaiController {
     private RoleService roleService;
     private TkdJabatanService tkdJabatanService;
     private QutPegawaiService qutPegawaiService;
+    private StatusPenanggungJawabKegiatanService statusPenanggungJawabKegiatanService;
 
     @Autowired
     public AkunPegawaiController(
@@ -49,7 +48,8 @@ public class AkunPegawaiController {
             AkunPegawaiService akunPegawaiService,
             RoleService roleService,
             TkdJabatanService tkdJabatanService,
-            QutPegawaiService qutPegawaiService) {
+            QutPegawaiService qutPegawaiService,
+            StatusPenanggungJawabKegiatanService statusPenanggungJawabKegiatanService) {
         this.tkdJabatanDao = tkdJabatanDao;
         this.qutPegawaiDao = qutPegawaiDao;
         this.akunPegawaiDao = akunPegawaiDao;
@@ -57,6 +57,7 @@ public class AkunPegawaiController {
         this.roleService = roleService;
         this.tkdJabatanService = tkdJabatanService;
         this.qutPegawaiService = qutPegawaiService;
+        this.statusPenanggungJawabKegiatanService = statusPenanggungJawabKegiatanService;
     }
 
     @RequestMapping(value = "/test", method = RequestMethod.GET)
@@ -228,6 +229,23 @@ public class AkunPegawaiController {
         LOGGER.info("finish");
 
         return new ResponseEntity<Object>(qutPegawaiWrappers, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/get-status-penanggung-jawab", method = RequestMethod.GET)
+    ResponseEntity<?> getStatusPenanggungJawab() {
+        LOGGER.info("get all status penanggung jawab");
+
+        List<StatusPenanggungJawabWrapper> statusPenanggungJawabWrapperList
+                = new ArrayList<>();
+        List<StatusPenanggungJawabKegiatan> statusPenanggungJawabKegiatanList
+                = statusPenanggungJawabKegiatanService.getAll();
+
+        for (StatusPenanggungJawabKegiatan spj : statusPenanggungJawabKegiatanList) {
+            statusPenanggungJawabWrapperList
+                    .add(new StatusPenanggungJawabWrapper(spj.getKdStatus(), spj.getStatus()));
+        }
+
+        return new ResponseEntity<Object>(statusPenanggungJawabWrapperList, HttpStatus.OK);
     }
 
     //sampai disini

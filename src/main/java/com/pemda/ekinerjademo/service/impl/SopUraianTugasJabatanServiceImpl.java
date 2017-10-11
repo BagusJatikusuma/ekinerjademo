@@ -22,10 +22,9 @@ public class SopUraianTugasJabatanServiceImpl implements SopUraianTugasJabatanSe
     @Override
     public List<SopUraianTugasJabatan> findByUraianTugasJabatan(UraianTugasJabatanId uraianTugasJabatanId) {
         return sopUrtugJabatanDao
-                .findBySopUraianTugasJabatanId_KdUrtugAndSopUraianTugasJabatanId_KdJabatanAndSopUraianTugasJabatanId_KdJenisUrtug(
+                .findBySopUraianTugasJabatanId_KdUrtugAndSopUraianTugasJabatanId_KdJabatan(
                         uraianTugasJabatanId.getKdUrtug(),
-                        uraianTugasJabatanId.getKdJabatan(),
-                        uraianTugasJabatanId.getKdJenisUrtug()
+                        uraianTugasJabatanId.getKdJabatan()
                 );
     }
 

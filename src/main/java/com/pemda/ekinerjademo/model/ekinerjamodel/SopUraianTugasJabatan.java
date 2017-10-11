@@ -12,6 +12,14 @@ public class SopUraianTugasJabatan {
     private SopUraianTugasJabatanId sopUraianTugasJabatanId;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(
+            name = "kd_sop",
+            insertable = false,
+            updatable = false,
+            referencedColumnName = "kd_sop")
+    private Sop sop;
+
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumns({
             @JoinColumn(
                     name = "kd_urtug",
@@ -22,12 +30,7 @@ public class SopUraianTugasJabatan {
                     name = "kd_jabatan",
                     insertable = false,
                     updatable = false,
-                    referencedColumnName = "kd_jabatan"),
-            @JoinColumn(
-                    name = "kd_jenis_urtug",
-                    insertable = false,
-                    updatable = false,
-                    referencedColumnName = "kd_jenis_urtug")
+                    referencedColumnName = "kd_jabatan")
     })
     private UraianTugasJabatan uraianTugasJabatan;
 
@@ -43,7 +46,11 @@ public class SopUraianTugasJabatan {
         return uraianTugasJabatan;
     }
 
-    public void setUraianTugasJabatan(UraianTugasJabatan uraianTugasJabatan) {
-        this.uraianTugasJabatan = uraianTugasJabatan;
+    public Sop getSop() {
+        return sop;
+    }
+
+    public void setSop(Sop sop) {
+        this.sop = sop;
     }
 }

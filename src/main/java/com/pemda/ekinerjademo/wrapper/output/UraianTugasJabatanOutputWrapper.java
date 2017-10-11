@@ -1,11 +1,10 @@
-package com.pemda.ekinerjademo.wrapper.input;
-
-import java.util.List;
+package com.pemda.ekinerjademo.wrapper.output;
 
 /**
- * Created by bagus on 11/09/17.
+ * Created by bagus on 10/10/17.
  */
-public class UraianTugasJabatanInputWrapper {
+public class UraianTugasJabatanOutputWrapper {
+    private String urtug;
     private String kdUrtug;
     private String kdJabatan;
     private Integer kuantitas;
@@ -13,7 +12,27 @@ public class UraianTugasJabatanInputWrapper {
     private Integer kualitas;
     private Integer waktu;
     private Integer biaya;
-    private String createdBy;
+
+    public UraianTugasJabatanOutputWrapper() {
+    }
+    public UraianTugasJabatanOutputWrapper(
+            String urtug,
+            String kdUrtug,
+            String kdJabatan,
+            Integer kuantitas,
+            String satuanKuantitas,
+            Integer kualitas,
+            Integer waktu,
+            Integer biaya) {
+        this.urtug = urtug;
+        this.kdUrtug = kdUrtug;
+        this.kdJabatan = kdJabatan;
+        this.kuantitas = kuantitas;
+        this.satuanKuantitas = satuanKuantitas;
+        this.kualitas = kualitas;
+        this.waktu = waktu;
+        this.biaya = biaya;
+    }
 
     public String getKdUrtug() {
         return kdUrtug;
@@ -31,12 +50,12 @@ public class UraianTugasJabatanInputWrapper {
         this.kdJabatan = kdJabatan;
     }
 
-    public String getCreatedBy() {
-        return createdBy;
+    public String getUrtug() {
+        return urtug;
     }
 
-    public void setCreatedBy(String createdBy) {
-        this.createdBy = createdBy;
+    public void setUrtug(String urtug) {
+        this.urtug = urtug;
     }
 
     public Integer getKuantitas() {

@@ -86,26 +86,18 @@ public class UraianTugasJabatanController {
 
                         jabatanUraianTugasWrapperList
                                 .add(new UraianTugasJenisWrapper(
-                                        new UraianTugasWrapper(uraianTugas.getKdUrtug(), uraianTugas.getDeskripsi()),
-                                        new JenisUrtugWrapper(
-                                                uraianTugasJabatan.getJenisUrtug().getKdJenisUrtug(),
-                                                uraianTugasJabatan.getJenisUrtug().getJenisUrtug()),
-                                        uraianTugasJabatan.getSatuan(),
-                                        uraianTugasJabatan.getVolumeKerja(),
-                                        uraianTugasJabatan.getNormaWaktu(),
-                                        uraianTugasJabatan.getBebanKerja(),
-                                        uraianTugasJabatan.getPeralatan(),
-                                        uraianTugasJabatan.getKeterangan(),
+                                        new UraianTugasWrapper(
+                                                uraianTugas.getKdUrtug(),
+                                                uraianTugas.getDeskripsi()),
                                         uraianTugasJabatan.getKuantitas(),
                                         uraianTugasJabatan.getSatuanKuantitas(),
                                         uraianTugasJabatan.getKualitas(),
                                         uraianTugasJabatan.getWaktu(),
-                                        uraianTugasJabatan.getSatuanWaktu(),
                                         uraianTugasJabatan.getBiaya()
                                 ));
 
                         found = true;
-//                        break;
+                        break;
                     }
 
                 }
@@ -130,28 +122,31 @@ public class UraianTugasJabatanController {
         return new ResponseEntity<Object>(uraianTugasJabatanWrapper, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/get-uraian-jenis-tugas-jabatan/{kdJabatan}", method = RequestMethod.GET)
+
+    @RequestMapping(value = "/get-uraian-tugas-jabatan-by-jabatan/{kdJabatan}", method = RequestMethod.GET)
     @Transactional
-    ResponseEntity<?> getUraianJenisTugasJabatan(@PathVariable("kdJabatan") String kdJabatan) {
-        LOGGER.info("Get uraian jenis tugas jabatan");
+    ResponseEntity<?> getUraianTugasJabatanByJabatan(@PathVariable("kdJabatan") String kdJabatan) {
+        LOGGER.info("Get uraian tugas jabatan by jabatan");
 
-//        List<JenisUrtugUrtug> jenisUrtugUrtugList
-//                = jenisUrtugUrtugService.getJenisUrtugUrtugByJabatan(kdJabatan);
-//
-//        if (jenisUrtugUrtugList.isEmpty()) {
-//            return null;
-//        }
-//
-//        for (JenisUrtugUrtug urtugJabatan : jenisUrtugUrtugList) {
-//            LOGGER.info(
-//                    urtugJabatan.getJenisUrtug().getJenisUrtug()+
-//                    " : "+
-//                    urtugJabatan.getUraianTugasJabatan().getUraianTugas().getDeskripsi()+
-//                    " : "+
-//                    urtugJabatan.getUraianTugasJabatan().getBebanKerja());
-//        }
+        List<UraianTugasJabatanOutputWrapper> urtugJabatanWrapperList
+                = new ArrayList<>();
+        List<UraianTugasJabatan> uraianTugasJabatanList =
+                uraianTugasJabatanService.getUraianTugasJabatanByJabatan(kdJabatan);
 
-        return null;
+        for (UraianTugasJabatan uraianTugasJabatan : uraianTugasJabatanList) {
+            urtugJabatanWrapperList
+                    .add(new UraianTugasJabatanOutputWrapper(
+                            uraianTugasJabatan.getUraianTugas().getDeskripsi(),
+                            uraianTugasJabatan.getUraianTugasJabatanId().getKdUrtug(),
+                            uraianTugasJabatan.getUraianTugasJabatanId().getKdJabatan(),
+                            uraianTugasJabatan.getKuantitas(),
+                            uraianTugasJabatan.getSatuanKuantitas(),
+                            uraianTugasJabatan.getKualitas(),
+                            uraianTugasJabatan.getWaktu(),
+                            uraianTugasJabatan.getBiaya()));
+        }
+
+        return new ResponseEntity<Object>(urtugJabatanWrapperList, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/add-uraian-tugas-jabatan", method = RequestMethod.POST)
@@ -174,14 +169,13 @@ public class UraianTugasJabatanController {
         return new ResponseEntity<Object>(new CustomMessage("urtug jabatan created"), HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/delete-uraian-tugas-jabatan/{kdJabatan}/{kdUrtug}/{kdJenisUrtug}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/delete-uraian-tugas-jabatan/{kdJabatan}/{kdUrtug}", method = RequestMethod.DELETE)
     ResponseEntity<?> deleteUraianTugasJabatan(
             @PathVariable("kdJabatan") String kdJabatan,
-            @PathVariable("kdUrtug") String kdUrtug,
-            @PathVariable("kdJenisUrtug") String kdJenisUrtug) {
+            @PathVariable("kdUrtug") String kdUrtug) {
         LOGGER.info("delete urtug jabatan");
 
-        uraianTugasJabatanService.delete(kdUrtug, kdJabatan, kdJenisUrtug);
+        uraianTugasJabatanService.delete(kdUrtug, kdJabatan);
 
         return new ResponseEntity<Object>(new CustomMessage("uraian tugas jabatan deleted"), HttpStatus.OK);
     }

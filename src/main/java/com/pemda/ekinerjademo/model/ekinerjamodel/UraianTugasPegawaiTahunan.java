@@ -11,39 +11,41 @@ public class UraianTugasPegawaiTahunan {
     @EmbeddedId
     private UraianTugasPegawaiTahunanId uraianTugasPegawaiTahunanId;
 
-    @Column(name = "tahun_uraian_tugas")
-    private Long tahunUraianTugas;
-
     @Column(name = "status_pengerjaan")
     private Integer statusPengerjaan;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumns({
+            @JoinColumn(
+                    name = "kd_urtug",
+                    insertable = false,
+                    updatable = false,
+                    referencedColumnName = "kd_urtug"),
+            @JoinColumn(
+                    name = "kd_jabatan",
+                    insertable = false,
+                    updatable = false,
+                    referencedColumnName = "kd_jabatan"),
+            @JoinColumn(
+                    name = "kd_jenis_urtug",
+                    insertable = false,
+                    updatable = false,
+                    referencedColumnName = "kd_jenis_urtug"),
+            @JoinColumn(
+                    name = "tahun_urtug",
+                    insertable = false,
+                    updatable = false,
+                    referencedColumnName = "tahun_urtug")
+    })
+    private UraianTugasJabatanJenisUrtug uraianTugasJabatanJenisUrtug;
+
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(
             name = "nip_pegawai",
             insertable = false,
             updatable = false,
             referencedColumnName = "nip_pegawai")
     private AkunPegawai akunPegawai;
-
-//    @ManyToOne
-//    @JoinColumns({
-//            @JoinColumn(
-//                    name = "kd_jenis_urtug",
-//                    referencedColumnName = "kd_jenis_urtug",
-//                    insertable = false,
-//                    updatable = false),
-//            @JoinColumn(
-//                    name = "kd_urtug",
-//                    referencedColumnName = "kd_urtug",
-//                    insertable = false,
-//                    updatable = false),
-//            @JoinColumn(
-//                    name = "kd_jabatan",
-//                    referencedColumnName = "kd_jabatan",
-//                    insertable = false,
-//                    updatable = false)
-//    })
-//    private JenisUrtugUrtug jenisUrtugUrtug;
 
     public UraianTugasPegawaiTahunanId getUraianTugasPegawaiTahunanId() {
         return uraianTugasPegawaiTahunanId;
@@ -61,19 +63,19 @@ public class UraianTugasPegawaiTahunan {
         this.akunPegawai = akunPegawai;
     }
 
-    public Long getTahunUraianTugas() {
-        return tahunUraianTugas;
-    }
-
-    public void setTahunUraianTugas(Long tahunUraianTugas) {
-        this.tahunUraianTugas = tahunUraianTugas;
-    }
-
     public Integer getStatusPengerjaan() {
         return statusPengerjaan;
     }
 
     public void setStatusPengerjaan(Integer statusPengerjaan) {
         this.statusPengerjaan = statusPengerjaan;
+    }
+
+    public UraianTugasJabatanJenisUrtug getUraianTugasJabatanJenisUrtug() {
+        return uraianTugasJabatanJenisUrtug;
+    }
+
+    public void setUraianTugasJabatanJenisUrtug(UraianTugasJabatanJenisUrtug uraianTugasJabatanJenisUrtug) {
+        this.uraianTugasJabatanJenisUrtug = uraianTugasJabatanJenisUrtug;
     }
 }

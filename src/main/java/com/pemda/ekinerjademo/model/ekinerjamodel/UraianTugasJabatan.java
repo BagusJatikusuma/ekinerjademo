@@ -13,24 +13,6 @@ public class UraianTugasJabatan implements Serializable {
     @EmbeddedId
     private UraianTugasJabatanId uraianTugasJabatanId;
 
-    @Column(name = "satuan")
-    private String satuan;
-
-    @Column(name = "volume_kerja")
-    private Integer volumeKerja;
-
-    @Column(name = "norma_waktu")
-    private Integer normaWaktu;
-
-    @Column(name = "beban_kerja")
-    private Integer bebanKerja;
-
-    @Column(name = "peralatan")
-    private String peralatan;
-
-    @Column(name = "keterangan")
-    private  String keterangan;
-
     @Column(name = "kuantitas")
     private Integer kuantitas;
 
@@ -43,23 +25,12 @@ public class UraianTugasJabatan implements Serializable {
     @Column(name = "waktu")
     private Integer waktu;
 
-    @Column(name = "satuan_waktu")
-    private String satuanWaktu;
-
     @Column(name = "biaya")
-    private Long biaya;
+    private Integer biaya;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "created_by")
     private AkunPegawai createdBy;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(
-            name = "kd_jenis_urtug",
-            insertable = false,
-            updatable = false,
-            referencedColumnName = "kd_jenis_urtug")
-    private JenisUrtug jenisUrtug;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(
@@ -69,12 +40,15 @@ public class UraianTugasJabatan implements Serializable {
             referencedColumnName = "kd_urtug")
     private UraianTugas uraianTugas;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "uraianTugasJabatan")
-    private List<UrtugKegiatan> urtugKegiatanList;
+    @OneToMany(
+            mappedBy = "uraianTugasJabatan",
+            orphanRemoval = true,
+            cascade = { CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH, CascadeType.REMOVE},
+            targetEntity = UraianTugasJabatanJenisUrtug.class)
+    private List<UraianTugasJabatanJenisUrtug> uraianTugasJabatanJenisUrtugList;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "uraianTugasJabatan")
     private List<SopUraianTugasJabatan> sopUraianTugasJabatanList;
-
 
     public UraianTugasJabatanId getUraianTugasJabatanId() {
         return uraianTugasJabatanId;
@@ -98,69 +72,6 @@ public class UraianTugasJabatan implements Serializable {
 
     public void setCreatedBy(AkunPegawai createdBy) {
         this.createdBy = createdBy;
-    }
-    public String getSatuan() {
-        return satuan;
-    }
-
-    public void setSatuan(String satuan) {
-        this.satuan = satuan;
-    }
-
-    public Integer getVolumeKerja() {
-        return volumeKerja;
-    }
-
-    public void setVolumeKerja(Integer volumeKerja) {
-        this.volumeKerja = volumeKerja;
-    }
-
-    public Integer getNormaWaktu() {
-        return normaWaktu;
-    }
-
-    public void setNormaWaktu(Integer normaWaktu) {
-        this.normaWaktu = normaWaktu;
-    }
-
-    public Integer getBebanKerja() {
-        return bebanKerja;
-    }
-
-    public void setBebanKerja(Integer bebanKerja) {
-        this.bebanKerja = bebanKerja;
-    }
-
-    public String getPeralatan() {
-        return peralatan;
-    }
-
-    public void setPeralatan(String peralatan) {
-        this.peralatan = peralatan;
-    }
-
-    public String getKeterangan() {
-        return keterangan;
-    }
-
-    public void setKeterangan(String keterangan) {
-        this.keterangan = keterangan;
-    }
-
-    public JenisUrtug getJenisUrtug() {
-        return jenisUrtug;
-    }
-
-    public void setJenisUrtug(JenisUrtug jenisUrtug) {
-        this.jenisUrtug = jenisUrtug;
-    }
-
-    public List<UrtugKegiatan> getUrtugKegiatanList() {
-        return urtugKegiatanList;
-    }
-
-    public void setUrtugKegiatanList(List<UrtugKegiatan> urtugKegiatanList) {
-        this.urtugKegiatanList = urtugKegiatanList;
     }
 
     public List<SopUraianTugasJabatan> getSopUraianTugasJabatanList() {
@@ -203,19 +114,19 @@ public class UraianTugasJabatan implements Serializable {
         this.waktu = waktu;
     }
 
-    public String getSatuanWaktu() {
-        return satuanWaktu;
-    }
-
-    public void setSatuanWaktu(String satuanWaktu) {
-        this.satuanWaktu = satuanWaktu;
-    }
-
-    public Long getBiaya() {
+    public Integer getBiaya() {
         return biaya;
     }
 
-    public void setBiaya(Long biaya) {
+    public void setBiaya(Integer biaya) {
         this.biaya = biaya;
+    }
+
+    public List<UraianTugasJabatanJenisUrtug> getUraianTugasJabatanJenisUrtugList() {
+        return uraianTugasJabatanJenisUrtugList;
+    }
+
+    public void setUraianTugasJabatanJenisUrtugList(List<UraianTugasJabatanJenisUrtug> uraianTugasJabatanJenisUrtugList) {
+        this.uraianTugasJabatanJenisUrtugList = uraianTugasJabatanJenisUrtugList;
     }
 }

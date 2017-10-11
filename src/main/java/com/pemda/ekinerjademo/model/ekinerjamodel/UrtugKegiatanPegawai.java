@@ -29,6 +29,11 @@ public class UrtugKegiatanPegawai {
                     updatable = false,
                     referencedColumnName = "kd_jenis_urtug"),
             @JoinColumn(
+                    name = "tahun_urtug",
+                    insertable = false,
+                    updatable = false,
+                    referencedColumnName = "tahun_urtug"),
+            @JoinColumn(
                     name = "kd_urusan",
                     insertable = false,
                     updatable = false,

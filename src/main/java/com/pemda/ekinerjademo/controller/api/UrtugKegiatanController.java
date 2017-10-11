@@ -11,6 +11,7 @@ import com.pemda.ekinerjademo.service.UnitKerjaKegiatanService;
 import com.pemda.ekinerjademo.service.UrtugKegiatanService;
 import com.pemda.ekinerjademo.wrapper.input.UraianTugasJabatanInputWrapper;
 import com.pemda.ekinerjademo.wrapper.input.UrtugJabatanIdInputWrapper;
+import com.pemda.ekinerjademo.wrapper.input.UrtugJabatanJenisIdInputWrapper;
 import com.pemda.ekinerjademo.wrapper.input.UrtugKegiatanInputWrapper;
 import com.pemda.ekinerjademo.wrapper.output.CustomMessage;
 import com.pemda.ekinerjademo.wrapper.output.UrtugKegiatanWrapper;
@@ -54,7 +55,7 @@ public class UrtugKegiatanController {
 
     @RequestMapping(value = "/get-urtug-kegiatan-by-jabatan", method = RequestMethod.POST)
     ResponseEntity<?> getUrtugKegiatanByUrtugJabatan(
-            @RequestBody UrtugJabatanIdInputWrapper urtugJabatanWrapper) {
+            @RequestBody UrtugJabatanJenisIdInputWrapper urtugJabatanWrapper) {
         List<UrtugKegiatanWrapper> urtugKegiatanWrapperList = new ArrayList<>();
 
         UnitKerjaKegiatan unitKerjaKegiatan
@@ -66,7 +67,8 @@ public class UrtugKegiatanController {
                 = urtugKegiatanService.findAllByUraianTugasJabatan(
                         urtugJabatanWrapper.getKdUrtug(),
                         urtugJabatanWrapper.getKdJabatan(),
-                        urtugJabatanWrapper.getKdJenisUrtug());
+                        urtugJabatanWrapper.getKdJenisUrtug(),
+                        urtugJabatanWrapper.getTahunUrtug());
 
         for (UrtugKegiatan urtugKegiatan : urtugKegiatanList) {
             for (TaKegiatan taKegiatan : taKegiatanList) {
@@ -77,6 +79,7 @@ public class UrtugKegiatanController {
                                     urtugKegiatan.getUrtugKegiatanId().getKdUrtug(),
                                     urtugKegiatan.getUrtugKegiatanId().getKdJabatan(),
                                     urtugKegiatan.getUrtugKegiatanId().getKdJenisUrtug(),
+                                    urtugKegiatan.getUrtugKegiatanId().getTahunUrtug(),
                                     urtugKegiatan.getUrtugKegiatanId().getKdUrusan(),
                                     urtugKegiatan.getUrtugKegiatanId().getKdBidang(),
                                     urtugKegiatan.getUrtugKegiatanId().getKdUnit(),
@@ -104,6 +107,7 @@ public class UrtugKegiatanController {
                         urtugKegiatanInputWrapper.getKdUrtug(),
                         urtugKegiatanInputWrapper.getKdJabatan(),
                         urtugKegiatanInputWrapper.getKdJenisUrtug(),
+                        urtugKegiatanInputWrapper.getTahunUrtug(),
                         urtugKegiatanInputWrapper.getKdUrusan(),
                         urtugKegiatanInputWrapper.getKdBidang(),
                         urtugKegiatanInputWrapper.getKdUnit(),
@@ -111,7 +115,8 @@ public class UrtugKegiatanController {
                         urtugKegiatanInputWrapper.getTahun(),
                         urtugKegiatanInputWrapper.getKdProg(),
                         urtugKegiatanInputWrapper.getIdProg(),
-                        urtugKegiatanInputWrapper.getKdKeg()));
+                        urtugKegiatanInputWrapper.getKdKeg()
+                ));
 
         urtugKegiatanService.save(urtugKegiatan);
 
@@ -128,6 +133,7 @@ public class UrtugKegiatanController {
                         urtugKegiatanInputWrapper.getKdUrtug(),
                         urtugKegiatanInputWrapper.getKdJabatan(),
                         urtugKegiatanInputWrapper.getKdJenisUrtug(),
+                        urtugKegiatanInputWrapper.getTahunUrtug(),
                         urtugKegiatanInputWrapper.getKdUrusan(),
                         urtugKegiatanInputWrapper.getKdBidang(),
                         urtugKegiatanInputWrapper.getKdUnit(),
@@ -135,7 +141,8 @@ public class UrtugKegiatanController {
                         urtugKegiatanInputWrapper.getTahun(),
                         urtugKegiatanInputWrapper.getKdProg(),
                         urtugKegiatanInputWrapper.getIdProg(),
-                        urtugKegiatanInputWrapper.getKdKeg()));
+                        urtugKegiatanInputWrapper.getKdKeg()
+                ));
 
         urtugKegiatanService.update(urtugKegiatan);
 
@@ -151,6 +158,7 @@ public class UrtugKegiatanController {
                         urtugKegiatanInputWrapper.getKdUrtug(),
                         urtugKegiatanInputWrapper.getKdJabatan(),
                         urtugKegiatanInputWrapper.getKdJenisUrtug(),
+                        urtugKegiatanInputWrapper.getTahunUrtug(),
                         urtugKegiatanInputWrapper.getKdUrusan(),
                         urtugKegiatanInputWrapper.getKdBidang(),
                         urtugKegiatanInputWrapper.getKdUnit(),
@@ -158,7 +166,8 @@ public class UrtugKegiatanController {
                         urtugKegiatanInputWrapper.getTahun(),
                         urtugKegiatanInputWrapper.getKdProg(),
                         urtugKegiatanInputWrapper.getIdProg(),
-                        urtugKegiatanInputWrapper.getKdKeg()));
+                        urtugKegiatanInputWrapper.getKdKeg()
+                ));
 
         return new ResponseEntity<Object>(new CustomMessage("urtug kegiatan deleted"), HttpStatus.OK);
     }

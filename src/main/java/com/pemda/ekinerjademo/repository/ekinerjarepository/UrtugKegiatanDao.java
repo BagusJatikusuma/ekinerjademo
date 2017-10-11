@@ -14,8 +14,9 @@ import java.util.List;
 public interface UrtugKegiatanDao extends JpaRepository<UrtugKegiatan, Long> {
     UrtugKegiatan findByUrtugKegiatanId(UrtugKegiatanId urtugKegiatanId);
     void deleteByUrtugKegiatanId(UrtugKegiatanId urtugKegiatanId);
-    List<UrtugKegiatan> findByUrtugKegiatanId_KdUrtugAndUrtugKegiatanId_KdJabatanAndUrtugKegiatanId_KdJenisUrtug(
+    List<UrtugKegiatan> findByUrtugKegiatanId_KdUrtugAndUrtugKegiatanId_KdJabatanAndUrtugKegiatanId_KdJenisUrtugAndUrtugKegiatanId_TahunUrtug(
             String kdUrtug,
             String kdJabatan,
-            String kdJenisUrtug);
+            String kdJenisUrtug,
+            Integer tahunUrtug);
 }

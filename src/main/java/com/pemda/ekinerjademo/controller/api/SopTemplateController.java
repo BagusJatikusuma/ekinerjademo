@@ -3,7 +3,7 @@ package com.pemda.ekinerjademo.controller.api;
 import com.pemda.ekinerjademo.model.ekinerjamodel.SopTemplate;
 import com.pemda.ekinerjademo.model.ekinerjamodel.SopTemplateId;
 import com.pemda.ekinerjademo.service.SopTemplateService;
-import com.pemda.ekinerjademo.wrapper.output.CustomMessage;
+import com.pemda.ekinerjademo.wrapper.output.*;
 import com.pemda.ekinerjademo.wrapper.output.SopTemplateWrapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

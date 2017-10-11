@@ -12,10 +12,9 @@ import java.util.List;
  */
 @Repository
 public interface SopUraianTugasJabatanDao extends JpaRepository<SopUraianTugasJabatan, String> {
-    SopUraianTugasJabatan findBySopUraianTugasJabatanId(SopUraianTugasJabatan sopUraianTugasJabatan);
+    SopUraianTugasJabatan findBySopUraianTugasJabatanId(SopUraianTugasJabatanId sopUraianTugasJabatanId);
     void deleteBySopUraianTugasJabatanId(SopUraianTugasJabatanId sopUraianTugasJabatanId);
-    List<SopUraianTugasJabatan> findBySopUraianTugasJabatanId_KdUrtugAndSopUraianTugasJabatanId_KdJabatanAndSopUraianTugasJabatanId_KdJenisUrtug(
+    List<SopUraianTugasJabatan> findBySopUraianTugasJabatanId_KdUrtugAndSopUraianTugasJabatanId_KdJabatan(
             String kdUrtug,
-            String kdJabatan,
-            String kdJenisUrtug);
+            String kdJabatan);
 }

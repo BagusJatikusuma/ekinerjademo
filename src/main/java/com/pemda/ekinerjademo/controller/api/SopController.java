@@ -60,8 +60,7 @@ public class SopController {
                 = sopUraianTugasJabatanService
                 .findByUraianTugasJabatan(new UraianTugasJabatanId(
                         urtugJabatanIdInputWrapper.getKdUrtug(),
-                        urtugJabatanIdInputWrapper.getKdJabatan(),
-                        urtugJabatanIdInputWrapper.getKdJenisUrtug()));
+                        urtugJabatanIdInputWrapper.getKdJabatan()));
 
         if (sopUraianTugasJabatans.isEmpty()) {
             for (Sop sop : sopList) {

@@ -9,6 +9,7 @@ public class UrtugKegiatanInputWrapper {
     private String kdUrtug;
     private String kdJabatan;
     private String kdJenisUrtug;
+    private Integer tahunUrtug;
     private Integer kdUrusan;
     private Integer kdBidang;
     private Integer kdUnit;
@@ -106,4 +107,11 @@ public class UrtugKegiatanInputWrapper {
         this.kdKeg = kdKeg;
     }
 
+    public Integer getTahunUrtug() {
+        return tahunUrtug;
+    }
+
+    public void setTahunUrtug(Integer tahunUrtug) {
+        this.tahunUrtug = tahunUrtug;
+    }
 }
