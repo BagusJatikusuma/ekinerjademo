@@ -2,7 +2,9 @@ package com.pemda.ekinerjademo.controller.api;
 
 import com.pemda.ekinerjademo.model.ekinerjamodel.SopUraianTugasJabatan;
 import com.pemda.ekinerjademo.model.ekinerjamodel.SopUraianTugasJabatanId;
+import com.pemda.ekinerjademo.model.ekinerjamodel.UraianTugasJabatanId;
 import com.pemda.ekinerjademo.service.SopUraianTugasJabatanService;
+import com.pemda.ekinerjademo.wrapper.input.UraianTugasJabatanIdInputWrapper;
 import com.pemda.ekinerjademo.wrapper.output.*;
 import com.pemda.ekinerjademo.wrapper.output.SopUraianTugasJabatanWrapper;
 import org.slf4j.Logger;
@@ -11,6 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * Created by bagus on 08/10/17.
@@ -22,6 +26,16 @@ public class SopUraianTugasJabatanController {
     public static final Logger LOGGER = LoggerFactory.getLogger(SopUraianTugasJabatanController.class);
 
     @Autowired private SopUraianTugasJabatanService sopUraianTugasJabatanService;
+
+    @RequestMapping(value = "/get-sop-uraian-tugas-jabatan", method = RequestMethod.GET)
+    ResponseEntity<?> getSopUraianTugasJabatan(@RequestBody UraianTugasJabatanIdInputWrapper urtugJabatanWrapper) {
+        List<SopUraianTugasJabatan> sopUraianTugasJabatanList
+                = sopUraianTugasJabatanService.findByUraianTugasJabatan(
+                        new UraianTugasJabatanId(urtugJabatanWrapper.getKdUrtug(), urtugJabatanWrapper.getKdJabatan()));
+
+        return null;
+
+    }
 
     @RequestMapping(value = "/create-sop-uraian-tugas-jabatan", method = RequestMethod.POST)
     ResponseEntity<?> createSopUraianTugasJabatan(
