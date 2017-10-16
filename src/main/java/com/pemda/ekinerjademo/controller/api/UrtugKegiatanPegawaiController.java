@@ -1,7 +1,9 @@
 package com.pemda.ekinerjademo.controller.api;
 
+import com.pemda.ekinerjademo.model.bismamodel.QutPegawai;
 import com.pemda.ekinerjademo.model.ekinerjamodel.*;
 import com.pemda.ekinerjademo.model.simdamodel.TaKegiatan;
+import com.pemda.ekinerjademo.service.QutPegawaiService;
 import com.pemda.ekinerjademo.service.TaKegiatanService;
 import com.pemda.ekinerjademo.service.UnitKerjaKegiatanService;
 import com.pemda.ekinerjademo.service.UrtugKegiatanPegawaiService;
@@ -11,6 +13,7 @@ import com.pemda.ekinerjademo.wrapper.input.UrtugKegiatanInputWrapper;
 import com.pemda.ekinerjademo.wrapper.input.UrtugKegiatanPegawaiInputWrapper;
 import com.pemda.ekinerjademo.wrapper.output.CustomMessage;
 import com.pemda.ekinerjademo.wrapper.output.PenanggungJawabKegiatanWrapper;
+import com.pemda.ekinerjademo.wrapper.output.UrtugKegiatanPegawaiByUrtugJabatanWrapper;
 import com.pemda.ekinerjademo.wrapper.output.UrtugKegiatanPegawaiWrapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,6 +37,7 @@ public class UrtugKegiatanPegawaiController {
     private UrtugKegiatanPegawaiService urtugKegiatanPegawaiService;
     @Autowired private TaKegiatanService taKegiatanService;
     @Autowired private UnitKerjaKegiatanService unitKerjaKegiatanService;
+    @Autowired private QutPegawaiService qutPegawaiService;
 
     @Autowired
     public UrtugKegiatanPegawaiController(UrtugKegiatanPegawaiService urtugKegiatanPegawaiService) {
@@ -45,7 +49,7 @@ public class UrtugKegiatanPegawaiController {
             @RequestBody UraianTugasKegiatanByJabatanInputWrapper urtugJabatanInputWrapper) {
         LOGGER.info("get urtug kegiatan pegawai by urtug jabatan");
 
-        List<UrtugKegiatanPegawaiWrapper> urtugKegiatanPegawaiWrappers
+        List<UrtugKegiatanPegawaiByUrtugJabatanWrapper> urtugKegiatanPegawaiWrappers
                 = new ArrayList<>();
 
         List<UrtugKegiatanPegawai> urtugKegiatanPegawaiList
@@ -60,32 +64,49 @@ public class UrtugKegiatanPegawaiController {
                 = unitKerjaKegiatanService.findByKdUnitKerja(urtugJabatanInputWrapper.getKdUnitKerja());
 
         List<TaKegiatan> taKegiatanList = taKegiatanService.findByUnitKerja(unitKerjaKegiatan);
+        List<QutPegawai> qutPegawaiList
+                = qutPegawaiService.getQutPegawaiByUnitKerja(urtugJabatanInputWrapper.getKdUnitKerja());
+        String namaPegawai = "";
 
         for (UrtugKegiatanPegawai urtugKegiatanPegawai : urtugKegiatanPegawaiList) {
             for (TaKegiatan taKegiatan : taKegiatanList) {
                 if (urtugKegiatanPegawai.getUrtugKegiatanPegawaiId().getKdProg().equals(taKegiatan.getTaKegiatanId().getKdProg()) &&
                         urtugKegiatanPegawai.getUrtugKegiatanPegawaiId().getKdKeg().equals(taKegiatan.getTaKegiatanId().getKdKegiatan())) {
-                    urtugKegiatanPegawaiWrappers
-                            .add(new UrtugKegiatanPegawaiWrapper(
-                                    urtugKegiatanPegawai.getUrtugKegiatanPegawaiId().getKdUrtug(),
-                                    urtugKegiatanPegawai.getUrtugKegiatanPegawaiId().getKdJabatan(),
-                                    urtugKegiatanPegawai.getUrtugKegiatanPegawaiId().getKdJenisUrtug(),
-                                    urtugKegiatanPegawai.getUrtugKegiatanPegawaiId().getTahunUrtug(),
-                                    urtugKegiatanPegawai.getUrtugKegiatanPegawaiId().getKdUrusan(),
-                                    urtugKegiatanPegawai.getUrtugKegiatanPegawaiId().getKdBidang(),
-                                    urtugKegiatanPegawai.getUrtugKegiatanPegawaiId().getKdUnit(),
-                                    urtugKegiatanPegawai.getUrtugKegiatanPegawaiId().getKdSub(),
-                                    urtugKegiatanPegawai.getUrtugKegiatanPegawaiId().getTahun(),
-                                    urtugKegiatanPegawai.getUrtugKegiatanPegawaiId().getKdProg(),
-                                    urtugKegiatanPegawai.getUrtugKegiatanPegawaiId().getIdProg(),
-                                    urtugKegiatanPegawai.getUrtugKegiatanPegawaiId().getKdKeg(),
-                                    taKegiatan.getKetKegiatan(),
-                                    taKegiatan.getPaguAnggaran(),
-                                    urtugKegiatanPegawai.getUrtugKegiatanPegawaiId().getNipPegawai(),
-                                    urtugKegiatanPegawai.getUrtugKegiatanPegawaiId().getKdStatusPenanggungJawab(),
-                                    urtugKegiatanPegawai.getStatusPenanggungJawabKegiatan().getStatus()));
+                    for (QutPegawai qutPegawai : qutPegawaiList) {
+                        if (urtugKegiatanPegawai.getUrtugKegiatanPegawaiId().getNipPegawai()
+                                .equals(qutPegawai.getNip())) {
+                            urtugKegiatanPegawaiWrappers
+                                    .add(new UrtugKegiatanPegawaiByUrtugJabatanWrapper(
+                                            urtugKegiatanPegawai.getUrtugKegiatanPegawaiId().getKdUrtug(),
+                                            urtugKegiatanPegawai.getUrtugKegiatanPegawaiId().getKdJabatan(),
+                                            urtugKegiatanPegawai.getUrtugKegiatanPegawaiId().getKdJenisUrtug(),
+                                            urtugKegiatanPegawai.getUrtugKegiatanPegawaiId().getTahunUrtug(),
+                                            urtugKegiatanPegawai.getUrtugKegiatanPegawaiId().getKdUrusan(),
+                                            urtugKegiatanPegawai.getUrtugKegiatanPegawaiId().getKdBidang(),
+                                            urtugKegiatanPegawai.getUrtugKegiatanPegawaiId().getKdUnit(),
+                                            urtugKegiatanPegawai.getUrtugKegiatanPegawaiId().getKdSub(),
+                                            urtugKegiatanPegawai.getUrtugKegiatanPegawaiId().getTahun(),
+                                            urtugKegiatanPegawai.getUrtugKegiatanPegawaiId().getKdProg(),
+                                            urtugKegiatanPegawai.getUrtugKegiatanPegawaiId().getIdProg(),
+                                            urtugKegiatanPegawai.getUrtugKegiatanPegawaiId().getKdKeg(),
+                                            taKegiatan.getKetKegiatan(),
+                                            taKegiatan.getPaguAnggaran(),
+                                            urtugKegiatanPegawai.getUrtugKegiatanPegawaiId().getNipPegawai(),
+                                            qutPegawai.getNama(),
+                                            urtugKegiatanPegawai.getUrtugKegiatanPegawaiId().getKdStatusPenanggungJawab(),
+                                            urtugKegiatanPegawai.getStatusPenanggungJawabKegiatan().getStatus()));
+                            break;
+
+                        }
+
+                    }
+
+                    break;
+
                 }
+
             }
+
         }
 
         return new ResponseEntity<Object>(urtugKegiatanPegawaiWrappers, HttpStatus.OK);
@@ -131,6 +152,8 @@ public class UrtugKegiatanPegawaiController {
                                     urtugKegiatanPegawai.getUrtugKegiatanPegawaiId().getNipPegawai(),
                                     urtugKegiatanPegawai.getUrtugKegiatanPegawaiId().getKdStatusPenanggungJawab(),
                                     urtugKegiatanPegawai.getStatusPenanggungJawabKegiatan().getStatus()));
+
+                    break;
                 }
             }
         }
