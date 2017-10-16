@@ -1,9 +1,6 @@
 package com.pemda.ekinerjademo.service.impl;
 
-import com.pemda.ekinerjademo.model.ekinerjamodel.UrtugKegiatan;
-import com.pemda.ekinerjademo.model.ekinerjamodel.UrtugKegiatanId;
-import com.pemda.ekinerjademo.model.ekinerjamodel.UrtugKegiatanPegawai;
-import com.pemda.ekinerjademo.model.ekinerjamodel.UrtugKegiatanPegawaiId;
+import com.pemda.ekinerjademo.model.ekinerjamodel.*;
 import com.pemda.ekinerjademo.repository.ekinerjarepository.UrtugKegiatanPegawaiDao;
 import com.pemda.ekinerjademo.service.UrtugKegiatanPegawaiService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +17,12 @@ import java.util.List;
 public class UrtugKegiatanPegawaiServiceImpl implements UrtugKegiatanPegawaiService {
     @Autowired
     private UrtugKegiatanPegawaiDao urtugKegiatanPegawaiDao;
+
+    @Override
+    public List<UrtugKegiatanPegawai> findByUrtugJabatan(UraianTugasJabatanJenisUrtugId uraianTugasJabatanJenisUrtugId) {
+        return urtugKegiatanPegawaiDao
+                .findUrtugKegiatanPegawaiByUrtugJabatan(uraianTugasJabatanJenisUrtugId);
+    }
 
     @Override
     public List<UrtugKegiatanPegawai> findByNipPegawai(String nipPegawai) {
