@@ -19,6 +19,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -102,7 +103,7 @@ public class SopController {
         LOGGER.info("create new sop");
 
         Sop sop = new Sop();
-        sop.setKdSop(sopInputWrapper.getKdSop());
+        sop.setKdSop(String.valueOf(new Date().getTime()));
         sop.setSop(sopInputWrapper.getSop());
 
         sopService.save(sop);

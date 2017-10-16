@@ -15,6 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -107,7 +108,7 @@ public class TemplateController {
         LOGGER.info("create new template");
 
         Template template = new Template();
-        template.setKdTemplate(templateWrapper.getKdTemplate());
+        template.setKdTemplate(String.valueOf(new Date().getTime()));
         template.setNmTemplate(templateWrapper.getNmTemplate());
         template.setUrl(templateWrapper.getUrl());
 
