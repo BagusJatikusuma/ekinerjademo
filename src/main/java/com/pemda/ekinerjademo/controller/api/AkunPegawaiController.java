@@ -2,14 +2,14 @@ package com.pemda.ekinerjademo.controller.api;
 
 import com.pemda.ekinerjademo.model.bismamodel.QutPegawai;
 import com.pemda.ekinerjademo.model.bismamodel.TkdJabatan;
-import com.pemda.ekinerjademo.model.ekinerjamodel.AkunPegawai;
-import com.pemda.ekinerjademo.model.ekinerjamodel.Role;
-import com.pemda.ekinerjademo.model.ekinerjamodel.StatusPenanggungJawabKegiatan;
+import com.pemda.ekinerjademo.model.ekinerjamodel.*;
 import com.pemda.ekinerjademo.repository.bismarepository.QutPegawaiDao;
 import com.pemda.ekinerjademo.repository.bismarepository.TkdJabatanDao;
 import com.pemda.ekinerjademo.repository.ekinerjarepository.AkunPegawaiDao;
 import com.pemda.ekinerjademo.service.*;
 import com.pemda.ekinerjademo.wrapper.input.AkunPegawaiRoleInputWrapper;
+import com.pemda.ekinerjademo.wrapper.input.UrtugKegiatanInputWrapper;
+import com.pemda.ekinerjademo.wrapper.input.UrtugKegiatanPenanggungJawabWrapper;
 import com.pemda.ekinerjademo.wrapper.output.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -39,6 +39,7 @@ public class AkunPegawaiController {
     private TkdJabatanService tkdJabatanService;
     private QutPegawaiService qutPegawaiService;
     private StatusPenanggungJawabKegiatanService statusPenanggungJawabKegiatanService;
+    private UrtugKegiatanPegawaiService urtugKegiatanPegawaiService;
 
     @Autowired
     public AkunPegawaiController(
@@ -49,7 +50,8 @@ public class AkunPegawaiController {
             RoleService roleService,
             TkdJabatanService tkdJabatanService,
             QutPegawaiService qutPegawaiService,
-            StatusPenanggungJawabKegiatanService statusPenanggungJawabKegiatanService) {
+            StatusPenanggungJawabKegiatanService statusPenanggungJawabKegiatanService,
+            UrtugKegiatanPegawaiService urtugKegiatanPegawaiService) {
         this.tkdJabatanDao = tkdJabatanDao;
         this.qutPegawaiDao = qutPegawaiDao;
         this.akunPegawaiDao = akunPegawaiDao;
@@ -58,6 +60,7 @@ public class AkunPegawaiController {
         this.tkdJabatanService = tkdJabatanService;
         this.qutPegawaiService = qutPegawaiService;
         this.statusPenanggungJawabKegiatanService = statusPenanggungJawabKegiatanService;
+        this.urtugKegiatanPegawaiService = urtugKegiatanPegawaiService;
     }
 
     @RequestMapping(value = "/test", method = RequestMethod.GET)
@@ -231,6 +234,60 @@ public class AkunPegawaiController {
         return new ResponseEntity<Object>(qutPegawaiWrappers, HttpStatus.OK);
     }
 
+    @RequestMapping(value = "/get-pegawai-penanggung-jawab", method = RequestMethod.POST)
+    ResponseEntity<?> getPegawaiPenanggunhJawab(@RequestBody UrtugKegiatanPenanggungJawabWrapper inputWrapper) {
+        LOGGER.info("get pegawai penanggung jawab");
+
+        List<UrtugKegiatanPegawai> urtugKegiatanPegawaiList
+                = urtugKegiatanPegawaiService.findByUrtugKegiatan(
+                        new UrtugKegiatanId(
+                                inputWrapper.getKdUrtug(),
+                                inputWrapper.getKdJabatan(),
+                                inputWrapper.getKdJenisUrtug(),
+                                inputWrapper.getTahunUrtug(),
+                                inputWrapper.getKdUrusan(),
+                                inputWrapper.getKdBidang(),
+                                inputWrapper.getKdUnit(),
+                                inputWrapper.getKdSub(),
+                                inputWrapper.getTahun(),
+                                inputWrapper.getKdProg(),
+                                inputWrapper.getIdProg(),
+                                inputWrapper.getKdKeg()));
+
+        List<QutPegawaiWrapper> qutPegawaiWrappers
+                = new ArrayList<>();
+        List<QutPegawai> qutPegawaiList
+                = qutPegawaiService.getQutPegawaiByUnitKerja(inputWrapper.getKdUnitKerja());
+
+        boolean found;
+        for (QutPegawai qutPegawai : qutPegawaiList) {
+            found = false;
+            for (UrtugKegiatanPegawai urtugKegiatanPegawai : urtugKegiatanPegawaiList) {
+                if (urtugKegiatanPegawai.getUrtugKegiatanPegawaiId().getNipPegawai()
+                        .equals(qutPegawai.getNip())) {
+                    found = true;
+                    break;
+                }
+            }
+
+            if (!found) {
+                qutPegawaiWrappers
+                        .add(new QutPegawaiWrapper(
+                                qutPegawai.getNip(),
+                                qutPegawai.getNama(),
+                                qutPegawai.getKdJabatan(),
+                                qutPegawai.getJabatan(),
+                                qutPegawai.getKdUnitKerja(),
+                                qutPegawai.getUnitKerja(),
+                                qutPegawai.getPangkat(),
+                                qutPegawai.getGol()));
+            }
+
+        }
+
+        return new ResponseEntity<Object>(qutPegawaiWrappers, HttpStatus.OK);
+    }
+
     @RequestMapping(value = "/get-status-penanggung-jawab", method = RequestMethod.GET)
     ResponseEntity<?> getStatusPenanggungJawab() {
         LOGGER.info("get all status penanggung jawab");
@@ -243,6 +300,58 @@ public class AkunPegawaiController {
         for (StatusPenanggungJawabKegiatan spj : statusPenanggungJawabKegiatanList) {
             statusPenanggungJawabWrapperList
                     .add(new StatusPenanggungJawabWrapper(spj.getKdStatus(), spj.getStatus()));
+        }
+
+        return new ResponseEntity<Object>(statusPenanggungJawabWrapperList, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/get-status-penanggung-jawab-kegiatan", method = RequestMethod.POST)
+    ResponseEntity<?> getStatusPenanggungJawabKegiatan(@RequestBody UrtugKegiatanInputWrapper inputWrapper) {
+        LOGGER.info("get all status penanggung jawab kegiatan");
+
+        List<UrtugKegiatanPegawai> urtugKegiatanPegawaiList
+                = urtugKegiatanPegawaiService.findByUrtugKegiatan(
+                    new UrtugKegiatanId(
+                            inputWrapper.getKdUrtug(),
+                            inputWrapper.getKdJabatan(),
+                            inputWrapper.getKdJenisUrtug(),
+                            inputWrapper.getTahunUrtug(),
+                            inputWrapper.getKdUrusan(),
+                            inputWrapper.getKdBidang(),
+                            inputWrapper.getKdUnit(),
+                            inputWrapper.getKdSub(),
+                            inputWrapper.getTahun(),
+                            inputWrapper.getKdProg(),
+                            inputWrapper.getIdProg(),
+                            inputWrapper.getKdKeg()));
+
+        List<StatusPenanggungJawabWrapper> statusPenanggungJawabWrapperList
+                = new ArrayList<>();
+        List<StatusPenanggungJawabKegiatan> statusPenanggungJawabKegiatanList
+                = statusPenanggungJawabKegiatanService.getAll();
+
+        boolean inputConstraint;
+
+        for (StatusPenanggungJawabKegiatan spj : statusPenanggungJawabKegiatanList) {
+            inputConstraint = false;
+            if (spj.getKdStatus().equals("PJ001") ||
+                    spj.getKdStatus().equals("PJ002")) {
+                for (UrtugKegiatanPegawai urtugKegiatanPegawai : urtugKegiatanPegawaiList) {
+                    if (urtugKegiatanPegawai.getUrtugKegiatanPegawaiId().getKdStatusPenanggungJawab()
+                            .equals(spj.getKdStatus())) {
+                        inputConstraint = true;
+                        break;
+                    }
+
+                }
+
+            }
+
+            if (!inputConstraint) {
+                statusPenanggungJawabWrapperList
+                        .add(new StatusPenanggungJawabWrapper(spj.getKdStatus(), spj.getStatus()));
+            }
+
         }
 
         return new ResponseEntity<Object>(statusPenanggungJawabWrapperList, HttpStatus.OK);

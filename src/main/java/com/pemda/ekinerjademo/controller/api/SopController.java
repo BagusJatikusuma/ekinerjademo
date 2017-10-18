@@ -124,9 +124,9 @@ public class SopController {
         return new ResponseEntity<Object>(new CustomMessage("sop updated"), HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/delete-sop", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/delete-sop/{kdSop}", method = RequestMethod.DELETE)
     ResponseEntity<?> deleteSop(@PathVariable("kdSop") String kdSop) {
-        LOGGER.info("delete sop");
+        LOGGER.info("delete sop "+kdSop);
 
         sopService.delete(kdSop);
 

@@ -131,9 +131,9 @@ public class TemplateController {
         return new ResponseEntity<Object>(new CustomMessage("sop updated"), HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/delete-template", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/delete-template/{kdTemplate}", method = RequestMethod.DELETE)
     ResponseEntity<?> deleteTemplate(@PathVariable("kdTemplate") String kdTemplate) {
-        LOGGER.info("delete template");
+        LOGGER.info("delete template"+kdTemplate);
 
         templateService.delete(kdTemplate);
 
