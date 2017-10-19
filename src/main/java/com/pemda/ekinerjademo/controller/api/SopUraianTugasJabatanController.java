@@ -27,15 +27,19 @@ public class SopUraianTugasJabatanController {
 
     @Autowired private SopUraianTugasJabatanService sopUraianTugasJabatanService;
 
-    @RequestMapping(value = "/get-sop-uraian-tugas-jabatan", method = RequestMethod.GET)
-    ResponseEntity<?> getSopUraianTugasJabatan(@RequestBody UraianTugasJabatanIdInputWrapper urtugJabatanWrapper) {
-        List<SopUraianTugasJabatan> sopUraianTugasJabatanList
-                = sopUraianTugasJabatanService.findByUraianTugasJabatan(
-                        new UraianTugasJabatanId(urtugJabatanWrapper.getKdUrtug(), urtugJabatanWrapper.getKdJabatan()));
-
-        return null;
-
-    }
+//    @RequestMapping(value = "/get-sop-uraian-tugas-jabatan", method = RequestMethod.POST)
+//    ResponseEntity<?> getSopUraianTugasJabatan(@RequestBody UraianTugasJabatanIdInputWrapper urtugJabatanWrapper) {
+//        LOGGER.info("get sop uraian tugas jabatan");
+//
+//        List<SopUraianTugasJabatan> sopUraianTugasJabatanList
+//                = sopUraianTugasJabatanService.findByUraianTugasJabatan(
+//                        new UraianTugasJabatanId(urtugJabatanWrapper.getKdUrtug(), urtugJabatanWrapper.getKdJabatan()));
+//
+//
+//
+//        return new ResponseEntity<Object>();
+//
+//    }
 
     @RequestMapping(value = "/create-sop-uraian-tugas-jabatan", method = RequestMethod.POST)
     ResponseEntity<?> createSopUraianTugasJabatan(
