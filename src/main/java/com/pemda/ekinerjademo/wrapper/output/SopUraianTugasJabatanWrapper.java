@@ -7,19 +7,16 @@ public class SopUraianTugasJabatanWrapper {
     private String kdSop;
     private String kdUrtug;
     private String kdJabatan;
-    private String kdJenisUrtug;
 
     public SopUraianTugasJabatanWrapper() {
     }
     public SopUraianTugasJabatanWrapper(
             String kdSop,
             String kdUrtug,
-            String kdJabatan,
-            String kdJenisUrtug) {
+            String kdJabatan) {
         this.kdSop = kdSop;
         this.kdUrtug = kdUrtug;
         this.kdJabatan = kdJabatan;
-        this.kdJenisUrtug = kdJenisUrtug;
     }
 
     public String getKdSop() {
@@ -44,13 +41,5 @@ public class SopUraianTugasJabatanWrapper {
 
     public void setKdJabatan(String kdJabatan) {
         this.kdJabatan = kdJabatan;
-    }
-
-    public String getKdJenisUrtug() {
-        return kdJenisUrtug;
-    }
-
-    public void setKdJenisUrtug(String kdJenisUrtug) {
-        this.kdJenisUrtug = kdJenisUrtug;
     }
 }

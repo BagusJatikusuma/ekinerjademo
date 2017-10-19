@@ -7,10 +7,7 @@ import com.pemda.ekinerjademo.service.QutPegawaiService;
 import com.pemda.ekinerjademo.service.TaKegiatanService;
 import com.pemda.ekinerjademo.service.UnitKerjaKegiatanService;
 import com.pemda.ekinerjademo.service.UrtugKegiatanPegawaiService;
-import com.pemda.ekinerjademo.wrapper.input.UraianTugasJabatanJenisUrtugInputWrapper;
-import com.pemda.ekinerjademo.wrapper.input.UraianTugasKegiatanByJabatanInputWrapper;
-import com.pemda.ekinerjademo.wrapper.input.UrtugKegiatanInputWrapper;
-import com.pemda.ekinerjademo.wrapper.input.UrtugKegiatanPegawaiInputWrapper;
+import com.pemda.ekinerjademo.wrapper.input.*;
 import com.pemda.ekinerjademo.wrapper.output.CustomMessage;
 import com.pemda.ekinerjademo.wrapper.output.PenanggungJawabKegiatanWrapper;
 import com.pemda.ekinerjademo.wrapper.output.UrtugKegiatanPegawaiByUrtugJabatanWrapper;
@@ -44,7 +41,7 @@ public class UrtugKegiatanPegawaiController {
         this.urtugKegiatanPegawaiService = urtugKegiatanPegawaiService;
     }
 
-    @RequestMapping(value = "/get-urtug-kegiatan-pegawai-by-urtug-jabatan/", method = RequestMethod.POST)
+    @RequestMapping(value = "/get-urtug-kegiatan-pegawai-by-urtug-jabatan", method = RequestMethod.POST)
     ResponseEntity<?> getUrtugKegiatanPegawaiByUrtugJabatan(
             @RequestBody UraianTugasKegiatanByJabatanInputWrapper urtugJabatanInputWrapper) {
         LOGGER.info("get urtug kegiatan pegawai by urtug jabatan");
@@ -66,7 +63,6 @@ public class UrtugKegiatanPegawaiController {
         List<TaKegiatan> taKegiatanList = taKegiatanService.findByUnitKerja(unitKerjaKegiatan);
         List<QutPegawai> qutPegawaiList
                 = qutPegawaiService.getQutPegawaiByUnitKerja(urtugJabatanInputWrapper.getKdUnitKerja());
-        String namaPegawai = "";
 
         for (UrtugKegiatanPegawai urtugKegiatanPegawai : urtugKegiatanPegawaiList) {
             for (TaKegiatan taKegiatan : taKegiatanList) {
@@ -161,11 +157,16 @@ public class UrtugKegiatanPegawaiController {
         return new ResponseEntity<Object>(urtugKegiatanPegawaiWrappers, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/get-urtug-kegiatan-pegawai-by-urtug-kegiatan/", method = RequestMethod.POST)
+    @RequestMapping(value = "/get-urtug-kegiatan-pegawai-by-urtug-kegiatan", method = RequestMethod.POST)
     ResponseEntity<?> getUrtugKegiatanPegawaiByUrtugKegiatan(
-            @RequestBody UrtugKegiatanInputWrapper urtugKegiatanInputWrapper) {
+            @RequestBody UrtugKegiatanUnitKerjaInputWrapper urtugKegiatanInputWrapper) {
+        LOGGER.info("get urtug kegiatan pegawi by urtug kegiatan");
+
         List<PenanggungJawabKegiatanWrapper> penanggungJawabKegiatanList
                 = new ArrayList<>();
+
+        List<QutPegawai> qutPegawaiList
+                = qutPegawaiService.getQutPegawaiByUnitKerja(urtugKegiatanInputWrapper.getKdUnitKerja());
 
         List<UrtugKegiatanPegawai> urtugKegiatanPegawaiList
                 = urtugKegiatanPegawaiService.findByUrtugKegiatan(
@@ -184,11 +185,21 @@ public class UrtugKegiatanPegawaiController {
                                 urtugKegiatanInputWrapper.getKdKeg()));
 
         for (UrtugKegiatanPegawai urtugKegiatanPegawai : urtugKegiatanPegawaiList) {
-            penanggungJawabKegiatanList
-                    .add(new PenanggungJawabKegiatanWrapper(
-                            urtugKegiatanPegawai.getUrtugKegiatanPegawaiId().getNipPegawai(),
-                            urtugKegiatanPegawai.getUrtugKegiatanPegawaiId().getKdStatusPenanggungJawab(),
-                            urtugKegiatanPegawai.getStatusPenanggungJawabKegiatan().getStatus()));
+            for (QutPegawai qutPegawai : qutPegawaiList) {
+                if (qutPegawai.getNip()
+                        .equals(urtugKegiatanPegawai.getUrtugKegiatanPegawaiId().getNipPegawai())) {
+                    penanggungJawabKegiatanList
+                            .add(new PenanggungJawabKegiatanWrapper(
+                                    urtugKegiatanPegawai.getUrtugKegiatanPegawaiId().getNipPegawai(),
+                                    qutPegawai.getNama(),
+                                    urtugKegiatanPegawai.getUrtugKegiatanPegawaiId().getKdStatusPenanggungJawab(),
+                                    urtugKegiatanPegawai.getStatusPenanggungJawabKegiatan().getStatus()));
+                    break;
+
+                }
+
+            }
+
         }
 
         return new ResponseEntity<Object>(penanggungJawabKegiatanList, HttpStatus.OK);
@@ -257,7 +268,7 @@ public class UrtugKegiatanPegawaiController {
                 new CustomMessage("urtug kegiatan pegawai updated"), HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/delete-urtug-kegiatan-pegawai", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/delete-urtug-kegiatan-pegawai", method = RequestMethod.POST)
     ResponseEntity<?> deleteUrtugKegiatanPegawai(
             @RequestBody UrtugKegiatanPegawaiInputWrapper urtugKegiatanPegawaiInputWrapper) {
         LOGGER.info("delete urtug kegiatan pegawai");
