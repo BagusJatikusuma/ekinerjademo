@@ -59,7 +59,7 @@ public class SopUraianTugasJabatanController {
         return new ResponseEntity<Object>(new CustomMessage("sop uraian tugas jabatan created"), HttpStatus.CREATED);
     }
 
-    @RequestMapping(value = "/delete-sop-uraian-tugas-jabatan", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/delete-sop-uraian-tugas-jabatan", method = RequestMethod.POST)
     ResponseEntity<?> deleteSopUraianTugasJabatan(
             @RequestBody SopUraianTugasJabatanWrapper sopUraianTugasJabatanWrapper) {
         LOGGER.info("delete sop uraian tugas jabatan");

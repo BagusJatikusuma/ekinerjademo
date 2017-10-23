@@ -39,6 +39,7 @@ public class SopTemplateController {
         return new ResponseEntity<Object>(new CustomMessage("sop template created"), HttpStatus.CREATED);
     }
 
+    @RequestMapping(value = "/delete-sop-template", method = RequestMethod.POST)
     ResponseEntity<?> deleteSopTemplate(@RequestBody SopTemplateWrapper sopTemplateWrapper) {
         LOGGER.info("delete sop template");
 

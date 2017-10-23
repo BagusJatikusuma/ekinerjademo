@@ -144,7 +144,7 @@ public class TestServiceController {
 //        return null;
 //    }
 
-    @RequestMapping(value = "/kegiatan-simda-unit-kerja/{kdUnitKerja}")
+    @RequestMapping(value = "/kegiatan-simda-unit-kerja/{kdUnitKerja}", method = RequestMethod.GET)
     @Transactional("simdaTransactionManager")
     ResponseEntity<?> kegiatanSimdaUnitKerja(@PathVariable("kdUnitKerja") String kdUnitKerja) {
         LOGGER.info("get kegiatan simda");

@@ -149,7 +149,7 @@ public class UrtugKegiatanController {
         return new ResponseEntity<Object>(new CustomMessage("urtug kegiatan updated"), HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/delete-urtug-kegiatan", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/delete-urtug-kegiatan", method = RequestMethod.POST)
     ResponseEntity<?> deleteUrtugKegiatan(@RequestBody UrtugKegiatanInputWrapper urtugKegiatanInputWrapper) {
         LOGGER.info("delete urtug kegiatan");
 

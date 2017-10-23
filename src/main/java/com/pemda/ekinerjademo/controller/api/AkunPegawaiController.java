@@ -334,11 +334,14 @@ public class AkunPegawaiController {
 
         for (StatusPenanggungJawabKegiatan spj : statusPenanggungJawabKegiatanList) {
             inputConstraint = false;
-            if (spj.getKdStatus().equals("PJ001") ||
-                    spj.getKdStatus().equals("PJ002")) {
+            if (spj.getKdStatus().equals("ST001") ||
+                    spj.getKdStatus().equals("ST002")) {
+                LOGGER.info("masuk "+spj.getKdStatus());
+
                 for (UrtugKegiatanPegawai urtugKegiatanPegawai : urtugKegiatanPegawaiList) {
                     if (urtugKegiatanPegawai.getUrtugKegiatanPegawaiId().getKdStatusPenanggungJawab()
                             .equals(spj.getKdStatus())) {
+                        LOGGER.info("constraint "+urtugKegiatanPegawai.getUrtugKegiatanPegawaiId().getKdStatusPenanggungJawab());
                         inputConstraint = true;
                         break;
                     }
