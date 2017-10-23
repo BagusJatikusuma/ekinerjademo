@@ -23,7 +23,7 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * Created by bagus on 26/09/17.
+ * Created by bagus jatikusuma on 26/09/17.
  */
 @RestController
 @CrossOrigin(allowCredentials = "false")
