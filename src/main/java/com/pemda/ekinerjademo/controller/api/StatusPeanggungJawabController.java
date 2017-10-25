@@ -11,7 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.Year;
+import java.util.Date;
 
 /**
  * Created by bagus on 24/10/17.
@@ -36,7 +36,7 @@ public class StatusPeanggungJawabController {
 
         StatusPenanggungJawabKegiatan spjk
                 = new StatusPenanggungJawabKegiatan();
-        spjk.setKdStatus(String.valueOf(Year.now().getValue()));
+        spjk.setKdStatus(String.valueOf(new Date().getTime()));
         spjk.setStatus(inputWrapper.getStatus());
 
         spjkService.save(spjk);

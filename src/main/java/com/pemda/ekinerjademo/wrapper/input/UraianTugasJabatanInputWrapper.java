@@ -14,6 +14,7 @@ public class UraianTugasJabatanInputWrapper {
     private Integer waktu;
     private Integer biaya;
     private String createdBy;
+    private String nipPenilai;
 
     public String getKdUrtug() {
         return kdUrtug;
@@ -77,5 +78,13 @@ public class UraianTugasJabatanInputWrapper {
 
     public void setBiaya(Integer biaya) {
         this.biaya = biaya;
+    }
+
+    public String getNipPenilai() {
+        return nipPenilai;
+    }
+
+    public void setNipPenilai(String nipPenilai) {
+        this.nipPenilai = nipPenilai;
     }
 }

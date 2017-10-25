@@ -68,6 +68,7 @@ public class UraianTugasJabatanServiceImpl implements UraianTugasJabatanService 
         urtugJabatan.setWaktu(urtugJabatanWrapper.getWaktu());
         urtugJabatan.setBiaya(urtugJabatanWrapper.getBiaya());
         urtugJabatan.setCreatedBy(new AkunPegawai(urtugJabatanWrapper.getCreatedBy()));
+        urtugJabatan.setNipPenilai(urtugJabatanWrapper.getNipPenilai());
 
         urtugJabatanTransactionalService.save(urtugJabatan);
     }
