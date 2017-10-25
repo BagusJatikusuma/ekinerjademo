@@ -32,9 +32,6 @@ public class UraianTugasJabatan implements Serializable {
     @JoinColumn(name = "created_by")
     private AkunPegawai createdBy;
 
-    @Column(name = "nip_penilai")
-    private String nipPenilai;
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(
             name = "kd_urtug",
@@ -133,11 +130,4 @@ public class UraianTugasJabatan implements Serializable {
         this.uraianTugasJabatanJenisUrtugList = uraianTugasJabatanJenisUrtugList;
     }
 
-    public String getNipPenilai() {
-        return nipPenilai;
-    }
-
-    public void setNipPenilai(String nipPenilai) {
-        this.nipPenilai = nipPenilai;
-    }
 }
