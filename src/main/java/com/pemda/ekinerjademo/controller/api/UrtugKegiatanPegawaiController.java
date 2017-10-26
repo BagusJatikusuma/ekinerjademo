@@ -323,6 +323,7 @@ public class UrtugKegiatanPegawaiController {
                                 urtugKegiatanPegawaiInputWrapper.getKdKeg(),
                                 urtugKegiatanPegawaiInputWrapper.getNipPegawai(),
                                 urtugKegiatanPegawaiInputWrapper.getKdStatusPenanggungJawab()));
+        
         urtugKegiatanPegawai.setStatusApproval(0);
 
         urtugKegiatanPegawaiService.save(urtugKegiatanPegawai);
@@ -355,6 +356,7 @@ public class UrtugKegiatanPegawaiController {
                                 urtugKegiatanPegawaiInputWrapper.getKdKeg(),
                                 urtugKegiatanPegawaiInputWrapper.getNipPegawai(),
                                 urtugKegiatanPegawaiInputWrapper.getKdStatusPenanggungJawab()));
+
         urtugKegiatanPegawai.setStatusApproval(urtugKegiatanPegawaiInputWrapper.getStatusApproval());
 
         urtugKegiatanPegawaiService.update(urtugKegiatanPegawai);
@@ -396,7 +398,6 @@ public class UrtugKegiatanPegawaiController {
     ResponseEntity<?> changeStatusUrtugDpaPegawai(
             @RequestBody UrtugKegiatanPegawaiInputWrapper urtugKegiatanPegawaiInputWrapper) {
         LOGGER.info("change status urtug dpa pegawai");
-
         return new ResponseEntity<Object>(
                 new CustomMessage("urtug kegiatan pegawai updated"), HttpStatus.OK);
     }
