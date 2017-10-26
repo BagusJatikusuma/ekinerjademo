@@ -82,4 +82,40 @@ public class UraianTugasPegawaiTahunanController {
                 new CustomMessage("uraian tugas pegawai tahunan created"), HttpStatus.OK);
     }
 
+    //inset urtug tahunan pegawai dan change status approval urtug pegawai non-DPA
+    @RequestMapping(value = "/approval-urtug-tahunan-non-dpa-pegawai", method = RequestMethod.PUT)
+    ResponseEntity<?> approvalUrtugTahunanNonDpaPegawai(
+            @RequestBody List<UraianTugasPegawaiTahunanInputWrapper> uraianTugasPegawaiTahunanInputWrapperList ){
+        LOGGER.info("approval uraian tugas tahunan non DPA");
+
+        List<UraianTugasPegawaiTahunan> uraianTugasPegawaiTahunanList
+                = urtugPegawaiTahunanService.getByNipPegawai(
+                        uraianTugasPegawaiTahunanInputWrapperList
+                                .get(0)
+                                .getNipPegawai());
+
+        for (UraianTugasPegawaiTahunanInputWrapper urtugPegawaiAtasan : uraianTugasPegawaiTahunanInputWrapperList){
+            boolean found = false;
+            for (UraianTugasPegawaiTahunan urtugPegawai : uraianTugasPegawaiTahunanList){
+                if (urtugPegawaiAtasan.getKdUrtug().equals(urtugPegawai.getUraianTugasPegawaiTahunanId().getKdUrtug())) {
+                    urtugPegawaiTahunanService.approveUrtug(new UraianTugasPegawaiTahunanId(
+                            urtugPegawaiAtasan.getKdUrtug(),
+                            urtugPegawaiAtasan.getKdJabatan(),
+                            urtugPegawaiAtasan.getKdJenisUrtug(),
+                            urtugPegawaiAtasan.getTahunUrtug(),
+                            urtugPegawaiAtasan.getNipPegawai()));
+
+                    found = true;
+                    break;
+                }
+            }
+
+            if (!found) {
+                urtugPegawaiTahunanService.createUraianTugasPegawaiTahunan(
+                        urtugPegawaiAtasan,
+                        true);
+            }
+        }
+        return new ResponseEntity<Object>(new CustomMessage("Uraian tugas yang dipilih telah disetujui"), HttpStatus.OK);
+    }
 }
