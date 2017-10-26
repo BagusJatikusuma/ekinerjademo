@@ -132,6 +132,7 @@ public class UrtugKegiatanPegawaiController {
                     urtugKegiatanPegawaiWrappers
                             .add(new UrtugKegiatanPegawaiWrapper(
                                     urtugKegiatanPegawai.getUrtugKegiatanPegawaiId().getKdUrtug(),
+                                    urtugKegiatanPegawai.getUrtugKegiatan().getUraianTugasJabatanJenisUrtug().getUraianTugasJabatan().getUraianTugas().getDeskripsi(),
                                     urtugKegiatanPegawai.getUrtugKegiatanPegawaiId().getKdJabatan(),
                                     urtugKegiatanPegawai.getUrtugKegiatanPegawaiId().getKdJenisUrtug(),
                                     urtugKegiatanPegawai.getUrtugKegiatanPegawaiId().getTahunUrtug(),

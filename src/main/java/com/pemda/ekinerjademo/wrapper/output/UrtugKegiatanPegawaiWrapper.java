@@ -7,6 +7,7 @@ import java.math.BigDecimal;
  */
 public class UrtugKegiatanPegawaiWrapper {
     private String kdUrtug;
+    private String deskripsiUrtug;
     private String kdJabatan;
     private String kdJenisUrtug;
     private Integer tahunUrtug;
@@ -45,6 +46,44 @@ public class UrtugKegiatanPegawaiWrapper {
             String kdStatusPenanggungJawab,
             String statusPenanggungJawab) {
         this.kdUrtug = kdUrtug;
+        this.kdJabatan = kdJabatan;
+        this.kdJenisUrtug = kdJenisUrtug;
+        this.tahunUrtug = tahunUrtug;
+        this.kdUrusan = kdUrusan;
+        this.kdBidang = kdBidang;
+        this.kdUnit = kdUnit;
+        this.kdSub = kdSub;
+        this.tahun = tahun;
+        this.kdProg = kdProg;
+        this.idProg = idProg;
+        this.kdKeg = kdKeg;
+        this.ketKeg = ketKeg;
+        this.paguAnggaran = paguAnggaran;
+        this.nipPegawai = nipPegawai;
+        this.kdStatusPenanggungJawab = kdStatusPenanggungJawab;
+        this.statusPenanggungJawab = statusPenanggungJawab;
+    }
+    public UrtugKegiatanPegawaiWrapper(
+            String kdUrtug,
+            String deskripsiUrtug,
+            String kdJabatan,
+            String kdJenisUrtug,
+            Integer tahunUrtug,
+            Integer kdUrusan,
+            Integer kdBidang,
+            Integer kdUnit,
+            Integer kdSub,
+            Integer tahun,
+            Integer kdProg,
+            Integer idProg,
+            Integer kdKeg,
+            String ketKeg,
+            BigDecimal paguAnggaran,
+            String nipPegawai,
+            String kdStatusPenanggungJawab,
+            String statusPenanggungJawab) {
+        this.kdUrtug = kdUrtug;
+        this.deskripsiUrtug = deskripsiUrtug;
         this.kdJabatan = kdJabatan;
         this.kdJenisUrtug = kdJenisUrtug;
         this.tahunUrtug = tahunUrtug;
@@ -197,5 +236,13 @@ public class UrtugKegiatanPegawaiWrapper {
 
     public void setTahunUrtug(Integer tahunUrtug) {
         this.tahunUrtug = tahunUrtug;
+    }
+
+    public String getDeskripsiUrtug() {
+        return deskripsiUrtug;
+    }
+
+    public void setDeskripsiUrtug(String deskripsiUrtug) {
+        this.deskripsiUrtug = deskripsiUrtug;
     }
 }
