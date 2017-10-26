@@ -389,4 +389,14 @@ public class UrtugKegiatanPegawaiController {
                 new CustomMessage("urtug kegiatan pegawai deleted"), HttpStatus.OK);
     }
 
+    //change status urtug dpa pegawai
+    @RequestMapping(value = "/change-status-urtug-dpa-pegawai", method = RequestMethod.PUT)
+    ResponseEntity<?> changeStatusUrtugDpaPegawai(
+            @RequestBody UrtugKegiatanPegawaiInputWrapper urtugKegiatanPegawaiInputWrapper) {
+        LOGGER.info("change status urtug dpa pegawai");
+
+        return new ResponseEntity<Object>(
+                new CustomMessage("urtug kegiatan pegawai updated"), HttpStatus.OK);
+    }
+
 }

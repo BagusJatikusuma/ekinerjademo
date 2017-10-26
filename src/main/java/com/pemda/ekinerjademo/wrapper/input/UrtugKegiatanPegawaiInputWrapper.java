@@ -20,6 +20,7 @@ public class UrtugKegiatanPegawaiInputWrapper {
     private Integer kdKeg;
     private String nipPegawai;
     private String kdStatusPenanggungJawab;
+    private Integer statusApproval;
 
     public String getKdUrtug() {
         return kdUrtug;
@@ -131,5 +132,13 @@ public class UrtugKegiatanPegawaiInputWrapper {
 
     public void setTahunUrtug(Integer tahunUrtug) {
         this.tahunUrtug = tahunUrtug;
+    }
+
+    public Integer getStatusApproval() {
+        return statusApproval;
+    }
+
+    public void setStatusApproval(Integer statusApproval) {
+        this.statusApproval = statusApproval;
     }
 }
