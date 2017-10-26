@@ -117,26 +117,26 @@ public class UraianTugasJabatanJenisUrtugController {
         return new ResponseEntity<Object>(new CustomMessage("urtug jabatan jenis deleted"), HttpStatus.OK);
     }
 
-//    @RequestMapping(value = "/get-urtug-non-dpa-by-jabatan/{kdJabatan}", method = RequestMethod.GET)
-//    ResponseEntity<?> getUrtugNonDpaByJabatan(@PathVariable("kdJabatan") String kdJabatan) {
-//        LOGGER.info("get urtug Non-DPA by jabatan");
-//
-//        List<UraianTugasJabatanJenisUrtugWrapper> urtugWrapperList
-//                = new ArrayList<>();
-//        List<UraianTugasJabatanJenisUrtug> urtugJabatanJenisList
-//                = uraianTugasJabatanJenisUrtugService.getByJabatan(kdJabatan);
-//
-//        for (UraianTugasJabatanJenisUrtug urtugJabatanJenis : urtugJabatanJenisList) {
-//            urtugWrapperList
-//                    .add(new UraianTugasJabatanJenisUrtugWrapper(
-//                            urtugJabatanJenis.getUraianTugasJabatanJenisUrtugId().getKdUrtug(),
-//                            urtugJabatanJenis.getUraianTugasJabatan().getUraianTugas().getDeskripsi(),
-//                            urtugJabatanJenis.getUraianTugasJabatanJenisUrtugId().getKdJabatan(),
-//                            urtugJabatanJenis.getUraianTugasJabatanJenisUrtugId().getKdJenisUrtug(),
-//                            urtugJabatanJenis.getJenisUrtug().getJenisUrtug(),
-//                            urtugJabatanJenis.getUraianTugasJabatanJenisUrtugId().getTahunUrtug()));
-//        }
-//
-//        return new ResponseEntity<Object>(urtugWrapperList, HttpStatus.OK);
-//    }
+    @RequestMapping(value = "/get-urtug-non-dpa-by-jabatan/{kdJabatan}", method = RequestMethod.GET)
+    ResponseEntity<?> getUrtugNonDpaByJabatan(@PathVariable("kdJabatan") String kdJabatan) {
+        LOGGER.info("get urtug Non-DPA by jabatan");
+
+        List<UraianTugasJabatanJenisUrtugWrapper> urtugWrapperList
+                = new ArrayList<>();
+        List<UraianTugasJabatanJenisUrtug> urtugJabatanJenisList
+                = uraianTugasJabatanJenisUrtugService.getUrtugNonDpaByJabatan(kdJabatan);
+
+        for (UraianTugasJabatanJenisUrtug urtugJabatanJenis : urtugJabatanJenisList) {
+            urtugWrapperList
+                    .add(new UraianTugasJabatanJenisUrtugWrapper(
+                            urtugJabatanJenis.getUraianTugasJabatanJenisUrtugId().getKdUrtug(),
+                            urtugJabatanJenis.getUraianTugasJabatan().getUraianTugas().getDeskripsi(),
+                            urtugJabatanJenis.getUraianTugasJabatanJenisUrtugId().getKdJabatan(),
+                            urtugJabatanJenis.getUraianTugasJabatanJenisUrtugId().getKdJenisUrtug(),
+                            urtugJabatanJenis.getJenisUrtug().getJenisUrtug(),
+                            urtugJabatanJenis.getUraianTugasJabatanJenisUrtugId().getTahunUrtug()));
+        }
+
+        return new ResponseEntity<Object>(urtugWrapperList, HttpStatus.OK);
+    }
 }
