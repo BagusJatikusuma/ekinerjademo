@@ -25,6 +25,13 @@ public interface UraianTugasJabatanJenisUrtugDao extends JpaRepository<UraianTug
             "left join fetch utj.uraianTugasJabatan uj " +
             "left join fetch uj.uraianTugas " +
             "left join fetch utj.jenisUrtug " +
+            "where utj.uraianTugasJabatanJenisUrtugId.kdJabatan = ?1 " +
+            "and utj.uraianTugasJabatanJenisUrtugId.kdJenisUrtug = ?2")
+    List<UraianTugasJabatanJenisUrtug> findUrtugNonDpaByJabatan(String jabatan, String nonDpa);
+    @Query("select utj from UraianTugasJabatanJenisUrtug utj " +
+            "left join fetch utj.uraianTugasJabatan uj " +
+            "left join fetch uj.uraianTugas " +
+            "left join fetch utj.jenisUrtug " +
             "where utj.uraianTugasJabatanJenisUrtugId.kdJabatan = ?1")
     List<UraianTugasJabatanJenisUrtug> findByJabatan(String kdJabatan);
     UraianTugasJabatanJenisUrtug findByUraianTugasJabatanJenisUrtugId(UraianTugasJabatanJenisUrtugId urtugId);
