@@ -11,6 +11,9 @@ public class UrtugKegiatanPegawai {
     @EmbeddedId
     private UrtugKegiatanPegawaiId urtugKegiatanPegawaiId;
 
+    @Column(name = "status_approval")
+    private Integer statusApproval;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumns({
             @JoinColumn(
@@ -122,5 +125,13 @@ public class UrtugKegiatanPegawai {
 
     public void setStatusPenanggungJawabKegiatan(StatusPenanggungJawabKegiatan statusPenanggungJawabKegiatan) {
         this.statusPenanggungJawabKegiatan = statusPenanggungJawabKegiatan;
+    }
+
+    public Integer getStatusApproval() {
+        return statusApproval;
+    }
+
+    public void setStatusApproval(Integer statusApproval) {
+        this.statusApproval = statusApproval;
     }
 }

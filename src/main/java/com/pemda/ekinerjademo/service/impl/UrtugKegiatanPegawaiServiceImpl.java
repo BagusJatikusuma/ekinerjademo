@@ -37,6 +37,12 @@ public class UrtugKegiatanPegawaiServiceImpl implements UrtugKegiatanPegawaiServ
     }
 
     @Override
+    public List<UrtugKegiatanPegawai> findByUrtugJabatanAndNipPegawai(UraianTugasJabatanId uraianTugasJabatanId, String nipPegawai) {
+        return urtugKegiatanPegawaiDao
+                .findUrtugKegiatanPegawaiByUrtugJabatanAndNip(uraianTugasJabatanId, nipPegawai);
+    }
+
+    @Override
     public void save(UrtugKegiatanPegawai urtugKegiatanPegawai) {
         urtugKegiatanPegawaiDao.save(urtugKegiatanPegawai);
     }

@@ -8,10 +8,7 @@ import com.pemda.ekinerjademo.service.TaKegiatanService;
 import com.pemda.ekinerjademo.service.UnitKerjaKegiatanService;
 import com.pemda.ekinerjademo.service.UrtugKegiatanPegawaiService;
 import com.pemda.ekinerjademo.wrapper.input.*;
-import com.pemda.ekinerjademo.wrapper.output.CustomMessage;
-import com.pemda.ekinerjademo.wrapper.output.PenanggungJawabKegiatanWrapper;
-import com.pemda.ekinerjademo.wrapper.output.UrtugKegiatanPegawaiByUrtugJabatanWrapper;
-import com.pemda.ekinerjademo.wrapper.output.UrtugKegiatanPegawaiWrapper;
+import com.pemda.ekinerjademo.wrapper.output.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -122,6 +119,101 @@ public class UrtugKegiatanPegawaiController {
 
         UnitKerjaKegiatan unitKerjaKegiatan
                 = unitKerjaKegiatanService.findByKdUnitKerja(kdUnitKerja);
+
+        List<TaKegiatan> taKegiatanList = taKegiatanService.findByUnitKerja(unitKerjaKegiatan);
+
+        for (UrtugKegiatanPegawai urtugKegiatanPegawai : urtugKegiatanPegawaiList) {
+            for (TaKegiatan taKegiatan : taKegiatanList) {
+                if (urtugKegiatanPegawai.getUrtugKegiatanPegawaiId().getKdProg().equals(taKegiatan.getTaKegiatanId().getKdProg()) &&
+                        urtugKegiatanPegawai.getUrtugKegiatanPegawaiId().getKdKeg().equals(taKegiatan.getTaKegiatanId().getKdKegiatan())) {
+                    urtugKegiatanPegawaiWrappers
+                            .add(new UrtugKegiatanPegawaiWrapper(
+                                    urtugKegiatanPegawai.getUrtugKegiatanPegawaiId().getKdUrtug(),
+                                    urtugKegiatanPegawai.getUrtugKegiatan().getUraianTugasJabatanJenisUrtug().getUraianTugasJabatan().getUraianTugas().getDeskripsi(),
+                                    urtugKegiatanPegawai.getUrtugKegiatanPegawaiId().getKdJabatan(),
+                                    urtugKegiatanPegawai.getUrtugKegiatanPegawaiId().getKdJenisUrtug(),
+                                    urtugKegiatanPegawai.getUrtugKegiatanPegawaiId().getTahunUrtug(),
+                                    urtugKegiatanPegawai.getUrtugKegiatanPegawaiId().getKdUrusan(),
+                                    urtugKegiatanPegawai.getUrtugKegiatanPegawaiId().getKdBidang(),
+                                    urtugKegiatanPegawai.getUrtugKegiatanPegawaiId().getKdUnit(),
+                                    urtugKegiatanPegawai.getUrtugKegiatanPegawaiId().getKdSub(),
+                                    urtugKegiatanPegawai.getUrtugKegiatanPegawaiId().getTahun(),
+                                    urtugKegiatanPegawai.getUrtugKegiatanPegawaiId().getKdProg(),
+                                    urtugKegiatanPegawai.getUrtugKegiatanPegawaiId().getIdProg(),
+                                    urtugKegiatanPegawai.getUrtugKegiatanPegawaiId().getKdKeg(),
+                                    taKegiatan.getKetKegiatan(),
+                                    taKegiatan.getPaguAnggaran(),
+                                    urtugKegiatanPegawai.getUrtugKegiatanPegawaiId().getNipPegawai(),
+                                    urtugKegiatanPegawai.getUrtugKegiatanPegawaiId().getKdStatusPenanggungJawab(),
+                                    urtugKegiatanPegawai.getStatusPenanggungJawabKegiatan().getStatus()));
+
+                    break;
+                }
+            }
+        }
+
+        return new ResponseEntity<Object>(urtugKegiatanPegawaiWrappers, HttpStatus.OK);
+    }
+
+    //get urtug dpa by nip
+    @RequestMapping(value = "/get-urtug-dpa-pegawai/{nipPegawai}/{kdUnitKerja}", method = RequestMethod.GET)
+    ResponseEntity<?> getUrtugDpaPegawaiByNipPegawai(
+            @PathVariable("nipPegawai") String nipPegawai,
+            @PathVariable("kdUnitKerja") String kdUnitKerja) {
+        LOGGER.info("get urtug dpa pegawai");
+
+        List<UraianTugasJabatanOutputWrapper> outputWrappers
+                = new ArrayList<>();
+
+        List<UrtugKegiatanPegawai> urtugKegiatanPegawaiList
+                = urtugKegiatanPegawaiService.findByNipPegawai(nipPegawai);
+
+        for (UrtugKegiatanPegawai urtugKegiatanPegawai : urtugKegiatanPegawaiList) {
+            boolean found = false;
+            for (UraianTugasJabatanOutputWrapper uraianTugasJabatanOutputWrapper : outputWrappers) {
+                if (urtugKegiatanPegawai.getUrtugKegiatanPegawaiId().getKdUrtug()
+                        .equals(uraianTugasJabatanOutputWrapper.getKdUrtug())) {
+                    found =true;
+                    break;
+                }
+
+            }
+
+            if (!found) {
+                outputWrappers
+                        .add(new UraianTugasJabatanOutputWrapper(
+                                urtugKegiatanPegawai.getUrtugKegiatan().getUraianTugasJabatanJenisUrtug().getUraianTugasJabatan().getUraianTugas().getDeskripsi(),
+                                urtugKegiatanPegawai.getUrtugKegiatanPegawaiId().getKdUrtug(),
+                                urtugKegiatanPegawai.getUrtugKegiatanPegawaiId().getKdJabatan(),
+                                urtugKegiatanPegawai.getUrtugKegiatan().getUraianTugasJabatanJenisUrtug().getUraianTugasJabatan().getKuantitas(),
+                                urtugKegiatanPegawai.getUrtugKegiatan().getUraianTugasJabatanJenisUrtug().getUraianTugasJabatan().getSatuanKuantitas(),
+                                urtugKegiatanPegawai.getUrtugKegiatan().getUraianTugasJabatanJenisUrtug().getUraianTugasJabatan().getKualitas(),
+                                urtugKegiatanPegawai.getUrtugKegiatan().getUraianTugasJabatanJenisUrtug().getUraianTugasJabatan().getWaktu(),
+                                urtugKegiatanPegawai.getUrtugKegiatan().getUraianTugasJabatanJenisUrtug().getUraianTugasJabatan().getBiaya()));
+            }
+
+        }
+
+        return new ResponseEntity<Object>(outputWrappers, HttpStatus.OK);
+    }
+
+    //get kegiatan dpa and status by urtug jabatan and nip
+    @RequestMapping(value = "/get-kegiatan-pegawai-by-urtug", method = RequestMethod.POST)
+    ResponseEntity<?> getKegiatanPegawaibyUraianTugasJabatan(
+            @RequestBody UrtugJabatanIdNipInputWrapper inputWrapper) {
+        LOGGER.info("get kegiatan pegawai by urtug");
+
+        List<UrtugKegiatanPegawaiWrapper> urtugKegiatanPegawaiWrappers
+                = new ArrayList<>();
+
+        List<UrtugKegiatanPegawai> urtugKegiatanPegawaiList
+                = urtugKegiatanPegawaiService
+                .findByUrtugJabatanAndNipPegawai(
+                        new UraianTugasJabatanId(inputWrapper.getKdUrtug(), inputWrapper.getKdJabatan()),
+                        inputWrapper.getNipPegawai());
+
+        UnitKerjaKegiatan unitKerjaKegiatan
+                = unitKerjaKegiatanService.findByKdUnitKerja(inputWrapper.getKdUnitKerja());
 
         List<TaKegiatan> taKegiatanList = taKegiatanService.findByUnitKerja(unitKerjaKegiatan);
 
