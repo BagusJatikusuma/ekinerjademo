@@ -396,10 +396,38 @@ public class UrtugKegiatanPegawaiController {
     //change status urtug dpa pegawai
     @RequestMapping(value = "/change-status-urtug-dpa-pegawai", method = RequestMethod.PUT)
     ResponseEntity<?> changeStatusUrtugDpaPegawai(
-            @RequestBody UrtugKegiatanPegawaiInputWrapper urtugKegiatanPegawaiInputWrapper) {
+            @RequestBody List<UrtugKegiatanPegawaiInputWrapper> urtugKegiatanPegawaiInputWrapperList) {
         LOGGER.info("change status urtug dpa pegawai");
+
+        for (UrtugKegiatanPegawaiInputWrapper urtugKegiatanPegawaiInputWrapper:
+                urtugKegiatanPegawaiInputWrapperList) {
+            UrtugKegiatanPegawai urtugKegiatanPegawai = new UrtugKegiatanPegawai();
+
+            urtugKegiatanPegawai
+                    .setUrtugKegiatanPegawaiId(
+                            new UrtugKegiatanPegawaiId(
+                                    urtugKegiatanPegawaiInputWrapper.getKdUrtug(),
+                                    urtugKegiatanPegawaiInputWrapper.getKdJabatan(),
+                                    urtugKegiatanPegawaiInputWrapper.getKdJenisUrtug(),
+                                    urtugKegiatanPegawaiInputWrapper.getTahunUrtug(),
+                                    urtugKegiatanPegawaiInputWrapper.getKdUrusan(),
+                                    urtugKegiatanPegawaiInputWrapper.getKdBidang(),
+                                    urtugKegiatanPegawaiInputWrapper.getKdUnit(),
+                                    urtugKegiatanPegawaiInputWrapper.getKdSub(),
+                                    urtugKegiatanPegawaiInputWrapper.getTahun(),
+                                    urtugKegiatanPegawaiInputWrapper.getKdProg(),
+                                    urtugKegiatanPegawaiInputWrapper.getIdProg(),
+                                    urtugKegiatanPegawaiInputWrapper.getKdKeg(),
+                                    urtugKegiatanPegawaiInputWrapper.getNipPegawai(),
+                                    urtugKegiatanPegawaiInputWrapper.getKdStatusPenanggungJawab()));
+
+            urtugKegiatanPegawai.setStatusApproval(urtugKegiatanPegawaiInputWrapper.getStatusApproval());
+
+            urtugKegiatanPegawaiService.update(urtugKegiatanPegawai);
+        }
+
         return new ResponseEntity<Object>(
-                new CustomMessage("urtug kegiatan pegawai updated"), HttpStatus.OK);
+                new CustomMessage("urtug DPA disetujuan"), HttpStatus.OK);
     }
 
 }
