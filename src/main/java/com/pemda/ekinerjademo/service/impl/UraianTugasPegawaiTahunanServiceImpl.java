@@ -50,6 +50,34 @@ public class UraianTugasPegawaiTahunanServiceImpl implements UraianTugasPegawaiT
     }
 
     @Override
+    public void approveUrtug(UraianTugasPegawaiTahunanId uraianTugasPegawaiTahunanId) {
+        UraianTugasPegawaiTahunan uraianTugasPegawaiTahunan
+                = urtugPegawaiTahunanDao.findOne(uraianTugasPegawaiTahunanId);
+        uraianTugasPegawaiTahunan.setStatusApproval(true);
+    }
+
+    @Override
+    public void createUraianTugasPegawaiTahunan(
+            UraianTugasPegawaiTahunanInputWrapper uraianTugasPegawaiTahunanInputWrapper,
+            Boolean statusApproval) {
+        UraianTugasPegawaiTahunan urtugPegawaiTahunan = new UraianTugasPegawaiTahunan();
+        urtugPegawaiTahunan
+                .setUraianTugasPegawaiTahunanId(
+                        new UraianTugasPegawaiTahunanId(
+                                uraianTugasPegawaiTahunanInputWrapper.getKdUrtug(),
+                                uraianTugasPegawaiTahunanInputWrapper.getKdJabatan(),
+                                uraianTugasPegawaiTahunanInputWrapper.getKdJenisUrtug(),
+                                Year.now().getValue(),
+                                uraianTugasPegawaiTahunanInputWrapper.getNipPegawai()
+                        ));
+        urtugPegawaiTahunan.setAkunPegawai(new AkunPegawai(uraianTugasPegawaiTahunanInputWrapper.getNipPegawai()));
+        urtugPegawaiTahunan.setStatusApproval(statusApproval);
+        urtugPegawaiTahunan.setStatusPengerjaan(0);
+
+        urtugPegawaiTahunanDao.save(urtugPegawaiTahunan);
+    }
+
+    @Override
     public List<UraianTugasPegawaiTahunan> getByNipPegawai(String nipPegawai) {
         return urtugPegawaiTahunanDao
                 .findByUraianTugasPegawaiTahunanId_NipPegawai(nipPegawai);

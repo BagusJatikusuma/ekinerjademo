@@ -12,5 +12,7 @@ import java.util.List;
 public interface UraianTugasPegawaiTahunanService {
     void createUraianTugasPegawaiTahunanList(List<UraianTugasPegawaiTahunanInputWrapper> urtugPegawaiList);
     void deleteUraianTugasPegawaiTahunan(UraianTugasPegawaiTahunanId urtugPegawaiTahunanId);
+    void approveUrtug(UraianTugasPegawaiTahunanId uraianTugasPegawaiTahunanId);
+    void createUraianTugasPegawaiTahunan(UraianTugasPegawaiTahunanInputWrapper uraianTugasPegawaiTahunanInputWrapper, Boolean statusApproval);
     List<UraianTugasPegawaiTahunan> getByNipPegawai(String nipPegawai);
 }
