@@ -323,6 +323,7 @@ public class UrtugKegiatanPegawaiController {
                                 urtugKegiatanPegawaiInputWrapper.getKdKeg(),
                                 urtugKegiatanPegawaiInputWrapper.getNipPegawai(),
                                 urtugKegiatanPegawaiInputWrapper.getKdStatusPenanggungJawab()));
+        urtugKegiatanPegawai.setStatusApproval(0);
 
         urtugKegiatanPegawaiService.save(urtugKegiatanPegawai);
 
@@ -354,6 +355,7 @@ public class UrtugKegiatanPegawaiController {
                                 urtugKegiatanPegawaiInputWrapper.getKdKeg(),
                                 urtugKegiatanPegawaiInputWrapper.getNipPegawai(),
                                 urtugKegiatanPegawaiInputWrapper.getKdStatusPenanggungJawab()));
+        urtugKegiatanPegawai.setStatusApproval(urtugKegiatanPegawaiInputWrapper.getStatusApproval());
 
         urtugKegiatanPegawaiService.update(urtugKegiatanPegawai);
 
