@@ -8,6 +8,7 @@ import com.pemda.ekinerjademo.repository.bismarepository.TkdJabatanDao;
 import com.pemda.ekinerjademo.repository.ekinerjarepository.AkunPegawaiDao;
 import com.pemda.ekinerjademo.service.*;
 import com.pemda.ekinerjademo.wrapper.input.AkunPegawaiRoleInputWrapper;
+import com.pemda.ekinerjademo.wrapper.input.PegawaiPenilaiInputWrapper;
 import com.pemda.ekinerjademo.wrapper.input.UrtugKegiatanInputWrapper;
 import com.pemda.ekinerjademo.wrapper.input.UrtugKegiatanPenanggungJawabWrapper;
 import com.pemda.ekinerjademo.wrapper.output.*;
@@ -387,6 +388,20 @@ public class AkunPegawaiController {
 
 
         return new ResponseEntity<Object>(pegawaiWrapper, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/set-pegawai-penilai", method = RequestMethod.POST)
+    ResponseEntity<?> setPegawaiPenilai(@RequestBody PegawaiPenilaiInputWrapper pegawaiPenilaiInputWrapper) {
+        LOGGER.info("set pegawai penilai");
+
+        PejabatPenilaiDinilai pejabatPenilaiDinilai = new PejabatPenilaiDinilai();
+        pejabatPenilaiDinilai.setPejabatPenilaiDinilaiId(new PejabatPenilaiDinilaiId(
+                pegawaiPenilaiInputWrapper.getNipPenilai(),
+                pegawaiPenilaiInputWrapper.getKdJabatan()));
+        pejabatPenilaiDinilaiService.create(pejabatPenilaiDinilai);
+
+
+        return new ResponseEntity<Object>(pegawaiPenilaiInputWrapper, HttpStatus.OK);
     }
 
     //sampai disini
