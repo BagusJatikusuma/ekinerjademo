@@ -90,6 +90,12 @@ public class UraianTugasJabatanJenisUrtugController {
                                 inputWrapper.getKdJabatan(),
                                 inputWrapper.getKdJenisUrtug(),
                                 Year.now().getValue()));
+        urtugJabatanJenis.setKuantitas(inputWrapper.getKuantitas());
+        urtugJabatanJenis.setSatuanKuantitas(inputWrapper.getSatuanKuantitas());
+        urtugJabatanJenis.setKualitas(inputWrapper.getKualitas());
+        urtugJabatanJenis.setWaktu(inputWrapper.getWaktu());
+        urtugJabatanJenis.setBiaya(inputWrapper.getBiaya());
+
 
         uraianTugasJabatanJenisUrtugService.save(urtugJabatanJenis);
 

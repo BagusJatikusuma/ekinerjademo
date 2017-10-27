@@ -33,7 +33,7 @@ public class UraianTugasPegawaiTahunan {
     private Integer biaya;
 
     @Column(name = "alasan")
-    private Integer alasan;
+    private String alasan;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumns({
@@ -148,11 +148,11 @@ public class UraianTugasPegawaiTahunan {
         this.biaya = biaya;
     }
 
-    public Integer getAlasan() {
+    public String getAlasan() {
         return alasan;
     }
 
-    public void setAlasan(Integer alasan) {
+    public void setAlasan(String alasan) {
         this.alasan = alasan;
     }
 }
