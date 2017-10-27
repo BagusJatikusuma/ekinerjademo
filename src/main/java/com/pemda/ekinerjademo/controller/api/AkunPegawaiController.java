@@ -369,8 +369,24 @@ public class AkunPegawaiController {
     ResponseEntity<?> getPenilaiUrtug(@PathVariable("kdJabatan") String kdJabatan) {
         LOGGER.info("get penilai urtug by jabatan");
 
+        PejabatPenilaiDinilai pejabatPenilaiDinilai
+                = pejabatPenilaiDinilaiService.findByKdJabatanDinilai(kdJabatan);
+        QutPegawai qutPegawai
+                = qutPegawaiService.getQutPegawai(
+                        pejabatPenilaiDinilai.getPejabatPenilaiDinilaiId().getNipPenilai());
+        QutPegawaiWrapper pegawaiWrapper
+                = new QutPegawaiWrapper(
+                        qutPegawai.getNip(),
+                qutPegawai.getNama(),
+                qutPegawai.getKdJabatan(),
+                qutPegawai.getJabatan(),
+                qutPegawai.getKdUnitKerja(),
+                qutPegawai.getUnitKerja(),
+                qutPegawai.getPangkat(),
+                qutPegawai.getGol());
 
-        return null;
+
+        return new ResponseEntity<Object>(pegawaiWrapper, HttpStatus.OK);
     }
 
     //sampai disini
