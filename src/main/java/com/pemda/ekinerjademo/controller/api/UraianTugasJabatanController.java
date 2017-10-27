@@ -134,16 +134,18 @@ public class UraianTugasJabatanController {
                 uraianTugasJabatanService.getUraianTugasJabatanByJabatan(kdJabatan);
 
         for (UraianTugasJabatan uraianTugasJabatan : uraianTugasJabatanList) {
-            urtugJabatanWrapperList
-                    .add(new UraianTugasJabatanOutputWrapper(
-                            uraianTugasJabatan.getUraianTugas().getDeskripsi(),
-                            uraianTugasJabatan.getUraianTugasJabatanId().getKdUrtug(),
-                            uraianTugasJabatan.getUraianTugasJabatanId().getKdJabatan(),
-                            uraianTugasJabatan.getKuantitas(),
-                            uraianTugasJabatan.getSatuanKuantitas(),
-                            uraianTugasJabatan.getKualitas(),
-                            uraianTugasJabatan.getWaktu(),
-                            uraianTugasJabatan.getBiaya()));
+            if(uraianTugasJabatan.getUraianTugasJabatanJenisUrtugList().isEmpty()){
+                urtugJabatanWrapperList
+                        .add(new UraianTugasJabatanOutputWrapper(
+                                uraianTugasJabatan.getUraianTugas().getDeskripsi(),
+                                uraianTugasJabatan.getUraianTugasJabatanId().getKdUrtug(),
+                                uraianTugasJabatan.getUraianTugasJabatanId().getKdJabatan(),
+                                uraianTugasJabatan.getKuantitas(),
+                                uraianTugasJabatan.getSatuanKuantitas(),
+                                uraianTugasJabatan.getKualitas(),
+                                uraianTugasJabatan.getWaktu(),
+                                uraianTugasJabatan.getBiaya()));
+            }
         }
 
         return new ResponseEntity<Object>(urtugJabatanWrapperList, HttpStatus.OK);

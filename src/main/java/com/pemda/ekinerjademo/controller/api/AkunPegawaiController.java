@@ -335,7 +335,9 @@ public class AkunPegawaiController {
         for (StatusPenanggungJawabKegiatan spj : statusPenanggungJawabKegiatanList) {
             inputConstraint = false;
             if (spj.getKdStatus().equals("ST001") ||
-                    spj.getKdStatus().equals("ST002")) {
+                    spj.getKdStatus().equals("ST002")||
+                    spj.getKdStatus().equals("ST004")||
+                    spj.getKdStatus().equals("ST005")) {
                 LOGGER.info("masuk "+spj.getKdStatus());
 
                 for (UrtugKegiatanPegawai urtugKegiatanPegawai : urtugKegiatanPegawaiList) {
