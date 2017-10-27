@@ -397,7 +397,7 @@ public class UrtugKegiatanPegawaiController {
                 new CustomMessage("urtug kegiatan pegawai deleted"), HttpStatus.OK);
     }
 
-    //change status urtug dpa pegawai per kegiatan
+    //change status urtug dpa pegawai per kegiatan (tidak dipakai)
     @RequestMapping(value = "/change-status-urtug-dpa-pegawai", method = RequestMethod.PUT)
     ResponseEntity<?> changeStatusUrtugDpaPegawai(
             @RequestBody List<UrtugKegiatanPegawaiInputWrapper> urtugKegiatanPegawaiInputWrapperList) {
@@ -434,6 +434,17 @@ public class UrtugKegiatanPegawaiController {
                 new CustomMessage("urtug DPA disetujuan"), HttpStatus.OK);
     }
 
-    //status approval per urtug
+    //status approval per urtug (yang dipakai)
+    @RequestMapping(value = "/change-status-urtug-kegiatan-pegawai-approval", method = RequestMethod.PUT)
+    ResponseEntity<?> changeStatusUrtugKegiatanPegawaiApproval(
+            @RequestBody List<UrtugKegiatanPegawaiApprovalInputWrapper> urtugKegiatanPegawaiApprovalInputWrapperList) {
+        LOGGER.info("change status urtug kegiatan pegawai approval");
+
+        urtugKegiatanPegawaiService.changeStatusApprovalUrtugKegiatan(urtugKegiatanPegawaiApprovalInputWrapperList);
+
+        return new ResponseEntity<Object>(
+                new CustomMessage("urtug kegiatan telah dikonfirmasi"), HttpStatus.OK);
+    }
+
 
 }
