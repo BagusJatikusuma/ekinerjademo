@@ -40,6 +40,7 @@ public class AkunPegawaiController {
     private QutPegawaiService qutPegawaiService;
     private StatusPenanggungJawabKegiatanService statusPenanggungJawabKegiatanService;
     private UrtugKegiatanPegawaiService urtugKegiatanPegawaiService;
+    private PejabatPenilaiDinilaiService pejabatPenilaiDinilaiService;
 
     @Autowired
     public AkunPegawaiController(
@@ -51,7 +52,8 @@ public class AkunPegawaiController {
             TkdJabatanService tkdJabatanService,
             QutPegawaiService qutPegawaiService,
             StatusPenanggungJawabKegiatanService statusPenanggungJawabKegiatanService,
-            UrtugKegiatanPegawaiService urtugKegiatanPegawaiService) {
+            UrtugKegiatanPegawaiService urtugKegiatanPegawaiService,
+            PejabatPenilaiDinilaiService pejabatPenilaiDinilaiService) {
         this.tkdJabatanDao = tkdJabatanDao;
         this.qutPegawaiDao = qutPegawaiDao;
         this.akunPegawaiDao = akunPegawaiDao;
@@ -61,6 +63,7 @@ public class AkunPegawaiController {
         this.qutPegawaiService = qutPegawaiService;
         this.statusPenanggungJawabKegiatanService = statusPenanggungJawabKegiatanService;
         this.urtugKegiatanPegawaiService = urtugKegiatanPegawaiService;
+        this.pejabatPenilaiDinilaiService = pejabatPenilaiDinilaiService;
     }
 
     @RequestMapping(value = "/test", method = RequestMethod.GET)
@@ -360,6 +363,14 @@ public class AkunPegawaiController {
         }
 
         return new ResponseEntity<Object>(statusPenanggungJawabWrapperList, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/get-penilai-urtug-by-jabatan/{kdJabatan}")
+    ResponseEntity<?> getPenilaiUrtug(@PathVariable("kdJabatan") String kdJabatan) {
+        LOGGER.info("get penilai urtug by jabatan");
+
+
+        return null;
     }
 
     //sampai disini

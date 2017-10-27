@@ -162,7 +162,7 @@ public class UrtugKegiatanPegawaiController {
             @PathVariable("kdUnitKerja") String kdUnitKerja) {
         LOGGER.info("get urtug dpa pegawai");
 
-        List<UraianTugasJabatanOutputWrapper> outputWrappers
+        List<UrtugJabatanOutputWrapperTemporary> outputWrappers
                 = new ArrayList<>();
 
         List<UrtugKegiatanPegawai> urtugKegiatanPegawaiList
@@ -170,7 +170,7 @@ public class UrtugKegiatanPegawaiController {
 
         for (UrtugKegiatanPegawai urtugKegiatanPegawai : urtugKegiatanPegawaiList) {
             boolean found = false;
-            for (UraianTugasJabatanOutputWrapper uraianTugasJabatanOutputWrapper : outputWrappers) {
+            for (UrtugJabatanOutputWrapperTemporary uraianTugasJabatanOutputWrapper : outputWrappers) {
                 if (urtugKegiatanPegawai.getUrtugKegiatanPegawaiId().getKdUrtug()
                         .equals(uraianTugasJabatanOutputWrapper.getKdUrtug())) {
                     found =true;
@@ -181,10 +181,11 @@ public class UrtugKegiatanPegawaiController {
 
             if (!found) {
                 outputWrappers
-                        .add(new UraianTugasJabatanOutputWrapper(
+                        .add(new UrtugJabatanOutputWrapperTemporary(
                                 urtugKegiatanPegawai.getUrtugKegiatan().getUraianTugasJabatanJenisUrtug().getUraianTugasJabatan().getUraianTugas().getDeskripsi(),
                                 urtugKegiatanPegawai.getUrtugKegiatanPegawaiId().getKdUrtug(),
                                 urtugKegiatanPegawai.getUrtugKegiatanPegawaiId().getKdJabatan(),
+                                urtugKegiatanPegawai.getUrtugKegiatanPegawaiId().getTahunUrtug(),
                                 urtugKegiatanPegawai.getUrtugKegiatan().getUraianTugasJabatanJenisUrtug().getUraianTugasJabatan().getKuantitas(),
                                 urtugKegiatanPegawai.getUrtugKegiatan().getUraianTugasJabatanJenisUrtug().getUraianTugasJabatan().getSatuanKuantitas(),
                                 urtugKegiatanPegawai.getUrtugKegiatan().getUraianTugasJabatanJenisUrtug().getUraianTugasJabatan().getKualitas(),
