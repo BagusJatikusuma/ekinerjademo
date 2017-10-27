@@ -17,6 +17,24 @@ public class UraianTugasPegawaiTahunan {
     @Column(name = "status_pengerjaan")
     private Integer statusPengerjaan;
 
+    @Column(name = "kuantitas")
+    private Integer kuantitas;
+
+    @Column(name = "satuan_kuantitas")
+    private String satuanKuantitas;
+
+    @Column(name = "kualitas")
+    private Integer kualitas;
+
+    @Column(name = "waktu")
+    private Integer waktu;
+
+    @Column(name = "biaya")
+    private Integer biaya;
+
+    @Column(name = "alasan")
+    private Integer alasan;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumns({
             @JoinColumn(
@@ -88,5 +106,53 @@ public class UraianTugasPegawaiTahunan {
 
     public void setStatusApproval(Boolean statusApproval) {
         this.statusApproval = statusApproval;
+    }
+
+    public Integer getKuantitas() {
+        return kuantitas;
+    }
+
+    public void setKuantitas(Integer kuantitas) {
+        this.kuantitas = kuantitas;
+    }
+
+    public String getSatuanKuantitas() {
+        return satuanKuantitas;
+    }
+
+    public void setSatuanKuantitas(String satuanKuantitas) {
+        this.satuanKuantitas = satuanKuantitas;
+    }
+
+    public Integer getKualitas() {
+        return kualitas;
+    }
+
+    public void setKualitas(Integer kualitas) {
+        this.kualitas = kualitas;
+    }
+
+    public Integer getWaktu() {
+        return waktu;
+    }
+
+    public void setWaktu(Integer waktu) {
+        this.waktu = waktu;
+    }
+
+    public Integer getBiaya() {
+        return biaya;
+    }
+
+    public void setBiaya(Integer biaya) {
+        this.biaya = biaya;
+    }
+
+    public Integer getAlasan() {
+        return alasan;
+    }
+
+    public void setAlasan(Integer alasan) {
+        this.alasan = alasan;
     }
 }
