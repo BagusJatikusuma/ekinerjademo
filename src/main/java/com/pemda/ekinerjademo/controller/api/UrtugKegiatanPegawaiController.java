@@ -393,7 +393,7 @@ public class UrtugKegiatanPegawaiController {
                 new CustomMessage("urtug kegiatan pegawai deleted"), HttpStatus.OK);
     }
 
-    //change status urtug dpa pegawai
+    //change status urtug dpa pegawai per kegiatan
     @RequestMapping(value = "/change-status-urtug-dpa-pegawai", method = RequestMethod.PUT)
     ResponseEntity<?> changeStatusUrtugDpaPegawai(
             @RequestBody List<UrtugKegiatanPegawaiInputWrapper> urtugKegiatanPegawaiInputWrapperList) {
@@ -429,5 +429,7 @@ public class UrtugKegiatanPegawaiController {
         return new ResponseEntity<Object>(
                 new CustomMessage("urtug DPA disetujuan"), HttpStatus.OK);
     }
+
+    //status approval per urtug
 
 }
