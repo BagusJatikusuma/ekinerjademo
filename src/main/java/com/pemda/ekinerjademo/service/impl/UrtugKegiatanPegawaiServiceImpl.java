@@ -3,6 +3,8 @@ package com.pemda.ekinerjademo.service.impl;
 import com.pemda.ekinerjademo.model.ekinerjamodel.*;
 import com.pemda.ekinerjademo.repository.ekinerjarepository.UrtugKegiatanPegawaiDao;
 import com.pemda.ekinerjademo.service.UrtugKegiatanPegawaiService;
+import com.pemda.ekinerjademo.wrapper.input.UrtugKegiatanPegawaiApprovalInputWrapper;
+import com.pemda.ekinerjademo.wrapper.output.UrtugKegiatanPegawaiByUrtugJabatanWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -43,6 +45,12 @@ public class UrtugKegiatanPegawaiServiceImpl implements UrtugKegiatanPegawaiServ
     }
 
     @Override
+    public List<UrtugKegiatanPegawai> findByUrtugJabatanTahunAndNipePegawai(UraianTugasJabatanJenisUrtugId uraianTugasJabatanJenisUrtugId, String nipPegawai) {
+        return urtugKegiatanPegawaiDao
+                .findUrtugKegiatanPegawaiByUrtugJabatanTahunAndNip(uraianTugasJabatanJenisUrtugId, nipPegawai);
+    }
+
+    @Override
     public void save(UrtugKegiatanPegawai urtugKegiatanPegawai) {
         urtugKegiatanPegawaiDao.save(urtugKegiatanPegawai);
     }
@@ -55,5 +63,27 @@ public class UrtugKegiatanPegawaiServiceImpl implements UrtugKegiatanPegawaiServ
     @Override
     public void delete(UrtugKegiatanPegawaiId urtugKegiatanPegawaiId) {
         urtugKegiatanPegawaiDao.deleteByUrtugKegiatanPegawaiId(urtugKegiatanPegawaiId);
+    }
+
+    @Override
+    public void changeStatusApprovalUrtugKegiatan(List<UrtugKegiatanPegawaiApprovalInputWrapper> inputWrapperList) {
+        for (UrtugKegiatanPegawaiApprovalInputWrapper inputWrapper : inputWrapperList) {
+            List<UrtugKegiatanPegawai> urtugKegiatanPegawaiList
+                    = urtugKegiatanPegawaiDao
+                        .findUrtugKegiatanPegawaiByUrtugJabatanTahunAndNip(
+                            new UraianTugasJabatanJenisUrtugId(
+                                    inputWrapper.getKdUrtug(),
+                                    inputWrapper.getKdJabatan(),
+                                    inputWrapper.getKdJenisUrtug(),
+                                    inputWrapper.getTahunUrtug()),
+                            inputWrapper.getNipPegawai());
+
+            for (UrtugKegiatanPegawai urtugKegiatanPegawai : urtugKegiatanPegawaiList) {
+                urtugKegiatanPegawai.setStatusApproval(inputWrapper.getStatusApproval());
+                update(urtugKegiatanPegawai);
+            }
+
+        }
+
     }
 }

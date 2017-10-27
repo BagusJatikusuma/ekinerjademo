@@ -200,7 +200,7 @@ public class UrtugKegiatanPegawaiController {
     //get kegiatan dpa and status by urtug jabatan and nip
     @RequestMapping(value = "/get-kegiatan-pegawai-by-urtug", method = RequestMethod.POST)
     ResponseEntity<?> getKegiatanPegawaibyUraianTugasJabatan(
-            @RequestBody UrtugJabatanIdNipInputWrapper inputWrapper) {
+            @RequestBody UrtugJabatanJenisUnitKerjaInputWrapper inputWrapper) {
         LOGGER.info("get kegiatan pegawai by urtug");
 
         List<UrtugKegiatanPegawaiWrapper> urtugKegiatanPegawaiWrappers
@@ -208,8 +208,12 @@ public class UrtugKegiatanPegawaiController {
 
         List<UrtugKegiatanPegawai> urtugKegiatanPegawaiList
                 = urtugKegiatanPegawaiService
-                .findByUrtugJabatanAndNipPegawai(
-                        new UraianTugasJabatanId(inputWrapper.getKdUrtug(), inputWrapper.getKdJabatan()),
+                .findByUrtugJabatanTahunAndNipePegawai(
+                        new UraianTugasJabatanJenisUrtugId(
+                                inputWrapper.getKdUrtug(),
+                                inputWrapper.getKdJabatan(),
+                                inputWrapper.getKdJenisUrtug(),
+                                inputWrapper.getTahunUrtug()),
                         inputWrapper.getNipPegawai());
 
         UnitKerjaKegiatan unitKerjaKegiatan

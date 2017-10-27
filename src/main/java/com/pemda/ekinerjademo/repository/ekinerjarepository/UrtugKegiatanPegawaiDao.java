@@ -38,6 +38,17 @@ public interface UrtugKegiatanPegawaiDao extends JpaRepository<UrtugKegiatanPega
             "left join fetch utjj.uraianTugasJabatan utj " +
             "left join fetch utjj.jenisUrtug " +
             "left join fetch utj.uraianTugas " +
+            "where ukp.urtugKegiatan.uraianTugasJabatanJenisUrtug.uraianTugasJabatanJenisUrtugId = ?1 " +
+            "and ukp.urtugKegiatanPegawaiId.nipPegawai = ?2")
+    List<UrtugKegiatanPegawai> findUrtugKegiatanPegawaiByUrtugJabatanTahunAndNip(
+            UraianTugasJabatanJenisUrtugId uraianTugasJabatanJenisUrtugId, String nip);
+
+    @Query("select ukp from UrtugKegiatanPegawai ukp " +
+            "left join fetch ukp.urtugKegiatan uk " +
+            "left join fetch uk.uraianTugasJabatanJenisUrtug utjj " +
+            "left join fetch utjj.uraianTugasJabatan utj " +
+            "left join fetch utjj.jenisUrtug " +
+            "left join fetch utj.uraianTugas " +
             "where ukp.urtugKegiatan.urtugKegiatanId = ?1")
     List<UrtugKegiatanPegawai> findUrtugKegiatanPegawaiByUrtugKegiatan(UrtugKegiatanId urtugKegiatanId);
 
