@@ -109,7 +109,7 @@ public class UraianTugasJabatanJenisUrtugController {
         return null;
     }
 
-    @RequestMapping(value = "/delete-urtug-jabatan-jenis", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/delete-urtug-jabatan-jenis", method = RequestMethod.POST)
     ResponseEntity<?> delete(@RequestBody UraianTugasJabatanJenisUrtugInputWrapper inputWrapper) {
         LOGGER.info("delete urtug jabatan jenis");
 
