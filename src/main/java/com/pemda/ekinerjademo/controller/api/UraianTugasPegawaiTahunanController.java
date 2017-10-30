@@ -157,10 +157,10 @@ public class UraianTugasPegawaiTahunanController {
             for (QutPegawai qutPegawai : qutPegawaiList){
                 if (qutPegawai.getNip().equals(pegawaiCredential.getNipPegawai())){
                     AjuanUraianTugasNonDpaPegawaiWrapper ajuanUraianTugasNonDpaPegawaiWrapper = new AjuanUraianTugasNonDpaPegawaiWrapper();
-                    ajuanUraianTugasNonDpaPegawaiWrapper.setNamaPegawai(qutPegawai.getNip());
+                    ajuanUraianTugasNonDpaPegawaiWrapper.setNipPegawai(qutPegawai.getNip());
                     ajuanUraianTugasNonDpaPegawaiWrapper.setNamaPegawai(qutPegawai.getNama());
-                    ajuanUraianTugasNonDpaPegawaiWrapper.setNamaPegawai(qutPegawai.getKdJabatan());
-                    ajuanUraianTugasNonDpaPegawaiWrapper.setNamaPegawai(qutPegawai.getJabatan());
+                    ajuanUraianTugasNonDpaPegawaiWrapper.setKdJabatan(qutPegawai.getKdJabatan());
+                    ajuanUraianTugasNonDpaPegawaiWrapper.setJabatan(qutPegawai.getJabatan());
 
                     ajuanUraianTugasNonDpaPegawaiWrapperList.add(ajuanUraianTugasNonDpaPegawaiWrapper);
                 }
