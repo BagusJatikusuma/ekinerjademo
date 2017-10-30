@@ -15,4 +15,5 @@ public interface UraianTugasPegawaiTahunanService {
     void approveUrtug(UraianTugasPegawaiTahunanId uraianTugasPegawaiTahunanId);
     void createUraianTugasPegawaiTahunan(UraianTugasPegawaiTahunanInputWrapper uraianTugasPegawaiTahunanInputWrapper, Boolean statusApproval);
     List<UraianTugasPegawaiTahunan> getByNipPegawai(String nipPegawai);
+    List<UraianTugasPegawaiTahunan> getByUnitKerja(String kdUnitKerja);
 }
