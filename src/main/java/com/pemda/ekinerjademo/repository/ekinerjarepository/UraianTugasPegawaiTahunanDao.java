@@ -19,5 +19,10 @@ public interface UraianTugasPegawaiTahunanDao extends JpaRepository<UraianTugasP
             "left join fetch utj.uraianTugas " +
             "where utpt.uraianTugasPegawaiTahunanId.nipPegawai = ?1")
     List<UraianTugasPegawaiTahunan> findByUraianTugasPegawaiTahunanId_NipPegawai(String nipPegawai);
+
+    @Query("select utpt from UraianTugasPegawaiTahunan utpt " +
+            "where utpt.uraianTugasPegawaiTahunanId.kdJabatan like concat(?1,'%')")
+    List<UraianTugasPegawaiTahunan> findByUnitKerja(String kdUnitKerja);
+
     void deleteByUraianTugasPegawaiTahunanId(UraianTugasPegawaiTahunanId urtugPegawaiTahunanId);
 }

@@ -38,7 +38,7 @@ public class UraianTugasJabatanController {
             UraianTugasService uraianTugasService) {
         this.tkdJabatanService = tkdJabatanService;
         this.uraianTugasJabatanService = uraianTugasJabatanService;
-        this.uraianTugasService = uraianTugasService;;
+        this.uraianTugasService = uraianTugasService;
     }
 
     @RequestMapping(value = "/get-uraian-tugas-by-jabatan/{kdJabatan}", method = RequestMethod.GET)
