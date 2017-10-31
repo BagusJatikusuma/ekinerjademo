@@ -30,6 +30,11 @@ public class UraianTugasJabatanJenisUrtugServiceImpl implements UraianTugasJabat
     }
 
     @Override
+    public List<UraianTugasJabatanJenisUrtug> getUrtugNonDpaByUnitKerja(String kdUnitKerja) {
+        return uraianTugasJabatanJenisUrtugDao.findUrtugNonDpaByUnitKerja(kdUnitKerja, "KJU002");
+    }
+
+    @Override
     public List<UraianTugasJabatanJenisUrtug> getByUrtugJabatanAndTahun(String kdUrtug, String kdJabatan, Integer tahun) {
         return null;
     }

@@ -21,6 +21,7 @@ public interface UraianTugasJabatanJenisUrtugDao extends JpaRepository<UraianTug
             "where utj.uraianTugasJabatanJenisUrtugId.kdUrtug = ?1 " +
             "and utj.uraianTugasJabatanJenisUrtugId.kdJabatan = ?2")
     List<UraianTugasJabatanJenisUrtug> findByUrtugJabatan(String kdUrtug, String kdJabatan);
+
     @Query("select utj from UraianTugasJabatanJenisUrtug utj " +
             "left join fetch utj.uraianTugasJabatan uj " +
             "left join fetch uj.uraianTugas " +
@@ -28,12 +29,22 @@ public interface UraianTugasJabatanJenisUrtugDao extends JpaRepository<UraianTug
             "where utj.uraianTugasJabatanJenisUrtugId.kdJabatan = ?1 " +
             "and utj.uraianTugasJabatanJenisUrtugId.kdJenisUrtug = ?2")
     List<UraianTugasJabatanJenisUrtug> findUrtugNonDpaByJabatan(String jabatan, String nonDpa);
+
     @Query("select utj from UraianTugasJabatanJenisUrtug utj " +
             "left join fetch utj.uraianTugasJabatan uj " +
             "left join fetch uj.uraianTugas " +
             "left join fetch utj.jenisUrtug " +
             "where utj.uraianTugasJabatanJenisUrtugId.kdJabatan = ?1")
     List<UraianTugasJabatanJenisUrtug> findByJabatan(String kdJabatan);
+
+    @Query("select utj from UraianTugasJabatanJenisUrtug utj " +
+            "left join fetch utj.uraianTugasJabatan uj " +
+            "left join fetch uj.uraianTugas " +
+            "left join fetch utj.jenisUrtug " +
+            "where utj.uraianTugasJabatanJenisUrtugId.kdJabatan like concat(?1,'%') " +
+            "and utj.uraianTugasJabatanJenisUrtugId.kdJenisUrtug = ?2")
+    List<UraianTugasJabatanJenisUrtug> findUrtugNonDpaByUnitKerja(String kdUnitKerja, String nonDpa);
+
     UraianTugasJabatanJenisUrtug findByUraianTugasJabatanJenisUrtugId(UraianTugasJabatanJenisUrtugId urtugId);
     void deleteByUraianTugasJabatanJenisUrtugId(UraianTugasJabatanJenisUrtugId urtugId);
 

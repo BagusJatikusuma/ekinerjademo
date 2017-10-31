@@ -36,25 +36,42 @@ public class PejabatPenilaiDinilaiController {
     }
 
     @RequestMapping(value = "/choose-pejabat-penilai", method = RequestMethod.POST)
-    ResponseEntity<?> choosePejabatPenilai(PejabatanPenilaiDinilaiInputWrapper inputWrapper) {
+    ResponseEntity<?> choosePejabatPenilai(@RequestBody PejabatanPenilaiDinilaiInputWrapper inputWrapper) {
         LOGGER.info("choose pejabat penilai dinilai");
 
-        PejabatPenilaiDinilai pejabatPenilaiDinilai
+        PejabatPenilaiDinilai pejabatPenilaiDinilaiTemp
                 = pejabatPenilaiDinilaiService.findByKdJabatanDinilai(inputWrapper.getKdJabatanDinilai());
 
-        if (pejabatPenilaiDinilai == null) {
-            pejabatPenilaiDinilai
-                    .setPejabatPenilaiDinilaiId(
-                            new PejabatPenilaiDinilaiId(
-                                    inputWrapper.getNipPenilai(),
-                                    inputWrapper.getKdJabatanDinilai()));
+        if (pejabatPenilaiDinilaiTemp == null) {
+            PejabatPenilaiDinilaiId pejabatPenilaiDinilaiId
+                    = new PejabatPenilaiDinilaiId(
+                            inputWrapper.getNipPenilai(), inputWrapper.getKdJabatanDinilai());
 
-            pejabatPenilaiDinilaiService.create(pejabatPenilaiDinilai);
+            pejabatPenilaiDinilaiTemp = new PejabatPenilaiDinilai();
+            pejabatPenilaiDinilaiTemp
+                    .setPejabatPenilaiDinilaiId(pejabatPenilaiDinilaiId);
+
+            LOGGER.info(
+                    pejabatPenilaiDinilaiTemp.getPejabatPenilaiDinilaiId().getNipPenilai()+
+                    " : "+
+                    pejabatPenilaiDinilaiTemp.getPejabatPenilaiDinilaiId().getKdJabatanDinilai());
+
+            pejabatPenilaiDinilaiService.create(pejabatPenilaiDinilaiTemp);
         } else {
             pejabatPenilaiDinilaiService
-                    .updatePejabatPenilaiByKdJabatanDinilai(
-                            inputWrapper.getNipPenilai(),
-                            inputWrapper.getKdJabatanDinilai());
+                    .delete(new PejabatPenilaiDinilaiId(
+                            pejabatPenilaiDinilaiTemp.getPejabatPenilaiDinilaiId().getNipPenilai(),
+                            pejabatPenilaiDinilaiTemp.getPejabatPenilaiDinilaiId().getKdJabatanDinilai()));
+
+            PejabatPenilaiDinilaiId pejabatPenilaiDinilaiId
+                    = new PejabatPenilaiDinilaiId(
+                    inputWrapper.getNipPenilai(), inputWrapper.getKdJabatanDinilai());
+
+            PejabatPenilaiDinilai newPejabatPenilaiDinilai = new PejabatPenilaiDinilai();
+            newPejabatPenilaiDinilai
+                    .setPejabatPenilaiDinilaiId(pejabatPenilaiDinilaiId);
+
+            pejabatPenilaiDinilaiService.create(newPejabatPenilaiDinilai);
         }
 
         return new ResponseEntity<Object>(new CustomMessage("pejabat penilai choosed"), HttpStatus.OK);

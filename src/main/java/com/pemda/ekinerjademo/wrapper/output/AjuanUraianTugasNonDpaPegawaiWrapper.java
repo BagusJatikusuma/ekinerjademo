@@ -12,6 +12,7 @@ public class AjuanUraianTugasNonDpaPegawaiWrapper {
     private String kdJabatan;
     private String jabatan;
     private List<UraianTugasWrapper> uraianTugasDiajukan;
+    private List<UraianTugasWrapper> uraianTugasTidakDipilih;
 
     public List<UraianTugasWrapper> getUraianTugasDiajukan() {
         return uraianTugasDiajukan;
@@ -53,4 +54,11 @@ public class AjuanUraianTugasNonDpaPegawaiWrapper {
         this.jabatan = jabatan;
     }
 
+    public List<UraianTugasWrapper> getUraianTugasTidakDipilih() {
+        return uraianTugasTidakDipilih;
+    }
+
+    public void setUraianTugasTidakDipilih(List<UraianTugasWrapper> uraianTugasTidakDipilih) {
+        this.uraianTugasTidakDipilih = uraianTugasTidakDipilih;
+    }
 }

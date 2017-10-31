@@ -11,6 +11,7 @@ import java.util.List;
 public interface UraianTugasJabatanJenisUrtugService {
     List<UraianTugasJabatanJenisUrtug> get();
     List<UraianTugasJabatanJenisUrtug> getUrtugNonDpaByJabatan(String kdJabatan);
+    List<UraianTugasJabatanJenisUrtug> getUrtugNonDpaByUnitKerja(String kdUnitKerja);
     List<UraianTugasJabatanJenisUrtug> getByUrtugJabatanAndTahun(String kdUrtug, String kdJabatan, Integer tahun);
     List<UraianTugasJabatanJenisUrtug> getByUrtugJabatan(String kdUrtug, String kdJabatan);
     List<UraianTugasJabatanJenisUrtug> getByJabatan(String kdJabatan);
