@@ -50,7 +50,13 @@ public class UraianTugasPegawaiTahunanController {
                             urtugPegawaiTahunan.getUraianTugasPegawaiTahunanId().getKdJabatan(),
                             urtugPegawaiTahunan.getUraianTugasPegawaiTahunanId().getKdJenisUrtug(),
                             urtugPegawaiTahunan.getUraianTugasPegawaiTahunanId().getTahunUrtug(),
-                            urtugPegawaiTahunan.getUraianTugasPegawaiTahunanId().getNipPegawai()
+                            urtugPegawaiTahunan.getUraianTugasPegawaiTahunanId().getNipPegawai(),
+                            urtugPegawaiTahunan.getKuantitas(),
+                            urtugPegawaiTahunan.getSatuanKuantitas(),
+                            urtugPegawaiTahunan.getKualitas(),
+                            urtugPegawaiTahunan.getWaktu(),
+                            urtugPegawaiTahunan.getBiaya(),
+                            urtugPegawaiTahunan.getAlasan()
                     ));
         }
 
@@ -87,12 +93,13 @@ public class UraianTugasPegawaiTahunanController {
                 new CustomMessage("uraian tugas pegawai tahunan created"), HttpStatus.OK);
     }
 
-    //inset urtug tahunan pegawai dan change status approval urtug pegawai non-DPA
+    //insert urtug tahunan pegawai dan change status approval urtug pegawai non-DPA
     @RequestMapping(value = "/approval-urtug-tahunan-non-dpa-pegawai", method = RequestMethod.PUT)
     ResponseEntity<?> approvalUrtugTahunanNonDpaPegawai(
             @RequestBody List<UraianTugasPegawaiTahunanInputWrapper> uraianTugasPegawaiTahunanInputWrapperList ){
         LOGGER.info("approval uraian tugas tahunan non DPA");
 
+        //get current uraian tugas non dpa pegawai in database
         List<UraianTugasPegawaiTahunan> uraianTugasPegawaiTahunanList
                 = urtugPegawaiTahunanService.getByNipPegawai(
                         uraianTugasPegawaiTahunanInputWrapperList
@@ -102,7 +109,8 @@ public class UraianTugasPegawaiTahunanController {
         for (UraianTugasPegawaiTahunanInputWrapper urtugPegawaiAtasan : uraianTugasPegawaiTahunanInputWrapperList){
             boolean found = false;
             for (UraianTugasPegawaiTahunan urtugPegawai : uraianTugasPegawaiTahunanList){
-                if (urtugPegawaiAtasan.getKdUrtug().equals(urtugPegawai.getUraianTugasPegawaiTahunanId().getKdUrtug())) {
+                if (urtugPegawaiAtasan.getKdUrtug()
+                        .equals(urtugPegawai.getUraianTugasPegawaiTahunanId().getKdUrtug())) {
                     urtugPegawaiTahunanService.approveUrtug(new UraianTugasPegawaiTahunanId(
                             urtugPegawaiAtasan.getKdUrtug(),
                             urtugPegawaiAtasan.getKdJabatan(),
@@ -174,8 +182,8 @@ public class UraianTugasPegawaiTahunanController {
 
         //insert urtug ke setiap elemen tugas
         for (AjuanUraianTugasNonDpaPegawaiWrapper ajuanUraianTugasNonDpaPegawaiWrapper : ajuanUraianTugasNonDpaPegawaiWrapperList){
-            List<UraianTugasWrapper> uraianTugasWrapperList = new ArrayList<>();
-            List<UraianTugasWrapper> uraianTugasTidakDipilihWrapperList = new ArrayList<>();
+            List<UraianTugasPegawaiTahunanWrapper> uraianTugasWrapperList = new ArrayList<>();
+            List<UraianTugasPegawaiTahunanWrapper> uraianTugasTidakDipilihWrapperList = new ArrayList<>();
 
             for (UraianTugasJabatanJenisUrtug uraianTugasJabatanJenisUrtug : uraianTugasJabatanJenisUrtugList) {
                 if (ajuanUraianTugasNonDpaPegawaiWrapper.getKdJabatan()
@@ -197,9 +205,20 @@ public class UraianTugasPegawaiTahunanController {
                                         " : "+
                                         uraianTugasPegawaiTahunan.getUraianTugasPegawaiTahunanId().getKdUrtug());
                                 uraianTugasWrapperList.add(
-                                        new UraianTugasWrapper(
+                                        new UraianTugasPegawaiTahunanWrapper(
+                                                uraianTugasPegawaiTahunan.getUraianTugasJabatanJenisUrtug().getUraianTugasJabatan().getUraianTugas().getDeskripsi(),
                                                 uraianTugasPegawaiTahunan.getUraianTugasPegawaiTahunanId().getKdUrtug(),
-                                                uraianTugasPegawaiTahunan.getUraianTugasJabatanJenisUrtug().getUraianTugasJabatan().getUraianTugas().getDeskripsi()));
+                                                uraianTugasPegawaiTahunan.getUraianTugasPegawaiTahunanId().getKdJabatan(),
+                                                uraianTugasPegawaiTahunan.getUraianTugasPegawaiTahunanId().getKdJenisUrtug(),
+                                                uraianTugasPegawaiTahunan.getUraianTugasPegawaiTahunanId().getTahunUrtug(),
+                                                uraianTugasPegawaiTahunan.getUraianTugasPegawaiTahunanId().getNipPegawai(),
+                                                uraianTugasPegawaiTahunan.getKuantitas(),
+                                                uraianTugasPegawaiTahunan.getSatuanKuantitas(),
+                                                uraianTugasPegawaiTahunan.getKualitas(),
+                                                uraianTugasPegawaiTahunan.getWaktu(),
+                                                uraianTugasPegawaiTahunan.getBiaya(),
+                                                uraianTugasPegawaiTahunan.getAlasan()
+                                                ));
                                 break;
                             }
 
@@ -208,9 +227,20 @@ public class UraianTugasPegawaiTahunanController {
 
                     if (!found) {
                         uraianTugasTidakDipilihWrapperList.add(
-                                        new UraianTugasWrapper(
-                                                uraianTugasJabatanJenisUrtug.getUraianTugasJabatanJenisUrtugId().getKdUrtug(),
-                                                uraianTugasJabatanJenisUrtug.getUraianTugasJabatan().getUraianTugas().getDeskripsi()));
+                                new UraianTugasPegawaiTahunanWrapper(
+                                        uraianTugasJabatanJenisUrtug.getUraianTugasJabatan().getUraianTugas().getDeskripsi(),
+                                        uraianTugasJabatanJenisUrtug.getUraianTugasJabatanJenisUrtugId().getKdUrtug(),
+                                        uraianTugasJabatanJenisUrtug.getUraianTugasJabatanJenisUrtugId().getKdJabatan(),
+                                        uraianTugasJabatanJenisUrtug.getUraianTugasJabatanJenisUrtugId().getKdJenisUrtug(),
+                                        uraianTugasJabatanJenisUrtug.getUraianTugasJabatanJenisUrtugId().getTahunUrtug(),
+                                        "",
+                                        uraianTugasJabatanJenisUrtug.getKuantitas(),
+                                        uraianTugasJabatanJenisUrtug.getSatuanKuantitas(),
+                                        uraianTugasJabatanJenisUrtug.getKualitas(),
+                                        uraianTugasJabatanJenisUrtug.getWaktu(),
+                                        uraianTugasJabatanJenisUrtug.getBiaya(),
+                                        ""
+                                ));
                     }
 
                 }
@@ -223,4 +253,5 @@ public class UraianTugasPegawaiTahunanController {
         return new ResponseEntity<Object>(ajuanUraianTugasNonDpaPegawaiWrapperList, HttpStatus.OK);
 
     }
+
 }

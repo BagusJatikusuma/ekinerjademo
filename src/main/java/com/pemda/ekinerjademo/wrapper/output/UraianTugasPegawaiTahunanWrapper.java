@@ -10,20 +10,40 @@ public class UraianTugasPegawaiTahunanWrapper {
     private String kdJenisUrtug;
     private Integer tahunUrtug;
     private String nipPegawai;
+    private Integer kuantitas;
+    private String satuanKuantitas;
+    private Integer kualitas;
+    private Integer waktu;
+    private Integer biaya;
+    private String alasan;
 
+    public UraianTugasPegawaiTahunanWrapper() {
+    }
     public UraianTugasPegawaiTahunanWrapper(
             String urtug,
             String kdUrtug,
             String kdJabatan,
             String kdJenisUrtug,
             Integer tahunUrtug,
-            String nipPegawai) {
+            String nipPegawai,
+            Integer kuantitas,
+            String satuanKuantitas,
+            Integer kualitas,
+            Integer waktu,
+            Integer biaya,
+            String alasan) {
         this.urtug = urtug;
         this.kdUrtug = kdUrtug;
         this.kdJabatan = kdJabatan;
         this.kdJenisUrtug = kdJenisUrtug;
         this.tahunUrtug = tahunUrtug;
         this.nipPegawai = nipPegawai;
+        this.kuantitas = kuantitas;
+        this.satuanKuantitas = satuanKuantitas;
+        this.kualitas = kualitas;
+        this.waktu = waktu;
+        this.biaya = biaya;
+        this.alasan = alasan;
     }
 
     public String getUrtug() {
@@ -72,5 +92,53 @@ public class UraianTugasPegawaiTahunanWrapper {
 
     public void setNipPegawai(String nipPegawai) {
         this.nipPegawai = nipPegawai;
+    }
+
+    public Integer getKuantitas() {
+        return kuantitas;
+    }
+
+    public void setKuantitas(Integer kuantitas) {
+        this.kuantitas = kuantitas;
+    }
+
+    public String getSatuanKuantitas() {
+        return satuanKuantitas;
+    }
+
+    public void setSatuanKuantitas(String satuanKuantitas) {
+        this.satuanKuantitas = satuanKuantitas;
+    }
+
+    public Integer getKualitas() {
+        return kualitas;
+    }
+
+    public void setKualitas(Integer kualitas) {
+        this.kualitas = kualitas;
+    }
+
+    public Integer getWaktu() {
+        return waktu;
+    }
+
+    public void setWaktu(Integer waktu) {
+        this.waktu = waktu;
+    }
+
+    public Integer getBiaya() {
+        return biaya;
+    }
+
+    public void setBiaya(Integer biaya) {
+        this.biaya = biaya;
+    }
+
+    public String getAlasan() {
+        return alasan;
+    }
+
+    public void setAlasan(String alasan) {
+        this.alasan = alasan;
     }
 }

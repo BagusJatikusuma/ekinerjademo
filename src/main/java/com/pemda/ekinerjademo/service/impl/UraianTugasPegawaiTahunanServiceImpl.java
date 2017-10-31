@@ -56,6 +56,11 @@ public class UraianTugasPegawaiTahunanServiceImpl implements UraianTugasPegawaiT
     }
 
     @Override
+    public void deleteUraianTugasPegawaiTahunanByNipPegawaiAndTahun(String nipPegawai, Integer tahunUrtug) {
+
+    }
+
+    @Override
     public void approveUrtug(UraianTugasPegawaiTahunanId uraianTugasPegawaiTahunanId) {
         UraianTugasPegawaiTahunan uraianTugasPegawaiTahunan
                 = urtugPegawaiTahunanDao.findOne(uraianTugasPegawaiTahunanId);
@@ -79,6 +84,12 @@ public class UraianTugasPegawaiTahunanServiceImpl implements UraianTugasPegawaiT
         urtugPegawaiTahunan.setAkunPegawai(new AkunPegawai(uraianTugasPegawaiTahunanInputWrapper.getNipPegawai()));
         urtugPegawaiTahunan.setStatusApproval(statusApproval);
         urtugPegawaiTahunan.setStatusPengerjaan(0);
+        urtugPegawaiTahunan.setKuantitas(uraianTugasPegawaiTahunanInputWrapper.getKuantitas());
+        urtugPegawaiTahunan.setSatuanKuantitas(uraianTugasPegawaiTahunanInputWrapper.getSatuanKuantitas());
+        urtugPegawaiTahunan.setKualitas(uraianTugasPegawaiTahunanInputWrapper.getKualitas());
+        urtugPegawaiTahunan.setWaktu(uraianTugasPegawaiTahunanInputWrapper.getWaktu());
+        urtugPegawaiTahunan.setBiaya(uraianTugasPegawaiTahunanInputWrapper.getBiaya());
+        urtugPegawaiTahunan.setAlasan(uraianTugasPegawaiTahunanInputWrapper.getAlasan());
 
         urtugPegawaiTahunanDao.save(urtugPegawaiTahunan);
     }

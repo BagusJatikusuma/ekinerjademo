@@ -11,14 +11,14 @@ public class AjuanUraianTugasNonDpaPegawaiWrapper {
     private String namaPegawai;
     private String kdJabatan;
     private String jabatan;
-    private List<UraianTugasWrapper> uraianTugasDiajukan;
-    private List<UraianTugasWrapper> uraianTugasTidakDipilih;
+    private List<UraianTugasPegawaiTahunanWrapper> uraianTugasDiajukan;
+    private List<UraianTugasPegawaiTahunanWrapper> uraianTugasTidakDipilih;
 
-    public List<UraianTugasWrapper> getUraianTugasDiajukan() {
+    public List<UraianTugasPegawaiTahunanWrapper> getUraianTugasDiajukan() {
         return uraianTugasDiajukan;
     }
 
-    public void setUraianTugasDiajukan(List<UraianTugasWrapper> uraianTugasDiajukan) {
+    public void setUraianTugasDiajukan(List<UraianTugasPegawaiTahunanWrapper> uraianTugasDiajukan) {
         this.uraianTugasDiajukan = uraianTugasDiajukan;
     }
 
@@ -54,11 +54,11 @@ public class AjuanUraianTugasNonDpaPegawaiWrapper {
         this.jabatan = jabatan;
     }
 
-    public List<UraianTugasWrapper> getUraianTugasTidakDipilih() {
+    public List<UraianTugasPegawaiTahunanWrapper> getUraianTugasTidakDipilih() {
         return uraianTugasTidakDipilih;
     }
 
-    public void setUraianTugasTidakDipilih(List<UraianTugasWrapper> uraianTugasTidakDipilih) {
+    public void setUraianTugasTidakDipilih(List<UraianTugasPegawaiTahunanWrapper> uraianTugasTidakDipilih) {
         this.uraianTugasTidakDipilih = uraianTugasTidakDipilih;
     }
 }
