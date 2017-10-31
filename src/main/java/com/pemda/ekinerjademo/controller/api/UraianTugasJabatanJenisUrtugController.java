@@ -2,11 +2,15 @@ package com.pemda.ekinerjademo.controller.api;
 
 import com.pemda.ekinerjademo.model.ekinerjamodel.UraianTugasJabatanJenisUrtug;
 import com.pemda.ekinerjademo.model.ekinerjamodel.UraianTugasJabatanJenisUrtugId;
+import com.pemda.ekinerjademo.model.ekinerjamodel.UraianTugasPegawaiTahunan;
 import com.pemda.ekinerjademo.service.UraianTugasJabatanJenisUrtugService;
+import com.pemda.ekinerjademo.service.UraianTugasPegawaiTahunanService;
 import com.pemda.ekinerjademo.wrapper.input.UraianTugasJabatanJenisUrtugInputWrapper;
 import com.pemda.ekinerjademo.wrapper.input.UrtugJabatanIdInputWrapper;
 import com.pemda.ekinerjademo.wrapper.output.CustomMessage;
 import com.pemda.ekinerjademo.wrapper.output.UraianTugasJabatanJenisUrtugWrapper;
+import com.pemda.ekinerjademo.wrapper.output.UraianTugasPegawaiTahunanWrapper;
+import com.pemda.ekinerjademo.wrapper.output.UrtugNonDpaWrapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +34,8 @@ public class UraianTugasJabatanJenisUrtugController {
 
     @Autowired
     private UraianTugasJabatanJenisUrtugService uraianTugasJabatanJenisUrtugService;
+    @Autowired
+    private UraianTugasPegawaiTahunanService urtugPegawaiTahunanService;
 
     @RequestMapping(value = "/get-urtug-jabatan-jenis-by-urtug-jabatan", method = RequestMethod.POST)
     ResponseEntity<?> getByUrtugJabatan(@RequestBody UrtugJabatanIdInputWrapper inputWrapper) {
@@ -123,26 +129,63 @@ public class UraianTugasJabatanJenisUrtugController {
         return new ResponseEntity<Object>(new CustomMessage("urtug jabatan jenis deleted"), HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/get-urtug-non-dpa-by-jabatan/{kdJabatan}", method = RequestMethod.GET)
-    ResponseEntity<?> getUrtugNonDpaByJabatan(@PathVariable("kdJabatan") String kdJabatan) {
+    @RequestMapping(value = "/get-urtug-non-dpa-by-jabatan/{kdJabatan}/{nipPegawai}", method = RequestMethod.GET)
+    ResponseEntity<?> getUrtugNonDpaByJabatan(
+            @PathVariable("kdJabatan") String kdJabatan,
+            @PathVariable("nipPegawai") String nipPegawai) {
         LOGGER.info("get urtug Non-DPA by jabatan");
 
         List<UraianTugasJabatanJenisUrtugWrapper> urtugWrapperList
                 = new ArrayList<>();
+        List<UraianTugasPegawaiTahunanWrapper> uraianTugasPegawaiTahunanWrapperList
+                = new ArrayList<>();
         List<UraianTugasJabatanJenisUrtug> urtugJabatanJenisList
                 = uraianTugasJabatanJenisUrtugService.getUrtugNonDpaByJabatan(kdJabatan);
+        List<UraianTugasPegawaiTahunan> urtugPegawaiTahunanList
+                = urtugPegawaiTahunanService.getByNipPegawai(nipPegawai);
 
         for (UraianTugasJabatanJenisUrtug urtugJabatanJenis : urtugJabatanJenisList) {
-            urtugWrapperList
-                    .add(new UraianTugasJabatanJenisUrtugWrapper(
-                            urtugJabatanJenis.getUraianTugasJabatanJenisUrtugId().getKdUrtug(),
-                            urtugJabatanJenis.getUraianTugasJabatan().getUraianTugas().getDeskripsi(),
-                            urtugJabatanJenis.getUraianTugasJabatanJenisUrtugId().getKdJabatan(),
-                            urtugJabatanJenis.getUraianTugasJabatanJenisUrtugId().getKdJenisUrtug(),
-                            urtugJabatanJenis.getJenisUrtug().getJenisUrtug(),
-                            urtugJabatanJenis.getUraianTugasJabatanJenisUrtugId().getTahunUrtug()));
+            boolean found = false;
+            for (UraianTugasPegawaiTahunan uraianTugasPegawaiTahunan : urtugPegawaiTahunanList) {
+                if (urtugJabatanJenis.getUraianTugasJabatanJenisUrtugId().getKdUrtug()
+                        .equals(uraianTugasPegawaiTahunan.getUraianTugasPegawaiTahunanId().getKdUrtug())) {
+                    found = true;
+                    uraianTugasPegawaiTahunanWrapperList
+                            .add(new UraianTugasPegawaiTahunanWrapper(
+                                    uraianTugasPegawaiTahunan.getUraianTugasJabatanJenisUrtug().getUraianTugasJabatan().getUraianTugas().getDeskripsi(),
+                                    uraianTugasPegawaiTahunan.getUraianTugasPegawaiTahunanId().getKdUrtug(),
+                                    uraianTugasPegawaiTahunan.getUraianTugasPegawaiTahunanId().getKdJabatan(),
+                                    uraianTugasPegawaiTahunan.getUraianTugasPegawaiTahunanId().getKdJenisUrtug(),
+                                    uraianTugasPegawaiTahunan.getUraianTugasPegawaiTahunanId().getTahunUrtug(),
+                                    uraianTugasPegawaiTahunan.getUraianTugasPegawaiTahunanId().getNipPegawai(),
+                                    uraianTugasPegawaiTahunan.getKuantitas(),
+                                    uraianTugasPegawaiTahunan.getSatuanKuantitas(),
+                                    uraianTugasPegawaiTahunan.getKualitas(),
+                                    uraianTugasPegawaiTahunan.getWaktu(),
+                                    uraianTugasPegawaiTahunan.getBiaya(),
+                                    uraianTugasPegawaiTahunan.getAlasan(),
+                                    uraianTugasPegawaiTahunan.getStatusApproval()
+                            ));
+                    break;
+                }
+            }
+
+            if (!found) {
+                urtugWrapperList
+                        .add(new UraianTugasJabatanJenisUrtugWrapper(
+                                urtugJabatanJenis.getUraianTugasJabatanJenisUrtugId().getKdUrtug(),
+                                urtugJabatanJenis.getUraianTugasJabatan().getUraianTugas().getDeskripsi(),
+                                urtugJabatanJenis.getUraianTugasJabatanJenisUrtugId().getKdJabatan(),
+                                urtugJabatanJenis.getUraianTugasJabatanJenisUrtugId().getKdJenisUrtug(),
+                                urtugJabatanJenis.getJenisUrtug().getJenisUrtug(),
+                                urtugJabatanJenis.getUraianTugasJabatanJenisUrtugId().getTahunUrtug()));
+            }
+
         }
 
-        return new ResponseEntity<Object>(urtugWrapperList, HttpStatus.OK);
+        UrtugNonDpaWrapper urtugNonDpaWrapper
+                = new UrtugNonDpaWrapper(urtugWrapperList, uraianTugasPegawaiTahunanWrapperList);
+
+        return new ResponseEntity<Object>(urtugNonDpaWrapper, HttpStatus.OK);
     }
 }

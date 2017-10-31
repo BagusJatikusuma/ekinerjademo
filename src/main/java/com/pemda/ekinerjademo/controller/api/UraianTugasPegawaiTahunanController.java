@@ -56,7 +56,8 @@ public class UraianTugasPegawaiTahunanController {
                             urtugPegawaiTahunan.getKualitas(),
                             urtugPegawaiTahunan.getWaktu(),
                             urtugPegawaiTahunan.getBiaya(),
-                            urtugPegawaiTahunan.getAlasan()
+                            urtugPegawaiTahunan.getAlasan(),
+                            urtugPegawaiTahunan.getStatusApproval()
                     ));
         }
 
@@ -217,7 +218,8 @@ public class UraianTugasPegawaiTahunanController {
                                                 uraianTugasPegawaiTahunan.getKualitas(),
                                                 uraianTugasPegawaiTahunan.getWaktu(),
                                                 uraianTugasPegawaiTahunan.getBiaya(),
-                                                uraianTugasPegawaiTahunan.getAlasan()
+                                                uraianTugasPegawaiTahunan.getAlasan(),
+                                                uraianTugasPegawaiTahunan.getStatusApproval()
                                                 ));
                                 break;
                             }
@@ -239,7 +241,8 @@ public class UraianTugasPegawaiTahunanController {
                                         uraianTugasJabatanJenisUrtug.getKualitas(),
                                         uraianTugasJabatanJenisUrtug.getWaktu(),
                                         uraianTugasJabatanJenisUrtug.getBiaya(),
-                                        ""
+                                        "",
+                                        false
                                 ));
                     }
 

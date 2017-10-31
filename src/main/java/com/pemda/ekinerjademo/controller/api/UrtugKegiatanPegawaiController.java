@@ -493,7 +493,7 @@ public class UrtugKegiatanPegawaiController {
 
         //mengkelompokan berdasarkan kegiatan
 
-        return new ResponseEntity<Object>(false, HttpStatus.OK);
+        return new ResponseEntity<Object>(urtugKegiatanPegawaiWrapperList, HttpStatus.OK);
     }
 
 }
