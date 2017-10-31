@@ -17,6 +17,7 @@ public interface UrtugKegiatanPegawaiService {
             UraianTugasJabatanId uraianTugasJabatanId, String nipPegawai);
     List<UrtugKegiatanPegawai> findByUrtugJabatanTahunAndNipePegawai(
             UraianTugasJabatanJenisUrtugId uraianTugasJabatanJenisUrtugId, String nipPegawai);
+    List<UrtugKegiatanPegawai> findByUnitKerja(String unitKerja);
     void save(UrtugKegiatanPegawai urtugKegiatanPegawai);
     void update(UrtugKegiatanPegawai urtugKegiatanPegawai);
     void delete(UrtugKegiatanPegawaiId urtugKegiatanPegawaiId);

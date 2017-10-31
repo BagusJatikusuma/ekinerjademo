@@ -28,4 +28,5 @@ public interface UraianTugasPegawaiTahunanDao extends JpaRepository<UraianTugasP
     List<UraianTugasPegawaiTahunan> findByUnitKerja(String kdUnitKerja);
 
     void deleteByUraianTugasPegawaiTahunanId(UraianTugasPegawaiTahunanId urtugPegawaiTahunanId);
+
 }

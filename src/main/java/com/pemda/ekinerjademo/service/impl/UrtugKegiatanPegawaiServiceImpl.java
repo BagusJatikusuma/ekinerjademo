@@ -51,6 +51,12 @@ public class UrtugKegiatanPegawaiServiceImpl implements UrtugKegiatanPegawaiServ
     }
 
     @Override
+    public List<UrtugKegiatanPegawai> findByUnitKerja(String unitKerja) {
+        return urtugKegiatanPegawaiDao
+                .findByUnitKerja(unitKerja);
+    }
+
+    @Override
     public void save(UrtugKegiatanPegawai urtugKegiatanPegawai) {
         urtugKegiatanPegawaiDao.save(urtugKegiatanPegawai);
     }

@@ -61,5 +61,14 @@ public interface UrtugKegiatanPegawaiDao extends JpaRepository<UrtugKegiatanPega
             "where ukp.urtugKegiatan.uraianTugasJabatanJenisUrtug.uraianTugasJabatanJenisUrtugId = ?1")
     List<UrtugKegiatanPegawai> findUrtugKegiatanPegawaiByUrtugJabatan(UraianTugasJabatanJenisUrtugId urtugjabatanJenisId);
 
+    @Query("select ukp from UrtugKegiatanPegawai ukp " +
+            "left join fetch ukp.urtugKegiatan uk " +
+            "left join fetch uk.uraianTugasJabatanJenisUrtug utjj " +
+            "left join fetch utjj.uraianTugasJabatan utj " +
+            "left join fetch utjj.jenisUrtug " +
+            "left join fetch utj.uraianTugas " +
+            "where ukp.urtugKegiatanPegawaiId.kdJabatan like concat(?1,'%')")
+    List<UrtugKegiatanPegawai> findByUnitKerja(String kdUnitKerja);
+
     void deleteByUrtugKegiatanPegawaiId(UrtugKegiatanPegawaiId urtugKegiatanPegawaiId);
 }
