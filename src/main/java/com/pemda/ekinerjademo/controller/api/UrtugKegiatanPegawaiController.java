@@ -447,5 +447,53 @@ public class UrtugKegiatanPegawaiController {
                 new CustomMessage("urtug kegiatan telah dikonfirmasi"), HttpStatus.OK);
     }
 
+    //mengetahui Unit Kerja apabila ada urtug yang ditolak dan diganti pegawai lain
+    @RequestMapping(value = "/get-hasil-approval-urtug-dpa/{kdUnitKerja}", method = RequestMethod.GET)
+    ResponseEntity<?> getHasilApprovalUrtugDpa(@PathVariable("kdUnitKerja") String kdUnitKerja) {
+        LOGGER.info("get hasil approval urtug dpa");
+
+        List<UrtugKegiatanPegawaiWrapper> urtugKegiatanPegawaiWrapperList = new ArrayList<>();
+        List<UrtugKegiatanPegawai> urtugKegiatanPegawaiList = urtugKegiatanPegawaiService.findByUnitKerja(kdUnitKerja);
+
+        //ambil semua data urug dpa pegawai berdasarkan unit kerja
+        UnitKerjaKegiatan unitKerjaKegiatan
+                = unitKerjaKegiatanService.findByKdUnitKerja(kdUnitKerja);
+
+        List<TaKegiatan> taKegiatanList = taKegiatanService.findByUnitKerja(unitKerjaKegiatan);
+
+        for (UrtugKegiatanPegawai urtugKegiatanPegawai : urtugKegiatanPegawaiList) {
+            for (TaKegiatan taKegiatan : taKegiatanList) {
+                if (urtugKegiatanPegawai.getUrtugKegiatanPegawaiId().getKdProg().equals(taKegiatan.getTaKegiatanId().getKdProg()) &&
+                        urtugKegiatanPegawai.getUrtugKegiatanPegawaiId().getKdKeg().equals(taKegiatan.getTaKegiatanId().getKdKegiatan())) {
+                    urtugKegiatanPegawaiWrapperList
+                            .add(new UrtugKegiatanPegawaiWrapper(
+                                    urtugKegiatanPegawai.getUrtugKegiatanPegawaiId().getKdUrtug(),
+                                    urtugKegiatanPegawai.getUrtugKegiatan().getUraianTugasJabatanJenisUrtug().getUraianTugasJabatan().getUraianTugas().getDeskripsi(),
+                                    urtugKegiatanPegawai.getUrtugKegiatanPegawaiId().getKdJabatan(),
+                                    urtugKegiatanPegawai.getUrtugKegiatanPegawaiId().getKdJenisUrtug(),
+                                    urtugKegiatanPegawai.getUrtugKegiatanPegawaiId().getTahunUrtug(),
+                                    urtugKegiatanPegawai.getUrtugKegiatanPegawaiId().getKdUrusan(),
+                                    urtugKegiatanPegawai.getUrtugKegiatanPegawaiId().getKdBidang(),
+                                    urtugKegiatanPegawai.getUrtugKegiatanPegawaiId().getKdUnit(),
+                                    urtugKegiatanPegawai.getUrtugKegiatanPegawaiId().getKdSub(),
+                                    urtugKegiatanPegawai.getUrtugKegiatanPegawaiId().getTahun(),
+                                    urtugKegiatanPegawai.getUrtugKegiatanPegawaiId().getKdProg(),
+                                    urtugKegiatanPegawai.getUrtugKegiatanPegawaiId().getIdProg(),
+                                    urtugKegiatanPegawai.getUrtugKegiatanPegawaiId().getKdKeg(),
+                                    taKegiatan.getKetKegiatan(),
+                                    taKegiatan.getPaguAnggaran(),
+                                    urtugKegiatanPegawai.getUrtugKegiatanPegawaiId().getNipPegawai(),
+                                    urtugKegiatanPegawai.getUrtugKegiatanPegawaiId().getKdStatusPenanggungJawab(),
+                                    urtugKegiatanPegawai.getStatusPenanggungJawabKegiatan().getStatus()
+                            ));
+                    break;
+                }
+            }
+        }
+
+        //mengkelompokan berdasarkan kegiatan
+
+        return new ResponseEntity<Object>(false, HttpStatus.OK);
+    }
 
 }
