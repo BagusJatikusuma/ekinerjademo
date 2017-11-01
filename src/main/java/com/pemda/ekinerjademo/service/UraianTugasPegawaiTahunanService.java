@@ -13,8 +13,10 @@ public interface UraianTugasPegawaiTahunanService {
     void createUraianTugasPegawaiTahunanList(List<UraianTugasPegawaiTahunanInputWrapper> urtugPegawaiList);
     void deleteUraianTugasPegawaiTahunan(UraianTugasPegawaiTahunanId urtugPegawaiTahunanId);
     void deleteUraianTugasPegawaiTahunanByNipPegawaiAndTahun(String nipPegawai, Integer tahunUrtug);
-    void approveUrtug(UraianTugasPegawaiTahunanId uraianTugasPegawaiTahunanId);
-    void createUraianTugasPegawaiTahunan(UraianTugasPegawaiTahunanInputWrapper uraianTugasPegawaiTahunanInputWrapper, Boolean statusApproval);
+    void approveUrtug(UraianTugasPegawaiTahunanInputWrapper uraianTugasPegawaiTahunanInputWrapper);
+    void createUraianTugasPegawaiTahunan(
+            UraianTugasPegawaiTahunanInputWrapper uraianTugasPegawaiTahunanInputWrapper,
+            Integer statusApproval);
     List<UraianTugasPegawaiTahunan> getByNipPegawai(String nipPegawai);
     List<UraianTugasPegawaiTahunan> getByUnitKerja(String kdUnitKerja);
 }

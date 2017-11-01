@@ -16,7 +16,7 @@ public class UraianTugasPegawaiTahunanWrapper {
     private Integer waktu;
     private Integer biaya;
     private String alasan;
-    private boolean statusApproval;
+    private Integer statusApproval;
 
     public UraianTugasPegawaiTahunanWrapper() {
     }
@@ -33,7 +33,7 @@ public class UraianTugasPegawaiTahunanWrapper {
             Integer waktu,
             Integer biaya,
             String alasan,
-            boolean statusApproval) {
+            Integer statusApproval) {
         this.urtug = urtug;
         this.kdUrtug = kdUrtug;
         this.kdJabatan = kdJabatan;
@@ -145,11 +145,11 @@ public class UraianTugasPegawaiTahunanWrapper {
         this.alasan = alasan;
     }
 
-    public boolean isStatusApproval() {
+    public Integer isStatusApproval() {
         return statusApproval;
     }
 
-    public void setStatusApproval(boolean statusApproval) {
+    public void setStatusApproval(Integer statusApproval) {
         this.statusApproval = statusApproval;
     }
 }

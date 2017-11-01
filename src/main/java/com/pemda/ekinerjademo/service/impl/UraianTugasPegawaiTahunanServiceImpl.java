@@ -35,7 +35,7 @@ public class UraianTugasPegawaiTahunanServiceImpl implements UraianTugasPegawaiT
                                     urtugPegawai.getNipPegawai()
                             ));
             urtugPegawaiTahunan.setAkunPegawai(new AkunPegawai(urtugPegawai.getNipPegawai()));
-            urtugPegawaiTahunan.setStatusApproval(false);
+            urtugPegawaiTahunan.setStatusApproval(0);
             urtugPegawaiTahunan.setStatusPengerjaan(0);
             urtugPegawaiTahunan.setKuantitas(urtugPegawai.getKuantitas());
             urtugPegawaiTahunan.setSatuanKuantitas(urtugPegawai.getSatuanKuantitas());
@@ -61,16 +61,28 @@ public class UraianTugasPegawaiTahunanServiceImpl implements UraianTugasPegawaiT
     }
 
     @Override
-    public void approveUrtug(UraianTugasPegawaiTahunanId uraianTugasPegawaiTahunanId) {
+    public void approveUrtug(UraianTugasPegawaiTahunanInputWrapper uraianTugasPegawaiTahunanInputWrapper) {
         UraianTugasPegawaiTahunan uraianTugasPegawaiTahunan
-                = urtugPegawaiTahunanDao.findOne(uraianTugasPegawaiTahunanId);
-        uraianTugasPegawaiTahunan.setStatusApproval(true);
+                = urtugPegawaiTahunanDao.findOne(
+                        new UraianTugasPegawaiTahunanId(
+                                uraianTugasPegawaiTahunanInputWrapper.getKdUrtug(),
+                                uraianTugasPegawaiTahunanInputWrapper.getKdJabatan(),
+                                uraianTugasPegawaiTahunanInputWrapper.getKdJenisUrtug(),
+                                uraianTugasPegawaiTahunanInputWrapper.getTahunUrtug(),
+                                uraianTugasPegawaiTahunanInputWrapper.getNipPegawai()));
+        uraianTugasPegawaiTahunan.setStatusApproval(uraianTugasPegawaiTahunanInputWrapper.getStatusApproval());
+        uraianTugasPegawaiTahunan.setKuantitas(uraianTugasPegawaiTahunanInputWrapper.getKuantitas());
+        uraianTugasPegawaiTahunan.setSatuanKuantitas(uraianTugasPegawaiTahunanInputWrapper.getSatuanKuantitas());
+        uraianTugasPegawaiTahunan.setKualitas(uraianTugasPegawaiTahunanInputWrapper.getKualitas());
+        uraianTugasPegawaiTahunan.setWaktu(uraianTugasPegawaiTahunanInputWrapper.getWaktu());
+        uraianTugasPegawaiTahunan.setBiaya(uraianTugasPegawaiTahunanInputWrapper.getBiaya());
+        uraianTugasPegawaiTahunan.setAlasan(uraianTugasPegawaiTahunanInputWrapper.getAlasan());
     }
 
     @Override
     public void createUraianTugasPegawaiTahunan(
             UraianTugasPegawaiTahunanInputWrapper uraianTugasPegawaiTahunanInputWrapper,
-            Boolean statusApproval) {
+            Integer statusApproval) {
         UraianTugasPegawaiTahunan urtugPegawaiTahunan = new UraianTugasPegawaiTahunan();
         urtugPegawaiTahunan
                 .setUraianTugasPegawaiTahunanId(

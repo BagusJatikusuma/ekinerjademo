@@ -112,12 +112,7 @@ public class UraianTugasPegawaiTahunanController {
             for (UraianTugasPegawaiTahunan urtugPegawai : uraianTugasPegawaiTahunanList){
                 if (urtugPegawaiAtasan.getKdUrtug()
                         .equals(urtugPegawai.getUraianTugasPegawaiTahunanId().getKdUrtug())) {
-                    urtugPegawaiTahunanService.approveUrtug(new UraianTugasPegawaiTahunanId(
-                            urtugPegawaiAtasan.getKdUrtug(),
-                            urtugPegawaiAtasan.getKdJabatan(),
-                            urtugPegawaiAtasan.getKdJenisUrtug(),
-                            urtugPegawaiAtasan.getTahunUrtug(),
-                            urtugPegawaiAtasan.getNipPegawai()));
+                    urtugPegawaiTahunanService.approveUrtug(urtugPegawaiAtasan);
 
                     found = true;
                     break;
@@ -127,7 +122,7 @@ public class UraianTugasPegawaiTahunanController {
             if (!found) {
                 urtugPegawaiTahunanService.createUraianTugasPegawaiTahunan(
                         urtugPegawaiAtasan,
-                        true);
+                        2);
             }
         }
         return new ResponseEntity<Object>(new CustomMessage("Uraian tugas yang dipilih telah disetujui"), HttpStatus.OK);
@@ -242,7 +237,7 @@ public class UraianTugasPegawaiTahunanController {
                                         uraianTugasJabatanJenisUrtug.getWaktu(),
                                         uraianTugasJabatanJenisUrtug.getBiaya(),
                                         "",
-                                        false
+                                        0
                                 ));
                     }
 

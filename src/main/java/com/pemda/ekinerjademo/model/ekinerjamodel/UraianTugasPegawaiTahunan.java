@@ -12,7 +12,7 @@ public class UraianTugasPegawaiTahunan {
     private UraianTugasPegawaiTahunanId uraianTugasPegawaiTahunanId;
 
     @Column(name = "status_approval")
-    private Boolean statusApproval;
+    private Integer statusApproval;
 
     @Column(name = "status_pengerjaan")
     private Integer statusPengerjaan;
@@ -100,11 +100,11 @@ public class UraianTugasPegawaiTahunan {
         this.uraianTugasJabatanJenisUrtug = uraianTugasJabatanJenisUrtug;
     }
 
-    public Boolean getStatusApproval() {
+    public Integer getStatusApproval() {
         return statusApproval;
     }
 
-    public void setStatusApproval(Boolean statusApproval) {
+    public void setStatusApproval(Integer statusApproval) {
         this.statusApproval = statusApproval;
     }
 
