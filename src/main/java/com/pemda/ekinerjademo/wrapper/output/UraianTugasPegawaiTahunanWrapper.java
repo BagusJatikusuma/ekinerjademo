@@ -145,7 +145,7 @@ public class UraianTugasPegawaiTahunanWrapper {
         this.alasan = alasan;
     }
 
-    public Integer isStatusApproval() {
+    public Integer getStatusApproval() {
         return statusApproval;
     }
 
