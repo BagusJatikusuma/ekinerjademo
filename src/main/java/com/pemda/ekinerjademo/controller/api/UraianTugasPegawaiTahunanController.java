@@ -43,22 +43,24 @@ public class UraianTugasPegawaiTahunanController {
                 = new ArrayList<>();
 
         for (UraianTugasPegawaiTahunan urtugPegawaiTahunan : urtugPegawaiTahunanList) {
-            urtugPegawaiTahunanWrapperList
-                    .add(new UraianTugasPegawaiTahunanWrapper(
-                            urtugPegawaiTahunan.getUraianTugasJabatanJenisUrtug().getUraianTugasJabatan().getUraianTugas().getDeskripsi(),
-                            urtugPegawaiTahunan.getUraianTugasPegawaiTahunanId().getKdUrtug(),
-                            urtugPegawaiTahunan.getUraianTugasPegawaiTahunanId().getKdJabatan(),
-                            urtugPegawaiTahunan.getUraianTugasPegawaiTahunanId().getKdJenisUrtug(),
-                            urtugPegawaiTahunan.getUraianTugasPegawaiTahunanId().getTahunUrtug(),
-                            urtugPegawaiTahunan.getUraianTugasPegawaiTahunanId().getNipPegawai(),
-                            urtugPegawaiTahunan.getKuantitas(),
-                            urtugPegawaiTahunan.getSatuanKuantitas(),
-                            urtugPegawaiTahunan.getKualitas(),
-                            urtugPegawaiTahunan.getWaktu(),
-                            urtugPegawaiTahunan.getBiaya(),
-                            urtugPegawaiTahunan.getAlasan(),
-                            urtugPegawaiTahunan.getStatusApproval()
-                    ));
+            if (urtugPegawaiTahunan.getStatusApproval() == 1) {
+                urtugPegawaiTahunanWrapperList
+                        .add(new UraianTugasPegawaiTahunanWrapper(
+                                urtugPegawaiTahunan.getUraianTugasJabatanJenisUrtug().getUraianTugasJabatan().getUraianTugas().getDeskripsi(),
+                                urtugPegawaiTahunan.getUraianTugasPegawaiTahunanId().getKdUrtug(),
+                                urtugPegawaiTahunan.getUraianTugasPegawaiTahunanId().getKdJabatan(),
+                                urtugPegawaiTahunan.getUraianTugasPegawaiTahunanId().getKdJenisUrtug(),
+                                urtugPegawaiTahunan.getUraianTugasPegawaiTahunanId().getTahunUrtug(),
+                                urtugPegawaiTahunan.getUraianTugasPegawaiTahunanId().getNipPegawai(),
+                                urtugPegawaiTahunan.getKuantitas(),
+                                urtugPegawaiTahunan.getSatuanKuantitas(),
+                                urtugPegawaiTahunan.getKualitas(),
+                                urtugPegawaiTahunan.getWaktu(),
+                                urtugPegawaiTahunan.getBiaya(),
+                                urtugPegawaiTahunan.getAlasan(),
+                                urtugPegawaiTahunan.getStatusApproval()
+                        ));
+            }
         }
 
         return new ResponseEntity<Object>(urtugPegawaiTahunanWrapperList, HttpStatus.OK);
@@ -120,10 +122,14 @@ public class UraianTugasPegawaiTahunanController {
             }
 
             if (!found) {
-                urtugPegawaiTahunanService.createUraianTugasPegawaiTahunan(
-                        urtugPegawaiAtasan,
-                        2);
+                if (urtugPegawaiAtasan.getStatusApproval() == 1) {
+                    urtugPegawaiTahunanService.createUraianTugasPegawaiTahunan(
+                            urtugPegawaiAtasan,
+                            1);
+                }
+
             }
+
         }
         return new ResponseEntity<Object>(new CustomMessage("Uraian tugas yang dipilih telah disetujui"), HttpStatus.OK);
     }
@@ -195,27 +201,24 @@ public class UraianTugasPegawaiTahunanController {
                             if (uraianTugasJabatanJenisUrtug.getUraianTugasJabatanJenisUrtugId().getKdUrtug()
                                     .equals(uraianTugasPegawaiTahunan.getUraianTugasPegawaiTahunanId().getKdUrtug())) {
                                 found = true;
-                                LOGGER.info(
-                                        "sama : "+
-                                        uraianTugasJabatanJenisUrtug.getUraianTugasJabatanJenisUrtugId().getKdUrtug()+
-                                        " : "+
-                                        uraianTugasPegawaiTahunan.getUraianTugasPegawaiTahunanId().getKdUrtug());
-                                uraianTugasWrapperList.add(
-                                        new UraianTugasPegawaiTahunanWrapper(
-                                                uraianTugasPegawaiTahunan.getUraianTugasJabatanJenisUrtug().getUraianTugasJabatan().getUraianTugas().getDeskripsi(),
-                                                uraianTugasPegawaiTahunan.getUraianTugasPegawaiTahunanId().getKdUrtug(),
-                                                uraianTugasPegawaiTahunan.getUraianTugasPegawaiTahunanId().getKdJabatan(),
-                                                uraianTugasPegawaiTahunan.getUraianTugasPegawaiTahunanId().getKdJenisUrtug(),
-                                                uraianTugasPegawaiTahunan.getUraianTugasPegawaiTahunanId().getTahunUrtug(),
-                                                uraianTugasPegawaiTahunan.getUraianTugasPegawaiTahunanId().getNipPegawai(),
-                                                uraianTugasPegawaiTahunan.getKuantitas(),
-                                                uraianTugasPegawaiTahunan.getSatuanKuantitas(),
-                                                uraianTugasPegawaiTahunan.getKualitas(),
-                                                uraianTugasPegawaiTahunan.getWaktu(),
-                                                uraianTugasPegawaiTahunan.getBiaya(),
-                                                uraianTugasPegawaiTahunan.getAlasan(),
-                                                uraianTugasPegawaiTahunan.getStatusApproval()
-                                                ));
+                                if (uraianTugasPegawaiTahunan.getStatusApproval() == 0) {
+                                    uraianTugasWrapperList.add(
+                                            new UraianTugasPegawaiTahunanWrapper(
+                                                    uraianTugasPegawaiTahunan.getUraianTugasJabatanJenisUrtug().getUraianTugasJabatan().getUraianTugas().getDeskripsi(),
+                                                    uraianTugasPegawaiTahunan.getUraianTugasPegawaiTahunanId().getKdUrtug(),
+                                                    uraianTugasPegawaiTahunan.getUraianTugasPegawaiTahunanId().getKdJabatan(),
+                                                    uraianTugasPegawaiTahunan.getUraianTugasPegawaiTahunanId().getKdJenisUrtug(),
+                                                    uraianTugasPegawaiTahunan.getUraianTugasPegawaiTahunanId().getTahunUrtug(),
+                                                    uraianTugasPegawaiTahunan.getUraianTugasPegawaiTahunanId().getNipPegawai(),
+                                                    uraianTugasPegawaiTahunan.getKuantitas(),
+                                                    uraianTugasPegawaiTahunan.getSatuanKuantitas(),
+                                                    uraianTugasPegawaiTahunan.getKualitas(),
+                                                    uraianTugasPegawaiTahunan.getWaktu(),
+                                                    uraianTugasPegawaiTahunan.getBiaya(),
+                                                    uraianTugasPegawaiTahunan.getAlasan(),
+                                                    uraianTugasPegawaiTahunan.getStatusApproval()
+                                            ));
+                                }
                                 break;
                             }
 

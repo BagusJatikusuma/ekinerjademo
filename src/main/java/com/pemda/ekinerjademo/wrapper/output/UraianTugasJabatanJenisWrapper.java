@@ -1,14 +1,13 @@
 package com.pemda.ekinerjademo.wrapper.output;
 
 /**
- * Created by bagus on 10/10/17.
+ * Created by bagus on 03/11/17.
  */
-public class UraianTugasJabatanJenisUrtugWrapper {
-    private String kdUrtug;
+public class UraianTugasJabatanJenisWrapper {
     private String urtug;
+    private String kdUrtug;
     private String kdJabatan;
     private String kdJenisUrtug;
-    private String jenisUrtug;
     private Integer tahunUrtug;
     private Integer kuantitas;
     private String satuanKuantitas;
@@ -16,31 +15,37 @@ public class UraianTugasJabatanJenisUrtugWrapper {
     private Integer waktu;
     private Integer biaya;
 
-    public UraianTugasJabatanJenisUrtugWrapper() {
+    public UraianTugasJabatanJenisWrapper() {
     }
-    public UraianTugasJabatanJenisUrtugWrapper(
-            String kdUrtug,
+    public UraianTugasJabatanJenisWrapper(
             String urtug,
+            String kdUrtug,
             String kdJabatan,
             String kdJenisUrtug,
-            String jenisUrtug,
             Integer tahunUrtug,
             Integer kuantitas,
             String satuanKuantitas,
             Integer kualitas,
             Integer waktu,
             Integer biaya) {
-        this.kdUrtug = kdUrtug;
         this.urtug = urtug;
+        this.kdUrtug = kdUrtug;
         this.kdJabatan = kdJabatan;
         this.kdJenisUrtug = kdJenisUrtug;
-        this.jenisUrtug = jenisUrtug;
         this.tahunUrtug = tahunUrtug;
         this.kuantitas = kuantitas;
         this.satuanKuantitas = satuanKuantitas;
         this.kualitas = kualitas;
         this.waktu = waktu;
         this.biaya = biaya;
+    }
+
+    public String getUrtug() {
+        return urtug;
+    }
+
+    public void setUrtug(String urtug) {
+        this.urtug = urtug;
     }
 
     public String getKdUrtug() {
@@ -59,36 +64,12 @@ public class UraianTugasJabatanJenisUrtugWrapper {
         this.kdJabatan = kdJabatan;
     }
 
-    public String getKdJenisUrtug() {
-        return kdJenisUrtug;
-    }
-
-    public void setKdJenisUrtug(String kdJenisUrtug) {
-        this.kdJenisUrtug = kdJenisUrtug;
-    }
-
-    public String getJenisUrtug() {
-        return jenisUrtug;
-    }
-
-    public void setJenisUrtug(String jenisUrtug) {
-        this.jenisUrtug = jenisUrtug;
-    }
-
     public Integer getTahunUrtug() {
         return tahunUrtug;
     }
 
     public void setTahunUrtug(Integer tahunUrtug) {
         this.tahunUrtug = tahunUrtug;
-    }
-
-    public String getUrtug() {
-        return urtug;
-    }
-
-    public void setUrtug(String urtug) {
-        this.urtug = urtug;
     }
 
     public Integer getKuantitas() {
@@ -129,5 +110,13 @@ public class UraianTugasJabatanJenisUrtugWrapper {
 
     public void setBiaya(Integer biaya) {
         this.biaya = biaya;
+    }
+
+    public String getKdJenisUrtug() {
+        return kdJenisUrtug;
+    }
+
+    public void setKdJenisUrtug(String kdJenisUrtug) {
+        this.kdJenisUrtug = kdJenisUrtug;
     }
 }

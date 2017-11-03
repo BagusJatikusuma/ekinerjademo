@@ -54,7 +54,13 @@ public class UraianTugasJabatanJenisUrtugController {
                             urtugJabatanJenis.getUraianTugasJabatanJenisUrtugId().getKdJabatan(),
                             urtugJabatanJenis.getUraianTugasJabatanJenisUrtugId().getKdJenisUrtug(),
                             urtugJabatanJenis.getJenisUrtug().getJenisUrtug(),
-                            urtugJabatanJenis.getUraianTugasJabatanJenisUrtugId().getTahunUrtug()));
+                            urtugJabatanJenis.getUraianTugasJabatanJenisUrtugId().getTahunUrtug(),
+                            urtugJabatanJenis.getKuantitas(),
+                            urtugJabatanJenis.getSatuanKuantitas(),
+                            urtugJabatanJenis.getKualitas(),
+                            urtugJabatanJenis.getWaktu(),
+                            urtugJabatanJenis.getBiaya()
+                    ));
         }
 
         return new ResponseEntity<Object>(urtugWrapperList, HttpStatus.OK);
@@ -77,7 +83,13 @@ public class UraianTugasJabatanJenisUrtugController {
                             urtugJabatanJenis.getUraianTugasJabatanJenisUrtugId().getKdJabatan(),
                             urtugJabatanJenis.getUraianTugasJabatanJenisUrtugId().getKdJenisUrtug(),
                             urtugJabatanJenis.getJenisUrtug().getJenisUrtug(),
-                            urtugJabatanJenis.getUraianTugasJabatanJenisUrtugId().getTahunUrtug()));
+                            urtugJabatanJenis.getUraianTugasJabatanJenisUrtugId().getTahunUrtug(),
+                            urtugJabatanJenis.getKuantitas(),
+                            urtugJabatanJenis.getSatuanKuantitas(),
+                            urtugJabatanJenis.getKualitas(),
+                            urtugJabatanJenis.getWaktu(),
+                            urtugJabatanJenis.getBiaya()
+                    ));
         }
 
         return new ResponseEntity<Object>(urtugWrapperList, HttpStatus.OK);
@@ -178,7 +190,13 @@ public class UraianTugasJabatanJenisUrtugController {
                                 urtugJabatanJenis.getUraianTugasJabatanJenisUrtugId().getKdJabatan(),
                                 urtugJabatanJenis.getUraianTugasJabatanJenisUrtugId().getKdJenisUrtug(),
                                 urtugJabatanJenis.getJenisUrtug().getJenisUrtug(),
-                                urtugJabatanJenis.getUraianTugasJabatanJenisUrtugId().getTahunUrtug()));
+                                urtugJabatanJenis.getUraianTugasJabatanJenisUrtugId().getTahunUrtug(),
+                                urtugJabatanJenis.getKuantitas(),
+                                urtugJabatanJenis.getSatuanKuantitas(),
+                                urtugJabatanJenis.getKualitas(),
+                                urtugJabatanJenis.getWaktu(),
+                                urtugJabatanJenis.getBiaya()
+                        ));
             }
 
         }

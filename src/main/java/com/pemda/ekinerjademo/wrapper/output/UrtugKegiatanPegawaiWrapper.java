@@ -24,6 +24,7 @@ public class UrtugKegiatanPegawaiWrapper {
     private String nipPegawai;
     private String kdStatusPenanggungJawab;
     private String statusPenanggungJawab;
+    private Integer statusApproval;
 
     public UrtugKegiatanPegawaiWrapper() {
     }
@@ -100,6 +101,46 @@ public class UrtugKegiatanPegawaiWrapper {
         this.nipPegawai = nipPegawai;
         this.kdStatusPenanggungJawab = kdStatusPenanggungJawab;
         this.statusPenanggungJawab = statusPenanggungJawab;
+    }
+    public UrtugKegiatanPegawaiWrapper(
+            String kdUrtug,
+            String deskripsiUrtug,
+            String kdJabatan,
+            String kdJenisUrtug,
+            Integer tahunUrtug,
+            Integer kdUrusan,
+            Integer kdBidang,
+            Integer kdUnit,
+            Integer kdSub,
+            Integer tahun,
+            Integer kdProg,
+            Integer idProg,
+            Integer kdKeg,
+            String ketKeg,
+            BigDecimal paguAnggaran,
+            String nipPegawai,
+            String kdStatusPenanggungJawab,
+            String statusPenanggungJawab,
+            Integer statusApproval) {
+        this.kdUrtug = kdUrtug;
+        this.deskripsiUrtug = deskripsiUrtug;
+        this.kdJabatan = kdJabatan;
+        this.kdJenisUrtug = kdJenisUrtug;
+        this.tahunUrtug = tahunUrtug;
+        this.kdUrusan = kdUrusan;
+        this.kdBidang = kdBidang;
+        this.kdUnit = kdUnit;
+        this.kdSub = kdSub;
+        this.tahun = tahun;
+        this.kdProg = kdProg;
+        this.idProg = idProg;
+        this.kdKeg = kdKeg;
+        this.ketKeg = ketKeg;
+        this.paguAnggaran = paguAnggaran;
+        this.nipPegawai = nipPegawai;
+        this.kdStatusPenanggungJawab = kdStatusPenanggungJawab;
+        this.statusPenanggungJawab = statusPenanggungJawab;
+        this.statusApproval = statusApproval;
     }
 
     public String getKdUrtug() {
@@ -244,5 +285,13 @@ public class UrtugKegiatanPegawaiWrapper {
 
     public void setDeskripsiUrtug(String deskripsiUrtug) {
         this.deskripsiUrtug = deskripsiUrtug;
+    }
+
+    public Integer getStatusApproval() {
+        return statusApproval;
+    }
+
+    public void setStatusApproval(Integer statusApproval) {
+        this.statusApproval = statusApproval;
     }
 }

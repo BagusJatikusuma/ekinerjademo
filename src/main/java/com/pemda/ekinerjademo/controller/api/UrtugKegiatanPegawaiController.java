@@ -162,7 +162,7 @@ public class UrtugKegiatanPegawaiController {
             @PathVariable("kdUnitKerja") String kdUnitKerja) {
         LOGGER.info("get urtug dpa pegawai");
 
-        List<UrtugJabatanOutputWrapperTemporary> outputWrappers
+        List<UraianTugasJabatanJenisWrapper> outputWrappers
                 = new ArrayList<>();
 
         List<UrtugKegiatanPegawai> urtugKegiatanPegawaiList
@@ -170,7 +170,7 @@ public class UrtugKegiatanPegawaiController {
 
         for (UrtugKegiatanPegawai urtugKegiatanPegawai : urtugKegiatanPegawaiList) {
             boolean found = false;
-            for (UrtugJabatanOutputWrapperTemporary uraianTugasJabatanOutputWrapper : outputWrappers) {
+            for (UraianTugasJabatanJenisWrapper uraianTugasJabatanOutputWrapper : outputWrappers) {
                 if (urtugKegiatanPegawai.getUrtugKegiatanPegawaiId().getKdUrtug()
                         .equals(uraianTugasJabatanOutputWrapper.getKdUrtug())) {
                     found =true;
@@ -181,10 +181,11 @@ public class UrtugKegiatanPegawaiController {
 
             if (!found) {
                 outputWrappers
-                        .add(new UrtugJabatanOutputWrapperTemporary(
+                        .add(new UraianTugasJabatanJenisWrapper(
                                 urtugKegiatanPegawai.getUrtugKegiatan().getUraianTugasJabatanJenisUrtug().getUraianTugasJabatan().getUraianTugas().getDeskripsi(),
                                 urtugKegiatanPegawai.getUrtugKegiatanPegawaiId().getKdUrtug(),
                                 urtugKegiatanPegawai.getUrtugKegiatanPegawaiId().getKdJabatan(),
+                                urtugKegiatanPegawai.getUrtugKegiatanPegawaiId().getKdJenisUrtug(),
                                 urtugKegiatanPegawai.getUrtugKegiatanPegawaiId().getTahunUrtug(),
                                 urtugKegiatanPegawai.getUrtugKegiatan().getUraianTugasJabatanJenisUrtug().getUraianTugasJabatan().getKuantitas(),
                                 urtugKegiatanPegawai.getUrtugKegiatan().getUraianTugasJabatanJenisUrtug().getUraianTugasJabatan().getSatuanKuantitas(),
@@ -245,7 +246,8 @@ public class UrtugKegiatanPegawaiController {
                                     taKegiatan.getPaguAnggaran(),
                                     urtugKegiatanPegawai.getUrtugKegiatanPegawaiId().getNipPegawai(),
                                     urtugKegiatanPegawai.getUrtugKegiatanPegawaiId().getKdStatusPenanggungJawab(),
-                                    urtugKegiatanPegawai.getStatusPenanggungJawabKegiatan().getStatus()));
+                                    urtugKegiatanPegawai.getStatusPenanggungJawabKegiatan().getStatus()
+                            ));
 
                     break;
                 }
@@ -453,6 +455,8 @@ public class UrtugKegiatanPegawaiController {
         LOGGER.info("get hasil approval urtug dpa");
 
         List<UrtugKegiatanPegawaiWrapper> urtugKegiatanPegawaiWrapperList = new ArrayList<>();
+        List<UrtugKegiatanPegawaiApprovalWrapper> urtugKegiatanPegawaiApprovalWrapperList
+                = new ArrayList<>();
         List<UrtugKegiatanPegawai> urtugKegiatanPegawaiList = urtugKegiatanPegawaiService.findByUnitKerja(kdUnitKerja);
 
         //ambil semua data urug dpa pegawai berdasarkan unit kerja
@@ -484,14 +488,104 @@ public class UrtugKegiatanPegawaiController {
                                     taKegiatan.getPaguAnggaran(),
                                     urtugKegiatanPegawai.getUrtugKegiatanPegawaiId().getNipPegawai(),
                                     urtugKegiatanPegawai.getUrtugKegiatanPegawaiId().getKdStatusPenanggungJawab(),
-                                    urtugKegiatanPegawai.getStatusPenanggungJawabKegiatan().getStatus()
+                                    urtugKegiatanPegawai.getStatusPenanggungJawabKegiatan().getStatus(),
+                                    urtugKegiatanPegawai.getStatusApproval()
                             ));
                     break;
                 }
             }
         }
 
-        //mengkelompokan berdasarkan kegiatan
+        //mengelompokan berdasarkan urtug
+        for (UrtugKegiatanPegawaiWrapper urtugKegiatanPegawaiWrapper
+                : urtugKegiatanPegawaiWrapperList) {
+            boolean found = false;
+            for (UrtugKegiatanPegawaiApprovalWrapper urtugKegiatanPegawaiApprovalWrapper
+                    : urtugKegiatanPegawaiApprovalWrapperList) {
+                if (urtugKegiatanPegawaiApprovalWrapper.getKdUrtug()
+                        .equals(urtugKegiatanPegawaiWrapper.getKdUrtug())) {
+                    found = true;
+                    break;
+                }
+            }
+
+            if (!found) {
+                urtugKegiatanPegawaiApprovalWrapperList
+                        .add(new UrtugKegiatanPegawaiApprovalWrapper(
+                                urtugKegiatanPegawaiWrapper.getKdUrtug(),
+                                urtugKegiatanPegawaiWrapper.getDeskripsiUrtug(),
+                                urtugKegiatanPegawaiWrapper.getKdJabatan(),
+                                urtugKegiatanPegawaiWrapper.getKdJenisUrtug(),
+                                urtugKegiatanPegawaiWrapper.getTahunUrtug(),
+                                null));
+            }
+
+        }
+
+        //mengelompokan kegiatan berdasarkan urtug yang sama
+        for (UrtugKegiatanPegawaiApprovalWrapper urtugKegiatanPegawaiApprovalWrapper
+                : urtugKegiatanPegawaiApprovalWrapperList) {
+            List<KegiatanApprovalWrapper> kegiatanApprovalWrapperList
+                    = new ArrayList<>();
+            for (UrtugKegiatanPegawaiWrapper urtugKegiatanPegawaiWrapper
+                    : urtugKegiatanPegawaiWrapperList) {
+                if ((urtugKegiatanPegawaiApprovalWrapper.getKdUrtug()
+                        .equals(urtugKegiatanPegawaiWrapper.getKdUrtug())
+                        && (urtugKegiatanPegawaiApprovalWrapper.getKdJabatan()
+                            .equals(urtugKegiatanPegawaiWrapper.getKdJabatan()))
+                        && (urtugKegiatanPegawaiApprovalWrapper.getKdJenisUrtug()
+                            .equals(urtugKegiatanPegawaiWrapper.getKdJenisUrtug()))
+                        && (urtugKegiatanPegawaiApprovalWrapper.getTahunUrtug() == urtugKegiatanPegawaiWrapper.getTahunUrtug()) )) {
+
+                    kegiatanApprovalWrapperList
+                            .add(new KegiatanApprovalWrapper(
+                                    urtugKegiatanPegawaiWrapper.getKdUrusan(),
+                                    urtugKegiatanPegawaiWrapper.getKdBidang(),
+                                    urtugKegiatanPegawaiWrapper.getKdUnit(),
+                                    urtugKegiatanPegawaiWrapper.getKdSub(),
+                                    urtugKegiatanPegawaiWrapper.getTahun(),
+                                    urtugKegiatanPegawaiWrapper.getKdProg(),
+                                    urtugKegiatanPegawaiWrapper.getIdProg(),
+                                    urtugKegiatanPegawaiWrapper.getKdKeg(),
+                                    urtugKegiatanPegawaiWrapper.getKetKeg(),
+                                    urtugKegiatanPegawaiWrapper.getPaguAnggaran(),
+                                    null));
+
+                }
+
+            }
+            urtugKegiatanPegawaiApprovalWrapper
+                    .setUrtugKegiatanApprovalList(kegiatanApprovalWrapperList);
+        }
+
+        //mengelompokan status penanggung jawab berdasarkan kegiatan yang sama
+//        for (UrtugKegiatanPegawaiApprovalWrapper urtugKegiatanPegawaiApprovalWrapper
+//                : urtugKegiatanPegawaiApprovalWrapperList) {
+//            for (KegiatanApprovalWrapper kegiatanApprovalWrapper
+//                    : urtugKegiatanPegawaiApprovalWrapper.getUrtugKegiatanApprovalList()) {
+//                List<StatusApprovalPenanggungJawabWrapper> statusApprovalPenanggungJawabWrapperList
+//                        = new ArrayList<>();
+//                for (UrtugKegiatanPegawaiWrapper urtugKegiatanPegawaiWrapper
+//                        : urtugKegiatanPegawaiWrapperList) {
+//                    if ((urtugKegiatanPegawaiWrapper.getKdUrusan().equals())
+//                            &&(urtugKegiatanPegawaiWrapper.getKdBidang().equals())
+//                            &&(urtugKegiatanPegawaiWrapper.getKdUnit().equals())
+//                            &&(urtugKegiatanPegawaiWrapper.getKdSub().equals())
+//                            &&(urtugKegiatanPegawaiWrapper.getTahun().equals())
+//                            &&(urtugKegiatanPegawaiWrapper.getKdProg().equals())
+//                            &&(urtugKegiatanPegawaiWrapper.getIdProg().equals())
+//                            &&(urtugKegiatanPegawaiWrapper.getKdKeg().equals())) {
+//
+//
+//                    }
+//
+//                }
+//
+//
+//
+//            }
+//
+//        }
 
         return new ResponseEntity<Object>(urtugKegiatanPegawaiWrapperList, HttpStatus.OK);
     }

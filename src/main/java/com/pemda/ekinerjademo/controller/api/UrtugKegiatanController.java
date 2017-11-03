@@ -97,6 +97,7 @@ public class UrtugKegiatanController {
         return new ResponseEntity<Object>(urtugKegiatanWrapperList, HttpStatus.OK);
     }
 
+    //tambahkan algoritma akumulasi jumlah waktu, biaya berdasarkan jumlah kegiatan yang ditambahkan
     @RequestMapping(value = "/create-urtug-kegiatan", method = RequestMethod.POST)
     ResponseEntity<?> createUrtugKegiatan(@RequestBody UrtugKegiatanInputWrapper urtugKegiatanInputWrapper) {
         LOGGER.info("create urtug kegiatan");
