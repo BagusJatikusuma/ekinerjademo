@@ -647,7 +647,7 @@ public class UrtugKegiatanPegawaiController {
 
         }
 
-        return new ResponseEntity<Object>(urtugKegiatanPegawaiWrapperList, HttpStatus.OK);
+        return new ResponseEntity<Object>(urtugKegiatanPegawaiApprovalWrapperList, HttpStatus.OK);
     }
 
 }
