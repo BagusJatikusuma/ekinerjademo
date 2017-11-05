@@ -11,7 +11,6 @@ public class NodinBean {
     private String sifat;
     private String lampiran;
     private String perihal;
-
     private String isiSurat;
     private String isiPenutup;
 
