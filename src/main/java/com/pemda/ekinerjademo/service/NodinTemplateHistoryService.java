@@ -9,6 +9,7 @@ import java.util.List;
  */
 public interface NodinTemplateHistoryService {
     NodinTemplateHistory findByKdHistory(String kdHistory);
+    List<NodinTemplateHistory> findByNipPegawai(String nipPegawai);
     List<NodinTemplateHistory> findByKdUnitKerja(String kdUnitKerja);
     List<NodinTemplateHistory> findByKdUnitKerjaAndNomorSuratTahun(String kdUnitKerja, Integer nomorSuratTahun);
     void deleteByKdHistory(String kdHistory);

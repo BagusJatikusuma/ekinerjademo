@@ -24,6 +24,11 @@ public class NodinTemplateHistoryServiceImpl implements NodinTemplateHistoryServ
     }
 
     @Override
+    public List<NodinTemplateHistory> findByNipPegawai(String nipPegawai) {
+        return nodinTemplateHistoryDao.findByNipPegawai(nipPegawai);
+    }
+
+    @Override
     public List<NodinTemplateHistory> findByKdUnitKerja(String kdUnitKerja) {
         return nodinTemplateHistoryDao.findByKdUnitKerja(kdUnitKerja);
     }

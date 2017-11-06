@@ -12,6 +12,7 @@ import java.util.List;
 @Repository
 public interface NodinTemplateHistoryDao extends JpaRepository<NodinTemplateHistory, String> {
     NodinTemplateHistory findByKdHistory(String kdHistory);
+    List<NodinTemplateHistory> findByNipPegawai(String nipPegawai);
     List<NodinTemplateHistory> findByKdUnitKerja(String kdUnitKerja);
     List<NodinTemplateHistory> findByKdUnitKerjaAndNomorSuratTahun(String kdUnitKerja, Integer nomorSuratTahun);
     void deleteByKdHistory(String kdHistory);

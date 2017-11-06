@@ -5,6 +5,7 @@ import com.pemda.ekinerjademo.service.NodinTemplateHistoryService;
 import com.pemda.ekinerjademo.util.EkinerjaXMLBuilder;
 import com.pemda.ekinerjademo.wrapper.input.NodinTemplateInputWrapper;
 import com.pemda.ekinerjademo.wrapper.output.CustomMessage;
+import com.pemda.ekinerjademo.wrapper.output.NodinHistoryWrapper;
 import com.pemda.ekinerjademo.wrapper.report.NodinBean;
 import com.pemda.ekinerjademo.wrapper.report.NotaDinasBean;
 import net.sf.jasperreports.engine.*;
@@ -220,6 +221,28 @@ public class ReportApplicationController {
 
         return new ResponseEntity<Object>(nodinDocumentBytes, headers, HttpStatus.OK);
 
+    }
+
+    @RequestMapping(value = "/get-report-nodin-history-by-nip/{nipPegawai}", method = RequestMethod.GET)
+    ResponseEntity<?> getReportNodinHistoryByNipPegawai(@PathVariable("nipPegawai") String nipPegawai) {
+        LOGGER.info("get report history by nip "+nipPegawai);
+
+        List<NodinTemplateHistory> nodinTemplateHistories
+                = nodinTemplateHistoryService.findByNipPegawai(nipPegawai);
+        List<NodinHistoryWrapper> nodinHistoryWrapperList
+                = new ArrayList<>();
+
+        DateFormat df = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+        for (NodinTemplateHistory nodinTemplateHistory : nodinTemplateHistories) {
+            nodinHistoryWrapperList
+                    .add(new NodinHistoryWrapper(
+                            nodinTemplateHistory.getKdHistory(),
+                            df.format(
+                                    new Date(nodinTemplateHistory.getCreatedDateTimeMilis()))
+                    ));
+        }
+
+        return new ResponseEntity<Object>(nodinHistoryWrapperList, HttpStatus.OK);
     }
 
 }

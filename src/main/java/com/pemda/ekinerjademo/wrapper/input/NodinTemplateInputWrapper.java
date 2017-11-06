@@ -15,7 +15,7 @@ public class NodinTemplateInputWrapper {
     private String nmTujuan;
     private String nmPemberi;
     private String hal;
-    private Integer tanggal;
+    private Long tanggal;
     private String pembukaSurat;
     private String isiSurat;
     private String penutupSurat;
@@ -78,11 +78,11 @@ public class NodinTemplateInputWrapper {
         this.hal = hal;
     }
 
-    public Integer getTanggal() {
+    public Long getTanggal() {
         return tanggal;
     }
 
-    public void setTanggal(Integer tanggal) {
+    public void setTanggal(Long tanggal) {
         this.tanggal = tanggal;
     }
 
