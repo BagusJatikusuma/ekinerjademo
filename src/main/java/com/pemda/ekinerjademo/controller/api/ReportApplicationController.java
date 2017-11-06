@@ -14,14 +14,14 @@ import net.sf.jasperreports.engine.util.JRSaver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
+import java.nio.file.Files;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.Year;
@@ -103,7 +103,6 @@ public class ReportApplicationController {
         LOGGER.info("create surat nodin");
 
         EkinerjaXMLBuilder ekinerjaXMLBuilder = new EkinerjaXMLBuilder();
-
         String tembusanListinXml
                 = ekinerjaXMLBuilder.convertListTembusanSuratNodinIntoXml(nodinTemplateWrapper.getTembusanSurat());
 
@@ -125,14 +124,16 @@ public class ReportApplicationController {
                         nodinTemplateWrapper.getIsiSurat(),
                         nodinTemplateWrapper.getPenutupSurat(),
                         nodinTemplateWrapper.getNmLengkap(),
-                        tembusanListinXml);
-        nodinTemplateHistoryService.save(nodinTemplateHistory);
+                        tembusanListinXml,
+                        new Date().getTime(),
+                        "");
 
         List<NotaDinasBean> beans = new ArrayList<>();
         DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
         beans.add(new NotaDinasBean(
                 nodinTemplateHistory.getNmInstansi(),
                 nodinTemplateHistory.getNomorSurat1()+"/"
+
                         +nodinTemplateHistory.getNomorSurat2()+"/"
                         +nodinTemplateHistory.getNomorSurat3()+"/"+nodinTemplateHistory.getNomorSuratTahun(),
                 nodinTemplateHistory.getNmTujuan(),
@@ -167,13 +168,16 @@ public class ReportApplicationController {
 
             JRPdfExporter exporter = new JRPdfExporter();
 
+
             File employeeReportPdf
                     = File.createTempFile(
                         "nodin_report.",
                         ".pdf",
-                        new File("/home/pemkab"));
+                        new File("/home/pemkab/project/documents/nodin"));
 
             JasperExportManager.exportReportToPdfStream(jasperPrint, new FileOutputStream(employeeReportPdf));
+            nodinTemplateHistory.setDocumentFileName(employeeReportPdf.getName());
+//            LOGGER.info(employeeReportPdf.getAbsolutePath());
 
         } catch (JRException e) {
             e.printStackTrace();
@@ -181,11 +185,41 @@ public class ReportApplicationController {
             e.printStackTrace();
         }
 
+        nodinTemplateHistoryService.save(nodinTemplateHistory);
 //        LOGGER.info(tembusanListinXml);
 
         return new ResponseEntity<Object>(
                 new CustomMessage("nodin report created"),
                 HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/get-nodin-document-by-history/{kdHistory}", method = RequestMethod.GET)
+    ResponseEntity<?> getNodinDocumentByKdHistory(@PathVariable("kdHistory") String kdHistory) {
+        LOGGER.info("get nodin document by kd history : "+kdHistory);
+
+        NodinTemplateHistory nodinTemplateHistory
+                = nodinTemplateHistoryService.findByKdHistory(kdHistory);
+
+        if (nodinTemplateHistory == null)
+            return new ResponseEntity<Object>(new CustomMessage("dokumen tidak ditemukan"), HttpStatus.OK);
+
+        byte[] nodinDocumentBytes;
+        File nodinDocument
+                = new File("/home/pemkab/project/documents/nodin/"+nodinTemplateHistory.getDocumentFileName());
+
+        try {
+            nodinDocumentBytes = Files.readAllBytes(nodinDocument.toPath());
+        } catch (IOException e) {
+            return new ResponseEntity<Object>(new CustomMessage("berkas dokumen gagal diproses"), HttpStatus.OK);
+        }
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.parseMediaType("application/pdf"));
+        headers.setContentDispositionFormData(nodinTemplateHistory.getDocumentFileName(), nodinTemplateHistory.getDocumentFileName());
+        headers.setCacheControl("must-revalidate, post-check=0, pre-check=0");
+
+        return new ResponseEntity<Object>(nodinDocumentBytes, headers, HttpStatus.OK);
+
     }
 
 }

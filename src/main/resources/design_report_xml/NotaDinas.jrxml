@@ -1,26 +1,7 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE jasperReport PUBLIC "//JasperReports//DTD Report Design//EN"
-		"http://jasperreports.sourceforge.net/dtds/jasperreport.dtd">
-<!-- Created with Jaspersoft Studio version 6.4.0.final using JasperReports Library version 6.4.1  -->
-<jasperReport
-		xmlns="http://jasperreports.sourceforge.net/jasperreports"
-		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd"
-		name="NotaDinas"
-		pageWidth="595"
-		pageHeight="842"
-		columnWidth="555"
-		leftMargin="20"
-		rightMargin="20"
-		topMargin="20"
-		bottomMargin="20"
-		printOrder="Vertical">
-
-	<!--<template>"styles.jrtx"</template>-->
-	<!--<style name="hanging-indentation-style">-->
-		<!--<box leftPadding="23"/>-->
-		<!--<paragraph firstLineIndent="-23"/>-->
-	<!--</style>-->
-
+<!--
+ Created with Jaspersoft Studio version 6.4.0.final using JasperReports Library version 6.4.1
+-->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="NotaDinas" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" printOrder="Vertical">
 	<field name="namaInstansi" class="java.lang.String"/>
 	<field name="nomorSurat" class="java.lang.String"/>
 	<field name="namaTujuan" class="java.lang.String"/>
@@ -36,7 +17,6 @@
 	<background>
 		<band splitType="Stretch"/>
 	</background>
-
 	<title>
 		<band height="82" splitType="Stretch">
 			<textField isStretchWithOverflow="true">
@@ -44,14 +24,18 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="12"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{namaInstansi}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String">
+					<![CDATA[ $F{namaInstansi} ]]>
+				</textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true">
 				<reportElement positionType="Float" x="180" y="43" width="201" height="16" uuid="4f8740aa-87b1-4d48-91f4-7dac666e2e53"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="13" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA["NOTA DINAS"]]></textFieldExpression>
+				<textFieldExpression>
+					<![CDATA[ "NOTA DINAS" ]]>
+				</textFieldExpression>
 			</textField>
 			<frame>
 				<reportElement positionType="Float" x="180" y="59" width="201" height="20" uuid="3ae7a091-3e48-426e-b36f-828f777af057"/>
@@ -67,7 +51,9 @@
 					<textElement textAlignment="Left">
 						<font size="12"/>
 					</textElement>
-					<textFieldExpression class="java.lang.String"><![CDATA[$F{nomorSurat}]]></textFieldExpression>
+					<textFieldExpression class="java.lang.String">
+						<![CDATA[ $F{nomorSurat} ]]>
+					</textFieldExpression>
 				</textField>
 			</frame>
 		</band>
@@ -75,87 +61,111 @@
 	<pageHeader>
 		<band height="89" splitType="Stretch">
 			<frame>
-				<reportElement positionType="Float" x="2" y="17" width="278" height="25" uuid="e0ebcedc-585d-4f72-ae34-dda5bdfddef1"/>
+				<reportElement positionType="Float" x="2" y="17" width="278" height="18" uuid="e0ebcedc-585d-4f72-ae34-dda5bdfddef1"/>
 				<staticText>
 					<reportElement x="-1" y="1" width="50" height="15" uuid="c84f7eb9-9e75-46d5-b8fb-5a46f16eb111"/>
 					<textElement>
 						<font size="12"/>
 					</textElement>
-					<text><![CDATA[Yth]]></text>
+					<text>
+						<![CDATA[Yth]]>
+					</text>
 				</staticText>
 				<textField isStretchWithOverflow="true">
 					<reportElement x="70" y="1" width="180" height="15" uuid="1615d211-0deb-4565-b137-a08266b20185"/>
 					<textElement>
 						<font size="12"/>
 					</textElement>
-					<textFieldExpression class="java.lang.String"><![CDATA[$F{namaTujuan}]]></textFieldExpression>
+					<textFieldExpression class="java.lang.String">
+						<![CDATA[ $F{namaTujuan} ]]>
+					</textFieldExpression>
 				</textField>
 				<textField>
 					<reportElement x="55" y="2" width="13" height="15" uuid="120c00f5-58df-4666-be10-1f259bc50b5f"/>
-					<textFieldExpression><![CDATA[":"]]></textFieldExpression>
+					<textFieldExpression>
+						<![CDATA[ ":" ]]>
+					</textFieldExpression>
 				</textField>
 			</frame>
 			<frame>
-				<reportElement positionType="Float" x="2" y="33" width="278" height="25" uuid="e6384397-3d34-42a2-b0e5-854836ee3aba"/>
+				<reportElement positionType="Float" x="2" y="33" width="278" height="18" uuid="e6384397-3d34-42a2-b0e5-854836ee3aba"/>
 				<staticText>
 					<reportElement x="-1" y="1" width="50" height="15" uuid="f7d00087-41d8-4c3e-84cc-59df8a23a3bf"/>
 					<textElement>
 						<font size="12"/>
 					</textElement>
-					<text><![CDATA[Dari]]></text>
+					<text>
+						<![CDATA[Dari]]>
+					</text>
 				</staticText>
 				<textField isStretchWithOverflow="true">
 					<reportElement x="70" y="1" width="180" height="15" uuid="51d60f06-0013-485f-b94b-1b74a1af8b1a"/>
 					<textElement>
 						<font size="12"/>
 					</textElement>
-					<textFieldExpression class="java.lang.String"><![CDATA[$F{namaPemberi}]]></textFieldExpression>
+					<textFieldExpression class="java.lang.String">
+						<![CDATA[ $F{namaPemberi} ]]>
+					</textFieldExpression>
 				</textField>
 				<textField>
 					<reportElement x="55" y="2" width="13" height="15" uuid="856866f9-72f6-4611-a93b-fc7873e91d51"/>
-					<textFieldExpression><![CDATA[":"]]></textFieldExpression>
+					<textFieldExpression>
+						<![CDATA[ ":" ]]>
+					</textFieldExpression>
 				</textField>
 			</frame>
 			<frame>
-				<reportElement positionType="Float" x="2" y="48" width="278" height="25" uuid="065e7b4a-da81-4296-935d-82f69f995bb8"/>
+				<reportElement positionType="Float" x="2" y="48" width="278" height="18" uuid="065e7b4a-da81-4296-935d-82f69f995bb8"/>
 				<staticText>
 					<reportElement x="-1" y="2" width="50" height="15" uuid="bf0f3297-4fa6-431a-bd0f-3106fce0a0dd"/>
 					<textElement>
 						<font size="12"/>
 					</textElement>
-					<text><![CDATA[Hal]]></text>
+					<text>
+						<![CDATA[Hal]]>
+					</text>
 				</staticText>
 				<textField isStretchWithOverflow="true">
 					<reportElement x="70" y="2" width="180" height="15" uuid="323f9a3f-3f14-499a-b9b0-f41f7c59def3"/>
 					<textElement>
 						<font size="12"/>
 					</textElement>
-					<textFieldExpression class="java.lang.String"><![CDATA[$F{hal}]]></textFieldExpression>
+					<textFieldExpression class="java.lang.String">
+						<![CDATA[ $F{hal} ]]>
+					</textFieldExpression>
 				</textField>
 				<textField>
 					<reportElement x="55" y="2" width="13" height="15" uuid="02ed0b35-eae4-4a66-88d3-27843c67bc7a"/>
-					<textFieldExpression><![CDATA[":"]]></textFieldExpression>
+					<textFieldExpression>
+						<![CDATA[ ":" ]]>
+					</textFieldExpression>
 				</textField>
 			</frame>
 			<frame>
-				<reportElement positionType="Float" x="2" y="64" width="278" height="25" uuid="ca9b7185-a09f-4c0b-8036-255b5fa58356"/>
+				<reportElement positionType="Float" x="2" y="64" width="278" height="18" uuid="ca9b7185-a09f-4c0b-8036-255b5fa58356"/>
 				<staticText>
 					<reportElement x="-1" y="2" width="50" height="15" uuid="d36b44e6-f166-45d1-8980-f02b0ffee451"/>
 					<textElement>
 						<font size="12"/>
 					</textElement>
-					<text><![CDATA[Tanggal]]></text>
+					<text>
+						<![CDATA[Tanggal]]>
+					</text>
 				</staticText>
 				<textField isStretchWithOverflow="true">
 					<reportElement x="70" y="2" width="180" height="15" uuid="eaa4ed3f-08bd-422c-ae74-a46a4792996a"/>
 					<textElement>
 						<font size="12"/>
 					</textElement>
-					<textFieldExpression class="java.lang.String"><![CDATA[$F{tanggal}]]></textFieldExpression>
+					<textFieldExpression class="java.lang.String">
+						<![CDATA[ $F{tanggal} ]]>
+					</textFieldExpression>
 				</textField>
 				<textField>
 					<reportElement x="55" y="2" width="13" height="15" uuid="440933de-ed56-4f5b-91f5-a756bf0722c3"/>
-					<textFieldExpression><![CDATA[":"]]></textFieldExpression>
+					<textFieldExpression>
+						<![CDATA[ ":" ]]>
+					</textFieldExpression>
 				</textField>
 			</frame>
 			<rectangle>
@@ -172,48 +182,60 @@
 		<band height="306" splitType="Stretch">
 			<textField isStretchWithOverflow="true">
 				<reportElement positionType="Float" x="2" y="9" width="508" height="15" uuid="a8bad9a6-5d01-414f-beb2-398466a57883"/>
-				<textElement textAlignment="Justified">
+				<textElement>
 					<font size="12"/>
-					<paragraph firstLineIndent="50"/>
+					<paragraph firstLineIndent="60"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{pembukaSurat}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String">
+					<![CDATA[ $F{pembukaSurat} ]]>
+				</textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true">
 				<reportElement positionType="Float" x="1" y="38" width="509" height="15" uuid="f22b0741-d3db-4a06-a9d8-533cb9e1b5cf"/>
-				<textElement textAlignment="Justified">
+				<textElement>
 					<font size="12"/>
-					<paragraph firstLineIndent="50"/>
+					<paragraph firstLineIndent="60"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{isiSurat}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String">
+					<![CDATA[ $F{isiSurat} ]]>
+				</textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true">
 				<reportElement positionType="Float" x="2" y="70" width="508" height="15" uuid="4c89c28f-0b8c-4654-80d0-297e3c17e455"/>
-				<textElement textAlignment="Justified">
+				<textElement>
 					<font size="12"/>
-					<paragraph firstLineIndent="50"/>
+					<paragraph firstLineIndent="60"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{penutupSurat}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String">
+					<![CDATA[ $F{penutupSurat} ]]>
+				</textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true">
 				<reportElement positionType="Float" x="390" y="166" width="120" height="18" uuid="0f3f73d8-3cd2-408b-ba2e-baa6047150a9"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font size="12"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{namaLengkap}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String">
+					<![CDATA[ $F{namaLengkap} ]]>
+				</textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true">
 				<reportElement positionType="Float" x="1" y="210" width="120" height="18" uuid="5dfa49db-152e-46d9-996b-c328e38f42b2"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font size="12"/>
 				</textElement>
-				<textFieldExpression><![CDATA["Tembusan :"]]></textFieldExpression>
+				<textFieldExpression>
+					<![CDATA[ "Tembusan :" ]]>
+				</textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true">
 				<reportElement positionType="Float" x="1" y="228" width="120" height="18" uuid="315e5549-d708-403d-a4f1-f8ac7f0519ab"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font size="12"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{tembusanSurat}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String">
+					<![CDATA[ $F{tembusanSurat} ]]>
+				</textFieldExpression>
 			</textField>
 		</band>
 	</detail>

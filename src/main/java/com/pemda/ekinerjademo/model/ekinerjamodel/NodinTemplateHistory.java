@@ -47,6 +47,10 @@ public class NodinTemplateHistory {
     private String nmLengkap;
     @Column(name = "tembusan_surat")
     private String tembusanSurat;
+    @Column(name = "created_date_time_milis")
+    private Long createdDateTimeMilis;
+    @Column(name = "document_file_name")
+    private String documentFileName;
 
     public NodinTemplateHistory() {
     }
@@ -67,7 +71,9 @@ public class NodinTemplateHistory {
             String isiSurat,
             String penutupSurat,
             String nmLengkap,
-            String tembusanSurat) {
+            String tembusanSurat,
+            Long createdDateTimeMilis,
+            String documentFileName) {
         this.kdHistory = kdHistory;
         this.nipPegawai = nipPegawai;
         this.kdUnitKerja = kdUnitKerja;
@@ -85,6 +91,8 @@ public class NodinTemplateHistory {
         this.penutupSurat = penutupSurat;
         this.nmLengkap = nmLengkap;
         this.tembusanSurat = tembusanSurat;
+        this.createdDateTimeMilis = createdDateTimeMilis;
+        this.documentFileName = documentFileName;
     }
 
     public String getKdHistory() {
@@ -221,5 +229,21 @@ public class NodinTemplateHistory {
 
     public void setTembusanSurat(String tembusanSurat) {
         this.tembusanSurat = tembusanSurat;
+    }
+
+    public Long getCreatedDateTimeMilis() {
+        return createdDateTimeMilis;
+    }
+
+    public void setCreatedDateTimeMilis(Long createdDateTimeMilis) {
+        this.createdDateTimeMilis = createdDateTimeMilis;
+    }
+
+    public String getDocumentFileName() {
+        return documentFileName;
+    }
+
+    public void setDocumentFileName(String documentFileName) {
+        this.documentFileName = documentFileName;
     }
 }
