@@ -44,7 +44,7 @@
 					<textElement textAlignment="Center">
 						<font size="12"/>
 					</textElement>
-					<text><![CDATA[nomor]]></text>
+					<text><![CDATA[nomor:]]></text>
 				</staticText>
 				<textField isStretchWithOverflow="true">
 					<reportElement x="50" y="2" width="147" height="18" uuid="0bac23bf-a6c9-43b2-a685-3cd2704a6d9a"/>
@@ -61,18 +61,16 @@
 	<pageHeader>
 		<band height="89" splitType="Stretch">
 			<frame>
-				<reportElement positionType="Float" x="2" y="17" width="278" height="18" uuid="e0ebcedc-585d-4f72-ae34-dda5bdfddef1"/>
+				<reportElement positionType="Float" x="2" y="17" width="278" height="20" uuid="e0ebcedc-585d-4f72-ae34-dda5bdfddef1"/>
 				<staticText>
-					<reportElement x="-1" y="1" width="50" height="15" uuid="c84f7eb9-9e75-46d5-b8fb-5a46f16eb111"/>
+					<reportElement x="-1" y="1" width="50" height="18" uuid="7698e0dc-fb84-45cb-a57e-6db7ec3b6872"/>
 					<textElement>
 						<font size="12"/>
 					</textElement>
-					<text>
-						<![CDATA[Yth]]>
-					</text>
+					<text><![CDATA[Yth.]]></text>
 				</staticText>
 				<textField isStretchWithOverflow="true">
-					<reportElement x="70" y="1" width="180" height="15" uuid="1615d211-0deb-4565-b137-a08266b20185"/>
+					<reportElement x="70" y="1" width="180" height="18" uuid="1615d211-0deb-4565-b137-a08266b20185"/>
 					<textElement>
 						<font size="12"/>
 					</textElement>
@@ -81,25 +79,23 @@
 					</textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement x="55" y="2" width="13" height="15" uuid="120c00f5-58df-4666-be10-1f259bc50b5f"/>
+					<reportElement x="55" y="2" width="13" height="18" uuid="120c00f5-58df-4666-be10-1f259bc50b5f"/>
 					<textFieldExpression>
 						<![CDATA[ ":" ]]>
 					</textFieldExpression>
 				</textField>
 			</frame>
 			<frame>
-				<reportElement positionType="Float" x="2" y="33" width="278" height="18" uuid="e6384397-3d34-42a2-b0e5-854836ee3aba"/>
+				<reportElement positionType="Float" x="2" y="33" width="278" height="20" uuid="e6384397-3d34-42a2-b0e5-854836ee3aba"/>
 				<staticText>
-					<reportElement x="-1" y="1" width="50" height="15" uuid="f7d00087-41d8-4c3e-84cc-59df8a23a3bf"/>
+					<reportElement x="-1" y="2" width="50" height="18" uuid="7698e0dc-fb84-45cb-a57e-6db7ec3b6872"/>
 					<textElement>
 						<font size="12"/>
 					</textElement>
-					<text>
-						<![CDATA[Dari]]>
-					</text>
+					<text><![CDATA[Dari]]></text>
 				</staticText>
 				<textField isStretchWithOverflow="true">
-					<reportElement x="70" y="1" width="180" height="15" uuid="51d60f06-0013-485f-b94b-1b74a1af8b1a"/>
+					<reportElement x="70" y="2" width="180" height="18" uuid="51d60f06-0013-485f-b94b-1b74a1af8b1a"/>
 					<textElement>
 						<font size="12"/>
 					</textElement>
@@ -108,25 +104,23 @@
 					</textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement x="55" y="2" width="13" height="15" uuid="856866f9-72f6-4611-a93b-fc7873e91d51"/>
+					<reportElement x="55" y="2" width="13" height="18" uuid="856866f9-72f6-4611-a93b-fc7873e91d51"/>
 					<textFieldExpression>
 						<![CDATA[ ":" ]]>
 					</textFieldExpression>
 				</textField>
 			</frame>
 			<frame>
-				<reportElement positionType="Float" x="2" y="48" width="278" height="18" uuid="065e7b4a-da81-4296-935d-82f69f995bb8"/>
+				<reportElement positionType="Float" x="2" y="48" width="278" height="20" uuid="065e7b4a-da81-4296-935d-82f69f995bb8"/>
 				<staticText>
-					<reportElement x="-1" y="2" width="50" height="15" uuid="bf0f3297-4fa6-431a-bd0f-3106fce0a0dd"/>
-					<textElement>
-						<font size="12"/>
-					</textElement>
-					<text>
-						<![CDATA[Hal]]>
-					</text>
-				</staticText>
+				<reportElement x="-1" y="2" width="50" height="18" uuid="7698e0dc-fb84-45cb-a57e-6db7ec3b6872"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Hal]]></text>
+			</staticText>
 				<textField isStretchWithOverflow="true">
-					<reportElement x="70" y="2" width="180" height="15" uuid="323f9a3f-3f14-499a-b9b0-f41f7c59def3"/>
+					<reportElement x="70" y="2" width="180" height="18" uuid="323f9a3f-3f14-499a-b9b0-f41f7c59def3"/>
 					<textElement>
 						<font size="12"/>
 					</textElement>
@@ -135,25 +129,23 @@
 					</textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement x="55" y="2" width="13" height="15" uuid="02ed0b35-eae4-4a66-88d3-27843c67bc7a"/>
+					<reportElement x="55" y="2" width="13" height="18" uuid="02ed0b35-eae4-4a66-88d3-27843c67bc7a"/>
 					<textFieldExpression>
 						<![CDATA[ ":" ]]>
 					</textFieldExpression>
 				</textField>
 			</frame>
 			<frame>
-				<reportElement positionType="Float" x="2" y="64" width="278" height="18" uuid="ca9b7185-a09f-4c0b-8036-255b5fa58356"/>
+				<reportElement positionType="Float" x="2" y="64" width="278" height="20" uuid="ca9b7185-a09f-4c0b-8036-255b5fa58356"/>
 				<staticText>
-					<reportElement x="-1" y="2" width="50" height="15" uuid="d36b44e6-f166-45d1-8980-f02b0ffee451"/>
+					<reportElement x="-1" y="2" width="50" height="18" uuid="7698e0dc-fb84-45cb-a57e-6db7ec3b6872"/>
 					<textElement>
 						<font size="12"/>
 					</textElement>
-					<text>
-						<![CDATA[Tanggal]]>
-					</text>
+					<text><![CDATA[Tanggal]]></text>
 				</staticText>
 				<textField isStretchWithOverflow="true">
-					<reportElement x="70" y="2" width="180" height="15" uuid="eaa4ed3f-08bd-422c-ae74-a46a4792996a"/>
+					<reportElement x="70" y="2" width="180" height="18" uuid="eaa4ed3f-08bd-422c-ae74-a46a4792996a"/>
 					<textElement>
 						<font size="12"/>
 					</textElement>
@@ -162,7 +154,7 @@
 					</textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement x="55" y="2" width="13" height="15" uuid="440933de-ed56-4f5b-91f5-a756bf0722c3"/>
+					<reportElement x="55" y="2" width="13" height="18" uuid="440933de-ed56-4f5b-91f5-a756bf0722c3"/>
 					<textFieldExpression>
 						<![CDATA[ ":" ]]>
 					</textFieldExpression>

@@ -3,6 +3,7 @@ package com.pemda.ekinerjademo.controller.api;
 import com.pemda.ekinerjademo.model.bismamodel.QutPegawai;
 import com.pemda.ekinerjademo.model.bismamodel.TkdJabatan;
 import com.pemda.ekinerjademo.model.ekinerjamodel.*;
+import com.pemda.ekinerjademo.projection.ekinerjaprojection.CustomPegawaiCredential;
 import com.pemda.ekinerjademo.repository.bismarepository.QutPegawaiDao;
 import com.pemda.ekinerjademo.repository.bismarepository.TkdJabatanDao;
 import com.pemda.ekinerjademo.repository.ekinerjarepository.AkunPegawaiDao;
@@ -151,6 +152,21 @@ public class AkunPegawaiController {
         return new ResponseEntity<Object>(jabatanWrapperList, HttpStatus.OK);
     }
 
+    @RequestMapping(value = "/get-all-jabatan", method = RequestMethod.GET)
+    ResponseEntity<?> getAllJabatan() {
+        LOGGER.info("get all jabatan");
+
+        List<JabatanWrapper> jabatanWrapperList = new ArrayList<>();
+        List<TkdJabatan> tkdJabatanList = tkdJabatanService.getAll();
+
+        for (TkdJabatan tkdJabatan : tkdJabatanList) {
+            jabatanWrapperList
+                    .add(new JabatanWrapper(tkdJabatan.getKdJabatan(),tkdJabatan.getJabatan()));
+        }
+
+        return new ResponseEntity<Object>(jabatanWrapperList, HttpStatus.OK);
+    }
+
     @RequestMapping(value = "/get-pegawai", method = RequestMethod.GET)
     @Transactional
     ResponseEntity<?> getPegawai() {
@@ -158,8 +174,8 @@ public class AkunPegawaiController {
 
         List<QutPegawaiWrapper> qutPegawaiWrappers
                 = new ArrayList<>();
-        List<QutPegawai> qutPegawaiList
-                = qutPegawaiService.getQutPegawai();
+        List<CustomPegawaiCredential> qutPegawaiList
+                = qutPegawaiService.getCustomPegawaiCredentials();
         List<AkunPegawai> akunPegawaiList
                 = akunPegawaiService.getAkunPegawaiList();
 
@@ -180,8 +196,7 @@ public class AkunPegawaiController {
 //
 //        }
         LOGGER.info("finish get pegawai from database kepegawaian");
-
-        for (QutPegawai qutPegawai : qutPegawaiList) {
+        for (CustomPegawaiCredential qutPegawai : qutPegawaiList) {
             for (AkunPegawai akunPegawai : akunPegawaiList) {
                 if (qutPegawai.getNip()
                         .equals(akunPegawai.getNipPegawai())) {

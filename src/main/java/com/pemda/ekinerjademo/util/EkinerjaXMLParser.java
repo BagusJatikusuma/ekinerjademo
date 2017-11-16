@@ -32,4 +32,28 @@ public class EkinerjaXMLParser {
 
         return tembusanNodinList;
     }
+
+    public List<String> convertXmlSuratPerintahIntoListofString(String objectInXmlString, String objectType) {
+        List<String> objectList = new ArrayList<>();
+
+        Document document = null;
+        SAXReader saxReader = new SAXReader();
+
+        try {
+            document = saxReader.read(new StringReader(objectInXmlString));
+        } catch (DocumentException e) {
+            e.printStackTrace();
+        }
+
+        Element rootElement = document.getRootElement();
+        List<Node> nodes = document.selectNodes("/root/"+objectType);
+
+        for (Node node : nodes) {
+            objectList
+                    .add(node.selectSingleNode("text").getText());
+        }
+
+        return objectList;
+
+    }
 }
