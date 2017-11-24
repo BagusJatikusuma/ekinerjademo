@@ -63,4 +63,16 @@ public class EkinerjaXMLBuilder {
         return document.asXML();
     }
 
+    public String convertDaftarIsiInstruksiIntoXml(List<String> instruksiList) {
+        Document document = DocumentHelper.createDocument();
+        Element root = document.addElement("root");
+
+        for (String instruksi : instruksiList) {
+            Element element = root.addElement("instruksi");
+            element.addElement("text").addText(instruksi);
+        }
+
+        return document.asXML();
+    }
+
 }

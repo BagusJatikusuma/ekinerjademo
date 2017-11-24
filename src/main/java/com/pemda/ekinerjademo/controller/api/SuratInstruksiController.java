@@ -1,0 +1,297 @@
+package com.pemda.ekinerjademo.controller.api;
+
+import com.pemda.ekinerjademo.model.bismamodel.TkdJabatan;
+import com.pemda.ekinerjademo.model.ekinerjamodel.*;
+import com.pemda.ekinerjademo.projection.ekinerjaprojection.CustomPegawaiCredential;
+import com.pemda.ekinerjademo.service.QutPegawaiService;
+import com.pemda.ekinerjademo.service.SuratInstruksiService;
+import com.pemda.ekinerjademo.service.TkdJabatanService;
+import com.pemda.ekinerjademo.util.DateUtilities;
+import com.pemda.ekinerjademo.util.EkinerjaXMLBuilder;
+import com.pemda.ekinerjademo.util.EkinerjaXMLParser;
+import com.pemda.ekinerjademo.wrapper.input.SuratInstruksiInputWrapper;
+import com.pemda.ekinerjademo.wrapper.output.CustomMessage;
+import com.pemda.ekinerjademo.wrapper.output.DokumenSuratInstruksiWrapper;
+import com.pemda.ekinerjademo.wrapper.output.SuratInstruksiWrapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.time.Year;
+import java.util.*;
+
+/**
+ * Created by bagus on 23/11/17.
+ */
+@RestController
+@CrossOrigin(allowCredentials = "false")
+@RequestMapping(value = "/api")
+public class SuratInstruksiController {
+    public static final Logger LOGGER = LoggerFactory.getLogger(SuratInstruksiController.class);
+
+    @Autowired private SuratInstruksiService suratInstruksiService;
+    @Autowired private QutPegawaiService qutPegawaiService;
+    @Autowired private TkdJabatanService tkdJabatanService;
+
+    @RequestMapping(value = "/create-surat-instruksi", method = RequestMethod.POST)
+    ResponseEntity<?> createSuratInstruksi(
+            @RequestBody SuratInstruksiInputWrapper inputWrapper) {
+        LOGGER.info("create surat instruksi");
+
+        EkinerjaXMLBuilder ekinerjaXMLBuilder = new EkinerjaXMLBuilder();
+        String isiInstruksiInXml;
+
+        String kdSuratInstruksi = String.valueOf(new Date().getTime());
+
+        SuratInstruksi suratInstruksi = new SuratInstruksi();
+        suratInstruksi.setKdInstruksi(kdSuratInstruksi);
+        suratInstruksi.setJudulInstruksi(inputWrapper.getJudulInstruksi());
+        suratInstruksi.setNomor(inputWrapper.getNomor());
+        suratInstruksi.setTahun(Year.now().getValue());
+        suratInstruksi.setTentang(inputWrapper.getTentang());
+        suratInstruksi.setAlasan(inputWrapper.getAlasan());
+        suratInstruksi.setNipPenandatangan(inputWrapper.getNipPenandatangan());
+
+        isiInstruksiInXml
+                = ekinerjaXMLBuilder.convertDaftarIsiInstruksiIntoXml(inputWrapper.getDaftarIsiInstruksi());
+
+        suratInstruksi.setIsiInstruksi(isiInstruksiInXml);
+        suratInstruksi.setDikeluarkanDi(inputWrapper.getDikeluarkanDi());
+        suratInstruksi.setCreateddateMilis(inputWrapper.getTanggalDibuat());
+        suratInstruksi.setNipPembuat(inputWrapper.getNipPembuat());
+
+        suratInstruksiService.createSuratInstruksi(suratInstruksi);
+
+        //build target pegawai
+        for (String kdTargetPegawai : inputWrapper.getTargetPegawaiList()) {
+            InstruksiPegawai instruksiPegawai = new InstruksiPegawai();
+            instruksiPegawai
+                    .setInstruksiPegawaiId(new InstruksiPegawaiId(kdTargetPegawai, kdSuratInstruksi));
+            instruksiPegawai.setApproveStatus(0);
+
+            suratInstruksiService.createInstruksiPegawai(instruksiPegawai);
+        }
+        //build target pejabat
+        for (String kdTargetPejabat : inputWrapper.getTargetJabatanList()) {
+            InstruksiPejabat instruksiPejabat = new InstruksiPejabat();
+            instruksiPejabat
+                    .setInstruksiPejabatId(new InstruksiPejabatId(kdTargetPejabat, kdSuratInstruksi));
+            instruksiPejabat.setApproveStatus(0);
+
+            suratInstruksiService.createInstruksiPejabat(instruksiPejabat);
+        }
+
+        if (inputWrapper.isSuratPejabat()) {
+            SuratInstruksiPejabat suratInstruksiPejabat
+                    = new SuratInstruksiPejabat();
+            suratInstruksiPejabat.setKdInstruksi(kdSuratInstruksi);
+            suratInstruksiPejabat.setSuratInstruksi(suratInstruksi);
+            suratInstruksiPejabat.setKdJabatan(inputWrapper.getKdJabatanSuratPejabat());
+
+            suratInstruksiService.createSuratInstruksiPejabat(suratInstruksiPejabat);
+        } else {
+            SuratInstruksiNonPejabat suratInstruksiNonPejabat
+                    = new SuratInstruksiNonPejabat();
+            suratInstruksiNonPejabat.setKdInstruksi(kdSuratInstruksi);
+            suratInstruksiNonPejabat.setSuratInstruksi(suratInstruksi);
+            suratInstruksiNonPejabat.setKdUnitKerja(inputWrapper.getKdUnitKerja());
+            suratInstruksiService.createSuratInstruksiNonPejabat(suratInstruksiNonPejabat);
+        }
+
+
+        return new ResponseEntity<Object>(new CustomMessage("surat instruksi created"), HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/get-surat-instruksi-by-pembuat/{nipPegawai}", method = RequestMethod.GET)
+    ResponseEntity<?> getSuratInstruksiByPembuat(
+            @PathVariable("nipPegawai") String nipPegawai) {
+        LOGGER.info("get surat instruksi by pembuat");
+
+        List<SuratInstruksiWrapper> suratInstruksiWrapperList
+                = new ArrayList<>();
+        List<SuratInstruksi> suratInstruksiList
+                = suratInstruksiService.getSuratInstruksiByNip(nipPegawai);
+
+        LOGGER.info("length is "+suratInstruksiList.size());
+
+        Locale indoLocale = new Locale("id", "ID");
+        boolean isSuratPejabat;
+        for (SuratInstruksi suratInstruksi
+                : suratInstruksiList) {
+            isSuratPejabat = true;
+            if (suratInstruksi.getSuratInstruksiPejabat() == null) {
+                isSuratPejabat = false;
+            }
+            suratInstruksiWrapperList
+                    .add(new SuratInstruksiWrapper(
+                            suratInstruksi.getKdInstruksi(),
+                            suratInstruksi.getJudulInstruksi(),
+                            DateUtilities.createLocalDate(new Date(suratInstruksi.getCreateddateMilis()), "dd MMMM yyyy", indoLocale),
+                            isSuratPejabat));
+        }
+
+        return new ResponseEntity<Object>(suratInstruksiWrapperList, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/get-dokumen-surat-instruksi/{kdSuratInstruksi}", method = RequestMethod.GET)
+    ResponseEntity<?> getDokumenSuratInstruksi(
+            @PathVariable("kdSuratInstruksi") String kdSuratInstruksi) {
+        LOGGER.info("get dokumen surat instruksi");
+
+        EkinerjaXMLParser ekinerjaXMLParser = new EkinerjaXMLParser();
+
+        SuratInstruksi suratInstruksi
+                = suratInstruksiService.getDokumenSuratInstruksi(kdSuratInstruksi);
+        List<CustomPegawaiCredential> qutPegawaiList
+                = qutPegawaiService.getCustomPegawaiCredentials();
+        List<TkdJabatan> tkdJabatanList
+                = tkdJabatanService.getAll();
+
+        List<String> daftarIsiInstruksi
+                = ekinerjaXMLParser.convertXmlSuratPerintahIntoListofString(
+                        suratInstruksi.getIsiInstruksi(), "instruksi");
+        List<String> targetNamaPegawai = new ArrayList<>();
+        List<String> targetJabatan = new ArrayList<>();
+
+        TkdJabatan tkdJabatan = null;
+        CustomPegawaiCredential penandatanganSurat = null;
+
+        DokumenSuratInstruksiWrapper dokumenSuratInstruksiWrapper
+                = new DokumenSuratInstruksiWrapper();
+
+        for (CustomPegawaiCredential customPegawaiCredential
+                : qutPegawaiList) {
+            if (customPegawaiCredential.getNip()
+                    .equals(suratInstruksi.getNipPembuat())) {
+                penandatanganSurat = customPegawaiCredential;
+                break;
+            }
+        }
+
+        for (InstruksiPegawai instruksiPegawai
+                :suratInstruksi.getInstruksiPegawaiSet()) {
+            for (CustomPegawaiCredential pegawai : qutPegawaiList) {
+                if (pegawai.getNip()
+                        .equals(instruksiPegawai.getInstruksiPegawaiId().getNipPegawai())) {
+                    targetNamaPegawai.add(pegawai.getNama());
+                    break;
+                }
+
+            }
+
+        }
+
+        for (InstruksiPejabat instruksiPejabat
+                :suratInstruksi.getInstruksiPejabatSet()) {
+            for (TkdJabatan jabatan : tkdJabatanList) {
+                if (jabatan.getKdJabatan()
+                        .equals(instruksiPejabat.getInstruksiPejabatId().getKdJabatan())) {
+                    targetJabatan.add(jabatan.getJabatan());
+                    break;
+                }
+
+            }
+
+        }
+
+        dokumenSuratInstruksiWrapper.setKdInstruksi(suratInstruksi.getKdInstruksi());
+        dokumenSuratInstruksiWrapper.setJudulInstruksi(suratInstruksi.getJudulInstruksi());
+        dokumenSuratInstruksiWrapper.setNomor(suratInstruksi.getNomor());
+        dokumenSuratInstruksiWrapper.setTahun(suratInstruksi.getTahun());
+        dokumenSuratInstruksiWrapper.setTentang(suratInstruksi.getTentang());
+        dokumenSuratInstruksiWrapper.setKdJabatanPenandatangan(penandatanganSurat.getKdJabatan());
+        dokumenSuratInstruksiWrapper.setJabatanPenandaTangan(penandatanganSurat.getJabatan());
+        dokumenSuratInstruksiWrapper.setNamaPenandatangan(penandatanganSurat.getNama());
+        dokumenSuratInstruksiWrapper.setNipPenandatangan(penandatanganSurat.getNip());
+        dokumenSuratInstruksiWrapper.setAlasan(suratInstruksi.getAlasan());
+        dokumenSuratInstruksiWrapper.setDaftarIsiInstruksi(daftarIsiInstruksi);
+        Locale indoLocale = new Locale("id", "ID");
+        dokumenSuratInstruksiWrapper
+                .setTanggalDibuat(DateUtilities.createLocalDate(new Date(suratInstruksi.getCreateddateMilis()), "dd MMMM yyyy", indoLocale));
+        dokumenSuratInstruksiWrapper.setDikeluarkanDi(suratInstruksi.getDikeluarkanDi());
+        dokumenSuratInstruksiWrapper.setTargetNamaPegawaiList(targetNamaPegawai);
+        dokumenSuratInstruksiWrapper.setTargetJabatanList(targetJabatan);
+
+        if (suratInstruksi.getSuratInstruksiPejabat() != null) {
+            tkdJabatan
+                    = tkdJabatanService.getTkdJabatan(suratInstruksi.getSuratInstruksiPejabat().getKdJabatan());
+            dokumenSuratInstruksiWrapper.setSuratPejabat(true);
+            dokumenSuratInstruksiWrapper.setJabatanSuratPejabat(tkdJabatan.getJabatan());
+            dokumenSuratInstruksiWrapper.setUnitKerja(null);
+        } else {
+            dokumenSuratInstruksiWrapper.setSuratPejabat(false);
+            dokumenSuratInstruksiWrapper.setJabatanSuratPejabat(null);
+            dokumenSuratInstruksiWrapper.setUnitKerja(penandatanganSurat.getUnitKerja());
+        }
+
+
+        return new ResponseEntity<Object>(dokumenSuratInstruksiWrapper, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/get-instruksi-pegawai/{nipPegawai}", method = RequestMethod.GET)
+    ResponseEntity<?> getInstruksiPegawai(
+            @PathVariable("nipPegawai") String nipPegawai) {
+        LOGGER.info("get instruksi pegawai");
+
+        List<SuratInstruksiWrapper> suratInstruksiWrapperList
+                = new ArrayList<>();
+        List<InstruksiPegawai> instruksiPegawaiList
+                = suratInstruksiService.getInstruksiPegawai(nipPegawai);
+
+        Locale indoLocale = new Locale("id", "ID");
+        boolean isSuratPejabat;
+        for (InstruksiPegawai instruksiPegawai
+                : instruksiPegawaiList) {
+            isSuratPejabat = true;
+            if (instruksiPegawai.getSuratInstruksi().getSuratInstruksiPejabat() == null) {
+                isSuratPejabat = false;
+            }
+            suratInstruksiWrapperList
+                    .add(new SuratInstruksiWrapper(
+                            instruksiPegawai.getSuratInstruksi().getKdInstruksi(),
+                            instruksiPegawai.getSuratInstruksi().getJudulInstruksi(),
+                            DateUtilities.createLocalDate(new Date(instruksiPegawai.getSuratInstruksi().getCreateddateMilis()), "dd MMMM yyyy", indoLocale),
+                            isSuratPejabat));
+
+        }
+
+        return new ResponseEntity<Object>(suratInstruksiWrapperList, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/get-instruksi-pejabat/{kdJabatan}", method = RequestMethod.GET)
+    ResponseEntity<?> getInstruksiPejabat(
+            @PathVariable("kdJabatan") String kdJabatan) {
+        LOGGER.info("get instruksi pejabat");
+
+        List<SuratInstruksiWrapper> suratInstruksiWrapperList
+                = new ArrayList<>();
+        List<InstruksiPejabat> instruksiPejabatList
+                = suratInstruksiService.getInstruksiPejabat(kdJabatan);
+
+        Locale indoLocale = new Locale("id", "ID");
+        boolean isSuratPejabat;
+        for (InstruksiPejabat instruksiPejabat
+                : instruksiPejabatList) {
+            isSuratPejabat = true;
+            if (instruksiPejabat.getSuratInstruksi().getSuratInstruksiPejabat() == null) {
+                isSuratPejabat = false;
+            }
+            suratInstruksiWrapperList
+                    .add(new SuratInstruksiWrapper(
+                            instruksiPejabat.getSuratInstruksi().getKdInstruksi(),
+                            instruksiPejabat.getSuratInstruksi().getJudulInstruksi(),
+                            DateUtilities.createLocalDate(new Date(instruksiPejabat.getSuratInstruksi().getCreateddateMilis()), "dd MMMM yyyy", indoLocale),
+                            isSuratPejabat));
+
+        }
+
+        return new ResponseEntity<Object>(suratInstruksiWrapperList, HttpStatus.OK);
+    }
+
+}

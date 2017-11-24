@@ -133,7 +133,7 @@ public class SuratPerintahNonPejabatController {
         Set<SuratPerintahHistoryWrapper> suratPerintahHistoryWrappers
                 = new HashSet<>();
 
-        DateFormat df = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+        DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
         for (SuratPerintahNonPejabat suratPerintahNonPejabat
                 : suratPerintahNonPejabatSet) {
             suratPerintahHistoryWrappers

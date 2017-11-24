@@ -15,6 +15,10 @@ public class LembarDisposisiInputWrapper {
     private Long tglPenyelesaianMilis;
     private String kdLembarDisposisiParent;
     private String noSuratDisposisi;
+    private Long tanggalSuratDisposisiMilis;
+    private String dariSuratDisposisi;
+    private String ringkasanIsiSuratDisposisi;
+    private String lampiran;
     private List<String> daftarTargetLembarDisposisi;
 
     public String getNipPembuat() {
@@ -79,5 +83,37 @@ public class LembarDisposisiInputWrapper {
 
     public void setDaftarTargetLembarDisposisi(List<String> daftarTargetLembarDisposisi) {
         this.daftarTargetLembarDisposisi = daftarTargetLembarDisposisi;
+    }
+
+    public String getDariSuratDisposisi() {
+        return dariSuratDisposisi;
+    }
+
+    public void setDariSuratDisposisi(String dariSuratDisposisi) {
+        this.dariSuratDisposisi = dariSuratDisposisi;
+    }
+
+    public String getRingkasanIsiSuratDisposisi() {
+        return ringkasanIsiSuratDisposisi;
+    }
+
+    public void setRingkasanIsiSuratDisposisi(String ringkasanIsiSuratDisposisi) {
+        this.ringkasanIsiSuratDisposisi = ringkasanIsiSuratDisposisi;
+    }
+
+    public String getLampiran() {
+        return lampiran;
+    }
+
+    public void setLampiran(String lampiran) {
+        this.lampiran = lampiran;
+    }
+
+    public Long getTanggalSuratDisposisiMilis() {
+        return tanggalSuratDisposisiMilis;
+    }
+
+    public void setTanggalSuratDisposisiMilis(Long tanggalSuratDisposisiMilis) {
+        this.tanggalSuratDisposisiMilis = tanggalSuratDisposisiMilis;
     }
 }

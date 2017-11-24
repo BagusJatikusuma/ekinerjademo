@@ -1,7 +1,9 @@
 package com.pemda.ekinerjademo.controller.api;
 
 import com.pemda.ekinerjademo.model.ekinerjamodel.*;
+import com.pemda.ekinerjademo.repository.ekinerjarepository.SuratDisposisiDao;
 import com.pemda.ekinerjademo.service.LembarDisposisiService;
+import com.pemda.ekinerjademo.service.SuratDisposisiService;
 import com.pemda.ekinerjademo.wrapper.input.LembarDisposisiInputWrapper;
 import com.pemda.ekinerjademo.wrapper.output.CustomMessage;
 import org.slf4j.Logger;
@@ -25,6 +27,7 @@ public class LembarDisposisiController {
     public static final Logger LOGGER = LoggerFactory.getLogger(LembarDisposisiController.class);
 
     @Autowired private LembarDisposisiService lembarDisposisiService;
+    @Autowired private SuratDisposisiService suratDisposisiService;
 
     @RequestMapping(value = "/create-lembar-disposisi", method = RequestMethod.POST)
     ResponseEntity<?> createLembarDisposisi(
@@ -32,6 +35,15 @@ public class LembarDisposisiController {
         LOGGER.info("create lembar disposisi");
 
         String kdLembarDisposisi = String.valueOf(new Date().getTime());
+
+        SuratDisposisi suratDisposisi = new SuratDisposisi();
+        suratDisposisi.setNoSurat(inputWrapper.getNoSuratDisposisi());
+        suratDisposisi.setTanggalSuratMilis(inputWrapper.getTanggalSuratDisposisiMilis());
+        suratDisposisi.setDari(inputWrapper.getDariSuratDisposisi());
+        suratDisposisi.setRingkasanIsi(inputWrapper.getRingkasanIsiSuratDisposisi());
+        suratDisposisi.setLampiran(inputWrapper.getLampiran());
+
+        suratDisposisiService.create(suratDisposisi);
 
         LembarDisposisi lembarDisposisi = new LembarDisposisi();
         lembarDisposisi.setKdLembarDisposisi(kdLembarDisposisi);
