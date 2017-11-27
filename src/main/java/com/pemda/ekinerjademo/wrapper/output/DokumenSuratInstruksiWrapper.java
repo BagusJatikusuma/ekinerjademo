@@ -19,7 +19,7 @@ public class DokumenSuratInstruksiWrapper {
     private String tanggalDibuat;
     private String nipPenandatangan;
     private String namaPenandatangan;
-    private List<String> targetNamaPegawaiList;
+    private List<QutPegawaiWrapper> targetPegawaiList;
     private List<String> targetJabatanList;
     private boolean suratPejabat;
     private String jabatanSuratPejabat;
@@ -27,7 +27,6 @@ public class DokumenSuratInstruksiWrapper {
 
     public DokumenSuratInstruksiWrapper() {
     }
-
     public DokumenSuratInstruksiWrapper(
             String kdInstruksi,
             String judulInstruksi,
@@ -42,7 +41,7 @@ public class DokumenSuratInstruksiWrapper {
             String tanggalDibuat,
             String nipPenandatangan,
             String namaPenandatangan,
-            List<String> targetNamaPegawaiList,
+            List<QutPegawaiWrapper> targetPegawaiList,
             List<String> targetJabatanList,
             boolean suratPejabat,
             String jabatanSuratPejabat,
@@ -60,7 +59,7 @@ public class DokumenSuratInstruksiWrapper {
         this.tanggalDibuat = tanggalDibuat;
         this.nipPenandatangan = nipPenandatangan;
         this.namaPenandatangan = namaPenandatangan;
-        this.targetNamaPegawaiList = targetNamaPegawaiList;
+        this.targetPegawaiList = targetPegawaiList;
         this.targetJabatanList = targetJabatanList;
         this.suratPejabat = suratPejabat;
         this.jabatanSuratPejabat = jabatanSuratPejabat;
@@ -163,14 +162,6 @@ public class DokumenSuratInstruksiWrapper {
         this.nipPenandatangan = nipPenandatangan;
     }
 
-    public List<String> getTargetNamaPegawaiList() {
-        return targetNamaPegawaiList;
-    }
-
-    public void setTargetNamaPegawaiList(List<String> targetNamaPegawaiList) {
-        this.targetNamaPegawaiList = targetNamaPegawaiList;
-    }
-
     public List<String> getTargetJabatanList() {
         return targetJabatanList;
     }
@@ -209,5 +200,13 @@ public class DokumenSuratInstruksiWrapper {
 
     public void setNamaPenandatangan(String namaPenandatangan) {
         this.namaPenandatangan = namaPenandatangan;
+    }
+
+    public List<QutPegawaiWrapper> getTargetPegawaiList() {
+        return targetPegawaiList;
+    }
+
+    public void setTargetPegawaiList(List<QutPegawaiWrapper> targetPegawaiList) {
+        this.targetPegawaiList = targetPegawaiList;
     }
 }

@@ -12,6 +12,7 @@ import com.pemda.ekinerjademo.util.EkinerjaXMLParser;
 import com.pemda.ekinerjademo.wrapper.input.SuratInstruksiInputWrapper;
 import com.pemda.ekinerjademo.wrapper.output.CustomMessage;
 import com.pemda.ekinerjademo.wrapper.output.DokumenSuratInstruksiWrapper;
+import com.pemda.ekinerjademo.wrapper.output.QutPegawaiWrapper;
 import com.pemda.ekinerjademo.wrapper.output.SuratInstruksiWrapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -156,7 +157,8 @@ public class SuratInstruksiController {
         List<String> daftarIsiInstruksi
                 = ekinerjaXMLParser.convertXmlSuratPerintahIntoListofString(
                         suratInstruksi.getIsiInstruksi(), "instruksi");
-        List<String> targetNamaPegawai = new ArrayList<>();
+//        List<String> targetNamaPegawai = new ArrayList<>();
+        List<QutPegawaiWrapper> targetPegawai = new ArrayList<>();
         List<String> targetJabatan = new ArrayList<>();
 
         TkdJabatan tkdJabatan = null;
@@ -179,7 +181,16 @@ public class SuratInstruksiController {
             for (CustomPegawaiCredential pegawai : qutPegawaiList) {
                 if (pegawai.getNip()
                         .equals(instruksiPegawai.getInstruksiPegawaiId().getNipPegawai())) {
-                    targetNamaPegawai.add(pegawai.getNama());
+//                    targetNamaPegawai.add(pegawai.getNama());
+                    targetPegawai
+                            .add(new QutPegawaiWrapper(
+                                    pegawai.getNip(),
+                                    pegawai.getNama(), pegawai.getKdJabatan(),
+                                    pegawai.getJabatan(),
+                                    pegawai.getKdUnitKerja(),
+                                    pegawai.getUnitKerja(),
+                                    pegawai.getPangkat(),
+                                    pegawai.getGol()));
                     break;
                 }
 
@@ -215,7 +226,7 @@ public class SuratInstruksiController {
         dokumenSuratInstruksiWrapper
                 .setTanggalDibuat(DateUtilities.createLocalDate(new Date(suratInstruksi.getCreateddateMilis()), "dd MMMM yyyy", indoLocale));
         dokumenSuratInstruksiWrapper.setDikeluarkanDi(suratInstruksi.getDikeluarkanDi());
-        dokumenSuratInstruksiWrapper.setTargetNamaPegawaiList(targetNamaPegawai);
+        dokumenSuratInstruksiWrapper.setTargetPegawaiList(targetPegawai);
         dokumenSuratInstruksiWrapper.setTargetJabatanList(targetJabatan);
 
         if (suratInstruksi.getSuratInstruksiPejabat() != null) {
