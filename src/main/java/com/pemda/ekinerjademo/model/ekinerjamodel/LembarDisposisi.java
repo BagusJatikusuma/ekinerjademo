@@ -126,4 +126,11 @@ public class LembarDisposisi {
         this.noSuratDisposisi = noSuratDisposisi;
     }
 
+    public Set<TargetLembarDisposisi> getTargetLembarDisposisiSet() {
+        return targetLembarDisposisiSet;
+    }
+
+    public void setTargetLembarDisposisiSet(Set<TargetLembarDisposisi> targetLembarDisposisiSet) {
+        this.targetLembarDisposisiSet = targetLembarDisposisiSet;
+    }
 }

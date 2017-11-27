@@ -14,4 +14,9 @@ import java.util.List;
 public interface LembarDisposisiDao extends JpaRepository<LembarDisposisi, String> {
     @Query("select l from LembarDisposisi l where l.path LIKE concat(?1,'%') ")
     List<LembarDisposisi> findLembarDisposisiTree(String parentPath);
+    List<LembarDisposisi> findByNipPembuat(String nipPembuat);
+    @Query("select l from LembarDisposisi l " +
+            "left join fetch l.targetLembarDisposisiSet " +
+            "where l.kdLembarDisposisi = ?1")
+    LembarDisposisi findDokumenLembarDisposisi(String kdLembarDisposisi);
 }

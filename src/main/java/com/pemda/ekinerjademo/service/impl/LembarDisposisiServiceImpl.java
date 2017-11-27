@@ -46,7 +46,7 @@ public class LembarDisposisiServiceImpl implements LembarDisposisiService {
 
     @Override
     public List<LembarDisposisi> findByNipPegawai(String nipPegawai) {
-        return null;
+        return lembarDisposisiDao.findByNipPembuat(nipPegawai);
     }
 
     @Override
@@ -54,6 +54,16 @@ public class LembarDisposisiServiceImpl implements LembarDisposisiService {
         LembarDisposisi lembarDisposisi = lembarDisposisiDao.findOne(kdLembarDisposisi);
 
         return lembarDisposisiDao.findLembarDisposisiTree(lembarDisposisi.getPath());
+    }
+
+    @Override
+    public List<TargetLembarDisposisi> findByTargetDisposisi(String nipTarget) {
+        return targetLembarDisposisiDao.findByTargetLembarDisposisiId_NipPegawai(nipTarget);
+    }
+
+    @Override
+    public LembarDisposisi getDokumenLembarDisposisi(String kdLembarDisposisi) {
+        return lembarDisposisiDao.findDokumenLembarDisposisi(kdLembarDisposisi);
     }
 
 

@@ -16,4 +16,6 @@ public interface LembarDisposisiService {
     List<LembarDisposisi> findByUnitKerja(String kdUnitKerja);
     List<LembarDisposisi> findByNipPegawai(String nipPegawai);
     List<LembarDisposisi> findTree(String kdLembarDisposisi);
+    List<TargetLembarDisposisi> findByTargetDisposisi(String nipTarget);
+    LembarDisposisi getDokumenLembarDisposisi(String kdLembarDisposisi);
 }

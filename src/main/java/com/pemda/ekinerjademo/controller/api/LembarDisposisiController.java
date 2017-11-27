@@ -1,11 +1,17 @@
 package com.pemda.ekinerjademo.controller.api;
 
 import com.pemda.ekinerjademo.model.ekinerjamodel.*;
+import com.pemda.ekinerjademo.projection.ekinerjaprojection.CustomPegawaiCredential;
 import com.pemda.ekinerjademo.repository.ekinerjarepository.SuratDisposisiDao;
 import com.pemda.ekinerjademo.service.LembarDisposisiService;
+import com.pemda.ekinerjademo.service.QutPegawaiService;
 import com.pemda.ekinerjademo.service.SuratDisposisiService;
+import com.pemda.ekinerjademo.util.DateUtilities;
 import com.pemda.ekinerjademo.wrapper.input.LembarDisposisiInputWrapper;
 import com.pemda.ekinerjademo.wrapper.output.CustomMessage;
+import com.pemda.ekinerjademo.wrapper.output.DokumenLembarDisposisiWrapper;
+import com.pemda.ekinerjademo.wrapper.output.LembarDisposisiWrapper;
+import com.pemda.ekinerjademo.wrapper.output.QutPegawaiWrapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +22,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by bagus on 19/11/17.
@@ -28,6 +35,7 @@ public class LembarDisposisiController {
 
     @Autowired private LembarDisposisiService lembarDisposisiService;
     @Autowired private SuratDisposisiService suratDisposisiService;
+    @Autowired private QutPegawaiService qutPegawaiService;
 
     @RequestMapping(value = "/create-lembar-disposisi", method = RequestMethod.POST)
     ResponseEntity<?> createLembarDisposisi(
@@ -83,9 +91,57 @@ public class LembarDisposisiController {
         return new ResponseEntity<Object>(new CustomMessage("lembar disposisi created"), HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/get-lembar-disposisi", method = RequestMethod.GET)
-    ResponseEntity<?> getLembarDisposisi() {
-        return null;
+    @RequestMapping(value = "/get-lembar-disposisi-by-pembuat/{nipPembuat}", method = RequestMethod.GET)
+    ResponseEntity<?> getLembarDisposisi(@PathVariable("nipPembuat") String nipPembuat) {
+        LOGGER.info("get lembar disposisi by pembuat");
+
+        List<LembarDisposisi> lembarDisposisiList
+                = lembarDisposisiService.findByNipPegawai(nipPembuat);
+        List<LembarDisposisiWrapper> lembarDisposisiWrappers
+                = new ArrayList<>();
+
+        Locale indoLocale = new Locale("id", "ID");
+        for (LembarDisposisi lembarDisposisi
+                : lembarDisposisiList) {
+//            LOGGER.info(lembarDisposisi.getPath());
+            lembarDisposisiWrappers
+                    .add(new LembarDisposisiWrapper(
+                            lembarDisposisi.getKdLembarDisposisi(),
+                            lembarDisposisi.getPath(),
+                            DateUtilities.createLocalDate(new Date(lembarDisposisi.getTanggalPenerimaanMilis()), "dd MMMM yyyy", indoLocale),
+                            lembarDisposisi.getTktKeamanan(),
+                            DateUtilities.createLocalDate(new Date(lembarDisposisi.getTglPenyelesaianMilis()), "dd MMMM yyyy", indoLocale)
+                    ));
+        }
+
+        return new ResponseEntity<Object>(lembarDisposisiWrappers, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/get-lembar-disposisi-target/{nipTarget}", method = RequestMethod.GET)
+    ResponseEntity<?> getLembarDisposisiTarget(@PathVariable("nipTarget") String nipTarget) {
+        LOGGER.info("get lembar disposisi target");
+
+        List<TargetLembarDisposisi> targetLembarDisposisiList
+                = lembarDisposisiService.findByTargetDisposisi(nipTarget);
+
+        List<LembarDisposisiWrapper> lembarDisposisiWrappers
+                = new ArrayList<>();
+
+        Locale indoLocale = new Locale("id", "ID");
+        for (TargetLembarDisposisi targetLembarDisposisi
+                : targetLembarDisposisiList) {
+//            LOGGER.info(lembarDisposisi.getPath());
+            lembarDisposisiWrappers
+                    .add(new LembarDisposisiWrapper(
+                            targetLembarDisposisi.getLembarDisposisi().getKdLembarDisposisi(),
+                            targetLembarDisposisi.getLembarDisposisi().getPath(),
+                            DateUtilities.createLocalDate(new Date(targetLembarDisposisi.getLembarDisposisi().getTanggalPenerimaanMilis()), "dd MMMM yyyy", indoLocale),
+                            targetLembarDisposisi.getLembarDisposisi().getTktKeamanan(),
+                            DateUtilities.createLocalDate(new Date(targetLembarDisposisi.getLembarDisposisi().getTglPenyelesaianMilis()), "dd MMMM yyyy", indoLocale)
+                    ));
+        }
+
+        return new ResponseEntity<Object>(lembarDisposisiWrappers, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/get-lembar-disposisi-tree/{kdLembarDisposisi}", method = RequestMethod.GET)
@@ -95,13 +151,76 @@ public class LembarDisposisiController {
 
         List<LembarDisposisi> lembarDisposisiList
                 = lembarDisposisiService.findTree(kdLembarDisposisi);
+        List<LembarDisposisiWrapper> lembarDisposisiWrappers
+                = new ArrayList<>();
+
+        Locale indoLocale = new Locale("id", "ID");
 
         for (LembarDisposisi lembarDisposisi
                 : lembarDisposisiList) {
-            LOGGER.info(lembarDisposisi.getPath());
+//            LOGGER.info(lembarDisposisi.getPath());
+            lembarDisposisiWrappers
+                    .add(new LembarDisposisiWrapper(
+                            lembarDisposisi.getKdLembarDisposisi(),
+                            lembarDisposisi.getPath(),
+                            DateUtilities.createLocalDate(new Date(lembarDisposisi.getTanggalPenerimaanMilis()), "dd MMMM yyyy", indoLocale),
+                            lembarDisposisi.getTktKeamanan(),
+                            DateUtilities.createLocalDate(new Date(lembarDisposisi.getTglPenyelesaianMilis()), "dd MMMM yyyy", indoLocale)
+                            ));
         }
 
-        return null;
+        return new ResponseEntity<Object>(lembarDisposisiWrappers, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/get-dokumen-lembar-disposisi/{kdLembarDisposisi}", method = RequestMethod.GET)
+    ResponseEntity<?> getDokumenLembarDisposisi(@PathVariable("kdLembarDisposisi") String kdLembarDisposisi) {
+        LOGGER.info("get dokumen lembar disposisi ");
+
+        LembarDisposisi lembarDisposisi
+                = lembarDisposisiService.findByKdLembarDisposisi(kdLembarDisposisi);
+        List<CustomPegawaiCredential> qutPegawaiList
+                = qutPegawaiService.getCustomPegawaiCredentials();
+        List<QutPegawaiWrapper> targetPegawai = new ArrayList<>();
+
+        for (TargetLembarDisposisi targetLembarDisposisi
+                : lembarDisposisi.getTargetLembarDisposisiSet()) {
+            for (CustomPegawaiCredential pegawai : qutPegawaiList) {
+                if (pegawai.getNip()
+                        .equals(targetLembarDisposisi.getTargetLembarDisposisiId().getNipPegawai())) {
+                    targetPegawai
+                            .add(new QutPegawaiWrapper(
+                                    pegawai.getNip(),
+                                    pegawai.getNama(), pegawai.getKdJabatan(),
+                                    pegawai.getJabatan(),
+                                    pegawai.getKdUnitKerja(),
+                                    pegawai.getUnitKerja(),
+                                    pegawai.getPangkat(),
+                                    pegawai.getGol()));
+                    break;
+                }
+
+            }
+
+        }
+
+
+        Locale indoLocale = new Locale("id", "ID");
+        DokumenLembarDisposisiWrapper dokumenLembarDisposisiWrapper
+                = new DokumenLembarDisposisiWrapper(
+                        lembarDisposisi.getKdLembarDisposisi(),
+                lembarDisposisi.getPath(),
+                DateUtilities.createLocalDate(new Date(lembarDisposisi.getTanggalPenerimaanMilis()), "dd MMMM yyyy", indoLocale),
+                lembarDisposisi.getTktKeamanan(),
+                DateUtilities.createLocalDate(new Date(lembarDisposisi.getTglPenyelesaianMilis()), "dd MMMM yyyy", indoLocale),
+                lembarDisposisi.getNoSuratDisposisi().getNoSurat(),
+                DateUtilities.createLocalDate(new Date(lembarDisposisi.getNoSuratDisposisi().getTanggalSuratMilis()), "dd MMMM yyyy", indoLocale),
+                lembarDisposisi.getNoSuratDisposisi().getDari(),
+                lembarDisposisi.getNoSuratDisposisi().getRingkasanIsi(),
+                lembarDisposisi.getNoSuratDisposisi().getLampiran(),
+                targetPegawai
+                );
+
+        return new ResponseEntity<Object>(dokumenLembarDisposisiWrapper, HttpStatus.OK);
     }
 
 }
