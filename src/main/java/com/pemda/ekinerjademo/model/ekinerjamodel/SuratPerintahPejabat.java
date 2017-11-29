@@ -6,8 +6,8 @@ import javax.persistence.*;
  * Created by bagus on 28/11/17.
  */
 @Entity
-@Table(name = "surat_perintah_non_pejabat")
-public class SuratPerintahNonPejabat {
+@Table(name = "surat_perintah_pejabat")
+public class SuratPerintahPejabat {
     @Id
     @Column(name = "kd_surat_perintah")
     private String kdSuratPerintah;
@@ -16,8 +16,8 @@ public class SuratPerintahNonPejabat {
     @PrimaryKeyJoinColumn(name = "kd_surat_perintah", referencedColumnName = "kd_surat_perintah")
     private SuratPerintah suratPerintah;
 
-    @Column(name = "kd_unit_kerja")
-    private String kdUnitKerja;
+    @Column(name = "kd_jabatan")
+    private String kdJabatan;
 
     public String getKdSuratPerintah() {
         return kdSuratPerintah;
@@ -35,11 +35,11 @@ public class SuratPerintahNonPejabat {
         this.suratPerintah = suratPerintah;
     }
 
-    public String getKdUnitKerja() {
-        return kdUnitKerja;
+    public String getKdJabatan() {
+        return kdJabatan;
     }
 
-    public void setKdUnitKerja(String kdUnitKerja) {
-        this.kdUnitKerja = kdUnitKerja;
+    public void setKdJabatan(String kdJabatan) {
+        this.kdJabatan = kdJabatan;
     }
 }

@@ -4,7 +4,6 @@ import com.pemda.ekinerjademo.model.bismamodel.TkdJabatan;
 import com.pemda.ekinerjademo.projection.ekinerjaprojection.CustomPegawaiCredential;
 
 import java.util.List;
-import java.util.Set;
 
 /**
  * Created by bagus on 15/11/17.
@@ -12,13 +11,9 @@ import java.util.Set;
 public class SuratPerintahNonPejabatDokumenWrapper {
     private String kdSuratPerintah;
 
-    private String nipPembuat;
+    private String nipPenandatangan;
 
-    private String nmPembuat;
-
-    private String kdUnitKerjaPembuat;
-
-    private String unitKerjaPembuat;
+    private String nmPenandatangan;
 
     private String nomorSurat;
 
@@ -32,47 +27,67 @@ public class SuratPerintahNonPejabatDokumenWrapper {
 
     private String tanggalDibuat;
 
-    private String nmJabatanPembuat;
+    private String nmJabatanPenandatangan;
 
     private String ttdPath;
 
-    private List<CustomPegawaiCredential> daftarTarget;
+    private List<CustomPegawaiCredential> daftarTargetPegawai;
+
+    private List<TkdJabatan> daftarTargetPejabat;
 
     private List<TkdJabatan> daftarTembusan;
+
+    private boolean isSuratPejabat;
+
+    private String kdUnitKerjaPenandatangan;
+
+    private String unitKerjaPenandatangan;
+
+    private String kdJabatanPenandatangan;
+
+    private String jabatanPenandatangan;
 
     public SuratPerintahNonPejabatDokumenWrapper() {
     }
     public SuratPerintahNonPejabatDokumenWrapper(
             String kdSuratPerintah,
-            String nipPembuat,
-            String nmPembuat,
-            String kdUnitKerjaPembuat,
-            String unitKerjaPembuat,
+            String nipPenandatangan,
+            String nmPenandatangan,
             String nomorSurat,
             List<String> menimbangList,
             List<String> dasarList,
             List<String> untukList,
             String tempat,
             String tanggalDibuat,
-            String nmJabatanPembuat,
+            String nmJabatanPenandatangan,
             String ttdPath,
-            List<CustomPegawaiCredential> daftarTarget,
-            List<TkdJabatan> daftarTembusan) {
+            List<CustomPegawaiCredential> daftarTargetPegawai,
+            List<TkdJabatan> daftarTargetPejabat,
+            List<TkdJabatan> daftarTembusan,
+            boolean isSuratPejabat,
+            String kdUnitKerjaPenandatangan,
+            String unitKerjaPenandatangan,
+            String kdJabatanPenandatangan,
+            String jabatanPenandatangan) {
         this.kdSuratPerintah = kdSuratPerintah;
-        this.nipPembuat = nipPembuat;
-        this.nmPembuat = nmPembuat;
-        this.kdUnitKerjaPembuat = kdUnitKerjaPembuat;
-        this.unitKerjaPembuat = unitKerjaPembuat;
+        this.nipPenandatangan = nipPenandatangan;
+        this.nmPenandatangan = nmPenandatangan;
         this.nomorSurat = nomorSurat;
         this.menimbangList = menimbangList;
         this.dasarList = dasarList;
         this.untukList = untukList;
         this.tempat = tempat;
         this.tanggalDibuat = tanggalDibuat;
-        this.nmJabatanPembuat = nmJabatanPembuat;
+        this.nmJabatanPenandatangan = nmJabatanPenandatangan;
         this.ttdPath = ttdPath;
-        this.daftarTarget = daftarTarget;
+        this.daftarTargetPegawai = daftarTargetPegawai;
+        this.daftarTargetPejabat = daftarTargetPejabat;
         this.daftarTembusan = daftarTembusan;
+        this.isSuratPejabat = isSuratPejabat;
+        this.kdUnitKerjaPenandatangan = kdUnitKerjaPenandatangan;
+        this.unitKerjaPenandatangan = unitKerjaPenandatangan;
+        this.kdJabatanPenandatangan = kdJabatanPenandatangan;
+        this.jabatanPenandatangan = jabatanPenandatangan;
     }
 
     public String getKdSuratPerintah() {
@@ -83,36 +98,36 @@ public class SuratPerintahNonPejabatDokumenWrapper {
         this.kdSuratPerintah = kdSuratPerintah;
     }
 
-    public String getNipPembuat() {
-        return nipPembuat;
+    public String getNipPenandatangan() {
+        return nipPenandatangan;
     }
 
-    public void setNipPembuat(String nipPembuat) {
-        this.nipPembuat = nipPembuat;
+    public void setNipPenandatangan(String nipPenandatangan) {
+        this.nipPenandatangan = nipPenandatangan;
     }
 
-    public String getNmPembuat() {
-        return nmPembuat;
+    public String getNmPenandatangan() {
+        return nmPenandatangan;
     }
 
-    public void setNmPembuat(String nmPembuat) {
-        this.nmPembuat = nmPembuat;
+    public void setNmPenandatangan(String nmPenandatangan) {
+        this.nmPenandatangan = nmPenandatangan;
     }
 
-    public String getKdUnitKerjaPembuat() {
-        return kdUnitKerjaPembuat;
+    public String getKdUnitKerjaPenandatangan() {
+        return kdUnitKerjaPenandatangan;
     }
 
-    public void setKdUnitKerjaPembuat(String kdUnitKerjaPembuat) {
-        this.kdUnitKerjaPembuat = kdUnitKerjaPembuat;
+    public void setKdUnitKerjaPenandatangan(String kdUnitKerjaPenandatangan) {
+        this.kdUnitKerjaPenandatangan = kdUnitKerjaPenandatangan;
     }
 
-    public String getUnitKerjaPembuat() {
-        return unitKerjaPembuat;
+    public String getUnitKerjaPenandatangan() {
+        return unitKerjaPenandatangan;
     }
 
-    public void setUnitKerjaPembuat(String unitKerjaPembuat) {
-        this.unitKerjaPembuat = unitKerjaPembuat;
+    public void setUnitKerjaPenandatangan(String unitKerjaPenandatangan) {
+        this.unitKerjaPenandatangan = unitKerjaPenandatangan;
     }
 
     public String getNomorSurat() {
@@ -163,12 +178,12 @@ public class SuratPerintahNonPejabatDokumenWrapper {
         this.tanggalDibuat = tanggalDibuat;
     }
 
-    public String getNmJabatanPembuat() {
-        return nmJabatanPembuat;
+    public String getNmJabatanPenandatangan() {
+        return nmJabatanPenandatangan;
     }
 
-    public void setNmJabatanPembuat(String nmJabatanPembuat) {
-        this.nmJabatanPembuat = nmJabatanPembuat;
+    public void setNmJabatanPenandatangan(String nmJabatanPenandatangan) {
+        this.nmJabatanPenandatangan = nmJabatanPenandatangan;
     }
 
     public String getTtdPath() {
@@ -179,12 +194,12 @@ public class SuratPerintahNonPejabatDokumenWrapper {
         this.ttdPath = ttdPath;
     }
 
-    public List<CustomPegawaiCredential> getDaftarTarget() {
-        return daftarTarget;
+    public List<CustomPegawaiCredential> getDaftarTargetPegawai() {
+        return daftarTargetPegawai;
     }
 
-    public void setDaftarTarget(List<CustomPegawaiCredential> daftarTarget) {
-        this.daftarTarget = daftarTarget;
+    public void setDaftarTargetPegawai(List<CustomPegawaiCredential> daftarTargetPegawai) {
+        this.daftarTargetPegawai = daftarTargetPegawai;
     }
 
     public List<TkdJabatan> getDaftarTembusan() {
@@ -193,5 +208,37 @@ public class SuratPerintahNonPejabatDokumenWrapper {
 
     public void setDaftarTembusan(List<TkdJabatan> daftarTembusan) {
         this.daftarTembusan = daftarTembusan;
+    }
+
+    public List<TkdJabatan> getDaftarTargetPejabat() {
+        return daftarTargetPejabat;
+    }
+
+    public void setDaftarTargetPejabat(List<TkdJabatan> daftarTargetPejabat) {
+        this.daftarTargetPejabat = daftarTargetPejabat;
+    }
+
+    public String getKdJabatanPenandatangan() {
+        return kdJabatanPenandatangan;
+    }
+
+    public void setKdJabatanPenandatangan(String kdJabatanPenandatangan) {
+        this.kdJabatanPenandatangan = kdJabatanPenandatangan;
+    }
+
+    public String getJabatanPenandatangan() {
+        return jabatanPenandatangan;
+    }
+
+    public void setJabatanPenandatangan(String jabatanPenandatangan) {
+        this.jabatanPenandatangan = jabatanPenandatangan;
+    }
+
+    public boolean isSuratPejabat() {
+        return isSuratPejabat;
+    }
+
+    public void setSuratPejabat(boolean suratPejabat) {
+        isSuratPejabat = suratPejabat;
     }
 }

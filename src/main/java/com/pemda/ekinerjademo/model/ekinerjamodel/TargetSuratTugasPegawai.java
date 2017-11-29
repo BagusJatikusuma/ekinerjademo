@@ -18,7 +18,7 @@ public class TargetSuratTugasPegawai {
             insertable = false,
             updatable = false,
             referencedColumnName = "kd_surat_tugas")
-    private SuratInstruksi suratInstruksi;
+    private SuratTugas suratTugas;
 
     public TargetSuratTugasPegawaiId getTargetSuratTugasPegawaiId() {
         return targetSuratTugasPegawaiId;
@@ -36,11 +36,11 @@ public class TargetSuratTugasPegawai {
         this.approveStatus = approveStatus;
     }
 
-    public SuratInstruksi getSuratInstruksi() {
-        return suratInstruksi;
+    public SuratTugas getSuratTugas() {
+        return suratTugas;
     }
 
-    public void setSuratInstruksi(SuratInstruksi suratInstruksi) {
-        this.suratInstruksi = suratInstruksi;
+    public void setSuratTugas(SuratTugas suratTugas) {
+        this.suratTugas = suratTugas;
     }
 }

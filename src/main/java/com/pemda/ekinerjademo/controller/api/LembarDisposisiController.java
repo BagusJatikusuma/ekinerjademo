@@ -70,6 +70,7 @@ public class LembarDisposisiController {
         lembarDisposisi.setTktKeamanan(inputWrapper.getTktKeamanan());
         lembarDisposisi.setTglPenyelesaianMilis(inputWrapper.getTglPenyelesaianMilis());
         lembarDisposisi.setNoSuratDisposisi(new SuratDisposisi(inputWrapper.getNoSuratDisposisi()));
+        lembarDisposisi.setIsiDisposisi(inputWrapper.getIsiDisposisi());
 
         if (inputWrapper.getKdLembarDisposisiParent() == null) {
             lembarDisposisi.setKdLembarDisposisiParent(null);
@@ -213,6 +214,7 @@ public class LembarDisposisiController {
                 lembarDisposisi.getTktKeamanan(),
                 DateUtilities.createLocalDate(new Date(lembarDisposisi.getTglPenyelesaianMilis()), "dd MMMM yyyy", indoLocale),
                 lembarDisposisi.getNoSuratDisposisi().getNoSurat(),
+                lembarDisposisi.getIsiDisposisi(),
                 DateUtilities.createLocalDate(new Date(lembarDisposisi.getNoSuratDisposisi().getTanggalSuratMilis()), "dd MMMM yyyy", indoLocale),
                 lembarDisposisi.getNoSuratDisposisi().getDari(),
                 lembarDisposisi.getNoSuratDisposisi().getRingkasanIsi(),

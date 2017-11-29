@@ -20,6 +20,7 @@ public class LembarDisposisiInputWrapper {
     private String ringkasanIsiSuratDisposisi;
     private String lampiran;
     private List<String> daftarTargetLembarDisposisi;
+    private String isiDisposisi;
 
     public String getNipPembuat() {
         return nipPembuat;
@@ -115,5 +116,13 @@ public class LembarDisposisiInputWrapper {
 
     public void setTanggalSuratDisposisiMilis(Long tanggalSuratDisposisiMilis) {
         this.tanggalSuratDisposisiMilis = tanggalSuratDisposisiMilis;
+    }
+
+    public String getIsiDisposisi() {
+        return isiDisposisi;
+    }
+
+    public void setIsiDisposisi(String isiDisposisi) {
+        this.isiDisposisi = isiDisposisi;
     }
 }

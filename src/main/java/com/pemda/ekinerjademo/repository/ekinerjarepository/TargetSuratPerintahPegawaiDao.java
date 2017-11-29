@@ -9,15 +9,15 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 /**
- * Created by bagus on 14/11/17.
+ * Created by bagus on 28/11/17.
  */
 @Repository
-public interface TargetSuratPerintahNonPejabatDao
+public interface TargetSuratPerintahPegawaiDao
         extends JpaRepository<TargetSuratPerintahPegawai, TargetSuratPerintahPegawaiId> {
-//    @Query("select t from TargetSuratPerintahPegawai t " +
-//            "left join fetch t.suratPerintahNonPejabat " +
-//            "where t.targetSuratPerintahNonPejabatId.nipPegawai = ?1")
-//    List<TargetSuratPerintahPegawai> findByTargetSuratPerintahNonPejabatId_NipPegawai(String nipPegawai);
-//
-//    List<TargetSuratPerintahPegawai> findByTargetSuratPerintahNonPejabatId_KdSuratPerintah(String kdSuratPerintah);
+    @Query("select t from TargetSuratPerintahPegawai t " +
+            "left join fetch t.suratPerintah " +
+            "where t.targetSuratPerintahPegawaiId.nipPegawai = ?1")
+    List<TargetSuratPerintahPegawai> findByTargetSuratPerintahPegawaiId_NipPegawai(String nipPegawai);
+
+    List<TargetSuratPerintahPegawai> findByTargetSuratPerintahPegawaiId_KdSuratPerintah(String kdSuratperintah);
 }

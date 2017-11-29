@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 /**
  * Created by bagus on 25/10/17.
  */
@@ -41,6 +43,12 @@ public class PejabatPenilaiDinilaiServiceImpl implements PejabatPenilaiDinilaiSe
     public PejabatPenilaiDinilai findByKdJabatanDinilai(String kdJabatanDinilai) {
         return pejabatPenilaiDinilaiDao
                 .findByPejabatPenilaiDinilaiId_KdJabatanDinilai(kdJabatanDinilai);
+    }
+
+    @Override
+    public List<PejabatPenilaiDinilai> findPegawaiDinilai(String nipPenilai) {
+        return pejabatPenilaiDinilaiDao
+                .findByPejabatPenilaiDinilaiId_NipPenilai(nipPenilai);
     }
 
     @Override

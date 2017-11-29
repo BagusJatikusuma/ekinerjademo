@@ -1,5 +1,9 @@
 package com.pemda.ekinerjademo.controller.api;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectWriter;
+import com.fasterxml.jackson.module.afterburner.AfterburnerModule;
 import com.pemda.ekinerjademo.model.bismamodel.QutPegawai;
 import com.pemda.ekinerjademo.model.bismamodel.TkdJabatan;
 import com.pemda.ekinerjademo.model.ekinerjamodel.*;
@@ -17,6 +21,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
@@ -223,6 +228,59 @@ public class AkunPegawaiController {
         return new ResponseEntity<Object>(qutPegawaiWrappers, HttpStatus.OK);
     }
 
+    @RequestMapping(
+            value = "/get-pegawai-custom",
+            method = RequestMethod.GET,
+            produces = {MediaType.APPLICATION_JSON_VALUE })
+    ResponseEntity<?> getPegawaiCustom() {
+        LOGGER.info("get akun pegawai with role");
+
+        List<QutPegawaiWrapper> qutPegawaiWrappers
+                = new ArrayList<>();
+        List<CustomPegawaiCredential> qutPegawaiList
+                = qutPegawaiService.getCustomPegawaiCredentials();
+        List<AkunPegawai> akunPegawaiList
+                = akunPegawaiService.getAkunPegawaiList();
+
+        LOGGER.info("finish get pegawai from database kepegawaian");
+        for (CustomPegawaiCredential qutPegawai : qutPegawaiList) {
+            for (AkunPegawai akunPegawai : akunPegawaiList) {
+                if (qutPegawai.getNip()
+                        .equals(akunPegawai.getNipPegawai())) {
+                    qutPegawaiWrappers
+                            .add(new QutPegawaiWrapper(
+                                    qutPegawai.getNip(),
+                                    qutPegawai.getNama(),
+                                    qutPegawai.getKdJabatan(),
+                                    qutPegawai.getJabatan(),
+                                    qutPegawai.getKdUnitKerja(),
+                                    qutPegawai.getUnitKerja(),
+                                    qutPegawai.getPangkat(),
+                                    qutPegawai.getGol(),
+                                    akunPegawai.getRole().getRole()));
+                    break;
+                }
+
+            }
+
+        }
+
+        LOGGER.info("finish");
+
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.registerModule(new AfterburnerModule());
+        ObjectWriter ow = mapper.writer().withDefaultPrettyPrinter();
+
+        String json = "";
+        try {
+            json = ow.writeValueAsString(qutPegawaiWrappers);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+
+        return new ResponseEntity<Object>(json, HttpStatus.OK);
+    }
+
     @RequestMapping(value = "/get-pegawai/{kdUnitKerja}", method = RequestMethod.GET)
     @Transactional
     ResponseEntity<?> getPegawaiByUnitKerja(@PathVariable("kdUnitKerja") String kdUnitKerja) {
@@ -251,6 +309,43 @@ public class AkunPegawaiController {
         LOGGER.info("finish");
 
         return new ResponseEntity<Object>(qutPegawaiWrappers, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/get-pegawai-dinilai/{nipPenilai}/{kdUnitKerja}", method = RequestMethod.GET)
+    ResponseEntity<?> getPegawaiDinilai(
+            @PathVariable("nipPenilai") String nipPenilai,
+            @PathVariable("kdUnitKerja") String kdUnitKerja) {
+        LOGGER.info("get pegawai dinilai");
+
+        List<QutPegawaiWrapper> qutPegawaiWrappers
+                = new ArrayList<>();
+        List<QutPegawai> qutPegawaiList
+                = qutPegawaiService.getQutPegawaiByUnitKerja(kdUnitKerja);
+        List<PejabatPenilaiDinilai> pejabatPenilaiDinilaiList
+                = pejabatPenilaiDinilaiService.findPegawaiDinilai(nipPenilai);
+
+        for (QutPegawai qutPegawai
+                : qutPegawaiList) {
+            for (PejabatPenilaiDinilai pejabatPenilaiDinilai :
+                    pejabatPenilaiDinilaiList) {
+                if (pejabatPenilaiDinilai.getPejabatPenilaiDinilaiId().getKdJabatanDinilai()
+                        .equals(qutPegawai.getKdJabatan())) {
+                    qutPegawaiWrappers
+                            .add(new QutPegawaiWrapper(
+                                    qutPegawai.getNip(),
+                                    qutPegawai.getNama(),
+                                    qutPegawai.getKdJabatan(),
+                                    qutPegawai.getJabatan(),
+                                    qutPegawai.getKdUnitKerja(),
+                                    qutPegawai.getUnitKerja(),
+                                    qutPegawai.getPangkat(),
+                                    qutPegawai.getGol()));
+                    break;
+                }
+            }
+        }
+
+        return null;
     }
 
     @RequestMapping(value = "/get-pegawai-penanggung-jawab", method = RequestMethod.POST)

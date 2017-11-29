@@ -12,6 +12,7 @@ public class DokumenLembarDisposisiWrapper {
     private Integer tktKeamanan;
     private String tglPenyelesaian;
     private String noSuratDisposisi;
+    private String isiDisposisi;
     private String tanggalSuratDisposisi;
     private String dari;
     private String ringkasanIsi;
@@ -27,6 +28,7 @@ public class DokumenLembarDisposisiWrapper {
             Integer tktKeamanan,
             String tglPenyelesaian,
             String noSuratDisposisi,
+            String isiDisposisi,
             String tanggalSuratDisposisi,
             String dari,
             String ringkasanIsi,
@@ -38,6 +40,7 @@ public class DokumenLembarDisposisiWrapper {
         this.tktKeamanan = tktKeamanan;
         this.tglPenyelesaian = tglPenyelesaian;
         this.noSuratDisposisi = noSuratDisposisi;
+        this.isiDisposisi = isiDisposisi;
         this.tanggalSuratDisposisi = tanggalSuratDisposisi;
         this.dari = dari;
         this.ringkasanIsi = ringkasanIsi;
@@ -131,5 +134,13 @@ public class DokumenLembarDisposisiWrapper {
 
     public void setTargetPegawaiLembarDisposisi(List<QutPegawaiWrapper> targetPegawaiLembarDisposisi) {
         this.targetPegawaiLembarDisposisi = targetPegawaiLembarDisposisi;
+    }
+
+    public String getIsiDisposisi() {
+        return isiDisposisi;
+    }
+
+    public void setIsiDisposisi(String isiDisposisi) {
+        this.isiDisposisi = isiDisposisi;
     }
 }

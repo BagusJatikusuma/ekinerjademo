@@ -9,7 +9,7 @@ import javax.persistence.*;
 @Table(name = "target_surat_tugas_pejabat")
 public class TargetSuratTugasPejabat {
     @EmbeddedId
-    private TargetSuratTugasPegawaiId targetSuratTugasPegawaiId;
+    private TargetSuratTugasPejabatId targetSuratTugasPejabatId;
     @Column(name = "approve_status")
     private Integer approveStatus;
     @ManyToOne
@@ -18,15 +18,8 @@ public class TargetSuratTugasPejabat {
             insertable = false,
             updatable = false,
             referencedColumnName = "kd_surat_tugas")
-    private SuratInstruksi suratInstruksi;
+    private SuratTugas suratTugas;
 
-    public TargetSuratTugasPegawaiId getTargetSuratTugasPegawaiId() {
-        return targetSuratTugasPegawaiId;
-    }
-
-    public void setTargetSuratTugasPegawaiId(TargetSuratTugasPegawaiId targetSuratTugasPegawaiId) {
-        this.targetSuratTugasPegawaiId = targetSuratTugasPegawaiId;
-    }
 
     public Integer getApproveStatus() {
         return approveStatus;
@@ -36,11 +29,19 @@ public class TargetSuratTugasPejabat {
         this.approveStatus = approveStatus;
     }
 
-    public SuratInstruksi getSuratInstruksi() {
-        return suratInstruksi;
+    public SuratTugas getSuratTugas() {
+        return suratTugas;
     }
 
-    public void setSuratInstruksi(SuratInstruksi suratInstruksi) {
-        this.suratInstruksi = suratInstruksi;
+    public void setSuratTugas(SuratTugas suratTugas) {
+        this.suratTugas = suratTugas;
+    }
+
+    public TargetSuratTugasPejabatId getTargetSuratTugasPejabatId() {
+        return targetSuratTugasPejabatId;
+    }
+
+    public void setTargetSuratTugasPejabatId(TargetSuratTugasPejabatId targetSuratTugasPejabatId) {
+        this.targetSuratTugasPejabatId = targetSuratTugasPejabatId;
     }
 }

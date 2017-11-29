@@ -14,7 +14,7 @@ public class SuratDisposisi {
     @Id
     @Column(name = "no_surat")
     private String noSurat;
-    @Column(name = "tanggal_surat_milis")
+    @Column(name = "tgl_surat_milis")
     private Long tanggalSuratMilis;
     @Column(name = "dari")
     private String dari;

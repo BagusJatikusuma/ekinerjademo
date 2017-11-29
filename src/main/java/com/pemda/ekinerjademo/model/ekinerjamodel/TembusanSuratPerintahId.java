@@ -8,15 +8,15 @@ import java.io.Serializable;
  * Created by bagus on 14/11/17.
  */
 @Embeddable
-public class TembusanSuratPerintahNonPejabatId implements Serializable {
+public class TembusanSuratPerintahId implements Serializable {
     @Column(name = "kd_surat_perintah")
     private String kdSuratPerintah;
     @Column(name = "kd_jabatan")
     private String kdJabatan;
 
-    public TembusanSuratPerintahNonPejabatId() {
+    public TembusanSuratPerintahId() {
     }
-    public TembusanSuratPerintahNonPejabatId(String kdSuratPerintah, String kdJabatan) {
+    public TembusanSuratPerintahId(String kdSuratPerintah, String kdJabatan) {
         this.kdSuratPerintah = kdSuratPerintah;
         this.kdJabatan = kdJabatan;
     }
@@ -42,7 +42,7 @@ public class TembusanSuratPerintahNonPejabatId implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        TembusanSuratPerintahNonPejabatId that = (TembusanSuratPerintahNonPejabatId) o;
+        TembusanSuratPerintahId that = (TembusanSuratPerintahId) o;
 
         if (!kdSuratPerintah.equals(that.kdSuratPerintah)) return false;
         return kdJabatan.equals(that.kdJabatan);

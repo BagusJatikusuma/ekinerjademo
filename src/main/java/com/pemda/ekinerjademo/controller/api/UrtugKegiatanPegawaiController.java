@@ -109,7 +109,7 @@ public class UrtugKegiatanPegawaiController {
     ResponseEntity<?> getUrtugKegiatanPegawaiApprovalByNip(
             @PathVariable("nipPegawai") String nipPegawai,
             @PathVariable("kdUnitKerja") String kdUnitKerja) {
-        LOGGER.info("geet urtug kegiatan pegawai by pegawai");
+        LOGGER.info("get urtug kegiatan pegawai by pegawai");
 
         List<UrtugKegiatanPegawaiWrapper> urtugKegiatanPegawaiWrappers
                 = new ArrayList<>();

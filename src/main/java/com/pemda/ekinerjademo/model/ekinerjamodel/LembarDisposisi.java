@@ -39,6 +39,8 @@ public class LembarDisposisi {
     private SuratDisposisi noSuratDisposisi;
     @OneToMany(mappedBy = "lembarDisposisi", fetch = FetchType.LAZY)
     private Set<TargetLembarDisposisi> targetLembarDisposisiSet;
+    @Column(name = "isi_disposisi")
+    private String isiDisposisi;
 
     public LembarDisposisi() {
     }
@@ -132,5 +134,13 @@ public class LembarDisposisi {
 
     public void setTargetLembarDisposisiSet(Set<TargetLembarDisposisi> targetLembarDisposisiSet) {
         this.targetLembarDisposisiSet = targetLembarDisposisiSet;
+    }
+
+    public String getIsiDisposisi() {
+        return isiDisposisi;
+    }
+
+    public void setIsiDisposisi(String isiDisposisi) {
+        this.isiDisposisi = isiDisposisi;
     }
 }

@@ -6,12 +6,12 @@ import java.util.Set;
 /**
  * Created by bagus on 15/11/17.
  */
-public class SuratperintahNonPejabatInputWrapper {
+public class SuratPerintahInputWrapper {
     private String kdSuratPerintah;
 
     private String nipPembuat;
 
-    private String kdUnitKerja;
+    private String nipPenandatangan;
 
     private Integer nomorSurat1;
 
@@ -31,13 +31,19 @@ public class SuratperintahNonPejabatInputWrapper {
 
     private Long tanggalPerintahMilis;
 
-    private String kdJabatan;
-
     private String ttdPath;
 
-    private Set<String> kdTargetList;
+    private Set<String> kdTargetPegawaiList;
+
+    private Set<String> kdTargetPejabatList;
 
     private Set<String> kdTembusanList;
+
+    private boolean suratPejabat;
+
+    private String kdJabatanSuratPejabat;
+
+    private String kdUnitKerja;
 
     public String getKdSuratPerintah() {
         return kdSuratPerintah;
@@ -53,14 +59,6 @@ public class SuratperintahNonPejabatInputWrapper {
 
     public void setNipPembuat(String nipPembuat) {
         this.nipPembuat = nipPembuat;
-    }
-
-    public String getKdUnitKerja() {
-        return kdUnitKerja;
-    }
-
-    public void setKdUnitKerja(String kdUnitKerja) {
-        this.kdUnitKerja = kdUnitKerja;
     }
 
     public Integer getNomorSurat1() {
@@ -127,14 +125,6 @@ public class SuratperintahNonPejabatInputWrapper {
         this.tanggalPerintahMilis = tanggalPerintahMilis;
     }
 
-    public String getKdJabatan() {
-        return kdJabatan;
-    }
-
-    public void setKdJabatan(String kdJabatan) {
-        this.kdJabatan = kdJabatan;
-    }
-
     public String getTtdPath() {
         return ttdPath;
     }
@@ -143,12 +133,12 @@ public class SuratperintahNonPejabatInputWrapper {
         this.ttdPath = ttdPath;
     }
 
-    public Set<String> getKdTargetList() {
-        return kdTargetList;
+    public Set<String> getKdTargetPegawaiList() {
+        return kdTargetPegawaiList;
     }
 
-    public void setKdTargetList(Set<String> kdTargetList) {
-        this.kdTargetList = kdTargetList;
+    public void setKdTargetPegawaiList(Set<String> kdTargetPegawaiList) {
+        this.kdTargetPegawaiList = kdTargetPegawaiList;
     }
 
     public Set<String> getKdTembusanList() {
@@ -165,5 +155,45 @@ public class SuratperintahNonPejabatInputWrapper {
 
     public void setMenimbangList(List<String> menimbangList) {
         this.menimbangList = menimbangList;
+    }
+
+    public Set<String> getKdTargetPejabatList() {
+        return kdTargetPejabatList;
+    }
+
+    public void setKdTargetPejabatList(Set<String> kdTargetPejabatList) {
+        this.kdTargetPejabatList = kdTargetPejabatList;
+    }
+
+    public String getNipPenandatangan() {
+        return nipPenandatangan;
+    }
+
+    public void setNipPenandatangan(String nipPenandatangan) {
+        this.nipPenandatangan = nipPenandatangan;
+    }
+
+    public boolean isSuratPejabat() {
+        return suratPejabat;
+    }
+
+    public void setSuratPejabat(boolean suratPejabat) {
+        this.suratPejabat = suratPejabat;
+    }
+
+    public String getKdJabatanSuratPejabat() {
+        return kdJabatanSuratPejabat;
+    }
+
+    public void setKdJabatanSuratPejabat(String kdJabatanSuratPejabat) {
+        this.kdJabatanSuratPejabat = kdJabatanSuratPejabat;
+    }
+
+    public String getKdUnitKerja() {
+        return kdUnitKerja;
+    }
+
+    public void setKdUnitKerja(String kdUnitKerja) {
+        this.kdUnitKerja = kdUnitKerja;
     }
 }
