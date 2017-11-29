@@ -324,10 +324,33 @@ public class AkunPegawaiController {
         List<PejabatPenilaiDinilai> pejabatPenilaiDinilaiList
                 = pejabatPenilaiDinilaiService.findPegawaiDinilai(nipPenilai);
 
-        for (QutPegawai qutPegawai
-                : qutPegawaiList) {
-            for (PejabatPenilaiDinilai pejabatPenilaiDinilai :
-                    pejabatPenilaiDinilaiList) {
+//        for (QutPegawai qutPegawai
+//                : qutPegawaiList) {
+//            for (PejabatPenilaiDinilai pejabatPenilaiDinilai :
+//                    pejabatPenilaiDinilaiList) {
+//                if (pejabatPenilaiDinilai.getPejabatPenilaiDinilaiId().getKdJabatanDinilai()
+//                        .equals(qutPegawai.getKdJabatan())) {
+//                    qutPegawaiWrappers
+//                            .add(new QutPegawaiWrapper(
+//                                    qutPegawai.getNip(),
+//                                    qutPegawai.getNama(),
+//                                    qutPegawai.getKdJabatan(),
+//                                    qutPegawai.getJabatan(),
+//                                    qutPegawai.getKdUnitKerja(),
+//                                    qutPegawai.getUnitKerja(),
+//                                    qutPegawai.getPangkat(),
+//                                    qutPegawai.getGol()));
+//                    break;
+//                }
+//            }
+//        }
+
+        for (PejabatPenilaiDinilai pejabatPenilaiDinilai :
+                pejabatPenilaiDinilaiList) {
+            LOGGER.info(pejabatPenilaiDinilai.getPejabatPenilaiDinilaiId().getKdJabatanDinilai());
+
+            for (QutPegawai qutPegawai
+                    : qutPegawaiList) {
                 if (pejabatPenilaiDinilai.getPejabatPenilaiDinilaiId().getKdJabatanDinilai()
                         .equals(qutPegawai.getKdJabatan())) {
                     qutPegawaiWrappers
@@ -340,12 +363,11 @@ public class AkunPegawaiController {
                                     qutPegawai.getUnitKerja(),
                                     qutPegawai.getPangkat(),
                                     qutPegawai.getGol()));
-                    break;
                 }
             }
         }
 
-        return null;
+        return new ResponseEntity<Object>(qutPegawaiWrappers, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/get-pegawai-penanggung-jawab", method = RequestMethod.POST)
