@@ -30,7 +30,7 @@ public class PejabatPenilaiDinilaiServiceImpl implements PejabatPenilaiDinilaiSe
     @Override
     public void updatePejabatPenilaiByKdJabatanDinilai(String nipPenilai, String kdJabatanDinilai) {
         PejabatPenilaiDinilai pejabatPenilaiDinilai
-                = pejabatPenilaiDinilaiDao.findByPejabatPenilaiDinilaiId_KdJabatanDinilai(kdJabatanDinilai);
+                = pejabatPenilaiDinilaiDao.findByPejabatPenilaiDinilaiId(new PejabatPenilaiDinilaiId(nipPenilai, kdJabatanDinilai));
 
         pejabatPenilaiDinilai
                 .setPejabatPenilaiDinilaiId(
@@ -40,9 +40,13 @@ public class PejabatPenilaiDinilaiServiceImpl implements PejabatPenilaiDinilaiSe
     }
 
     @Override
-    public PejabatPenilaiDinilai findByKdJabatanDinilai(String kdJabatanDinilai) {
-        return pejabatPenilaiDinilaiDao
-                .findByPejabatPenilaiDinilaiId_KdJabatanDinilai(kdJabatanDinilai);
+    public List<PejabatPenilaiDinilai> findByKdJabatanDinilai(String kdJabatanDinilai) {
+        return pejabatPenilaiDinilaiDao.findByPejabatPenilaiDinilaiId_KdJabatanDinilai(kdJabatanDinilai);
+    }
+
+    @Override
+    public PejabatPenilaiDinilai find(PejabatPenilaiDinilaiId pejabatPenilaiDinilaiId) {
+        return pejabatPenilaiDinilaiDao.findByPejabatPenilaiDinilaiId(pejabatPenilaiDinilaiId);
     }
 
     @Override

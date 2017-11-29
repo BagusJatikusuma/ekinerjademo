@@ -502,11 +502,11 @@ public class AkunPegawaiController {
     ResponseEntity<?> getPenilaiUrtug(@PathVariable("kdJabatan") String kdJabatan) {
         LOGGER.info("get penilai urtug by jabatan");
 
-        PejabatPenilaiDinilai pejabatPenilaiDinilai
+        List<PejabatPenilaiDinilai> pejabatPenilaiDinilaiList
                 = pejabatPenilaiDinilaiService.findByKdJabatanDinilai(kdJabatan);
         QutPegawai qutPegawai
                 = qutPegawaiService.getQutPegawai(
-                        pejabatPenilaiDinilai.getPejabatPenilaiDinilaiId().getNipPenilai());
+                        pejabatPenilaiDinilaiList.get(0).getPejabatPenilaiDinilaiId().getNipPenilai());
         QutPegawaiWrapper pegawaiWrapper
                 = new QutPegawaiWrapper(
                         qutPegawai.getNip(),

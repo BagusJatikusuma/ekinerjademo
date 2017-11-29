@@ -13,7 +13,7 @@ import java.util.List;
 @Repository
 public interface PejabatPenilaiDinilaiDao extends JpaRepository<PejabatPenilaiDinilai, PejabatPenilaiDinilaiId> {
     PejabatPenilaiDinilai findByPejabatPenilaiDinilaiId(PejabatPenilaiDinilaiId pejabatPenilaiDinilaiId);
-    PejabatPenilaiDinilai findByPejabatPenilaiDinilaiId_KdJabatanDinilai(String kdJabatanDinilai);
+    List<PejabatPenilaiDinilai> findByPejabatPenilaiDinilaiId_KdJabatanDinilai(String kdJabatanDinilai);
     List<PejabatPenilaiDinilai> findByPejabatPenilaiDinilaiId_NipPenilai(String nipPenilai);
     void deleteByPejabatPenilaiDinilaiId(PejabatPenilaiDinilaiId pejabatPenilaiDinilaiId);
 }

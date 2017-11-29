@@ -12,7 +12,8 @@ public interface PejabatPenilaiDinilaiService {
     void create(PejabatPenilaiDinilai pejabatPenilaiDinilai);
     void updatePejabatPenilai(PejabatPenilaiDinilai pejabatPenilaiDinilai);
     void updatePejabatPenilaiByKdJabatanDinilai(String nipPenilai, String kdJabatanDinilai);
-    PejabatPenilaiDinilai findByKdJabatanDinilai(String kdJabatanDinilai);
+    List<PejabatPenilaiDinilai> findByKdJabatanDinilai(String kdJabatanDinilai);
+    PejabatPenilaiDinilai find(PejabatPenilaiDinilaiId pejabatPenilaiDinilaiId);
     List<PejabatPenilaiDinilai> findPegawaiDinilai(String nipPenilai);
     void delete(PejabatPenilaiDinilaiId pejabatPenilaiDinilaiId);
 }

@@ -15,6 +15,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 /**
  * Created by bagus on 25/10/17.
  */
@@ -39,15 +41,15 @@ public class PejabatPenilaiDinilaiController {
     ResponseEntity<?> choosePejabatPenilai(@RequestBody PejabatanPenilaiDinilaiInputWrapper inputWrapper) {
         LOGGER.info("choose pejabat penilai dinilai");
 
-        PejabatPenilaiDinilai pejabatPenilaiDinilaiTemp
+        List<PejabatPenilaiDinilai> pejabatPenilaiDinilaiTempList
                 = pejabatPenilaiDinilaiService.findByKdJabatanDinilai(inputWrapper.getKdJabatanDinilai());
 
-        if (pejabatPenilaiDinilaiTemp == null) {
+        if (pejabatPenilaiDinilaiTempList.isEmpty()) {
             PejabatPenilaiDinilaiId pejabatPenilaiDinilaiId
                     = new PejabatPenilaiDinilaiId(
                             inputWrapper.getNipPenilai(), inputWrapper.getKdJabatanDinilai());
 
-            pejabatPenilaiDinilaiTemp = new PejabatPenilaiDinilai();
+            PejabatPenilaiDinilai pejabatPenilaiDinilaiTemp = new PejabatPenilaiDinilai();
             pejabatPenilaiDinilaiTemp
                     .setPejabatPenilaiDinilaiId(pejabatPenilaiDinilaiId);
 
@@ -60,8 +62,8 @@ public class PejabatPenilaiDinilaiController {
         } else {
             pejabatPenilaiDinilaiService
                     .delete(new PejabatPenilaiDinilaiId(
-                            pejabatPenilaiDinilaiTemp.getPejabatPenilaiDinilaiId().getNipPenilai(),
-                            pejabatPenilaiDinilaiTemp.getPejabatPenilaiDinilaiId().getKdJabatanDinilai()));
+                            pejabatPenilaiDinilaiTempList.get(0).getPejabatPenilaiDinilaiId().getNipPenilai(),
+                            pejabatPenilaiDinilaiTempList.get(0).getPejabatPenilaiDinilaiId().getKdJabatanDinilai()));
 
             PejabatPenilaiDinilaiId pejabatPenilaiDinilaiId
                     = new PejabatPenilaiDinilaiId(
@@ -81,12 +83,12 @@ public class PejabatPenilaiDinilaiController {
     ResponseEntity<?> getPejabatPenilai(@PathVariable("kdJabatan") String kdJabatan) {
         LOGGER.info("get pejabat penilai");
 
-        PejabatPenilaiDinilai pejabatPenilaiDinilai
+        List<PejabatPenilaiDinilai> pejabatPenilaiDinilaiList
                 = pejabatPenilaiDinilaiService.findByKdJabatanDinilai(kdJabatan);
 
         QutPegawai qutPegawai =
                 qutPegawaiService
-                        .getQutPegawai(pejabatPenilaiDinilai.getPejabatPenilaiDinilaiId().getNipPenilai());
+                        .getQutPegawai(pejabatPenilaiDinilaiList.get(0).getPejabatPenilaiDinilaiId().getNipPenilai());
 
         QutPegawaiWrapper qutPegawaiWrapper
                 = new QutPegawaiWrapper(
