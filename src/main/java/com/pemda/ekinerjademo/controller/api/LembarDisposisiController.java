@@ -51,7 +51,10 @@ public class LembarDisposisiController {
         suratDisposisi.setRingkasanIsi(inputWrapper.getRingkasanIsiSuratDisposisi());
         suratDisposisi.setLampiran(inputWrapper.getLampiran());
 
-        suratDisposisiService.create(suratDisposisi);
+        if (inputWrapper.getKdLembarDisposisiParent() == null ||
+                inputWrapper.getKdLembarDisposisiParent().equals("")) {
+            suratDisposisiService.create(suratDisposisi);
+        }
 
         LembarDisposisi lembarDisposisi = new LembarDisposisi();
         lembarDisposisi.setKdLembarDisposisi(kdLembarDisposisi);
