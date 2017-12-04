@@ -20,7 +20,7 @@ import java.util.Date;
 @CrossOrigin(allowCredentials = "false")
 @RequestMapping(value = "/api")
 public class StatusPeanggungJawabController {
-    public static final Logger LOGGER = LoggerFactory.getLogger(TestServiceController.class);
+    public static final Logger LOGGER = LoggerFactory.getLogger(StatusPeanggungJawabController.class);
 
     private StatusPenanggungJawabKegiatanService spjkService;
 

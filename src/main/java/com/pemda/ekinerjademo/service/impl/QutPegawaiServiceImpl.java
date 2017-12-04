@@ -1,6 +1,7 @@
 package com.pemda.ekinerjademo.service.impl;
 
 import com.pemda.ekinerjademo.model.bismamodel.QutPegawai;
+import com.pemda.ekinerjademo.projection.ekinerjaprojection.CustomPegawaiCredential;
 import com.pemda.ekinerjademo.repository.bismarepository.QutPegawaiDao;
 import com.pemda.ekinerjademo.service.QutPegawaiService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +26,11 @@ public class QutPegawaiServiceImpl implements QutPegawaiService {
     @Override
     public List<QutPegawai> getQutPegawai() {
         return qutPegawaiDao.findAll();
+    }
+
+    @Override
+    public List<CustomPegawaiCredential> getCustomPegawaiCredentials() {
+        return qutPegawaiDao.findByCustomPegawaiCredential();
     }
 
     @Override

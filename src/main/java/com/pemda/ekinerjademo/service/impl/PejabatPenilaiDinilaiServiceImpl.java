@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 /**
  * Created by bagus on 25/10/17.
  */
@@ -28,7 +30,7 @@ public class PejabatPenilaiDinilaiServiceImpl implements PejabatPenilaiDinilaiSe
     @Override
     public void updatePejabatPenilaiByKdJabatanDinilai(String nipPenilai, String kdJabatanDinilai) {
         PejabatPenilaiDinilai pejabatPenilaiDinilai
-                = pejabatPenilaiDinilaiDao.findByPejabatPenilaiDinilaiId_KdJabatanDinilai(kdJabatanDinilai);
+                = pejabatPenilaiDinilaiDao.findByPejabatPenilaiDinilaiId(new PejabatPenilaiDinilaiId(nipPenilai, kdJabatanDinilai));
 
         pejabatPenilaiDinilai
                 .setPejabatPenilaiDinilaiId(
@@ -38,9 +40,19 @@ public class PejabatPenilaiDinilaiServiceImpl implements PejabatPenilaiDinilaiSe
     }
 
     @Override
-    public PejabatPenilaiDinilai findByKdJabatanDinilai(String kdJabatanDinilai) {
+    public List<PejabatPenilaiDinilai> findByKdJabatanDinilai(String kdJabatanDinilai) {
+        return pejabatPenilaiDinilaiDao.findByPejabatPenilaiDinilaiId_KdJabatanDinilai(kdJabatanDinilai);
+    }
+
+    @Override
+    public PejabatPenilaiDinilai find(PejabatPenilaiDinilaiId pejabatPenilaiDinilaiId) {
+        return pejabatPenilaiDinilaiDao.findByPejabatPenilaiDinilaiId(pejabatPenilaiDinilaiId);
+    }
+
+    @Override
+    public List<PejabatPenilaiDinilai> findPegawaiDinilai(String nipPenilai) {
         return pejabatPenilaiDinilaiDao
-                .findByPejabatPenilaiDinilaiId_KdJabatanDinilai(kdJabatanDinilai);
+                .findByPejabatPenilaiDinilaiId_NipPenilai(nipPenilai);
     }
 
     @Override
