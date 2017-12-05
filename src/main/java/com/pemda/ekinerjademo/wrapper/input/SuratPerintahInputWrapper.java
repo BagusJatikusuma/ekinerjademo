@@ -45,6 +45,8 @@ public class SuratPerintahInputWrapper {
 
     private String kdUnitKerja;
 
+    private String kdSuratPerintahBawahan;
+
     public String getKdSuratPerintah() {
         return kdSuratPerintah;
     }
@@ -195,5 +197,13 @@ public class SuratPerintahInputWrapper {
 
     public void setKdUnitKerja(String kdUnitKerja) {
         this.kdUnitKerja = kdUnitKerja;
+    }
+
+    public String getKdSuratPerintahBawahan() {
+        return kdSuratPerintahBawahan;
+    }
+
+    public void setKdSuratPerintahBawahan(String kdSuratPerintahBawahan) {
+        this.kdSuratPerintahBawahan = kdSuratPerintahBawahan;
     }
 }

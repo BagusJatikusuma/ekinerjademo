@@ -3,6 +3,7 @@ package com.pemda.ekinerjademo.controller.api;
 import com.pemda.ekinerjademo.model.bismamodel.TkdJabatan;
 import com.pemda.ekinerjademo.model.ekinerjamodel.*;
 import com.pemda.ekinerjademo.projection.ekinerjaprojection.CustomPegawaiCredential;
+import com.pemda.ekinerjademo.service.NomorUrutSuratUnitKerjaService;
 import com.pemda.ekinerjademo.service.QutPegawaiService;
 import com.pemda.ekinerjademo.service.SuratPerintahService;
 import com.pemda.ekinerjademo.service.TkdJabatanService;
@@ -37,6 +38,8 @@ public class SuratPerintahController {
     private QutPegawaiService qutPegawaiService;
     @Autowired
     private TkdJabatanService tkdJabatanService;
+    @Autowired
+    private NomorUrutSuratUnitKerjaService nomorUrutSuratUnitKerjaService;
 
     @RequestMapping(value = "/create-surat-perintah", method = RequestMethod.POST)
     ResponseEntity<?> createSuratPerintah(
@@ -46,7 +49,25 @@ public class SuratPerintahController {
         EkinerjaXMLBuilder ekinerjaXMLBuilder = new EkinerjaXMLBuilder();
 
         String dasarInXml, untukInXml, menimbangInXml;
-        Integer nomorSurat1 = 1;
+        Integer nomorSurat1 = 0;
+
+//        NomorUrutSuratUnitKerja nomorUrutSurat
+//                = nomorUrutSuratUnitKerjaService.getNomorSuratByUnitKerjaAndTahun(inputWrapper.getKdUnitKerja(), Year.now().getValue());
+//
+//        if (nomorUrutSurat == null) {
+//            nomorUrutSurat
+//                    = new NomorUrutSuratUnitKerja();
+//            nomorUrutSurat
+//                    .setNomorUrutSuratUnitKerjaId(
+//                            new NomorUrutSuratUnitKerjaId(inputWrapper.getKdUnitKerja(), Year.now().getValue()));
+//            nomorUrutSurat.setNomorUrutSurat(1);
+//
+//            nomorUrutSuratUnitKerjaService.createNomorUrutSurat(nomorUrutSurat);
+//        } else {
+//            nomorUrutSurat.setNomorUrutSurat(nomorUrutSurat.getNomorUrutSurat() + 1);
+//
+//            nomorUrutSuratUnitKerjaService.updateNomorUrutSurat(nomorUrutSurat);
+//        }
 
         Set<TargetSuratPerintahPegawai> targetSuratPerintahPegawaiList
                 = new HashSet<>();
@@ -125,6 +146,9 @@ public class SuratPerintahController {
         suratPerintah.setTanggalPerintahMilis(inputWrapper.getTanggalPerintahMilis());
         suratPerintah.setTtdPath("random path");
         suratPerintah.setKdUnitKerja(inputWrapper.getKdUnitKerja());
+        suratPerintah.setApprovalPenandatangan(0);
+        suratPerintah.setStatusPenyebaran(0);
+        suratPerintah.setPathPenilaian(kdSuratPerintah);
 //        suratPerintah.setTargetSuratPerintahPegawaiList(targetSuratPerintahPegawaiList);
 //        suratPerintah.setTembusanSuratPerintahList(tembusanSuratPerintahList);
 
@@ -150,8 +174,170 @@ public class SuratPerintahController {
         }
 
         return new ResponseEntity<Object>(
-                new CustomMessage("surat perintah creted"), HttpStatus.CREATED);
+                new CustomMessage("surat perintah created"), HttpStatus.CREATED);
 
+    }
+
+
+    @RequestMapping(value = "/lanjut-surat-perintah-bawahan", method = RequestMethod.POST)
+    ResponseEntity<?> lanjutSuratPerintahBawahan(
+            @RequestBody SuratPerintahInputWrapper inputWrapper) {
+        LOGGER.info("lanjut surat perintah bawahan");
+
+        EkinerjaXMLBuilder ekinerjaXMLBuilder = new EkinerjaXMLBuilder();
+
+        String dasarInXml, untukInXml, menimbangInXml;
+        Integer nomorSurat1 = 0;
+        SuratPerintah suratPerintahBawahan
+                = suratPerintahService.getSuratPerintahByKdSuratPerintah(inputWrapper.getKdSuratPerintahBawahan());
+
+//        NomorUrutSuratUnitKerja nomorUrutSurat
+//                = nomorUrutSuratUnitKerjaService.getNomorSuratByUnitKerjaAndTahun(inputWrapper.getKdUnitKerja(), Year.now().getValue());
+//
+//        if (nomorUrutSurat == null) {
+//            nomorUrutSurat
+//                    = new NomorUrutSuratUnitKerja();
+//            nomorUrutSurat
+//                    .setNomorUrutSuratUnitKerjaId(
+//                            new NomorUrutSuratUnitKerjaId(inputWrapper.getKdUnitKerja(), Year.now().getValue()));
+//            nomorUrutSurat.setNomorUrutSurat(1);
+//
+//            nomorUrutSuratUnitKerjaService.createNomorUrutSurat(nomorUrutSurat);
+//        } else {
+//            nomorUrutSurat.setNomorUrutSurat(nomorUrutSurat.getNomorUrutSurat() + 1);
+//
+//            nomorUrutSuratUnitKerjaService.updateNomorUrutSurat(nomorUrutSurat);
+//        }
+
+        Set<TargetSuratPerintahPegawai> targetSuratPerintahPegawaiList
+                = new HashSet<>();
+        Set<TargetSuratPerintahPejabat> targetSuratPerintahPejabatSet
+                = new HashSet<>();
+        Set<TembusanSuratPerintah> tembusanSuratPerintahList
+                = new HashSet<>();
+        SuratPerintah suratPerintah
+                = new SuratPerintah();
+
+        String kdSuratPerintah = String.valueOf(new Date().getTime());
+
+        //build target pegawai list
+        for (String kdTarget : inputWrapper.getKdTargetPegawaiList()) {
+            TargetSuratPerintahPegawaiId targetId
+                    = new TargetSuratPerintahPegawaiId(kdSuratPerintah, kdTarget);
+            TargetSuratPerintahPegawai targetSuratPerintahPegawai = new TargetSuratPerintahPegawai();
+
+            targetSuratPerintahPegawai.setTargetSuratPerintahPegawaiId(targetId);
+            targetSuratPerintahPegawai.setApproveStatus(0);
+
+            targetSuratPerintahPegawaiList.add(targetSuratPerintahPegawai);
+        }
+        //build target pejabat list
+        for (String kdTargetPejabat : inputWrapper.getKdTargetPejabatList()) {
+            TargetSuratPerintahPejabatId targetId
+                    = new TargetSuratPerintahPejabatId(kdSuratPerintah, kdTargetPejabat);
+            TargetSuratPerintahPejabat targetSuratPerintahPejabat = new TargetSuratPerintahPejabat();
+
+            targetSuratPerintahPejabat.setTargetSuratPerintahPejabatId(targetId);
+            targetSuratPerintahPejabat.setApproveStatus(0);
+
+            targetSuratPerintahPejabatSet.add(targetSuratPerintahPejabat);
+        }
+
+        //build tembusan list
+        for (String kdTembusan : inputWrapper.getKdTembusanList()) {
+            TembusanSuratPerintahId tembusanId
+                    = new TembusanSuratPerintahId(kdSuratPerintah, kdTembusan);
+            TembusanSuratPerintah tembusanSuratPerintah = new TembusanSuratPerintah();
+
+            tembusanSuratPerintah.setTembusanSuratPerintahId(tembusanId);
+
+            tembusanSuratPerintahList.add(tembusanSuratPerintah);
+        }
+        //build dasar list in xml
+        dasarInXml
+                = ekinerjaXMLBuilder.convertListSuratPerintahIntoXml(
+                inputWrapper.getDasarList(), "dasar");
+        //build untuk list in xml
+        untukInXml
+                = ekinerjaXMLBuilder.convertListSuratPerintahIntoXml(
+                inputWrapper.getUntukList(), "untuk");
+        //build menimbang in xml
+        menimbangInXml
+                = ekinerjaXMLBuilder.convertListSuratPerintahIntoXml(
+                inputWrapper.getMenimbangList(), "menimbang");
+
+        //set nomor surat based kdUnitKerja
+        if (suratPerintahService.getLatestNomorSuratByUnitKerja(inputWrapper.getKdUnitKerja()) != null) {
+            nomorSurat1
+                    = suratPerintahService.getLatestNomorSuratByUnitKerja(inputWrapper.getKdUnitKerja()) + 1;
+        }
+        //build surat target perintah non pejabat
+        suratPerintah.setKdSuratPerintah(kdSuratPerintah);
+        suratPerintah.setNipPembuat(inputWrapper.getNipPembuat());
+        suratPerintah.setNipPenandatangan(inputWrapper.getNipPenandatangan());
+        suratPerintah.setNomorSurat1(nomorSurat1);
+        suratPerintah.setNomorSurat2(inputWrapper.getNomorSurat2());
+        suratPerintah.setNomorSurat3(inputWrapper.getNomorSurat3());
+        suratPerintah.setNomorTahun(Year.now().getValue());
+        suratPerintah.setDasar(dasarInXml);
+        suratPerintah.setUntuk(untukInXml);
+        suratPerintah.setMenimbang(menimbangInXml);
+        suratPerintah.setTempat(inputWrapper.getTempat());
+        suratPerintah.setTanggalPerintahMilis(inputWrapper.getTanggalPerintahMilis());
+        suratPerintah.setTtdPath("random path");
+        suratPerintah.setKdUnitKerja(inputWrapper.getKdUnitKerja());
+        suratPerintah.setApprovalPenandatangan(0);
+        suratPerintah.setStatusPenyebaran(0);
+        suratPerintah.setPathPenilaian(suratPerintahBawahan.getPathPenilaian()+"."+kdSuratPerintah);
+//        suratPerintah.setTargetSuratPerintahPegawaiList(targetSuratPerintahPegawaiList);
+//        suratPerintah.setTembusanSuratPerintahList(tembusanSuratPerintahList);
+
+        suratPerintahService.creteSurat(suratPerintah);
+        suratPerintahService.createTargetSuratPegawai(targetSuratPerintahPegawaiList);
+        suratPerintahService.createTargetSuratPejabat(targetSuratPerintahPejabatSet);
+        suratPerintahService.createTembusanSurat(tembusanSuratPerintahList);
+
+        if (inputWrapper.isSuratPejabat()) {
+            SuratPerintahPejabat suratPerintahPejabat
+                    = new SuratPerintahPejabat();
+            suratPerintahPejabat.setKdJabatan(inputWrapper.getKdJabatanSuratPejabat());
+            suratPerintahPejabat.setKdSuratPerintah(kdSuratPerintah);
+
+            suratPerintahService.createSuratPerintahPejabat(suratPerintahPejabat);
+        } else {
+            SuratPerintahNonPejabat suratPerintahNonPejabat
+                    = new SuratPerintahNonPejabat();
+            suratPerintahNonPejabat.setKdUnitKerja(inputWrapper.getKdUnitKerja());
+            suratPerintahNonPejabat.setKdSuratPerintah(kdSuratPerintah);
+
+            suratPerintahService.createSuratPerintahNonPejabat(suratPerintahNonPejabat);
+        }
+
+        return null;
+    }
+
+    //sebar surat perintah
+    @RequestMapping(value = "/sebar-surat-perintah", method = RequestMethod.PUT)
+    ResponseEntity<?> sebarSuratPerintah() {
+        LOGGER.info("sebar surat perintah");
+
+        return null;
+    }
+
+    //approve surat perintah
+    @RequestMapping(value = "/approve-surat-perintah", method = RequestMethod.PUT)
+    ResponseEntity<?> approveSuratPerintah() {
+        LOGGER.info("approve surat perintah");
+
+        return null;
+    }
+
+    //terima surat perintah
+    @RequestMapping(value = "/terima-surat-perintah", method = RequestMethod.PUT)
+    ResponseEntity<?> terimaSuratPerintah() {
+        LOGGER.info("terima surat perintah");
+
+        return null;
     }
 
     @RequestMapping(value = "/get-daftar-surat-perintah-history-by-pegawai/{nipPegawai}", method = RequestMethod.GET)
@@ -363,7 +549,7 @@ public class SuratPerintahController {
                         kdJabatanPenandatangan,
                         jabatanPenandatangan);
 
-        return new ResponseEntity<Object>(suratPerintah, HttpStatus.OK);
+        return new ResponseEntity<Object>(suratPerintahWrapper, HttpStatus.OK);
     }
 
 

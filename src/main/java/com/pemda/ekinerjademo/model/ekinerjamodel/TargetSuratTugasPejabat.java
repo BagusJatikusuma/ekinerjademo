@@ -12,6 +12,8 @@ public class TargetSuratTugasPejabat {
     private TargetSuratTugasPejabatId targetSuratTugasPejabatId;
     @Column(name = "approve_status")
     private Integer approveStatus;
+    @Column(name = "status_diterima")
+    private Integer statusDiterima;
     @ManyToOne
     @JoinColumn(
             name = "kd_surat_tugas",
@@ -43,5 +45,13 @@ public class TargetSuratTugasPejabat {
 
     public void setTargetSuratTugasPejabatId(TargetSuratTugasPejabatId targetSuratTugasPejabatId) {
         this.targetSuratTugasPejabatId = targetSuratTugasPejabatId;
+    }
+
+    public Integer getStatusDiterima() {
+        return statusDiterima;
+    }
+
+    public void setStatusDiterima(Integer statusDiterima) {
+        this.statusDiterima = statusDiterima;
     }
 }

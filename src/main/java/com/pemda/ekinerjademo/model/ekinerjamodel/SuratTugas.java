@@ -36,6 +36,12 @@ public class SuratTugas {
     private Long tanggalTugasMilis;
     @Column(name = "ttd_path")
     private String ttdPath;
+    @Column(name = "status_penyebaran")
+    private Integer statusPenyebaran;
+    @Column(name = "approval_penandatangan")
+    private Integer approvalPenandatangan;
+    @Column(name = "path_penilaian")
+    private String pathPenilaian;
 
     public String getKdSuratTugas() {
         return kdSuratTugas;
@@ -131,5 +137,29 @@ public class SuratTugas {
 
     public void setTtdPath(String ttdPath) {
         this.ttdPath = ttdPath;
+    }
+
+    public Integer getStatusPenyebaran() {
+        return statusPenyebaran;
+    }
+
+    public void setStatusPenyebaran(Integer statusPenyebaran) {
+        this.statusPenyebaran = statusPenyebaran;
+    }
+
+    public Integer getApprovalPenandatangan() {
+        return approvalPenandatangan;
+    }
+
+    public void setApprovalPenandatangan(Integer approvalPenandatangan) {
+        this.approvalPenandatangan = approvalPenandatangan;
+    }
+
+    public String getPathPenilaian() {
+        return pathPenilaian;
+    }
+
+    public void setPathPenilaian(String pathPenilaian) {
+        this.pathPenilaian = pathPenilaian;
     }
 }

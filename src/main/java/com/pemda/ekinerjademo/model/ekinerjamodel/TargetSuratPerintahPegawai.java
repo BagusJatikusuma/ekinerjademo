@@ -14,6 +14,9 @@ public class TargetSuratPerintahPegawai {
     @Column(name = "approve_status")
     private Integer approveStatus;
 
+    @Column(name = "status_diterima")
+    private Integer statusDiterima;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(
             name = "kd_surat_perintah",
@@ -44,5 +47,13 @@ public class TargetSuratPerintahPegawai {
 
     public void setSuratPerintah(SuratPerintah suratPerintah) {
         this.suratPerintah = suratPerintah;
+    }
+
+    public Integer getStatusDiterima() {
+        return statusDiterima;
+    }
+
+    public void setStatusDiterima(Integer statusDiterima) {
+        this.statusDiterima = statusDiterima;
     }
 }

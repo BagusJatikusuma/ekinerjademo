@@ -38,6 +38,12 @@ public class SuratPerintah {
     private String menimbang;
     @Column(name = "kd_unit_kerja")
     private String kdUnitKerja;
+    @Column(name = "status_penyebaran")
+    private Integer statusPenyebaran;
+    @Column(name = "approval_penandatangan")
+    private Integer approvalPenandatangan;
+    @Column(name = "path_penilaian")
+    private String pathPenilaian;
 
     @OneToMany(mappedBy = "suratPerintah")
     private Set<TargetSuratPerintahPegawai> targetSuratPerintahPegawaiList;
@@ -201,5 +207,29 @@ public class SuratPerintah {
 
     public void setKdUnitKerja(String kdUnitKerja) {
         this.kdUnitKerja = kdUnitKerja;
+    }
+
+    public Integer getStatusPenyebaran() {
+        return statusPenyebaran;
+    }
+
+    public void setStatusPenyebaran(Integer statusPenyebaran) {
+        this.statusPenyebaran = statusPenyebaran;
+    }
+
+    public Integer getApprovalPenandatangan() {
+        return approvalPenandatangan;
+    }
+
+    public void setApprovalPenandatangan(Integer approvalPenandatangan) {
+        this.approvalPenandatangan = approvalPenandatangan;
+    }
+
+    public String getPathPenilaian() {
+        return pathPenilaian;
+    }
+
+    public void setPathPenilaian(String pathPenilaian) {
+        this.pathPenilaian = pathPenilaian;
     }
 }

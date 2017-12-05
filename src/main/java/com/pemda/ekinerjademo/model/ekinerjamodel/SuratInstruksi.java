@@ -32,6 +32,9 @@ public class SuratInstruksi {
     private String nipPembuat;
     @Column(name = "nip_penandatangan")
     private String nipPenandatangan;
+    @Column(name = "path")
+    private String path;
+
     @OneToMany(mappedBy = "suratInstruksi")
     private Set<InstruksiPegawai> instruksiPegawaiSet;
     @OneToMany(mappedBy = "suratInstruksi")
@@ -165,5 +168,13 @@ public class SuratInstruksi {
 
     public void setNipPenandatangan(String nipPenandatangan) {
         this.nipPenandatangan = nipPenandatangan;
+    }
+
+    public String getPath() {
+        return path;
+    }
+
+    public void setPath(String path) {
+        this.path = path;
     }
 }

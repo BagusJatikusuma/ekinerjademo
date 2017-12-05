@@ -11,6 +11,9 @@ public class TembusanSuratPerintah {
     @EmbeddedId
     private TembusanSuratPerintahId tembusanSuratPerintahId;
 
+    @Column(name = "status_diterima")
+    private Integer statusDiterima;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(
             name = "kd_surat_perintah",
@@ -35,4 +38,11 @@ public class TembusanSuratPerintah {
         this.suratPerintah = suratPerintah;
     }
 
+    public Integer getStatusDiterima() {
+        return statusDiterima;
+    }
+
+    public void setStatusDiterima(Integer statusDiterima) {
+        this.statusDiterima = statusDiterima;
+    }
 }

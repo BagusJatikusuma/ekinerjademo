@@ -25,6 +25,13 @@ public class LembarDisposisi {
     private Integer tktKeamanan;
     @Column(name = "tgl_penyelesaian_milis")
     private Long tglPenyelesaianMilis;
+    @Column(name = "isi_disposisi")
+    private String isiDisposisi;
+    @Column(name = "status_penyebaran")
+    private Integer statusPenyebaran;
+    @Column(name = "approval_penandatangan")
+    private Integer approvalPenandatangan;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(
             name = "kd_lembar_dispoisisi_parent",
@@ -39,8 +46,6 @@ public class LembarDisposisi {
     private SuratDisposisi noSuratDisposisi;
     @OneToMany(mappedBy = "lembarDisposisi", fetch = FetchType.LAZY)
     private Set<TargetLembarDisposisi> targetLembarDisposisiSet;
-    @Column(name = "isi_disposisi")
-    private String isiDisposisi;
 
     public LembarDisposisi() {
     }
@@ -142,5 +147,21 @@ public class LembarDisposisi {
 
     public void setIsiDisposisi(String isiDisposisi) {
         this.isiDisposisi = isiDisposisi;
+    }
+
+    public Integer getStatusPenyebaran() {
+        return statusPenyebaran;
+    }
+
+    public void setStatusPenyebaran(Integer statusPenyebaran) {
+        this.statusPenyebaran = statusPenyebaran;
+    }
+
+    public Integer getApprovalPenandatangan() {
+        return approvalPenandatangan;
+    }
+
+    public void setApprovalPenandatangan(Integer approvalPenandatangan) {
+        this.approvalPenandatangan = approvalPenandatangan;
     }
 }

@@ -10,6 +10,8 @@ import javax.persistence.*;
 public class TembusanSuratTugas {
     @EmbeddedId
     private TembusanSuratTugasId tembusanSuratTugasId;
+    @Column(name = "status_diterima")
+    private Integer statusDiterima;
 
     @ManyToOne
     @JoinColumn(
@@ -33,5 +35,13 @@ public class TembusanSuratTugas {
 
     public void setSuratTugas(SuratTugas suratTugas) {
         this.suratTugas = suratTugas;
+    }
+
+    public Integer getStatusDiterima() {
+        return statusDiterima;
+    }
+
+    public void setStatusDiterima(Integer statusDiterima) {
+        this.statusDiterima = statusDiterima;
     }
 }
