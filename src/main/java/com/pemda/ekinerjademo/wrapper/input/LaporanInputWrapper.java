@@ -15,7 +15,7 @@ public class LaporanInputWrapper {
     private String penutup;
     private String nipPenandatangan;
     private String kotaPembuatanSurat;
-    private String nipPembuatanSurat;
+    private String nipPembuatSurat;
     private String kdUnitKerja;
 
     public String getTentang() {
@@ -106,12 +106,12 @@ public class LaporanInputWrapper {
         this.kotaPembuatanSurat = kotaPembuatanSurat;
     }
 
-    public String getNipPembuatanSurat() {
-        return nipPembuatanSurat;
+    public String getNipPembuatSurat() {
+        return nipPembuatSurat;
     }
 
-    public void setNipPembuatanSurat(String nipPembuatanSurat) {
-        this.nipPembuatanSurat = nipPembuatanSurat;
+    public void setNipPembuatSurat(String nipPembuatSurat) {
+        this.nipPembuatSurat = nipPembuatSurat;
     }
 
     public String getKdUnitKerja() {
