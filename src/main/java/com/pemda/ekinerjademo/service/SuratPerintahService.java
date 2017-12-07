@@ -15,15 +15,21 @@ public interface SuratPerintahService {
 
     List<TargetSuratPerintahPegawai> getTargetSuratPerintahPegawai(String nipTargetSurat);
     List<TargetSuratPerintahPejabat> getTargetSuratPerintahPejabat(String kdJabatanTarget);
+    List<TembusanSuratPerintah> getTembusanSuratPerintah(String kdJabatanTembusan);
 
     Integer getLatestNomorSuratByUnitKerja(String kdUnitKerja);
 
     void creteSurat(SuratPerintah suratPerintah);
     void createTargetSuratPegawai(Set<TargetSuratPerintahPegawai> targetSuratPerintahPegawaiSet);
+    void updateTargetSuratPegawai(TargetSuratPerintahPegawai targetSuratPerintahPegawai);
     void createTargetSuratPejabat(Set<TargetSuratPerintahPejabat> targetSuratPerintahPejabatSet);
+    void updateTargetSuratPejabat(TargetSuratPerintahPejabat targetSuratPerintahPejabat);
     void createSuratPerintahPejabat(SuratPerintahPejabat suratPerintahPejabat);
     void createSuratPerintahNonPejabat(SuratPerintahNonPejabat suratPerintahNonPejabat);
     void createTembusanSurat(Set<TembusanSuratPerintah> tembusanSuratPerintahSet);
+    void updateTembusanSurat(TembusanSuratPerintah tembusanSuratPerintah);
+
+    void update(SuratPerintah suratPerintah);
 
     SuratPerintah getSuratPerintahByKdSuratPerintah(String kdSuratperintah);
 

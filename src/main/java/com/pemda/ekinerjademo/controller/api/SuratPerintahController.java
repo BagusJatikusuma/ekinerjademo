@@ -1,5 +1,6 @@
 package com.pemda.ekinerjademo.controller.api;
 
+import com.pemda.ekinerjademo.model.bismamodel.QutPegawai;
 import com.pemda.ekinerjademo.model.bismamodel.TkdJabatan;
 import com.pemda.ekinerjademo.model.ekinerjamodel.*;
 import com.pemda.ekinerjademo.projection.ekinerjaprojection.CustomPegawaiCredential;
@@ -11,6 +12,7 @@ import com.pemda.ekinerjademo.util.DateUtilities;
 import com.pemda.ekinerjademo.util.EkinerjaXMLBuilder;
 import com.pemda.ekinerjademo.util.EkinerjaXMLParser;
 import com.pemda.ekinerjademo.wrapper.input.SuratPerintahInputWrapper;
+import com.pemda.ekinerjademo.wrapper.input.TargetSuratDiterimaInputWrapper;
 import com.pemda.ekinerjademo.wrapper.output.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -88,6 +90,7 @@ public class SuratPerintahController {
 
             targetSuratPerintahPegawai.setTargetSuratPerintahPegawaiId(targetId);
             targetSuratPerintahPegawai.setApproveStatus(0);
+            targetSuratPerintahPegawai.setStatusDiterima(0);
 
             targetSuratPerintahPegawaiList.add(targetSuratPerintahPegawai);
         }
@@ -99,6 +102,7 @@ public class SuratPerintahController {
 
             targetSuratPerintahPejabat.setTargetSuratPerintahPejabatId(targetId);
             targetSuratPerintahPejabat.setApproveStatus(0);
+            targetSuratPerintahPejabat.setStatusDiterima(0);
 
             targetSuratPerintahPejabatSet.add(targetSuratPerintahPejabat);
         }
@@ -110,6 +114,7 @@ public class SuratPerintahController {
             TembusanSuratPerintah tembusanSuratPerintah = new TembusanSuratPerintah();
 
             tembusanSuratPerintah.setTembusanSuratPerintahId(tembusanId);
+            tembusanSuratPerintah.setStatusDiterima(0);
 
             tembusanSuratPerintahList.add(tembusanSuratPerintah);
         }
@@ -228,6 +233,7 @@ public class SuratPerintahController {
 
             targetSuratPerintahPegawai.setTargetSuratPerintahPegawaiId(targetId);
             targetSuratPerintahPegawai.setApproveStatus(0);
+            targetSuratPerintahPegawai.setStatusDiterima(0);
 
             targetSuratPerintahPegawaiList.add(targetSuratPerintahPegawai);
         }
@@ -239,6 +245,7 @@ public class SuratPerintahController {
 
             targetSuratPerintahPejabat.setTargetSuratPerintahPejabatId(targetId);
             targetSuratPerintahPejabat.setApproveStatus(0);
+            targetSuratPerintahPejabat.setStatusDiterima(0);
 
             targetSuratPerintahPejabatSet.add(targetSuratPerintahPejabat);
         }
@@ -250,6 +257,7 @@ public class SuratPerintahController {
             TembusanSuratPerintah tembusanSuratPerintah = new TembusanSuratPerintah();
 
             tembusanSuratPerintah.setTembusanSuratPerintahId(tembusanId);
+            tembusanSuratPerintah.setStatusDiterima(0);
 
             tembusanSuratPerintahList.add(tembusanSuratPerintah);
         }
@@ -313,29 +321,100 @@ public class SuratPerintahController {
             suratPerintahService.createSuratPerintahNonPejabat(suratPerintahNonPejabat);
         }
 
-        return null;
+        return new ResponseEntity<Object>(
+                new CustomMessage("surat sudah dinilai dan dilaporkan ke atasan"),
+                HttpStatus.OK);
     }
 
     //sebar surat perintah
-    @RequestMapping(value = "/sebar-surat-perintah", method = RequestMethod.PUT)
-    ResponseEntity<?> sebarSuratPerintah() {
+    @RequestMapping(value = "/sebar-surat-perintah/{kdSuratPerintah}", method = RequestMethod.PUT)
+    ResponseEntity<?> sebarSuratPerintah(@PathVariable("kdSuratPerintah") String kdSuratPerintah) {
         LOGGER.info("sebar surat perintah");
 
-        return null;
+        SuratPerintah suratPerintah
+                = suratPerintahService.getSuratPerintahByKdSuratPerintah(kdSuratPerintah);
+        suratPerintah.setStatusPenyebaran(1);
+
+        suratPerintahService.update(suratPerintah);
+
+        return new ResponseEntity<Object>(new CustomMessage("surat perintah sudah di sebar"), HttpStatus.OK);
     }
 
     //approve surat perintah
-    @RequestMapping(value = "/approve-surat-perintah", method = RequestMethod.PUT)
-    ResponseEntity<?> approveSuratPerintah() {
+    @RequestMapping(value = "/approve-surat-perintah/{kdSuratPerintah}", method = RequestMethod.PUT)
+    ResponseEntity<?> approveSuratPerintah(
+            @PathVariable("kdSuratPerintah") String kdSuratPerintah) {
         LOGGER.info("approve surat perintah");
 
-        return null;
+        SuratPerintah suratPerintah
+                = suratPerintahService.getSuratPerintahByKdSuratPerintah(kdSuratPerintah);
+        suratPerintah.setApprovalPenandatangan(1);
+
+        suratPerintahService.update(suratPerintah);
+
+        return new ResponseEntity<Object>(new CustomMessage("surat perintah sudah disetujui"), HttpStatus.OK);
     }
 
     //terima surat perintah
-    @RequestMapping(value = "/terima-surat-perintah", method = RequestMethod.PUT)
-    ResponseEntity<?> terimaSuratPerintah() {
+    @RequestMapping(value = "/terima-surat-perintah/{kdSuratPerintah}/{kdUnitKerja}", method = RequestMethod.PUT)
+    ResponseEntity<?> terimaSuratPerintah(
+            @PathVariable("kdSuratPerintah") String kdSuratPerintah,
+            @PathVariable("kdUnitKerja") String kdUnitKerja) {
         LOGGER.info("terima surat perintah");
+
+        SuratPerintah suratPerintah
+                = suratPerintahService.getSuratPerintahByKdSuratPerintah(kdSuratPerintah);
+        List<QutPegawai> pegawaiUnitKerjaList
+                = qutPegawaiService.getQutPegawaiByUnitKerja(kdUnitKerja);
+        List<TkdJabatan> jabatanUnitKerjaList
+                = tkdJabatanService.getJabatanByUnitKerja(kdUnitKerja);
+
+        for (TargetSuratPerintahPegawai targetSuratPerintahPegawai
+             : suratPerintah.getTargetSuratPerintahPegawaiList()) {
+            for (QutPegawai pegawai
+                    : pegawaiUnitKerjaList) {
+                if (targetSuratPerintahPegawai.getTargetSuratPerintahPegawaiId().getNipPegawai()
+                        .equals(pegawai.getNip())) {
+                    targetSuratPerintahPegawai.setStatusDiterima(1);
+                    suratPerintahService.updateTargetSuratPegawai(targetSuratPerintahPegawai);
+
+                    break;
+                }
+
+            }
+
+        }
+
+        for (TargetSuratPerintahPejabat targetSuratPerintahPejabat
+             : suratPerintah.getTargetSuratPerintahPejabatSet()) {
+            for (TkdJabatan jabatan
+                    : jabatanUnitKerjaList) {
+                if (targetSuratPerintahPejabat.getTargetSuratPerintahPejabatId().getKdJabatan()
+                        .equals(jabatan.getKdJabatan())) {
+                    targetSuratPerintahPejabat.setStatusDiterima(1);
+                    suratPerintahService.updateTargetSuratPejabat(targetSuratPerintahPejabat);
+
+                    break;
+                }
+            }
+        }
+
+        for (TembusanSuratPerintah tembusanSuratPerintah
+                : suratPerintah.getTembusanSuratPerintahList()) {
+            for (TkdJabatan jabatan
+                    : jabatanUnitKerjaList) {
+                LOGGER.info(tembusanSuratPerintah.getTembusanSuratPerintahId().getKdJabatan()+" : "+jabatan.getKdJabatan());
+                if (tembusanSuratPerintah.getTembusanSuratPerintahId().getKdJabatan()
+                        .equals(jabatan.getKdJabatan())) {
+                    LOGGER.info("update => "+tembusanSuratPerintah.getTembusanSuratPerintahId().getKdJabatan()+" : "+jabatan.getKdJabatan());
+                    tembusanSuratPerintah.setStatusDiterima(1);
+                    suratPerintahService.updateTembusanSurat(tembusanSuratPerintah);
+
+                    break;
+                }
+            }
+        }
+
 
         return null;
     }
@@ -375,20 +454,87 @@ public class SuratPerintahController {
     ResponseEntity<?> getDaftarSuratPerintahTarget(@PathVariable("nipTarget") String nipTarget) {
         LOGGER.info("get surat perintah nip "+nipTarget);
 
-        List<TargetSuratPerintahPegawai> daftarSuratPerintahTarget
-                = suratPerintahService.getTargetSuratPerintahPegawai(nipTarget);
-        List<SuratPerintahTargetWrapper> daftarSuratPerintahTargetWrapper
-                = new ArrayList<>();
         List<CustomPegawaiCredential> qutPegawaiList
                 = qutPegawaiService.getCustomPegawaiCredentials();
+
+        CustomPegawaiCredential pegawaiTarget = null;
+
+        for (CustomPegawaiCredential pegawai : qutPegawaiList) {
+            if (nipTarget.equals(pegawai.getNip())) {
+                pegawaiTarget = pegawai;
+
+                break;
+            }
+        }
+
+        List<TargetSuratPerintahPegawai> daftarSuratPerintahPegawaiTarget
+                = suratPerintahService.getTargetSuratPerintahPegawai(nipTarget);
+        List<TargetSuratPerintahPejabat> daftarSuratPerintahPejabatTarget
+                = suratPerintahService.getTargetSuratPerintahPejabat(pegawaiTarget.getKdJabatan());
+        List<TembusanSuratPerintah> daftarSuratPerintahTembusan
+                = suratPerintahService.getTembusanSuratPerintah(pegawaiTarget.getKdJabatan());
+
+        List<SuratPerintahTargetWrapper> daftarSuratPerintahTargetWrapper
+                = new ArrayList<>();
         Locale indoLocale = new Locale("id", "ID");
 
         boolean isSuratPejabat = false;
+        //get surat perintah berdasarkan target pegawai
         for (TargetSuratPerintahPegawai suratTarget
-                : daftarSuratPerintahTarget) {
+                : daftarSuratPerintahPegawaiTarget) {
             for (CustomPegawaiCredential pegawaiPemberi : qutPegawaiList) {
                 if (pegawaiPemberi.getNip()
-                        .equals(suratTarget.getSuratPerintah().getNipPembuat())) {
+                        .equals(suratTarget.getSuratPerintah().getNipPenandatangan())) {
+
+                    if (suratTarget.getSuratPerintah().getSuratPerintahPejabat() != null)
+                        isSuratPejabat = true;
+                    else
+                        isSuratPejabat = false;
+
+                    daftarSuratPerintahTargetWrapper
+                            .add(new SuratPerintahTargetWrapper(
+                                    suratTarget.getSuratPerintah().getKdSuratPerintah(),
+                                    DateUtilities.createLocalDate(new Date(suratTarget.getSuratPerintah().getTanggalPerintahMilis()), "dd MMMM yyyy", indoLocale),
+                                    isSuratPejabat,
+                                    pegawaiPemberi.getNip(),
+                                    pegawaiPemberi.getNama(),
+                                    pegawaiPemberi.getJabatan())
+                            );
+                    break;
+                }
+            }
+        }
+        //get surat perintah berdasarkan target pegawai
+        for (TargetSuratPerintahPejabat suratTarget
+                : daftarSuratPerintahPejabatTarget) {
+            for (CustomPegawaiCredential pegawaiPemberi : qutPegawaiList) {
+                if (pegawaiPemberi.getNip()
+                        .equals(suratTarget.getSuratPerintah().getNipPenandatangan())) {
+
+                    if (suratTarget.getSuratPerintah().getSuratPerintahPejabat() != null)
+                        isSuratPejabat = true;
+                    else
+                        isSuratPejabat = false;
+
+                    daftarSuratPerintahTargetWrapper
+                            .add(new SuratPerintahTargetWrapper(
+                                    suratTarget.getSuratPerintah().getKdSuratPerintah(),
+                                    DateUtilities.createLocalDate(new Date(suratTarget.getSuratPerintah().getTanggalPerintahMilis()), "dd MMMM yyyy", indoLocale),
+                                    isSuratPejabat,
+                                    pegawaiPemberi.getNip(),
+                                    pegawaiPemberi.getNama(),
+                                    pegawaiPemberi.getJabatan())
+                            );
+                    break;
+                }
+            }
+        }
+        //get surat perintah berdasarkan tembusan
+        for (TembusanSuratPerintah suratTarget
+                : daftarSuratPerintahTembusan) {
+            for (CustomPegawaiCredential pegawaiPemberi : qutPegawaiList) {
+                if (pegawaiPemberi.getNip()
+                        .equals(suratTarget.getSuratPerintah().getNipPenandatangan())) {
 
                     if (suratTarget.getSuratPerintah().getSuratPerintahPejabat() != null)
                         isSuratPejabat = true;
@@ -551,6 +697,7 @@ public class SuratPerintahController {
 
         return new ResponseEntity<Object>(suratPerintahWrapper, HttpStatus.OK);
     }
+
 
 
 }

@@ -57,6 +57,11 @@ public class SuratPerintahServiceImpl implements SuratPerintahService {
     }
 
     @Override
+    public List<TembusanSuratPerintah> getTembusanSuratPerintah(String kdJabatanTembusan) {
+        return tembusanSuratPerintahDao.findByTembusanSuratPerintahId_KdJabatan(kdJabatanTembusan);
+    }
+
+    @Override
     public Integer getLatestNomorSuratByUnitKerja(String kdUnitKerja) {
         return suratPerintahDao.findLatestNomorSuratByUnitKerja(kdUnitKerja);
     }
@@ -77,11 +82,21 @@ public class SuratPerintahServiceImpl implements SuratPerintahService {
     }
 
     @Override
+    public void updateTargetSuratPegawai(TargetSuratPerintahPegawai targetSuratPerintahPegawai) {
+        targetSuratPerintahPegawaiDao.save(targetSuratPerintahPegawai);
+    }
+
+    @Override
     public void createTargetSuratPejabat(Set<TargetSuratPerintahPejabat> targetSuratPerintahPejabatSet) {
         for (TargetSuratPerintahPejabat targetSuratPerintahPejabat
                 : targetSuratPerintahPejabatSet) {
             targetSuratPerintahPejabatDao.save(targetSuratPerintahPejabat);
         }
+    }
+
+    @Override
+    public void updateTargetSuratPejabat(TargetSuratPerintahPejabat targetSuratPerintahPejabat) {
+        targetSuratPerintahPejabatDao.save(targetSuratPerintahPejabat);
     }
 
     @Override
@@ -102,6 +117,16 @@ public class SuratPerintahServiceImpl implements SuratPerintahService {
                 tembusanSuratPerintahDao.save(tembusan);
             }
         }
+    }
+
+    @Override
+    public void updateTembusanSurat(TembusanSuratPerintah tembusanSuratPerintah) {
+        tembusanSuratPerintahDao.save(tembusanSuratPerintah);
+    }
+
+    @Override
+    public void update(SuratPerintah suratPerintah) {
+        suratPerintahDao.save(suratPerintah);
     }
 
     @Override
