@@ -9,5 +9,5 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface TaIndikatorDao extends JpaRepository<TaIndikator, Long> {
-    
+
 }
