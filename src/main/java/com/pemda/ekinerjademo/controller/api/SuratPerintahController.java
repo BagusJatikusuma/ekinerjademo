@@ -35,7 +35,8 @@ import java.util.*;
 public class SuratPerintahController {
     public static final Logger LOGGER = LoggerFactory.getLogger(SuratPerintahController.class);
 
-    @Autowired private SuratPerintahService suratPerintahService;
+    @Autowired
+    private SuratPerintahService suratPerintahService;
     @Autowired
     private QutPegawaiService qutPegawaiService;
     @Autowired
