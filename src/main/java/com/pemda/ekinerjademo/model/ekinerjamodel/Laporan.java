@@ -35,12 +35,12 @@ public class Laporan {
     @Column(name = "penutup")
     private String penutup;
     @Column(name = "nip_penandatangan")
-    private String nip_penandatangan;
+    private String nipPenandatangan;
 
     @Column(name = "kota_pembuatan_surat")
     private String kotaPembuatanSurat;
-    @Column(name = "tanggal_perintah_milis")
-    private Long tanggalPerintahMilis;
+    @Column(name = "tanggal_pembuatan_milis")
+    private Long tanggalPembuatanMilis;
     @Column(name = "nip_pembuat_surat")
     private String nipPembuatSurat;
     @Column(name = "kd_unit_kerja")
@@ -126,12 +126,12 @@ public class Laporan {
         this.penutup = penutup;
     }
 
-    public String getNip_penandatangan() {
-        return nip_penandatangan;
+    public String getNipPenandatangan() {
+        return nipPenandatangan;
     }
 
-    public void setNip_penandatangan(String nip_penandatangan) {
-        this.nip_penandatangan = nip_penandatangan;
+    public void setNipPenandatangan(String nipPenandatangan) {
+        this.nipPenandatangan = nipPenandatangan;
     }
 
     public String getKotaPembuatanSurat() {
@@ -142,12 +142,12 @@ public class Laporan {
         this.kotaPembuatanSurat = kotaPembuatanSurat;
     }
 
-    public Long getTanggalPerintahMilis() {
-        return tanggalPerintahMilis;
+    public Long getTanggalPembuatanMilis() {
+        return tanggalPembuatanMilis;
     }
 
-    public void setTanggalPerintahMilis(Long tanggalPerintahMilis) {
-        this.tanggalPerintahMilis = tanggalPerintahMilis;
+    public void setTanggalPembuatanMilis(Long tanggalPembuatanMilis) {
+        this.tanggalPembuatanMilis = tanggalPembuatanMilis;
     }
 
     public String getNipPembuatSurat() {

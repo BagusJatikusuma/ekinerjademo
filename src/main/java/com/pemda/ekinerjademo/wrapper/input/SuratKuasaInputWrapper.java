@@ -6,7 +6,7 @@ package com.pemda.ekinerjademo.wrapper.input;
 public class SuratKuasaInputWrapper {
     private String nomorUrusan;
     private String nomorPasanganUrut;
-    private String nomotUnit;
+    private String nomorUnit;
     private String nipPemberiKuasa;
     private String nipPenerimaKuasa;
     private String isiKuasa;
@@ -30,12 +30,12 @@ public class SuratKuasaInputWrapper {
         this.nomorPasanganUrut = nomorPasanganUrut;
     }
 
-    public String getNomotUnit() {
-        return nomotUnit;
+    public String getNomorUnit() {
+        return nomorUnit;
     }
 
-    public void setNomotUnit(String nomotUnit) {
-        this.nomotUnit = nomotUnit;
+    public void setNomorUnit(String nomorUnit) {
+        this.nomorUnit = nomorUnit;
     }
 
     public String getNipPemberiKuasa() {
