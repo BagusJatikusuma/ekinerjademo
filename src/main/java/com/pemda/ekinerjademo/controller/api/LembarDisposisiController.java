@@ -3,10 +3,7 @@ package com.pemda.ekinerjademo.controller.api;
 import com.pemda.ekinerjademo.model.ekinerjamodel.*;
 import com.pemda.ekinerjademo.projection.ekinerjaprojection.CustomPegawaiCredential;
 import com.pemda.ekinerjademo.repository.ekinerjarepository.SuratDisposisiDao;
-import com.pemda.ekinerjademo.service.LembarDisposisiService;
-import com.pemda.ekinerjademo.service.NomorUrutSuratUnitKerjaService;
-import com.pemda.ekinerjademo.service.QutPegawaiService;
-import com.pemda.ekinerjademo.service.SuratDisposisiService;
+import com.pemda.ekinerjademo.service.*;
 import com.pemda.ekinerjademo.util.DateUtilities;
 import com.pemda.ekinerjademo.wrapper.input.LembarDisposisiInputWrapper;
 import com.pemda.ekinerjademo.wrapper.output.CustomMessage;
@@ -36,7 +33,7 @@ public class LembarDisposisiController {
 
     @Autowired private LembarDisposisiService lembarDisposisiService;
     @Autowired private SuratDisposisiService suratDisposisiService;
-    @Autowired private QutPegawaiService qutPegawaiService;
+    @Autowired private QutPegawaiCloneService qutPegawaiService;
 
     @RequestMapping(value = "/create-lembar-disposisi", method = RequestMethod.POST)
     ResponseEntity<?> createLembarDisposisi(

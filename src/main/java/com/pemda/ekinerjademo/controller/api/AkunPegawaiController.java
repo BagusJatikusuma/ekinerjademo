@@ -44,7 +44,7 @@ public class AkunPegawaiController {
     private AkunPegawaiService akunPegawaiService;
     private RoleService roleService;
     private TkdJabatanService tkdJabatanService;
-    private QutPegawaiService qutPegawaiService;
+    private QutPegawaiCloneService qutPegawaiService;
     private StatusPenanggungJawabKegiatanService statusPenanggungJawabKegiatanService;
     private UrtugKegiatanPegawaiService urtugKegiatanPegawaiService;
     private PejabatPenilaiDinilaiService pejabatPenilaiDinilaiService;
@@ -57,7 +57,7 @@ public class AkunPegawaiController {
             AkunPegawaiService akunPegawaiService,
             RoleService roleService,
             TkdJabatanService tkdJabatanService,
-            QutPegawaiService qutPegawaiService,
+            QutPegawaiCloneService qutPegawaiService,
             StatusPenanggungJawabKegiatanService statusPenanggungJawabKegiatanService,
             UrtugKegiatanPegawaiService urtugKegiatanPegawaiService,
             PejabatPenilaiDinilaiService pejabatPenilaiDinilaiService) {

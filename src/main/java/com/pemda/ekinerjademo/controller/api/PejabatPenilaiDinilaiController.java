@@ -4,6 +4,7 @@ import com.pemda.ekinerjademo.model.bismamodel.QutPegawai;
 import com.pemda.ekinerjademo.model.ekinerjamodel.PejabatPenilaiDinilai;
 import com.pemda.ekinerjademo.model.ekinerjamodel.PejabatPenilaiDinilaiId;
 import com.pemda.ekinerjademo.service.PejabatPenilaiDinilaiService;
+import com.pemda.ekinerjademo.service.QutPegawaiCloneService;
 import com.pemda.ekinerjademo.service.QutPegawaiService;
 import com.pemda.ekinerjademo.wrapper.input.PejabatanPenilaiDinilaiInputWrapper;
 import com.pemda.ekinerjademo.wrapper.output.CustomMessage;
@@ -27,12 +28,12 @@ public class PejabatPenilaiDinilaiController {
     public static final Logger LOGGER = LoggerFactory.getLogger(PejabatPenilaiDinilaiController.class);
 
     private PejabatPenilaiDinilaiService pejabatPenilaiDinilaiService;
-    private QutPegawaiService qutPegawaiService;
+    private QutPegawaiCloneService qutPegawaiService;
 
     @Autowired
     public PejabatPenilaiDinilaiController(
             PejabatPenilaiDinilaiService pejabatPenilaiDinilaiService,
-            QutPegawaiService qutPegawaiService) {
+            QutPegawaiCloneService qutPegawaiService) {
         this.pejabatPenilaiDinilaiService = pejabatPenilaiDinilaiService;
         this.qutPegawaiService = qutPegawaiService;
     }

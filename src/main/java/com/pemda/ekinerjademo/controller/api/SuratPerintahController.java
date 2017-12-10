@@ -4,10 +4,7 @@ import com.pemda.ekinerjademo.model.bismamodel.QutPegawai;
 import com.pemda.ekinerjademo.model.bismamodel.TkdJabatan;
 import com.pemda.ekinerjademo.model.ekinerjamodel.*;
 import com.pemda.ekinerjademo.projection.ekinerjaprojection.CustomPegawaiCredential;
-import com.pemda.ekinerjademo.service.NomorUrutSuratUnitKerjaService;
-import com.pemda.ekinerjademo.service.QutPegawaiService;
-import com.pemda.ekinerjademo.service.SuratPerintahService;
-import com.pemda.ekinerjademo.service.TkdJabatanService;
+import com.pemda.ekinerjademo.service.*;
 import com.pemda.ekinerjademo.util.DateUtilities;
 import com.pemda.ekinerjademo.util.EkinerjaXMLBuilder;
 import com.pemda.ekinerjademo.util.EkinerjaXMLParser;
@@ -38,7 +35,7 @@ public class SuratPerintahController {
     @Autowired
     private SuratPerintahService suratPerintahService;
     @Autowired
-    private QutPegawaiService qutPegawaiService;
+    private QutPegawaiCloneService qutPegawaiService;
     @Autowired
     private TkdJabatanService tkdJabatanService;
     @Autowired

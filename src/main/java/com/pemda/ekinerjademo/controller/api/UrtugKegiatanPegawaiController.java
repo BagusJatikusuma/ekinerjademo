@@ -3,10 +3,7 @@ package com.pemda.ekinerjademo.controller.api;
 import com.pemda.ekinerjademo.model.bismamodel.QutPegawai;
 import com.pemda.ekinerjademo.model.ekinerjamodel.*;
 import com.pemda.ekinerjademo.model.simdamodel.TaKegiatan;
-import com.pemda.ekinerjademo.service.QutPegawaiService;
-import com.pemda.ekinerjademo.service.TaKegiatanService;
-import com.pemda.ekinerjademo.service.UnitKerjaKegiatanService;
-import com.pemda.ekinerjademo.service.UrtugKegiatanPegawaiService;
+import com.pemda.ekinerjademo.service.*;
 import com.pemda.ekinerjademo.wrapper.input.*;
 import com.pemda.ekinerjademo.wrapper.output.*;
 import org.slf4j.Logger;
@@ -31,7 +28,7 @@ public class UrtugKegiatanPegawaiController {
     private UrtugKegiatanPegawaiService urtugKegiatanPegawaiService;
     @Autowired private TaKegiatanService taKegiatanService;
     @Autowired private UnitKerjaKegiatanService unitKerjaKegiatanService;
-    @Autowired private QutPegawaiService qutPegawaiService;
+    @Autowired private QutPegawaiCloneService qutPegawaiService;
 
     @Autowired
     public UrtugKegiatanPegawaiController(UrtugKegiatanPegawaiService urtugKegiatanPegawaiService) {

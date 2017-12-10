@@ -31,7 +31,7 @@ public class AuthenticationController {
     @Resource(name = "BasicAuthenticationProvider")
     private AuthenticationProvider authenticationProvider;
     @Autowired
-    private QutPegawaiService qutPegawaiService;
+    private QutPegawaiCloneService qutPegawaiService;
     @Autowired
     private AkunPegawaiService akunPegawaiService;
 

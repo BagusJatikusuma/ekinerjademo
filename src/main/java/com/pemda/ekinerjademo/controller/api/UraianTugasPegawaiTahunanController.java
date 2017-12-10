@@ -5,10 +5,7 @@ import com.pemda.ekinerjademo.model.ekinerjamodel.PejabatPenilaiDinilai;
 import com.pemda.ekinerjademo.model.ekinerjamodel.UraianTugasJabatanJenisUrtug;
 import com.pemda.ekinerjademo.model.ekinerjamodel.UraianTugasPegawaiTahunan;
 import com.pemda.ekinerjademo.model.ekinerjamodel.UraianTugasPegawaiTahunanId;
-import com.pemda.ekinerjademo.service.PejabatPenilaiDinilaiService;
-import com.pemda.ekinerjademo.service.QutPegawaiService;
-import com.pemda.ekinerjademo.service.UraianTugasJabatanJenisUrtugService;
-import com.pemda.ekinerjademo.service.UraianTugasPegawaiTahunanService;
+import com.pemda.ekinerjademo.service.*;
 import com.pemda.ekinerjademo.wrapper.input.UraianTugasPegawaiTahunanInputWrapper;
 import com.pemda.ekinerjademo.wrapper.output.*;
 import org.slf4j.Logger;
@@ -32,7 +29,7 @@ public class UraianTugasPegawaiTahunanController {
     public static final Logger LOGGER = LoggerFactory.getLogger(UraianTugasPegawaiTahunanController.class);
 
     @Autowired private UraianTugasPegawaiTahunanService urtugPegawaiTahunanService;
-    @Autowired private QutPegawaiService qutPegawaiService;
+    @Autowired private QutPegawaiCloneService qutPegawaiService;
     @Autowired private UraianTugasJabatanJenisUrtugService uraianTugasJabatanJenisUrtugService;
     @Autowired private PejabatPenilaiDinilaiService pejabatPenilaiDinilaiService;
 

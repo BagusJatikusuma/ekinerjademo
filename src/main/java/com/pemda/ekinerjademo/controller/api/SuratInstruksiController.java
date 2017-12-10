@@ -3,6 +3,7 @@ package com.pemda.ekinerjademo.controller.api;
 import com.pemda.ekinerjademo.model.bismamodel.TkdJabatan;
 import com.pemda.ekinerjademo.model.ekinerjamodel.*;
 import com.pemda.ekinerjademo.projection.ekinerjaprojection.CustomPegawaiCredential;
+import com.pemda.ekinerjademo.service.QutPegawaiCloneService;
 import com.pemda.ekinerjademo.service.QutPegawaiService;
 import com.pemda.ekinerjademo.service.SuratInstruksiService;
 import com.pemda.ekinerjademo.service.TkdJabatanService;
@@ -37,7 +38,7 @@ public class SuratInstruksiController {
     public static final Logger LOGGER = LoggerFactory.getLogger(SuratInstruksiController.class);
 
     @Autowired private SuratInstruksiService suratInstruksiService;
-    @Autowired private QutPegawaiService qutPegawaiService;
+    @Autowired private QutPegawaiCloneService qutPegawaiService;
     @Autowired private TkdJabatanService tkdJabatanService;
 
     @RequestMapping(value = "/create-surat-instruksi", method = RequestMethod.POST)
