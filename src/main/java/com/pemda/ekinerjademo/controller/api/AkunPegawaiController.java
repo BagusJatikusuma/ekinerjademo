@@ -311,6 +311,32 @@ public class AkunPegawaiController {
         return new ResponseEntity<Object>(qutPegawaiWrappers, HttpStatus.OK);
     }
 
+    @RequestMapping(value = "/get-pegawai-by-jabatan/{kdJabatan}", method = RequestMethod.GET)
+    ResponseEntity<?> getPegawaiByJabatan(@PathVariable("kdJabatan") String kdJabatan) {
+        LOGGER.info("get pegawai by jabatan");
+
+        List<QutPegawaiWrapper> qutPegawaiWrappers
+                = new ArrayList<>();
+        List<QutPegawaiClone> qutPegawaiCloneList
+                = qutPegawaiService.getQutPegawaiByKdJabatan(kdJabatan);
+
+        for (QutPegawaiClone pegawai : qutPegawaiCloneList) {
+            qutPegawaiWrappers
+                    .add(new QutPegawaiWrapper(
+                            pegawai.getNip(),
+                            pegawai.getNama(),
+                            pegawai.getKdJabatan(),
+                            pegawai.getJabatan(),
+                            pegawai.getKdUnitKerja(),
+                            pegawai.getUnitKerja(),
+                            pegawai.getPangkat(),
+                            pegawai.getGol()));
+        }
+
+        return new ResponseEntity<Object>(qutPegawaiWrappers, HttpStatus.OK);
+
+    }
+
     @RequestMapping(value = "/get-pegawai-dinilai/{nipPenilai}/{kdUnitKerja}", method = RequestMethod.GET)
     ResponseEntity<?> getPegawaiDinilai(
             @PathVariable("nipPenilai") String nipPenilai,

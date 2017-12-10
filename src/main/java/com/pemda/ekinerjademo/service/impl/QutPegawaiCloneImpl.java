@@ -315,6 +315,11 @@ public class QutPegawaiCloneImpl implements QutPegawaiCloneService {
     }
 
     @Override
+    public List<QutPegawaiClone> getQutPegawaiByKdJabatan(String kdJabatan) {
+        return qutPegawaiCloneDao.findByKdJabatan(kdJabatan);
+    }
+
+    @Override
     public void deleteAll() {
         qutPegawaiCloneDao.deleteAll();
     }

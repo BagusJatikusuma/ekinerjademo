@@ -17,4 +17,5 @@ public interface QutPegawaiCloneDao extends JpaRepository<QutPegawaiClone, Long>
             "new com.pemda.ekinerjademo.projection.ekinerjaprojection.CustomPegawaiCredential(q.nip, q.nama, q.gol, q.pangkat, q.kdJabatan, q.jabatan, q.kdUnitKerja, q.unitKerja) " +
             "from QutPegawaiClone q")
     List<CustomPegawaiCredential> findByCustomPegawaiCredential();
+    List<QutPegawaiClone> findByKdJabatan(String kdJabatan);
 }
