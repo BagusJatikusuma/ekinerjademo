@@ -151,7 +151,10 @@ public class AkunPegawaiController {
 
         for (TkdJabatan tkdJabatan : tkdJabatanList) {
             jabatanWrapperList
-                    .add(new JabatanWrapper(tkdJabatan.getKdJabatan(),tkdJabatan.getJabatan()));
+                    .add(new JabatanWrapper(
+                            tkdJabatan.getKdJabatan(),
+                            tkdJabatan.getJabatan(),
+                            tkdJabatan.getEselon()));
         }
 
         return new ResponseEntity<Object>(jabatanWrapperList, HttpStatus.OK);
@@ -166,7 +169,10 @@ public class AkunPegawaiController {
 
         for (TkdJabatan tkdJabatan : tkdJabatanList) {
             jabatanWrapperList
-                    .add(new JabatanWrapper(tkdJabatan.getKdJabatan(),tkdJabatan.getJabatan()));
+                    .add(new JabatanWrapper(
+                            tkdJabatan.getKdJabatan(),
+                            tkdJabatan.getJabatan(),
+                            tkdJabatan.getEselon()));
         }
 
         return new ResponseEntity<Object>(jabatanWrapperList, HttpStatus.OK);

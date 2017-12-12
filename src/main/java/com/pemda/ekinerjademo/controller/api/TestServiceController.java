@@ -217,22 +217,24 @@ public class TestServiceController {
                         unitKerjaKegiatan.getKdUnit());
 
         for (TaProgram taProgram : taProgramList) {
-            taProgramWrappers
-                    .add(new TaProgramWrapper(
-                            taProgram.getTaProgramId().getKdUrusan(),
-                            taProgram.getTaProgramId().getKdBIdang(),
-                            taProgram.getTaProgramId().getKdUnit(),
-                            taProgram.getTaProgramId().getKdSub(),
-                            taProgram.getTaProgramId().getTahun(),
-                            taProgram.getTaProgramId().getKdProg(),
-                            taProgram.getTaProgramId().getIdProg(),
-                            taProgram.getKetProgram(),
-                            taProgram.getTolakUkur(),
-                            taProgram.getTargetAngka(),
-                            taProgram.getTargetUraian(),
-                            taProgram.getKdUrusan1(),
-                            taProgram.getKdBidang1()
-                    ));
+            if (!taProgram.getKetProgram().equals("Non Program")) {
+                taProgramWrappers
+                        .add(new TaProgramWrapper(
+                                taProgram.getTaProgramId().getKdUrusan(),
+                                taProgram.getTaProgramId().getKdBIdang(),
+                                taProgram.getTaProgramId().getKdUnit(),
+                                taProgram.getTaProgramId().getKdSub(),
+                                taProgram.getTaProgramId().getTahun(),
+                                taProgram.getTaProgramId().getKdProg(),
+                                taProgram.getTaProgramId().getIdProg(),
+                                taProgram.getKetProgram(),
+                                taProgram.getTolakUkur(),
+                                taProgram.getTargetAngka(),
+                                taProgram.getTargetUraian(),
+                                taProgram.getKdUrusan1(),
+                                taProgram.getKdBidang1()
+                        ));
+            }
         }
 
         return new ResponseEntity<Object>(taProgramWrappers, HttpStatus.OK);
