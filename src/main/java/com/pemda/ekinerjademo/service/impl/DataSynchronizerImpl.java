@@ -36,16 +36,20 @@ public class DataSynchronizerImpl extends Thread{
         try
         {
             //get start day
-            int tempDay = (int)(new Date().getTime()/(1000*60*60*24));
+//            int tempDay = (int)(new Date().getTime()/(1000*60*60*24));
+            Date tempDate = new Date();
+            Date currentDate;
             //loop
             for (;;) {
-                int currentDay = (int)(new Date().getTime()/(1000*60*60*24));
-                LOGGER.info(tempDay+" : "+currentDay);
+//                int currentDay = (int)(new Date().getTime()/(1000*60*60*24));
+                currentDate = new Date();
+
+//                LOGGER.info(tempDay+" : "+currentDay);
                 //if already tomorrow
-                if (currentDay > tempDay) {
+                if (currentDate.after(tempDate)) {
                     resetDataPegawai();
                     //replace temp day
-                    tempDay = currentDay;
+                    tempDate = new Date();
                 }
                 //wait for one hour
                 Thread.sleep(1000 * 60 * 60);
@@ -64,8 +68,10 @@ public class DataSynchronizerImpl extends Thread{
 
         qutPegawaiCloneService.deleteAll();
 
-        List<QutPegawai> qutPegawaiList = qutPegawaiService.getQutPegawai();
-        List<QutPegawaiClone> qutPegawaiCloneList = new ArrayList<>();
+        List<QutPegawai> qutPegawaiList
+                = qutPegawaiService.getQutPegawai();
+        List<QutPegawaiClone> qutPegawaiCloneList
+                = new ArrayList<>();
 
         for (QutPegawai qutPegawai : qutPegawaiList) {
             QutPegawaiClone pegawaiClone = new QutPegawaiClone();

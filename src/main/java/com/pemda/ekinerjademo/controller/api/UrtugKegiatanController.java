@@ -4,15 +4,16 @@ import com.pemda.ekinerjademo.model.ekinerjamodel.UnitKerjaKegiatan;
 import com.pemda.ekinerjademo.model.ekinerjamodel.UrtugKegiatan;
 import com.pemda.ekinerjademo.model.ekinerjamodel.UrtugKegiatanId;
 import com.pemda.ekinerjademo.model.simdamodel.TaKegiatan;
+import com.pemda.ekinerjademo.model.simdamodel.TaKegiatanId;
+import com.pemda.ekinerjademo.model.simdamodel.TaProgram;
+import com.pemda.ekinerjademo.model.simdamodel.TaProgramId;
 import com.pemda.ekinerjademo.repository.ekinerjarepository.UnitKerjaKegiatanDao;
 import com.pemda.ekinerjademo.repository.simdarepository.TaKegiatanDao;
+import com.pemda.ekinerjademo.repository.simdarepository.TaProgramDao;
 import com.pemda.ekinerjademo.service.TaKegiatanService;
 import com.pemda.ekinerjademo.service.UnitKerjaKegiatanService;
 import com.pemda.ekinerjademo.service.UrtugKegiatanService;
-import com.pemda.ekinerjademo.wrapper.input.UraianTugasJabatanInputWrapper;
-import com.pemda.ekinerjademo.wrapper.input.UrtugJabatanIdInputWrapper;
-import com.pemda.ekinerjademo.wrapper.input.UrtugJabatanJenisIdInputWrapper;
-import com.pemda.ekinerjademo.wrapper.input.UrtugKegiatanInputWrapper;
+import com.pemda.ekinerjademo.wrapper.input.*;
 import com.pemda.ekinerjademo.wrapper.output.CustomMessage;
 import com.pemda.ekinerjademo.wrapper.output.UrtugKegiatanWrapper;
 import org.slf4j.Logger;
@@ -39,6 +40,8 @@ public class UrtugKegiatanController {
     private UnitKerjaKegiatanDao unitKerjaKegiatanDao;
     @Autowired
     private TaKegiatanDao taKegiatanDao;
+    @Autowired
+    private TaProgramDao taProgramDao;
     @Autowired
     private TaKegiatanService taKegiatanService;
     @Autowired
@@ -102,6 +105,18 @@ public class UrtugKegiatanController {
     ResponseEntity<?> createUrtugKegiatan(@RequestBody UrtugKegiatanInputWrapper urtugKegiatanInputWrapper) {
         LOGGER.info("create urtug kegiatan");
 
+        TaKegiatan taKegiatan
+                = taKegiatanDao.findByTaKegiatanId(
+                        new TaKegiatanId(
+                                urtugKegiatanInputWrapper.getKdUrusan(),
+                                urtugKegiatanInputWrapper.getKdBidang(),
+                                urtugKegiatanInputWrapper.getKdUnit(),
+                                urtugKegiatanInputWrapper.getKdSub(),
+                                urtugKegiatanInputWrapper.getTahun(),
+                                urtugKegiatanInputWrapper.getKdProg(),
+                                urtugKegiatanInputWrapper.getIdProg(),
+                                urtugKegiatanInputWrapper.getKdKeg()));
+
         UrtugKegiatan urtugKegiatan = new UrtugKegiatan();
         urtugKegiatan.setUrtugKegiatanId(
                 new UrtugKegiatanId(
@@ -118,10 +133,63 @@ public class UrtugKegiatanController {
                         urtugKegiatanInputWrapper.getIdProg(),
                         urtugKegiatanInputWrapper.getKdKeg()
                 ));
+        urtugKegiatan.setKuantitas(urtugKegiatanInputWrapper.getKuantitas());
+        urtugKegiatan.setSatuanKuantitas(urtugKegiatanInputWrapper.getSatuanKuantitas());
+        urtugKegiatan.setKualitas(100);
+        urtugKegiatan.setWaktu(urtugKegiatanInputWrapper.getWaktu());
+        urtugKegiatan.setBiaya(taKegiatan.getPaguAnggaran());
 
         urtugKegiatanService.save(urtugKegiatan);
 
         return new ResponseEntity<Object>(new CustomMessage("urtug kegiatan created"), HttpStatus.CREATED);
+    }
+
+    @RequestMapping(value = "/create-urtug-program", method = RequestMethod.POST)
+    ResponseEntity<?> createUrtugProgram(
+            @RequestBody UrtugProgramInputWrapper inputWrapper) {
+        LOGGER.info("create urtug program");
+
+        TaProgram taProgram
+                = taProgramDao.findByTaProgramId(
+                        new TaProgramId(
+                                inputWrapper.getKdUrusan(),
+                                inputWrapper.getKdBidang(),
+                                inputWrapper.getKdUnit(),
+                                inputWrapper.getKdSub(),
+                                inputWrapper.getTahun(),
+                                inputWrapper.getKdProg(),
+                                inputWrapper.getIdProg()));
+
+        for (TaKegiatan kegiatan
+                : taProgram.getTaKegiatanList()) {
+            UrtugKegiatan urtugKegiatan = new UrtugKegiatan();
+
+            urtugKegiatan.setUrtugKegiatanId(
+                    new UrtugKegiatanId(
+                            inputWrapper.getKdUrtug(),
+                            inputWrapper.getKdJabatan(),
+                            inputWrapper.getKdJenisUrtug(),
+                            inputWrapper.getTahunUrtug(),
+                            inputWrapper.getKdUrusan(),
+                            inputWrapper.getKdBidang(),
+                            inputWrapper.getKdUnit(),
+                            inputWrapper.getKdSub(),
+                            inputWrapper.getTahun(),
+                            inputWrapper.getKdProg(),
+                            inputWrapper.getIdProg(),
+                            kegiatan.getTaKegiatanId().getKdKegiatan()
+                    ));
+            urtugKegiatan.setKuantitas(taProgram.getTaKegiatanList().size());
+            urtugKegiatan.setSatuanKuantitas("kegiatan");
+            urtugKegiatan.setKualitas(100);
+            urtugKegiatan.setWaktu(12);
+            urtugKegiatan.setBiaya(kegiatan.getPaguAnggaran());
+
+            urtugKegiatanService.save(urtugKegiatan);
+
+        }
+
+        return new ResponseEntity<Object>(new CustomMessage("urtug program created"), HttpStatus.CREATED);
     }
 
     @RequestMapping(value = "/update-urtug-kegiatan", method = RequestMethod.PUT)

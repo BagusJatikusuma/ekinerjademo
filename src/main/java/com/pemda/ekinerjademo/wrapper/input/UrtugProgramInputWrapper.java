@@ -1,11 +1,9 @@
 package com.pemda.ekinerjademo.wrapper.input;
 
-import javax.persistence.Column;
-
 /**
- * Created by bagus on 05/10/17.
+ * Created by bagus on 11/12/17.
  */
-public class UrtugKegiatanInputWrapper {
+public class UrtugProgramInputWrapper {
     private String kdUrtug;
     private String kdJabatan;
     private String kdJenisUrtug;
@@ -17,43 +15,6 @@ public class UrtugKegiatanInputWrapper {
     private Integer tahun;
     private Integer kdProg;
     private Integer idProg;
-    private Integer kdKeg;
-    private Integer kuantitas;
-    private String  satuanKuantitas;
-    private Integer kualitas;
-    private Integer waktu;
-
-    public Integer getKuantitas() {
-        return kuantitas;
-    }
-
-    public void setKuantitas(Integer kuantitas) {
-        this.kuantitas = kuantitas;
-    }
-
-    public String getSatuanKuantitas() {
-        return satuanKuantitas;
-    }
-
-    public void setSatuanKuantitas(String satuanKuantitas) {
-        this.satuanKuantitas = satuanKuantitas;
-    }
-
-    public Integer getKualitas() {
-        return kualitas;
-    }
-
-    public void setKualitas(Integer kualitas) {
-        this.kualitas = kualitas;
-    }
-
-    public Integer getWaktu() {
-        return waktu;
-    }
-
-    public void setWaktu(Integer waktu) {
-        this.waktu = waktu;
-    }
 
     public String getKdUrtug() {
         return kdUrtug;
@@ -77,6 +38,14 @@ public class UrtugKegiatanInputWrapper {
 
     public void setKdJenisUrtug(String kdJenisUrtug) {
         this.kdJenisUrtug = kdJenisUrtug;
+    }
+
+    public Integer getTahunUrtug() {
+        return tahunUrtug;
+    }
+
+    public void setTahunUrtug(Integer tahunUrtug) {
+        this.tahunUrtug = tahunUrtug;
     }
 
     public Integer getKdUrusan() {
@@ -133,21 +102,5 @@ public class UrtugKegiatanInputWrapper {
 
     public void setIdProg(Integer idProg) {
         this.idProg = idProg;
-    }
-
-    public Integer getKdKeg() {
-        return kdKeg;
-    }
-
-    public void setKdKeg(Integer kdKeg) {
-        this.kdKeg = kdKeg;
-    }
-
-    public Integer getTahunUrtug() {
-        return tahunUrtug;
-    }
-
-    public void setTahunUrtug(Integer tahunUrtug) {
-        this.tahunUrtug = tahunUrtug;
     }
 }

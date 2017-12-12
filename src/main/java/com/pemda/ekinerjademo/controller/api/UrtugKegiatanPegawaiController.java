@@ -3,6 +3,8 @@ package com.pemda.ekinerjademo.controller.api;
 import com.pemda.ekinerjademo.model.bismamodel.QutPegawai;
 import com.pemda.ekinerjademo.model.ekinerjamodel.*;
 import com.pemda.ekinerjademo.model.simdamodel.TaKegiatan;
+import com.pemda.ekinerjademo.model.simdamodel.TaProgram;
+import com.pemda.ekinerjademo.repository.simdarepository.TaProgramDao;
 import com.pemda.ekinerjademo.service.*;
 import com.pemda.ekinerjademo.wrapper.input.*;
 import com.pemda.ekinerjademo.wrapper.output.*;
@@ -27,6 +29,7 @@ public class UrtugKegiatanPegawaiController {
 
     private UrtugKegiatanPegawaiService urtugKegiatanPegawaiService;
     @Autowired private TaKegiatanService taKegiatanService;
+    @Autowired private TaProgramDao taProgramDao;
     @Autowired private UnitKerjaKegiatanService unitKerjaKegiatanService;
     @Autowired private QutPegawaiCloneService qutPegawaiService;
 
@@ -205,6 +208,63 @@ public class UrtugKegiatanPegawaiController {
 
         return new ResponseEntity<Object>(urtugKegiatanPegawaiWrappers, HttpStatus.OK);
 
+    }
+
+    @RequestMapping(value = "/get-urtug-program-pegawai/{nipPegawai}/{kdUnitKerja}")
+    ResponseEntity<?> getUrtugProgramPegawai(
+            @PathVariable("nipPegawai") String nipPegawai,
+            @PathVariable("kdUnitKerja") String kdUnitKerja) {
+        LOGGER.info("get urtug program pegawai");
+
+        UnitKerjaKegiatan unitKerjaKegiatan
+                = unitKerjaKegiatanService.findByKdUnitKerja(kdUnitKerja);
+
+        List<UrtugProgramPegawaiWrapper> urtugProgramPegawaiWrapperList
+                = new ArrayList<>();
+
+        List<UrtugKegiatanPegawai> urtugKegiatanPegawaiList
+                = urtugKegiatanPegawaiService.findByNipPegawai(nipPegawai);
+        List<TaProgram> taProgramList
+                = taProgramDao.findAllByKdUnitKerja(
+                        unitKerjaKegiatan.getKdUrusan(),
+                        unitKerjaKegiatan.getKdBidang(),
+                        unitKerjaKegiatan.getKdUnit());
+
+        boolean notFound = true;
+        for (UrtugKegiatanPegawai urtugKegiatanPegawai
+                : urtugKegiatanPegawaiList) {
+            for (UrtugProgramPegawaiWrapper urtugProgramPegawaiWrapper
+                    : urtugProgramPegawaiWrapperList) {
+
+            }
+
+            if (notFound) {
+                urtugProgramPegawaiWrapperList
+                        .add(new UrtugProgramPegawaiWrapper(
+                                urtugKegiatanPegawai.getUrtugKegiatanPegawaiId().getKdUrtug(),
+                                urtugKegiatanPegawai.getUrtugKegiatan().getUraianTugasJabatanJenisUrtug().getUraianTugasJabatan().getUraianTugas().getDeskripsi(),
+                                urtugKegiatanPegawai.getUrtugKegiatanPegawaiId().getKdJabatan(),
+                                urtugKegiatanPegawai.getUrtugKegiatanPegawaiId().getKdJenisUrtug(),
+                                urtugKegiatanPegawai.getUrtugKegiatanPegawaiId().getTahunUrtug(),
+                                urtugKegiatanPegawai.getUrtugKegiatanPegawaiId().getKdUrusan(),
+                                urtugKegiatanPegawai.getUrtugKegiatanPegawaiId().getKdBidang(),
+                                urtugKegiatanPegawai.getUrtugKegiatanPegawaiId().getKdUnit(),
+                                urtugKegiatanPegawai.getUrtugKegiatanPegawaiId().getKdSub(),
+                                urtugKegiatanPegawai.getUrtugKegiatanPegawaiId().getTahun(),
+                                urtugKegiatanPegawai.getUrtugKegiatanPegawaiId().getKdProg(),
+                                urtugKegiatanPegawai.getUrtugKegiatanPegawaiId().getIdProg(),
+                                "",
+                                urtugKegiatanPegawai.getUrtugKegiatan().getKuantitas(),
+                                urtugKegiatanPegawai.getUrtugKegiatan().getSatuanKuantitas(),
+                                urtugKegiatanPegawai.getUrtugKegiatan().getKualitas(),
+                                urtugKegiatanPegawai.getUrtugKegiatan().getWaktu(),
+                                urtugKegiatanPegawai.getUrtugKegiatan().getBiaya()
+                        ));
+            }
+        }
+
+
+        return null;
     }
 
     //get urtug dpa by nip
