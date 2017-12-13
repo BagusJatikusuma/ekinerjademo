@@ -22,6 +22,14 @@ public class SuratDisposisi {
     private String ringkasanIsi;
     @Column(name = "lampiran")
     private String lampiran;
+    @Column(name = "path_file")
+    private String pathFile;
+    @Column(name = "jenis_surat_penugasan")
+    private Integer jenisSuratPenugasan;
+    @Column(name = "kd_surat_penugasan")
+    private String kdSuratPenugasan;
+    @Column(name = "no_surat_disposisi")
+    private String noSuratDisposisi;
 
     public SuratDisposisi() {
     }
@@ -67,5 +75,37 @@ public class SuratDisposisi {
 
     public void setLampiran(String lampiran) {
         this.lampiran = lampiran;
+    }
+
+    public String getPathFile() {
+        return pathFile;
+    }
+
+    public void setPathFile(String pathFile) {
+        this.pathFile = pathFile;
+    }
+
+    public Integer getJenisSuratPenugasan() {
+        return jenisSuratPenugasan;
+    }
+
+    public void setJenisSuratPenugasan(Integer jenisSuratPenugasan) {
+        this.jenisSuratPenugasan = jenisSuratPenugasan;
+    }
+
+    public String getKdSuratPenugasan() {
+        return kdSuratPenugasan;
+    }
+
+    public void setKdSuratPenugasan(String kdSuratPenugasan) {
+        this.kdSuratPenugasan = kdSuratPenugasan;
+    }
+
+    public String getNoSuratDisposisi() {
+        return noSuratDisposisi;
+    }
+
+    public void setNoSuratDisposisi(String noSuratDisposisi) {
+        this.noSuratDisposisi = noSuratDisposisi;
     }
 }

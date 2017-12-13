@@ -24,6 +24,9 @@ public class UrtugProgramPegawaiWrapper {
     private Integer kualitas;
     private Integer waktu;
     private BigDecimal biaya;
+    private String kdStatusPenanggungJawab;
+    private String statusPenanggungJawab;
+    private Integer statusApproval;
 
     public UrtugProgramPegawaiWrapper() {
     }
@@ -64,6 +67,50 @@ public class UrtugProgramPegawaiWrapper {
         this.kualitas = kualitas;
         this.waktu = waktu;
         this.biaya = biaya;
+    }
+    public UrtugProgramPegawaiWrapper(
+            String kdUrtug,
+            String deskripsiUrtug,
+            String kdJabatan,
+            String kdJenisUrtug,
+            Integer tahunUrtug,
+            Integer kdUrusan,
+            Integer kdBidang,
+            Integer kdUnit,
+            Integer kdSub,
+            Integer tahun,
+            Integer kdProg,
+            Integer idProg,
+            String ketProgram,
+            Integer kuantitas,
+            String satuanKuantitas,
+            Integer kualitas,
+            Integer waktu,
+            BigDecimal biaya,
+            String kdStatusPenanggungJawab,
+            String statusPenanggungJawab,
+            Integer statusApproval) {
+        this.kdUrtug = kdUrtug;
+        this.deskripsiUrtug = deskripsiUrtug;
+        this.kdJabatan = kdJabatan;
+        this.kdJenisUrtug = kdJenisUrtug;
+        this.tahunUrtug = tahunUrtug;
+        this.kdUrusan = kdUrusan;
+        this.kdBidang = kdBidang;
+        this.kdUnit = kdUnit;
+        this.kdSub = kdSub;
+        this.tahun = tahun;
+        this.kdProg = kdProg;
+        this.idProg = idProg;
+        this.ketProgram = ketProgram;
+        this.kuantitas = kuantitas;
+        this.satuanKuantitas = satuanKuantitas;
+        this.kualitas = kualitas;
+        this.waktu = waktu;
+        this.biaya = biaya;
+        this.kdStatusPenanggungJawab = kdStatusPenanggungJawab;
+        this.statusPenanggungJawab = statusPenanggungJawab;
+        this.statusApproval = statusApproval;
     }
 
     public String getKdUrtug() {
@@ -200,5 +247,37 @@ public class UrtugProgramPegawaiWrapper {
 
     public void setBiaya(BigDecimal biaya) {
         this.biaya = biaya;
+    }
+
+    public String getKetProgram() {
+        return ketProgram;
+    }
+
+    public void setKetProgram(String ketProgram) {
+        this.ketProgram = ketProgram;
+    }
+
+    public String getKdStatusPenanggungJawab() {
+        return kdStatusPenanggungJawab;
+    }
+
+    public void setKdStatusPenanggungJawab(String kdStatusPenanggungJawab) {
+        this.kdStatusPenanggungJawab = kdStatusPenanggungJawab;
+    }
+
+    public String getStatusPenanggungJawab() {
+        return statusPenanggungJawab;
+    }
+
+    public void setStatusPenanggungJawab(String statusPenanggungJawab) {
+        this.statusPenanggungJawab = statusPenanggungJawab;
+    }
+
+    public Integer getStatusApproval() {
+        return statusApproval;
+    }
+
+    public void setStatusApproval(Integer statusApproval) {
+        this.statusApproval = statusApproval;
     }
 }

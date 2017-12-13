@@ -199,7 +199,13 @@ public class UrtugKegiatanPegawaiController {
                                     taKegiatan.getPaguAnggaran(),
                                     urtugKegiatanPegawai.getUrtugKegiatanPegawaiId().getNipPegawai(),
                                     urtugKegiatanPegawai.getUrtugKegiatanPegawaiId().getKdStatusPenanggungJawab(),
-                                    urtugKegiatanPegawai.getStatusPenanggungJawabKegiatan().getStatus()));
+                                    urtugKegiatanPegawai.getStatusPenanggungJawabKegiatan().getStatus(),
+                                    urtugKegiatanPegawai.getStatusApproval(),
+                                    urtugKegiatanPegawai.getUrtugKegiatan().getKuantitas(),
+                                    urtugKegiatanPegawai.getUrtugKegiatan().getSatuanKuantitas(),
+                                    urtugKegiatanPegawai.getUrtugKegiatan().getKualitas(),
+                                    urtugKegiatanPegawai.getUrtugKegiatan().getWaktu()
+                            ));
 
                     break;
                 }
@@ -230,12 +236,26 @@ public class UrtugKegiatanPegawaiController {
                         unitKerjaKegiatan.getKdBidang(),
                         unitKerjaKegiatan.getKdUnit());
 
-        boolean notFound = true;
+        boolean notFound;
         for (UrtugKegiatanPegawai urtugKegiatanPegawai
                 : urtugKegiatanPegawaiList) {
+            notFound = true;
+
             for (UrtugProgramPegawaiWrapper urtugProgramPegawaiWrapper
                     : urtugProgramPegawaiWrapperList) {
+                if (urtugProgramPegawaiWrapper.getKdUrusan().equals(urtugKegiatanPegawai.getUrtugKegiatanPegawaiId().getKdUrusan()) &&
+                        urtugProgramPegawaiWrapper.getKdBidang().equals(urtugKegiatanPegawai.getUrtugKegiatanPegawaiId().getKdBidang()) &&
+                        urtugProgramPegawaiWrapper.getKdUnit().equals(urtugKegiatanPegawai.getUrtugKegiatanPegawaiId().getKdUnit()) &&
+                        urtugProgramPegawaiWrapper.getKdSub().equals(urtugKegiatanPegawai.getUrtugKegiatanPegawaiId().getKdSub()) &&
+                        urtugProgramPegawaiWrapper.getTahun().equals(urtugKegiatanPegawai.getUrtugKegiatanPegawaiId().getTahun()) &&
+                        urtugProgramPegawaiWrapper.getKdProg().equals(urtugKegiatanPegawai.getUrtugKegiatanPegawaiId().getKdProg()) &&
+                        urtugProgramPegawaiWrapper.getIdProg().equals(urtugKegiatanPegawai.getUrtugKegiatanPegawaiId().getIdProg())) {
 
+                    urtugProgramPegawaiWrapper.setBiaya(urtugProgramPegawaiWrapper.getBiaya().add(urtugKegiatanPegawai.getUrtugKegiatan().getBiaya()));
+                    notFound = false;
+
+                    break;
+                }
             }
 
             if (notFound) {
@@ -258,13 +278,33 @@ public class UrtugKegiatanPegawaiController {
                                 urtugKegiatanPegawai.getUrtugKegiatan().getSatuanKuantitas(),
                                 urtugKegiatanPegawai.getUrtugKegiatan().getKualitas(),
                                 urtugKegiatanPegawai.getUrtugKegiatan().getWaktu(),
-                                urtugKegiatanPegawai.getUrtugKegiatan().getBiaya()
+                                urtugKegiatanPegawai.getUrtugKegiatan().getBiaya(),
+                                urtugKegiatanPegawai.getStatusPenanggungJawabKegiatan().getKdStatus(),
+                                urtugKegiatanPegawai.getStatusPenanggungJawabKegiatan().getStatus(),
+                                urtugKegiatanPegawai.getStatusApproval()
                         ));
             }
         }
 
+        //set keterangan from simda
+        for (UrtugProgramPegawaiWrapper program
+                : urtugProgramPegawaiWrapperList) {
+            for (TaProgram taProgram
+                    : taProgramList) {
+                if (program.getKdUrusan().equals(taProgram.getTaProgramId().getKdUrusan()) &&
+                        program.getKdBidang().equals(taProgram.getTaProgramId().getKdBIdang()) &&
+                        program.getKdUnit().equals(taProgram.getTaProgramId().getKdUnit()) &&
+                        program.getKdSub().equals(taProgram.getTaProgramId().getKdSub()) &&
+                        program.getTahun().equals(taProgram.getTaProgramId().getTahun()) &&
+                        program.getKdProg().equals(taProgram.getTaProgramId().getKdProg()) &&
+                        program.getIdProg().equals(taProgram.getTaProgramId().getIdProg())) {
 
-        return null;
+                    program.setKetProgram(taProgram.getKetProgram());
+                }
+            }
+        }
+
+        return new ResponseEntity<Object>(urtugProgramPegawaiWrapperList, HttpStatus.OK);
     }
 
     //get urtug dpa by nip

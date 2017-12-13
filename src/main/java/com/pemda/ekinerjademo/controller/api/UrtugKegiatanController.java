@@ -16,6 +16,7 @@ import com.pemda.ekinerjademo.service.UrtugKegiatanService;
 import com.pemda.ekinerjademo.wrapper.input.*;
 import com.pemda.ekinerjademo.wrapper.output.CustomMessage;
 import com.pemda.ekinerjademo.wrapper.output.UrtugKegiatanWrapper;
+import com.pemda.ekinerjademo.wrapper.output.UrtugProgramWrapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -99,6 +100,90 @@ public class UrtugKegiatanController {
 
         return new ResponseEntity<Object>(urtugKegiatanWrapperList, HttpStatus.OK);
     }
+
+    @RequestMapping(value = "/get-urtug-program-by-jabatan", method = RequestMethod.POST)
+    ResponseEntity<?> getUrtugProgramByUrtugJabatan(
+            @RequestBody UrtugJabatanJenisIdInputWrapper urtugJabatanWrapper) {
+        LOGGER.info("get urtug program by urtug jabatan");
+
+        List<UrtugProgramWrapper> urtugProgramWrapperList = new ArrayList<>();
+
+        UnitKerjaKegiatan unitKerjaKegiatan
+                = unitKerjaKegiatanService.findByKdUnitKerja(urtugJabatanWrapper.getKdUnitKerja());
+
+        List<TaProgram> taProgramList
+                = taProgramDao.findAllByKdUnitKerja(
+                    unitKerjaKegiatan.getKdUrusan(),
+                    unitKerjaKegiatan.getKdBidang(),
+                    unitKerjaKegiatan.getKdUnit());
+
+        List<UrtugKegiatan> urtugKegiatanList
+                = urtugKegiatanService.findAllByUraianTugasJabatan(
+                    urtugJabatanWrapper.getKdUrtug(),
+                    urtugJabatanWrapper.getKdJabatan(),
+                    urtugJabatanWrapper.getKdJenisUrtug(),
+                    urtugJabatanWrapper.getTahunUrtug());
+
+        boolean notFound;
+        for (UrtugKegiatan urtugKegiatan : urtugKegiatanList) {
+            notFound = true;
+
+            for (UrtugProgramWrapper urtugProgramWrapper
+                    : urtugProgramWrapperList) {
+                if (urtugProgramWrapper.getKdUrusan().equals(urtugKegiatan.getUrtugKegiatanId().getKdUrusan()) &&
+                        urtugProgramWrapper.getKdBidang().equals(urtugKegiatan.getUrtugKegiatanId().getKdBidang()) &&
+                        urtugProgramWrapper.getKdUnit().equals(urtugKegiatan.getUrtugKegiatanId().getKdUnit()) &&
+                        urtugProgramWrapper.getKdSub().equals(urtugKegiatan.getUrtugKegiatanId().getKdSub()) &&
+                        urtugProgramWrapper.getTahun().equals(urtugKegiatan.getUrtugKegiatanId().getTahun()) &&
+                        urtugProgramWrapper.getKdProg().equals(urtugKegiatan.getUrtugKegiatanId().getKdProg()) &&
+                        urtugProgramWrapper.getIdProg().equals(urtugKegiatan.getUrtugKegiatanId().getIdProg())) {
+                    notFound = false;
+
+                    break;
+                }
+            }
+
+            if (notFound) {
+                urtugProgramWrapperList
+                        .add(new UrtugProgramWrapper(
+                                urtugKegiatan.getUrtugKegiatanId().getKdUrtug(),
+                                urtugKegiatan.getUrtugKegiatanId().getKdJabatan(),
+                                urtugKegiatan.getUrtugKegiatanId().getKdJenisUrtug(),
+                                urtugKegiatan.getUrtugKegiatanId().getTahunUrtug(),
+                                urtugKegiatan.getUrtugKegiatanId().getKdUrusan(),
+                                urtugKegiatan.getUrtugKegiatanId().getKdBidang(),
+                                urtugKegiatan.getUrtugKegiatanId().getKdUnit(),
+                                urtugKegiatan.getUrtugKegiatanId().getKdSub(),
+                                urtugKegiatan.getUrtugKegiatanId().getTahun(),
+                                urtugKegiatan.getUrtugKegiatanId().getKdProg(),
+                                urtugKegiatan.getUrtugKegiatanId().getIdProg(),
+                                ""
+                        ));
+            }
+        }
+
+        //set keterangan from simda
+        for (UrtugProgramWrapper program
+                : urtugProgramWrapperList) {
+            for (TaProgram taProgram
+                    : taProgramList) {
+                if (program.getKdUrusan().equals(taProgram.getTaProgramId().getKdUrusan()) &&
+                        program.getKdBidang().equals(taProgram.getTaProgramId().getKdBIdang()) &&
+                        program.getKdUnit().equals(taProgram.getTaProgramId().getKdUnit()) &&
+                        program.getKdSub().equals(taProgram.getTaProgramId().getKdSub()) &&
+                        program.getTahun().equals(taProgram.getTaProgramId().getTahun()) &&
+                        program.getKdProg().equals(taProgram.getTaProgramId().getKdProg()) &&
+                        program.getIdProg().equals(taProgram.getTaProgramId().getIdProg())) {
+
+                    program.setKetProgram(taProgram.getKetProgram());
+                }
+            }
+        }
+
+        return new ResponseEntity<Object>(urtugProgramWrapperList, HttpStatus.OK);
+    }
+
+
 
     //tambahkan algoritma akumulasi jumlah waktu, biaya berdasarkan jumlah kegiatan yang ditambahkan
     @RequestMapping(value = "/create-urtug-kegiatan", method = RequestMethod.POST)
