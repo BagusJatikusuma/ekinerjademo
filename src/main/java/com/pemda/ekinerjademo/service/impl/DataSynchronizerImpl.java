@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -31,6 +32,8 @@ public class DataSynchronizerImpl extends Thread{
     {
         LOGGER.info("start check synchronize process");
 
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+
         resetDataPegawai();
 
         try
@@ -43,10 +46,11 @@ public class DataSynchronizerImpl extends Thread{
             for (;;) {
 //                int currentDay = (int)(new Date().getTime()/(1000*60*60*24));
                 currentDate = new Date();
+                LOGGER.info(sdf.format(currentDate)+":"+sdf.format(tempDate));
 
 //                LOGGER.info(tempDay+" : "+currentDay);
                 //if already tomorrow
-                if (currentDate.after(tempDate)) {
+                if (!sdf.format(currentDate).equals(sdf.format(tempDate))) {
                     resetDataPegawai();
                     //replace temp day
                     tempDate = new Date();
