@@ -4,6 +4,7 @@ import com.pemda.ekinerjademo.model.bismamodel.QutPegawai;
 import com.pemda.ekinerjademo.model.ekinerjamodel.*;
 import com.pemda.ekinerjademo.model.simdamodel.TaKegiatan;
 import com.pemda.ekinerjademo.model.simdamodel.TaProgram;
+import com.pemda.ekinerjademo.model.simdamodel.TaProgramId;
 import com.pemda.ekinerjademo.repository.simdarepository.TaProgramDao;
 import com.pemda.ekinerjademo.service.*;
 import com.pemda.ekinerjademo.wrapper.input.*;
@@ -490,6 +491,55 @@ public class UrtugKegiatanPegawaiController {
         return new ResponseEntity<Object>(
                 new CustomMessage("urtug kegiatan pegawai created"), HttpStatus.CREATED);
     }
+
+    //need some revision in this statement taKegiatan.getTaKegiatanId().getKdKegiatan(), and get data kegiatan
+    @RequestMapping(value = "/create-urtug-program-pegawai", method = RequestMethod.POST)
+    ResponseEntity<?> createUrtugProgramPegawai(
+            @RequestBody UrtugProgramPegawaiInputWrapper urtugProgramPegawaiWrapper) {
+        LOGGER.info("create urtug program pegawai");
+
+        TaProgram taProgram
+                = taProgramDao.findByTaProgramId(
+                        new TaProgramId(urtugProgramPegawaiWrapper.getKdUrusan(),
+                                        urtugProgramPegawaiWrapper.getKdBidang(),
+                                        urtugProgramPegawaiWrapper.getKdUnit(),
+                                        urtugProgramPegawaiWrapper.getKdSub(),
+                                        urtugProgramPegawaiWrapper.getTahun(),
+                                        urtugProgramPegawaiWrapper.getKdProg(),
+                                        urtugProgramPegawaiWrapper.getIdProg()));
+
+        for (TaKegiatan taKegiatan
+                : taProgram.getTaKegiatanList()) {
+            UrtugKegiatanPegawai urtugKegiatanPegawai = new UrtugKegiatanPegawai();
+
+            urtugKegiatanPegawai
+                    .setUrtugKegiatanPegawaiId(
+                            new UrtugKegiatanPegawaiId(
+                                    urtugProgramPegawaiWrapper.getKdUrtug(),
+                                    urtugProgramPegawaiWrapper.getKdJabatan(),
+                                    urtugProgramPegawaiWrapper.getKdJenisUrtug(),
+                                    urtugProgramPegawaiWrapper.getTahunUrtug(),
+                                    urtugProgramPegawaiWrapper.getKdUrusan(),
+                                    urtugProgramPegawaiWrapper.getKdBidang(),
+                                    urtugProgramPegawaiWrapper.getKdUnit(),
+                                    urtugProgramPegawaiWrapper.getKdSub(),
+                                    urtugProgramPegawaiWrapper.getTahun(),
+                                    urtugProgramPegawaiWrapper.getKdProg(),
+                                    urtugProgramPegawaiWrapper.getIdProg(),
+                                    taKegiatan.getTaKegiatanId().getKdKegiatan(),
+                                    urtugProgramPegawaiWrapper.getNipPegawai(),
+                                    urtugProgramPegawaiWrapper.getKdStatusPenanggungJawab()));
+
+            urtugKegiatanPegawai.setStatusApproval(0);
+
+            urtugKegiatanPegawaiService.save(urtugKegiatanPegawai);
+
+        }
+
+        return new ResponseEntity<Object>(
+                new CustomMessage("urtug program pegawai created"), HttpStatus.CREATED);
+    }
+
 
     @RequestMapping(value = "/update-urtug-kegiatan-pegawai", method = RequestMethod.PUT)
     ResponseEntity<?> updateUrtugKegiatanPegawai(
