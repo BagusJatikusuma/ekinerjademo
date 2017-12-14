@@ -1,6 +1,7 @@
 package com.pemda.ekinerjademo.service;
 
 import com.pemda.ekinerjademo.model.ekinerjamodel.*;
+import com.pemda.ekinerjademo.model.simdamodel.TaProgramId;
 import com.pemda.ekinerjademo.wrapper.input.UrtugKegiatanPegawaiApprovalInputWrapper;
 import com.pemda.ekinerjademo.wrapper.output.UrtugKegiatanPegawaiByUrtugJabatanWrapper;
 
@@ -18,8 +19,12 @@ public interface UrtugKegiatanPegawaiService {
     List<UrtugKegiatanPegawai> findByUrtugJabatanTahunAndNipePegawai(
             UraianTugasJabatanJenisUrtugId uraianTugasJabatanJenisUrtugId, String nipPegawai);
     List<UrtugKegiatanPegawai> findByUnitKerja(String unitKerja);
+
+    List<UrtugKegiatanPegawai> findByProgram(Integer kdUrusan, Integer kdBidang, Integer kdUnit, Integer kdSub, Integer tahun, Integer kdProg, Integer idProg);
+
     void save(UrtugKegiatanPegawai urtugKegiatanPegawai);
     void update(UrtugKegiatanPegawai urtugKegiatanPegawai);
     void delete(UrtugKegiatanPegawaiId urtugKegiatanPegawaiId);
     void changeStatusApprovalUrtugKegiatan(List<UrtugKegiatanPegawaiApprovalInputWrapper> inputWrapperList);
+
 }

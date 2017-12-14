@@ -106,21 +106,23 @@ public class UrtugKegiatanPegawaiController {
         return new ResponseEntity<Object>(urtugKegiatanPegawaiWrappers, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/get-urtug-program-pegawai-by-urtug-jabatan", method = RequestMethod.POST)
-    ResponseEntity<?> getUrtugProgramPegawaiByUrtugJabatan(
-            @RequestBody UraianTugasKegiatanByJabatanInputWrapper urtugJabatanInputWrapper) {
+    @RequestMapping(value = "/get-urtug-program-pegawai-by-urtug-kegiatan", method = RequestMethod.POST)
+    ResponseEntity<?> getUrtugProgramPegawaiByUrtugKegiatan(
+            @RequestBody UrtugKegiatanUnitKerjaInputWrapper urtugJabatanInputWrapper) {
         LOGGER.info("get urtug program pegawai by urtug jabatan");
 
         List<UrtugProgramPegawaiByUrtugJabatanWrapper> urtugProgramPegawaiWrappers
                 = new ArrayList<>();
 
         List<UrtugKegiatanPegawai> urtugKegiatanPegawaiList
-                = urtugKegiatanPegawaiService.findByUrtugJabatan(
-                    new UraianTugasJabatanJenisUrtugId(
-                            urtugJabatanInputWrapper.getKdUrtug(),
-                            urtugJabatanInputWrapper.getKdJabatan(),
-                            urtugJabatanInputWrapper.getKdJenisUrtug(),
-                            urtugJabatanInputWrapper.getTahunUrtug()));
+                = urtugKegiatanPegawaiService.findByProgram(
+                        urtugJabatanInputWrapper.getKdUrusan(),
+                        urtugJabatanInputWrapper.getKdBidang(),
+                        urtugJabatanInputWrapper.getKdUnit(),
+                        urtugJabatanInputWrapper.getKdSub(),
+                        urtugJabatanInputWrapper.getTahun(),
+                        urtugJabatanInputWrapper.getKdProg(),
+                        urtugJabatanInputWrapper.getIdProg());
 
         UnitKerjaKegiatan unitKerjaKegiatan
                 = unitKerjaKegiatanService.findByKdUnitKerja(urtugJabatanInputWrapper.getKdUnitKerja());
