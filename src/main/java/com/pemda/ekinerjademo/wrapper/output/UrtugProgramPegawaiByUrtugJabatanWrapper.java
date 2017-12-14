@@ -1,9 +1,11 @@
-package com.pemda.ekinerjademo.wrapper.input;
+package com.pemda.ekinerjademo.wrapper.output;
+
+import java.math.BigDecimal;
 
 /**
- * Created by bagus on 13/12/17.
+ * Created by bagus on 14/12/17.
  */
-public class UrtugProgramPegawaiInputWrapper {
+public class UrtugProgramPegawaiByUrtugJabatanWrapper {
     private String kdUrtug;
     private String kdJabatan;
     private String kdJenisUrtug;
@@ -15,10 +17,51 @@ public class UrtugProgramPegawaiInputWrapper {
     private Integer tahun;
     private Integer kdProg;
     private Integer idProg;
-    private Integer kdKeg; //EMANG AYA KDKEG DI PROGRAM?
+    private String ketProg;
+    private BigDecimal paguAnggaran;
     private String nipPegawai;
+    private String namaPegawai;
     private String kdStatusPenanggungJawab;
-    private Integer statusApproval;
+    private String statusPenanggungJawab;
+
+    public UrtugProgramPegawaiByUrtugJabatanWrapper() {
+    }
+    public UrtugProgramPegawaiByUrtugJabatanWrapper(
+            String kdUrtug,
+            String kdJabatan,
+            String kdJenisUrtug,
+            Integer tahunUrtug,
+            Integer kdUrusan,
+            Integer kdBidang,
+            Integer kdUnit,
+            Integer kdSub,
+            Integer tahun,
+            Integer kdProg,
+            Integer idProg,
+            String ketProg,
+            BigDecimal paguAnggaran,
+            String nipPegawai,
+            String namaPegawai,
+            String kdStatusPenanggungJawab,
+            String statusPenanggungJawab) {
+        this.kdUrtug = kdUrtug;
+        this.kdJabatan = kdJabatan;
+        this.kdJenisUrtug = kdJenisUrtug;
+        this.tahunUrtug = tahunUrtug;
+        this.kdUrusan = kdUrusan;
+        this.kdBidang = kdBidang;
+        this.kdUnit = kdUnit;
+        this.kdSub = kdSub;
+        this.tahun = tahun;
+        this.kdProg = kdProg;
+        this.idProg = idProg;
+        this.ketProg = ketProg;
+        this.paguAnggaran = paguAnggaran;
+        this.nipPegawai = nipPegawai;
+        this.namaPegawai = namaPegawai;
+        this.kdStatusPenanggungJawab = kdStatusPenanggungJawab;
+        this.statusPenanggungJawab = statusPenanggungJawab;
+    }
 
     public String getKdUrtug() {
         return kdUrtug;
@@ -108,12 +151,20 @@ public class UrtugProgramPegawaiInputWrapper {
         this.idProg = idProg;
     }
 
-    public Integer getKdKeg() {
-        return kdKeg;
+    public String getKetProg() {
+        return ketProg;
     }
 
-    public void setKdKeg(Integer kdKeg) {
-        this.kdKeg = kdKeg;
+    public void setKetProg(String ketProg) {
+        this.ketProg = ketProg;
+    }
+
+    public BigDecimal getPaguAnggaran() {
+        return paguAnggaran;
+    }
+
+    public void setPaguAnggaran(BigDecimal paguAnggaran) {
+        this.paguAnggaran = paguAnggaran;
     }
 
     public String getNipPegawai() {
@@ -124,6 +175,14 @@ public class UrtugProgramPegawaiInputWrapper {
         this.nipPegawai = nipPegawai;
     }
 
+    public String getNamaPegawai() {
+        return namaPegawai;
+    }
+
+    public void setNamaPegawai(String namaPegawai) {
+        this.namaPegawai = namaPegawai;
+    }
+
     public String getKdStatusPenanggungJawab() {
         return kdStatusPenanggungJawab;
     }
@@ -132,12 +191,11 @@ public class UrtugProgramPegawaiInputWrapper {
         this.kdStatusPenanggungJawab = kdStatusPenanggungJawab;
     }
 
-    public Integer getStatusApproval() {
-        return statusApproval;
+    public String getStatusPenanggungJawab() {
+        return statusPenanggungJawab;
     }
 
-    public void setStatusApproval(Integer statusApproval) {
-        this.statusApproval = statusApproval;
+    public void setStatusPenanggungJawab(String statusPenanggungJawab) {
+        this.statusPenanggungJawab = statusPenanggungJawab;
     }
-
 }
