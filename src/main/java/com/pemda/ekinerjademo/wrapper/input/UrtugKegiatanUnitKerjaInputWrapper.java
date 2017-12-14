@@ -17,6 +17,7 @@ public class UrtugKegiatanUnitKerjaInputWrapper {
     private Integer idProg;
     private Integer kdKeg;
     private String kdUnitKerja;
+    private String nipPegawai;
 
     public String getKdUrtug() {
         return kdUrtug;
@@ -120,5 +121,13 @@ public class UrtugKegiatanUnitKerjaInputWrapper {
 
     public void setKdUnitKerja(String kdUnitKerja) {
         this.kdUnitKerja = kdUnitKerja;
+    }
+
+    public String getNipPegawai() {
+        return nipPegawai;
+    }
+
+    public void setNipPegawai(String nipPegawai) {
+        this.nipPegawai = nipPegawai;
     }
 }
