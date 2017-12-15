@@ -33,6 +33,7 @@ public class UrtugKegiatanPegawaiController {
     @Autowired private TaProgramDao taProgramDao;
     @Autowired private UnitKerjaKegiatanService unitKerjaKegiatanService;
     @Autowired private QutPegawaiCloneService qutPegawaiService;
+    @Autowired private QutPegawaiCloneService qutPegawaiCloneService;
 
     @Autowired
     public UrtugKegiatanPegawaiController(UrtugKegiatanPegawaiService urtugKegiatanPegawaiService) {
@@ -581,8 +582,10 @@ public class UrtugKegiatanPegawaiController {
         List<PenanggungJawabKegiatanWrapper> penanggungJawabKegiatanList
                 = new ArrayList<>();
 
-        List<QutPegawai> qutPegawaiList
-                = qutPegawaiService.getQutPegawaiByUnitKerja(urtugKegiatanInputWrapper.getKdUnitKerja());
+//        List<QutPegawai> qutPegawaiList
+//                = qutPegawaiService.getQutPegawaiByUnitKerja(urtugKegiatanInputWrapper.getKdUnitKerja());
+        List<QutPegawaiClone> pegawaiJabatanList
+                = qutPegawaiCloneService.getQutPegawaiByKdJabatan(urtugKegiatanInputWrapper.getKdJabatan());
 
         List<UrtugKegiatanPegawai> urtugKegiatanPegawaiList
                 = urtugKegiatanPegawaiService.findByUrtugKegiatan(
@@ -600,8 +603,9 @@ public class UrtugKegiatanPegawaiController {
                                 urtugKegiatanInputWrapper.getIdProg(),
                                 urtugKegiatanInputWrapper.getKdKeg()));
 
+
         for (UrtugKegiatanPegawai urtugKegiatanPegawai : urtugKegiatanPegawaiList) {
-            for (QutPegawai qutPegawai : qutPegawaiList) {
+            for (QutPegawaiClone qutPegawai : pegawaiJabatanList) {
                 if (qutPegawai.getNip()
                         .equals(urtugKegiatanPegawai.getUrtugKegiatanPegawaiId().getNipPegawai())) {
                     penanggungJawabKegiatanList
@@ -614,6 +618,66 @@ public class UrtugKegiatanPegawaiController {
 
                 }
 
+            }
+
+        }
+
+        return new ResponseEntity<Object>(penanggungJawabKegiatanList, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/get-urtug-kegiatan-pegawai-by-urtug-program", method = RequestMethod.POST)
+    ResponseEntity<?> getUrtugKegiatanPegawaiByUrtugProgram(
+            @RequestBody UrtugKegiatanUnitKerjaInputWrapper urtugKegiatanInputWrapper) {
+        LOGGER.info("get urtug kegiatan pegawi by urtug program");
+
+        List<PenanggungJawabKegiatanWrapper> penanggungJawabKegiatanList
+                = new ArrayList<>();
+
+        List<QutPegawaiClone> pegawaiJabatanList
+                = qutPegawaiCloneService.getQutPegawaiByKdJabatan(urtugKegiatanInputWrapper.getKdJabatan());
+
+        List<UrtugKegiatanPegawai> urtugKegiatanPegawaiList
+                = urtugKegiatanPegawaiService.findByProgramAndUrtugJabatan(
+                        urtugKegiatanInputWrapper.getKdUrtug(),
+                        urtugKegiatanInputWrapper.getKdJabatan(),
+                        urtugKegiatanInputWrapper.getKdJenisUrtug(),
+                        urtugKegiatanInputWrapper.getTahunUrtug(),
+                        urtugKegiatanInputWrapper.getKdUrusan(),
+                        urtugKegiatanInputWrapper.getKdBidang(),
+                        urtugKegiatanInputWrapper.getKdUnit(),
+                        urtugKegiatanInputWrapper.getKdSub(),
+                        urtugKegiatanInputWrapper.getTahun(),
+                        urtugKegiatanInputWrapper.getKdProg(),
+                        urtugKegiatanInputWrapper.getIdProg());
+
+        boolean notFound;
+        for (UrtugKegiatanPegawai urtugKegiatanPegawai : urtugKegiatanPegawaiList) {
+            notFound = true;
+
+            for (PenanggungJawabKegiatanWrapper pj
+                    : penanggungJawabKegiatanList) {
+                if (pj.getNipPegawai()
+                        .equals(urtugKegiatanPegawai.getUrtugKegiatanPegawaiId().getNipPegawai())) {
+                    notFound = false;
+                    break;
+                }
+            }
+
+            if (notFound) {
+                for (QutPegawaiClone qutPegawai : pegawaiJabatanList) {
+                    if (qutPegawai.getNip()
+                            .equals(urtugKegiatanPegawai.getUrtugKegiatanPegawaiId().getNipPegawai())) {
+                        penanggungJawabKegiatanList
+                                .add(new PenanggungJawabKegiatanWrapper(
+                                        urtugKegiatanPegawai.getUrtugKegiatanPegawaiId().getNipPegawai(),
+                                        qutPegawai.getNama(),
+                                        urtugKegiatanPegawai.getUrtugKegiatanPegawaiId().getKdStatusPenanggungJawab(),
+                                        urtugKegiatanPegawai.getStatusPenanggungJawabKegiatan().getStatus()));
+                        break;
+
+                    }
+
+                }
             }
 
         }

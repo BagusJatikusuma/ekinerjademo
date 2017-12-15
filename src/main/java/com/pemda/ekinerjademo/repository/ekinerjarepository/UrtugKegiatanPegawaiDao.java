@@ -91,6 +91,25 @@ public interface UrtugKegiatanPegawaiDao extends JpaRepository<UrtugKegiatanPega
             "left join fetch utjj.uraianTugasJabatan utj " +
             "left join fetch utjj.jenisUrtug " +
             "left join fetch utj.uraianTugas " +
+            "where ukp.urtugKegiatanPegawaiId.kdUrtug = ?1 " +
+            "and ukp.urtugKegiatanPegawaiId.kdJabatan = ?2 " +
+            "and ukp.urtugKegiatanPegawaiId.kdJenisUrtug = ?3 " +
+            "and ukp.urtugKegiatanPegawaiId.tahunUrtug = ?4 " +
+            "and ukp.urtugKegiatanPegawaiId.kdUrusan = ?5 " +
+            "and ukp.urtugKegiatanPegawaiId.kdBidang = ?6 " +
+            "and ukp.urtugKegiatanPegawaiId.kdUnit = ?7 " +
+            "and ukp.urtugKegiatanPegawaiId.kdSub = ?8 " +
+            "and ukp.urtugKegiatanPegawaiId.tahun = ?9 " +
+            "and ukp.urtugKegiatanPegawaiId.kdProg = ?10 " +
+            "and ukp.urtugKegiatanPegawaiId.idProg = ?11")
+    List<UrtugKegiatanPegawai> findByProgramAndUrtugJabatan(String kdUrtug, String kdJabatan, String kdJenisUrtug, Integer tahunUrtug, Integer kdUrusan, Integer kdBidang, Integer kdUnit, Integer kdSub, Integer tahun, Integer kdProg, Integer idProg);
+
+    @Query("select ukp from UrtugKegiatanPegawai ukp " +
+            "left join fetch ukp.urtugKegiatan uk " +
+            "left join fetch uk.uraianTugasJabatanJenisUrtug utjj " +
+            "left join fetch utjj.uraianTugasJabatan utj " +
+            "left join fetch utjj.jenisUrtug " +
+            "left join fetch utj.uraianTugas " +
             "where ukp.urtugKegiatanPegawaiId.kdUrusan = ?1 " +
             "and ukp.urtugKegiatanPegawaiId.kdBidang = ?2 " +
             "and ukp.urtugKegiatanPegawaiId.kdUnit = ?3 " +

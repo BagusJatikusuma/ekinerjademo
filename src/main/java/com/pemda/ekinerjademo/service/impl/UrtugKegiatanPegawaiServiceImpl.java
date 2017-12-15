@@ -70,6 +70,11 @@ public class UrtugKegiatanPegawaiServiceImpl implements UrtugKegiatanPegawaiServ
     }
 
     @Override
+    public List<UrtugKegiatanPegawai> findByProgramAndUrtugJabatan(String kdUrtug, String kdJabatan, String kdJenisUrtug, Integer tahunUrtug, Integer kdUrusan, Integer kdBidang, Integer kdUnit, Integer kdSub, Integer tahun, Integer kdProg, Integer idProg) {
+        return urtugKegiatanPegawaiDao.findByProgramAndUrtugJabatan(kdUrtug,kdJabatan, kdJenisUrtug, tahunUrtug, kdUrusan, kdBidang, kdUnit, kdSub, tahun, kdProg, idProg);
+    }
+
+    @Override
     public List<UrtugKegiatanPegawai> findByProgramAndPegawai(
             Integer kdUrusan,
             Integer kdBidang,
