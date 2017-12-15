@@ -1,9 +1,9 @@
 package com.pemda.ekinerjademo.wrapper.input;
 
 /**
- * Created by bagus on 18/10/17.
+ * Created by bagus on 13/12/17.
  */
-public class UrtugKegiatanUnitKerjaInputWrapper {
+public class UrtugProgramPegawaiInputWrapper {
     private String kdUrtug;
     private String kdJabatan;
     private String kdJenisUrtug;
@@ -15,9 +15,10 @@ public class UrtugKegiatanUnitKerjaInputWrapper {
     private Integer tahun;
     private Integer kdProg;
     private Integer idProg;
-    private Integer kdKeg;
-    private String kdUnitKerja;
+    private Integer kdKeg; //EMANG AYA KDKEG DI PROGRAM?
     private String nipPegawai;
+    private String kdStatusPenanggungJawab;
+    private Integer statusApproval;
 
     public String getKdUrtug() {
         return kdUrtug;
@@ -41,6 +42,14 @@ public class UrtugKegiatanUnitKerjaInputWrapper {
 
     public void setKdJenisUrtug(String kdJenisUrtug) {
         this.kdJenisUrtug = kdJenisUrtug;
+    }
+
+    public Integer getTahunUrtug() {
+        return tahunUrtug;
+    }
+
+    public void setTahunUrtug(Integer tahunUrtug) {
+        this.tahunUrtug = tahunUrtug;
     }
 
     public Integer getKdUrusan() {
@@ -107,22 +116,6 @@ public class UrtugKegiatanUnitKerjaInputWrapper {
         this.kdKeg = kdKeg;
     }
 
-    public Integer getTahunUrtug() {
-        return tahunUrtug;
-    }
-
-    public void setTahunUrtug(Integer tahunUrtug) {
-        this.tahunUrtug = tahunUrtug;
-    }
-
-    public String getKdUnitKerja() {
-        return kdUnitKerja;
-    }
-
-    public void setKdUnitKerja(String kdUnitKerja) {
-        this.kdUnitKerja = kdUnitKerja;
-    }
-
     public String getNipPegawai() {
         return nipPegawai;
     }
@@ -130,4 +123,21 @@ public class UrtugKegiatanUnitKerjaInputWrapper {
     public void setNipPegawai(String nipPegawai) {
         this.nipPegawai = nipPegawai;
     }
+
+    public String getKdStatusPenanggungJawab() {
+        return kdStatusPenanggungJawab;
+    }
+
+    public void setKdStatusPenanggungJawab(String kdStatusPenanggungJawab) {
+        this.kdStatusPenanggungJawab = kdStatusPenanggungJawab;
+    }
+
+    public Integer getStatusApproval() {
+        return statusApproval;
+    }
+
+    public void setStatusApproval(Integer statusApproval) {
+        this.statusApproval = statusApproval;
+    }
+
 }

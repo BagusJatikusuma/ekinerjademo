@@ -6,11 +6,17 @@ package com.pemda.ekinerjademo.wrapper.output;
 public class JabatanWrapper {
     private String kdJabatan;
     private String jabatan;
+    private String eselon;
 
     public JabatanWrapper() {}
     public JabatanWrapper(String kdJabatan, String jabatan) {
         this.kdJabatan = kdJabatan;
         this.jabatan = jabatan;
+    }
+    public JabatanWrapper(String kdJabatan, String jabatan, String eselon) {
+        this.kdJabatan = kdJabatan;
+        this.jabatan = jabatan;
+        this.eselon = eselon;
     }
 
     public String getKdJabatan() {
@@ -27,5 +33,13 @@ public class JabatanWrapper {
 
     public void setJabatan(String jabatan) {
         this.jabatan = jabatan;
+    }
+
+    public String getEselon() {
+        return eselon;
+    }
+
+    public void setEselon(String eselon) {
+        this.eselon = eselon;
     }
 }

@@ -5,6 +5,7 @@ import com.pemda.ekinerjademo.projection.ekinerjaprojection.CustomPegawaiCredent
 import com.pemda.ekinerjademo.repository.ekinerjarepository.SuratDisposisiDao;
 import com.pemda.ekinerjademo.service.*;
 import com.pemda.ekinerjademo.util.DateUtilities;
+import com.pemda.ekinerjademo.util.FileUploader;
 import com.pemda.ekinerjademo.wrapper.input.LembarDisposisiInputWrapper;
 import com.pemda.ekinerjademo.wrapper.output.CustomMessage;
 import com.pemda.ekinerjademo.wrapper.output.DokumenLembarDisposisiWrapper;
@@ -16,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -52,6 +54,72 @@ public class LembarDisposisiController {
         if (inputWrapper.getKdLembarDisposisiParent() == null ||
                 inputWrapper.getKdLembarDisposisiParent().equals("")) {
             suratDisposisiService.create(suratDisposisi);
+        }
+
+        LembarDisposisi lembarDisposisi = new LembarDisposisi();
+        lembarDisposisi.setKdLembarDisposisi(kdLembarDisposisi);
+
+        if (inputWrapper.getKdLembarDisposisiParent() == null) {
+            lembarDisposisi.setPath(kdLembarDisposisi);
+        } else {
+            LembarDisposisi lembarDisposisiParent
+                    = lembarDisposisiService.findByKdLembarDisposisi(inputWrapper.getKdLembarDisposisiParent());
+            lembarDisposisi.setPath(lembarDisposisiParent.getPath()+"."+kdLembarDisposisi);
+        }
+
+        lembarDisposisi.setNipPembuat(inputWrapper.getNipPembuat());
+        lembarDisposisi.setKdUnitKerja(inputWrapper.getKdUnitKerja());
+        lembarDisposisi.setTanggalPenerimaanMilis(inputWrapper.getTanggalPenerimaanMilis());
+        lembarDisposisi.setTktKeamanan(inputWrapper.getTktKeamanan());
+        lembarDisposisi.setTglPenyelesaianMilis(inputWrapper.getTglPenyelesaianMilis());
+        lembarDisposisi.setNoSuratDisposisi(new SuratDisposisi(inputWrapper.getNoSuratDisposisi()));
+        lembarDisposisi.setIsiDisposisi(inputWrapper.getIsiDisposisi());
+
+        if (inputWrapper.getKdLembarDisposisiParent() == null) {
+            lembarDisposisi.setKdLembarDisposisiParent(null);
+        } else {
+            lembarDisposisi.setKdLembarDisposisiParent(new LembarDisposisi(inputWrapper.getKdLembarDisposisiParent()));
+        }
+        lembarDisposisiService.create(lembarDisposisi);
+
+        List<TargetLembarDisposisi> targetLembarDisposisiList = new ArrayList<>();
+        for (String kdTarget : inputWrapper.getDaftarTargetLembarDisposisi()) {
+            TargetLembarDisposisi targetLembarDisposisi = new TargetLembarDisposisi();
+            targetLembarDisposisi.setTargetLembarDisposisiId(new TargetLembarDisposisiId(kdLembarDisposisi, kdTarget));
+            targetLembarDisposisi.setApproveStatus(0);
+
+            targetLembarDisposisiList.add(targetLembarDisposisi);
+        }
+        lembarDisposisiService.createTargetLembarDisposisi(targetLembarDisposisiList);
+
+        return new ResponseEntity<Object>(new CustomMessage("lembar disposisi created"), HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/create-lembar-disposisi-ekstensi", method = RequestMethod.POST)
+    ResponseEntity<?> createLembarDisposisiEkstensi(
+            @RequestPart("metadata") LembarDisposisiInputWrapper inputWrapper,
+            @RequestPart("file") MultipartFile fileSuratDisposisi) {
+        LOGGER.info("create lembar disposisi");
+
+        FileUploader uploader = new FileUploader();
+
+        String kdLembarDisposisi = String.valueOf(new Date().getTime());
+
+        if (inputWrapper.getKdLembarDisposisiParent() == null ||
+                inputWrapper.getKdLembarDisposisiParent().equals("")) {
+            String namaFileSuratDisposisi = String.valueOf(new Date().getTime());
+
+            SuratDisposisi suratDisposisi = new SuratDisposisi();
+            suratDisposisi.setNoSurat(kdLembarDisposisi);
+            suratDisposisi.setNoSuratDisposisi(inputWrapper.getNoSuratDisposisi());
+            suratDisposisi.setTanggalSuratMilis(inputWrapper.getTanggalSuratDisposisiMilis());
+            suratDisposisi.setDari(inputWrapper.getDariSuratDisposisi());
+            suratDisposisi.setRingkasanIsi(inputWrapper.getRingkasanIsiSuratDisposisi());
+            suratDisposisi.setLampiran(inputWrapper.getLampiran());
+            suratDisposisi.setPathFile(namaFileSuratDisposisi);
+
+            suratDisposisiService.create(suratDisposisi);
+            uploader.uploadSuratLembarDisposisi(fileSuratDisposisi, namaFileSuratDisposisi);
         }
 
         LembarDisposisi lembarDisposisi = new LembarDisposisi();

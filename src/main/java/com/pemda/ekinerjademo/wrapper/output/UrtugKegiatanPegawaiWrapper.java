@@ -25,6 +25,10 @@ public class UrtugKegiatanPegawaiWrapper {
     private String kdStatusPenanggungJawab;
     private String statusPenanggungJawab;
     private Integer statusApproval;
+    private Integer kuantitas;
+    private String satuanKuantitas;
+    private Integer kualitas;
+    private Integer waktu;
 
     public UrtugKegiatanPegawaiWrapper() {
     }
@@ -141,6 +145,54 @@ public class UrtugKegiatanPegawaiWrapper {
         this.kdStatusPenanggungJawab = kdStatusPenanggungJawab;
         this.statusPenanggungJawab = statusPenanggungJawab;
         this.statusApproval = statusApproval;
+    }
+    public UrtugKegiatanPegawaiWrapper(
+            String kdUrtug,
+            String deskripsiUrtug,
+            String kdJabatan,
+            String kdJenisUrtug,
+            Integer tahunUrtug,
+            Integer kdUrusan,
+            Integer kdBidang,
+            Integer kdUnit,
+            Integer kdSub,
+            Integer tahun,
+            Integer kdProg,
+            Integer idProg,
+            Integer kdKeg,
+            String ketKeg,
+            BigDecimal paguAnggaran,
+            String nipPegawai,
+            String kdStatusPenanggungJawab,
+            String statusPenanggungJawab,
+            Integer statusApproval,
+            Integer kuantitas,
+            String satuanKuantitas,
+            Integer kualitas,
+            Integer waktu) {
+        this.kdUrtug = kdUrtug;
+        this.deskripsiUrtug = deskripsiUrtug;
+        this.kdJabatan = kdJabatan;
+        this.kdJenisUrtug = kdJenisUrtug;
+        this.tahunUrtug = tahunUrtug;
+        this.kdUrusan = kdUrusan;
+        this.kdBidang = kdBidang;
+        this.kdUnit = kdUnit;
+        this.kdSub = kdSub;
+        this.tahun = tahun;
+        this.kdProg = kdProg;
+        this.idProg = idProg;
+        this.kdKeg = kdKeg;
+        this.ketKeg = ketKeg;
+        this.paguAnggaran = paguAnggaran;
+        this.nipPegawai = nipPegawai;
+        this.kdStatusPenanggungJawab = kdStatusPenanggungJawab;
+        this.statusPenanggungJawab = statusPenanggungJawab;
+        this.statusApproval = statusApproval;
+        this.kuantitas = kuantitas;
+        this.satuanKuantitas = satuanKuantitas;
+        this.kualitas = kualitas;
+        this.waktu = waktu;
     }
 
     public String getKdUrtug() {
@@ -294,4 +346,37 @@ public class UrtugKegiatanPegawaiWrapper {
     public void setStatusApproval(Integer statusApproval) {
         this.statusApproval = statusApproval;
     }
+
+    public Integer getKuantitas() {
+        return kuantitas;
+    }
+
+    public void setKuantitas(Integer kuantitas) {
+        this.kuantitas = kuantitas;
+    }
+
+    public String getSatuanKuantitas() {
+        return satuanKuantitas;
+    }
+
+    public void setSatuanKuantitas(String satuanKuantitas) {
+        this.satuanKuantitas = satuanKuantitas;
+    }
+
+    public Integer getKualitas() {
+        return kualitas;
+    }
+
+    public void setKualitas(Integer kualitas) {
+        this.kualitas = kualitas;
+    }
+
+    public Integer getWaktu() {
+        return waktu;
+    }
+
+    public void setWaktu(Integer waktu) {
+        this.waktu = waktu;
+    }
+
 }

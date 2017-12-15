@@ -1,6 +1,7 @@
 package com.pemda.ekinerjademo.service.impl;
 
 import com.pemda.ekinerjademo.model.ekinerjamodel.*;
+import com.pemda.ekinerjademo.model.simdamodel.TaProgramId;
 import com.pemda.ekinerjademo.repository.ekinerjarepository.UrtugKegiatanPegawaiDao;
 import com.pemda.ekinerjademo.service.UrtugKegiatanPegawaiService;
 import com.pemda.ekinerjademo.wrapper.input.UrtugKegiatanPegawaiApprovalInputWrapper;
@@ -54,6 +55,31 @@ public class UrtugKegiatanPegawaiServiceImpl implements UrtugKegiatanPegawaiServ
     public List<UrtugKegiatanPegawai> findByUnitKerja(String unitKerja) {
         return urtugKegiatanPegawaiDao
                 .findByUnitKerja(unitKerja);
+    }
+
+    @Override
+    public List<UrtugKegiatanPegawai> findByProgram(
+            Integer kdUrusan,
+            Integer kdBidang,
+            Integer kdUnit,
+            Integer kdSub,
+            Integer tahun,
+            Integer kdProg,
+            Integer idProg) {
+        return urtugKegiatanPegawaiDao.findByProgram(kdUrusan, kdBidang, kdUnit, kdSub, tahun, kdProg, idProg);
+    }
+
+    @Override
+    public List<UrtugKegiatanPegawai> findByProgramAndPegawai(
+            Integer kdUrusan,
+            Integer kdBidang,
+            Integer kdUnit,
+            Integer kdSub,
+            Integer tahun,
+            Integer kdProg,
+            Integer idProg,
+            String nip) {
+        return urtugKegiatanPegawaiDao.findByProgramAndPegawai(kdUrusan, kdBidang, kdUnit, kdSub, tahun, kdProg, idProg, nip);
     }
 
     @Override

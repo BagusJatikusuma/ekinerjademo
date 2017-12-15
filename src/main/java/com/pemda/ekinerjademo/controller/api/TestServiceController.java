@@ -2,11 +2,14 @@ package com.pemda.ekinerjademo.controller.api;
 
 import com.pemda.ekinerjademo.model.ekinerjamodel.*;
 import com.pemda.ekinerjademo.model.simdamodel.TaKegiatan;
+import com.pemda.ekinerjademo.model.simdamodel.TaProgram;
 import com.pemda.ekinerjademo.repository.ekinerjarepository.AkunPegawaiDao;
 import com.pemda.ekinerjademo.repository.ekinerjarepository.UnitKerjaKegiatanDao;
 import com.pemda.ekinerjademo.repository.simdarepository.TaKegiatanDao;
+import com.pemda.ekinerjademo.repository.simdarepository.TaProgramDao;
 import com.pemda.ekinerjademo.service.*;
 import com.pemda.ekinerjademo.wrapper.output.TaKegiatanWrapper;
+import com.pemda.ekinerjademo.wrapper.output.TaProgramWrapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,6 +40,8 @@ public class TestServiceController {
     private AkunPegawaiDao akunPegawaiDao;
     @Autowired
     private TaKegiatanDao taKegiatanDao;
+    @Autowired
+    private TaProgramDao taProgramDao;
     @Autowired
     private UnitKerjaKegiatanDao unitKerjaKegiatanDao;
 
@@ -189,5 +194,52 @@ public class TestServiceController {
 
         return new ResponseEntity<Object>(taKegiatanWrapperList, HttpStatus.OK);
     }
+
+    @RequestMapping(value = "/program-simda-unit-kerja/{kdUnitKerja}", method = RequestMethod.GET)
+    @Transactional("simdaTransactionManager")
+    ResponseEntity<?> getProgramSimdaUnitKerja(
+            @PathVariable("kdUnitKerja") String kdUnitKerja) {
+        LOGGER.info("get kegiatan simda");
+
+        UnitKerjaKegiatan unitKerjaKegiatan = unitKerjaKegiatanDao.findByKdUnitKerja(kdUnitKerja);
+
+        LOGGER.info(
+                "kdUrusan : "+unitKerjaKegiatan.getKdUrusan()+
+                        ", kdBidang : "+unitKerjaKegiatan.getKdBidang()+
+                        ", kdUnit : "+unitKerjaKegiatan.getKdUnit());
+
+        List<TaProgramWrapper> taProgramWrappers
+                = new ArrayList<>();
+        List<TaProgram> taProgramList
+                = taProgramDao.findAllByKdUnitKerja(
+                        unitKerjaKegiatan.getKdUrusan(),
+                        unitKerjaKegiatan.getKdBidang(),
+                        unitKerjaKegiatan.getKdUnit());
+
+        for (TaProgram taProgram : taProgramList) {
+            if (!taProgram.getKetProgram().equals("Non Program")) {
+                taProgramWrappers
+                        .add(new TaProgramWrapper(
+                                taProgram.getTaProgramId().getKdUrusan(),
+                                taProgram.getTaProgramId().getKdBIdang(),
+                                taProgram.getTaProgramId().getKdUnit(),
+                                taProgram.getTaProgramId().getKdSub(),
+                                taProgram.getTaProgramId().getTahun(),
+                                taProgram.getTaProgramId().getKdProg(),
+                                taProgram.getTaProgramId().getIdProg(),
+                                taProgram.getKetProgram(),
+                                taProgram.getTolakUkur(),
+                                taProgram.getTargetAngka(),
+                                taProgram.getTargetUraian(),
+                                taProgram.getKdUrusan1(),
+                                taProgram.getKdBidang1()
+                        ));
+            }
+        }
+
+        return new ResponseEntity<Object>(taProgramWrappers, HttpStatus.OK);
+    }
+
+
 
 }

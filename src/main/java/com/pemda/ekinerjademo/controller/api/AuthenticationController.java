@@ -81,7 +81,8 @@ public class AuthenticationController {
                         qutPegawai.getKdUnitKerja(),
                         qutPegawai.getKdJabatan(),
                         qutPegawai.getPangkat(),
-                        qutPegawai.getGol());
+                        qutPegawai.getGol(),
+                        qutPegawai.getEselon());
 
         return new ResponseEntity<Object>(pegawaiCredential, HttpStatus.OK);
 

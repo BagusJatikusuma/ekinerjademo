@@ -4,17 +4,19 @@ import com.pemda.ekinerjademo.model.ekinerjamodel.UnitKerjaKegiatan;
 import com.pemda.ekinerjademo.model.ekinerjamodel.UrtugKegiatan;
 import com.pemda.ekinerjademo.model.ekinerjamodel.UrtugKegiatanId;
 import com.pemda.ekinerjademo.model.simdamodel.TaKegiatan;
+import com.pemda.ekinerjademo.model.simdamodel.TaKegiatanId;
+import com.pemda.ekinerjademo.model.simdamodel.TaProgram;
+import com.pemda.ekinerjademo.model.simdamodel.TaProgramId;
 import com.pemda.ekinerjademo.repository.ekinerjarepository.UnitKerjaKegiatanDao;
 import com.pemda.ekinerjademo.repository.simdarepository.TaKegiatanDao;
+import com.pemda.ekinerjademo.repository.simdarepository.TaProgramDao;
 import com.pemda.ekinerjademo.service.TaKegiatanService;
 import com.pemda.ekinerjademo.service.UnitKerjaKegiatanService;
 import com.pemda.ekinerjademo.service.UrtugKegiatanService;
-import com.pemda.ekinerjademo.wrapper.input.UraianTugasJabatanInputWrapper;
-import com.pemda.ekinerjademo.wrapper.input.UrtugJabatanIdInputWrapper;
-import com.pemda.ekinerjademo.wrapper.input.UrtugJabatanJenisIdInputWrapper;
-import com.pemda.ekinerjademo.wrapper.input.UrtugKegiatanInputWrapper;
+import com.pemda.ekinerjademo.wrapper.input.*;
 import com.pemda.ekinerjademo.wrapper.output.CustomMessage;
 import com.pemda.ekinerjademo.wrapper.output.UrtugKegiatanWrapper;
+import com.pemda.ekinerjademo.wrapper.output.UrtugProgramWrapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,6 +41,8 @@ public class UrtugKegiatanController {
     private UnitKerjaKegiatanDao unitKerjaKegiatanDao;
     @Autowired
     private TaKegiatanDao taKegiatanDao;
+    @Autowired
+    private TaProgramDao taProgramDao;
     @Autowired
     private TaKegiatanService taKegiatanService;
     @Autowired
@@ -97,10 +101,106 @@ public class UrtugKegiatanController {
         return new ResponseEntity<Object>(urtugKegiatanWrapperList, HttpStatus.OK);
     }
 
+    @RequestMapping(value = "/get-urtug-program-by-jabatan", method = RequestMethod.POST)
+    ResponseEntity<?> getUrtugProgramByUrtugJabatan(
+            @RequestBody UrtugJabatanJenisIdInputWrapper urtugJabatanWrapper) {
+        LOGGER.info("get urtug program by urtug jabatan");
+
+        List<UrtugProgramWrapper> urtugProgramWrapperList = new ArrayList<>();
+
+        UnitKerjaKegiatan unitKerjaKegiatan
+                = unitKerjaKegiatanService.findByKdUnitKerja(urtugJabatanWrapper.getKdUnitKerja());
+
+        List<TaProgram> taProgramList
+                = taProgramDao.findAllByKdUnitKerja(
+                    unitKerjaKegiatan.getKdUrusan(),
+                    unitKerjaKegiatan.getKdBidang(),
+                    unitKerjaKegiatan.getKdUnit());
+
+        List<UrtugKegiatan> urtugKegiatanList
+                = urtugKegiatanService.findAllByUraianTugasJabatan(
+                    urtugJabatanWrapper.getKdUrtug(),
+                    urtugJabatanWrapper.getKdJabatan(),
+                    urtugJabatanWrapper.getKdJenisUrtug(),
+                    urtugJabatanWrapper.getTahunUrtug());
+
+        boolean notFound;
+        for (UrtugKegiatan urtugKegiatan : urtugKegiatanList) {
+            notFound = true;
+
+            for (UrtugProgramWrapper urtugProgramWrapper
+                    : urtugProgramWrapperList) {
+                if (urtugProgramWrapper.getKdUrusan().equals(urtugKegiatan.getUrtugKegiatanId().getKdUrusan()) &&
+                        urtugProgramWrapper.getKdBidang().equals(urtugKegiatan.getUrtugKegiatanId().getKdBidang()) &&
+                        urtugProgramWrapper.getKdUnit().equals(urtugKegiatan.getUrtugKegiatanId().getKdUnit()) &&
+                        urtugProgramWrapper.getKdSub().equals(urtugKegiatan.getUrtugKegiatanId().getKdSub()) &&
+                        urtugProgramWrapper.getTahun().equals(urtugKegiatan.getUrtugKegiatanId().getTahun()) &&
+                        urtugProgramWrapper.getKdProg().equals(urtugKegiatan.getUrtugKegiatanId().getKdProg()) &&
+                        urtugProgramWrapper.getIdProg().equals(urtugKegiatan.getUrtugKegiatanId().getIdProg())) {
+                    notFound = false;
+
+                    break;
+                }
+            }
+
+            if (notFound) {
+                urtugProgramWrapperList
+                        .add(new UrtugProgramWrapper(
+                                urtugKegiatan.getUrtugKegiatanId().getKdUrtug(),
+                                urtugKegiatan.getUrtugKegiatanId().getKdJabatan(),
+                                urtugKegiatan.getUrtugKegiatanId().getKdJenisUrtug(),
+                                urtugKegiatan.getUrtugKegiatanId().getTahunUrtug(),
+                                urtugKegiatan.getUrtugKegiatanId().getKdUrusan(),
+                                urtugKegiatan.getUrtugKegiatanId().getKdBidang(),
+                                urtugKegiatan.getUrtugKegiatanId().getKdUnit(),
+                                urtugKegiatan.getUrtugKegiatanId().getKdSub(),
+                                urtugKegiatan.getUrtugKegiatanId().getTahun(),
+                                urtugKegiatan.getUrtugKegiatanId().getKdProg(),
+                                urtugKegiatan.getUrtugKegiatanId().getIdProg(),
+                                ""
+                        ));
+            }
+        }
+
+        //set keterangan from simda
+        for (UrtugProgramWrapper program
+                : urtugProgramWrapperList) {
+            for (TaProgram taProgram
+                    : taProgramList) {
+                if (program.getKdUrusan().equals(taProgram.getTaProgramId().getKdUrusan()) &&
+                        program.getKdBidang().equals(taProgram.getTaProgramId().getKdBIdang()) &&
+                        program.getKdUnit().equals(taProgram.getTaProgramId().getKdUnit()) &&
+                        program.getKdSub().equals(taProgram.getTaProgramId().getKdSub()) &&
+                        program.getTahun().equals(taProgram.getTaProgramId().getTahun()) &&
+                        program.getKdProg().equals(taProgram.getTaProgramId().getKdProg()) &&
+                        program.getIdProg().equals(taProgram.getTaProgramId().getIdProg())) {
+
+                    program.setKetProgram(taProgram.getKetProgram());
+                }
+            }
+        }
+
+        return new ResponseEntity<Object>(urtugProgramWrapperList, HttpStatus.OK);
+    }
+
+
+
     //tambahkan algoritma akumulasi jumlah waktu, biaya berdasarkan jumlah kegiatan yang ditambahkan
     @RequestMapping(value = "/create-urtug-kegiatan", method = RequestMethod.POST)
     ResponseEntity<?> createUrtugKegiatan(@RequestBody UrtugKegiatanInputWrapper urtugKegiatanInputWrapper) {
         LOGGER.info("create urtug kegiatan");
+
+        TaKegiatan taKegiatan
+                = taKegiatanDao.findByTaKegiatanId(
+                        new TaKegiatanId(
+                                urtugKegiatanInputWrapper.getKdUrusan(),
+                                urtugKegiatanInputWrapper.getKdBidang(),
+                                urtugKegiatanInputWrapper.getKdUnit(),
+                                urtugKegiatanInputWrapper.getKdSub(),
+                                urtugKegiatanInputWrapper.getTahun(),
+                                urtugKegiatanInputWrapper.getKdProg(),
+                                urtugKegiatanInputWrapper.getIdProg(),
+                                urtugKegiatanInputWrapper.getKdKeg()));
 
         UrtugKegiatan urtugKegiatan = new UrtugKegiatan();
         urtugKegiatan.setUrtugKegiatanId(
@@ -118,10 +218,63 @@ public class UrtugKegiatanController {
                         urtugKegiatanInputWrapper.getIdProg(),
                         urtugKegiatanInputWrapper.getKdKeg()
                 ));
+        urtugKegiatan.setKuantitas(urtugKegiatanInputWrapper.getKuantitas());
+        urtugKegiatan.setSatuanKuantitas(urtugKegiatanInputWrapper.getSatuanKuantitas());
+        urtugKegiatan.setKualitas(100);
+        urtugKegiatan.setWaktu(urtugKegiatanInputWrapper.getWaktu());
+        urtugKegiatan.setBiaya(taKegiatan.getPaguAnggaran());
 
         urtugKegiatanService.save(urtugKegiatan);
 
         return new ResponseEntity<Object>(new CustomMessage("urtug kegiatan created"), HttpStatus.CREATED);
+    }
+
+    @RequestMapping(value = "/create-urtug-program", method = RequestMethod.POST)
+    ResponseEntity<?> createUrtugProgram(
+            @RequestBody UrtugProgramInputWrapper inputWrapper) {
+        LOGGER.info("create urtug program");
+
+        TaProgram taProgram
+                = taProgramDao.findByTaProgramId(
+                        new TaProgramId(
+                                inputWrapper.getKdUrusan(),
+                                inputWrapper.getKdBidang(),
+                                inputWrapper.getKdUnit(),
+                                inputWrapper.getKdSub(),
+                                inputWrapper.getTahun(),
+                                inputWrapper.getKdProg(),
+                                inputWrapper.getIdProg()));
+
+        for (TaKegiatan kegiatan
+                : taProgram.getTaKegiatanList()) {
+            UrtugKegiatan urtugKegiatan = new UrtugKegiatan();
+
+            urtugKegiatan.setUrtugKegiatanId(
+                    new UrtugKegiatanId(
+                            inputWrapper.getKdUrtug(),
+                            inputWrapper.getKdJabatan(),
+                            inputWrapper.getKdJenisUrtug(),
+                            inputWrapper.getTahunUrtug(),
+                            inputWrapper.getKdUrusan(),
+                            inputWrapper.getKdBidang(),
+                            inputWrapper.getKdUnit(),
+                            inputWrapper.getKdSub(),
+                            inputWrapper.getTahun(),
+                            inputWrapper.getKdProg(),
+                            inputWrapper.getIdProg(),
+                            kegiatan.getTaKegiatanId().getKdKegiatan()
+                    ));
+            urtugKegiatan.setKuantitas(taProgram.getTaKegiatanList().size());
+            urtugKegiatan.setSatuanKuantitas("kegiatan");
+            urtugKegiatan.setKualitas(100);
+            urtugKegiatan.setWaktu(12);
+            urtugKegiatan.setBiaya(kegiatan.getPaguAnggaran());
+
+            urtugKegiatanService.save(urtugKegiatan);
+
+        }
+
+        return new ResponseEntity<Object>(new CustomMessage("urtug program created"), HttpStatus.CREATED);
     }
 
     @RequestMapping(value = "/update-urtug-kegiatan", method = RequestMethod.PUT)

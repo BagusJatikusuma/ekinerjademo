@@ -1,9 +1,9 @@
 package com.pemda.ekinerjademo.wrapper.input;
 
 /**
- * Created by bagus on 18/10/17.
+ * Created by bagus on 11/12/17.
  */
-public class UrtugKegiatanUnitKerjaInputWrapper {
+public class UrtugProgramInputWrapper {
     private String kdUrtug;
     private String kdJabatan;
     private String kdJenisUrtug;
@@ -15,9 +15,6 @@ public class UrtugKegiatanUnitKerjaInputWrapper {
     private Integer tahun;
     private Integer kdProg;
     private Integer idProg;
-    private Integer kdKeg;
-    private String kdUnitKerja;
-    private String nipPegawai;
 
     public String getKdUrtug() {
         return kdUrtug;
@@ -41,6 +38,14 @@ public class UrtugKegiatanUnitKerjaInputWrapper {
 
     public void setKdJenisUrtug(String kdJenisUrtug) {
         this.kdJenisUrtug = kdJenisUrtug;
+    }
+
+    public Integer getTahunUrtug() {
+        return tahunUrtug;
+    }
+
+    public void setTahunUrtug(Integer tahunUrtug) {
+        this.tahunUrtug = tahunUrtug;
     }
 
     public Integer getKdUrusan() {
@@ -97,37 +102,5 @@ public class UrtugKegiatanUnitKerjaInputWrapper {
 
     public void setIdProg(Integer idProg) {
         this.idProg = idProg;
-    }
-
-    public Integer getKdKeg() {
-        return kdKeg;
-    }
-
-    public void setKdKeg(Integer kdKeg) {
-        this.kdKeg = kdKeg;
-    }
-
-    public Integer getTahunUrtug() {
-        return tahunUrtug;
-    }
-
-    public void setTahunUrtug(Integer tahunUrtug) {
-        this.tahunUrtug = tahunUrtug;
-    }
-
-    public String getKdUnitKerja() {
-        return kdUnitKerja;
-    }
-
-    public void setKdUnitKerja(String kdUnitKerja) {
-        this.kdUnitKerja = kdUnitKerja;
-    }
-
-    public String getNipPegawai() {
-        return nipPegawai;
-    }
-
-    public void setNipPegawai(String nipPegawai) {
-        this.nipPegawai = nipPegawai;
     }
 }

@@ -18,6 +18,42 @@ public class UrtugKegiatanInputWrapper {
     private Integer kdProg;
     private Integer idProg;
     private Integer kdKeg;
+    private Integer kuantitas;
+    private String  satuanKuantitas;
+    private Integer kualitas;
+    private Integer waktu;
+
+    public Integer getKuantitas() {
+        return kuantitas;
+    }
+
+    public void setKuantitas(Integer kuantitas) {
+        this.kuantitas = kuantitas;
+    }
+
+    public String getSatuanKuantitas() {
+        return satuanKuantitas;
+    }
+
+    public void setSatuanKuantitas(String satuanKuantitas) {
+        this.satuanKuantitas = satuanKuantitas;
+    }
+
+    public Integer getKualitas() {
+        return kualitas;
+    }
+
+    public void setKualitas(Integer kualitas) {
+        this.kualitas = kualitas;
+    }
+
+    public Integer getWaktu() {
+        return waktu;
+    }
+
+    public void setWaktu(Integer waktu) {
+        this.waktu = waktu;
+    }
 
     public String getKdUrtug() {
         return kdUrtug;
