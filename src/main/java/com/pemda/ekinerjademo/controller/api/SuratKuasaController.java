@@ -27,7 +27,7 @@ public class SuratKuasaController {
 
     @Autowired private SuratKuasaService suratKuasaService;
 
-    @RequestMapping(value = "/create-berita-acara", method = RequestMethod.POST)
+    @RequestMapping(value = "/create-surat-kuasa", method = RequestMethod.POST)
     ResponseEntity<?> createSuratKuasa(
             @RequestBody SuratKuasaInputWrapper inputWrapper) {
         LOGGER.info("create surat kuasa");

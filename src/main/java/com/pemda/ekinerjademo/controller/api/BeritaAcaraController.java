@@ -27,7 +27,7 @@ public class BeritaAcaraController {
     @Autowired private BeritaAcaraService beritaAcaraService;
 
 
-    @RequestMapping(value = "berita-acara/create-berita-acara", method = RequestMethod.POST)
+    @RequestMapping(value = "/berita-acara/create-berita-acara", method = RequestMethod.POST)
     ResponseEntity<?> createBeritaAcara(
             @RequestBody BeritaAcaraInputWrapper inputWrapper) {
         LOGGER.info("create berita acara");
