@@ -95,7 +95,7 @@ public class LembarDisposisiController {
         return new ResponseEntity<Object>(new CustomMessage("lembar disposisi created"), HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/create-lembar-disposisi-ekstensi", method = RequestMethod.POST, consumes = "multipart/form-data")
+    @RequestMapping(value = "/create-lembar-disposisi-ekstensi", method = RequestMethod.POST)
     ResponseEntity<?> createLembarDisposisiEkstensi(
             @RequestPart("metadata") LembarDisposisiInputWrapper inputWrapper,
             @RequestPart("file") MultipartFile fileSuratDisposisi) {
@@ -138,7 +138,8 @@ public class LembarDisposisiController {
         lembarDisposisi.setTanggalPenerimaanMilis(inputWrapper.getTanggalPenerimaanMilis());
         lembarDisposisi.setTktKeamanan(inputWrapper.getTktKeamanan());
         lembarDisposisi.setTglPenyelesaianMilis(inputWrapper.getTglPenyelesaianMilis());
-        lembarDisposisi.setNoSuratDisposisi(new SuratDisposisi(inputWrapper.getNoSuratDisposisi()));
+//        lembarDisposisi.setNoSuratDisposisi(new SuratDisposisi(inputWrapper.getNoSuratDisposisi()));
+        lembarDisposisi.setNoSuratDisposisi(new SuratDisposisi(kdLembarDisposisi));
         lembarDisposisi.setIsiDisposisi(inputWrapper.getIsiDisposisi());
 
         if (inputWrapper.getKdLembarDisposisiParent() == null) {

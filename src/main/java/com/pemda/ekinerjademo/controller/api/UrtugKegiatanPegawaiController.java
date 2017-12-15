@@ -260,6 +260,100 @@ public class UrtugKegiatanPegawaiController {
 
     }
 
+    @RequestMapping(value = "/get-urtug-program-pegawai-approval/{nipPegawai}/{kdUnitKerja}", method = RequestMethod.GET)
+    ResponseEntity<?> getUrtugProgramPegawaiApproval(
+            @PathVariable("nipPegawai") String nipPegawai,
+            @PathVariable("kdUnitKerja") String kdUnitKerja) {
+        LOGGER.info("get urtug program pegawai by urtug jabatan");
+
+        List<UrtugProgramPegawaiWrapper> urtugProgramPegawaiWrapperList
+                = new ArrayList<>();
+
+        List<UrtugKegiatanPegawai> urtugKegiatanPegawaiList
+                = urtugKegiatanPegawaiService.findByNipPegawai(nipPegawai);
+
+        UnitKerjaKegiatan unitKerjaKegiatan
+                = unitKerjaKegiatanService.findByKdUnitKerja(kdUnitKerja);
+
+        List<TaProgram> taProgramList
+                = taProgramDao.findAllByKdUnitKerja(
+                        unitKerjaKegiatan.getKdUrusan(),
+                        unitKerjaKegiatan.getKdBidang(),
+                        unitKerjaKegiatan.getKdUnit());
+
+        boolean notFound;
+        for (UrtugKegiatanPegawai urtugKegiatanPegawai
+                : urtugKegiatanPegawaiList) {
+            notFound = true;
+
+            if (urtugKegiatanPegawai.getStatusApproval() == 1) {
+                for (UrtugProgramPegawaiWrapper urtugProgramPegawaiWrapper
+                        : urtugProgramPegawaiWrapperList) {
+                    if (urtugProgramPegawaiWrapper.getKdUrusan().equals(urtugKegiatanPegawai.getUrtugKegiatanPegawaiId().getKdUrusan()) &&
+                            urtugProgramPegawaiWrapper.getKdBidang().equals(urtugKegiatanPegawai.getUrtugKegiatanPegawaiId().getKdBidang()) &&
+                            urtugProgramPegawaiWrapper.getKdUnit().equals(urtugKegiatanPegawai.getUrtugKegiatanPegawaiId().getKdUnit()) &&
+                            urtugProgramPegawaiWrapper.getKdSub().equals(urtugKegiatanPegawai.getUrtugKegiatanPegawaiId().getKdSub()) &&
+                            urtugProgramPegawaiWrapper.getTahun().equals(urtugKegiatanPegawai.getUrtugKegiatanPegawaiId().getTahun()) &&
+                            urtugProgramPegawaiWrapper.getKdProg().equals(urtugKegiatanPegawai.getUrtugKegiatanPegawaiId().getKdProg()) &&
+                            urtugProgramPegawaiWrapper.getIdProg().equals(urtugKegiatanPegawai.getUrtugKegiatanPegawaiId().getIdProg())) {
+
+                        urtugProgramPegawaiWrapper.setBiaya(urtugProgramPegawaiWrapper.getBiaya().add(urtugKegiatanPegawai.getUrtugKegiatan().getBiaya()));
+                        notFound = false;
+
+                        break;
+                    }
+                }
+
+                if (notFound) {
+                    urtugProgramPegawaiWrapperList
+                            .add(new UrtugProgramPegawaiWrapper(
+                                    urtugKegiatanPegawai.getUrtugKegiatanPegawaiId().getKdUrtug(),
+                                    urtugKegiatanPegawai.getUrtugKegiatan().getUraianTugasJabatanJenisUrtug().getUraianTugasJabatan().getUraianTugas().getDeskripsi(),
+                                    urtugKegiatanPegawai.getUrtugKegiatanPegawaiId().getKdJabatan(),
+                                    urtugKegiatanPegawai.getUrtugKegiatanPegawaiId().getKdJenisUrtug(),
+                                    urtugKegiatanPegawai.getUrtugKegiatanPegawaiId().getTahunUrtug(),
+                                    urtugKegiatanPegawai.getUrtugKegiatanPegawaiId().getKdUrusan(),
+                                    urtugKegiatanPegawai.getUrtugKegiatanPegawaiId().getKdBidang(),
+                                    urtugKegiatanPegawai.getUrtugKegiatanPegawaiId().getKdUnit(),
+                                    urtugKegiatanPegawai.getUrtugKegiatanPegawaiId().getKdSub(),
+                                    urtugKegiatanPegawai.getUrtugKegiatanPegawaiId().getTahun(),
+                                    urtugKegiatanPegawai.getUrtugKegiatanPegawaiId().getKdProg(),
+                                    urtugKegiatanPegawai.getUrtugKegiatanPegawaiId().getIdProg(),
+                                    "",
+                                    urtugKegiatanPegawai.getUrtugKegiatan().getKuantitas(),
+                                    urtugKegiatanPegawai.getUrtugKegiatan().getSatuanKuantitas(),
+                                    urtugKegiatanPegawai.getUrtugKegiatan().getKualitas(),
+                                    urtugKegiatanPegawai.getUrtugKegiatan().getWaktu(),
+                                    urtugKegiatanPegawai.getUrtugKegiatan().getBiaya(),
+                                    urtugKegiatanPegawai.getStatusPenanggungJawabKegiatan().getKdStatus(),
+                                    urtugKegiatanPegawai.getStatusPenanggungJawabKegiatan().getStatus(),
+                                    urtugKegiatanPegawai.getStatusApproval()
+                            ));
+                }
+            }
+        }
+
+        //set keterangan from simda
+        for (UrtugProgramPegawaiWrapper program
+                : urtugProgramPegawaiWrapperList) {
+            for (TaProgram taProgram
+                    : taProgramList) {
+                if (program.getKdUrusan().equals(taProgram.getTaProgramId().getKdUrusan()) &&
+                        program.getKdBidang().equals(taProgram.getTaProgramId().getKdBIdang()) &&
+                        program.getKdUnit().equals(taProgram.getTaProgramId().getKdUnit()) &&
+                        program.getKdSub().equals(taProgram.getTaProgramId().getKdSub()) &&
+                        program.getTahun().equals(taProgram.getTaProgramId().getTahun()) &&
+                        program.getKdProg().equals(taProgram.getTaProgramId().getKdProg()) &&
+                        program.getIdProg().equals(taProgram.getTaProgramId().getIdProg())) {
+
+                    program.setKetProgram(taProgram.getKetProgram());
+                }
+            }
+        }
+
+        return new ResponseEntity<Object>(urtugProgramPegawaiWrapperList, HttpStatus.OK);
+    }
+
     @RequestMapping(value = "/get-urtug-kegiatan-pegawai/{nipPegawai}/{kdUnitKerja}", method = RequestMethod.GET)
     ResponseEntity<?> getUrtugKegiatanPegawaiByNip(
             @PathVariable("nipPegawai") String nipPegawai,
