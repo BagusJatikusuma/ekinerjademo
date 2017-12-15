@@ -118,4 +118,5 @@ public class UrtugKegiatanPegawaiServiceImpl implements UrtugKegiatanPegawaiServ
         }
 
     }
+
 }

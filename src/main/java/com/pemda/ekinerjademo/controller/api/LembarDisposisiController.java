@@ -95,7 +95,7 @@ public class LembarDisposisiController {
         return new ResponseEntity<Object>(new CustomMessage("lembar disposisi created"), HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/create-lembar-disposisi-ekstensi", method = RequestMethod.POST)
+    @RequestMapping(value = "/create-lembar-disposisi-ekstensi", method = RequestMethod.POST, consumes = "multipart/form-data")
     ResponseEntity<?> createLembarDisposisiEkstensi(
             @RequestPart("metadata") LembarDisposisiInputWrapper inputWrapper,
             @RequestPart("file") MultipartFile fileSuratDisposisi) {
