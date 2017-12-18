@@ -696,6 +696,13 @@ public class SuratPerintahController {
         return new ResponseEntity<Object>(suratPerintahWrapper, HttpStatus.OK);
     }
 
+    @RequestMapping(value = "/open-surat-perintah/{kdSuratPerintah}", method = RequestMethod.PUT)
+    ResponseEntity<?> openSuratPerintah(@PathVariable("kdSuratPerintah") String kdSuratPerintah) {
+        LOGGER.info("open surat perintah");
 
+        suratPerintahService.openSuratPerintah(kdSuratPerintah);
+
+        return new ResponseEntity<Object>(new CustomMessage("surat perintah opened"), HttpStatus.OK);
+    }
 
 }

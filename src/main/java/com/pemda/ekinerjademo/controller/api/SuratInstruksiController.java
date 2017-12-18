@@ -306,4 +306,13 @@ public class SuratInstruksiController {
         return new ResponseEntity<Object>(suratInstruksiWrapperList, HttpStatus.OK);
     }
 
+    @RequestMapping(value = "/open-surat-instruksi/{kdSuratInstruksi}", method = RequestMethod.PUT)
+    ResponseEntity<?> openSuratInstruksi(@PathVariable("kdSuratInstruksi") String kdSuratInstruksi) {
+        LOGGER.info("open surat instruksi");
+
+        suratInstruksiService.openSuratInstruksi(kdSuratInstruksi);
+
+        return new ResponseEntity<Object>(new CustomMessage("surat instruksi opened"), HttpStatus.OK);
+    }
+
 }

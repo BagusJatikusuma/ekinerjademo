@@ -28,6 +28,7 @@ public interface SuratPerintahService {
     void createSuratPerintahNonPejabat(SuratPerintahNonPejabat suratPerintahNonPejabat);
     void createTembusanSurat(Set<TembusanSuratPerintah> tembusanSuratPerintahSet);
     void updateTembusanSurat(TembusanSuratPerintah tembusanSuratPerintah);
+    void openSuratPerintah(String kdSuratPerintah);
 
     void update(SuratPerintah suratPerintah);
 

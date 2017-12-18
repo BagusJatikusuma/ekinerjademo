@@ -52,6 +52,14 @@ public class SuratInstruksiServiceImpl implements SuratInstruksiService {
     }
 
     @Override
+    public void openSuratInstruksi(String kdSuratInstruksi) {
+        SuratInstruksi suratInstruksi
+                = suratInstruksiDao.findOne(kdSuratInstruksi);
+
+        suratInstruksi.setStatusBaca(1);
+    }
+
+    @Override
     public SuratInstruksi getSuratInstruksi(String kdSuratInstruksi) {
         return suratInstruksiDao.findOne(kdSuratInstruksi);
     }

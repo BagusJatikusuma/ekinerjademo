@@ -12,6 +12,8 @@ public interface LembarDisposisiService {
     // buat root lembar disposisi, disposisi pertama
     void create(LembarDisposisi lembarDisposisi);
     void createTargetLembarDisposisi(List<TargetLembarDisposisi> targetLembarDisposisiList);
+    void openLembarDisposisi(String kdLembarDisposisi);
+
     LembarDisposisi findByKdLembarDisposisi(String kdLembarDisposisi);
     List<LembarDisposisi> findByUnitKerja(String kdUnitKerja);
     List<LembarDisposisi> findByNipPegawai(String nipPegawai);

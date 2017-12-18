@@ -13,6 +13,8 @@ public interface SuratInstruksiService {
     void createInstruksiPejabat(InstruksiPejabat instruksiPejabat);
     void createSuratInstruksiPejabat(SuratInstruksiPejabat suratInstruksiPejabat);
     void createSuratInstruksiNonPejabat(SuratInstruksiNonPejabat suratInstruksiNonPejabat);
+    void openSuratInstruksi(String kdSuratInstruksi);
+
     SuratInstruksi getSuratInstruksi(String kdSuratInstruksi);
     SuratInstruksi getDokumenSuratInstruksi(String kdSuratInstruksi);
     List<InstruksiPegawai> getInstruksiPegawai(String nipPegawai);

@@ -141,6 +141,7 @@ public class LembarDisposisiController {
 //        lembarDisposisi.setNoSuratDisposisi(new SuratDisposisi(inputWrapper.getNoSuratDisposisi()));
         lembarDisposisi.setNoSuratDisposisi(new SuratDisposisi(kdLembarDisposisi));
         lembarDisposisi.setIsiDisposisi(inputWrapper.getIsiDisposisi());
+        lembarDisposisi.setStatusBaca(0);
 
         if (inputWrapper.getKdLembarDisposisiParent() == null) {
             lembarDisposisi.setKdLembarDisposisiParent(null);
@@ -293,6 +294,15 @@ public class LembarDisposisiController {
                 );
 
         return new ResponseEntity<Object>(dokumenLembarDisposisiWrapper, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/open-lembar-disposisi/{kdLembarDisposisi}", method = RequestMethod.PUT)
+    ResponseEntity<?> openLembarDisposisi(@PathVariable("kdLembarDisposisi") String kdLembarDisposisi) {
+        LOGGER.info("open lembar disposisi");
+
+        lembarDisposisiService.openLembarDisposisi(kdLembarDisposisi);
+
+        return new ResponseEntity<Object>(new CustomMessage("lembar disposisi opened"), HttpStatus.OK);
     }
 
 }

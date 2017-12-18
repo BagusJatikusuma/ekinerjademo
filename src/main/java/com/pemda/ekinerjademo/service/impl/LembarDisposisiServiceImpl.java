@@ -35,6 +35,13 @@ public class LembarDisposisiServiceImpl implements LembarDisposisiService {
     }
 
     @Override
+    public void openLembarDisposisi(String kdLembarDisposisi) {
+        LembarDisposisi lembarDisposisi = lembarDisposisiDao.findOne(kdLembarDisposisi);
+
+        lembarDisposisi.setStatusBaca(1);
+    }
+
+    @Override
     public LembarDisposisi findByKdLembarDisposisi(String kdLembarDisposisi) {
         return lembarDisposisiDao.findOne(kdLembarDisposisi);
     }

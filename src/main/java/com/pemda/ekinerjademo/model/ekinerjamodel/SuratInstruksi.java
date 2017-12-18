@@ -34,6 +34,8 @@ public class SuratInstruksi {
     private String nipPenandatangan;
     @Column(name = "path")
     private String path;
+    @Column(name = "status_baca")
+    private Integer statusBaca;
 
     @OneToMany(mappedBy = "suratInstruksi")
     private Set<InstruksiPegawai> instruksiPegawaiSet;
@@ -176,5 +178,13 @@ public class SuratInstruksi {
 
     public void setPath(String path) {
         this.path = path;
+    }
+
+    public Integer getStatusBaca() {
+        return statusBaca;
+    }
+
+    public void setStatusBaca(Integer statusBaca) {
+        this.statusBaca = statusBaca;
     }
 }

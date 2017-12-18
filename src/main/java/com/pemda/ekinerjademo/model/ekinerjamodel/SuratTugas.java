@@ -42,6 +42,8 @@ public class SuratTugas {
     private Integer approvalPenandatangan;
     @Column(name = "path_penilaian")
     private String pathPenilaian;
+    @Column(name = "status_baca")
+    private Integer statusBaca;
 
     public String getKdSuratTugas() {
         return kdSuratTugas;
@@ -161,5 +163,13 @@ public class SuratTugas {
 
     public void setPathPenilaian(String pathPenilaian) {
         this.pathPenilaian = pathPenilaian;
+    }
+
+    public Integer getStatusBaca() {
+        return statusBaca;
+    }
+
+    public void setStatusBaca(Integer statusBaca) {
+        this.statusBaca = statusBaca;
     }
 }

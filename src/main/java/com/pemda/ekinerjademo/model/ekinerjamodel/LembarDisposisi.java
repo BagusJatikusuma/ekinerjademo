@@ -31,6 +31,10 @@ public class LembarDisposisi {
     private Integer statusPenyebaran;
     @Column(name = "approval_penandatangan")
     private Integer approvalPenandatangan;
+    @Column(name = "status_baca")
+    private Integer statusBaca;
+    @Column(name = "tanggal_pengiriman_surat")
+    private Long tanggalPengirimanMilis;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(
@@ -163,5 +167,21 @@ public class LembarDisposisi {
 
     public void setApprovalPenandatangan(Integer approvalPenandatangan) {
         this.approvalPenandatangan = approvalPenandatangan;
+    }
+
+    public Integer getStatusBaca() {
+        return statusBaca;
+    }
+
+    public void setStatusBaca(Integer statusBaca) {
+        this.statusBaca = statusBaca;
+    }
+
+    public Long getTanggalPengirimanMilis() {
+        return tanggalPengirimanMilis;
+    }
+
+    public void setTanggalPengirimanMilis(Long tanggalPengirimanMilis) {
+        this.tanggalPengirimanMilis = tanggalPengirimanMilis;
     }
 }
