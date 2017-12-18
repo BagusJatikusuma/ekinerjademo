@@ -7,6 +7,7 @@ public class SuratPerintahHistoryWrapper {
     private String kdSurat;
     private String createdDate;
     private boolean isSuratPejabat;
+    private Integer statusBaca;
 
     public SuratPerintahHistoryWrapper() {
     }
@@ -14,6 +15,16 @@ public class SuratPerintahHistoryWrapper {
         this.kdSurat = kdSurat;
         this.createdDate = createdDate;
         this.isSuratPejabat = isSuratPejabat;
+    }
+    public SuratPerintahHistoryWrapper(
+            String kdSurat,
+            String createdDate,
+            boolean isSuratPejabat,
+            Integer statusBaca) {
+        this.kdSurat = kdSurat;
+        this.createdDate = createdDate;
+        this.isSuratPejabat = isSuratPejabat;
+        this.statusBaca = statusBaca;
     }
 
     public String getKdSurat() {
@@ -38,5 +49,13 @@ public class SuratPerintahHistoryWrapper {
 
     public void setSuratPejabat(boolean suratPejabat) {
         isSuratPejabat = suratPejabat;
+    }
+
+    public Integer getStatusBaca() {
+        return statusBaca;
+    }
+
+    public void setStatusBaca(Integer statusBaca) {
+        this.statusBaca = statusBaca;
     }
 }

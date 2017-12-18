@@ -1,12 +1,10 @@
 package com.pemda.ekinerjademo.controller.api;
 
+import com.pemda.ekinerjademo.model.bismamodel.QutPegawai;
 import com.pemda.ekinerjademo.model.bismamodel.TkdJabatan;
 import com.pemda.ekinerjademo.model.ekinerjamodel.*;
 import com.pemda.ekinerjademo.projection.ekinerjaprojection.CustomPegawaiCredential;
-import com.pemda.ekinerjademo.service.QutPegawaiCloneService;
-import com.pemda.ekinerjademo.service.QutPegawaiService;
-import com.pemda.ekinerjademo.service.SuratInstruksiService;
-import com.pemda.ekinerjademo.service.TkdJabatanService;
+import com.pemda.ekinerjademo.service.*;
 import com.pemda.ekinerjademo.util.DateUtilities;
 import com.pemda.ekinerjademo.util.EkinerjaXMLBuilder;
 import com.pemda.ekinerjademo.util.EkinerjaXMLParser;
@@ -40,6 +38,11 @@ public class SuratInstruksiController {
     @Autowired private SuratInstruksiService suratInstruksiService;
     @Autowired private QutPegawaiCloneService qutPegawaiService;
     @Autowired private TkdJabatanService tkdJabatanService;
+
+    @Autowired private BeritaAcaraService beritaAcaraService;
+    @Autowired private SuratKuasaController suratKuasaController;
+    @Autowired private SuratPerintahService suratPerintahService;
+
 
     @RequestMapping(value = "/create-surat-instruksi", method = RequestMethod.POST)
     ResponseEntity<?> createSuratInstruksi(
@@ -135,7 +138,8 @@ public class SuratInstruksiController {
                             suratInstruksi.getKdInstruksi(),
                             suratInstruksi.getJudulInstruksi(),
                             DateUtilities.createLocalDate(new Date(suratInstruksi.getCreateddateMilis()), "dd MMMM yyyy", indoLocale),
-                            isSuratPejabat));
+                            isSuratPejabat,
+                            suratInstruksi.getStatusBaca()));
         }
 
         return new ResponseEntity<Object>(suratInstruksiWrapperList, HttpStatus.OK);
@@ -260,6 +264,9 @@ public class SuratInstruksiController {
         boolean isSuratPejabat;
         for (InstruksiPegawai instruksiPegawai
                 : instruksiPegawaiList) {
+            QutPegawai pegawaiPengirim
+                    = qutPegawaiService.getQutPegawai(instruksiPegawai.getSuratInstruksi().getNipPembuat());
+
             isSuratPejabat = true;
             if (instruksiPegawai.getSuratInstruksi().getSuratInstruksiPejabat() == null) {
                 isSuratPejabat = false;
@@ -269,7 +276,12 @@ public class SuratInstruksiController {
                             instruksiPegawai.getSuratInstruksi().getKdInstruksi(),
                             instruksiPegawai.getSuratInstruksi().getJudulInstruksi(),
                             DateUtilities.createLocalDate(new Date(instruksiPegawai.getSuratInstruksi().getCreateddateMilis()), "dd MMMM yyyy", indoLocale),
-                            isSuratPejabat));
+                            instruksiPegawai.getSuratInstruksi().getCreateddateMilis(),
+                            isSuratPejabat,
+                            null,
+                            instruksiPegawai.getSuratInstruksi().getNipPembuat(),
+                            pegawaiPengirim.getNama()
+                    ));
 
         }
 
@@ -290,6 +302,9 @@ public class SuratInstruksiController {
         boolean isSuratPejabat;
         for (InstruksiPejabat instruksiPejabat
                 : instruksiPejabatList) {
+            QutPegawai pegawaiPengirim
+                    = qutPegawaiService.getQutPegawai(instruksiPejabat.getSuratInstruksi().getNipPembuat());
+
             isSuratPejabat = true;
             if (instruksiPejabat.getSuratInstruksi().getSuratInstruksiPejabat() == null) {
                 isSuratPejabat = false;
@@ -299,7 +314,12 @@ public class SuratInstruksiController {
                             instruksiPejabat.getSuratInstruksi().getKdInstruksi(),
                             instruksiPejabat.getSuratInstruksi().getJudulInstruksi(),
                             DateUtilities.createLocalDate(new Date(instruksiPejabat.getSuratInstruksi().getCreateddateMilis()), "dd MMMM yyyy", indoLocale),
-                            isSuratPejabat));
+                            instruksiPejabat.getSuratInstruksi().getCreateddateMilis(),
+                            isSuratPejabat,
+                            null,
+                            instruksiPejabat.getSuratInstruksi().getNipPembuat(),
+                            pegawaiPengirim.getNama()
+                            ));
 
         }
 
@@ -314,5 +334,7 @@ public class SuratInstruksiController {
 
         return new ResponseEntity<Object>(new CustomMessage("surat instruksi opened"), HttpStatus.OK);
     }
+
+
 
 }

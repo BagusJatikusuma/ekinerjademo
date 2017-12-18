@@ -42,6 +42,11 @@ public class SuratKuasa {
     @Column(name = "kd_unit_kerja")
     private String kdUnitKerja;
 
+    @Column(name = "kd_naskah_penugasan")
+    private String kdNaskahPenugasan;
+    @Column(name = "jenis_naskah_penugasan")
+    private Integer jenisNaskahPenugasan;
+
     public String getKdSuratKuasa() {
         return kdSuratKuasa;
     }
@@ -144,5 +149,21 @@ public class SuratKuasa {
 
     public void setKdUnitKerja(String kdUnitKerja) {
         this.kdUnitKerja = kdUnitKerja;
+    }
+
+    public String getKdNaskahPenugasan() {
+        return kdNaskahPenugasan;
+    }
+
+    public void setKdNaskahPenugasan(String kdNaskahPenugasan) {
+        this.kdNaskahPenugasan = kdNaskahPenugasan;
+    }
+
+    public Integer getJenisNaskahPenugasan() {
+        return jenisNaskahPenugasan;
+    }
+
+    public void setJenisNaskahPenugasan(Integer jenisNaskahPenugasan) {
+        this.jenisNaskahPenugasan = jenisNaskahPenugasan;
     }
 }

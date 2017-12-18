@@ -6,6 +6,7 @@ package com.pemda.ekinerjademo.wrapper.output;
 public class SuratPerintahTargetWrapper {
     private String kdSurat;
     private String createdDate;
+    private Long createdDateMilis;
     private boolean isSuratPejabat;
     private String nipPemberi;
     private String namaPemberi;
@@ -22,6 +23,22 @@ public class SuratPerintahTargetWrapper {
             String jabatanPemberi) {
         this.kdSurat = kdSurat;
         this.createdDate = createdDate;
+        this.isSuratPejabat = isSuratPejabat;
+        this.nipPemberi = nipPemberi;
+        this.namaPemberi = namaPemberi;
+        this.jabatanPemberi = jabatanPemberi;
+    }
+    public SuratPerintahTargetWrapper(
+            String kdSurat,
+            String createdDate,
+            Long createdDateMilis,
+            boolean isSuratPejabat,
+            String nipPemberi,
+            String namaPemberi,
+            String jabatanPemberi) {
+        this.kdSurat = kdSurat;
+        this.createdDate = createdDate;
+        this.createdDateMilis = createdDateMilis;
         this.isSuratPejabat = isSuratPejabat;
         this.nipPemberi = nipPemberi;
         this.namaPemberi = namaPemberi;
@@ -74,5 +91,13 @@ public class SuratPerintahTargetWrapper {
 
     public void setJabatanPemberi(String jabatanPemberi) {
         this.jabatanPemberi = jabatanPemberi;
+    }
+
+    public Long getCreatedDateMilis() {
+        return createdDateMilis;
+    }
+
+    public void setCreatedDateMilis(Long createdDateMilis) {
+        this.createdDateMilis = createdDateMilis;
     }
 }

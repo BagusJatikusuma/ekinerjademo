@@ -1,5 +1,6 @@
 package com.pemda.ekinerjademo.controller.api;
 
+import com.pemda.ekinerjademo.model.bismamodel.QutPegawai;
 import com.pemda.ekinerjademo.model.ekinerjamodel.*;
 import com.pemda.ekinerjademo.projection.ekinerjaprojection.CustomPegawaiCredential;
 import com.pemda.ekinerjademo.repository.ekinerjarepository.SuratDisposisiDao;
@@ -142,6 +143,7 @@ public class LembarDisposisiController {
         lembarDisposisi.setNoSuratDisposisi(new SuratDisposisi(kdLembarDisposisi));
         lembarDisposisi.setIsiDisposisi(inputWrapper.getIsiDisposisi());
         lembarDisposisi.setStatusBaca(0);
+        lembarDisposisi.setTanggalPengirimanMilis(new Date().getTime());
 
         if (inputWrapper.getKdLembarDisposisiParent() == null) {
             lembarDisposisi.setKdLembarDisposisiParent(null);
@@ -182,7 +184,9 @@ public class LembarDisposisiController {
                             lembarDisposisi.getPath(),
                             DateUtilities.createLocalDate(new Date(lembarDisposisi.getTanggalPenerimaanMilis()), "dd MMMM yyyy", indoLocale),
                             lembarDisposisi.getTktKeamanan(),
-                            DateUtilities.createLocalDate(new Date(lembarDisposisi.getTglPenyelesaianMilis()), "dd MMMM yyyy", indoLocale)
+                            DateUtilities.createLocalDate(new Date(lembarDisposisi.getTglPenyelesaianMilis()), "dd MMMM yyyy", indoLocale),
+                            lembarDisposisi.getStatusBaca(),
+                            DateUtilities.createLocalDate(new Date(lembarDisposisi.getTanggalPengirimanMilis()), "dd MMMM yyyy", indoLocale)
                     ));
         }
 
@@ -196,6 +200,7 @@ public class LembarDisposisiController {
         List<TargetLembarDisposisi> targetLembarDisposisiList
                 = lembarDisposisiService.findByTargetDisposisi(nipTarget);
 
+
         List<LembarDisposisiWrapper> lembarDisposisiWrappers
                 = new ArrayList<>();
 
@@ -203,13 +208,23 @@ public class LembarDisposisiController {
         for (TargetLembarDisposisi targetLembarDisposisi
                 : targetLembarDisposisiList) {
 //            LOGGER.info(lembarDisposisi.getPath());
+            QutPegawai pegawaiPengirim
+                    = qutPegawaiService.getQutPegawai(targetLembarDisposisi.getLembarDisposisi().getNipPembuat());
+
             lembarDisposisiWrappers
                     .add(new LembarDisposisiWrapper(
                             targetLembarDisposisi.getLembarDisposisi().getKdLembarDisposisi(),
                             targetLembarDisposisi.getLembarDisposisi().getPath(),
                             DateUtilities.createLocalDate(new Date(targetLembarDisposisi.getLembarDisposisi().getTanggalPenerimaanMilis()), "dd MMMM yyyy", indoLocale),
+                            targetLembarDisposisi.getLembarDisposisi().getTanggalPenerimaanMilis(),
                             targetLembarDisposisi.getLembarDisposisi().getTktKeamanan(),
-                            DateUtilities.createLocalDate(new Date(targetLembarDisposisi.getLembarDisposisi().getTglPenyelesaianMilis()), "dd MMMM yyyy", indoLocale)
+                            DateUtilities.createLocalDate(new Date(targetLembarDisposisi.getLembarDisposisi().getTglPenyelesaianMilis()), "dd MMMM yyyy", indoLocale),
+                            targetLembarDisposisi.getLembarDisposisi().getTglPenyelesaianMilis(),
+                            null,
+                            DateUtilities.createLocalDate(new Date(targetLembarDisposisi.getLembarDisposisi().getTanggalPengirimanMilis()), "dd MMMM yyyy", indoLocale),
+                            targetLembarDisposisi.getLembarDisposisi().getTanggalPengirimanMilis(),
+                            targetLembarDisposisi.getLembarDisposisi().getNipPembuat(),
+                            pegawaiPengirim.getNama()
                     ));
         }
 

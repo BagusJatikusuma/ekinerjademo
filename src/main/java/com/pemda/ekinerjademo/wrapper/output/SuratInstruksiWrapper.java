@@ -7,7 +7,11 @@ public class SuratInstruksiWrapper {
     private String kdInstruksi;
     private String judulInstruksi;
     private String tanggalDibuat;
+    private Long tanggalDibuatMilis;
     private boolean suratPejabat;
+    private Integer statusbaca;
+    private String nipPengirim;
+    private String namaPengirim;
 
     public SuratInstruksiWrapper() {
     }
@@ -20,6 +24,36 @@ public class SuratInstruksiWrapper {
         this.judulInstruksi = judulInstruksi;
         this.tanggalDibuat = tanggalDibuat;
         this.suratPejabat = suratPejabat;
+    }
+    public SuratInstruksiWrapper(
+            String kdInstruksi,
+            String judulInstruksi,
+            String tanggalDibuat,
+            boolean suratPejabat,
+            Integer statusbaca) {
+        this.kdInstruksi = kdInstruksi;
+        this.judulInstruksi = judulInstruksi;
+        this.tanggalDibuat = tanggalDibuat;
+        this.suratPejabat = suratPejabat;
+        this.statusbaca = statusbaca;
+    }
+    public SuratInstruksiWrapper(
+            String kdInstruksi,
+            String judulInstruksi,
+            String tanggalDibuat,
+            Long tanggalDibuatMilis,
+            boolean suratPejabat,
+            Integer statusbaca,
+            String nipPengirim,
+            String namaPengirim) {
+        this.kdInstruksi = kdInstruksi;
+        this.judulInstruksi = judulInstruksi;
+        this.tanggalDibuat = tanggalDibuat;
+        this.tanggalDibuatMilis = tanggalDibuatMilis;
+        this.suratPejabat = suratPejabat;
+        this.statusbaca = statusbaca;
+        this.nipPengirim = nipPengirim;
+        this.namaPengirim = namaPengirim;
     }
 
     public String getKdInstruksi() {
@@ -52,5 +86,37 @@ public class SuratInstruksiWrapper {
 
     public void setSuratPejabat(boolean suratPejabat) {
         this.suratPejabat = suratPejabat;
+    }
+
+    public Integer getStatusbaca() {
+        return statusbaca;
+    }
+
+    public void setStatusbaca(Integer statusbaca) {
+        this.statusbaca = statusbaca;
+    }
+
+    public Long getTanggalDibuatMilis() {
+        return tanggalDibuatMilis;
+    }
+
+    public void setTanggalDibuatMilis(Long tanggalDibuatMilis) {
+        this.tanggalDibuatMilis = tanggalDibuatMilis;
+    }
+
+    public String getNipPengirim() {
+        return nipPengirim;
+    }
+
+    public void setNipPengirim(String nipPengirim) {
+        this.nipPengirim = nipPengirim;
+    }
+
+    public String getNamaPengirim() {
+        return namaPengirim;
+    }
+
+    public void setNamaPengirim(String namaPengirim) {
+        this.namaPengirim = namaPengirim;
     }
 }

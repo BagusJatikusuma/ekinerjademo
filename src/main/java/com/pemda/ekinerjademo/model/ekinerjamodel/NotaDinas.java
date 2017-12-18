@@ -40,6 +40,11 @@ public class NotaDinas {
     @Column(name = "kd_unit_kerja")
     private String kdUnitKerja;
 
+    @Column(name = "kd_naskah_penugasan")
+    private String kdNaskahPenugasan;
+    @Column(name = "jenis_naskah_penugasan")
+    private Integer jenisNaskahPenugasan;
+
 //    @OneToMany(mappedBy = "notaDinas")
 //    private Set<TembusanNotaDinas> tembusanNotaDinasList;
 

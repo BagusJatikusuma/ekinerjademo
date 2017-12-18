@@ -7,8 +7,15 @@ public class LembarDisposisiWrapper {
     private String kdLembarDisposisi;
     private String path;
     private String tanggalPenerimaan;
+    private Long tanggalPenerimaanMilis;
     private Integer tktKeamanan;
     private String tglPenyelesaian;
+    private Long tglPenyelesaianMilis;
+    private Integer statusBaca;
+    private String tglPengiriman;
+    private Long tglPengirimanMilis;
+    private String nipPengirim;
+    private String namaPengirim;
 
     public LembarDisposisiWrapper() {
     }
@@ -18,6 +25,48 @@ public class LembarDisposisiWrapper {
         this.tanggalPenerimaan = tanggalPenerimaan;
         this.tktKeamanan = tktKeamanan;
         this.tglPenyelesaian = tglPenyelesaian;
+    }
+    public LembarDisposisiWrapper(
+            String kdLembarDisposisi,
+            String path,
+            String tanggalPenerimaan,
+            Integer tktKeamanan,
+            String tglPenyelesaian,
+            Integer statusBaca,
+            String tglPengiriman) {
+        this.kdLembarDisposisi = kdLembarDisposisi;
+        this.path = path;
+        this.tanggalPenerimaan = tanggalPenerimaan;
+        this.tktKeamanan = tktKeamanan;
+        this.tglPenyelesaian = tglPenyelesaian;
+        this.statusBaca = statusBaca;
+        this.tglPengiriman = tglPengiriman;
+    }
+    public LembarDisposisiWrapper(
+            String kdLembarDisposisi,
+            String path,
+            String tanggalPenerimaan,
+            Long tanggalPenerimaanMilis,
+            Integer tktKeamanan,
+            String tglPenyelesaian,
+            Long tglPenyelesaianMilis,
+            Integer statusBaca,
+            String tglPengiriman,
+            Long tglPengirimanMilis,
+            String nipPengirim,
+            String namaPengirim) {
+        this.kdLembarDisposisi = kdLembarDisposisi;
+        this.path = path;
+        this.tanggalPenerimaan = tanggalPenerimaan;
+        this.tanggalPenerimaanMilis = tanggalPenerimaanMilis;
+        this.tktKeamanan = tktKeamanan;
+        this.tglPenyelesaian = tglPenyelesaian;
+        this.tglPenyelesaianMilis = tglPenyelesaianMilis;
+        this.statusBaca = statusBaca;
+        this.tglPengiriman = tglPengiriman;
+        this.tglPengirimanMilis = tglPengirimanMilis;
+        this.nipPengirim = nipPengirim;
+        this.namaPengirim = namaPengirim;
     }
 
     public String getKdLembarDisposisi() {
@@ -58,5 +107,61 @@ public class LembarDisposisiWrapper {
 
     public void setTglPenyelesaian(String tglPenyelesaian) {
         this.tglPenyelesaian = tglPenyelesaian;
+    }
+
+    public Integer getStatusBaca() {
+        return statusBaca;
+    }
+
+    public void setStatusBaca(Integer statusBaca) {
+        this.statusBaca = statusBaca;
+    }
+
+    public String getTglPengiriman() {
+        return tglPengiriman;
+    }
+
+    public void setTglPengiriman(String tglPengiriman) {
+        this.tglPengiriman = tglPengiriman;
+    }
+
+    public String getNipPengirim() {
+        return nipPengirim;
+    }
+
+    public void setNipPengirim(String nipPengirim) {
+        this.nipPengirim = nipPengirim;
+    }
+
+    public String getNamaPengirim() {
+        return namaPengirim;
+    }
+
+    public void setNamaPengirim(String namaPengirim) {
+        this.namaPengirim = namaPengirim;
+    }
+
+    public Long getTanggalPenerimaanMilis() {
+        return tanggalPenerimaanMilis;
+    }
+
+    public void setTanggalPenerimaanMilis(Long tanggalPenerimaanMilis) {
+        this.tanggalPenerimaanMilis = tanggalPenerimaanMilis;
+    }
+
+    public Long getTglPenyelesaianMilis() {
+        return tglPenyelesaianMilis;
+    }
+
+    public void setTglPenyelesaianMilis(Long tglPenyelesaianMilis) {
+        this.tglPenyelesaianMilis = tglPenyelesaianMilis;
+    }
+
+    public Long getTglPengirimanMilis() {
+        return tglPengirimanMilis;
+    }
+
+    public void setTglPengirimanMilis(Long tglPengirimanMilis) {
+        this.tglPengirimanMilis = tglPengirimanMilis;
     }
 }

@@ -442,7 +442,9 @@ public class SuratPerintahController {
                     .add(new SuratPerintahHistoryWrapper(
                             suratPerintah.getKdSuratPerintah(),
                             df.format(new Date(suratPerintah.getTanggalPerintahMilis())),
-                            isSuratPejabat));
+                            isSuratPejabat,
+                            suratPerintah.getStatusBaca()
+                    ));
         }
 
         return new ResponseEntity<Object>(suratPerintahHistoryWrappers, HttpStatus.OK);
@@ -493,6 +495,7 @@ public class SuratPerintahController {
                             .add(new SuratPerintahTargetWrapper(
                                     suratTarget.getSuratPerintah().getKdSuratPerintah(),
                                     DateUtilities.createLocalDate(new Date(suratTarget.getSuratPerintah().getTanggalPerintahMilis()), "dd MMMM yyyy", indoLocale),
+                                    suratTarget.getSuratPerintah().getTanggalPerintahMilis(),
                                     isSuratPejabat,
                                     pegawaiPemberi.getNip(),
                                     pegawaiPemberi.getNama(),
@@ -518,6 +521,7 @@ public class SuratPerintahController {
                             .add(new SuratPerintahTargetWrapper(
                                     suratTarget.getSuratPerintah().getKdSuratPerintah(),
                                     DateUtilities.createLocalDate(new Date(suratTarget.getSuratPerintah().getTanggalPerintahMilis()), "dd MMMM yyyy", indoLocale),
+                                    suratTarget.getSuratPerintah().getTanggalPerintahMilis(),
                                     isSuratPejabat,
                                     pegawaiPemberi.getNip(),
                                     pegawaiPemberi.getNama(),
@@ -543,6 +547,7 @@ public class SuratPerintahController {
                             .add(new SuratPerintahTargetWrapper(
                                     suratTarget.getSuratPerintah().getKdSuratPerintah(),
                                     DateUtilities.createLocalDate(new Date(suratTarget.getSuratPerintah().getTanggalPerintahMilis()), "dd MMMM yyyy", indoLocale),
+                                    suratTarget.getSuratPerintah().getTanggalPerintahMilis(),
                                     isSuratPejabat,
                                     pegawaiPemberi.getNip(),
                                     pegawaiPemberi.getNama(),
