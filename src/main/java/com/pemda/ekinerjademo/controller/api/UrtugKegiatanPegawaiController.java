@@ -923,6 +923,47 @@ public class UrtugKegiatanPegawaiController {
                 new CustomMessage("urtug kegiatan pegawai deleted"), HttpStatus.OK);
     }
 
+    @RequestMapping(value = "/delete-urtug-program-pegawai", method = RequestMethod.POST)
+    ResponseEntity<?> deleteUrtugProgramPegawai(
+            @RequestBody UrtugKegiatanUnitKerjaInputWrapper urtugJabatanInputWrapper) {
+        LOGGER.info("delete urtug program pegawai");
+
+        List<UrtugKegiatanPegawai> urtugKegiatanPegawaiList
+                = urtugKegiatanPegawaiService.findByProgramAndPegawai(
+                        urtugJabatanInputWrapper.getKdUrusan(),
+                        urtugJabatanInputWrapper.getKdBidang(),
+                        urtugJabatanInputWrapper.getKdUnit(),
+                        urtugJabatanInputWrapper.getKdSub(),
+                        urtugJabatanInputWrapper.getTahun(),
+                        urtugJabatanInputWrapper.getKdProg(),
+                        urtugJabatanInputWrapper.getIdProg(),
+                        urtugJabatanInputWrapper.getNipPegawai());
+
+        for (UrtugKegiatanPegawai urtugKegiatanPegawai
+                : urtugKegiatanPegawaiList) {
+            UrtugKegiatanPegawaiId urtugKegiatanPegawaiId
+                    = new UrtugKegiatanPegawaiId(
+                            urtugJabatanInputWrapper.getKdUrtug(),
+                            urtugJabatanInputWrapper.getKdJabatan(),
+                            urtugJabatanInputWrapper.getKdJenisUrtug(),
+                            urtugJabatanInputWrapper.getTahunUrtug(),
+                            urtugJabatanInputWrapper.getKdUrusan(),
+                            urtugJabatanInputWrapper.getKdBidang(),
+                            urtugJabatanInputWrapper.getKdUnit(),
+                            urtugJabatanInputWrapper.getKdSub(),
+                            urtugJabatanInputWrapper.getTahun(),
+                            urtugJabatanInputWrapper.getKdProg(),
+                            urtugJabatanInputWrapper.getIdProg(),
+                            urtugKegiatanPegawai.getUrtugKegiatanPegawaiId().getKdKeg(),
+                            urtugJabatanInputWrapper.getNipPegawai(),
+                            urtugKegiatanPegawai.getUrtugKegiatanPegawaiId().getKdStatusPenanggungJawab());
+
+            urtugKegiatanPegawaiService.delete(urtugKegiatanPegawaiId);
+        }
+
+        return new ResponseEntity<Object>(new CustomMessage("urtug program pegawai deleted"), HttpStatus.OK);
+    }
+
     //change status urtug dpa pegawai per kegiatan (tidak dipakai)
     @RequestMapping(value = "/change-status-urtug-dpa-pegawai", method = RequestMethod.PUT)
     ResponseEntity<?> changeStatusUrtugDpaPegawai(

@@ -12,6 +12,9 @@ public class InstruksiPejabat {
     private InstruksiPejabatId instruksiPejabatId;
     @Column(name = "approve_status")
     private Integer approveStatus;
+    @Column(name = "status_baca")
+    private Integer statusBaca;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(
             name = "kd_instruksi",
@@ -45,4 +48,11 @@ public class InstruksiPejabat {
         this.suratInstruksi = suratInstruksi;
     }
 
+    public Integer getStatusBaca() {
+        return statusBaca;
+    }
+
+    public void setStatusBaca(Integer statusBaca) {
+        this.statusBaca = statusBaca;
+    }
 }

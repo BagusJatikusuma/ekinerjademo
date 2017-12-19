@@ -75,6 +75,8 @@ public class LembarDisposisiController {
         lembarDisposisi.setTglPenyelesaianMilis(inputWrapper.getTglPenyelesaianMilis());
         lembarDisposisi.setNoSuratDisposisi(new SuratDisposisi(inputWrapper.getNoSuratDisposisi()));
         lembarDisposisi.setIsiDisposisi(inputWrapper.getIsiDisposisi());
+        lembarDisposisi.setStatusBaca(0);
+        lembarDisposisi.setTanggalPengirimanMilis(new Date().getTime());
 
         if (inputWrapper.getKdLembarDisposisiParent() == null) {
             lembarDisposisi.setKdLembarDisposisiParent(null);
@@ -88,6 +90,7 @@ public class LembarDisposisiController {
             TargetLembarDisposisi targetLembarDisposisi = new TargetLembarDisposisi();
             targetLembarDisposisi.setTargetLembarDisposisiId(new TargetLembarDisposisiId(kdLembarDisposisi, kdTarget));
             targetLembarDisposisi.setApproveStatus(0);
+            targetLembarDisposisi.setStatusBaca(0);
 
             targetLembarDisposisiList.add(targetLembarDisposisi);
         }
@@ -220,12 +223,52 @@ public class LembarDisposisiController {
                             targetLembarDisposisi.getLembarDisposisi().getTktKeamanan(),
                             DateUtilities.createLocalDate(new Date(targetLembarDisposisi.getLembarDisposisi().getTglPenyelesaianMilis()), "dd MMMM yyyy", indoLocale),
                             targetLembarDisposisi.getLembarDisposisi().getTglPenyelesaianMilis(),
-                            null,
+                            targetLembarDisposisi.getStatusBaca(),
                             DateUtilities.createLocalDate(new Date(targetLembarDisposisi.getLembarDisposisi().getTanggalPengirimanMilis()), "dd MMMM yyyy", indoLocale),
                             targetLembarDisposisi.getLembarDisposisi().getTanggalPengirimanMilis(),
                             targetLembarDisposisi.getLembarDisposisi().getNipPembuat(),
                             pegawaiPengirim.getNama()
                     ));
+        }
+
+        return new ResponseEntity<Object>(lembarDisposisiWrappers, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/get-lembar-disposisi-target-unread/{nipTarget}", method = RequestMethod.GET)
+    ResponseEntity<?> getLembarDisposisiTargetUnread(@PathVariable("nipTarget") String nipTarget) {
+        LOGGER.info("get lembar disposisi target unread");
+
+        List<TargetLembarDisposisi> targetLembarDisposisiList
+                = lembarDisposisiService.findByTargetDisposisi(nipTarget);
+
+
+        List<LembarDisposisiWrapper> lembarDisposisiWrappers
+                = new ArrayList<>();
+
+        Locale indoLocale = new Locale("id", "ID");
+        for (TargetLembarDisposisi targetLembarDisposisi
+                : targetLembarDisposisiList) {
+//            LOGGER.info(lembarDisposisi.getPath());
+            QutPegawai pegawaiPengirim
+                    = qutPegawaiService.getQutPegawai(targetLembarDisposisi.getLembarDisposisi().getNipPembuat());
+
+            if (targetLembarDisposisi.getStatusBaca() == 0) {
+                lembarDisposisiWrappers
+                        .add(new LembarDisposisiWrapper(
+                                targetLembarDisposisi.getLembarDisposisi().getKdLembarDisposisi(),
+                                targetLembarDisposisi.getLembarDisposisi().getPath(),
+                                DateUtilities.createLocalDate(new Date(targetLembarDisposisi.getLembarDisposisi().getTanggalPenerimaanMilis()), "dd MMMM yyyy", indoLocale),
+                                targetLembarDisposisi.getLembarDisposisi().getTanggalPenerimaanMilis(),
+                                targetLembarDisposisi.getLembarDisposisi().getTktKeamanan(),
+                                DateUtilities.createLocalDate(new Date(targetLembarDisposisi.getLembarDisposisi().getTglPenyelesaianMilis()), "dd MMMM yyyy", indoLocale),
+                                targetLembarDisposisi.getLembarDisposisi().getTglPenyelesaianMilis(),
+                                targetLembarDisposisi.getStatusBaca(),
+                                DateUtilities.createLocalDate(new Date(targetLembarDisposisi.getLembarDisposisi().getTanggalPengirimanMilis()), "dd MMMM yyyy", indoLocale),
+                                targetLembarDisposisi.getLembarDisposisi().getTanggalPengirimanMilis(),
+                                targetLembarDisposisi.getLembarDisposisi().getNipPembuat(),
+                                pegawaiPengirim.getNama()
+                        ));
+            }
         }
 
         return new ResponseEntity<Object>(lembarDisposisiWrappers, HttpStatus.OK);
@@ -311,11 +354,14 @@ public class LembarDisposisiController {
         return new ResponseEntity<Object>(dokumenLembarDisposisiWrapper, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/open-lembar-disposisi/{kdLembarDisposisi}", method = RequestMethod.PUT)
-    ResponseEntity<?> openLembarDisposisi(@PathVariable("kdLembarDisposisi") String kdLembarDisposisi) {
+    @RequestMapping(value = "/open-lembar-disposisi/{kdLembarDisposisi}/{nipPegawai}", method = RequestMethod.PUT)
+    ResponseEntity<?> openLembarDisposisi(
+            @PathVariable("kdLembarDisposisi") String kdLembarDisposisi,
+            @PathVariable("nipPegawai") String nipPegawai) {
         LOGGER.info("open lembar disposisi");
 
         lembarDisposisiService.openLembarDisposisi(kdLembarDisposisi);
+        lembarDisposisiService.openLembarDisposisiTarget(new TargetLembarDisposisiId(kdLembarDisposisi, nipPegawai));
 
         return new ResponseEntity<Object>(new CustomMessage("lembar disposisi opened"), HttpStatus.OK);
     }

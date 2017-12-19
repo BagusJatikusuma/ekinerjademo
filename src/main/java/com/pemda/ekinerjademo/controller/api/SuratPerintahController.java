@@ -89,6 +89,7 @@ public class SuratPerintahController {
             targetSuratPerintahPegawai.setTargetSuratPerintahPegawaiId(targetId);
             targetSuratPerintahPegawai.setApproveStatus(0);
             targetSuratPerintahPegawai.setStatusDiterima(0);
+            targetSuratPerintahPegawai.setStatusBaca(0);
 
             targetSuratPerintahPegawaiList.add(targetSuratPerintahPegawai);
         }
@@ -101,6 +102,7 @@ public class SuratPerintahController {
             targetSuratPerintahPejabat.setTargetSuratPerintahPejabatId(targetId);
             targetSuratPerintahPejabat.setApproveStatus(0);
             targetSuratPerintahPejabat.setStatusDiterima(0);
+            targetSuratPerintahPejabat.setStatusBaca(0);
 
             targetSuratPerintahPejabatSet.add(targetSuratPerintahPejabat);
         }
@@ -113,6 +115,7 @@ public class SuratPerintahController {
 
             tembusanSuratPerintah.setTembusanSuratPerintahId(tembusanId);
             tembusanSuratPerintah.setStatusDiterima(0);
+            tembusanSuratPerintah.setStatusBaca(0);
 
             tembusanSuratPerintahList.add(tembusanSuratPerintah);
         }
@@ -146,12 +149,13 @@ public class SuratPerintahController {
         suratPerintah.setUntuk(untukInXml);
         suratPerintah.setMenimbang(menimbangInXml);
         suratPerintah.setTempat(inputWrapper.getTempat());
-        suratPerintah.setTanggalPerintahMilis(inputWrapper.getTanggalPerintahMilis());
+        suratPerintah.setTanggalPerintahMilis(new Date().getTime());
         suratPerintah.setTtdPath("random path");
         suratPerintah.setKdUnitKerja(inputWrapper.getKdUnitKerja());
         suratPerintah.setApprovalPenandatangan(0);
         suratPerintah.setStatusPenyebaran(0);
         suratPerintah.setPathPenilaian(kdSuratPerintah);
+        suratPerintah.setStatusBaca(0);
 //        suratPerintah.setTargetSuratPerintahPegawaiList(targetSuratPerintahPegawaiList);
 //        suratPerintah.setTembusanSuratPerintahList(tembusanSuratPerintahList);
 
@@ -295,6 +299,7 @@ public class SuratPerintahController {
         suratPerintah.setApprovalPenandatangan(0);
         suratPerintah.setStatusPenyebaran(0);
         suratPerintah.setPathPenilaian(suratPerintahBawahan.getPathPenilaian()+"."+kdSuratPerintah);
+        suratPerintah.setStatusBaca(0);
 //        suratPerintah.setTargetSuratPerintahPegawaiList(targetSuratPerintahPegawaiList);
 //        suratPerintah.setTembusanSuratPerintahList(tembusanSuratPerintahList);
 
@@ -499,7 +504,8 @@ public class SuratPerintahController {
                                     isSuratPejabat,
                                     pegawaiPemberi.getNip(),
                                     pegawaiPemberi.getNama(),
-                                    pegawaiPemberi.getJabatan())
+                                    pegawaiPemberi.getJabatan(),
+                                    suratTarget.getStatusBaca())
                             );
                     break;
                 }
@@ -525,7 +531,8 @@ public class SuratPerintahController {
                                     isSuratPejabat,
                                     pegawaiPemberi.getNip(),
                                     pegawaiPemberi.getNama(),
-                                    pegawaiPemberi.getJabatan())
+                                    pegawaiPemberi.getJabatan(),
+                                    suratTarget.getStatusBaca())
                             );
                     break;
                 }
@@ -551,8 +558,130 @@ public class SuratPerintahController {
                                     isSuratPejabat,
                                     pegawaiPemberi.getNip(),
                                     pegawaiPemberi.getNama(),
-                                    pegawaiPemberi.getJabatan())
+                                    pegawaiPemberi.getJabatan(),
+                                    suratTarget.getStatusBaca())
                             );
+                    break;
+                }
+            }
+        }
+
+        return new ResponseEntity<Object>(daftarSuratPerintahTargetWrapper, HttpStatus.OK);
+
+    }
+
+    @RequestMapping(value = "/get-daftar-surat-perintah-target-unread/{nipTarget}", method = RequestMethod.GET)
+    ResponseEntity<?> getDaftarSuratPerintahTargetUnread(@PathVariable("nipTarget") String nipTarget) {
+        LOGGER.info("get surat perintah unread nip "+nipTarget);
+
+        List<CustomPegawaiCredential> qutPegawaiList
+                = qutPegawaiService.getCustomPegawaiCredentials();
+
+        CustomPegawaiCredential pegawaiTarget = null;
+
+        for (CustomPegawaiCredential pegawai : qutPegawaiList) {
+            if (nipTarget.equals(pegawai.getNip())) {
+                pegawaiTarget = pegawai;
+
+                break;
+            }
+        }
+
+        List<TargetSuratPerintahPegawai> daftarSuratPerintahPegawaiTarget
+                = suratPerintahService.getTargetSuratPerintahPegawai(nipTarget);
+        List<TargetSuratPerintahPejabat> daftarSuratPerintahPejabatTarget
+                = suratPerintahService.getTargetSuratPerintahPejabat(pegawaiTarget.getKdJabatan());
+        List<TembusanSuratPerintah> daftarSuratPerintahTembusan
+                = suratPerintahService.getTembusanSuratPerintah(pegawaiTarget.getKdJabatan());
+
+        List<SuratPerintahTargetWrapper> daftarSuratPerintahTargetWrapper
+                = new ArrayList<>();
+        Locale indoLocale = new Locale("id", "ID");
+
+        boolean isSuratPejabat = false;
+        //get surat perintah berdasarkan target pegawai
+        for (TargetSuratPerintahPegawai suratTarget
+                : daftarSuratPerintahPegawaiTarget) {
+            for (CustomPegawaiCredential pegawaiPemberi : qutPegawaiList) {
+                if (pegawaiPemberi.getNip()
+                        .equals(suratTarget.getSuratPerintah().getNipPenandatangan())) {
+
+                    if (suratTarget.getSuratPerintah().getSuratPerintahPejabat() != null)
+                        isSuratPejabat = true;
+                    else
+                        isSuratPejabat = false;
+
+                    if (suratTarget.getStatusBaca() == 0) {
+                        daftarSuratPerintahTargetWrapper
+                                .add(new SuratPerintahTargetWrapper(
+                                        suratTarget.getSuratPerintah().getKdSuratPerintah(),
+                                        DateUtilities.createLocalDate(new Date(suratTarget.getSuratPerintah().getTanggalPerintahMilis()), "dd MMMM yyyy", indoLocale),
+                                        suratTarget.getSuratPerintah().getTanggalPerintahMilis(),
+                                        isSuratPejabat,
+                                        pegawaiPemberi.getNip(),
+                                        pegawaiPemberi.getNama(),
+                                        pegawaiPemberi.getJabatan(),
+                                        suratTarget.getStatusBaca())
+                                );
+                    }
+                    break;
+                }
+            }
+        }
+        //get surat perintah berdasarkan target pegawai
+        for (TargetSuratPerintahPejabat suratTarget
+                : daftarSuratPerintahPejabatTarget) {
+            for (CustomPegawaiCredential pegawaiPemberi : qutPegawaiList) {
+                if (pegawaiPemberi.getNip()
+                        .equals(suratTarget.getSuratPerintah().getNipPenandatangan())) {
+
+                    if (suratTarget.getSuratPerintah().getSuratPerintahPejabat() != null)
+                        isSuratPejabat = true;
+                    else
+                        isSuratPejabat = false;
+
+                    if (suratTarget.getStatusBaca() == 0) {
+                        daftarSuratPerintahTargetWrapper
+                                .add(new SuratPerintahTargetWrapper(
+                                        suratTarget.getSuratPerintah().getKdSuratPerintah(),
+                                        DateUtilities.createLocalDate(new Date(suratTarget.getSuratPerintah().getTanggalPerintahMilis()), "dd MMMM yyyy", indoLocale),
+                                        suratTarget.getSuratPerintah().getTanggalPerintahMilis(),
+                                        isSuratPejabat,
+                                        pegawaiPemberi.getNip(),
+                                        pegawaiPemberi.getNama(),
+                                        pegawaiPemberi.getJabatan(),
+                                        suratTarget.getStatusBaca())
+                                );
+                    }
+                    break;
+                }
+            }
+        }
+        //get surat perintah berdasarkan tembusan
+        for (TembusanSuratPerintah suratTarget
+                : daftarSuratPerintahTembusan) {
+            for (CustomPegawaiCredential pegawaiPemberi : qutPegawaiList) {
+                if (pegawaiPemberi.getNip()
+                        .equals(suratTarget.getSuratPerintah().getNipPenandatangan())) {
+
+                    if (suratTarget.getSuratPerintah().getSuratPerintahPejabat() != null)
+                        isSuratPejabat = true;
+                    else
+                        isSuratPejabat = false;
+
+                    if (suratTarget.getStatusBaca() == 0) {
+                        daftarSuratPerintahTargetWrapper
+                                .add(new SuratPerintahTargetWrapper(
+                                        suratTarget.getSuratPerintah().getKdSuratPerintah(),
+                                        DateUtilities.createLocalDate(new Date(suratTarget.getSuratPerintah().getTanggalPerintahMilis()), "dd MMMM yyyy", indoLocale),
+                                        suratTarget.getSuratPerintah().getTanggalPerintahMilis(),
+                                        isSuratPejabat,
+                                        pegawaiPemberi.getNip(),
+                                        pegawaiPemberi.getNama(),
+                                        pegawaiPemberi.getJabatan(),
+                                        suratTarget.getStatusBaca())
+                                );
+                    }
                     break;
                 }
             }
@@ -701,11 +830,14 @@ public class SuratPerintahController {
         return new ResponseEntity<Object>(suratPerintahWrapper, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/open-surat-perintah/{kdSuratPerintah}", method = RequestMethod.PUT)
-    ResponseEntity<?> openSuratPerintah(@PathVariable("kdSuratPerintah") String kdSuratPerintah) {
+    @RequestMapping(value = "/open-surat-perintah-pegawai/{kdSuratPerintah}/{nipPegawai}", method = RequestMethod.PUT)
+    ResponseEntity<?> openSuratPerintah(
+            @PathVariable("kdSuratPerintah") String kdSuratPerintah,
+            @PathVariable("nipPegawai") String nipPegawai) {
         LOGGER.info("open surat perintah");
 
         suratPerintahService.openSuratPerintah(kdSuratPerintah);
+        suratPerintahService.openSuratPerintahPegawai(new TargetSuratPerintahPegawaiId(kdSuratPerintah, nipPegawai));
 
         return new ResponseEntity<Object>(new CustomMessage("surat perintah opened"), HttpStatus.OK);
     }

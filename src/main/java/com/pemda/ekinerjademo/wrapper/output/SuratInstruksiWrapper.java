@@ -12,6 +12,7 @@ public class SuratInstruksiWrapper {
     private Integer statusbaca;
     private String nipPengirim;
     private String namaPengirim;
+    private Integer statusBaca;
 
     public SuratInstruksiWrapper() {
     }
@@ -54,6 +55,26 @@ public class SuratInstruksiWrapper {
         this.statusbaca = statusbaca;
         this.nipPengirim = nipPengirim;
         this.namaPengirim = namaPengirim;
+    }
+    public SuratInstruksiWrapper(
+            String kdInstruksi,
+            String judulInstruksi,
+            String tanggalDibuat,
+            Long tanggalDibuatMilis,
+            boolean suratPejabat,
+            Integer statusbaca,
+            String nipPengirim,
+            String namaPengirim,
+            Integer statusBaca) {
+        this.kdInstruksi = kdInstruksi;
+        this.judulInstruksi = judulInstruksi;
+        this.tanggalDibuat = tanggalDibuat;
+        this.tanggalDibuatMilis = tanggalDibuatMilis;
+        this.suratPejabat = suratPejabat;
+        this.statusbaca = statusbaca;
+        this.nipPengirim = nipPengirim;
+        this.namaPengirim = namaPengirim;
+        this.statusBaca = statusBaca;
     }
 
     public String getKdInstruksi() {
@@ -118,5 +139,13 @@ public class SuratInstruksiWrapper {
 
     public void setNamaPengirim(String namaPengirim) {
         this.namaPengirim = namaPengirim;
+    }
+
+    public Integer getStatusBaca() {
+        return statusBaca;
+    }
+
+    public void setStatusBaca(Integer statusBaca) {
+        this.statusBaca = statusBaca;
     }
 }

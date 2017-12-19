@@ -60,6 +60,14 @@ public class SuratInstruksiServiceImpl implements SuratInstruksiService {
     }
 
     @Override
+    public void openSuratInstruksiTarget(InstruksiPegawaiId instruksiPegawaiId) {
+        InstruksiPegawai instruksiPegawai
+                = instruksiPegawaiDao.findOne(instruksiPegawaiId);
+
+        instruksiPegawai.setStatusBaca(1);
+    }
+
+    @Override
     public SuratInstruksi getSuratInstruksi(String kdSuratInstruksi) {
         return suratInstruksiDao.findOne(kdSuratInstruksi);
     }

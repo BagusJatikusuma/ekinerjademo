@@ -6,6 +6,7 @@ import javax.persistence.Column;
  * Created by bagus on 05/10/17.
  */
 public class UrtugKegiatanInputWrapper {
+    private String kdUnitKerja;
     private String kdUrtug;
     private String kdJabatan;
     private String kdJenisUrtug;
@@ -22,6 +23,7 @@ public class UrtugKegiatanInputWrapper {
     private String  satuanKuantitas;
     private Integer kualitas;
     private Integer waktu;
+
 
     public Integer getKuantitas() {
         return kuantitas;
@@ -149,5 +151,13 @@ public class UrtugKegiatanInputWrapper {
 
     public void setTahunUrtug(Integer tahunUrtug) {
         this.tahunUrtug = tahunUrtug;
+    }
+
+    public String getKdUnitKerja() {
+        return kdUnitKerja;
+    }
+
+    public void setKdUnitKerja(String kdUnitKerja) {
+        this.kdUnitKerja = kdUnitKerja;
     }
 }

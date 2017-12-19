@@ -14,6 +14,7 @@ public interface SuratInstruksiService {
     void createSuratInstruksiPejabat(SuratInstruksiPejabat suratInstruksiPejabat);
     void createSuratInstruksiNonPejabat(SuratInstruksiNonPejabat suratInstruksiNonPejabat);
     void openSuratInstruksi(String kdSuratInstruksi);
+    void openSuratInstruksiTarget(InstruksiPegawaiId instruksiPegawaiId);
 
     SuratInstruksi getSuratInstruksi(String kdSuratInstruksi);
     SuratInstruksi getDokumenSuratInstruksi(String kdSuratInstruksi);

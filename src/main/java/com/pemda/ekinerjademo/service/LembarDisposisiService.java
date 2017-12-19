@@ -2,6 +2,8 @@ package com.pemda.ekinerjademo.service;
 
 import com.pemda.ekinerjademo.model.ekinerjamodel.LembarDisposisi;
 import com.pemda.ekinerjademo.model.ekinerjamodel.TargetLembarDisposisi;
+import com.pemda.ekinerjademo.model.ekinerjamodel.TargetLembarDisposisiId;
+import com.pemda.ekinerjademo.model.ekinerjamodel.TargetSuratPerintahPegawaiId;
 
 import java.util.List;
 
@@ -13,6 +15,7 @@ public interface LembarDisposisiService {
     void create(LembarDisposisi lembarDisposisi);
     void createTargetLembarDisposisi(List<TargetLembarDisposisi> targetLembarDisposisiList);
     void openLembarDisposisi(String kdLembarDisposisi);
+    void openLembarDisposisiTarget(TargetLembarDisposisiId targetLembarDisposisiId);
 
     LembarDisposisi findByKdLembarDisposisi(String kdLembarDisposisi);
     List<LembarDisposisi> findByUnitKerja(String kdUnitKerja);

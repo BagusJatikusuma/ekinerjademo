@@ -12,6 +12,8 @@ public class TembusanSuratTugas {
     private TembusanSuratTugasId tembusanSuratTugasId;
     @Column(name = "status_diterima")
     private Integer statusDiterima;
+    @Column(name = "status_baca")
+    private Integer statusBaca;
 
     @ManyToOne
     @JoinColumn(
@@ -43,5 +45,13 @@ public class TembusanSuratTugas {
 
     public void setStatusDiterima(Integer statusDiterima) {
         this.statusDiterima = statusDiterima;
+    }
+
+    public Integer getStatusBaca() {
+        return statusBaca;
+    }
+
+    public void setStatusBaca(Integer statusBaca) {
+        this.statusBaca = statusBaca;
     }
 }

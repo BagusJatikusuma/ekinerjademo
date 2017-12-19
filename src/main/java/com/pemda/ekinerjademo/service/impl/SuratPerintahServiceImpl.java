@@ -133,6 +133,14 @@ public class SuratPerintahServiceImpl implements SuratPerintahService {
     }
 
     @Override
+    public void openSuratPerintahPegawai(TargetSuratPerintahPegawaiId targetSuratPerintahPegawaiId) {
+        TargetSuratPerintahPegawai targetSuratPerintahPegawai
+                = targetSuratPerintahPegawaiDao.findOne(targetSuratPerintahPegawaiId);
+
+        targetSuratPerintahPegawai.setStatusBaca(1);
+    }
+
+    @Override
     public void update(SuratPerintah suratPerintah) {
         suratPerintahDao.save(suratPerintah);
     }

@@ -1,7 +1,6 @@
 package com.pemda.ekinerjademo.service.impl;
 
-import com.pemda.ekinerjademo.model.ekinerjamodel.LembarDisposisi;
-import com.pemda.ekinerjademo.model.ekinerjamodel.TargetLembarDisposisi;
+import com.pemda.ekinerjademo.model.ekinerjamodel.*;
 import com.pemda.ekinerjademo.repository.ekinerjarepository.LembarDisposisiDao;
 import com.pemda.ekinerjademo.repository.ekinerjarepository.TargetLembarDisposisiDao;
 import com.pemda.ekinerjademo.service.LembarDisposisiService;
@@ -39,6 +38,14 @@ public class LembarDisposisiServiceImpl implements LembarDisposisiService {
         LembarDisposisi lembarDisposisi = lembarDisposisiDao.findOne(kdLembarDisposisi);
 
         lembarDisposisi.setStatusBaca(1);
+    }
+
+    @Override
+    public void openLembarDisposisiTarget(TargetLembarDisposisiId targetLembarDisposisiId) {
+        TargetLembarDisposisi targetLembarDisposisi
+                = targetLembarDisposisiDao.findOne(targetLembarDisposisiId);
+
+        targetLembarDisposisi.setStatusBaca(1);
     }
 
     @Override

@@ -229,6 +229,108 @@ public class UrtugKegiatanController {
         return new ResponseEntity<Object>(new CustomMessage("urtug kegiatan created"), HttpStatus.CREATED);
     }
 
+    @RequestMapping(value = "/get-urtug-kegiatan-by-id/", method = RequestMethod.POST)
+    ResponseEntity<?> getUrtugKegiatanById(
+            @RequestBody UrtugKegiatanInputWrapper urtugKegiatanInputWrapper) {
+        LOGGER.info("get urtug kegiatan by id");
+
+        UnitKerjaKegiatan unitKerjaKegiatan
+                = unitKerjaKegiatanService.findByKdUnitKerja(urtugKegiatanInputWrapper.getKdUnitKerja());
+
+        List<TaKegiatan> taKegiatanList = taKegiatanService.findByUnitKerja(unitKerjaKegiatan);
+
+        UrtugKegiatan urtugKegiatan
+                = urtugKegiatanService.find(new UrtugKegiatanId(
+                            urtugKegiatanInputWrapper.getKdUrtug(),
+                            urtugKegiatanInputWrapper.getKdJabatan(),
+                            urtugKegiatanInputWrapper.getKdJenisUrtug(),
+                            urtugKegiatanInputWrapper.getTahunUrtug(),
+                            urtugKegiatanInputWrapper.getKdUrusan(),
+                            urtugKegiatanInputWrapper.getKdBidang(),
+                            urtugKegiatanInputWrapper.getKdUnit(),
+                            urtugKegiatanInputWrapper.getKdSub(),
+                            urtugKegiatanInputWrapper.getTahun(),
+                            urtugKegiatanInputWrapper.getKdProg(),
+                            urtugKegiatanInputWrapper.getIdProg(),
+                            urtugKegiatanInputWrapper.getKdKeg()
+                    ));
+
+        UrtugKegiatanWrapper urtugKegiatanWrapper = null;
+        for (TaKegiatan taKegiatan
+                : taKegiatanList) {
+            if (urtugKegiatan.getUrtugKegiatanId().getKdProg().equals(taKegiatan.getTaKegiatanId().getKdProg()) &&
+                    urtugKegiatan.getUrtugKegiatanId().getKdKeg().equals(taKegiatan.getTaKegiatanId().getKdKegiatan())) {
+                urtugKegiatanWrapper
+                        = new UrtugKegiatanWrapper(
+                                urtugKegiatan.getUrtugKegiatanId().getKdUrtug(),
+                                urtugKegiatan.getUrtugKegiatanId().getKdJabatan(),
+                                urtugKegiatan.getUrtugKegiatanId().getKdJenisUrtug(),
+                                urtugKegiatan.getUrtugKegiatanId().getTahunUrtug(),
+                                urtugKegiatan.getUrtugKegiatanId().getKdUrusan(),
+                                urtugKegiatan.getUrtugKegiatanId().getKdBidang(),
+                                urtugKegiatan.getUrtugKegiatanId().getKdUnit(),
+                                urtugKegiatan.getUrtugKegiatanId().getKdSub(),
+                                urtugKegiatan.getUrtugKegiatanId().getTahun(),
+                                urtugKegiatan.getUrtugKegiatanId().getKdProg(),
+                                urtugKegiatan.getUrtugKegiatanId().getIdProg(),
+                                urtugKegiatan.getUrtugKegiatanId().getKdKeg(),
+                                taKegiatan.getKetKegiatan(),
+                                taKegiatan.getPaguAnggaran(),
+                                urtugKegiatan.getKuantitas(),
+                                urtugKegiatan.getSatuanKuantitas(),
+                                urtugKegiatan.getKualitas(),
+                                urtugKegiatan.getWaktu());
+            }
+        }
+
+        return new ResponseEntity<Object>(urtugKegiatanWrapper, HttpStatus.OK);
+    }
+
+//    @RequestMapping(value = "/get-urtug-program-by-id/", method = RequestMethod.POST)
+//    ResponseEntity<?> getUrtugProgramById(
+//            @RequestBody UrtugKegiatanInputWrapper urtugKegiatanInputWrapper) {
+//        LOGGER.info("get urtug kegiatan by id");
+//
+//        UnitKerjaKegiatan unitKerjaKegiatan
+//                = unitKerjaKegiatanService.findByKdUnitKerja(urtugKegiatanInputWrapper.getKdUnitKerja());
+//
+//        List<TaKegiatan> taKegiatanList = taKegiatanService.findByUnitKerja(unitKerjaKegiatan);
+//
+//        UrtugKegiatan urtugKegiatan
+//                = urtugKegiatanService.find
+//        ));
+//
+//        UrtugKegiatanWrapper urtugKegiatanWrapper = null;
+//        for (TaKegiatan taKegiatan
+//                : taKegiatanList) {
+//            if (urtugKegiatan.getUrtugKegiatanId().getKdProg().equals(taKegiatan.getTaKegiatanId().getKdProg()) &&
+//                    urtugKegiatan.getUrtugKegiatanId().getKdKeg().equals(taKegiatan.getTaKegiatanId().getKdKegiatan())) {
+//                urtugKegiatanWrapper
+//                        = new UrtugKegiatanWrapper(
+//                        urtugKegiatan.getUrtugKegiatanId().getKdUrtug(),
+//                        urtugKegiatan.getUrtugKegiatanId().getKdJabatan(),
+//                        urtugKegiatan.getUrtugKegiatanId().getKdJenisUrtug(),
+//                        urtugKegiatan.getUrtugKegiatanId().getTahunUrtug(),
+//                        urtugKegiatan.getUrtugKegiatanId().getKdUrusan(),
+//                        urtugKegiatan.getUrtugKegiatanId().getKdBidang(),
+//                        urtugKegiatan.getUrtugKegiatanId().getKdUnit(),
+//                        urtugKegiatan.getUrtugKegiatanId().getKdSub(),
+//                        urtugKegiatan.getUrtugKegiatanId().getTahun(),
+//                        urtugKegiatan.getUrtugKegiatanId().getKdProg(),
+//                        urtugKegiatan.getUrtugKegiatanId().getIdProg(),
+//                        urtugKegiatan.getUrtugKegiatanId().getKdKeg(),
+//                        taKegiatan.getKetKegiatan(),
+//                        taKegiatan.getPaguAnggaran(),
+//                        urtugKegiatan.getKuantitas(),
+//                        urtugKegiatan.getSatuanKuantitas(),
+//                        urtugKegiatan.getKualitas(),
+//                        urtugKegiatan.getWaktu());
+//            }
+//        }
+//
+//        return new ResponseEntity<Object>(urtugKegiatanWrapper, HttpStatus.OK);
+//    }
+
     @RequestMapping(value = "/create-urtug-program", method = RequestMethod.POST)
     ResponseEntity<?> createUrtugProgram(
             @RequestBody UrtugProgramInputWrapper inputWrapper) {

@@ -79,6 +79,7 @@ public class SuratInstruksiController {
             instruksiPegawai
                     .setInstruksiPegawaiId(new InstruksiPegawaiId(kdTargetPegawai, kdSuratInstruksi));
             instruksiPegawai.setApproveStatus(0);
+            instruksiPegawai.setStatusBaca(0);
 
             suratInstruksiService.createInstruksiPegawai(instruksiPegawai);
         }
@@ -88,6 +89,7 @@ public class SuratInstruksiController {
             instruksiPejabat
                     .setInstruksiPejabatId(new InstruksiPejabatId(kdTargetPejabat, kdSuratInstruksi));
             instruksiPejabat.setApproveStatus(0);
+            instruksiPejabat.setStatusBaca(0);
 
             suratInstruksiService.createInstruksiPejabat(instruksiPejabat);
         }
@@ -280,8 +282,50 @@ public class SuratInstruksiController {
                             isSuratPejabat,
                             null,
                             instruksiPegawai.getSuratInstruksi().getNipPembuat(),
-                            pegawaiPengirim.getNama()
+                            pegawaiPengirim.getNama(),
+                            instruksiPegawai.getStatusBaca()
                     ));
+
+        }
+
+        return new ResponseEntity<Object>(suratInstruksiWrapperList, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/get-instruksi-pegawai-unread/{nipPegawai}", method = RequestMethod.GET)
+    ResponseEntity<?> getInstruksiPegawaiUnread(
+            @PathVariable("nipPegawai") String nipPegawai) {
+        LOGGER.info("get instruksi pegawai unread");
+
+        List<SuratInstruksiWrapper> suratInstruksiWrapperList
+                = new ArrayList<>();
+        List<InstruksiPegawai> instruksiPegawaiList
+                = suratInstruksiService.getInstruksiPegawai(nipPegawai);
+
+        Locale indoLocale = new Locale("id", "ID");
+        boolean isSuratPejabat;
+        for (InstruksiPegawai instruksiPegawai
+                : instruksiPegawaiList) {
+            QutPegawai pegawaiPengirim
+                    = qutPegawaiService.getQutPegawai(instruksiPegawai.getSuratInstruksi().getNipPembuat());
+
+            isSuratPejabat = true;
+            if (instruksiPegawai.getSuratInstruksi().getSuratInstruksiPejabat() == null) {
+                isSuratPejabat = false;
+            }
+            if (instruksiPegawai.getStatusBaca() == 0) {
+                suratInstruksiWrapperList
+                        .add(new SuratInstruksiWrapper(
+                                instruksiPegawai.getSuratInstruksi().getKdInstruksi(),
+                                instruksiPegawai.getSuratInstruksi().getJudulInstruksi(),
+                                DateUtilities.createLocalDate(new Date(instruksiPegawai.getSuratInstruksi().getCreateddateMilis()), "dd MMMM yyyy", indoLocale),
+                                instruksiPegawai.getSuratInstruksi().getCreateddateMilis(),
+                                isSuratPejabat,
+                                instruksiPegawai.getStatusBaca(),
+                                instruksiPegawai.getSuratInstruksi().getNipPembuat(),
+                                pegawaiPengirim.getNama(),
+                                instruksiPegawai.getStatusBaca()
+                        ));
+            }
 
         }
 
@@ -318,7 +362,8 @@ public class SuratInstruksiController {
                             isSuratPejabat,
                             null,
                             instruksiPejabat.getSuratInstruksi().getNipPembuat(),
-                            pegawaiPengirim.getNama()
+                            pegawaiPengirim.getNama(),
+                            instruksiPejabat.getStatusBaca()
                             ));
 
         }
@@ -326,11 +371,55 @@ public class SuratInstruksiController {
         return new ResponseEntity<Object>(suratInstruksiWrapperList, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/open-surat-instruksi/{kdSuratInstruksi}", method = RequestMethod.PUT)
-    ResponseEntity<?> openSuratInstruksi(@PathVariable("kdSuratInstruksi") String kdSuratInstruksi) {
+    @RequestMapping(value = "/get-instruksi-pejabat-unread/{kdJabatan}", method = RequestMethod.GET)
+    ResponseEntity<?> getInstruksiPejabatUnread(
+            @PathVariable("kdJabatan") String kdJabatan) {
+        LOGGER.info("get instruksi pejabat unread");
+
+        List<SuratInstruksiWrapper> suratInstruksiWrapperList
+                = new ArrayList<>();
+        List<InstruksiPejabat> instruksiPejabatList
+                = suratInstruksiService.getInstruksiPejabat(kdJabatan);
+
+        Locale indoLocale = new Locale("id", "ID");
+        boolean isSuratPejabat;
+        for (InstruksiPejabat instruksiPejabat
+                : instruksiPejabatList) {
+            QutPegawai pegawaiPengirim
+                    = qutPegawaiService.getQutPegawai(instruksiPejabat.getSuratInstruksi().getNipPembuat());
+
+            isSuratPejabat = true;
+            if (instruksiPejabat.getSuratInstruksi().getSuratInstruksiPejabat() == null) {
+                isSuratPejabat = false;
+            }
+            if (instruksiPejabat.getStatusBaca() == 0) {
+                suratInstruksiWrapperList
+                        .add(new SuratInstruksiWrapper(
+                                instruksiPejabat.getSuratInstruksi().getKdInstruksi(),
+                                instruksiPejabat.getSuratInstruksi().getJudulInstruksi(),
+                                DateUtilities.createLocalDate(new Date(instruksiPejabat.getSuratInstruksi().getCreateddateMilis()), "dd MMMM yyyy", indoLocale),
+                                instruksiPejabat.getSuratInstruksi().getCreateddateMilis(),
+                                isSuratPejabat,
+                                instruksiPejabat.getStatusBaca(),
+                                instruksiPejabat.getSuratInstruksi().getNipPembuat(),
+                                pegawaiPengirim.getNama(),
+                                instruksiPejabat.getStatusBaca()
+                        ));
+            }
+
+        }
+
+        return new ResponseEntity<Object>(suratInstruksiWrapperList, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/open-surat-instruksi-pegawai/{kdSuratInstruksi}/{nipPegawai}", method = RequestMethod.PUT)
+    ResponseEntity<?> openSuratInstruksi(
+            @PathVariable("kdSuratInstruksi") String kdSuratInstruksi,
+            @PathVariable("nipPegawai") String nipPegawai) {
         LOGGER.info("open surat instruksi");
 
         suratInstruksiService.openSuratInstruksi(kdSuratInstruksi);
+        suratInstruksiService.openSuratInstruksiTarget(new InstruksiPegawaiId(nipPegawai, kdSuratInstruksi));
 
         return new ResponseEntity<Object>(new CustomMessage("surat instruksi opened"), HttpStatus.OK);
     }
