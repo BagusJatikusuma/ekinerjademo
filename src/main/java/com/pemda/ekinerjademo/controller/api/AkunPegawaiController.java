@@ -420,8 +420,7 @@ public class AkunPegawaiController {
                                 inputWrapper.getIdProg(),
                                 inputWrapper.getKdKeg()));
 
-        List<QutPegawaiWrapper> qutPegawaiWrappers
-                = new ArrayList<>();
+        List<QutPegawaiWrapper> qutPegawaiWrappers = new ArrayList<>();
         List<QutPegawai> qutPegawaiList
                 = qutPegawaiService.getQutPegawaiByUnitKerja(inputWrapper.getKdUnitKerja());
         List<QutPegawaiClone> qutPegawaiCloneList
