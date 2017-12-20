@@ -424,9 +424,11 @@ public class AkunPegawaiController {
                 = new ArrayList<>();
         List<QutPegawai> qutPegawaiList
                 = qutPegawaiService.getQutPegawaiByUnitKerja(inputWrapper.getKdUnitKerja());
+        List<QutPegawaiClone> qutPegawaiCloneList
+                = qutPegawaiService.getQutPegawaiByKdJabatan(inputWrapper.getKdJabatan());
 
         boolean found;
-        for (QutPegawai qutPegawai : qutPegawaiList) {
+        for (QutPegawaiClone qutPegawai : qutPegawaiCloneList) {
             found = false;
             for (UrtugKegiatanPegawai urtugKegiatanPegawai : urtugKegiatanPegawaiList) {
                 if (urtugKegiatanPegawai.getUrtugKegiatanPegawaiId().getNipPegawai()
