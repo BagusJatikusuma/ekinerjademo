@@ -236,6 +236,7 @@ public class SuratPerintahController {
             targetSuratPerintahPegawai.setTargetSuratPerintahPegawaiId(targetId);
             targetSuratPerintahPegawai.setApproveStatus(0);
             targetSuratPerintahPegawai.setStatusDiterima(0);
+            targetSuratPerintahPegawai.setStatusBaca(0);
 
             targetSuratPerintahPegawaiList.add(targetSuratPerintahPegawai);
         }
@@ -248,6 +249,7 @@ public class SuratPerintahController {
             targetSuratPerintahPejabat.setTargetSuratPerintahPejabatId(targetId);
             targetSuratPerintahPejabat.setApproveStatus(0);
             targetSuratPerintahPejabat.setStatusDiterima(0);
+            targetSuratPerintahPejabat.setStatusBaca(0);
 
             targetSuratPerintahPejabatSet.add(targetSuratPerintahPejabat);
         }
