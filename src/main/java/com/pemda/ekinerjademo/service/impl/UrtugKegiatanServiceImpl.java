@@ -35,6 +35,23 @@ public class UrtugKegiatanServiceImpl implements UrtugKegiatanService {
     }
 
     @Override
+    public List<UrtugKegiatan> findByProgramAndUrtug(
+            String kdUrtug,
+            String kdJabatan,
+            String kdJenisUrtug,
+            Integer tahunUrtug,
+            Integer kdUrusan,
+            Integer kdBidang,
+            Integer kdUnit,
+            Integer kdSub,
+            Integer tahun,
+            Integer kdProg,
+            Integer idProg) {
+        return urtugKegiatanDao
+                .findByProgramAndUrtug(kdUrtug, kdJabatan, kdJenisUrtug, tahunUrtug, kdUrusan, kdBidang, kdUnit, kdSub, tahun, kdProg, idProg);
+    }
+
+    @Override
     public UrtugKegiatan find(UrtugKegiatanId urtugKegiatanId) {
         return urtugKegiatanDao.findByUrtugKegiatanId(urtugKegiatanId);
     }

@@ -200,8 +200,9 @@ public class UraianTugasPegawaiTahunanController {
 
                             if (uraianTugasJabatanJenisUrtug.getUraianTugasJabatanJenisUrtugId().getKdUrtug()
                                     .equals(uraianTugasPegawaiTahunan.getUraianTugasPegawaiTahunanId().getKdUrtug())) {
-                                found = true;
+//                                found = true;// revisi
                                 if (uraianTugasPegawaiTahunan.getStatusApproval() == 0) {
+                                    found = true;
                                     uraianTugasWrapperList.add(
                                             new UraianTugasPegawaiTahunanWrapper(
                                                     uraianTugasPegawaiTahunan.getUraianTugasJabatanJenisUrtug().getUraianTugasJabatan().getUraianTugas().getDeskripsi(),
@@ -346,8 +347,9 @@ public class UraianTugasPegawaiTahunanController {
 
                             if (uraianTugasJabatanJenisUrtug.getUraianTugasJabatanJenisUrtugId().getKdUrtug()
                                     .equals(uraianTugasPegawaiTahunan.getUraianTugasPegawaiTahunanId().getKdUrtug())) {
-                                found = true;
+//                                found = true; //revisi
                                 if (uraianTugasPegawaiTahunan.getStatusApproval() == 0) {
+                                    found = true;
                                     uraianTugasWrapperList.add(
                                             new UraianTugasPegawaiTahunanWrapper(
                                                     uraianTugasPegawaiTahunan.getUraianTugasJabatanJenisUrtug().getUraianTugasJabatan().getUraianTugas().getDeskripsi(),
@@ -364,7 +366,12 @@ public class UraianTugasPegawaiTahunanController {
                                                     uraianTugasPegawaiTahunan.getAlasan(),
                                                     uraianTugasPegawaiTahunan.getStatusApproval()
                                             ));
+                                } //baris else merupakan revisi
+                                else if (uraianTugasPegawaiTahunan.getStatusApproval() == 2
+                                        || uraianTugasPegawaiTahunan.getStatusApproval() == 1) {
+                                    found = true;
                                 }
+
                                 break;
                             }
 

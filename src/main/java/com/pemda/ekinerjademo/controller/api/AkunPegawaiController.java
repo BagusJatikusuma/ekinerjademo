@@ -12,10 +12,7 @@ import com.pemda.ekinerjademo.repository.bismarepository.QutPegawaiDao;
 import com.pemda.ekinerjademo.repository.bismarepository.TkdJabatanDao;
 import com.pemda.ekinerjademo.repository.ekinerjarepository.AkunPegawaiDao;
 import com.pemda.ekinerjademo.service.*;
-import com.pemda.ekinerjademo.wrapper.input.AkunPegawaiRoleInputWrapper;
-import com.pemda.ekinerjademo.wrapper.input.PegawaiPenilaiInputWrapper;
-import com.pemda.ekinerjademo.wrapper.input.UrtugKegiatanInputWrapper;
-import com.pemda.ekinerjademo.wrapper.input.UrtugKegiatanPenanggungJawabWrapper;
+import com.pemda.ekinerjademo.wrapper.input.*;
 import com.pemda.ekinerjademo.wrapper.output.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -673,6 +670,22 @@ public class AkunPegawaiController {
 
 
         return new ResponseEntity<Object>(pegawaiPenilaiInputWrapper, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/change-password-pegawai", method = RequestMethod.PUT)
+    ResponseEntity<?> changePassword(
+            @RequestBody AkunPasswordInputWrapper pegawaiPasswordWrapper) {
+        LOGGER.info("change password pegawai");
+
+        AkunPegawai akunPegawai
+                = akunPegawaiService.getAkunPegawai(pegawaiPasswordWrapper.getNipPegawai());
+
+        akunPegawai.setPassword(pegawaiPasswordWrapper.getNewPassword());
+
+        akunPegawaiService.save(akunPegawai);
+
+        return new ResponseEntity<Object>(new CustomMessage("password changed"), HttpStatus.OK);
+
     }
 
     //sampai disini

@@ -428,4 +428,43 @@ public class UrtugKegiatanController {
         return new ResponseEntity<Object>(new CustomMessage("urtug kegiatan deleted"), HttpStatus.OK);
     }
 
+    @RequestMapping(value = "/delete-urtug-program", method = RequestMethod.POST)
+    ResponseEntity<?> deleteUrtugProgram(@RequestBody UrtugKegiatanInputWrapper urtugKegiatanInputWrapper) {
+        List<UrtugKegiatan> urtugKegiatanList
+                = urtugKegiatanService.findByProgramAndUrtug(
+                        urtugKegiatanInputWrapper.getKdUrtug(),
+                        urtugKegiatanInputWrapper.getKdJabatan(),
+                        urtugKegiatanInputWrapper.getKdJenisUrtug(),
+                        urtugKegiatanInputWrapper.getTahunUrtug(),
+                        urtugKegiatanInputWrapper.getKdUrusan(),
+                        urtugKegiatanInputWrapper.getKdBidang(),
+                        urtugKegiatanInputWrapper.getKdUnit(),
+                        urtugKegiatanInputWrapper.getKdSub(),
+                        urtugKegiatanInputWrapper.getTahun(),
+                        urtugKegiatanInputWrapper.getKdProg(),
+                        urtugKegiatanInputWrapper.getIdProg());
+
+        for (UrtugKegiatan urtugKegiatan
+                : urtugKegiatanList) {
+            urtugKegiatanService.delete(
+                    new UrtugKegiatanId(
+                            urtugKegiatan.getUrtugKegiatanId().getKdUrtug(),
+                            urtugKegiatan.getUrtugKegiatanId().getKdJabatan(),
+                            urtugKegiatan.getUrtugKegiatanId().getKdJenisUrtug(),
+                            urtugKegiatan.getUrtugKegiatanId().getTahunUrtug(),
+                            urtugKegiatan.getUrtugKegiatanId().getKdUrusan(),
+                            urtugKegiatan.getUrtugKegiatanId().getKdBidang(),
+                            urtugKegiatan.getUrtugKegiatanId().getKdUnit(),
+                            urtugKegiatan.getUrtugKegiatanId().getKdSub(),
+                            urtugKegiatan.getUrtugKegiatanId().getTahun(),
+                            urtugKegiatan.getUrtugKegiatanId().getKdProg(),
+                            urtugKegiatan.getUrtugKegiatanId().getIdProg(),
+                            urtugKegiatan.getUrtugKegiatanId().getKdKeg()
+                    ));
+        }
+
+        return new ResponseEntity<Object>(new CustomMessage("urtug program deleted"), HttpStatus.OK);
+
+    }
+
 }

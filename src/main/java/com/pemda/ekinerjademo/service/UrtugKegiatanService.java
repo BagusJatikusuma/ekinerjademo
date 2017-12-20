@@ -11,7 +11,10 @@ import java.util.List;
 public interface UrtugKegiatanService {
     List<UrtugKegiatan> findAll();
     List<UrtugKegiatan> findAllByUraianTugasJabatan(String kdUrtug, String kdJabatan, String kdJenisUrtug, Integer tahunUrtug);
+    List<UrtugKegiatan> findByProgramAndUrtug(String kdUrtug, String kdJabatan, String kdJenisUrtug, Integer tahunUrtug, Integer kdUrusan, Integer kdBidang, Integer kdUnit, Integer kdSub, Integer tahun, Integer kdProg, Integer idProg);
+
     UrtugKegiatan find(UrtugKegiatanId urtugKegiatanId);
+
     void save(UrtugKegiatan urtugKegiatan);
     void update(UrtugKegiatan urtugKegiatan);
     void delete(UrtugKegiatanId urtugKegiatanId);

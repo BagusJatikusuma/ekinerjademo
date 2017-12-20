@@ -35,7 +35,8 @@ public class UraianTugasPegawaiTahunanServiceImpl implements UraianTugasPegawaiT
                                     urtugPegawai.getNipPegawai()
                             ));
             urtugPegawaiTahunan.setAkunPegawai(new AkunPegawai(urtugPegawai.getNipPegawai()));
-            urtugPegawaiTahunan.setStatusApproval(0);
+//            urtugPegawaiTahunan.setStatusApproval(0); ada revisi
+            urtugPegawaiTahunan.setStatusApproval(urtugPegawai.getStatusApproval()); // hasil revisi
             urtugPegawaiTahunan.setStatusPengerjaan(0);
             urtugPegawaiTahunan.setKuantitas(urtugPegawai.getKuantitas());
             urtugPegawaiTahunan.setSatuanKuantitas(urtugPegawai.getSatuanKuantitas());

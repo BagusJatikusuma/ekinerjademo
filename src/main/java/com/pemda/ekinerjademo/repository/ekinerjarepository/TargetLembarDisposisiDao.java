@@ -14,7 +14,8 @@ import java.util.List;
 @Repository
 public interface TargetLembarDisposisiDao extends JpaRepository<TargetLembarDisposisi, TargetLembarDisposisiId> {
     @Query("select t from TargetLembarDisposisi t " +
-            "left join fetch t.lembarDisposisi " +
+            "left join fetch t.lembarDisposisi ld " +
+            "left join fetch ld.targetLembarDisposisiSet " +
             "where t.targetLembarDisposisiId.nipPegawai = ?1")
     List<TargetLembarDisposisi> findByTargetLembarDisposisiId_NipPegawai(String nipPegawai);
 }
