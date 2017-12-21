@@ -49,6 +49,29 @@ public class ImageController {
 
     }
 
+    @RequestMapping(value = "/get-logo-ekinerja", method = RequestMethod.GET)
+    ResponseEntity<?> getLogoEkinerja() {
+        LOGGER.info("get logo ekinerja");
+
+        byte[] image;
+
+        File imgPath = new File("/home/pemkab/ekinerja_images/farm_to_table.png");
+
+        try {
+            image = Files.readAllBytes(imgPath.toPath());
+        } catch (IOException e) {
+            LOGGER.error("cannot read image");
+            return new ResponseEntity<>(
+                    new CustomMessage("cannot read image"),
+                    HttpStatus.EXPECTATION_FAILED);
+        }
+
+        return new ResponseEntity<>(
+                image,
+                getImageHttpHeader(image),
+                HttpStatus.OK);
+    }
+
     private HttpHeaders getImageHttpHeader(byte[] image) {
         HttpHeaders headers = new HttpHeaders();
 
