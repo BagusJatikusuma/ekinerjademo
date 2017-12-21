@@ -176,6 +176,7 @@ public class UraianTugasPegawaiTahunanController {
                     ajuanUraianTugasNonDpaPegawaiWrapper.setNamaPegawai(qutPegawai.getNama());
                     ajuanUraianTugasNonDpaPegawaiWrapper.setKdJabatan(qutPegawai.getKdJabatan());
                     ajuanUraianTugasNonDpaPegawaiWrapper.setJabatan(qutPegawai.getJabatan());
+                    ajuanUraianTugasNonDpaPegawaiWrapper.setEselon(qutPegawai.getEselon());
 
                     ajuanUraianTugasNonDpaPegawaiWrapperList.add(ajuanUraianTugasNonDpaPegawaiWrapper);
                 }
@@ -323,6 +324,7 @@ public class UraianTugasPegawaiTahunanController {
                     ajuanUraianTugasNonDpaPegawaiWrapper.setNamaPegawai(qutPegawai.getNama());
                     ajuanUraianTugasNonDpaPegawaiWrapper.setKdJabatan(qutPegawai.getKdJabatan());
                     ajuanUraianTugasNonDpaPegawaiWrapper.setJabatan(qutPegawai.getJabatan());
+                    ajuanUraianTugasNonDpaPegawaiWrapper.setEselon(qutPegawai.getEselon());
 
                     ajuanUraianTugasNonDpaPegawaiWrapperList.add(ajuanUraianTugasNonDpaPegawaiWrapper);
                 }

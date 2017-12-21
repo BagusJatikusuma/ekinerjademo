@@ -2,8 +2,10 @@ package com.pemda.ekinerjademo.controller.api;
 
 import com.pemda.ekinerjademo.model.bismamodel.QutPegawai;
 import com.pemda.ekinerjademo.model.bismamodel.TkdJabatan;
+import com.pemda.ekinerjademo.model.bismamodel.TkdUnk;
 import com.pemda.ekinerjademo.model.ekinerjamodel.*;
 import com.pemda.ekinerjademo.projection.ekinerjaprojection.CustomPegawaiCredential;
+import com.pemda.ekinerjademo.repository.bismarepository.TkdUnkDao;
 import com.pemda.ekinerjademo.service.*;
 import com.pemda.ekinerjademo.util.DateUtilities;
 import com.pemda.ekinerjademo.util.EkinerjaXMLBuilder;
@@ -38,6 +40,8 @@ public class SuratPerintahController {
     private QutPegawaiCloneService qutPegawaiService;
     @Autowired
     private TkdJabatanService tkdJabatanService;
+    @Autowired
+    private TkdUnkDao tkdUnkDao;
     @Autowired
     private NomorUrutSuratUnitKerjaService nomorUrutSuratUnitKerjaService;
 
@@ -262,6 +266,7 @@ public class SuratPerintahController {
 
             tembusanSuratPerintah.setTembusanSuratPerintahId(tembusanId);
             tembusanSuratPerintah.setStatusDiterima(0);
+            tembusanSuratPerintah.setStatusBaca(0);
 
             tembusanSuratPerintahList.add(tembusanSuratPerintah);
         }
@@ -804,7 +809,10 @@ public class SuratPerintahController {
             jabatanPenandatangan = penandatanganSurat.getJabatan();
         } else {
             kdUnitKerjaPenandatangan = penandatanganSurat.getKdUnitKerja();
-            unitKerjaPenandatangan = penandatanganSurat.getUnitKerja();
+
+            TkdUnk tkdUnk = tkdUnkDao.findOne(kdUnitKerjaPenandatangan);
+
+            unitKerjaPenandatangan = tkdUnk.getUnitKerja();
         }
 
         SuratPerintahNonPejabatDokumenWrapper suratPerintahWrapper

@@ -1,9 +1,6 @@
 package com.pemda.ekinerjademo.model.bismamodel;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 /**
  * Created by bagus on 07/09/17.
@@ -33,8 +30,9 @@ public class TkdJabatan {
     @Column(name = "tnjJabatanLm")
     private Long tnjJabatanLm;
 
-    @Column(name = "kdUnitKerja")
-    private String kdUnitKerja;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "kdUnitKerja")
+    private TkdUnk kdUnitKerja;
 
     @Column(name = "ket")
     private String ket;
@@ -97,11 +95,11 @@ public class TkdJabatan {
         this.tnjJabatanLm = tnjJabatanLm;
     }
 
-    public String getKdUnitKerja() {
+    public TkdUnk getKdUnitKerja() {
         return kdUnitKerja;
     }
 
-    public void setKdUnitKerja(String kdUnitKerja) {
+    public void setKdUnitKerja(TkdUnk kdUnitKerja) {
         this.kdUnitKerja = kdUnitKerja;
     }
 

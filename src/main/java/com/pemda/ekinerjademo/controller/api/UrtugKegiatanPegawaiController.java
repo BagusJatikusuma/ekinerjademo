@@ -1140,8 +1140,13 @@ public class UrtugKegiatanPegawaiController {
                             &&(urtugKegiatanPegawaiWrapper.getIdProg().equals(kegiatanApprovalWrapper.getIdProg()))
                             &&(urtugKegiatanPegawaiWrapper.getKdKeg().equals(kegiatanApprovalWrapper.getKdKeg()))) {
 
+                        String namaPegawai
+                                = qutPegawaiService.getQutPegawai(urtugKegiatanPegawaiWrapper.getNipPegawai()).getNama();
+
                         statusApprovalPenanggungJawabWrapperList
-                                .add(new StatusApprovalPenanggungJawabWrapper(urtugKegiatanPegawaiWrapper.getNipPegawai(),
+                                .add(new StatusApprovalPenanggungJawabWrapper(
+                                        urtugKegiatanPegawaiWrapper.getNipPegawai(),
+                                        namaPegawai,
                                         urtugKegiatanPegawaiWrapper.getKdStatusPenanggungJawab(),
                                         urtugKegiatanPegawaiWrapper.getStatusPenanggungJawab(),
                                         urtugKegiatanPegawaiWrapper.getStatusApproval()));

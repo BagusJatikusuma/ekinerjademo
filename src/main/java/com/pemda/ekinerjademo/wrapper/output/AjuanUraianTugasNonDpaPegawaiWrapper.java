@@ -11,6 +11,7 @@ public class AjuanUraianTugasNonDpaPegawaiWrapper {
     private String namaPegawai;
     private String kdJabatan;
     private String jabatan;
+    private String eselon;
     private List<UraianTugasPegawaiTahunanWrapper> uraianTugasDiajukan;
     private List<UraianTugasPegawaiTahunanWrapper> uraianTugasTidakDipilih;
 
@@ -60,5 +61,13 @@ public class AjuanUraianTugasNonDpaPegawaiWrapper {
 
     public void setUraianTugasTidakDipilih(List<UraianTugasPegawaiTahunanWrapper> uraianTugasTidakDipilih) {
         this.uraianTugasTidakDipilih = uraianTugasTidakDipilih;
+    }
+
+    public String getEselon() {
+        return eselon;
+    }
+
+    public void setEselon(String eselon) {
+        this.eselon = eselon;
     }
 }

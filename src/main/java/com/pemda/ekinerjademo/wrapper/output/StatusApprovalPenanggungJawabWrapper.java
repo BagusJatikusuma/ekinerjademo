@@ -5,6 +5,7 @@ package com.pemda.ekinerjademo.wrapper.output;
  */
 public class StatusApprovalPenanggungJawabWrapper {
     private String nipPegawai;
+    private String namaPegawai;
     private String kdStatusPenanggungJawab;
     private String statusPenanggungJawab;
     private Integer statusApproval;
@@ -17,6 +18,19 @@ public class StatusApprovalPenanggungJawabWrapper {
             String statusPenanggungJawab,
             Integer statusApproval) {
         this.nipPegawai = nipPegawai;
+        this.kdStatusPenanggungJawab = kdStatusPenanggungJawab;
+        this.statusPenanggungJawab = statusPenanggungJawab;
+        this.statusApproval = statusApproval;
+    }
+
+    public StatusApprovalPenanggungJawabWrapper(
+            String nipPegawai,
+            String namaPegawai,
+            String kdStatusPenanggungJawab,
+            String statusPenanggungJawab,
+            Integer statusApproval) {
+        this.nipPegawai = nipPegawai;
+        this.namaPegawai = namaPegawai;
         this.kdStatusPenanggungJawab = kdStatusPenanggungJawab;
         this.statusPenanggungJawab = statusPenanggungJawab;
         this.statusApproval = statusApproval;
@@ -52,5 +66,13 @@ public class StatusApprovalPenanggungJawabWrapper {
 
     public void setStatusApproval(Integer statusApproval) {
         this.statusApproval = statusApproval;
+    }
+
+    public String getNamaPegawai() {
+        return namaPegawai;
+    }
+
+    public void setNamaPegawai(String namaPegawai) {
+        this.namaPegawai = namaPegawai;
     }
 }

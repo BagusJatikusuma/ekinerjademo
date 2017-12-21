@@ -3,6 +3,7 @@ package com.pemda.ekinerjademo.repository.bismarepository;
 import com.pemda.ekinerjademo.model.bismamodel.TkdJabatan;
 import com.pemda.ekinerjademo.wrapper.BismaModelWrapper.KdNmJabatanProjection;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -12,7 +13,15 @@ import java.util.List;
  */
 @Repository
 public interface TkdJabatanDao extends JpaRepository<TkdJabatan, Long> {
+    @Query("select tj from TkdJabatan tj " +
+            "left join fetch tj.kdUnitKerja")
     List<TkdJabatan> findAll();
+    @Query("select tj from TkdJabatan tj " +
+            "left join fetch tj.kdUnitKerja unk " +
+            "where unk.kdUnK = ?1")
     List<TkdJabatan> findByKdUnitKerja(String kdUnitKerja);
+    @Query("select tj from TkdJabatan tj " +
+            "left join fetch tj.kdUnitKerja " +
+            "where tj.kdJabatan = ?1")
     TkdJabatan findByKdJabatan(String KdJabatan);
 }

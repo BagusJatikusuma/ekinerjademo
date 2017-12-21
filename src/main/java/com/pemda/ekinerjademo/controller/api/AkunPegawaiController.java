@@ -6,10 +6,12 @@ import com.fasterxml.jackson.databind.ObjectWriter;
 import com.fasterxml.jackson.module.afterburner.AfterburnerModule;
 import com.pemda.ekinerjademo.model.bismamodel.QutPegawai;
 import com.pemda.ekinerjademo.model.bismamodel.TkdJabatan;
+import com.pemda.ekinerjademo.model.bismamodel.TkdUnk;
 import com.pemda.ekinerjademo.model.ekinerjamodel.*;
 import com.pemda.ekinerjademo.projection.ekinerjaprojection.CustomPegawaiCredential;
 import com.pemda.ekinerjademo.repository.bismarepository.QutPegawaiDao;
 import com.pemda.ekinerjademo.repository.bismarepository.TkdJabatanDao;
+import com.pemda.ekinerjademo.repository.bismarepository.TkdUnkDao;
 import com.pemda.ekinerjademo.repository.ekinerjarepository.AkunPegawaiDao;
 import com.pemda.ekinerjademo.service.*;
 import com.pemda.ekinerjademo.wrapper.input.*;
@@ -42,10 +44,12 @@ public class AkunPegawaiController {
     private RoleService roleService;
     private TkdJabatanService tkdJabatanService;
     private QutPegawaiCloneService qutPegawaiService;
-    private QutPegawaiCloneService qutPegawaiCloneService;
+//    private QutPegawaiCloneService qutPegawaiCloneService;
     private StatusPenanggungJawabKegiatanService statusPenanggungJawabKegiatanService;
     private UrtugKegiatanPegawaiService urtugKegiatanPegawaiService;
     private PejabatPenilaiDinilaiService pejabatPenilaiDinilaiService;
+
+    @Autowired private TkdUnkDao tkdUnkDao;
 
     @Autowired
     public AkunPegawaiController(
@@ -187,6 +191,8 @@ public class AkunPegawaiController {
                 = qutPegawaiService.getCustomPegawaiCredentials();
         List<AkunPegawai> akunPegawaiList
                 = akunPegawaiService.getAkunPegawaiList();
+        List<TkdUnk> tkdUnkList
+                = tkdUnkDao.findAll();
 
 //        for (AkunPegawai akunPegawai : akunPegawaiList) {
 //            for (QutPegawai qutPegawai : qutPegawaiList) {
@@ -216,7 +222,7 @@ public class AkunPegawaiController {
                                     qutPegawai.getKdJabatan(),
                                     qutPegawai.getJabatan(),
                                     qutPegawai.getKdUnitKerja(),
-                                    qutPegawai.getUnitKerja(),
+                                    null,
                                     qutPegawai.getPangkat(),
                                     qutPegawai.getGol(),
                                     akunPegawai.getRole().getRole()));
@@ -225,6 +231,18 @@ public class AkunPegawaiController {
 
             }
 
+        }
+
+        //get correct unit kerja
+        for (QutPegawaiWrapper qutPegawaiWrapper
+                : qutPegawaiWrappers) {
+            for (TkdUnk tkdUnk
+                    : tkdUnkList) {
+                if (tkdUnk.getKdUnK().equals(qutPegawaiWrapper.getKdUnitKerja())) {
+                    qutPegawaiWrapper.setUnitKerja(tkdUnk.getUnitKerja());
+                    break;
+                }
+            }
         }
 
         LOGGER.info("finish");
@@ -245,6 +263,8 @@ public class AkunPegawaiController {
                 = qutPegawaiService.getCustomPegawaiCredentials();
         List<AkunPegawai> akunPegawaiList
                 = akunPegawaiService.getAkunPegawaiList();
+        List<TkdUnk> tkdUnkList
+                = tkdUnkDao.findAll();
 
         LOGGER.info("finish get pegawai from database kepegawaian");
         for (CustomPegawaiCredential qutPegawai : qutPegawaiList) {
@@ -267,6 +287,18 @@ public class AkunPegawaiController {
 
             }
 
+        }
+
+        //get correct unit kerja
+        for (QutPegawaiWrapper qutPegawaiWrapper
+                : qutPegawaiWrappers) {
+            for (TkdUnk tkdUnk
+                    : tkdUnkList) {
+                if (tkdUnk.getKdUnK().equals(qutPegawaiWrapper.getKdUnitKerja())) {
+                    qutPegawaiWrapper.setUnitKerja(tkdUnk.getUnitKerja());
+                    break;
+                }
+            }
         }
 
         LOGGER.info("finish");
@@ -294,6 +326,8 @@ public class AkunPegawaiController {
                 = new ArrayList<>();
         List<QutPegawai> qutPegawaiList
                 = qutPegawaiService.getQutPegawaiByUnitKerja(kdUnitKerja);
+        List<TkdUnk> tkdUnkList
+                = tkdUnkDao.findAll();
 
         LOGGER.info("finish get pegawai from database kepegawaian");
 
@@ -310,6 +344,18 @@ public class AkunPegawaiController {
                             qutPegawai.getGol()));
         }
 
+        //get correct unit kerja
+        for (QutPegawaiWrapper qutPegawaiWrapper
+                : qutPegawaiWrappers) {
+            for (TkdUnk tkdUnk
+                    : tkdUnkList) {
+                if (tkdUnk.getKdUnK().equals(qutPegawaiWrapper.getKdUnitKerja())) {
+                    qutPegawaiWrapper.setUnitKerja(tkdUnk.getUnitKerja());
+                    break;
+                }
+            }
+        }
+
         LOGGER.info("finish");
 
         return new ResponseEntity<Object>(qutPegawaiWrappers, HttpStatus.OK);
@@ -323,6 +369,8 @@ public class AkunPegawaiController {
                 = new ArrayList<>();
         List<QutPegawaiClone> qutPegawaiCloneList
                 = qutPegawaiService.getQutPegawaiByKdJabatan(kdJabatan);
+        List<TkdUnk> tkdUnkList
+                = tkdUnkDao.findAll();
 
         for (QutPegawaiClone pegawai : qutPegawaiCloneList) {
             qutPegawaiWrappers
@@ -335,6 +383,18 @@ public class AkunPegawaiController {
                             pegawai.getUnitKerja(),
                             pegawai.getPangkat(),
                             pegawai.getGol()));
+        }
+
+        //get correct unit kerja
+        for (QutPegawaiWrapper qutPegawaiWrapper
+                : qutPegawaiWrappers) {
+            for (TkdUnk tkdUnk
+                    : tkdUnkList) {
+                if (tkdUnk.getKdUnK().equals(qutPegawaiWrapper.getKdUnitKerja())) {
+                    qutPegawaiWrapper.setUnitKerja(tkdUnk.getUnitKerja());
+                    break;
+                }
+            }
         }
 
         return new ResponseEntity<Object>(qutPegawaiWrappers, HttpStatus.OK);
@@ -353,6 +413,8 @@ public class AkunPegawaiController {
                 = qutPegawaiService.getQutPegawaiByUnitKerja(kdUnitKerja);
         List<PejabatPenilaiDinilai> pejabatPenilaiDinilaiList
                 = pejabatPenilaiDinilaiService.findPegawaiDinilai(nipPenilai);
+        List<TkdUnk> tkdUnkList
+                = tkdUnkDao.findAll();
 
 //        for (QutPegawai qutPegawai
 //                : qutPegawaiList) {
@@ -397,6 +459,17 @@ public class AkunPegawaiController {
             }
         }
 
+        for (QutPegawaiWrapper qutPegawaiWrapper
+                : qutPegawaiWrappers) {
+            for (TkdUnk tkdUnk
+                    : tkdUnkList) {
+                if (tkdUnk.getKdUnK().equals(qutPegawaiWrapper.getKdUnitKerja())) {
+                    qutPegawaiWrapper.setUnitKerja(tkdUnk.getUnitKerja());
+                    break;
+                }
+            }
+        }
+
         return new ResponseEntity<Object>(qutPegawaiWrappers, HttpStatus.OK);
     }
 
@@ -425,6 +498,8 @@ public class AkunPegawaiController {
                 = qutPegawaiService.getQutPegawaiByUnitKerja(inputWrapper.getKdUnitKerja());
         List<QutPegawaiClone> qutPegawaiCloneList
                 = qutPegawaiService.getQutPegawaiByKdJabatan(inputWrapper.getKdJabatan());
+        List<TkdUnk> tkdUnkList
+                = tkdUnkDao.findAll();
 
         boolean found;
         for (QutPegawaiClone qutPegawai : qutPegawaiCloneList) {
@@ -452,6 +527,17 @@ public class AkunPegawaiController {
 
         }
 
+        for (QutPegawaiWrapper qutPegawaiWrapper
+                : qutPegawaiWrappers) {
+            for (TkdUnk tkdUnk
+                    : tkdUnkList) {
+                if (tkdUnk.getKdUnK().equals(qutPegawaiWrapper.getKdUnitKerja())) {
+                    qutPegawaiWrapper.setUnitKerja(tkdUnk.getUnitKerja());
+                    break;
+                }
+            }
+        }
+
         return new ResponseEntity<Object>(qutPegawaiWrappers, HttpStatus.OK);
     }
 
@@ -476,7 +562,9 @@ public class AkunPegawaiController {
         List<QutPegawaiWrapper> qutPegawaiWrappers
                 = new ArrayList<>();
         List<QutPegawaiClone> qutPegawaiList
-                = qutPegawaiCloneService.getQutPegawaiByKdJabatan(inputWrapper.getKdJabatan());
+                = qutPegawaiService.getQutPegawaiByKdJabatan(inputWrapper.getKdJabatan());
+        List<TkdUnk> tkdUnkList
+                = tkdUnkDao.findAll();
 
         boolean found;
         for (QutPegawaiClone qutPegawai : qutPegawaiList) {
@@ -502,6 +590,17 @@ public class AkunPegawaiController {
                                 qutPegawai.getGol()));
             }
 
+        }
+
+        for (QutPegawaiWrapper qutPegawaiWrapper
+                : qutPegawaiWrappers) {
+            for (TkdUnk tkdUnk
+                    : tkdUnkList) {
+                if (tkdUnk.getKdUnK().equals(qutPegawaiWrapper.getKdUnitKerja())) {
+                    qutPegawaiWrapper.setUnitKerja(tkdUnk.getUnitKerja());
+                    break;
+                }
+            }
         }
 
         return new ResponseEntity<Object>(qutPegawaiWrappers, HttpStatus.OK);
@@ -644,16 +743,20 @@ public class AkunPegawaiController {
         QutPegawai qutPegawai
                 = qutPegawaiService.getQutPegawai(
                         pejabatPenilaiDinilaiList.get(0).getPejabatPenilaiDinilaiId().getNipPenilai());
+
+        TkdUnk tkdUnk = tkdUnkDao.findOne(qutPegawai.getKdUnitKerja());
+
         QutPegawaiWrapper pegawaiWrapper
                 = new QutPegawaiWrapper(
                         qutPegawai.getNip(),
-                qutPegawai.getNama(),
-                qutPegawai.getKdJabatan(),
-                qutPegawai.getJabatan(),
-                qutPegawai.getKdUnitKerja(),
-                qutPegawai.getUnitKerja(),
-                qutPegawai.getPangkat(),
-                qutPegawai.getGol());
+                        qutPegawai.getNama(),
+                        qutPegawai.getKdJabatan(),
+                        qutPegawai.getJabatan(),
+                        qutPegawai.getKdUnitKerja(),
+                        tkdUnk.getUnitKerja(),
+                        qutPegawai.getPangkat(),
+                        qutPegawai.getGol());
+
 
 
         return new ResponseEntity<Object>(pegawaiWrapper, HttpStatus.OK);

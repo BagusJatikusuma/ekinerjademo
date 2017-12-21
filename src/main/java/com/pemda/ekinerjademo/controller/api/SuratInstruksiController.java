@@ -2,8 +2,10 @@ package com.pemda.ekinerjademo.controller.api;
 
 import com.pemda.ekinerjademo.model.bismamodel.QutPegawai;
 import com.pemda.ekinerjademo.model.bismamodel.TkdJabatan;
+import com.pemda.ekinerjademo.model.bismamodel.TkdUnk;
 import com.pemda.ekinerjademo.model.ekinerjamodel.*;
 import com.pemda.ekinerjademo.projection.ekinerjaprojection.CustomPegawaiCredential;
+import com.pemda.ekinerjademo.repository.bismarepository.TkdUnkDao;
 import com.pemda.ekinerjademo.service.*;
 import com.pemda.ekinerjademo.util.DateUtilities;
 import com.pemda.ekinerjademo.util.EkinerjaXMLBuilder;
@@ -43,6 +45,9 @@ public class SuratInstruksiController {
     @Autowired private SuratKuasaController suratKuasaController;
     @Autowired private SuratPerintahService suratPerintahService;
 
+    @Autowired
+    private TkdUnkDao tkdUnkDao;
+
 
     @RequestMapping(value = "/create-surat-instruksi", method = RequestMethod.POST)
     ResponseEntity<?> createSuratInstruksi(
@@ -70,6 +75,7 @@ public class SuratInstruksiController {
         suratInstruksi.setDikeluarkanDi(inputWrapper.getDikeluarkanDi());
         suratInstruksi.setCreateddateMilis(inputWrapper.getTanggalDibuat());
         suratInstruksi.setNipPembuat(inputWrapper.getNipPembuat());
+        suratInstruksi.setStatusBaca(0);
 
         suratInstruksiService.createSuratInstruksi(suratInstruksi);
 
@@ -245,7 +251,10 @@ public class SuratInstruksiController {
         } else {
             dokumenSuratInstruksiWrapper.setSuratPejabat(false);
             dokumenSuratInstruksiWrapper.setJabatanSuratPejabat(null);
-            dokumenSuratInstruksiWrapper.setUnitKerja(penandatanganSurat.getUnitKerja());
+
+            TkdUnk tkdUnk = tkdUnkDao.findOne(penandatanganSurat.getKdUnitKerja());
+
+            dokumenSuratInstruksiWrapper.setUnitKerja(tkdUnk.getUnitKerja());
         }
 
 
