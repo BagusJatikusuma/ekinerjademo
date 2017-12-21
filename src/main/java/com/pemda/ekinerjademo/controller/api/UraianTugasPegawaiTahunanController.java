@@ -1,10 +1,12 @@
 package com.pemda.ekinerjademo.controller.api;
 
 import com.pemda.ekinerjademo.model.bismamodel.QutPegawai;
+import com.pemda.ekinerjademo.model.bismamodel.TkdUnk;
 import com.pemda.ekinerjademo.model.ekinerjamodel.PejabatPenilaiDinilai;
 import com.pemda.ekinerjademo.model.ekinerjamodel.UraianTugasJabatanJenisUrtug;
 import com.pemda.ekinerjademo.model.ekinerjamodel.UraianTugasPegawaiTahunan;
 import com.pemda.ekinerjademo.model.ekinerjamodel.UraianTugasPegawaiTahunanId;
+import com.pemda.ekinerjademo.repository.bismarepository.TkdUnkDao;
 import com.pemda.ekinerjademo.service.*;
 import com.pemda.ekinerjademo.wrapper.input.UraianTugasPegawaiTahunanInputWrapper;
 import com.pemda.ekinerjademo.wrapper.output.*;
@@ -32,6 +34,7 @@ public class UraianTugasPegawaiTahunanController {
     @Autowired private QutPegawaiCloneService qutPegawaiService;
     @Autowired private UraianTugasJabatanJenisUrtugService uraianTugasJabatanJenisUrtugService;
     @Autowired private PejabatPenilaiDinilaiService pejabatPenilaiDinilaiService;
+    @Autowired private TkdUnkDao tkdUnkDao;
 
     @RequestMapping(value = "/get-uraian-tugas-pegawai-tahunan-by-nip/{nipPegawai}", method = RequestMethod.GET)
     ResponseEntity<?> getUraianTugasPegawaiTahunanByNip(@PathVariable("nipPegawai") String nipPegawai) {
@@ -277,6 +280,8 @@ public class UraianTugasPegawaiTahunanController {
                 = new ArrayList<>();
         List<UraianTugasJabatanJenisUrtug> uraianTugasJabatanJenisUrtugList
                 = uraianTugasJabatanJenisUrtugService.getUrtugNonDpaByUnitKerja(kdUnitKerja);
+        List<TkdUnk> tkdUnkList
+                = tkdUnkDao.findAll();
 
 
         //filter pegawai bawahan penilai
@@ -325,8 +330,20 @@ public class UraianTugasPegawaiTahunanController {
                     ajuanUraianTugasNonDpaPegawaiWrapper.setKdJabatan(qutPegawai.getKdJabatan());
                     ajuanUraianTugasNonDpaPegawaiWrapper.setJabatan(qutPegawai.getJabatan());
                     ajuanUraianTugasNonDpaPegawaiWrapper.setEselon(qutPegawai.getEselon());
+                    ajuanUraianTugasNonDpaPegawaiWrapper.setKdUnitKerja(qutPegawai.getKdUnitKerja());
 
                     ajuanUraianTugasNonDpaPegawaiWrapperList.add(ajuanUraianTugasNonDpaPegawaiWrapper);
+                }
+            }
+        }
+
+        for (AjuanUraianTugasNonDpaPegawaiWrapper qutPegawaiWrapper
+                : ajuanUraianTugasNonDpaPegawaiWrapperList) {
+            for (TkdUnk tkdUnk
+                    : tkdUnkList) {
+                if (tkdUnk.getKdUnK().equals(qutPegawaiWrapper.getKdUnitKerja())) {
+                    qutPegawaiWrapper.setUnitKerja(tkdUnk.getUnitKerja());
+                    break;
                 }
             }
         }
