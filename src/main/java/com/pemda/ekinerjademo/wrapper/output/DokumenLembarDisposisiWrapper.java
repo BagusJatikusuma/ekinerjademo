@@ -9,11 +9,15 @@ public class DokumenLembarDisposisiWrapper {
     private String kdLembarDisposisi;
     private String path;
     private String tanggalPenerimaan;
+    private Long tanggalPenerimaanMilis;
     private Integer tktKeamanan;
     private String tglPenyelesaian;
+    private Long tglPenyelesaianMilis;
+    private Long tangglPengirimanMilis;
     private String noSuratDisposisi;
     private String isiDisposisi;
     private String tanggalSuratDisposisi;
+    private Long tanggalSuratDisposisiMilis;
     private String dari;
     private String ringkasanIsi;
     private String lampiran;
@@ -47,6 +51,42 @@ public class DokumenLembarDisposisiWrapper {
         this.lampiran = lampiran;
         this.targetPegawaiLembarDisposisi = targetPegawaiLembarDisposisi;
     }
+
+    public DokumenLembarDisposisiWrapper(
+            String kdLembarDisposisi,
+            String path,
+            String tanggalPenerimaan,
+            Long tanggalPenerimaanMilis,
+            Integer tktKeamanan,
+            String tglPenyelesaian,
+            Long tglPenyelesaianMilis,
+            Long tangglPengirimanMilis,
+            String noSuratDisposisi,
+            String isiDisposisi,
+            String tanggalSuratDisposisi,
+            Long tanggalSuratDisposisiMilis,
+            String dari,
+            String ringkasanIsi,
+            String lampiran,
+            List<QutPegawaiWrapper> targetPegawaiLembarDisposisi) {
+        this.kdLembarDisposisi = kdLembarDisposisi;
+        this.path = path;
+        this.tanggalPenerimaan = tanggalPenerimaan;
+        this.tanggalPenerimaanMilis = tanggalPenerimaanMilis;
+        this.tktKeamanan = tktKeamanan;
+        this.tglPenyelesaian = tglPenyelesaian;
+        this.tglPenyelesaianMilis = tglPenyelesaianMilis;
+        this.tangglPengirimanMilis = tangglPengirimanMilis;
+        this.noSuratDisposisi = noSuratDisposisi;
+        this.isiDisposisi = isiDisposisi;
+        this.tanggalSuratDisposisi = tanggalSuratDisposisi;
+        this.tanggalSuratDisposisiMilis = tanggalSuratDisposisiMilis;
+        this.dari = dari;
+        this.ringkasanIsi = ringkasanIsi;
+        this.lampiran = lampiran;
+        this.targetPegawaiLembarDisposisi = targetPegawaiLembarDisposisi;
+    }
+
 
     public String getKdLembarDisposisi() {
         return kdLembarDisposisi;
@@ -142,5 +182,37 @@ public class DokumenLembarDisposisiWrapper {
 
     public void setIsiDisposisi(String isiDisposisi) {
         this.isiDisposisi = isiDisposisi;
+    }
+
+    public Long getTanggalPenerimaanMilis() {
+        return tanggalPenerimaanMilis;
+    }
+
+    public void setTanggalPenerimaanMilis(Long tanggalPenerimaanMilis) {
+        this.tanggalPenerimaanMilis = tanggalPenerimaanMilis;
+    }
+
+    public Long getTangglPengirimanMilis() {
+        return tangglPengirimanMilis;
+    }
+
+    public void setTangglPengirimanMilis(Long tangglPengirimanMilis) {
+        this.tangglPengirimanMilis = tangglPengirimanMilis;
+    }
+
+    public Long getTanggalSuratDisposisiMilis() {
+        return tanggalSuratDisposisiMilis;
+    }
+
+    public void setTanggalSuratDisposisiMilis(Long tanggalSuratDisposisiMilis) {
+        this.tanggalSuratDisposisiMilis = tanggalSuratDisposisiMilis;
+    }
+
+    public Long getTglPenyelesaianMilis() {
+        return tglPenyelesaianMilis;
+    }
+
+    public void setTglPenyelesaianMilis(Long tglPenyelesaianMilis) {
+        this.tglPenyelesaianMilis = tglPenyelesaianMilis;
     }
 }

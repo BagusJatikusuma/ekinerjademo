@@ -24,4 +24,6 @@ public interface SuratInstruksiService {
     List<SuratInstruksiNonPejabat> getSuratInstruksiUnitKerja(String kdUnitKerja);
     List<SuratInstruksi> getSuratInstruksiByNip(String nipPegawai);
 
+    List<SuratInstruksi> findTree(String kdSuratInstruksi);
+
 }

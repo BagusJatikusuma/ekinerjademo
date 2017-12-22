@@ -101,4 +101,12 @@ public class SuratInstruksiServiceImpl implements SuratInstruksiService {
     public List<SuratInstruksi> getSuratInstruksiByNip(String nipPegawai) {
         return suratInstruksiDao.findByNipPembuat(nipPegawai);
     }
+
+    @Override
+    public List<SuratInstruksi> findTree(String kdSuratInstruksi) {
+        SuratInstruksi suratInstruksi
+                = suratInstruksiDao.findByKdInstruksi(kdSuratInstruksi);
+
+        return suratInstruksiDao.findTree(suratInstruksi.getPath());
+    }
 }

@@ -290,13 +290,24 @@ public class LembarDisposisiController {
         for (LembarDisposisi lembarDisposisi
                 : lembarDisposisiList) {
 //            LOGGER.info(lembarDisposisi.getPath());
+            QutPegawai pegawaiPengirim
+                    = qutPegawaiService.getQutPegawai(lembarDisposisi.getNipPembuat());
+
             lembarDisposisiWrappers
                     .add(new LembarDisposisiWrapper(
                             lembarDisposisi.getKdLembarDisposisi(),
                             lembarDisposisi.getPath(),
                             DateUtilities.createLocalDate(new Date(lembarDisposisi.getTanggalPenerimaanMilis()), "dd MMMM yyyy", indoLocale),
+                            lembarDisposisi.getTanggalPenerimaanMilis(),
                             lembarDisposisi.getTktKeamanan(),
-                            DateUtilities.createLocalDate(new Date(lembarDisposisi.getTglPenyelesaianMilis()), "dd MMMM yyyy", indoLocale)
+                            DateUtilities.createLocalDate(new Date(lembarDisposisi.getTglPenyelesaianMilis()), "dd MMMM yyyy", indoLocale),
+                            lembarDisposisi.getTglPenyelesaianMilis(),
+                            lembarDisposisi.getStatusBaca(),
+                            DateUtilities.createLocalDate(new Date(lembarDisposisi.getTanggalPengirimanMilis()), "dd MMMM yyyy", indoLocale),
+                            lembarDisposisi.getTanggalPengirimanMilis(),
+                            lembarDisposisi.getNipPembuat(),
+                            pegawaiPengirim.getNama(),
+                            lembarDisposisi.getNoSuratDisposisi().getRingkasanIsi()
                             ));
         }
 
@@ -334,23 +345,26 @@ public class LembarDisposisiController {
 
         }
 
-
         Locale indoLocale = new Locale("id", "ID");
         DokumenLembarDisposisiWrapper dokumenLembarDisposisiWrapper
                 = new DokumenLembarDisposisiWrapper(
                         lembarDisposisi.getKdLembarDisposisi(),
-                lembarDisposisi.getPath(),
-                DateUtilities.createLocalDate(new Date(lembarDisposisi.getTanggalPenerimaanMilis()), "dd MMMM yyyy", indoLocale),
-                lembarDisposisi.getTktKeamanan(),
-                DateUtilities.createLocalDate(new Date(lembarDisposisi.getTglPenyelesaianMilis()), "dd MMMM yyyy", indoLocale),
-                lembarDisposisi.getNoSuratDisposisi().getNoSurat(),
-                lembarDisposisi.getIsiDisposisi(),
-                DateUtilities.createLocalDate(new Date(lembarDisposisi.getNoSuratDisposisi().getTanggalSuratMilis()), "dd MMMM yyyy", indoLocale),
-                lembarDisposisi.getNoSuratDisposisi().getDari(),
-                lembarDisposisi.getNoSuratDisposisi().getRingkasanIsi(),
-                lembarDisposisi.getNoSuratDisposisi().getLampiran(),
-                targetPegawai
-                );
+                        lembarDisposisi.getPath(),
+                        DateUtilities.createLocalDate(new Date(lembarDisposisi.getTanggalPenerimaanMilis()), "dd MMMM yyyy", indoLocale),
+                        lembarDisposisi.getTanggalPenerimaanMilis(),
+                        lembarDisposisi.getTktKeamanan(),
+                        DateUtilities.createLocalDate(new Date(lembarDisposisi.getTglPenyelesaianMilis()), "dd MMMM yyyy", indoLocale),
+                        lembarDisposisi.getTglPenyelesaianMilis(),
+                        lembarDisposisi.getTanggalPengirimanMilis(),
+                        lembarDisposisi.getNoSuratDisposisi().getNoSurat(),
+                        lembarDisposisi.getIsiDisposisi(),
+                        DateUtilities.createLocalDate(new Date(lembarDisposisi.getNoSuratDisposisi().getTanggalSuratMilis()), "dd MMMM yyyy", indoLocale),
+                        lembarDisposisi.getNoSuratDisposisi().getTanggalSuratMilis(),
+                        lembarDisposisi.getNoSuratDisposisi().getDari(),
+                        lembarDisposisi.getNoSuratDisposisi().getRingkasanIsi(),
+                        lembarDisposisi.getNoSuratDisposisi().getLampiran(),
+                        targetPegawai
+                        );
 
         return new ResponseEntity<Object>(dokumenLembarDisposisiWrapper, HttpStatus.OK);
     }

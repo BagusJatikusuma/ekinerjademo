@@ -27,4 +27,7 @@ public interface SuratInstruksiDao extends JpaRepository<SuratInstruksi, String>
             "left join fetch si.suratInstruksiNonPejabat " +
             "where si.kdInstruksi = ?1")
     SuratInstruksi findByKdInstruksi(String kdInstruksi);
+
+    @Query("select si from SuratInstruksi si where si.path like concat(?1,'%')")
+    List<SuratInstruksi> findTree(String parentPath);
 }

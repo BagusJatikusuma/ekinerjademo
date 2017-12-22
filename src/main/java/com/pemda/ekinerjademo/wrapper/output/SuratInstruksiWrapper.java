@@ -13,6 +13,7 @@ public class SuratInstruksiWrapper {
     private String nipPengirim;
     private String namaPengirim;
     private Integer statusBaca;
+    private String path;
 
     public SuratInstruksiWrapper() {
     }
@@ -75,6 +76,28 @@ public class SuratInstruksiWrapper {
         this.nipPengirim = nipPengirim;
         this.namaPengirim = namaPengirim;
         this.statusBaca = statusBaca;
+    }
+    public SuratInstruksiWrapper(
+            String kdInstruksi,
+            String judulInstruksi,
+            String tanggalDibuat,
+            Long tanggalDibuatMilis,
+            boolean suratPejabat,
+            Integer statusbaca,
+            String nipPengirim,
+            String namaPengirim,
+            Integer statusBaca,
+            String path) {
+        this.kdInstruksi = kdInstruksi;
+        this.judulInstruksi = judulInstruksi;
+        this.tanggalDibuat = tanggalDibuat;
+        this.tanggalDibuatMilis = tanggalDibuatMilis;
+        this.suratPejabat = suratPejabat;
+        this.statusbaca = statusbaca;
+        this.nipPengirim = nipPengirim;
+        this.namaPengirim = namaPengirim;
+        this.statusBaca = statusBaca;
+        this.path = path;
     }
 
     public String getKdInstruksi() {
@@ -147,5 +170,13 @@ public class SuratInstruksiWrapper {
 
     public void setStatusBaca(Integer statusBaca) {
         this.statusBaca = statusBaca;
+    }
+
+    public String getPath() {
+        return path;
+    }
+
+    public void setPath(String path) {
+        this.path = path;
     }
 }

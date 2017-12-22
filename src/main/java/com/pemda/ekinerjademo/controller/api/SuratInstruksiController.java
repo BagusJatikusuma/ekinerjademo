@@ -77,6 +77,14 @@ public class SuratInstruksiController {
         suratInstruksi.setNipPembuat(inputWrapper.getNipPembuat());
         suratInstruksi.setStatusBaca(0);
 
+        if (inputWrapper.getKdSuratInstruksiParent() == null) {
+            suratInstruksi.setPath(kdSuratInstruksi);
+        } else {
+            SuratInstruksi suratInstruksiParent
+                    = suratInstruksiService.getSuratInstruksi(inputWrapper.getKdSuratInstruksiParent());
+            suratInstruksi.setPath(suratInstruksiParent.getPath()+"."+kdSuratInstruksi);
+        }
+
         suratInstruksiService.createSuratInstruksi(suratInstruksi);
 
         //build target pegawai
@@ -416,6 +424,45 @@ public class SuratInstruksiController {
                         ));
             }
 
+        }
+
+        return new ResponseEntity<Object>(suratInstruksiWrapperList, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/get-surat-instruksi-tree/{kdSuratInstruksi}", method = RequestMethod.GET)
+    ResponseEntity<?> getSuratInstruksiTree(
+            @PathVariable("kdSuratInstruksi") String kdSuratInstruksi) {
+        LOGGER.info("get surat instruksi tree");
+
+        List<SuratInstruksi> suratInstruksiList
+                = suratInstruksiService.findTree(kdSuratInstruksi);
+        List<SuratInstruksiWrapper> suratInstruksiWrapperList
+                = new ArrayList<>();
+
+        Locale indoLocale = new Locale("id", "ID");
+
+        boolean isSuratPejabat;
+        for (SuratInstruksi suratInstruksi
+                : suratInstruksiList) {
+            QutPegawai pegawaiPengirim
+                    = qutPegawaiService.getQutPegawai(suratInstruksi.getNipPembuat());
+
+            isSuratPejabat = true;
+            if (suratInstruksi.getSuratInstruksiPejabat() == null) {
+                isSuratPejabat = false;
+            }
+            suratInstruksiWrapperList
+                    .add(new SuratInstruksiWrapper(suratInstruksi.getKdInstruksi(),
+                            suratInstruksi.getJudulInstruksi(),
+                            DateUtilities.createLocalDate(new Date(suratInstruksi.getCreateddateMilis()), "dd MMMM yyyy", indoLocale),
+                            suratInstruksi.getCreateddateMilis(),
+                            isSuratPejabat,
+                            suratInstruksi.getStatusBaca(),
+                            suratInstruksi.getNipPembuat(),
+                            pegawaiPengirim.getNama(),
+                            suratInstruksi.getStatusBaca(),
+                            suratInstruksi.getPath()
+                            ));
         }
 
         return new ResponseEntity<Object>(suratInstruksiWrapperList, HttpStatus.OK);

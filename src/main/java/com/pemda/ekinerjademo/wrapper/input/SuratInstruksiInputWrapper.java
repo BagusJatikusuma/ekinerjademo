@@ -20,6 +20,7 @@ public class SuratInstruksiInputWrapper {
     private boolean suratPejabat;
     private String kdJabatanSuratPejabat;
     private String kdUnitKerja;
+    private String kdSuratInstruksiParent;
 
     public String getJudulInstruksi() {
         return judulInstruksi;
@@ -131,5 +132,13 @@ public class SuratInstruksiInputWrapper {
 
     public void setNipPenandatangan(String nipPenandatangan) {
         this.nipPenandatangan = nipPenandatangan;
+    }
+
+    public String getKdSuratInstruksiParent() {
+        return kdSuratInstruksiParent;
+    }
+
+    public void setKdSuratInstruksiParent(String kdSuratInstruksiParent) {
+        this.kdSuratInstruksiParent = kdSuratInstruksiParent;
     }
 }
