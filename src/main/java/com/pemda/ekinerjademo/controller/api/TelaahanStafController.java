@@ -7,6 +7,7 @@ import com.pemda.ekinerjademo.service.TelaahanStafService;
 import com.pemda.ekinerjademo.wrapper.input.SuratKuasaInputWrapper;
 import com.pemda.ekinerjademo.wrapper.input.TelaahanStafInputWrapper;
 import com.pemda.ekinerjademo.wrapper.output.CustomMessage;
+import com.pemda.ekinerjademo.wrapper.output.TelaahanStaffHistoryWrapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,8 +15,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.time.Year;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by bayu on 15/12/17.
@@ -56,5 +61,31 @@ public class TelaahanStafController {
 
         return new ResponseEntity<Object>(
                 new CustomMessage("telaahan staf created"), HttpStatus.CREATED);
+    }
+
+    @RequestMapping(value = "/get-daftar-telaahan-staff-history-by-pegawai/{nipPegawai}", method = RequestMethod.GET)
+    ResponseEntity<?> getDaftarTelaahanStaffHistoryByPegawai(
+            @PathVariable("nipPembuatSurat") String nipPembuatSurat) {
+        LOGGER.info("get telaahan staff history by nip "+nipPembuatSurat);
+
+        List<TelaahanStaf> telaahanStafList
+                = telaahanStafService.getByNipPembuatSurat(nipPembuatSurat);
+
+        List<TelaahanStaffHistoryWrapper> telaahanStaffHistoryWrapperList
+                = new ArrayList<>();
+
+        DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+        for (TelaahanStaf telaahanStaf
+                : telaahanStafList) {
+
+            telaahanStaffHistoryWrapperList
+                    .add(new TelaahanStaffHistoryWrapper(
+                            telaahanStaf.getKdTelaahanStaf(),
+                            df.format(new Date(telaahanStaf.getTanggalPembuatanMilis())),
+                            telaahanStaf.getStatusBaca()
+                    ));
+        }
+
+        return new ResponseEntity<Object>(telaahanStaffHistoryWrapperList, HttpStatus.OK);
     }
 }

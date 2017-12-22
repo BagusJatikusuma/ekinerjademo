@@ -49,6 +49,8 @@ public class BeritaAcara {
     @Column(name = "status_approval_nip_mengetahui")
     private Integer statusApprovalNipMengetahui;
 
+    @Column(name = "status_baca")
+    private Integer statusBaca;
     @Column(name = "kota_pembuatan_surat")
     private String kotaPembuatanSurat;
     @Column(name = "tanggal_pembuatan_milis")
@@ -189,6 +191,14 @@ public class BeritaAcara {
 
     public void setStatusApprovalNipMengetahui(Integer statusApprovalNipMengetahui) {
         this.statusApprovalNipMengetahui = statusApprovalNipMengetahui;
+    }
+
+    public Integer getStatusBaca() {
+        return statusBaca;
+    }
+
+    public void setStatusBaca(Integer statusBaca) {
+        this.statusBaca = statusBaca;
     }
 
     public String getKotaPembuatanSurat() {

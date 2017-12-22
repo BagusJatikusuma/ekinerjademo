@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 /**
  * Created by bayu on 07/12/17.
  */
@@ -18,6 +20,11 @@ public class SuratKuasaServiceImpl implements SuratKuasaService{
     public static final Logger LOGGER = LoggerFactory.getLogger(SuratKuasaServiceImpl.class);
 
     @Autowired private SuratKuasaDao suratKuasaDao;
+
+    @Override
+    public List<SuratKuasa> getByNipPembuatSurat(String nipPembuatSurat) {
+        return suratKuasaDao.findByNipPembuatSurat(nipPembuatSurat);
+    }
 
     @Override
     public void createSuratKuasa(SuratKuasa suratKuasa) {

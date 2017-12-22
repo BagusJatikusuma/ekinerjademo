@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 /**
  * Created by bayu on 15/12/17.
  */
@@ -19,6 +21,11 @@ public class TelaahanStafServiceImpl implements TelaahanStafService {
 
     @Autowired
     private TelaahanStafDao telaahanStafDao;
+
+    @Override
+    public List<TelaahanStaf> getByNipPembuatSurat(String nipPembuatSurat) {
+        return telaahanStafDao.findByNipPembuatSurat(nipPembuatSurat);
+    }
 
     @Override
     public void createTelaahanStaf(TelaahanStaf telaahanStaf) {

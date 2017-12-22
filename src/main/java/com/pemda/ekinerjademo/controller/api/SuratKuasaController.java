@@ -6,6 +6,7 @@ import com.pemda.ekinerjademo.service.SuratKuasaService;
 import com.pemda.ekinerjademo.wrapper.input.BeritaAcaraInputWrapper;
 import com.pemda.ekinerjademo.wrapper.input.SuratKuasaInputWrapper;
 import com.pemda.ekinerjademo.wrapper.output.CustomMessage;
+import com.pemda.ekinerjademo.wrapper.output.SuratKuasaHistoryWrapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,8 +14,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.time.Year;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by bayu on 07/12/17.
@@ -56,5 +61,31 @@ public class SuratKuasaController {
 
         return new ResponseEntity<Object>(
                 new CustomMessage("surat kuasa created"), HttpStatus.CREATED);
+    }
+
+    @RequestMapping(value = "/get-daftar-surat-kuasa-history-by-pegawai/{nipPegawai}", method = RequestMethod.GET)
+    ResponseEntity<?> getDaftarSuratKuasaHistoryByPegawai(
+            @PathVariable("nipPembuatSurat") String nipPembuatSurat) {
+        LOGGER.info("get surat kuasa history by nip "+nipPembuatSurat);
+
+        List<SuratKuasa> suratKuasaList
+                = suratKuasaService.getByNipPembuatSurat(nipPembuatSurat);
+
+        List<SuratKuasaHistoryWrapper> suratKuasaHistoryWrapperList
+                = new ArrayList<>();
+
+        DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+        for (SuratKuasa suratKuasa
+                : suratKuasaList) {
+
+            suratKuasaHistoryWrapperList
+                    .add(new SuratKuasaHistoryWrapper(
+                            suratKuasa.getKdSuratKuasa(),
+                            df.format(new Date(suratKuasa.getTanggalPembuatanMilis())),
+                            suratKuasa.getStatusBaca()
+                    ));
+        }
+
+        return new ResponseEntity<Object>(suratKuasaHistoryWrapperList, HttpStatus.OK);
     }
 }

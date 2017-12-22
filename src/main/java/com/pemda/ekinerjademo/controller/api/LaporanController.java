@@ -6,6 +6,7 @@ import com.pemda.ekinerjademo.service.LaporanService;
 import com.pemda.ekinerjademo.wrapper.input.BeritaAcaraInputWrapper;
 import com.pemda.ekinerjademo.wrapper.input.LaporanInputWrapper;
 import com.pemda.ekinerjademo.wrapper.output.CustomMessage;
+import com.pemda.ekinerjademo.wrapper.output.LaporanHistoryWrapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,8 +14,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.time.Year;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by bayu on 07/12/17.
@@ -60,5 +65,31 @@ public class LaporanController {
 
         return new ResponseEntity<Object>(
                 new CustomMessage("laporan created"), HttpStatus.CREATED);
+    }
+
+    @RequestMapping(value = "/get-daftar-laporan-history-by-pegawai/{nipPegawai}", method = RequestMethod.GET)
+    ResponseEntity<?> getDaftarLaporanHistoryByPegawai(
+            @PathVariable("nipPembuatSurat") String nipPembuatSurat) {
+        LOGGER.info("get laporan history by nip "+nipPembuatSurat);
+
+        List<Laporan> laporanList
+                = laporanService.getByNipPembuatSurat(nipPembuatSurat);
+
+        List<LaporanHistoryWrapper> laporanHistoryWrapperList
+                = new ArrayList<>();
+
+        DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+        for (Laporan laporan
+                : laporanList) {
+
+            laporanHistoryWrapperList
+                    .add(new LaporanHistoryWrapper(
+                            laporan.getKdLaporan(),
+                            df.format(new Date(laporan.getTanggalPembuatanMilis())),
+                            laporan.getStatusBaca()
+                    ));
+        }
+
+        return new ResponseEntity<Object>(laporanHistoryWrapperList, HttpStatus.OK);
     }
 }
