@@ -37,6 +37,8 @@ public class Laporan {
     @Column(name = "nip_penandatangan")
     private String nipPenandatangan;
 
+    @Column(name = "status_baca")
+    private Integer statusBaca;
     @Column(name = "kota_pembuatan_surat")
     private String kotaPembuatanSurat;
     @Column(name = "tanggal_pembuatan_milis")
@@ -132,6 +134,14 @@ public class Laporan {
 
     public void setNipPenandatangan(String nipPenandatangan) {
         this.nipPenandatangan = nipPenandatangan;
+    }
+
+    public Integer getStatusBaca() {
+        return statusBaca;
+    }
+
+    public void setStatusBaca(Integer statusBaca) {
+        this.statusBaca = statusBaca;
     }
 
     public String getKotaPembuatanSurat() {

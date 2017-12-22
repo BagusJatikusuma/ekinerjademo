@@ -4,6 +4,7 @@ import com.pemda.ekinerjademo.model.ekinerjamodel.BeritaAcara;
 import com.pemda.ekinerjademo.service.BeritaAcaraService;
 import com.pemda.ekinerjademo.util.EkinerjaXMLBuilder;
 import com.pemda.ekinerjademo.wrapper.input.BeritaAcaraInputWrapper;
+import com.pemda.ekinerjademo.wrapper.output.BeritaAcaraHistoryWrapper;
 import com.pemda.ekinerjademo.wrapper.output.CustomMessage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,8 +13,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.time.Year;
-import java.util.Date;
+import java.util.*;
 
 /**
  * Created by bayu on 07/12/17.
@@ -65,5 +68,31 @@ public class BeritaAcaraController {
 
         return new ResponseEntity<Object>(
                 new CustomMessage("berita acara created"), HttpStatus.CREATED);
+    }
+
+    @RequestMapping(value = "/get-daftar-berita-acara-history-by-pegawai/{nipPegawai}", method = RequestMethod.GET)
+    ResponseEntity<?> getDaftarBeritaAcaraHistoryByPegawai(
+            @PathVariable("nipPembuatSurat") String nipPembuatSurat) {
+        LOGGER.info("get berita acara history by nip "+nipPembuatSurat);
+
+        List<BeritaAcara> beritaAcaraList
+                = beritaAcaraService.getByNipPembuatSurat(nipPembuatSurat);
+
+        List<BeritaAcaraHistoryWrapper> beritaAcaraHistoryWrapperList
+                = new ArrayList<>();
+
+        DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+        for (BeritaAcara beritaAcara
+                : beritaAcaraList) {
+
+            beritaAcaraHistoryWrapperList
+                    .add(new BeritaAcaraHistoryWrapper(
+                            beritaAcara.getKdBeritaAcara(),
+                            df.format(new Date(beritaAcara.getTanggalPembuatanMilis())),
+                            beritaAcara.getStatusBaca()
+                    ));
+        }
+
+        return new ResponseEntity<Object>(beritaAcaraHistoryWrapperList, HttpStatus.OK);
     }
 }

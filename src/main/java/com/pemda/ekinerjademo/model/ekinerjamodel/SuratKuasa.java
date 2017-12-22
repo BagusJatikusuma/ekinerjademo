@@ -33,6 +33,8 @@ public class SuratKuasa {
     @Column(name = "isi_kuasa")
     private String isiKuasa;
 
+    @Column(name = "status_baca")
+    private Integer statusBaca;
     @Column(name = "kota_pembuatan_surat")
     private String kotaPembuatanSurat;
     @Column(name = "tanggal_pembuatan_milis")
@@ -117,6 +119,14 @@ public class SuratKuasa {
 
     public void setIsiKuasa(String isiKuasa) {
         this.isiKuasa = isiKuasa;
+    }
+
+    public Integer getStatusBaca() {
+        return statusBaca;
+    }
+
+    public void setStatusBaca(Integer statusBaca) {
+        this.statusBaca = statusBaca;
     }
 
     public String getKotaPembuatanSurat() {
