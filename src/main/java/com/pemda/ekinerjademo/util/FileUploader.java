@@ -31,4 +31,22 @@ public class FileUploader {
         }
     }
 
+    public void uploadFileTemplateLain(MultipartFile fileSurat, String fileName) {
+        byte[] bytes = null;
+
+        try {
+            bytes = fileSurat.getBytes();
+
+            Path path
+                    = Paths.get("/home/pemkab/project/documents/template_lain/"
+                    +fileName+"."
+                    +fileSurat.getOriginalFilename().split("\\.")[1]);
+
+            Files.write(path, bytes);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 }

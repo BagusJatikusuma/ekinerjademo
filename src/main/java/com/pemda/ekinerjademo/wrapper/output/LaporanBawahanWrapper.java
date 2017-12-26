@@ -12,6 +12,7 @@ public class LaporanBawahanWrapper {
     private Integer kdJenisSurat;
     private Integer suratPejabat;
     private Long tanggalDibuatMilis;
+    private String namaFileTemplateLain;
 
     public LaporanBawahanWrapper() {
     }
@@ -51,7 +52,6 @@ public class LaporanBawahanWrapper {
         this.kdJenisSurat = kdJenisSurat;
         this.suratPejabat = suratPejabat;
     }
-
     public LaporanBawahanWrapper(
             String kdSurat,
             String jenisSurat,
@@ -69,6 +69,26 @@ public class LaporanBawahanWrapper {
         this.kdJenisSurat = kdJenisSurat;
         this.suratPejabat = suratPejabat;
         this.tanggalDibuatMilis = tanggalDibuatMilis;
+    }
+    public LaporanBawahanWrapper(
+            String kdSurat,
+            String jenisSurat,
+            String nipBawahan,
+            String namaBawahan,
+            Integer statusPenilaian,
+            Integer kdJenisSurat,
+            Integer suratPejabat,
+            Long tanggalDibuatMilis,
+            String namaFileTemplateLain) {
+        this.kdSurat = kdSurat;
+        this.jenisSurat = jenisSurat;
+        this.nipBawahan = nipBawahan;
+        this.namaBawahan = namaBawahan;
+        StatusPenilaian = statusPenilaian;
+        this.kdJenisSurat = kdJenisSurat;
+        this.suratPejabat = suratPejabat;
+        this.tanggalDibuatMilis = tanggalDibuatMilis;
+        this.namaFileTemplateLain = namaFileTemplateLain;
     }
 
     public String getKdSurat() {
@@ -133,5 +153,13 @@ public class LaporanBawahanWrapper {
 
     public void setTanggalDibuatMilis(Long tanggalDibuatMilis) {
         this.tanggalDibuatMilis = tanggalDibuatMilis;
+    }
+
+    public String getNamaFileTemplateLain() {
+        return namaFileTemplateLain;
+    }
+
+    public void setNamaFileTemplateLain(String namaFileTemplateLain) {
+        this.namaFileTemplateLain = namaFileTemplateLain;
     }
 }

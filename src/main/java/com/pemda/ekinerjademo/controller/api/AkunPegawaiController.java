@@ -56,6 +56,7 @@ public class AkunPegawaiController {
     @Autowired private LaporanService laporanService;
     @Autowired private SuratKuasaService suratKuasaService;
     @Autowired private TelaahanStafService telaahanStafService;
+    @Autowired private TemplateLainService templateLainService;
 
     @Autowired private TkdUnkDao tkdUnkDao;
 
@@ -903,6 +904,22 @@ public class AkunPegawaiController {
                                 14,
                                 0,
                                 telaahanStafBawahan.getTanggalPembuatanMilis()));
+            }
+
+            List<TemplateLain> templateLainList
+                    = templateLainService.getByPembuat(pegawaiBawahan.getNip());
+            for (TemplateLain templateLainBawahan : templateLainList) {
+                laporanBawahanWrapperList
+                        .add(new LaporanBawahanWrapper(templateLainBawahan.getKdTemplateLain(),
+                                "template lain",
+                                pegawaiBawahan.getNip(),
+                                pegawaiBawahan.getNama(),
+                                templateLainBawahan.getStatusPenilaian(),
+                                15,
+                                0,
+                                templateLainBawahan.getTanggalPembuatanMilis(),
+                                templateLainBawahan.getPathFile()
+                        ));
             }
         }
 
