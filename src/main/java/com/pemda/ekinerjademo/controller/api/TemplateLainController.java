@@ -28,7 +28,9 @@ public class TemplateLainController {
     @Autowired
     private TemplateLainService templateLainService;
 
-    @RequestMapping(value = "/create-template-lain", method = RequestMethod.POST)
+    @RequestMapping(value = "/create-template-lain",
+            method = RequestMethod.POST,
+            consumes = {"multipart/form-data"})
     ResponseEntity<?> createTemplateLain(
             @RequestPart("metadata") TemplateLainInputWrapper templateLainInputWrapper,
             @RequestPart("file") MultipartFile fileTemplateLain) {

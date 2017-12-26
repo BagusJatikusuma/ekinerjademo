@@ -16,7 +16,7 @@ public class TemplateLain {
     private String kdTemplateLain;
     @Column(name = "kd_unit_kerja")
     private String kdUnitKerja;
-    @Column(name = "nip_pegawai")
+    @Column(name = "nip_pembuat")
     private String nipPegawai;
     @Column(name = "keterangan")
     private String keterangan;
