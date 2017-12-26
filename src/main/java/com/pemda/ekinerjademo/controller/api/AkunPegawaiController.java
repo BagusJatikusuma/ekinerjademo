@@ -1098,6 +1098,14 @@ public class AkunPegawaiController {
 
                 telaahanStafService.createTelaahanStaf(telaahanStaf);
                 break;
+            case 15 :
+                TemplateLain templateLain
+                        = templateLainService.getTemplateLain(inputWrapper.getKdSurat());
+                templateLain.setStatusPenilaian(3);
+                templateLain.setAlasanPenolakan(inputWrapper.getAlasanPenolakan());
+
+                templateLainService.create(templateLain);
+                break;
         }
 
         return new ResponseEntity<Object>(new CustomMessage("laporan sudah ditolak"), HttpStatus.OK);

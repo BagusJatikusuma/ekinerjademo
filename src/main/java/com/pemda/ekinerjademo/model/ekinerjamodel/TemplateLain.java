@@ -38,6 +38,8 @@ public class TemplateLain {
     private Integer statusPenilaian;
     @Column(name = "tanggal_pembuatan_milis")
     private Long tanggalPembuatanMilis;
+    @Column(name = "alasan_penolakan")
+    private String alasanPenolakan;
 
     public String getKdTemplateLain() {
         return kdTemplateLain;
@@ -141,5 +143,13 @@ public class TemplateLain {
 
     public void setTanggalPembuatanMilis(Long tanggalPembuatanMilis) {
         this.tanggalPembuatanMilis = tanggalPembuatanMilis;
+    }
+
+    public String getAlasanPenolakan() {
+        return alasanPenolakan;
+    }
+
+    public void setAlasanPenolakan(String alasanPenolakan) {
+        this.alasanPenolakan = alasanPenolakan;
     }
 }
