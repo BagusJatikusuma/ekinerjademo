@@ -732,9 +732,9 @@ public class SuratPerintahController {
         LOGGER.info(suratPerintah.getUntuk());
 
         String nomorSurat
-                = String.valueOf(suratPerintah.getNomorSurat1()) +
-                    suratPerintah.getNomorSurat2() +
-                    suratPerintah.getNomorSurat3() +
+                = String.valueOf(suratPerintah.getNomorSurat1()) +"-"+
+                    suratPerintah.getNomorSurat2() +"-"+
+                    suratPerintah.getNomorSurat3() +"-"+
                     String.valueOf(suratPerintah.getNomorTahun());
         List<String> menimbangList
                 = ekinerjaXMLParser.convertXmlSuratPerintahIntoListofString(
@@ -836,11 +836,15 @@ public class SuratPerintahController {
                         penandatanganSurat.getNip(),
                         penandatanganSurat.getNama(),
                         nomorSurat,
+                        suratPerintah.getNomorSurat2(),
+                        suratPerintah.getNomorSurat3(),
+                        suratPerintah.getNomorTahun(),
                         menimbangList,
                         dasarList,
                         untukList,
                         suratPerintah.getTempat(),
                         tanggalSuratDibuat,
+                        suratPerintah.getTanggalPerintahMilis(),
                         penandatanganSurat.getJabatan(),
                         "",
                         daftarTargetPegawaiSuratPerintah,

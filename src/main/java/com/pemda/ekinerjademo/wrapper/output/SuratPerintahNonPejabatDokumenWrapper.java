@@ -17,6 +17,12 @@ public class SuratPerintahNonPejabatDokumenWrapper {
 
     private String nomorSurat;
 
+    private String nomorSurat1;
+
+    private String nomorSurat2;
+
+    private Integer nomorTahun;
+
     private List<String> menimbangList;
 
     private List<String> dasarList;
@@ -26,6 +32,8 @@ public class SuratPerintahNonPejabatDokumenWrapper {
     private String tempat;
 
     private String tanggalDibuat;
+
+    private Long tanggalDibuatMilis;
 
     private String nmJabatanPenandatangan;
 
@@ -78,6 +86,54 @@ public class SuratPerintahNonPejabatDokumenWrapper {
         this.untukList = untukList;
         this.tempat = tempat;
         this.tanggalDibuat = tanggalDibuat;
+        this.nmJabatanPenandatangan = nmJabatanPenandatangan;
+        this.ttdPath = ttdPath;
+        this.daftarTargetPegawai = daftarTargetPegawai;
+        this.daftarTargetPejabat = daftarTargetPejabat;
+        this.daftarTembusan = daftarTembusan;
+        this.isSuratPejabat = isSuratPejabat;
+        this.kdUnitKerjaPenandatangan = kdUnitKerjaPenandatangan;
+        this.unitKerjaPenandatangan = unitKerjaPenandatangan;
+        this.kdJabatanPenandatangan = kdJabatanPenandatangan;
+        this.jabatanPenandatangan = jabatanPenandatangan;
+    }
+    public SuratPerintahNonPejabatDokumenWrapper(
+            String kdSuratPerintah,
+            String nipPenandatangan,
+            String nmPenandatangan,
+            String nomorSurat,
+            String nomorSurat1,
+            String nomorSurat2,
+            Integer nomorTahun,
+            List<String> menimbangList,
+            List<String> dasarList,
+            List<String> untukList,
+            String tempat,
+            String tanggalDibuat,
+            Long tanggalDibuatMilis,
+            String nmJabatanPenandatangan,
+            String ttdPath,
+            List<CustomPegawaiCredential> daftarTargetPegawai,
+            List<TkdJabatan> daftarTargetPejabat,
+            List<TkdJabatan> daftarTembusan,
+            boolean isSuratPejabat,
+            String kdUnitKerjaPenandatangan,
+            String unitKerjaPenandatangan,
+            String kdJabatanPenandatangan,
+            String jabatanPenandatangan) {
+        this.kdSuratPerintah = kdSuratPerintah;
+        this.nipPenandatangan = nipPenandatangan;
+        this.nmPenandatangan = nmPenandatangan;
+        this.nomorSurat = nomorSurat;
+        this.nomorSurat1 = nomorSurat1;
+        this.nomorSurat2 = nomorSurat2;
+        this.nomorTahun = nomorTahun;
+        this.menimbangList = menimbangList;
+        this.dasarList = dasarList;
+        this.untukList = untukList;
+        this.tempat = tempat;
+        this.tanggalDibuat = tanggalDibuat;
+        this.tanggalDibuatMilis = tanggalDibuatMilis;
         this.nmJabatanPenandatangan = nmJabatanPenandatangan;
         this.ttdPath = ttdPath;
         this.daftarTargetPegawai = daftarTargetPegawai;
@@ -240,5 +296,37 @@ public class SuratPerintahNonPejabatDokumenWrapper {
 
     public void setSuratPejabat(boolean suratPejabat) {
         isSuratPejabat = suratPejabat;
+    }
+
+    public String getNomorSurat1() {
+        return nomorSurat1;
+    }
+
+    public void setNomorSurat1(String nomorSurat1) {
+        this.nomorSurat1 = nomorSurat1;
+    }
+
+    public String getNomorSurat2() {
+        return nomorSurat2;
+    }
+
+    public void setNomorSurat2(String nomorSurat2) {
+        this.nomorSurat2 = nomorSurat2;
+    }
+
+    public Integer getNomorTahun() {
+        return nomorTahun;
+    }
+
+    public void setNomorTahun(Integer nomorTahun) {
+        this.nomorTahun = nomorTahun;
+    }
+
+    public Long getTanggalDibuatMilis() {
+        return tanggalDibuatMilis;
+    }
+
+    public void setTanggalDibuatMilis(Long tanggalDibuatMilis) {
+        this.tanggalDibuatMilis = tanggalDibuatMilis;
     }
 }
