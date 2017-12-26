@@ -37,6 +37,9 @@ public class SuratInstruksi {
     @Column(name = "status_baca")
     private Integer statusBaca;
 
+    @Column(name = "durasi_pengerjaan")
+    private Integer durasiPengerjaan;
+
     @OneToMany(mappedBy = "suratInstruksi")
     private Set<InstruksiPegawai> instruksiPegawaiSet;
     @OneToMany(mappedBy = "suratInstruksi")
@@ -186,5 +189,13 @@ public class SuratInstruksi {
 
     public void setStatusBaca(Integer statusBaca) {
         this.statusBaca = statusBaca;
+    }
+
+    public Integer getDurasiPengerjaan() {
+        return durasiPengerjaan;
+    }
+
+    public void setDurasiPengerjaan(Integer durasiPengerjaan) {
+        this.durasiPengerjaan = durasiPengerjaan;
     }
 }

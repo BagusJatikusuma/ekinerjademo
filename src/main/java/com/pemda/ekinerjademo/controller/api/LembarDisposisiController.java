@@ -77,6 +77,7 @@ public class LembarDisposisiController {
         lembarDisposisi.setIsiDisposisi(inputWrapper.getIsiDisposisi());
         lembarDisposisi.setStatusBaca(0);
         lembarDisposisi.setTanggalPengirimanMilis(new Date().getTime());
+        lembarDisposisi.setDurasiPengerjaan(inputWrapper.getDurasiPengerjaan());
 
         if (inputWrapper.getKdLembarDisposisiParent() == null) {
             lembarDisposisi.setKdLembarDisposisiParent(null);
@@ -147,6 +148,7 @@ public class LembarDisposisiController {
         lembarDisposisi.setIsiDisposisi(inputWrapper.getIsiDisposisi());
         lembarDisposisi.setStatusBaca(0);
         lembarDisposisi.setTanggalPengirimanMilis(new Date().getTime());
+        lembarDisposisi.setDurasiPengerjaan(inputWrapper.getDurasiPengerjaan());
 
         if (inputWrapper.getKdLembarDisposisiParent() == null) {
             lembarDisposisi.setKdLembarDisposisiParent(null);

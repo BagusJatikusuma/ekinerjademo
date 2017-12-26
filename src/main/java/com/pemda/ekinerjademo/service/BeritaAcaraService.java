@@ -12,4 +12,6 @@ public interface BeritaAcaraService {
     List<BeritaAcara> getByNipPembuatSurat(String nipPembuatSurat);
 
     void createBeritaAcara(BeritaAcara beritaAcara);
+
+    BeritaAcara getBeritaAcara(String kdBeritaAcara);
 }

@@ -47,6 +47,8 @@ public class SuratPerintahInputWrapper {
 
     private String kdSuratPerintahBawahan;
 
+    private Integer durasiPengerjaan;
+
     public String getKdSuratPerintah() {
         return kdSuratPerintah;
     }
@@ -205,5 +207,13 @@ public class SuratPerintahInputWrapper {
 
     public void setKdSuratPerintahBawahan(String kdSuratPerintahBawahan) {
         this.kdSuratPerintahBawahan = kdSuratPerintahBawahan;
+    }
+
+    public Integer getDurasiPengerjaan() {
+        return durasiPengerjaan;
+    }
+
+    public void setDurasiPengerjaan(Integer durasiPengerjaan) {
+        this.durasiPengerjaan = durasiPengerjaan;
     }
 }

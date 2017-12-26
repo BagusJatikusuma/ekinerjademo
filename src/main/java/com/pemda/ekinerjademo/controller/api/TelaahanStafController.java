@@ -57,6 +57,11 @@ public class TelaahanStafController {
         telaahanStaf.setNipPembuatSurat(inputWrapper.getNipPembuatSurat());
         telaahanStaf.setKdUnitKerja(inputWrapper.getKdUnitKerja());
 
+        telaahanStaf.setDurasiPengerjaan(inputWrapper.getDurasiPengerjaan());
+        telaahanStaf.setNipPenilai("");
+        telaahanStaf.setStatusPenilaian(0);
+        telaahanStaf.setAlasanPenolakan("");
+
         telaahanStafService.createTelaahanStaf(telaahanStaf);
 
         return new ResponseEntity<Object>(

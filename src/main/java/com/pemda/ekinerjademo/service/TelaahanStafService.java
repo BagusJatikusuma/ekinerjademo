@@ -11,4 +11,6 @@ public interface TelaahanStafService {
     List<TelaahanStaf> getByNipPembuatSurat(String nipPembuatSurat);
 
     void createTelaahanStaf(TelaahanStaf telaahanStaf);
+
+    TelaahanStaf getTelaahanStaf(String kdTelaahanStaf);
 }

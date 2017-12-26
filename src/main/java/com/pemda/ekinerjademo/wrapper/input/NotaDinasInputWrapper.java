@@ -16,6 +16,7 @@ public class NotaDinasInputWrapper {
     private String nipPenandatangan;
     private String nipPembuatSurat;
     private String kdUnitKerja;
+    private Integer durasiPengerjaan;
 
     private Set<String> kdTembusanList;
 
@@ -105,5 +106,13 @@ public class NotaDinasInputWrapper {
 
     public void setKdTembusanList(Set<String> kdTembusanList) {
         this.kdTembusanList = kdTembusanList;
+    }
+
+    public Integer getDurasiPengerjaan() {
+        return durasiPengerjaan;
+    }
+
+    public void setDurasiPengerjaan(Integer durasiPengerjaan) {
+        this.durasiPengerjaan = durasiPengerjaan;
     }
 }

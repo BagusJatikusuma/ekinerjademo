@@ -11,4 +11,6 @@ public interface SuratKuasaService {
     List<SuratKuasa> getByNipPembuatSurat(String nipPembuatSurat);
 
     void createSuratKuasa(SuratKuasa suratKuasa);
+
+    SuratKuasa getSuratKuasa(String kdSuratKuasa);
 }

@@ -11,4 +11,6 @@ public interface LaporanService {
     List<Laporan> getByNipPembuatSurat(String nipPembuatSurat);
 
     void createLaporan(Laporan laporan);
+
+    Laporan getLaporan(String kdLaporan);
 }

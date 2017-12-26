@@ -27,6 +27,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by bagus on 06/09/17.
@@ -48,6 +49,13 @@ public class AkunPegawaiController {
     private StatusPenanggungJawabKegiatanService statusPenanggungJawabKegiatanService;
     private UrtugKegiatanPegawaiService urtugKegiatanPegawaiService;
     private PejabatPenilaiDinilaiService pejabatPenilaiDinilaiService;
+
+    //service yang digunakan untuk mengambil laporan
+    @Autowired private BeritaAcaraService beritaAcaraService;
+    @Autowired private SuratPerintahService suratPerintahService;
+    @Autowired private LaporanService laporanService;
+    @Autowired private SuratKuasaService suratKuasaService;
+    @Autowired private TelaahanStafService telaahanStafService;
 
     @Autowired private TkdUnkDao tkdUnkDao;
 
@@ -791,6 +799,249 @@ public class AkunPegawaiController {
         return new ResponseEntity<Object>(new CustomMessage("password changed"), HttpStatus.OK);
 
     }
+
+    @RequestMapping(value = "/get-laporan-bawahan/{nipPenilai}", method = RequestMethod.GET)
+    ResponseEntity<?> getLaporanBawahan(@PathVariable("nipPenilai") String nipPenilai) {
+        LOGGER.info("get laporan bawahan");
+
+        List<LaporanBawahanWrapper> laporanBawahanWrapperList
+                = new ArrayList<>();
+
+        List<QutPegawaiClone> pegawaiBawahanList = new ArrayList<>();
+        List<PejabatPenilaiDinilai> kdJabatanPegawaiBawahanList
+                = pejabatPenilaiDinilaiService.findPegawaiDinilai(nipPenilai);
+
+        //ambil data pegawai bawahan terlebih dahulu
+        for (PejabatPenilaiDinilai jabatan : kdJabatanPegawaiBawahanList) {
+            List<QutPegawaiClone> pegawaiBawahanJabatanList
+                    = qutPegawaiService.getQutPegawaiByKdJabatan(jabatan.getPejabatPenilaiDinilaiId().getKdJabatanDinilai());
+            for (QutPegawaiClone pegawaiBawahan : pegawaiBawahanJabatanList) {
+                pegawaiBawahanList.add(pegawaiBawahan);
+            }
+        }
+        //ambil laporan dari seluruh history template untuk setiap pegawai bawahan
+        for (QutPegawaiClone pegawaiBawahan : pegawaiBawahanList) {
+            //ambil data berita acara yang dilaporkan bawahan
+            List<BeritaAcara> beritaAcaraList
+                    = beritaAcaraService.getByNipPembuatSurat(pegawaiBawahan.getNip());
+            for (BeritaAcara beritaAcaraBawahan : beritaAcaraList) {
+                laporanBawahanWrapperList
+                        .add(new LaporanBawahanWrapper(
+                                beritaAcaraBawahan.getKdBeritaAcara(),
+                                "Berita Acara",
+                                pegawaiBawahan.getNip(),
+                                beritaAcaraBawahan.getStatusPenilaian(),
+                                0));
+            }
+            //ambil data surat perintah yang dilaporkan bawahan
+            Set<SuratPerintah> suratPerintahList
+                    = suratPerintahService.getByNipPembuat(pegawaiBawahan.getNip());
+            for (SuratPerintah suratPerintahBawahan : suratPerintahList) {
+                laporanBawahanWrapperList
+                        .add(new LaporanBawahanWrapper(
+                                suratPerintahBawahan.getKdSuratPerintah(),
+                                "Surat Perintah",
+                                pegawaiBawahan.getNip(),
+                                suratPerintahBawahan.getStatusPenilaian(),
+                                11));
+            }
+            //ambil data surat kuasa yang dilaporkan bawahan
+            List<SuratKuasa> suratKuasaList
+                    = suratKuasaService.getByNipPembuatSurat(pegawaiBawahan.getNip());
+            for (SuratKuasa suratKuasaBawahan : suratKuasaList) {
+                laporanBawahanWrapperList
+                        .add(new LaporanBawahanWrapper(
+                                suratKuasaBawahan.getKdSuratKuasa(),
+                                "Surat Kuasa",
+                                pegawaiBawahan.getNip(),
+                                suratKuasaBawahan.getStatusPenilaian(),
+                                9));
+            }
+            //ambil data laporan yang dilaporkan bawahan
+            List<Laporan> laporanList
+                    = laporanService.getByNipPembuatSurat(pegawaiBawahan.getNip());
+            for (Laporan laporanBawahan : laporanList) {
+                laporanBawahanWrapperList
+                        .add(new LaporanBawahanWrapper(
+                                laporanBawahan.getKdLaporan(),
+                                "Laporan Pegawai",
+                                pegawaiBawahan.getNip(),
+                                laporanBawahan.getStatusPenilaian(),
+                                1));
+            }
+            //ambil data telaahan staf yang dilaporkan bawahan
+            List<TelaahanStaf> telaahanStafList
+                    = telaahanStafService.getByNipPembuatSurat(pegawaiBawahan.getNip());
+            for (TelaahanStaf telaahanStafBawahan : telaahanStafList) {
+                laporanBawahanWrapperList
+                        .add(new LaporanBawahanWrapper(
+                                telaahanStafBawahan.getKdTelaahanStaf(),
+                                "Telaahan staf",
+                                pegawaiBawahan.getNip(),
+                                telaahanStafBawahan.getStatusPenilaian(),
+                                14));
+            }
+        }
+
+        return new ResponseEntity<Object>(laporanBawahanWrapperList, HttpStatus.OK);
+    }
+
+    //service ini digunakan beberapa menit sekali sebagai notifikasi jika ada laporan baru/yang belum dibaca
+    @RequestMapping(value = "/get-laporan-bawahan-notif/{nipPenilai}", method = RequestMethod.GET)
+    ResponseEntity<?> getLaporanBawahanNotif(@PathVariable("nipPenilai") String nipPenilai) {
+        LOGGER.info("get laporan pegawai bawahan notif");
+
+        List<LaporanBawahanWrapper> laporanBawahanWrapperList
+                = new ArrayList<>();
+        List<LaporanBawahanWrapper> laporanBawahanNotifList
+                = new ArrayList<>();
+
+        List<QutPegawaiClone> pegawaiBawahanList = new ArrayList<>();
+        List<PejabatPenilaiDinilai> kdJabatanPegawaiBawahanList
+                = pejabatPenilaiDinilaiService.findPegawaiDinilai(nipPenilai);
+
+        //ambil data pegawai bawahan terlebih dahulu
+        for (PejabatPenilaiDinilai jabatan : kdJabatanPegawaiBawahanList) {
+            List<QutPegawaiClone> pegawaiBawahanJabatanList
+                    = qutPegawaiService.getQutPegawaiByKdJabatan(jabatan.getPejabatPenilaiDinilaiId().getKdJabatanDinilai());
+            for (QutPegawaiClone pegawaiBawahan : pegawaiBawahanJabatanList) {
+                pegawaiBawahanList.add(pegawaiBawahan);
+            }
+        }
+        //ambil laporan dari seluruh history template untuk setiap pegawai bawahan
+        for (QutPegawaiClone pegawaiBawahan : pegawaiBawahanList) {
+            //ambil data berita acara yang dilaporkan bawahan
+            List<BeritaAcara> beritaAcaraList
+                    = beritaAcaraService.getByNipPembuatSurat(pegawaiBawahan.getNip());
+            for (BeritaAcara beritaAcaraBawahan : beritaAcaraList) {
+                laporanBawahanWrapperList
+                        .add(new LaporanBawahanWrapper(
+                                beritaAcaraBawahan.getKdBeritaAcara(),
+                                "Berita Acara",
+                                pegawaiBawahan.getNip(),
+                                beritaAcaraBawahan.getStatusPenilaian(),
+                                0));
+            }
+            //ambil data surat perintah yang dilaporkan bawahan
+            Set<SuratPerintah> suratPerintahList
+                    = suratPerintahService.getByNipPembuat(pegawaiBawahan.getNip());
+            for (SuratPerintah suratPerintahBawahan : suratPerintahList) {
+                laporanBawahanWrapperList
+                        .add(new LaporanBawahanWrapper(
+                                suratPerintahBawahan.getKdSuratPerintah(),
+                                "Surat Perintah",
+                                pegawaiBawahan.getNip(),
+                                suratPerintahBawahan.getStatusPenilaian(),
+                                11));
+            }
+            //ambil data surat kuasa yang dilaporkan bawahan
+            List<SuratKuasa> suratKuasaList
+                    = suratKuasaService.getByNipPembuatSurat(pegawaiBawahan.getNip());
+            for (SuratKuasa suratKuasaBawahan : suratKuasaList) {
+                laporanBawahanWrapperList
+                        .add(new LaporanBawahanWrapper(
+                                suratKuasaBawahan.getKdSuratKuasa(),
+                                "Surat Kuasa",
+                                pegawaiBawahan.getNip(),
+                                suratKuasaBawahan.getStatusPenilaian(),
+                                9));
+            }
+            //ambil data laporan yang dilaporkan bawahan
+            List<Laporan> laporanList
+                    = laporanService.getByNipPembuatSurat(pegawaiBawahan.getNip());
+            for (Laporan laporanBawahan : laporanList) {
+                laporanBawahanWrapperList
+                        .add(new LaporanBawahanWrapper(
+                                laporanBawahan.getKdLaporan(),
+                                "Laporan Pegawai",
+                                pegawaiBawahan.getNip(),
+                                laporanBawahan.getStatusPenilaian(),
+                                1));
+            }
+            //ambil data telaahan staf yang dilaporkan bawahan
+            List<TelaahanStaf> telaahanStafList
+                    = telaahanStafService.getByNipPembuatSurat(pegawaiBawahan.getNip());
+            for (TelaahanStaf telaahanStafBawahan : telaahanStafList) {
+                laporanBawahanWrapperList
+                        .add(new LaporanBawahanWrapper(
+                                telaahanStafBawahan.getKdTelaahanStaf(),
+                                "Telaahan staf",
+                                pegawaiBawahan.getNip(),
+                                telaahanStafBawahan.getStatusPenilaian(),
+                                14));
+            }
+        }
+
+        //filter data yang belum di read saja
+        for (LaporanBawahanWrapper laporanBawahanWrapper
+                : laporanBawahanWrapperList) {
+            if (laporanBawahanWrapper.getStatusPenilaian() == 0) {
+                laporanBawahanNotifList.add(laporanBawahanWrapper);
+            }
+        }
+
+        return new ResponseEntity<Object>(laporanBawahanNotifList, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/tolak-laporan", method = RequestMethod.PUT)
+    ResponseEntity<?> tolakLaporan(@RequestBody LaporanBawahanInputWrapper inputWrapper) {
+        LOGGER.info("tolak laporan");
+
+        switch (inputWrapper.getKdJenisSurat()) {
+            case 1 :
+                BeritaAcara beritaAcara
+                        = beritaAcaraService.getBeritaAcara(inputWrapper.getKdSurat());
+                beritaAcara.setStatusPenilaian(3);
+                beritaAcara.setAlasanPenolakan(inputWrapper.getAlasanPenolakan());
+
+                beritaAcaraService.createBeritaAcara(beritaAcara);
+                break;
+            case 2 :
+                Laporan laporan
+                        = laporanService.getLaporan(inputWrapper.getKdSurat());
+                laporan.setStatusPenilaian(3);
+                laporan.setAlasanPenolakan(inputWrapper.getAlasanPenolakan());
+
+                laporanService.createLaporan(laporan);
+                break;
+            case 3 : break;
+            case 4 : break;
+            case 5 : break;
+            case 6 : break;
+            case 7 : break;
+            case 8 : break;
+            case 9 :
+                SuratKuasa suratKuasa
+                        = suratKuasaService.getSuratKuasa(inputWrapper.getKdSurat());
+                suratKuasa.setStatusPenilaian(3);
+                suratKuasa.setAlasanPenolakan(inputWrapper.getAlasanPenolakan());
+
+                suratKuasaService.createSuratKuasa(suratKuasa);
+                break;
+            case 10 : break;
+            case 11 :
+                SuratPerintah suratPerintah
+                        = suratPerintahService.getSuratPerintahByKdSuratPerintah(inputWrapper.getKdSurat());
+                suratPerintah.setStatusPenilaian(3);
+                suratPerintah.setAlasanPenolakan(inputWrapper.getAlasanPenolakan());
+
+                suratPerintahService.creteSurat(suratPerintah);
+                break;
+            case 12 : break;
+            case 13 : break;
+            case 14 :
+                TelaahanStaf telaahanStaf
+                        = telaahanStafService.getTelaahanStaf(inputWrapper.getKdSurat());
+                telaahanStaf.setStatusPenilaian(3);
+                telaahanStaf.setAlasanPenolakan(inputWrapper.getAlasanPenolakan());
+
+                telaahanStafService.createTelaahanStaf(telaahanStaf);
+                break;
+        }
+
+        return new ResponseEntity<Object>(new CustomMessage("laporan sudah ditolak"), HttpStatus.OK);
+    }
+
 
     //sampai disini
 

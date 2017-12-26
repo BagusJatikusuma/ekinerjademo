@@ -35,6 +35,8 @@ public class LembarDisposisi {
     private Integer statusBaca;
     @Column(name = "tanggal_pengiriman_surat")
     private Long tanggalPengirimanMilis;
+    @Column(name = "durasi_pengerjaan")
+    private Integer durasiPengerjaan;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(
@@ -183,5 +185,13 @@ public class LembarDisposisi {
 
     public void setTanggalPengirimanMilis(Long tanggalPengirimanMilis) {
         this.tanggalPengirimanMilis = tanggalPengirimanMilis;
+    }
+
+    public Integer getDurasiPengerjaan() {
+        return durasiPengerjaan;
+    }
+
+    public void setDurasiPengerjaan(Integer durasiPengerjaan) {
+        this.durasiPengerjaan = durasiPengerjaan;
     }
 }

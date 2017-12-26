@@ -21,6 +21,7 @@ public class LembarDisposisiInputWrapper {
     private String lampiran;
     private List<String> daftarTargetLembarDisposisi;
     private String isiDisposisi;
+    private Integer durasiPengerjaan;
 
     public String getNipPembuat() {
         return nipPembuat;
@@ -124,5 +125,13 @@ public class LembarDisposisiInputWrapper {
 
     public void setIsiDisposisi(String isiDisposisi) {
         this.isiDisposisi = isiDisposisi;
+    }
+
+    public Integer getDurasiPengerjaan() {
+        return durasiPengerjaan;
+    }
+
+    public void setDurasiPengerjaan(Integer durasiPengerjaan) {
+        this.durasiPengerjaan = durasiPengerjaan;
     }
 }

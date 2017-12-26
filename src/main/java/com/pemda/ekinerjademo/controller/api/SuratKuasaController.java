@@ -56,6 +56,10 @@ public class SuratKuasaController {
         suratKuasa.setTanggalPembuatanMilis(new Date().getTime());
         suratKuasa.setNipPembuatSurat(inputWrapper.getNipPembuatSurat());
         suratKuasa.setKdUnitKerja(inputWrapper.getKdUnitKerja());
+        suratKuasa.setDurasiPengerjaan(inputWrapper.getDurasiPengerjaan());
+        suratKuasa.setNipPenilai("");
+        suratKuasa.setStatusPenilaian(0);
+        suratKuasa.setAlasanPenolakan("");
 
         suratKuasaService.createSuratKuasa(suratKuasa);
 

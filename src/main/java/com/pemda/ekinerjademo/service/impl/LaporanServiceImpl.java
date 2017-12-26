@@ -33,4 +33,9 @@ public class LaporanServiceImpl implements LaporanService {
     public void createLaporan(Laporan laporan) {
         laporanDao.save(laporan);
     }
+
+    @Override
+    public Laporan getLaporan(String kdLaporan) {
+        return laporanDao.findOne(kdLaporan);
+    }
 }

@@ -160,6 +160,10 @@ public class SuratPerintahController {
         suratPerintah.setStatusPenyebaran(0);
         suratPerintah.setPathPenilaian(kdSuratPerintah);
         suratPerintah.setStatusBaca(0);
+        suratPerintah.setDurasiPengerjaan(inputWrapper.getDurasiPengerjaan());
+        suratPerintah.setNipPenilai("");
+        suratPerintah.setStatusPenilaian(0);
+        suratPerintah.setAlasanPenolakan("");
 //        suratPerintah.setTargetSuratPerintahPegawaiList(targetSuratPerintahPegawaiList);
 //        suratPerintah.setTembusanSuratPerintahList(tembusanSuratPerintahList);
 

@@ -21,6 +21,7 @@ public class SuratInstruksiInputWrapper {
     private String kdJabatanSuratPejabat;
     private String kdUnitKerja;
     private String kdSuratInstruksiParent;
+    private Integer durasiPengerjaan;
 
     public String getJudulInstruksi() {
         return judulInstruksi;
@@ -140,5 +141,13 @@ public class SuratInstruksiInputWrapper {
 
     public void setKdSuratInstruksiParent(String kdSuratInstruksiParent) {
         this.kdSuratInstruksiParent = kdSuratInstruksiParent;
+    }
+
+    public Integer getDurasiPengerjaan() {
+        return durasiPengerjaan;
+    }
+
+    public void setDurasiPengerjaan(Integer durasiPengerjaan) {
+        this.durasiPengerjaan = durasiPengerjaan;
     }
 }

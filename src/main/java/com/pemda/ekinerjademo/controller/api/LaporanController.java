@@ -61,6 +61,11 @@ public class LaporanController {
         laporan.setNipPembuatSurat(inputWrapper.getNipPembuatSurat());
         laporan.setKdUnitKerja(inputWrapper.getKdUnitKerja());
 
+        laporan.setDurasiPengerjaan(inputWrapper.getDurasiPengerjaan());
+        laporan.setNipPenilai("");
+        laporan.setStatusPenilaian(0);
+        laporan.setAlasanPenolakan("");
+
         laporanService.createLaporan(laporan);
 
         return new ResponseEntity<Object>(

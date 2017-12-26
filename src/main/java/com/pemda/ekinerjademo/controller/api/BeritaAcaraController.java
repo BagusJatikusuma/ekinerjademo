@@ -29,7 +29,6 @@ public class BeritaAcaraController {
 
     @Autowired private BeritaAcaraService beritaAcaraService;
 
-
     @RequestMapping(value = "/berita-acara/create-berita-acara", method = RequestMethod.POST)
     ResponseEntity<?> createBeritaAcara(
             @RequestBody BeritaAcaraInputWrapper inputWrapper) {
@@ -63,6 +62,11 @@ public class BeritaAcaraController {
         beritaAcara.setTanggalPembuatanMilis(new Date().getTime());
         beritaAcara.setNipPembuatSurat(inputWrapper.getNipPembuatSurat());
         beritaAcara.setKdUnitKerja(inputWrapper.getKdUnitKerja());
+        //tambahan revisi
+        beritaAcara.setDurasiPengerjaan(inputWrapper.getDurasiPengerjaan());
+        beritaAcara.setNipPenilai("");
+        beritaAcara.setStatusPenilaian(0);
+        beritaAcara.setAlasanPenolakan("");
 
         beritaAcaraService.createBeritaAcara(beritaAcara);
 

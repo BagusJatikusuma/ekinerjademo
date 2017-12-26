@@ -30,4 +30,9 @@ public class SuratKuasaServiceImpl implements SuratKuasaService{
     public void createSuratKuasa(SuratKuasa suratKuasa) {
         suratKuasaDao.save(suratKuasa);
     }
+
+    @Override
+    public SuratKuasa getSuratKuasa(String kdSuratKuasa) {
+        return suratKuasaDao.findOne(kdSuratKuasa);
+    }
 }

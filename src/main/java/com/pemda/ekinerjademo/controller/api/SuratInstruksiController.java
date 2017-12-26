@@ -76,6 +76,7 @@ public class SuratInstruksiController {
         suratInstruksi.setCreateddateMilis(inputWrapper.getTanggalDibuat());
         suratInstruksi.setNipPembuat(inputWrapper.getNipPembuat());
         suratInstruksi.setStatusBaca(0);
+        suratInstruksi.setDurasiPengerjaan(inputWrapper.getDurasiPengerjaan());
 
         if (inputWrapper.getKdSuratInstruksiParent() == null) {
             suratInstruksi.setPath(kdSuratInstruksi);

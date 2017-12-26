@@ -31,4 +31,9 @@ public class TelaahanStafServiceImpl implements TelaahanStafService {
     public void createTelaahanStaf(TelaahanStaf telaahanStaf) {
         telaahanStafDao.save(telaahanStaf);
     }
+
+    @Override
+    public TelaahanStaf getTelaahanStaf(String kdTelaahanStaf) {
+        return telaahanStafDao.findOne(kdTelaahanStaf);
+    }
 }

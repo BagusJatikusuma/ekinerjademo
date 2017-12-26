@@ -31,4 +31,9 @@ public class BeritaAcaraServiceImpl implements BeritaAcaraService{
         beritaAcaraDao.save(beritaAcara);
 
     }
+
+    @Override
+    public BeritaAcara getBeritaAcara(String kdBeritaAcara) {
+        return beritaAcaraDao.findOne(kdBeritaAcara);
+    }
 }
