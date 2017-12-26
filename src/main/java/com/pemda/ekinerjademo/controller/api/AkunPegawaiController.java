@@ -832,9 +832,11 @@ public class AkunPegawaiController {
                                 beritaAcaraBawahan.getKdBeritaAcara(),
                                 "Berita Acara",
                                 pegawaiBawahan.getNip(),
+                                pegawaiBawahan.getNama(),
                                 beritaAcaraBawahan.getStatusPenilaian(),
                                 0,
-                                0));
+                                0,
+                                beritaAcaraBawahan.getTanggalPembuatanMilis()));
             }
             //ambil data surat perintah yang dilaporkan bawahan
             Set<SuratPerintah> suratPerintahList
@@ -851,9 +853,11 @@ public class AkunPegawaiController {
                                 suratPerintahBawahan.getKdSuratPerintah(),
                                 "Surat Perintah",
                                 pegawaiBawahan.getNip(),
+                                pegawaiBawahan.getNama(),
                                 suratPerintahBawahan.getStatusPenilaian(),
                                 11,
-                                suratPejabat));
+                                suratPejabat,
+                                suratPerintahBawahan.getTanggalPerintahMilis()));
             }
             //ambil data surat kuasa yang dilaporkan bawahan
             List<SuratKuasa> suratKuasaList
@@ -864,9 +868,11 @@ public class AkunPegawaiController {
                                 suratKuasaBawahan.getKdSuratKuasa(),
                                 "Surat Kuasa",
                                 pegawaiBawahan.getNip(),
+                                pegawaiBawahan.getNama(),
                                 suratKuasaBawahan.getStatusPenilaian(),
                                 9,
-                                0));
+                                0,
+                                suratKuasaBawahan.getTanggalPembuatanMilis()));
             }
             //ambil data laporan yang dilaporkan bawahan
             List<Laporan> laporanList
@@ -877,9 +883,11 @@ public class AkunPegawaiController {
                                 laporanBawahan.getKdLaporan(),
                                 "Laporan Pegawai",
                                 pegawaiBawahan.getNip(),
+                                pegawaiBawahan.getNama(),
                                 laporanBawahan.getStatusPenilaian(),
                                 1,
-                                0));
+                                0,
+                                laporanBawahan.getTanggalPembuatanMilis()));
             }
             //ambil data telaahan staf yang dilaporkan bawahan
             List<TelaahanStaf> telaahanStafList
@@ -890,9 +898,11 @@ public class AkunPegawaiController {
                                 telaahanStafBawahan.getKdTelaahanStaf(),
                                 "Telaahan staf",
                                 pegawaiBawahan.getNip(),
+                                pegawaiBawahan.getNama(),
                                 telaahanStafBawahan.getStatusPenilaian(),
                                 14,
-                                0));
+                                0,
+                                telaahanStafBawahan.getTanggalPembuatanMilis()));
             }
         }
 
@@ -933,9 +943,11 @@ public class AkunPegawaiController {
                                 beritaAcaraBawahan.getKdBeritaAcara(),
                                 "Berita Acara",
                                 pegawaiBawahan.getNip(),
+                                pegawaiBawahan.getNama(),
                                 beritaAcaraBawahan.getStatusPenilaian(),
                                 0,
-                                0));
+                                0,
+                                beritaAcaraBawahan.getTanggalPembuatanMilis()));
             }
             //ambil data surat perintah yang dilaporkan bawahan
             Set<SuratPerintah> suratPerintahList
@@ -951,9 +963,11 @@ public class AkunPegawaiController {
                                 suratPerintahBawahan.getKdSuratPerintah(),
                                 "Surat Perintah",
                                 pegawaiBawahan.getNip(),
+                                pegawaiBawahan.getNama(),
                                 suratPerintahBawahan.getStatusPenilaian(),
                                 11,
-                                suratPejabat));
+                                suratPejabat,
+                                suratPerintahBawahan.getTanggalPerintahMilis()));
             }
             //ambil data surat kuasa yang dilaporkan bawahan
             List<SuratKuasa> suratKuasaList
@@ -964,9 +978,11 @@ public class AkunPegawaiController {
                                 suratKuasaBawahan.getKdSuratKuasa(),
                                 "Surat Kuasa",
                                 pegawaiBawahan.getNip(),
+                                pegawaiBawahan.getNama(),
                                 suratKuasaBawahan.getStatusPenilaian(),
                                 9,
-                                0));
+                                0,
+                                suratKuasaBawahan.getTanggalPembuatanMilis()));
             }
             //ambil data laporan yang dilaporkan bawahan
             List<Laporan> laporanList
@@ -977,9 +993,11 @@ public class AkunPegawaiController {
                                 laporanBawahan.getKdLaporan(),
                                 "Laporan Pegawai",
                                 pegawaiBawahan.getNip(),
+                                pegawaiBawahan.getNama(),
                                 laporanBawahan.getStatusPenilaian(),
                                 1,
-                                0));
+                                0,
+                                laporanBawahan.getTanggalPembuatanMilis()));
             }
             //ambil data telaahan staf yang dilaporkan bawahan
             List<TelaahanStaf> telaahanStafList
@@ -990,9 +1008,11 @@ public class AkunPegawaiController {
                                 telaahanStafBawahan.getKdTelaahanStaf(),
                                 "Telaahan staf",
                                 pegawaiBawahan.getNip(),
+                                pegawaiBawahan.getNama(),
                                 telaahanStafBawahan.getStatusPenilaian(),
                                 14,
-                                0));
+                                0,
+                                telaahanStafBawahan.getTanggalPembuatanMilis()));
             }
         }
 
