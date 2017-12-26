@@ -14,6 +14,7 @@ public class SuratKuasaInputWrapper {
     private String nipPembuatSurat;
     private String kdUnitKerja;
     private Integer durasiPengerjaan;
+    private String kdSuratKuasaBawahan;
 
     public String getNomorUrusan() {
         return nomorUrusan;
@@ -93,5 +94,13 @@ public class SuratKuasaInputWrapper {
 
     public void setDurasiPengerjaan(Integer durasiPengerjaan) {
         this.durasiPengerjaan = durasiPengerjaan;
+    }
+
+    public String getKdSuratKuasaBawahan() {
+        return kdSuratKuasaBawahan;
+    }
+
+    public void setKdSuratKuasaBawahan(String kdSuratKuasaBawahan) {
+        this.kdSuratKuasaBawahan = kdSuratKuasaBawahan;
     }
 }

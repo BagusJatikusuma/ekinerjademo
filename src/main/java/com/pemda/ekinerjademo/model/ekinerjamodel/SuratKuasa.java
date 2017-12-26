@@ -51,6 +51,8 @@ public class SuratKuasa {
 
     @Column(name = "durasi_pengerjaan")
     private Integer durasiPengerjaan;
+    @Column(name = "path_penilaian")
+    private String pathPenilaian;
     @Column(name = "nip_penilai")
     private String nipPenilai;
     @Column(name = "status_penilaian")
@@ -216,5 +218,13 @@ public class SuratKuasa {
 
     public void setAlasanPenolakan(String alasanPenolakan) {
         this.alasanPenolakan = alasanPenolakan;
+    }
+
+    public String getPathPenilaian() {
+        return pathPenilaian;
+    }
+
+    public void setPathPenilaian(String pathPenilaian) {
+        this.pathPenilaian = pathPenilaian;
     }
 }

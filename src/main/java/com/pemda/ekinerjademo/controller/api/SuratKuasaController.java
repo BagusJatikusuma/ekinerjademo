@@ -61,6 +61,17 @@ public class SuratKuasaController {
         suratKuasa.setStatusPenilaian(0);
         suratKuasa.setAlasanPenolakan("");
 
+        if (inputWrapper.getKdSuratKuasaBawahan() == null) {
+            suratKuasa.setPathPenilaian(kdSuratKuasa);
+        } else {
+            SuratKuasa suratKuasaBawahan
+                    = suratKuasaService.getSuratKuasa(inputWrapper.getKdSuratKuasaBawahan());
+            suratKuasa.setPathPenilaian(suratKuasaBawahan.getPathPenilaian()+"."+kdSuratKuasa);
+
+            suratKuasaBawahan.setStatusPenilaian(2);
+            suratKuasaService.createSuratKuasa(suratKuasaBawahan);
+        }
+
         suratKuasaService.createSuratKuasa(suratKuasa);
 
         return new ResponseEntity<Object>(

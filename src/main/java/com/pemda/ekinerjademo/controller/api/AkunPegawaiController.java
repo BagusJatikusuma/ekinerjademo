@@ -819,7 +819,9 @@ public class AkunPegawaiController {
                 pegawaiBawahanList.add(pegawaiBawahan);
             }
         }
+
         //ambil laporan dari seluruh history template untuk setiap pegawai bawahan
+        Integer suratPejabat;
         for (QutPegawaiClone pegawaiBawahan : pegawaiBawahanList) {
             //ambil data berita acara yang dilaporkan bawahan
             List<BeritaAcara> beritaAcaraList
@@ -831,19 +833,27 @@ public class AkunPegawaiController {
                                 "Berita Acara",
                                 pegawaiBawahan.getNip(),
                                 beritaAcaraBawahan.getStatusPenilaian(),
+                                0,
                                 0));
             }
             //ambil data surat perintah yang dilaporkan bawahan
             Set<SuratPerintah> suratPerintahList
                     = suratPerintahService.getByNipPembuat(pegawaiBawahan.getNip());
             for (SuratPerintah suratPerintahBawahan : suratPerintahList) {
+
+                if (suratPerintahBawahan.getSuratPerintahPejabat() != null)
+                    suratPejabat = 1;
+                else
+                    suratPejabat = 2;
+
                 laporanBawahanWrapperList
                         .add(new LaporanBawahanWrapper(
                                 suratPerintahBawahan.getKdSuratPerintah(),
                                 "Surat Perintah",
                                 pegawaiBawahan.getNip(),
                                 suratPerintahBawahan.getStatusPenilaian(),
-                                11));
+                                11,
+                                suratPejabat));
             }
             //ambil data surat kuasa yang dilaporkan bawahan
             List<SuratKuasa> suratKuasaList
@@ -855,7 +865,8 @@ public class AkunPegawaiController {
                                 "Surat Kuasa",
                                 pegawaiBawahan.getNip(),
                                 suratKuasaBawahan.getStatusPenilaian(),
-                                9));
+                                9,
+                                0));
             }
             //ambil data laporan yang dilaporkan bawahan
             List<Laporan> laporanList
@@ -867,7 +878,8 @@ public class AkunPegawaiController {
                                 "Laporan Pegawai",
                                 pegawaiBawahan.getNip(),
                                 laporanBawahan.getStatusPenilaian(),
-                                1));
+                                1,
+                                0));
             }
             //ambil data telaahan staf yang dilaporkan bawahan
             List<TelaahanStaf> telaahanStafList
@@ -879,7 +891,8 @@ public class AkunPegawaiController {
                                 "Telaahan staf",
                                 pegawaiBawahan.getNip(),
                                 telaahanStafBawahan.getStatusPenilaian(),
-                                14));
+                                14,
+                                0));
             }
         }
 
@@ -909,6 +922,7 @@ public class AkunPegawaiController {
             }
         }
         //ambil laporan dari seluruh history template untuk setiap pegawai bawahan
+        Integer suratPejabat;
         for (QutPegawaiClone pegawaiBawahan : pegawaiBawahanList) {
             //ambil data berita acara yang dilaporkan bawahan
             List<BeritaAcara> beritaAcaraList
@@ -920,19 +934,26 @@ public class AkunPegawaiController {
                                 "Berita Acara",
                                 pegawaiBawahan.getNip(),
                                 beritaAcaraBawahan.getStatusPenilaian(),
+                                0,
                                 0));
             }
             //ambil data surat perintah yang dilaporkan bawahan
             Set<SuratPerintah> suratPerintahList
                     = suratPerintahService.getByNipPembuat(pegawaiBawahan.getNip());
             for (SuratPerintah suratPerintahBawahan : suratPerintahList) {
+                if (suratPerintahBawahan.getSuratPerintahPejabat() != null)
+                    suratPejabat = 1;
+                else
+                    suratPejabat = 2;
+
                 laporanBawahanWrapperList
                         .add(new LaporanBawahanWrapper(
                                 suratPerintahBawahan.getKdSuratPerintah(),
                                 "Surat Perintah",
                                 pegawaiBawahan.getNip(),
                                 suratPerintahBawahan.getStatusPenilaian(),
-                                11));
+                                11,
+                                suratPejabat));
             }
             //ambil data surat kuasa yang dilaporkan bawahan
             List<SuratKuasa> suratKuasaList
@@ -944,7 +965,8 @@ public class AkunPegawaiController {
                                 "Surat Kuasa",
                                 pegawaiBawahan.getNip(),
                                 suratKuasaBawahan.getStatusPenilaian(),
-                                9));
+                                9,
+                                0));
             }
             //ambil data laporan yang dilaporkan bawahan
             List<Laporan> laporanList
@@ -956,7 +978,8 @@ public class AkunPegawaiController {
                                 "Laporan Pegawai",
                                 pegawaiBawahan.getNip(),
                                 laporanBawahan.getStatusPenilaian(),
-                                1));
+                                1,
+                                0));
             }
             //ambil data telaahan staf yang dilaporkan bawahan
             List<TelaahanStaf> telaahanStafList
@@ -968,7 +991,8 @@ public class AkunPegawaiController {
                                 "Telaahan staf",
                                 pegawaiBawahan.getNip(),
                                 telaahanStafBawahan.getStatusPenilaian(),
-                                14));
+                                14,
+                                0));
             }
         }
 

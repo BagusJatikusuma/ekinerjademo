@@ -167,6 +167,17 @@ public class SuratPerintahController {
 //        suratPerintah.setTargetSuratPerintahPegawaiList(targetSuratPerintahPegawaiList);
 //        suratPerintah.setTembusanSuratPerintahList(tembusanSuratPerintahList);
 
+        if (inputWrapper.getKdSuratPerintahBawahan() == null) {
+            suratPerintah.setPathPenilaian(kdSuratPerintah);
+        } else {
+            SuratPerintah suratPerintahBawahan
+                    = suratPerintahService.getSuratPerintahByKdSuratPerintah(inputWrapper.getKdSuratPerintahBawahan());
+            suratPerintah.setPathPenilaian(suratPerintahBawahan.getPathPenilaian()+"."+kdSuratPerintah);
+
+            suratPerintahBawahan.setStatusPenilaian(2);
+            suratPerintahService.creteSurat(suratPerintahBawahan);
+        }
+
         suratPerintahService.creteSurat(suratPerintah);
         suratPerintahService.createTargetSuratPegawai(targetSuratPerintahPegawaiList);
         suratPerintahService.createTargetSuratPejabat(targetSuratPerintahPejabatSet);

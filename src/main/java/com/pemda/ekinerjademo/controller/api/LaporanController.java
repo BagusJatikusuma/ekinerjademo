@@ -66,6 +66,17 @@ public class LaporanController {
         laporan.setStatusPenilaian(0);
         laporan.setAlasanPenolakan("");
 
+        if (inputWrapper.getKdLaporanBawahan() == null) {
+            laporan.setPathPenilaian(kdLaporan);
+        } else {
+            Laporan laporanBawahan
+                    = laporanService.getLaporan(inputWrapper.getKdLaporanBawahan());
+            laporan.setPathPenilaian(laporanBawahan.getPathPenilaian()+"."+kdLaporan);
+
+            laporanBawahan.setStatusPenilaian(2);
+            laporanService.createLaporan(laporanBawahan);
+        }
+
         laporanService.createLaporan(laporan);
 
         return new ResponseEntity<Object>(

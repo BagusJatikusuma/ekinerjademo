@@ -18,6 +18,7 @@ public class LaporanInputWrapper {
     private String nipPembuatSurat;
     private String kdUnitKerja;
     private Integer durasiPengerjaan;
+    private String kdLaporanBawahan;
 
     public String getTentang() {
         return tentang;
@@ -129,5 +130,13 @@ public class LaporanInputWrapper {
 
     public void setDurasiPengerjaan(Integer durasiPengerjaan) {
         this.durasiPengerjaan = durasiPengerjaan;
+    }
+
+    public String getKdLaporanBawahan() {
+        return kdLaporanBawahan;
+    }
+
+    public void setKdLaporanBawahan(String kdLaporanBawahan) {
+        this.kdLaporanBawahan = kdLaporanBawahan;
     }
 }

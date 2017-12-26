@@ -9,6 +9,7 @@ public class LaporanBawahanWrapper {
     private String nipBawahan;
     private Integer StatusPenilaian;
     private Integer kdJenisSurat;
+    private Integer suratPejabat;
 
     public LaporanBawahanWrapper() {
     }
@@ -33,6 +34,20 @@ public class LaporanBawahanWrapper {
         this.nipBawahan = nipBawahan;
         StatusPenilaian = statusPenilaian;
         this.kdJenisSurat = kdJenisSurat;
+    }
+    public LaporanBawahanWrapper(
+            String kdSurat,
+            String jenisSurat,
+            String nipBawahan,
+            Integer statusPenilaian,
+            Integer kdJenisSurat,
+            Integer suratPejabat) {
+        this.kdSurat = kdSurat;
+        this.jenisSurat = jenisSurat;
+        this.nipBawahan = nipBawahan;
+        StatusPenilaian = statusPenilaian;
+        this.kdJenisSurat = kdJenisSurat;
+        this.suratPejabat = suratPejabat;
     }
 
     public String getKdSurat() {
@@ -73,5 +88,13 @@ public class LaporanBawahanWrapper {
 
     public void setKdJenisSurat(Integer kdJenisSurat) {
         this.kdJenisSurat = kdJenisSurat;
+    }
+
+    public Integer isSuratPejabat() {
+        return suratPejabat;
+    }
+
+    public void setSuratPejabat(Integer suratPejabat) {
+        this.suratPejabat = suratPejabat;
     }
 }

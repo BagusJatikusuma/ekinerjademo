@@ -62,6 +62,17 @@ public class TelaahanStafController {
         telaahanStaf.setStatusPenilaian(0);
         telaahanStaf.setAlasanPenolakan("");
 
+        if (inputWrapper.getKdTelaahanStafBawahan() == null) {
+            telaahanStaf.setPathPenilaian(kdTelahaanStaf);
+        } else {
+            TelaahanStaf telaahanStafBawahan
+                    = telaahanStafService.getTelaahanStaf(inputWrapper.getKdTelaahanStafBawahan());
+            telaahanStaf.setPathPenilaian(telaahanStafBawahan.getPathPenilaian()+"."+kdTelahaanStaf);
+
+            telaahanStafBawahan.setStatusPenilaian(2);
+            telaahanStafService.createTelaahanStaf(telaahanStafBawahan);
+        }
+
         telaahanStafService.createTelaahanStaf(telaahanStaf);
 
         return new ResponseEntity<Object>(

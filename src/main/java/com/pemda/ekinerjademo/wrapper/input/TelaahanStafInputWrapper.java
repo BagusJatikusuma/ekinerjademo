@@ -15,6 +15,7 @@ public class TelaahanStafInputWrapper {
     private String nipPembuatSurat;
     private String kdUnitKerja;
     private Integer durasiPengerjaan;
+    private String kdTelaahanStafBawahan;
 
     public String getTentang() {
         return tentang;
@@ -102,5 +103,13 @@ public class TelaahanStafInputWrapper {
 
     public void setDurasiPengerjaan(Integer durasiPengerjaan) {
         this.durasiPengerjaan = durasiPengerjaan;
+    }
+
+    public String getKdTelaahanStafBawahan() {
+        return kdTelaahanStafBawahan;
+    }
+
+    public void setKdTelaahanStafBawahan(String kdTelaahanStafBawahan) {
+        this.kdTelaahanStafBawahan = kdTelaahanStafBawahan;
     }
 }

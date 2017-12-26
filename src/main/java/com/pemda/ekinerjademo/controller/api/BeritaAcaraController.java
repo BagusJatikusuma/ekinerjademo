@@ -68,6 +68,17 @@ public class BeritaAcaraController {
         beritaAcara.setStatusPenilaian(0);
         beritaAcara.setAlasanPenolakan("");
 
+        if (inputWrapper.getKdBeritaAcaraBawahan() == null) {
+            beritaAcara.setPathPenilaian(kdBeritaAcara);
+        } else {
+            BeritaAcara beritaAcaraBawahan
+                    = beritaAcaraService.getBeritaAcara(inputWrapper.getKdBeritaAcaraBawahan());
+            beritaAcara.setPathPenilaian(beritaAcaraBawahan.getPathPenilaian()+"."+kdBeritaAcara);
+
+            beritaAcaraBawahan.setStatusPenilaian(2);
+            beritaAcaraService.createBeritaAcara(beritaAcaraBawahan);
+        }
+
         beritaAcaraService.createBeritaAcara(beritaAcara);
 
         return new ResponseEntity<Object>(
