@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 /**
  * Created by bagus on 26/12/17.
  */
@@ -18,6 +20,16 @@ public class LoginPegawaiServiceImpl implements LoginPegawaiService {
     @Override
     public void createLog(LoginPegawai loginPegawai) {
         loginPegawaiDao.save(loginPegawai);
+    }
+
+    @Override
+    public LoginPegawai get(Long loginId) {
+        return loginPegawaiDao.findOne(loginId);
+    }
+
+    @Override
+    public List<LoginPegawai> getByBulanAndTahun(Integer bulan, Integer tahun) {
+        return loginPegawaiDao.findByBulanLoginAndTahunLogin(bulan, tahun);
     }
 
 }

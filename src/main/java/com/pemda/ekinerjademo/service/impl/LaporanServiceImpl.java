@@ -38,4 +38,11 @@ public class LaporanServiceImpl implements LaporanService {
     public Laporan getLaporan(String kdLaporan) {
         return laporanDao.findOne(kdLaporan);
     }
+
+    @Override
+    public void openLaporanByPenilai(String kdLaporan) {
+        Laporan laporan = laporanDao.findOne(kdLaporan);
+
+        laporan.setStatusPenilaian(1);
+    }
 }

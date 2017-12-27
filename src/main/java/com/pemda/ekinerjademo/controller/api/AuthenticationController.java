@@ -101,10 +101,34 @@ public class AuthenticationController {
                         qutPegawai.getKdJabatan(),
                         qutPegawai.getPangkat(),
                         qutPegawai.getGol(),
-                        qutPegawai.getEselon());
+                        qutPegawai.getEselon(),
+                        kdLoginPegawai
+                );
 
         return new ResponseEntity<Object>(pegawaiCredential, HttpStatus.OK);
 
+    }
+
+    @RequestMapping(value = "/logout-pegawai/{loginId}", method = RequestMethod.PUT)
+    ResponseEntity<?> logOutPegawai(@PathVariable("loginId") Long loginId) {
+        LOGGER.info("log out");
+        LoginPegawai loginPegawai
+                = loginPegawaiService.get(loginId);
+
+        Calendar calendar = Calendar.getInstance();
+
+        Date currentDate = new Date();
+
+        calendar.setTime(currentDate);
+
+        loginPegawai.setLogoutMilis(currentDate.getTime());
+        loginPegawai.setTanggalLogout(calendar.get(Calendar.DAY_OF_MONTH));
+        loginPegawai.setBulanLogout(calendar.get(Calendar.MONTH)+1);
+        loginPegawai.setTahunLogout(calendar.get(Calendar.YEAR));
+
+        loginPegawaiService.createLog(loginPegawai);
+
+        return new ResponseEntity<Object>(new CustomMessage("logout success"), HttpStatus.OK);
     }
 
 }

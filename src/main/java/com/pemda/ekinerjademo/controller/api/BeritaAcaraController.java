@@ -110,4 +110,17 @@ public class BeritaAcaraController {
 
         return new ResponseEntity<Object>(beritaAcaraHistoryWrapperList, HttpStatus.OK);
     }
+
+    @RequestMapping(value = "/open-berita-acara-penilai/{kdBeritaAcara}/{nipPegawai}", method = RequestMethod.PUT)
+    ResponseEntity<?> openBeritaAcaraPenilai(
+            @PathVariable("kdBeritaAcara") String kdBeritaAcara,
+            @PathVariable("nipPegawai") String nipPegawai) {
+        LOGGER.info("open berita acara");
+
+        beritaAcaraService.openBeritaAcaraByPenilai(kdBeritaAcara);
+
+        return new ResponseEntity<Object>(new CustomMessage("berita acara opened by penilai"), HttpStatus.OK);
+
+    }
+
 }

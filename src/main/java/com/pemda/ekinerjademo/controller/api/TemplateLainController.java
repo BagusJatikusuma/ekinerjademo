@@ -55,7 +55,7 @@ public class TemplateLainController {
         templateLain.setTanggalPembuatanMilis(new Date().getTime());
 
         if (templateLainInputWrapper.getKdTemplateLainBawahan() == null) {
-            templateLain.setPathFile(kdTemplateLain);
+            templateLain.setPathFile(kdTemplateLain+fileTemplateLain.getOriginalFilename().split("\\.")[1]);
             templateLain.setPathPenilaian(kdTemplateLain);
 
             uploader.uploadFileTemplateLain(fileTemplateLain, kdTemplateLain);

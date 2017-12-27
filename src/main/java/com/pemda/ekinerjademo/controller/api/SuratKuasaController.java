@@ -103,4 +103,16 @@ public class SuratKuasaController {
 
         return new ResponseEntity<Object>(suratKuasaHistoryWrapperList, HttpStatus.OK);
     }
+
+    @RequestMapping(value = "/open-surat-kuasa-penilai/{kdSuratKuasa}/{nipPegawai}", method = RequestMethod.PUT)
+    ResponseEntity<?> openSuratKuasaPenilai(
+            @PathVariable("KdSuratkuasa") String kdSuratKuasa,
+            @PathVariable("nipPegawai") String nipPegawai) {
+        LOGGER.info("open surat kuasa");
+
+        suratKuasaService.openSuratKuasaByPenilai(kdSuratKuasa);
+
+        return new ResponseEntity<Object>(new CustomMessage("laporan opened by penilai"), HttpStatus.OK);
+
+    }
 }

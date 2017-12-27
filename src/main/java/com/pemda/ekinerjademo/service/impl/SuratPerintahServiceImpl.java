@@ -141,6 +141,13 @@ public class SuratPerintahServiceImpl implements SuratPerintahService {
     }
 
     @Override
+    public void openSuratPeintahByPenilai(String kdSuratPerintah) {
+        SuratPerintah suratPerintah = suratPerintahDao.findOne(kdSuratPerintah);
+
+        suratPerintah.setStatusPenilaian(1);
+    }
+
+    @Override
     public void update(SuratPerintah suratPerintah) {
         suratPerintahDao.save(suratPerintah);
     }

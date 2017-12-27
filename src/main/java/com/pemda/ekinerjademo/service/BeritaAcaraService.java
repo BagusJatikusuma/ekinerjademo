@@ -14,4 +14,6 @@ public interface BeritaAcaraService {
     void createBeritaAcara(BeritaAcara beritaAcara);
 
     BeritaAcara getBeritaAcara(String kdBeritaAcara);
+
+    void openBeritaAcaraByPenilai(String kdBeritaAcara);
 }

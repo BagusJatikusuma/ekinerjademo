@@ -139,6 +139,10 @@ public class LaporanBawahanWrapper {
         this.suratPejabat = suratPejabat;
     }
 
+    public Integer getSuratPejabat() {
+        return suratPejabat;
+    }
+
     public String getNamaBawahan() {
         return namaBawahan;
     }

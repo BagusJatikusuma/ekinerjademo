@@ -108,4 +108,17 @@ public class LaporanController {
 
         return new ResponseEntity<Object>(laporanHistoryWrapperList, HttpStatus.OK);
     }
+
+    @RequestMapping(value = "/open-laporan-penilai/{kdLaporan}/{nipPegawai}", method = RequestMethod.PUT)
+    ResponseEntity<?> openLaporanPenilai(
+            @PathVariable("KdLaporan") String kdLaporan,
+            @PathVariable("nipPegawai") String nipPegawai) {
+        LOGGER.info("open laporan");
+
+        laporanService.openLaporanByPenilai(kdLaporan);
+
+        return new ResponseEntity<Object>(new CustomMessage("laporan opened by penilai"), HttpStatus.OK);
+
+    }
+
 }

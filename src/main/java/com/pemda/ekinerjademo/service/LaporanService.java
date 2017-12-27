@@ -13,4 +13,6 @@ public interface LaporanService {
     void createLaporan(Laporan laporan);
 
     Laporan getLaporan(String kdLaporan);
+
+    void openLaporanByPenilai(String kdLaporan);
 }

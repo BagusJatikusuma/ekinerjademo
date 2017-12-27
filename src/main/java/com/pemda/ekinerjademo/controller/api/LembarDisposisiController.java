@@ -121,7 +121,7 @@ public class LembarDisposisiController {
             suratDisposisi.setDari(inputWrapper.getDariSuratDisposisi());
             suratDisposisi.setRingkasanIsi(inputWrapper.getRingkasanIsiSuratDisposisi());
             suratDisposisi.setLampiran(inputWrapper.getLampiran());
-            suratDisposisi.setPathFile(namaFileSuratDisposisi);
+            suratDisposisi.setPathFile(namaFileSuratDisposisi+fileSuratDisposisi.getOriginalFilename().split("\\.")[1]);
 
             suratDisposisiService.create(suratDisposisi);
             uploader.uploadSuratLembarDisposisi(fileSuratDisposisi, namaFileSuratDisposisi);
