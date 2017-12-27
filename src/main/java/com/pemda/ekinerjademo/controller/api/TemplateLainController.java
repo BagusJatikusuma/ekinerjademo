@@ -5,6 +5,8 @@ import com.pemda.ekinerjademo.service.TemplateLainService;
 import com.pemda.ekinerjademo.util.FileUploader;
 import com.pemda.ekinerjademo.wrapper.input.TemplateLainInputWrapper;
 import com.pemda.ekinerjademo.wrapper.output.CustomMessage;
+import com.pemda.ekinerjademo.wrapper.output.TemplateLainHistoryWrapper;
+import org.apache.commons.io.FilenameUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -55,7 +58,8 @@ public class TemplateLainController {
         templateLain.setTanggalPembuatanMilis(new Date().getTime());
 
         if (templateLainInputWrapper.getKdTemplateLainBawahan() == null) {
-            templateLain.setPathFile(kdTemplateLain+fileTemplateLain.getOriginalFilename().split("\\.")[1]);
+//            templateLain.setPathFile(kdTemplateLain+"."+fileTemplateLain.getOriginalFilename().split("\\.")[1]);
+            templateLain.setPathFile(kdTemplateLain+"."+ FilenameUtils.getExtension(fileTemplateLain.getOriginalFilename()));
             templateLain.setPathPenilaian(kdTemplateLain);
 
             uploader.uploadFileTemplateLain(fileTemplateLain, kdTemplateLain);
@@ -80,10 +84,26 @@ public class TemplateLainController {
     ResponseEntity<?> getTemplateLainByPembuat(@PathVariable("nipPembuat") String nipPembuat) {
         LOGGER.info("get template lain by pembuat");
 
+        List<TemplateLainHistoryWrapper> templateLainHistoryWrapperList
+                = new ArrayList<>();
         List<TemplateLain> templateLainList
                 = templateLainService.getByPembuat(nipPembuat);
 
-        return new ResponseEntity<Object>(templateLainList, HttpStatus.OK);
+        for (TemplateLain templateLain : templateLainList) {
+            templateLainHistoryWrapperList
+                    .add(new TemplateLainHistoryWrapper(
+                            templateLain.getKdTemplateLain(),
+                            templateLain.getKeterangan(),
+                            FilenameUtils.removeExtension(templateLain.getPathFile()),
+                            FilenameUtils.getExtension(templateLain.getPathFile()),
+                            templateLain.getStatusPenilaian(),
+                            templateLain.getTanggalPembuatanMilis(),
+                            templateLain.getAlasanPenolakan(),
+                            "template lain",
+                            15));
+        }
+
+        return new ResponseEntity<Object>(templateLainHistoryWrapperList, HttpStatus.OK);
     }
 
 }

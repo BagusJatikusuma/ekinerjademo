@@ -22,14 +22,15 @@ import java.nio.file.Files;
 public class FileController {
     public static final Logger LOGGER = LoggerFactory.getLogger(FileController.class);
 
-    @RequestMapping(value = "/get-template-lain-file/{namaFile}", method = RequestMethod.GET)
+    @RequestMapping(value = "/get-template-lain-file/{namaFile}/{fileExtension}", method = RequestMethod.GET)
     ResponseEntity<?> getTemplateLainFile(
-            @PathVariable("kdTemplateLain") String namaFile) {
+            @PathVariable("namaFile") String namaFile,
+            @PathVariable("fileExtension") String fileExtension) {
         LOGGER.info("get template lain file");
 
         byte[] file;
 
-        File filePath = new File("/home/pemkab/project/documents/template_lain/"+namaFile);
+        File filePath = new File("/home/pemkab/project/documents/template_lain/"+namaFile+"."+fileExtension);
 
         try {
             file = Files.readAllBytes(filePath.toPath());

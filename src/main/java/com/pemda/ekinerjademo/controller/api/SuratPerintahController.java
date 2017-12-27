@@ -470,7 +470,10 @@ public class SuratPerintahController {
                             suratPerintah.getKdSuratPerintah(),
                             df.format(new Date(suratPerintah.getTanggalPerintahMilis())),
                             isSuratPejabat,
-                            suratPerintah.getStatusBaca()
+                            suratPerintah.getStatusBaca(),
+                            "surat perintah",
+                            11,
+                            suratPerintah.getTanggalPerintahMilis()
                     ));
         }
 

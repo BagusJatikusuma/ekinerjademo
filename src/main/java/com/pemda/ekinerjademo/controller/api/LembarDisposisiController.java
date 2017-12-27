@@ -121,7 +121,7 @@ public class LembarDisposisiController {
             suratDisposisi.setDari(inputWrapper.getDariSuratDisposisi());
             suratDisposisi.setRingkasanIsi(inputWrapper.getRingkasanIsiSuratDisposisi());
             suratDisposisi.setLampiran(inputWrapper.getLampiran());
-            suratDisposisi.setPathFile(namaFileSuratDisposisi+fileSuratDisposisi.getOriginalFilename().split("\\.")[1]);
+            suratDisposisi.setPathFile(namaFileSuratDisposisi+"."+fileSuratDisposisi.getOriginalFilename().split("\\.")[1]);
 
             suratDisposisiService.create(suratDisposisi);
             uploader.uploadSuratLembarDisposisi(fileSuratDisposisi, namaFileSuratDisposisi);
@@ -202,8 +202,10 @@ public class LembarDisposisiController {
     ResponseEntity<?> getLembarDisposisiTarget(@PathVariable("nipTarget") String nipTarget) {
         LOGGER.info("get lembar disposisi target");
 
+//        List<TargetLembarDisposisi> targetLembarDisposisiList
+//                = lembarDisposisiService.findByTargetDisposisi(nipTarget);
         List<TargetLembarDisposisi> targetLembarDisposisiList
-                = lembarDisposisiService.findByTargetDisposisi(nipTarget);
+                = lembarDisposisiService.findByTargetDisposisiRev(nipTarget);
 
 
         List<LembarDisposisiWrapper> lembarDisposisiWrappers
@@ -240,9 +242,11 @@ public class LembarDisposisiController {
     ResponseEntity<?> getLembarDisposisiTargetUnread(@PathVariable("nipTarget") String nipTarget) {
         LOGGER.info("get lembar disposisi target unread");
 
-        List<TargetLembarDisposisi> targetLembarDisposisiList
-                = lembarDisposisiService.findByTargetDisposisi(nipTarget);
+//        List<TargetLembarDisposisi> targetLembarDisposisiList
+//                = lembarDisposisiService.findByTargetDisposisi(nipTarget);
 
+        List<TargetLembarDisposisi> targetLembarDisposisiList
+                = lembarDisposisiService.findByTargetDisposisiRev(nipTarget);
 
         List<LembarDisposisiWrapper> lembarDisposisiWrappers
                 = new ArrayList<>();
