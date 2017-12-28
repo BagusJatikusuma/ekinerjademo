@@ -92,6 +92,7 @@ public class TemplateLainController {
         templateLain.setKdUnitKerja(templateLainInputWrapper.getKdUnitKerja());
         templateLain.setNipPegawai(templateLainInputWrapper.getNipPegawai());
         templateLain.setKeterangan(templateLainInputWrapper.getKeterangan());
+        templateLain.setDurasiPengerjaan(templateLainInputWrapper.getDurasiPengerjaan());
         templateLain.setKdNaskahPenugasan(templateLainInputWrapper.getKdNaskahPenugasan());
         templateLain.setJenisNaskahPenugasan(templateLainInputWrapper.getJenisNaskahPenugasan());
         templateLain.setKdUrtug(templateLainInputWrapper.getKdUrtug());

@@ -10,6 +10,8 @@ public class TemplateLainInputWrapper {
 
     private String keterangan;
 
+    private Integer durasiPengerjaan;
+
     private String kdNaskahPenugasan;
 
     private Integer jenisNaskahPenugasan;
@@ -112,5 +114,13 @@ public class TemplateLainInputWrapper {
 
     public void setNamaFile(String namaFile) {
         this.namaFile = namaFile;
+    }
+
+    public Integer getDurasiPengerjaan() {
+        return durasiPengerjaan;
+    }
+
+    public void setDurasiPengerjaan(Integer durasiPengerjaan) {
+        this.durasiPengerjaan = durasiPengerjaan;
     }
 }
