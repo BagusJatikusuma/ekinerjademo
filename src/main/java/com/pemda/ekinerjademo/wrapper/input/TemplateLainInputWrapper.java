@@ -20,6 +20,8 @@ public class TemplateLainInputWrapper {
 
     private Integer tahunUrtug;
 
+    private String namaFile;
+
     private String kdTemplateLainBawahan;
 
     private String namaFileLaporanBawahan;
@@ -102,5 +104,13 @@ public class TemplateLainInputWrapper {
 
     public void setNamaFileLaporanBawahan(String namaFileLaporanBawahan) {
         this.namaFileLaporanBawahan = namaFileLaporanBawahan;
+    }
+
+    public String getNamaFile() {
+        return namaFile;
+    }
+
+    public void setNamaFile(String namaFile) {
+        this.namaFile = namaFile;
     }
 }

@@ -98,6 +98,19 @@ public class LembarDisposisiWrapper {
         this.ringkasanIsi = ringkasanIsi;
     }
 
+    public LembarDisposisiWrapper(String kdLembarDisposisi, String path, String tanggalPenerimaan, Long tanggalPenerimaanMilis, Integer tktKeamanan, String tglPenyelesaian, Long tglPenyelesaianMilis, Integer statusBaca, String tglPengiriman, Long tglPengirimanMilis) {
+        this.kdLembarDisposisi = kdLembarDisposisi;
+        this.path = path;
+        this.tanggalPenerimaan = tanggalPenerimaan;
+        this.tanggalPenerimaanMilis = tanggalPenerimaanMilis;
+        this.tktKeamanan = tktKeamanan;
+        this.tglPenyelesaian = tglPenyelesaian;
+        this.tglPenyelesaianMilis = tglPenyelesaianMilis;
+        this.statusBaca = statusBaca;
+        this.tglPengiriman = tglPengiriman;
+        this.tglPengirimanMilis = tglPengirimanMilis;
+    }
+
     public String getKdLembarDisposisi() {
         return kdLembarDisposisi;
     }

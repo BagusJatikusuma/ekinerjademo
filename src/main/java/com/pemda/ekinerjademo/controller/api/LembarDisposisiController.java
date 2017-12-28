@@ -12,6 +12,7 @@ import com.pemda.ekinerjademo.wrapper.output.CustomMessage;
 import com.pemda.ekinerjademo.wrapper.output.DokumenLembarDisposisiWrapper;
 import com.pemda.ekinerjademo.wrapper.output.LembarDisposisiWrapper;
 import com.pemda.ekinerjademo.wrapper.output.QutPegawaiWrapper;
+import groovy.transform.Synchronized;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,6 +40,7 @@ public class LembarDisposisiController {
     @Autowired private QutPegawaiCloneService qutPegawaiService;
 
     @RequestMapping(value = "/create-lembar-disposisi", method = RequestMethod.POST)
+    @Synchronized
     ResponseEntity<?> createLembarDisposisi(
             @RequestBody LembarDisposisiInputWrapper inputWrapper) {
         LOGGER.info("create lembar disposisi");
@@ -188,10 +190,13 @@ public class LembarDisposisiController {
                             lembarDisposisi.getKdLembarDisposisi(),
                             lembarDisposisi.getPath(),
                             DateUtilities.createLocalDate(new Date(lembarDisposisi.getTanggalPenerimaanMilis()), "dd MMMM yyyy", indoLocale),
+                            lembarDisposisi.getTanggalPenerimaanMilis(),
                             lembarDisposisi.getTktKeamanan(),
                             DateUtilities.createLocalDate(new Date(lembarDisposisi.getTglPenyelesaianMilis()), "dd MMMM yyyy", indoLocale),
+                            lembarDisposisi.getTglPenyelesaianMilis(),
                             lembarDisposisi.getStatusBaca(),
-                            DateUtilities.createLocalDate(new Date(lembarDisposisi.getTanggalPengirimanMilis()), "dd MMMM yyyy", indoLocale)
+                            DateUtilities.createLocalDate(new Date(lembarDisposisi.getTanggalPengirimanMilis()), "dd MMMM yyyy", indoLocale),
+                            lembarDisposisi.getTanggalPengirimanMilis()
                     ));
         }
 

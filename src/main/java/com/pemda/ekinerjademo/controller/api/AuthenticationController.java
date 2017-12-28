@@ -6,6 +6,7 @@ import com.pemda.ekinerjademo.service.*;
 import com.pemda.ekinerjademo.util.exception.AuthenticationCredentialsNotFoundExcecption;
 import com.pemda.ekinerjademo.util.exception.BadCredentialsException;
 import com.pemda.ekinerjademo.wrapper.output.*;
+import groovy.transform.Synchronized;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,6 +43,7 @@ public class AuthenticationController {
      */
     @RequestMapping(value = "/authentication", method = RequestMethod.POST)
     @Transactional
+    @Synchronized
     ResponseEntity<?> validateAkunPegawai(@RequestBody AkunPegawai akunPegawai) {
         LOGGER.info("receive "+akunPegawai.getNipPegawai()+" authetication request");
 

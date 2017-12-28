@@ -13,6 +13,7 @@ import com.pemda.ekinerjademo.util.EkinerjaXMLParser;
 import com.pemda.ekinerjademo.wrapper.input.SuratPerintahInputWrapper;
 import com.pemda.ekinerjademo.wrapper.input.TargetSuratDiterimaInputWrapper;
 import com.pemda.ekinerjademo.wrapper.output.*;
+import groovy.transform.Synchronized;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,6 +47,7 @@ public class SuratPerintahController {
     private NomorUrutSuratUnitKerjaService nomorUrutSuratUnitKerjaService;
 
     @RequestMapping(value = "/create-surat-perintah", method = RequestMethod.POST)
+    @Synchronized
     ResponseEntity<?> createSuratPerintah(
             @RequestBody SuratPerintahInputWrapper inputWrapper) {
         LOGGER.info("create surat perintah non pejabat");
@@ -473,7 +475,8 @@ public class SuratPerintahController {
                             suratPerintah.getStatusBaca(),
                             "surat perintah",
                             11,
-                            suratPerintah.getTanggalPerintahMilis()
+                            suratPerintah.getTanggalPerintahMilis(),
+                            suratPerintah.getStatusPenilaian()
                     ));
         }
 
@@ -874,10 +877,9 @@ public class SuratPerintahController {
         return new ResponseEntity<Object>(new CustomMessage("surat perintah opened"), HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/open-surat-perintah-penilai/{kdSuratPerintah}/{nipPegawai}", method = RequestMethod.PUT)
+    @RequestMapping(value = "/open-surat-perintah-penilai/{kdSuratPerintah}", method = RequestMethod.PUT)
     ResponseEntity<?> openSuratPerintahPenilai(
-            @PathVariable("KdSuratPerintah") String kdSuratPerintah,
-            @PathVariable("nipPegawai") String nipPegawai) {
+            @PathVariable("kdSuratPerintah") String kdSuratPerintah) {
         LOGGER.info("open surat penilai");
 
         suratPerintahService.openSuratPeintahByPenilai(kdSuratPerintah);

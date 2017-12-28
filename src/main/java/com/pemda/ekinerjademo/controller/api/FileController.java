@@ -51,7 +51,7 @@ public class FileController {
     private HttpHeaders getImageHttpHeader(byte[] image) {
         HttpHeaders headers = new HttpHeaders();
 
-        headers.setContentType(MediaType.TEXT_PLAIN);
+        headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
 
         return headers;
     }

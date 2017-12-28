@@ -80,6 +80,63 @@ public class TemplateLainController {
                 new CustomMessage("template lain created"), HttpStatus.CREATED);
     }
 
+    @RequestMapping(value = "/create-template-lain-data", method = RequestMethod.POST)
+    ResponseEntity<?> createTemplateLainData(@RequestBody TemplateLainInputWrapper templateLainInputWrapper) {
+        LOGGER.info("create template lain data");
+
+        String kdTemplateLain = String.valueOf(new Date().getTime());
+
+        TemplateLain templateLain = new TemplateLain();
+
+        templateLain.setKdTemplateLain(kdTemplateLain);
+        templateLain.setKdUnitKerja(templateLainInputWrapper.getKdUnitKerja());
+        templateLain.setNipPegawai(templateLainInputWrapper.getNipPegawai());
+        templateLain.setKeterangan(templateLainInputWrapper.getKeterangan());
+        templateLain.setKdNaskahPenugasan(templateLainInputWrapper.getKdNaskahPenugasan());
+        templateLain.setJenisNaskahPenugasan(templateLainInputWrapper.getJenisNaskahPenugasan());
+        templateLain.setKdUrtug(templateLainInputWrapper.getKdUrtug());
+        templateLain.setKdJabatan(templateLainInputWrapper.getKdJabatan());
+        templateLain.setTahunUrtug(templateLainInputWrapper.getTahunUrtug());
+        templateLain.setStatusPenilaian(0);
+        templateLain.setTanggalPembuatanMilis(new Date().getTime());
+
+        if (templateLainInputWrapper.getKdTemplateLainBawahan() == null) {
+//            templateLain.setPathFile(kdTemplateLain+"."+fileTemplateLain.getOriginalFilename().split("\\.")[1]);
+            templateLain.setPathFile(kdTemplateLain+"."+ FilenameUtils.getExtension(templateLainInputWrapper.getNamaFile()));
+            templateLain.setPathPenilaian(kdTemplateLain);
+        } else {
+            TemplateLain templateLainBawahan
+                    = templateLainService.getTemplateLain(templateLainInputWrapper.getKdTemplateLainBawahan());
+
+            templateLain.setPathFile(templateLainInputWrapper.getNamaFileLaporanBawahan());
+            templateLain.setPathPenilaian(templateLainBawahan.getPathPenilaian()+"."+kdTemplateLain);
+
+            templateLainBawahan.setStatusPenilaian(2);
+            templateLainService.create(templateLainBawahan);
+        }
+
+        templateLainService.create(templateLain);
+
+        return new ResponseEntity<Object>(
+                new CustomMessage(kdTemplateLain), HttpStatus.CREATED);
+    }
+
+    @RequestMapping(value = "/create-template-lain-file",
+            method = RequestMethod.POST)
+    ResponseEntity<?> createTemplateLainFile(@RequestParam("file") MultipartFile fileTemplateLain) {
+        LOGGER.info("create template lain");
+
+        FileUploader uploader = new FileUploader();
+//            templateLain.setPathFile(kdTemplateLain+"."+fileTemplateLain.getOriginalFilename().split("\\.")[1]);
+//            templateLain.setPathFile(kdTemplateLain+"."+ FilenameUtils.getExtension(fileTemplateLain.getOriginalFilename()));
+        uploader.uploadFileTemplateLain(fileTemplateLain, FilenameUtils.removeExtension(fileTemplateLain.getOriginalFilename()));
+
+        return new ResponseEntity<Object>(
+                new CustomMessage("template lain created"), HttpStatus.CREATED);
+    }
+
+
+
     @RequestMapping(value = "/get-template-lain-by-pembuat/{nipPembuat}", method = RequestMethod.GET)
     ResponseEntity<?> getTemplateLainByPembuat(@PathVariable("nipPembuat") String nipPembuat) {
         LOGGER.info("get template lain by pembuat");

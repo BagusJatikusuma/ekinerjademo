@@ -6,6 +6,7 @@ import com.pemda.ekinerjademo.util.EkinerjaXMLBuilder;
 import com.pemda.ekinerjademo.wrapper.input.BeritaAcaraInputWrapper;
 import com.pemda.ekinerjademo.wrapper.output.BeritaAcaraHistoryWrapper;
 import com.pemda.ekinerjademo.wrapper.output.CustomMessage;
+import groovy.transform.Synchronized;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +31,7 @@ public class BeritaAcaraController {
     @Autowired private BeritaAcaraService beritaAcaraService;
 
     @RequestMapping(value = "/berita-acara/create-berita-acara", method = RequestMethod.POST)
+    @Synchronized
     ResponseEntity<?> createBeritaAcara(
             @RequestBody BeritaAcaraInputWrapper inputWrapper) {
         LOGGER.info("create berita acara");

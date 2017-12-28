@@ -1,5 +1,6 @@
 package com.pemda.ekinerjademo.util;
 
+import org.apache.commons.io.FilenameUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -40,7 +41,7 @@ public class FileUploader {
             Path path
                     = Paths.get("/home/pemkab/project/documents/template_lain/"
                     +fileName+"."
-                    +fileSurat.getOriginalFilename().split("\\.")[1]);
+                    + FilenameUtils.getExtension(fileSurat.getOriginalFilename()));
 
             Files.write(path, bytes);
 
