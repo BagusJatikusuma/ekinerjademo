@@ -13,6 +13,7 @@ public class LaporanBawahanWrapper {
     private Integer suratPejabat;
     private Long tanggalDibuatMilis;
     private String namaFileTemplateLain;
+    private String extensiFile;
 
     public LaporanBawahanWrapper() {
     }
@@ -91,6 +92,19 @@ public class LaporanBawahanWrapper {
         this.namaFileTemplateLain = namaFileTemplateLain;
     }
 
+    public LaporanBawahanWrapper(String kdSurat, String jenisSurat, String nipBawahan, String namaBawahan, Integer statusPenilaian, Integer kdJenisSurat, Integer suratPejabat, Long tanggalDibuatMilis, String namaFileTemplateLain, String extensiFile) {
+        this.kdSurat = kdSurat;
+        this.jenisSurat = jenisSurat;
+        this.nipBawahan = nipBawahan;
+        this.namaBawahan = namaBawahan;
+        StatusPenilaian = statusPenilaian;
+        this.kdJenisSurat = kdJenisSurat;
+        this.suratPejabat = suratPejabat;
+        this.tanggalDibuatMilis = tanggalDibuatMilis;
+        this.namaFileTemplateLain = namaFileTemplateLain;
+        this.extensiFile = extensiFile;
+    }
+
     public String getKdSurat() {
         return kdSurat;
     }
@@ -165,5 +179,13 @@ public class LaporanBawahanWrapper {
 
     public void setNamaFileTemplateLain(String namaFileTemplateLain) {
         this.namaFileTemplateLain = namaFileTemplateLain;
+    }
+
+    public String getExtensiFile() {
+        return extensiFile;
+    }
+
+    public void setExtensiFile(String extensiFile) {
+        this.extensiFile = extensiFile;
     }
 }

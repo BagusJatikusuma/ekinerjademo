@@ -16,6 +16,7 @@ import com.pemda.ekinerjademo.repository.ekinerjarepository.AkunPegawaiDao;
 import com.pemda.ekinerjademo.service.*;
 import com.pemda.ekinerjademo.wrapper.input.*;
 import com.pemda.ekinerjademo.wrapper.output.*;
+import org.apache.commons.io.FilenameUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -919,7 +920,8 @@ public class AkunPegawaiController {
                                 15,
                                 0,
                                 templateLainBawahan.getTanggalPembuatanMilis(),
-                                templateLainBawahan.getPathFile()
+                                FilenameUtils.removeExtension(templateLainBawahan.getPathFile()),
+                                FilenameUtils.getExtension(templateLainBawahan.getPathFile())
                         ));
             }
         }
@@ -1031,6 +1033,23 @@ public class AkunPegawaiController {
                                 14,
                                 0,
                                 telaahanStafBawahan.getTanggalPembuatanMilis()));
+            }
+
+            List<TemplateLain> templateLainList
+                    = templateLainService.getByPembuat(pegawaiBawahan.getNip());
+            for (TemplateLain templateLainBawahan : templateLainList) {
+                laporanBawahanWrapperList
+                        .add(new LaporanBawahanWrapper(templateLainBawahan.getKdTemplateLain(),
+                                "template lain",
+                                pegawaiBawahan.getNip(),
+                                pegawaiBawahan.getNama(),
+                                templateLainBawahan.getStatusPenilaian(),
+                                15,
+                                0,
+                                templateLainBawahan.getTanggalPembuatanMilis(),
+                                FilenameUtils.removeExtension(templateLainBawahan.getPathFile()),
+                                FilenameUtils.getExtension(templateLainBawahan.getPathFile())
+                        ));
             }
         }
 
