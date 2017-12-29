@@ -92,7 +92,11 @@ public class TemplateLainController {
         templateLain.setKdUnitKerja(templateLainInputWrapper.getKdUnitKerja());
         templateLain.setNipPegawai(templateLainInputWrapper.getNipPegawai());
         templateLain.setKeterangan(templateLainInputWrapper.getKeterangan());
-        templateLain.setDurasiPengerjaan(templateLainInputWrapper.getDurasiPengerjaan());
+        if (templateLainInputWrapper.getDurasiPengerjaan() == null) {
+            templateLain.setDurasiPengerjaan(0);
+        } else {
+            templateLain.setDurasiPengerjaan(templateLainInputWrapper.getDurasiPengerjaan());
+        }
         templateLain.setKdNaskahPenugasan(templateLainInputWrapper.getKdNaskahPenugasan());
         templateLain.setJenisNaskahPenugasan(templateLainInputWrapper.getJenisNaskahPenugasan());
         templateLain.setKdUrtug(templateLainInputWrapper.getKdUrtug());

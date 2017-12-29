@@ -1317,6 +1317,23 @@ public class AkunPegawaiController {
                                     lembarDisposisi.getDurasiPengerjaan()));
                 }
             }
+            for (TemplateLain templateLain : templateLainList) {
+                date = new Date(templateLain.getTanggalPembuatanMilis());
+                calendar.setTime(date);
+
+                int tanggalDibuat = calendar.get(Calendar.DAY_OF_MONTH);
+                int bulanDibuat = calendar.get(Calendar.MONTH)+1;
+                int tahunDibuat = calendar.get(Calendar.YEAR);
+
+                if (bulanDibuat == bulan && tahunDibuat == tahun && tanggalDibuat == tanggal) {
+                    kinerjaPegawaiWrappers
+                            .add(new KinerjaPegawaiWrapper(
+                                    templateLain.getKdTemplateLain(),
+                                    "template lain",
+                                    15,
+                                    templateLain.getDurasiPengerjaan()));
+                }
+            }
 
             laporanKinerja.setDaftarKinerjaPegawaiWrapper(kinerjaPegawaiWrappers);
 

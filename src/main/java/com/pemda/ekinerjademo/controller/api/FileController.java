@@ -1,8 +1,11 @@
 package com.pemda.ekinerjademo.controller.api;
 
+import com.pemda.ekinerjademo.model.ekinerjamodel.TemplateLain;
+import com.pemda.ekinerjademo.service.TemplateLainService;
 import com.pemda.ekinerjademo.wrapper.output.CustomMessage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -22,6 +25,9 @@ import java.nio.file.Files;
 @RequestMapping(value = "/api")
 public class FileController {
     public static final Logger LOGGER = LoggerFactory.getLogger(FileController.class);
+
+    @Autowired
+    private TemplateLainService templateLainService;
 
     @RequestMapping(value = "/get-template-lain-file/{namaFile}/{fileExtension}", method = RequestMethod.GET)
     ResponseEntity<?> getTemplateLainFile(
@@ -49,13 +55,22 @@ public class FileController {
 
     }
 
-    @RequestMapping(value = "/get-template-lain-file-revisi/{namaFile}/{fileExtension}", method = RequestMethod.GET)
+    @RequestMapping(value = "/get-template-lain-file-revisi/{namaFile}/{fileExtension}/{kdSurat}", method = RequestMethod.GET)
     ResponseEntity<?> getTemplateLainFileRevisi(
             @PathVariable("namaFile") String namaFile,
             @PathVariable("fileExtension") String fileExtension,
+            @PathVariable("kdSurat") String kdSurat,
             HttpServletResponse response
             ) {
         LOGGER.info("get template lain file");
+
+        TemplateLain templateLain
+                = templateLainService.getTemplateLain(kdSurat);
+        if (templateLain.getStatusPenilaian() == 0) {
+            templateLain.setStatusPenilaian(1);
+        }
+
+        templateLainService.create(templateLain);
 
         byte[] file = null;
 
