@@ -1,8 +1,6 @@
 package com.pemda.ekinerjademo.model.ekinerjamodel;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 /**
  * Created by bagus on 04/01/18.
@@ -10,11 +8,22 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "tembusan_memorandum")
 public class TembusanMemorandum {
+    @EmbeddedId
     private TembusanMemorandumId tembusanMemorandumId;
+
     @Column(name = "status_diterima")
     private Integer statusDiterima;
+
     @Column(name = "status_baca")
     private Integer statusBaca;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(
+            name = "kd_memorandum",
+            insertable = false,
+            updatable = false,
+            referencedColumnName = "kd_memorandum")
+    private Memorandum memorandum;
 
     public TembusanMemorandumId getTembusanMemorandumId() {
         return tembusanMemorandumId;
@@ -38,5 +47,13 @@ public class TembusanMemorandum {
 
     public void setStatusBaca(Integer statusBaca) {
         this.statusBaca = statusBaca;
+    }
+
+    public Memorandum getMemorandum() {
+        return memorandum;
+    }
+
+    public void setMemorandum(Memorandum memorandum) {
+        this.memorandum = memorandum;
     }
 }

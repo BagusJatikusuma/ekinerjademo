@@ -1,9 +1,7 @@
 package com.pemda.ekinerjademo.model.ekinerjamodel;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.List;
 
 /**
  * Created by bagus on 04/01/18.
@@ -54,6 +52,13 @@ public class Memorandum {
     private Integer statusPenilaian;
     @Column(name = "alasan_penolakan")
     private String alasanPenolakan;
+
+    @OneToOne(mappedBy = "memorandum", fetch = FetchType.LAZY)
+    private MemorandumNonPejabat memorandumNonPejabat;
+    @OneToOne(mappedBy = "memorandum", fetch = FetchType.LAZY)
+    private MemorandumPejabat memorandumPejabat;
+    @OneToMany(mappedBy = "memorandum")
+    private List<TembusanMemorandum> tembusanMemorandumList;
 
     public String getKdMemorandum() {
         return kdMemorandum;
@@ -221,5 +226,29 @@ public class Memorandum {
 
     public void setAlasanPenolakan(String alasanPenolakan) {
         this.alasanPenolakan = alasanPenolakan;
+    }
+
+    public MemorandumNonPejabat getMemorandumNonPejabat() {
+        return memorandumNonPejabat;
+    }
+
+    public void setMemorandumNonPejabat(MemorandumNonPejabat memorandumNonPejabat) {
+        this.memorandumNonPejabat = memorandumNonPejabat;
+    }
+
+    public MemorandumPejabat getMemorandumPejabat() {
+        return memorandumPejabat;
+    }
+
+    public void setMemorandumPejabat(MemorandumPejabat memorandumPejabat) {
+        this.memorandumPejabat = memorandumPejabat;
+    }
+
+    public List<TembusanMemorandum> getTembusanMemorandumList() {
+        return tembusanMemorandumList;
+    }
+
+    public void setTembusanMemorandumList(List<TembusanMemorandum> tembusanMemorandumList) {
+        this.tembusanMemorandumList = tembusanMemorandumList;
     }
 }
