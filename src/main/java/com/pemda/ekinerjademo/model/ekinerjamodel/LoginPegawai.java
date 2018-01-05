@@ -13,7 +13,7 @@ import javax.persistence.Table;
 public class LoginPegawai {
     @Id
     @Column(name = "id_login_pegawai")
-    private Integer idLoginPegawai;
+    private Long idLoginPegawai;
 
     @Column(name = "nip_pegawai")
     private String nipPegawai;
@@ -34,11 +34,11 @@ public class LoginPegawai {
     @Column(name = "tahun_logout")
     private Integer tahunLogout;
 
-    public Integer getIdLoginPegawai() {
+    public Long getIdLoginPegawai() {
         return idLoginPegawai;
     }
 
-    public void setIdLoginPegawai(Integer idLoginPegawai) {
+    public void setIdLoginPegawai(Long idLoginPegawai) {
         this.idLoginPegawai = idLoginPegawai;
     }
 

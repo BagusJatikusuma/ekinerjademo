@@ -35,4 +35,11 @@ public class SuratKuasaServiceImpl implements SuratKuasaService{
     public SuratKuasa getSuratKuasa(String kdSuratKuasa) {
         return suratKuasaDao.findOne(kdSuratKuasa);
     }
+
+    @Override
+    public void openSuratKuasaByPenilai(String kdSuratKuasa) {
+        SuratKuasa suratKuasa = suratKuasaDao.findOne(kdSuratKuasa);
+
+        suratKuasa.setStatusPenilaian(1);
+    }
 }

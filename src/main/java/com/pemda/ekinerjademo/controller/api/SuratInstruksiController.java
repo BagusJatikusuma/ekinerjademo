@@ -15,6 +15,7 @@ import com.pemda.ekinerjademo.wrapper.output.CustomMessage;
 import com.pemda.ekinerjademo.wrapper.output.DokumenSuratInstruksiWrapper;
 import com.pemda.ekinerjademo.wrapper.output.QutPegawaiWrapper;
 import com.pemda.ekinerjademo.wrapper.output.SuratInstruksiWrapper;
+import groovy.transform.Synchronized;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,6 +51,7 @@ public class SuratInstruksiController {
 
 
     @RequestMapping(value = "/create-surat-instruksi", method = RequestMethod.POST)
+    @Synchronized
     ResponseEntity<?> createSuratInstruksi(
             @RequestBody SuratInstruksiInputWrapper inputWrapper) {
         LOGGER.info("create surat instruksi");

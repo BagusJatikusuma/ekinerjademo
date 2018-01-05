@@ -16,6 +16,7 @@ import com.pemda.ekinerjademo.repository.ekinerjarepository.AkunPegawaiDao;
 import com.pemda.ekinerjademo.service.*;
 import com.pemda.ekinerjademo.wrapper.input.*;
 import com.pemda.ekinerjademo.wrapper.output.*;
+import org.apache.commons.io.FilenameUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,9 +26,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Created by bagus on 06/09/17.
@@ -56,6 +55,10 @@ public class AkunPegawaiController {
     @Autowired private LaporanService laporanService;
     @Autowired private SuratKuasaService suratKuasaService;
     @Autowired private TelaahanStafService telaahanStafService;
+    @Autowired private TemplateLainService templateLainService;
+    @Autowired private LoginPegawaiService loginPegawaiService;
+    @Autowired private LembarDisposisiService lembarDisposisiService;
+    @Autowired private SuratInstruksiService suratInstruksiService;
 
     @Autowired private TkdUnkDao tkdUnkDao;
 
@@ -832,9 +835,11 @@ public class AkunPegawaiController {
                                 beritaAcaraBawahan.getKdBeritaAcara(),
                                 "Berita Acara",
                                 pegawaiBawahan.getNip(),
+                                pegawaiBawahan.getNama(),
                                 beritaAcaraBawahan.getStatusPenilaian(),
                                 0,
-                                0));
+                                0,
+                                beritaAcaraBawahan.getTanggalPembuatanMilis()));
             }
             //ambil data surat perintah yang dilaporkan bawahan
             Set<SuratPerintah> suratPerintahList
@@ -851,9 +856,11 @@ public class AkunPegawaiController {
                                 suratPerintahBawahan.getKdSuratPerintah(),
                                 "Surat Perintah",
                                 pegawaiBawahan.getNip(),
+                                pegawaiBawahan.getNama(),
                                 suratPerintahBawahan.getStatusPenilaian(),
                                 11,
-                                suratPejabat));
+                                suratPejabat,
+                                suratPerintahBawahan.getTanggalPerintahMilis()));
             }
             //ambil data surat kuasa yang dilaporkan bawahan
             List<SuratKuasa> suratKuasaList
@@ -864,9 +871,11 @@ public class AkunPegawaiController {
                                 suratKuasaBawahan.getKdSuratKuasa(),
                                 "Surat Kuasa",
                                 pegawaiBawahan.getNip(),
+                                pegawaiBawahan.getNama(),
                                 suratKuasaBawahan.getStatusPenilaian(),
                                 9,
-                                0));
+                                0,
+                                suratKuasaBawahan.getTanggalPembuatanMilis()));
             }
             //ambil data laporan yang dilaporkan bawahan
             List<Laporan> laporanList
@@ -877,9 +886,11 @@ public class AkunPegawaiController {
                                 laporanBawahan.getKdLaporan(),
                                 "Laporan Pegawai",
                                 pegawaiBawahan.getNip(),
+                                pegawaiBawahan.getNama(),
                                 laporanBawahan.getStatusPenilaian(),
                                 1,
-                                0));
+                                0,
+                                laporanBawahan.getTanggalPembuatanMilis()));
             }
             //ambil data telaahan staf yang dilaporkan bawahan
             List<TelaahanStaf> telaahanStafList
@@ -890,9 +901,28 @@ public class AkunPegawaiController {
                                 telaahanStafBawahan.getKdTelaahanStaf(),
                                 "Telaahan staf",
                                 pegawaiBawahan.getNip(),
+                                pegawaiBawahan.getNama(),
                                 telaahanStafBawahan.getStatusPenilaian(),
                                 14,
-                                0));
+                                0,
+                                telaahanStafBawahan.getTanggalPembuatanMilis()));
+            }
+
+            List<TemplateLain> templateLainList
+                    = templateLainService.getByPembuat(pegawaiBawahan.getNip());
+            for (TemplateLain templateLainBawahan : templateLainList) {
+                laporanBawahanWrapperList
+                        .add(new LaporanBawahanWrapper(templateLainBawahan.getKdTemplateLain(),
+                                "template lain",
+                                pegawaiBawahan.getNip(),
+                                pegawaiBawahan.getNama(),
+                                templateLainBawahan.getStatusPenilaian(),
+                                15,
+                                0,
+                                templateLainBawahan.getTanggalPembuatanMilis(),
+                                FilenameUtils.removeExtension(templateLainBawahan.getPathFile()),
+                                FilenameUtils.getExtension(templateLainBawahan.getPathFile())
+                        ));
             }
         }
 
@@ -933,9 +963,11 @@ public class AkunPegawaiController {
                                 beritaAcaraBawahan.getKdBeritaAcara(),
                                 "Berita Acara",
                                 pegawaiBawahan.getNip(),
+                                pegawaiBawahan.getNama(),
                                 beritaAcaraBawahan.getStatusPenilaian(),
                                 0,
-                                0));
+                                0,
+                                beritaAcaraBawahan.getTanggalPembuatanMilis()));
             }
             //ambil data surat perintah yang dilaporkan bawahan
             Set<SuratPerintah> suratPerintahList
@@ -951,9 +983,11 @@ public class AkunPegawaiController {
                                 suratPerintahBawahan.getKdSuratPerintah(),
                                 "Surat Perintah",
                                 pegawaiBawahan.getNip(),
+                                pegawaiBawahan.getNama(),
                                 suratPerintahBawahan.getStatusPenilaian(),
                                 11,
-                                suratPejabat));
+                                suratPejabat,
+                                suratPerintahBawahan.getTanggalPerintahMilis()));
             }
             //ambil data surat kuasa yang dilaporkan bawahan
             List<SuratKuasa> suratKuasaList
@@ -964,9 +998,11 @@ public class AkunPegawaiController {
                                 suratKuasaBawahan.getKdSuratKuasa(),
                                 "Surat Kuasa",
                                 pegawaiBawahan.getNip(),
+                                pegawaiBawahan.getNama(),
                                 suratKuasaBawahan.getStatusPenilaian(),
                                 9,
-                                0));
+                                0,
+                                suratKuasaBawahan.getTanggalPembuatanMilis()));
             }
             //ambil data laporan yang dilaporkan bawahan
             List<Laporan> laporanList
@@ -977,9 +1013,11 @@ public class AkunPegawaiController {
                                 laporanBawahan.getKdLaporan(),
                                 "Laporan Pegawai",
                                 pegawaiBawahan.getNip(),
+                                pegawaiBawahan.getNama(),
                                 laporanBawahan.getStatusPenilaian(),
                                 1,
-                                0));
+                                0,
+                                laporanBawahan.getTanggalPembuatanMilis()));
             }
             //ambil data telaahan staf yang dilaporkan bawahan
             List<TelaahanStaf> telaahanStafList
@@ -990,9 +1028,28 @@ public class AkunPegawaiController {
                                 telaahanStafBawahan.getKdTelaahanStaf(),
                                 "Telaahan staf",
                                 pegawaiBawahan.getNip(),
+                                pegawaiBawahan.getNama(),
                                 telaahanStafBawahan.getStatusPenilaian(),
                                 14,
-                                0));
+                                0,
+                                telaahanStafBawahan.getTanggalPembuatanMilis()));
+            }
+
+            List<TemplateLain> templateLainList
+                    = templateLainService.getByPembuat(pegawaiBawahan.getNip());
+            for (TemplateLain templateLainBawahan : templateLainList) {
+                laporanBawahanWrapperList
+                        .add(new LaporanBawahanWrapper(templateLainBawahan.getKdTemplateLain(),
+                                "template lain",
+                                pegawaiBawahan.getNip(),
+                                pegawaiBawahan.getNama(),
+                                templateLainBawahan.getStatusPenilaian(),
+                                15,
+                                0,
+                                templateLainBawahan.getTanggalPembuatanMilis(),
+                                FilenameUtils.removeExtension(templateLainBawahan.getPathFile()),
+                                FilenameUtils.getExtension(templateLainBawahan.getPathFile())
+                        ));
             }
         }
 
@@ -1061,9 +1118,231 @@ public class AkunPegawaiController {
 
                 telaahanStafService.createTelaahanStaf(telaahanStaf);
                 break;
+            case 15 :
+                TemplateLain templateLain
+                        = templateLainService.getTemplateLain(inputWrapper.getKdSurat());
+                templateLain.setStatusPenilaian(3);
+                templateLain.setAlasanPenolakan(inputWrapper.getAlasanPenolakan());
+
+                templateLainService.create(templateLain);
+                break;
         }
 
         return new ResponseEntity<Object>(new CustomMessage("laporan sudah ditolak"), HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/get-report-bulanan/{nipPegawai}/{bulan}/{tahun}")
+    ResponseEntity<?> getReportBulanan(@PathVariable("nipPegawai") String nipPegawai,
+                                       @PathVariable("bulan") Integer bulan,
+                                       @PathVariable("tahun") Integer tahun) {
+        LOGGER.info("get repot bulanan");
+
+        KehadiranPegawaiBulananWrapper daftarhadirWrapper = new KehadiranPegawaiBulananWrapper();
+
+        List<Integer> daftarTanggalKehadiran = new ArrayList<>();
+        List<LoginPegawai> loginPegawaiList
+                = loginPegawaiService.getByBulanAndTahun(bulan, tahun);
+
+        List<LaporanKinerjaPegawaiWrapper> laporanKinerjaPegawaiWrapperList
+                = new ArrayList<>();
+
+        boolean found;
+        for (LoginPegawai loginPegawai : loginPegawaiList) {
+            found = false;
+
+            for (Integer tanggal : daftarTanggalKehadiran) {
+                if (tanggal == loginPegawai.getTanggalLogin()) {
+                    found = true;
+                    break;
+                }
+            }
+
+            if (!found) {
+                daftarTanggalKehadiran.add(loginPegawai.getTanggalLogin());
+            }
+        }
+
+        QutPegawai pegawai = qutPegawaiService.getQutPegawai(nipPegawai);
+
+        List<TelaahanStaf> telaahanStafList
+                = telaahanStafService.getByNipPembuatSurat(nipPegawai);
+        List<BeritaAcara> beritaAcaraList
+                = beritaAcaraService.getByNipPembuatSurat(nipPegawai);
+        List<Laporan> laporanList
+                = laporanService.getByNipPembuatSurat(nipPegawai);
+        List<SuratInstruksi> suratInstruksiList
+                = suratInstruksiService.getSuratInstruksiByNip(nipPegawai);
+        List<SuratKuasa> suratKuasaList
+                = suratKuasaService.getByNipPembuatSurat(nipPegawai);
+        Set<SuratPerintah> suratPerintahList
+                = suratPerintahService.getByNipPembuat(nipPegawai);
+        List<TemplateLain> templateLainList
+                = templateLainService.getByPembuat(nipPegawai);
+        List<LembarDisposisi> lembarDisposisiList
+                = lembarDisposisiService.findByNipPegawai(nipPegawai);
+
+        Calendar calendar = Calendar.getInstance();
+        Date date = null;
+
+        Integer jumlahMenit = 0;
+
+        for (Integer tanggal : daftarTanggalKehadiran) {
+
+            LaporanKinerjaPegawaiWrapper laporanKinerja = new LaporanKinerjaPegawaiWrapper();
+
+            laporanKinerja.setNipPegawai(pegawai.getNip());
+            laporanKinerja.setNamaPegawai(pegawai.getNama());
+            laporanKinerja.setTanggal(tanggal);
+            laporanKinerja.setBulan(bulan);
+            laporanKinerja.setTahun(tahun);
+
+            List<KinerjaPegawaiWrapper> kinerjaPegawaiWrappers = new ArrayList<>();
+
+            for (TelaahanStaf telaahanStaf : telaahanStafList) {
+                date = new Date(telaahanStaf.getTanggalPembuatanMilis());
+                calendar.setTime(date);
+
+                int tanggalDibuat = calendar.get(Calendar.DAY_OF_MONTH);
+                int bulanDibuat = calendar.get(Calendar.MONTH)+1;
+                int tahunDibuat = calendar.get(Calendar.YEAR);
+
+                if (bulanDibuat == bulan && tahunDibuat == tahun && tanggalDibuat == tanggal) {
+                    kinerjaPegawaiWrappers
+                            .add(new KinerjaPegawaiWrapper(
+                                    telaahanStaf.getKdTelaahanStaf(),
+                                    "telaahan staf",
+                                    14,
+                                    telaahanStaf.getDurasiPengerjaan()));
+                }
+            }
+            for (BeritaAcara beritaAcara : beritaAcaraList) {
+                date = new Date(beritaAcara.getTanggalPembuatanMilis());
+                calendar.setTime(date);
+
+                int tanggalDibuat = calendar.get(Calendar.DAY_OF_MONTH);
+                int bulanDibuat = calendar.get(Calendar.MONTH)+1;
+                int tahunDibuat = calendar.get(Calendar.YEAR);
+
+                if (bulanDibuat == bulan && tahunDibuat == tahun && tanggalDibuat == tanggal) {
+                    kinerjaPegawaiWrappers
+                            .add(new KinerjaPegawaiWrapper(
+                                    beritaAcara.getKdBeritaAcara(),
+                                    "berita acara",
+                                    0,
+                                    beritaAcara.getDurasiPengerjaan()));
+                }
+            }
+            for (Laporan laporan : laporanList) {
+                date = new Date(laporan.getTanggalPembuatanMilis());
+                calendar.setTime(date);
+
+                int tanggalDibuat = calendar.get(Calendar.DAY_OF_MONTH);
+                int bulanDibuat = calendar.get(Calendar.MONTH)+1;
+                int tahunDibuat = calendar.get(Calendar.YEAR);
+
+                if (bulanDibuat == bulan && tahunDibuat == tahun && tanggalDibuat == tanggal) {
+                    kinerjaPegawaiWrappers
+                            .add(new KinerjaPegawaiWrapper(
+                                    laporan.getKdLaporan(),
+                                    "laporan",
+                                    1,
+                                    laporan.getDurasiPengerjaan()));
+                }
+            }
+            for (SuratInstruksi suratInstruksi : suratInstruksiList) {
+                date = new Date(suratInstruksi.getCreateddateMilis());
+                calendar.setTime(date);
+
+                int tanggalDibuat = calendar.get(Calendar.DAY_OF_MONTH);
+                int bulanDibuat = calendar.get(Calendar.MONTH)+1;
+                int tahunDibuat = calendar.get(Calendar.YEAR);
+
+                if (bulanDibuat == bulan && tahunDibuat == tahun && tanggalDibuat == tanggal) {
+                    kinerjaPegawaiWrappers
+                            .add(new KinerjaPegawaiWrapper(
+                                    suratInstruksi.getKdInstruksi(),
+                                    "surat instruksi",
+                                    16,
+                                    suratInstruksi.getDurasiPengerjaan()));
+                }
+            }
+            for (SuratKuasa suratKuasa : suratKuasaList) {
+                date = new Date(suratKuasa.getTanggalPembuatanMilis());
+                calendar.setTime(date);
+
+                int tanggalDibuat = calendar.get(Calendar.DAY_OF_MONTH);
+                int bulanDibuat = calendar.get(Calendar.MONTH)+1;
+                int tahunDibuat = calendar.get(Calendar.YEAR);
+
+                if (bulanDibuat == bulan && tahunDibuat == tahun && tanggalDibuat == tanggal) {
+                    kinerjaPegawaiWrappers
+                            .add(new KinerjaPegawaiWrapper(
+                                    suratKuasa.getKdSuratKuasa(),
+                                    "surat kuasa",
+                                    9,
+                                    suratKuasa.getDurasiPengerjaan()));
+                }
+            }
+            for (SuratPerintah suratPerintah : suratPerintahList) {
+                date = new Date(suratPerintah.getTanggalPerintahMilis());
+                calendar.setTime(date);
+
+                int tanggalDibuat = calendar.get(Calendar.DAY_OF_MONTH);
+                int bulanDibuat = calendar.get(Calendar.MONTH)+1;
+                int tahunDibuat = calendar.get(Calendar.YEAR);
+
+                if (bulanDibuat == bulan && tahunDibuat == tahun && tanggalDibuat == tanggal) {
+                    kinerjaPegawaiWrappers
+                            .add(new KinerjaPegawaiWrapper(
+                                    suratPerintah.getKdSuratPerintah(),
+                                    "surat perintah",
+                                    11,
+                                    suratPerintah.getDurasiPengerjaan()));
+                }
+            }
+            for (LembarDisposisi lembarDisposisi : lembarDisposisiList) {
+                date = new Date(lembarDisposisi.getTanggalPengirimanMilis());
+                calendar.setTime(date);
+
+                int tanggalDibuat = calendar.get(Calendar.DAY_OF_MONTH);
+                int bulanDibuat = calendar.get(Calendar.MONTH)+1;
+                int tahunDibuat = calendar.get(Calendar.YEAR);
+
+                if (bulanDibuat == bulan && tahunDibuat == tahun && tanggalDibuat == tanggal) {
+                    kinerjaPegawaiWrappers
+                            .add(new KinerjaPegawaiWrapper(
+                                    lembarDisposisi.getKdLembarDisposisi(),
+                                    "lembar disposisi",
+                                    17,
+                                    lembarDisposisi.getDurasiPengerjaan()));
+                }
+            }
+            for (TemplateLain templateLain : templateLainList) {
+                date = new Date(templateLain.getTanggalPembuatanMilis());
+                calendar.setTime(date);
+
+                int tanggalDibuat = calendar.get(Calendar.DAY_OF_MONTH);
+                int bulanDibuat = calendar.get(Calendar.MONTH)+1;
+                int tahunDibuat = calendar.get(Calendar.YEAR);
+
+                if (bulanDibuat == bulan && tahunDibuat == tahun && tanggalDibuat == tanggal) {
+                    kinerjaPegawaiWrappers
+                            .add(new KinerjaPegawaiWrapper(
+                                    templateLain.getKdTemplateLain(),
+                                    "template lain",
+                                    15,
+                                    templateLain.getDurasiPengerjaan()));
+                }
+            }
+
+            laporanKinerja.setDaftarKinerjaPegawaiWrapper(kinerjaPegawaiWrappers);
+
+            laporanKinerjaPegawaiWrapperList.add(laporanKinerja);
+        }
+
+
+        return new ResponseEntity<Object>(laporanKinerjaPegawaiWrapperList, HttpStatus.OK);
+
     }
 
 
@@ -1098,3 +1377,116 @@ public class AkunPegawaiController {
 //    }
 
 }
+
+
+
+////////////////////////////////////////////////////////////////
+//        daftarhadirWrapper.setDaftarTanggalHadir(daftarTanggalKehadiran);
+//        daftarhadirWrapper.setNipPegawai(pegawai.getNip());
+//        daftarhadirWrapper.setNamaPegawai(pegawai.getNama());
+//        daftarhadirWrapper.setBulan(bulan);
+//        daftarhadirWrapper.setTahun(tahun);
+//
+//        Integer jumlahMenit = 0;
+//
+//        List<TelaahanStaf> telaahanStafList
+//                = telaahanStafService.getByNipPembuatSurat(nipPegawai);
+//        List<BeritaAcara> beritaAcaraList
+//                = beritaAcaraService.getByNipPembuatSurat(nipPegawai);
+//        List<Laporan> laporanList
+//                = laporanService.getByNipPembuatSurat(nipPegawai);
+//        List<SuratInstruksi> suratInstruksiList
+//                = suratInstruksiService.getSuratInstruksiByNip(nipPegawai);
+//        List<SuratKuasa> suratKuasaList
+//                = suratKuasaService.getByNipPembuatSurat(nipPegawai);
+//        Set<SuratPerintah> suratPerintahList
+//                = suratPerintahService.getByNipPembuat(nipPegawai);
+//        List<TemplateLain> templateLainList
+//                = templateLainService.getByPembuat(nipPegawai);
+//        List<LembarDisposisi> lembarDisposisiList
+//                = lembarDisposisiService.findByNipPegawai(nipPegawai);
+//
+//        Calendar calendar = Calendar.getInstance();
+//        Date date = null;
+//
+//        for (TelaahanStaf telaahanStaf : telaahanStafList) {
+//            date = new Date(telaahanStaf.getTanggalPembuatanMilis());
+//            calendar.setTime(date);
+//
+//            int bulanDibuat = calendar.get(Calendar.MONTH)+1;
+//            int tahunDibuat = calendar.get(Calendar.YEAR);
+//
+//            if (bulanDibuat == bulan && tahunDibuat == tahun) {
+//                jumlahMenit = jumlahMenit + telaahanStaf.getDurasiPengerjaan();
+//            }
+//        }
+//        for (BeritaAcara beritaAcara : beritaAcaraList) {
+//            date = new Date(beritaAcara.getTanggalPembuatanMilis());
+//            calendar.setTime(date);
+//
+//            int bulanDibuat = calendar.get(Calendar.MONTH)+1;
+//            int tahunDibuat = calendar.get(Calendar.YEAR);
+//
+//            if (bulanDibuat == bulan && tahunDibuat == tahun) {
+//                jumlahMenit = jumlahMenit + beritaAcara.getDurasiPengerjaan();
+//            }
+//        }
+//        for (Laporan laporan : laporanList) {
+//            date = new Date(laporan.getTanggalPembuatanMilis());
+//            calendar.setTime(date);
+//
+//            int bulanDibuat = calendar.get(Calendar.MONTH)+1;
+//            int tahunDibuat = calendar.get(Calendar.YEAR);
+//
+//            if (bulanDibuat == bulan && tahunDibuat == tahun) {
+//                jumlahMenit = jumlahMenit + laporan.getDurasiPengerjaan();
+//            }
+//        }
+//        for (SuratInstruksi suratInstruksi : suratInstruksiList) {
+//            date = new Date(suratInstruksi.getCreateddateMilis());
+//            calendar.setTime(date);
+//
+//            int bulanDibuat = calendar.get(Calendar.MONTH)+1;
+//            int tahunDibuat = calendar.get(Calendar.YEAR);
+//
+//            if (bulanDibuat == bulan && tahunDibuat == tahun) {
+//                jumlahMenit = jumlahMenit + suratInstruksi.getDurasiPengerjaan();
+//            }
+//        }
+//        for (SuratKuasa suratKuasa : suratKuasaList) {
+//            date = new Date(suratKuasa.getTanggalPembuatanMilis());
+//            calendar.setTime(date);
+//
+//            int bulanDibuat = calendar.get(Calendar.MONTH)+1;
+//            int tahunDibuat = calendar.get(Calendar.YEAR);
+//
+//            if (bulanDibuat == bulan && tahunDibuat == tahun) {
+//                jumlahMenit = jumlahMenit + suratKuasa.getDurasiPengerjaan();
+//            }
+//        }
+//        for (SuratPerintah suratPerintah : suratPerintahList) {
+//            date = new Date(suratPerintah.getTanggalPerintahMilis());
+//            calendar.setTime(date);
+//
+//            int bulanDibuat = calendar.get(Calendar.MONTH)+1;
+//            int tahunDibuat = calendar.get(Calendar.YEAR);
+//
+//            if (bulanDibuat == bulan && tahunDibuat == tahun) {
+//                jumlahMenit = jumlahMenit + suratPerintah.getDurasiPengerjaan();
+//            }
+//        }
+//        for (LembarDisposisi lembarDisposisi : lembarDisposisiList) {
+//            date = new Date(lembarDisposisi.getTanggalPengirimanMilis());
+//            calendar.setTime(date);
+//
+//            int bulanDibuat = calendar.get(Calendar.MONTH)+1;
+//            int tahunDibuat = calendar.get(Calendar.YEAR);
+//
+//            if (bulanDibuat == bulan && tahunDibuat == tahun) {
+//                jumlahMenit = jumlahMenit + lembarDisposisi.getDurasiPengerjaan();
+//            }
+//        }
+//
+//        daftarhadirWrapper.setJumlahMenitKerja(jumlahMenit);
+//
+//        return new ResponseEntity<Object>(daftarhadirWrapper, HttpStatus.OK);

@@ -17,6 +17,7 @@ public class PegawaiCredential {
     private String pangkat;
     private String golongan;
     private String eselon;
+    private Long loginId;
 
     public PegawaiCredential() {}
     public PegawaiCredential(
@@ -88,6 +89,33 @@ public class PegawaiCredential {
         this.pangkat = pangkat;
         this.golongan = golongan;
         this.eselon = eselon;
+    }
+
+    public PegawaiCredential(
+            String nipPegawai,
+            String namaPegawai,
+            Role role,
+            String token,
+            String jabatan,
+            String unit,
+            String kdUnitKerja,
+            String kdJabatan,
+            String pangkat,
+            String golongan,
+            String eselon,
+            Long loginId) {
+        this.nipPegawai = nipPegawai;
+        this.namaPegawai = namaPegawai;
+        this.role = role;
+        this.token = token;
+        this.jabatan = jabatan;
+        this.unit = unit;
+        this.kdUnitKerja = kdUnitKerja;
+        this.kdJabatan = kdJabatan;
+        this.pangkat = pangkat;
+        this.golongan = golongan;
+        this.eselon = eselon;
+        this.loginId = loginId;
     }
 
     public String getNipPegawai() {
@@ -176,5 +204,13 @@ public class PegawaiCredential {
 
     public void setEselon(String eselon) {
         this.eselon = eselon;
+    }
+
+    public Long getLoginId() {
+        return loginId;
+    }
+
+    public void setLoginId(Long loginId) {
+        this.loginId = loginId;
     }
 }

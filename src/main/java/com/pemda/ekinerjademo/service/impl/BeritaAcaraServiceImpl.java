@@ -36,4 +36,11 @@ public class BeritaAcaraServiceImpl implements BeritaAcaraService{
     public BeritaAcara getBeritaAcara(String kdBeritaAcara) {
         return beritaAcaraDao.findOne(kdBeritaAcara);
     }
+
+    @Override
+    public void openBeritaAcaraByPenilai(String kdBeritaAcara) {
+        BeritaAcara beritaAcara = beritaAcaraDao.findOne(kdBeritaAcara);
+
+        beritaAcara.setStatusPenilaian(1);
+    }
 }

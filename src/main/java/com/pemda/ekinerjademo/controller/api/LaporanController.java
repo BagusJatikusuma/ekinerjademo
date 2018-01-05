@@ -7,6 +7,7 @@ import com.pemda.ekinerjademo.wrapper.input.BeritaAcaraInputWrapper;
 import com.pemda.ekinerjademo.wrapper.input.LaporanInputWrapper;
 import com.pemda.ekinerjademo.wrapper.output.CustomMessage;
 import com.pemda.ekinerjademo.wrapper.output.LaporanHistoryWrapper;
+import groovy.transform.Synchronized;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +34,7 @@ public class LaporanController {
     @Autowired private LaporanService laporanService;
 
     @RequestMapping(value = "/create-laporan", method = RequestMethod.POST)
+    @Synchronized
     ResponseEntity<?> createLaporan(
             @RequestBody LaporanInputWrapper inputWrapper) {
         LOGGER.info("create laporan");
@@ -108,4 +110,17 @@ public class LaporanController {
 
         return new ResponseEntity<Object>(laporanHistoryWrapperList, HttpStatus.OK);
     }
+
+    @RequestMapping(value = "/open-laporan-penilai/{kdLaporan}/{nipPegawai}", method = RequestMethod.PUT)
+    ResponseEntity<?> openLaporanPenilai(
+            @PathVariable("KdLaporan") String kdLaporan,
+            @PathVariable("nipPegawai") String nipPegawai) {
+        LOGGER.info("open laporan");
+
+        laporanService.openLaporanByPenilai(kdLaporan);
+
+        return new ResponseEntity<Object>(new CustomMessage("laporan opened by penilai"), HttpStatus.OK);
+
+    }
+
 }

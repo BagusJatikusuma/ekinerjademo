@@ -6,6 +6,7 @@ import com.pemda.ekinerjademo.util.EkinerjaXMLBuilder;
 import com.pemda.ekinerjademo.wrapper.input.BeritaAcaraInputWrapper;
 import com.pemda.ekinerjademo.wrapper.output.BeritaAcaraHistoryWrapper;
 import com.pemda.ekinerjademo.wrapper.output.CustomMessage;
+import groovy.transform.Synchronized;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +31,7 @@ public class BeritaAcaraController {
     @Autowired private BeritaAcaraService beritaAcaraService;
 
     @RequestMapping(value = "/berita-acara/create-berita-acara", method = RequestMethod.POST)
+    @Synchronized
     ResponseEntity<?> createBeritaAcara(
             @RequestBody BeritaAcaraInputWrapper inputWrapper) {
         LOGGER.info("create berita acara");
@@ -110,4 +112,17 @@ public class BeritaAcaraController {
 
         return new ResponseEntity<Object>(beritaAcaraHistoryWrapperList, HttpStatus.OK);
     }
+
+    @RequestMapping(value = "/open-berita-acara-penilai/{kdBeritaAcara}/{nipPegawai}", method = RequestMethod.PUT)
+    ResponseEntity<?> openBeritaAcaraPenilai(
+            @PathVariable("kdBeritaAcara") String kdBeritaAcara,
+            @PathVariable("nipPegawai") String nipPegawai) {
+        LOGGER.info("open berita acara");
+
+        beritaAcaraService.openBeritaAcaraByPenilai(kdBeritaAcara);
+
+        return new ResponseEntity<Object>(new CustomMessage("berita acara opened by penilai"), HttpStatus.OK);
+
+    }
+
 }

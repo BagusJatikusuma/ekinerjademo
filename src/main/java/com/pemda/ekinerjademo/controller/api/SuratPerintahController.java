@@ -13,6 +13,7 @@ import com.pemda.ekinerjademo.util.EkinerjaXMLParser;
 import com.pemda.ekinerjademo.wrapper.input.SuratPerintahInputWrapper;
 import com.pemda.ekinerjademo.wrapper.input.TargetSuratDiterimaInputWrapper;
 import com.pemda.ekinerjademo.wrapper.output.*;
+import groovy.transform.Synchronized;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,6 +47,7 @@ public class SuratPerintahController {
     private NomorUrutSuratUnitKerjaService nomorUrutSuratUnitKerjaService;
 
     @RequestMapping(value = "/create-surat-perintah", method = RequestMethod.POST)
+    @Synchronized
     ResponseEntity<?> createSuratPerintah(
             @RequestBody SuratPerintahInputWrapper inputWrapper) {
         LOGGER.info("create surat perintah non pejabat");
@@ -470,7 +472,11 @@ public class SuratPerintahController {
                             suratPerintah.getKdSuratPerintah(),
                             df.format(new Date(suratPerintah.getTanggalPerintahMilis())),
                             isSuratPejabat,
-                            suratPerintah.getStatusBaca()
+                            suratPerintah.getStatusBaca(),
+                            "surat perintah",
+                            11,
+                            suratPerintah.getTanggalPerintahMilis(),
+                            suratPerintah.getStatusPenilaian()
                     ));
         }
 
@@ -869,6 +875,17 @@ public class SuratPerintahController {
         suratPerintahService.openSuratPerintahPegawai(new TargetSuratPerintahPegawaiId(kdSuratPerintah, nipPegawai));
 
         return new ResponseEntity<Object>(new CustomMessage("surat perintah opened"), HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/open-surat-perintah-penilai/{kdSuratPerintah}", method = RequestMethod.PUT)
+    ResponseEntity<?> openSuratPerintahPenilai(
+            @PathVariable("kdSuratPerintah") String kdSuratPerintah) {
+        LOGGER.info("open surat penilai");
+
+        suratPerintahService.openSuratPeintahByPenilai(kdSuratPerintah);
+
+        return new ResponseEntity<Object>(new CustomMessage("laporan opened by penilai"), HttpStatus.OK);
+
     }
 
 }

@@ -31,6 +31,7 @@ public interface SuratPerintahService {
 
     void openSuratPerintah(String kdSuratPerintah);
     void openSuratPerintahPegawai(TargetSuratPerintahPegawaiId targetSuratPerintahPegawaiId);
+    void openSuratPeintahByPenilai(String kdSuratPerintah);
 
     void update(SuratPerintah suratPerintah);
 

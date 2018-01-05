@@ -13,4 +13,6 @@ public interface SuratKuasaService {
     void createSuratKuasa(SuratKuasa suratKuasa);
 
     SuratKuasa getSuratKuasa(String kdSuratKuasa);
+
+    void openSuratKuasaByPenilai(String kdSuratKuasa);
 }

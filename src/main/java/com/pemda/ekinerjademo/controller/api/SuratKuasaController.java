@@ -7,6 +7,7 @@ import com.pemda.ekinerjademo.wrapper.input.BeritaAcaraInputWrapper;
 import com.pemda.ekinerjademo.wrapper.input.SuratKuasaInputWrapper;
 import com.pemda.ekinerjademo.wrapper.output.CustomMessage;
 import com.pemda.ekinerjademo.wrapper.output.SuratKuasaHistoryWrapper;
+import groovy.transform.Synchronized;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +34,7 @@ public class SuratKuasaController {
     @Autowired private SuratKuasaService suratKuasaService;
 
     @RequestMapping(value = "/create-surat-kuasa", method = RequestMethod.POST)
+    @Synchronized
     ResponseEntity<?> createSuratKuasa(
             @RequestBody SuratKuasaInputWrapper inputWrapper) {
         LOGGER.info("create surat kuasa");
@@ -102,5 +104,17 @@ public class SuratKuasaController {
         }
 
         return new ResponseEntity<Object>(suratKuasaHistoryWrapperList, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/open-surat-kuasa-penilai/{kdSuratKuasa}/{nipPegawai}", method = RequestMethod.PUT)
+    ResponseEntity<?> openSuratKuasaPenilai(
+            @PathVariable("KdSuratkuasa") String kdSuratKuasa,
+            @PathVariable("nipPegawai") String nipPegawai) {
+        LOGGER.info("open surat kuasa");
+
+        suratKuasaService.openSuratKuasaByPenilai(kdSuratKuasa);
+
+        return new ResponseEntity<Object>(new CustomMessage("laporan opened by penilai"), HttpStatus.OK);
+
     }
 }

@@ -12,6 +12,7 @@ import com.pemda.ekinerjademo.wrapper.output.CustomMessage;
 import com.pemda.ekinerjademo.wrapper.output.DokumenLembarDisposisiWrapper;
 import com.pemda.ekinerjademo.wrapper.output.LembarDisposisiWrapper;
 import com.pemda.ekinerjademo.wrapper.output.QutPegawaiWrapper;
+import groovy.transform.Synchronized;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,6 +40,7 @@ public class LembarDisposisiController {
     @Autowired private QutPegawaiCloneService qutPegawaiService;
 
     @RequestMapping(value = "/create-lembar-disposisi", method = RequestMethod.POST)
+    @Synchronized
     ResponseEntity<?> createLembarDisposisi(
             @RequestBody LembarDisposisiInputWrapper inputWrapper) {
         LOGGER.info("create lembar disposisi");
@@ -100,7 +102,7 @@ public class LembarDisposisiController {
         return new ResponseEntity<Object>(new CustomMessage("lembar disposisi created"), HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/create-lembar-disposisi-ekstensi", method = RequestMethod.POST)
+    @RequestMapping(value = "/create-lembar-disposisi-ekstensi", method = RequestMethod.POST, consumes = {"multipart/form-data"})
     ResponseEntity<?> createLembarDisposisiEkstensi(
             @RequestPart("metadata") LembarDisposisiInputWrapper inputWrapper,
             @RequestPart("file") MultipartFile fileSuratDisposisi) {
@@ -121,7 +123,7 @@ public class LembarDisposisiController {
             suratDisposisi.setDari(inputWrapper.getDariSuratDisposisi());
             suratDisposisi.setRingkasanIsi(inputWrapper.getRingkasanIsiSuratDisposisi());
             suratDisposisi.setLampiran(inputWrapper.getLampiran());
-            suratDisposisi.setPathFile(namaFileSuratDisposisi);
+            suratDisposisi.setPathFile(namaFileSuratDisposisi+"."+fileSuratDisposisi.getOriginalFilename().split("\\.")[1]);
 
             suratDisposisiService.create(suratDisposisi);
             uploader.uploadSuratLembarDisposisi(fileSuratDisposisi, namaFileSuratDisposisi);
@@ -188,10 +190,13 @@ public class LembarDisposisiController {
                             lembarDisposisi.getKdLembarDisposisi(),
                             lembarDisposisi.getPath(),
                             DateUtilities.createLocalDate(new Date(lembarDisposisi.getTanggalPenerimaanMilis()), "dd MMMM yyyy", indoLocale),
+                            lembarDisposisi.getTanggalPenerimaanMilis(),
                             lembarDisposisi.getTktKeamanan(),
                             DateUtilities.createLocalDate(new Date(lembarDisposisi.getTglPenyelesaianMilis()), "dd MMMM yyyy", indoLocale),
+                            lembarDisposisi.getTglPenyelesaianMilis(),
                             lembarDisposisi.getStatusBaca(),
-                            DateUtilities.createLocalDate(new Date(lembarDisposisi.getTanggalPengirimanMilis()), "dd MMMM yyyy", indoLocale)
+                            DateUtilities.createLocalDate(new Date(lembarDisposisi.getTanggalPengirimanMilis()), "dd MMMM yyyy", indoLocale),
+                            lembarDisposisi.getTanggalPengirimanMilis()
                     ));
         }
 
@@ -202,8 +207,10 @@ public class LembarDisposisiController {
     ResponseEntity<?> getLembarDisposisiTarget(@PathVariable("nipTarget") String nipTarget) {
         LOGGER.info("get lembar disposisi target");
 
+//        List<TargetLembarDisposisi> targetLembarDisposisiList
+//                = lembarDisposisiService.findByTargetDisposisi(nipTarget);
         List<TargetLembarDisposisi> targetLembarDisposisiList
-                = lembarDisposisiService.findByTargetDisposisi(nipTarget);
+                = lembarDisposisiService.findByTargetDisposisiRev(nipTarget);
 
 
         List<LembarDisposisiWrapper> lembarDisposisiWrappers
@@ -240,9 +247,11 @@ public class LembarDisposisiController {
     ResponseEntity<?> getLembarDisposisiTargetUnread(@PathVariable("nipTarget") String nipTarget) {
         LOGGER.info("get lembar disposisi target unread");
 
-        List<TargetLembarDisposisi> targetLembarDisposisiList
-                = lembarDisposisiService.findByTargetDisposisi(nipTarget);
+//        List<TargetLembarDisposisi> targetLembarDisposisiList
+//                = lembarDisposisiService.findByTargetDisposisi(nipTarget);
 
+        List<TargetLembarDisposisi> targetLembarDisposisiList
+                = lembarDisposisiService.findByTargetDisposisiRev(nipTarget);
 
         List<LembarDisposisiWrapper> lembarDisposisiWrappers
                 = new ArrayList<>();

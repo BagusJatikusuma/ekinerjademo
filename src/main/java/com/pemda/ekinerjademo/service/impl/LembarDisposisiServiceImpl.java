@@ -76,6 +76,11 @@ public class LembarDisposisiServiceImpl implements LembarDisposisiService {
     }
 
     @Override
+    public List<TargetLembarDisposisi> findByTargetDisposisiRev(String nipTarget) {
+        return targetLembarDisposisiDao.findByTargetDisposisi(nipTarget);
+    }
+
+    @Override
     public LembarDisposisi getDokumenLembarDisposisi(String kdLembarDisposisi) {
         return lembarDisposisiDao.findDokumenLembarDisposisi(kdLembarDisposisi);
     }

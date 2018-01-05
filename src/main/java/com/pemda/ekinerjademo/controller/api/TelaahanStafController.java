@@ -8,6 +8,7 @@ import com.pemda.ekinerjademo.wrapper.input.SuratKuasaInputWrapper;
 import com.pemda.ekinerjademo.wrapper.input.TelaahanStafInputWrapper;
 import com.pemda.ekinerjademo.wrapper.output.CustomMessage;
 import com.pemda.ekinerjademo.wrapper.output.TelaahanStaffHistoryWrapper;
+import groovy.transform.Synchronized;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +36,7 @@ public class TelaahanStafController {
     private TelaahanStafService telaahanStafService;
 
     @RequestMapping(value = "/create-telaahan-staf", method = RequestMethod.POST)
+    @Synchronized
     ResponseEntity<?> createTelaahanStaf(
             @RequestBody TelaahanStafInputWrapper inputWrapper) {
         LOGGER.info("create telaahan staf");

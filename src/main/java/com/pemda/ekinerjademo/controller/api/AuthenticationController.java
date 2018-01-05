@@ -6,6 +6,7 @@ import com.pemda.ekinerjademo.service.*;
 import com.pemda.ekinerjademo.util.exception.AuthenticationCredentialsNotFoundExcecption;
 import com.pemda.ekinerjademo.util.exception.BadCredentialsException;
 import com.pemda.ekinerjademo.wrapper.output.*;
+import groovy.transform.Synchronized;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,9 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by bagus on 09/09/17.
@@ -34,6 +33,8 @@ public class AuthenticationController {
     private QutPegawaiCloneService qutPegawaiService;
     @Autowired
     private AkunPegawaiService akunPegawaiService;
+    @Autowired
+    private LoginPegawaiService loginPegawaiService;
 
     /**
      * this method used for receive pegawai authentication request
@@ -42,6 +43,7 @@ public class AuthenticationController {
      */
     @RequestMapping(value = "/authentication", method = RequestMethod.POST)
     @Transactional
+    @Synchronized
     ResponseEntity<?> validateAkunPegawai(@RequestBody AkunPegawai akunPegawai) {
         LOGGER.info("receive "+akunPegawai.getNipPegawai()+" authetication request");
 
@@ -60,6 +62,25 @@ public class AuthenticationController {
                     HttpStatus.UNAUTHORIZED);
 
         }
+
+        Calendar calendar = Calendar.getInstance();
+        Date currentDate = new Date();
+
+        calendar.setTime(currentDate);
+
+        Long kdLoginPegawai = currentDate.getTime();
+
+        LoginPegawai loginPegawai = new LoginPegawai();
+
+        loginPegawai.setIdLoginPegawai(kdLoginPegawai);
+        loginPegawai.setNipPegawai(akunPegawai.getNipPegawai());
+        loginPegawai.setLoginMilis(currentDate.getTime());
+
+        loginPegawai.setTanggalLogin(calendar.get(Calendar.DAY_OF_MONTH));
+        loginPegawai.setBulanLogin(calendar.get(Calendar.MONTH)+1);
+        loginPegawai.setTahunLogin(calendar.get(Calendar.YEAR));
+
+        loginPegawaiService.createLog(loginPegawai);
 
         QutPegawai qutPegawai =
                 qutPegawaiService.getQutPegawai(akunPegawaiAuthenticated.getNipPegawai());
@@ -82,10 +103,34 @@ public class AuthenticationController {
                         qutPegawai.getKdJabatan(),
                         qutPegawai.getPangkat(),
                         qutPegawai.getGol(),
-                        qutPegawai.getEselon());
+                        qutPegawai.getEselon(),
+                        kdLoginPegawai
+                );
 
         return new ResponseEntity<Object>(pegawaiCredential, HttpStatus.OK);
 
+    }
+
+    @RequestMapping(value = "/logout-pegawai/{loginId}", method = RequestMethod.PUT)
+    ResponseEntity<?> logOutPegawai(@PathVariable("loginId") Long loginId) {
+        LOGGER.info("log out");
+        LoginPegawai loginPegawai
+                = loginPegawaiService.get(loginId);
+
+        Calendar calendar = Calendar.getInstance();
+
+        Date currentDate = new Date();
+
+        calendar.setTime(currentDate);
+
+        loginPegawai.setLogoutMilis(currentDate.getTime());
+        loginPegawai.setTanggalLogout(calendar.get(Calendar.DAY_OF_MONTH));
+        loginPegawai.setBulanLogout(calendar.get(Calendar.MONTH)+1);
+        loginPegawai.setTahunLogout(calendar.get(Calendar.YEAR));
+
+        loginPegawaiService.createLog(loginPegawai);
+
+        return new ResponseEntity<Object>(new CustomMessage("logout success"), HttpStatus.OK);
     }
 
 }
