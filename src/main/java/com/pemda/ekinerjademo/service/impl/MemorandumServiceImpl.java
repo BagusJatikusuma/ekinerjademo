@@ -32,6 +32,11 @@ public class MemorandumServiceImpl implements MemorandumService {
     }
 
     @Override
+    public List<Memorandum> getByNipTarget(String nipTarget) {
+        return memorandumDao.findByNipPenerimaMemorandum(nipTarget);
+    }
+
+    @Override
     public List<TembusanMemorandum> getTembusanMemorandum(String kdJabatanTembusan) {
         return tembusanMemorandumDao.findByTembusanMemorandumId_KdJabatan(kdJabatanTembusan);
     }

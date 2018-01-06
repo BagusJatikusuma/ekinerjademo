@@ -53,6 +53,13 @@ public class Memorandum {
     @Column(name = "alasan_penolakan")
     private String alasanPenolakan;
 
+    @Column(name = "approval_penandatangan")
+    private Integer approvalPenandatangan;
+    @Column(name = "status_penyebaran")
+    private Integer statusPenyebaran;
+    @Column(name = "status_baca")
+    private Integer statusBaca;
+
     @OneToOne(mappedBy = "memorandum", fetch = FetchType.LAZY)
     private MemorandumNonPejabat memorandumNonPejabat;
     @OneToOne(mappedBy = "memorandum", fetch = FetchType.LAZY)
@@ -250,5 +257,29 @@ public class Memorandum {
 
     public void setTembusanMemorandumList(List<TembusanMemorandum> tembusanMemorandumList) {
         this.tembusanMemorandumList = tembusanMemorandumList;
+    }
+
+    public Integer getApprovalPenandatangan() {
+        return approvalPenandatangan;
+    }
+
+    public void setApprovalPenandatangan(Integer approvalPenandatangan) {
+        this.approvalPenandatangan = approvalPenandatangan;
+    }
+
+    public Integer getStatusPenyebaran() {
+        return statusPenyebaran;
+    }
+
+    public void setStatusPenyebaran(Integer statusPenyebaran) {
+        this.statusPenyebaran = statusPenyebaran;
+    }
+
+    public Integer getStatusBaca() {
+        return statusBaca;
+    }
+
+    public void setStatusBaca(Integer statusBaca) {
+        this.statusBaca = statusBaca;
     }
 }

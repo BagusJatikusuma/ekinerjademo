@@ -12,6 +12,7 @@ import java.util.List;
  */
 public interface MemorandumService {
     List<Memorandum> getByNipPembuat(String nipPembuat);
+    List<Memorandum> getByNipTarget(String nipTarget);
     List<TembusanMemorandum> getTembusanMemorandum(String kdJabatanTembusan);
 
     void createMemorandum(Memorandum memorandum);

@@ -14,7 +14,18 @@ import java.util.List;
 public interface MemorandumDao extends JpaRepository<Memorandum, String>{
     List<Memorandum> findByKdUnitKerja(String kdUnitKerja);
     List<Memorandum> findByNomorTahun(Integer nomorTahun);
+    @Query("select m from Memorandum m " +
+            "left join fetch m.memorandumNonPejabat " +
+            "left join fetch m.memorandumPejabat " +
+            "left join fetch m.tembusanMemorandumList " +
+            "where m.nipPembuatSurat = ?1")
     List<Memorandum> findByNipPembuatSurat(String nipPembuatSurat);
+    @Query("select m from Memorandum m " +
+            "left join fetch m.memorandumNonPejabat " +
+            "left join fetch m.memorandumPejabat " +
+            "left join fetch m.tembusanMemorandumList " +
+            "where m.nipPenerimaMemorandum = ?1")
+    List<Memorandum> findByNipPenerimaMemorandum(String nipPenerima);
     @Query("select m from Memorandum m " +
             "left join fetch m.memorandumNonPejabat " +
             "left join fetch m.memorandumPejabat " +
