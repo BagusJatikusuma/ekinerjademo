@@ -2,17 +2,17 @@ package com.pemda.ekinerjademo.model.ekinerjamodel;
 
 import javax.persistence.*;
 import java.util.List;
-import java.util.Set;
 
 /**
- * Created by bayu on 08/12/17.
+ * Created by bayu on 07/01/18.
  */
 @Entity
-@Table(name = "nota_dinas")
-public class NotaDinas {
+@Table(name = "surat_dinas")
+public class SuratDinas {
     @Id
-    @Column(name = "kd_nota_dinas")
-    private String kdNotaDinas;
+    @Column(name = "nomor_urusan")
+    private String kdSuratDinas;
+
     @Column(name = "nomor_urusan")
     private String nomorUrusan;
     @Column(name = "nomor_urut")
@@ -24,16 +24,20 @@ public class NotaDinas {
     @Column(name = "nomor_tahun")
     private Integer nomorTahun;
 
-    @Column(name = "kd_jabatan_penerima_nota_dinas")
-    private String kdJabatanPenerimaNotaDinas;
-    @Column(name = "nip_pemberi_nota_dinas")
-    private String nipPemberiNotaDinas;
+    @Column(name = "sifat")
+    private String sifat;
+    @Column(name = "lampiran")
+    private Integer lampiran;
     @Column(name = "hal")
     private String hal;
+    @Column(name = "kd_jabatan_penerima_surat_dinas")
+    private String kdJabatanPenerimaSuratDinas;
     @Column(name = "tanggal_pembuatan_milis")
     private Long tanggalPembuatanMilis;
-    @Column(name = "isi_nota_dinas")
-    private String isiNotaDinas;
+    @Column(name = "kota_pembuatan_surat")
+    private String kotaPembuatanSurat;
+    @Column(name = "isi_surat_dinas")
+    private String isiSuratDinas;
     @Column(name = "nip_penandatangan")
     private String nipPenandatangan;
     @Column(name = "nip_pembuat_surat")
@@ -45,9 +49,10 @@ public class NotaDinas {
     private String kdNaskahPenugasan;
     @Column(name = "jenis_naskah_penugasan")
     private Integer jenisNaskahPenugasan;
-
     @Column(name = "durasi_pengerjaan")
     private Integer durasiPengerjaan;
+    @Column(name = "path_penilaian")
+    private String pathPenilaian;
     @Column(name = "nip_penilai")
     private String nipPenilai;
     @Column(name = "status_penilaian")
@@ -55,15 +60,19 @@ public class NotaDinas {
     @Column(name = "alasan_penolakan")
     private String alasanPenolakan;
 
-    @OneToMany(mappedBy = "notaDinas")
-    private List<TembusanNotaDinas> tembusanNotaDinasList;
+    @OneToOne(mappedBy = "suratDinas", fetch = FetchType.LAZY)
+    private SuratDinasNonPejabat suratDinasNonPejabat;
+    @OneToOne(mappedBy = "suratDinas", fetch = FetchType.LAZY)
+    private SuratDinasPejabat suratDinasPejabat;
+    @OneToMany(mappedBy = "suratDinas")
+    private List<TembusanSuratDinas> tembusanSuratDinasList;
 
-    public String getKdNotaDinas() {
-        return kdNotaDinas;
+    public String getKdSuratDinas() {
+        return kdSuratDinas;
     }
 
-    public void setKdNotaDinas(String kdNotaDinas) {
-        this.kdNotaDinas = kdNotaDinas;
+    public void setKdSuratDinas(String kdSuratDinas) {
+        this.kdSuratDinas = kdSuratDinas;
     }
 
     public String getNomorUrusan() {
@@ -106,20 +115,20 @@ public class NotaDinas {
         this.nomorTahun = nomorTahun;
     }
 
-    public String getKdJabatanPenerimaNotaDinas() {
-        return kdJabatanPenerimaNotaDinas;
+    public String getSifat() {
+        return sifat;
     }
 
-    public void setKdJabatanPenerimaNotaDinas(String kdJabatanPenerimaNotaDinas) {
-        this.kdJabatanPenerimaNotaDinas = kdJabatanPenerimaNotaDinas;
+    public void setSifat(String sifat) {
+        this.sifat = sifat;
     }
 
-    public String getNipPemberiNotaDinas() {
-        return nipPemberiNotaDinas;
+    public Integer getLampiran() {
+        return lampiran;
     }
 
-    public void setNipPemberiNotaDinas(String nipPemberiNotaDinas) {
-        this.nipPemberiNotaDinas = nipPemberiNotaDinas;
+    public void setLampiran(Integer lampiran) {
+        this.lampiran = lampiran;
     }
 
     public String getHal() {
@@ -130,6 +139,14 @@ public class NotaDinas {
         this.hal = hal;
     }
 
+    public String getKdJabatanPenerimaSuratDinas() {
+        return kdJabatanPenerimaSuratDinas;
+    }
+
+    public void setKdJabatanPenerimaSuratDinas(String kdJabatanPenerimaSuratDinas) {
+        this.kdJabatanPenerimaSuratDinas = kdJabatanPenerimaSuratDinas;
+    }
+
     public Long getTanggalPembuatanMilis() {
         return tanggalPembuatanMilis;
     }
@@ -138,12 +155,20 @@ public class NotaDinas {
         this.tanggalPembuatanMilis = tanggalPembuatanMilis;
     }
 
-    public String getIsiNotaDinas() {
-        return isiNotaDinas;
+    public String getKotaPembuatanSurat() {
+        return kotaPembuatanSurat;
     }
 
-    public void setIsiNotaDinas(String isiNotaDinas) {
-        this.isiNotaDinas = isiNotaDinas;
+    public void setKotaPembuatanSurat(String kotaPembuatanSurat) {
+        this.kotaPembuatanSurat = kotaPembuatanSurat;
+    }
+
+    public String getIsiSuratDinas() {
+        return isiSuratDinas;
+    }
+
+    public void setIsiSuratDinas(String isiSuratDinas) {
+        this.isiSuratDinas = isiSuratDinas;
     }
 
     public String getNipPenandatangan() {
@@ -194,6 +219,14 @@ public class NotaDinas {
         this.durasiPengerjaan = durasiPengerjaan;
     }
 
+    public String getPathPenilaian() {
+        return pathPenilaian;
+    }
+
+    public void setPathPenilaian(String pathPenilaian) {
+        this.pathPenilaian = pathPenilaian;
+    }
+
     public String getNipPenilai() {
         return nipPenilai;
     }
@@ -216,5 +249,29 @@ public class NotaDinas {
 
     public void setAlasanPenolakan(String alasanPenolakan) {
         this.alasanPenolakan = alasanPenolakan;
+    }
+
+    public SuratDinasNonPejabat getSuratDinasNonPejabat() {
+        return suratDinasNonPejabat;
+    }
+
+    public void setSuratDinasNonPejabat(SuratDinasNonPejabat suratDinasNonPejabat) {
+        this.suratDinasNonPejabat = suratDinasNonPejabat;
+    }
+
+    public SuratDinasPejabat getSuratDinasPejabat() {
+        return suratDinasPejabat;
+    }
+
+    public void setSuratDinasPejabat(SuratDinasPejabat suratDinasPejabat) {
+        this.suratDinasPejabat = suratDinasPejabat;
+    }
+
+    public List<TembusanSuratDinas> getTembusanSuratDinasList() {
+        return tembusanSuratDinasList;
+    }
+
+    public void setTembusanSuratDinasList(List<TembusanSuratDinas> tembusanSuratDinasList) {
+        this.tembusanSuratDinasList = tembusanSuratDinasList;
     }
 }
