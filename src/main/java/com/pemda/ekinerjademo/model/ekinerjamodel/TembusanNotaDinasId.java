@@ -5,29 +5,28 @@ import javax.persistence.Embeddable;
 import java.io.Serializable;
 
 /**
- * Created by bagus on 04/01/18.
+ * Created by bayu on 07/01/18.
  */
 @Embeddable
-public class TembusanMemorandumId implements Serializable {
-    @Column(name = "kd_memorandum")
-    private String kdMemorandum;
-
+public class TembusanNotaDinasId implements Serializable {
+    @Column(name = "kd_nota_dinas")
+    private String kdNotaDinas;
     @Column(name = "kd_jabatan")
     private String kdJabatan;
 
-    public TembusanMemorandumId() {
+    public TembusanNotaDinasId() {
     }
-    public TembusanMemorandumId(String kdMemorandum, String kdJabatan) {
-        this.kdMemorandum = kdMemorandum;
+    public TembusanNotaDinasId(String kdNotaDinas, String kdJabatan) {
+        this.kdNotaDinas = kdNotaDinas;
         this.kdJabatan = kdJabatan;
     }
 
-    public String getKdMemorandum() {
-        return kdMemorandum;
+    public String getKdNotaDinas() {
+        return kdNotaDinas;
     }
 
-    public void setKdMemorandum(String kdMemorandum) {
-        this.kdMemorandum = kdMemorandum;
+    public void setKdNotaDinas(String kdNotaDinas) {
+        this.kdNotaDinas = kdNotaDinas;
     }
 
     public String getKdJabatan() {
@@ -43,15 +42,15 @@ public class TembusanMemorandumId implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        TembusanMemorandumId that = (TembusanMemorandumId) o;
+        TembusanNotaDinasId that = (TembusanNotaDinasId) o;
 
-        if (!kdMemorandum.equals(that.kdMemorandum)) return false;
+        if (!kdNotaDinas.equals(that.kdNotaDinas)) return false;
         return kdJabatan.equals(that.kdJabatan);
     }
 
     @Override
     public int hashCode() {
-        int result = kdMemorandum.hashCode();
+        int result = kdNotaDinas.hashCode();
         result = 31 * result + kdJabatan.hashCode();
         return result;
     }

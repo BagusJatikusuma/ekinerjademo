@@ -3,13 +3,13 @@ package com.pemda.ekinerjademo.model.ekinerjamodel;
 import javax.persistence.*;
 
 /**
- * Created by bagus on 04/01/18.
+ * Created by bayu on 07/01/18.
  */
 @Entity
-@Table(name = "tembusan_memorandum")
-public class TembusanMemorandum {
+@Table(name = "tembusan_nota_dinas")
+public class TembusanNotaDinas {
     @EmbeddedId
-    private TembusanMemorandumId tembusanMemorandumId;
+    private TembusanNotaDinasId tembusanNotaDinasId;
 
     @Column(name = "status_diterima")
     private Integer statusDiterima;
@@ -19,18 +19,18 @@ public class TembusanMemorandum {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(
-            name = "kd_memorandum",
+            name = "kd_nota_dinas",
             insertable = false,
             updatable = false,
-            referencedColumnName = "kd_memorandum")
-    private Memorandum memorandum;
+            referencedColumnName = "kd_nota_dinas")
+    private NotaDinas notaDinas;
 
-    public TembusanMemorandumId getTembusanMemorandumId() {
-        return tembusanMemorandumId;
+    public TembusanNotaDinasId getTembusanNotaDinasId() {
+        return tembusanNotaDinasId;
     }
 
-    public void setTembusanMemorandumId(TembusanMemorandumId tembusanMemorandumId) {
-        this.tembusanMemorandumId = tembusanMemorandumId;
+    public void setTembusanNotaDinasId(TembusanNotaDinasId tembusanNotaDinasId) {
+        this.tembusanNotaDinasId = tembusanNotaDinasId;
     }
 
     public Integer getStatusDiterima() {
@@ -49,11 +49,11 @@ public class TembusanMemorandum {
         this.statusBaca = statusBaca;
     }
 
-    public Memorandum getMemorandum() {
-        return memorandum;
+    public NotaDinas getNotaDinas() {
+        return notaDinas;
     }
 
-    public void setMemorandum(Memorandum memorandum) {
-        this.memorandum = memorandum;
+    public void setNotaDinas(NotaDinas notaDinas) {
+        this.notaDinas = notaDinas;
     }
 }

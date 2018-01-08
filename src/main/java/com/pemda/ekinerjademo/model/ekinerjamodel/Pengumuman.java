@@ -1,18 +1,20 @@
 package com.pemda.ekinerjademo.model.ekinerjamodel;
 
-import javax.persistence.*;
-import java.util.List;
-import java.util.Set;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 /**
- * Created by bayu on 08/12/17.
+ * Created by bayu on 07/01/18.
  */
 @Entity
-@Table(name = "nota_dinas")
-public class NotaDinas {
+@Table(name = "pengumuman")
+public class Pengumuman {
     @Id
-    @Column(name = "kd_nota_dinas")
-    private String kdNotaDinas;
+    @Column(name = "kd_pengumuman")
+    private String kdPengumuman;
+
     @Column(name = "nomor_urusan")
     private String nomorUrusan;
     @Column(name = "nomor_urut")
@@ -24,30 +26,28 @@ public class NotaDinas {
     @Column(name = "nomor_tahun")
     private Integer nomorTahun;
 
-    @Column(name = "kd_jabatan_penerima_nota_dinas")
-    private String kdJabatanPenerimaNotaDinas;
-    @Column(name = "nip_pemberi_nota_dinas")
-    private String nipPemberiNotaDinas;
-    @Column(name = "hal")
-    private String hal;
-    @Column(name = "tanggal_pembuatan_milis")
-    private Long tanggalPembuatanMilis;
-    @Column(name = "isi_nota_dinas")
-    private String isiNotaDinas;
+    @Column(name = "tentang")
+    private String tentang;
+    @Column(name = "isi_pengumuman")
+    private String isiPengumuman;
     @Column(name = "nip_penandatangan")
     private String nipPenandatangan;
+    @Column(name = "kota_pembuatan_surat")
+    private String kotaPembuatanSurat;
+    @Column(name = "tanggal_pembuatan_milis")
+    private Long tanggalPembuatanMilis;
     @Column(name = "nip_pembuat_surat")
     private String nipPembuatSurat;
     @Column(name = "kd_unit_kerja")
     private String kdUnitKerja;
-
-    @Column(name = "kd_naskah_penugasan")
-    private String kdNaskahPenugasan;
     @Column(name = "jenis_naskah_penugasan")
     private Integer jenisNaskahPenugasan;
-
+    @Column(name = "kd_naskah_penugasan")
+    private String kdNaskahPenugasan;
     @Column(name = "durasi_pengerjaan")
     private Integer durasiPengerjaan;
+    @Column(name = "path_penilaian")
+    private String pathPenilaian;
     @Column(name = "nip_penilai")
     private String nipPenilai;
     @Column(name = "status_penilaian")
@@ -55,15 +55,12 @@ public class NotaDinas {
     @Column(name = "alasan_penolakan")
     private String alasanPenolakan;
 
-    @OneToMany(mappedBy = "notaDinas")
-    private List<TembusanNotaDinas> tembusanNotaDinasList;
-
-    public String getKdNotaDinas() {
-        return kdNotaDinas;
+    public String getKdPengumuman() {
+        return kdPengumuman;
     }
 
-    public void setKdNotaDinas(String kdNotaDinas) {
-        this.kdNotaDinas = kdNotaDinas;
+    public void setKdPengumuman(String kdPengumuman) {
+        this.kdPengumuman = kdPengumuman;
     }
 
     public String getNomorUrusan() {
@@ -106,44 +103,20 @@ public class NotaDinas {
         this.nomorTahun = nomorTahun;
     }
 
-    public String getKdJabatanPenerimaNotaDinas() {
-        return kdJabatanPenerimaNotaDinas;
+    public String getTentang() {
+        return tentang;
     }
 
-    public void setKdJabatanPenerimaNotaDinas(String kdJabatanPenerimaNotaDinas) {
-        this.kdJabatanPenerimaNotaDinas = kdJabatanPenerimaNotaDinas;
+    public void setTentang(String tentang) {
+        this.tentang = tentang;
     }
 
-    public String getNipPemberiNotaDinas() {
-        return nipPemberiNotaDinas;
+    public String getIsiPengumuman() {
+        return isiPengumuman;
     }
 
-    public void setNipPemberiNotaDinas(String nipPemberiNotaDinas) {
-        this.nipPemberiNotaDinas = nipPemberiNotaDinas;
-    }
-
-    public String getHal() {
-        return hal;
-    }
-
-    public void setHal(String hal) {
-        this.hal = hal;
-    }
-
-    public Long getTanggalPembuatanMilis() {
-        return tanggalPembuatanMilis;
-    }
-
-    public void setTanggalPembuatanMilis(Long tanggalPembuatanMilis) {
-        this.tanggalPembuatanMilis = tanggalPembuatanMilis;
-    }
-
-    public String getIsiNotaDinas() {
-        return isiNotaDinas;
-    }
-
-    public void setIsiNotaDinas(String isiNotaDinas) {
-        this.isiNotaDinas = isiNotaDinas;
+    public void setIsiPengumuman(String isiPengumuman) {
+        this.isiPengumuman = isiPengumuman;
     }
 
     public String getNipPenandatangan() {
@@ -152,6 +125,22 @@ public class NotaDinas {
 
     public void setNipPenandatangan(String nipPenandatangan) {
         this.nipPenandatangan = nipPenandatangan;
+    }
+
+    public String getKotaPembuatanSurat() {
+        return kotaPembuatanSurat;
+    }
+
+    public void setKotaPembuatanSurat(String kotaPembuatanSurat) {
+        this.kotaPembuatanSurat = kotaPembuatanSurat;
+    }
+
+    public Long getTanggalPembuatanMilis() {
+        return tanggalPembuatanMilis;
+    }
+
+    public void setTanggalPembuatanMilis(Long tanggalPembuatanMilis) {
+        this.tanggalPembuatanMilis = tanggalPembuatanMilis;
     }
 
     public String getNipPembuatSurat() {
@@ -170,14 +159,6 @@ public class NotaDinas {
         this.kdUnitKerja = kdUnitKerja;
     }
 
-    public String getKdNaskahPenugasan() {
-        return kdNaskahPenugasan;
-    }
-
-    public void setKdNaskahPenugasan(String kdNaskahPenugasan) {
-        this.kdNaskahPenugasan = kdNaskahPenugasan;
-    }
-
     public Integer getJenisNaskahPenugasan() {
         return jenisNaskahPenugasan;
     }
@@ -186,12 +167,28 @@ public class NotaDinas {
         this.jenisNaskahPenugasan = jenisNaskahPenugasan;
     }
 
+    public String getKdNaskahPenugasan() {
+        return kdNaskahPenugasan;
+    }
+
+    public void setKdNaskahPenugasan(String kdNaskahPenugasan) {
+        this.kdNaskahPenugasan = kdNaskahPenugasan;
+    }
+
     public Integer getDurasiPengerjaan() {
         return durasiPengerjaan;
     }
 
     public void setDurasiPengerjaan(Integer durasiPengerjaan) {
         this.durasiPengerjaan = durasiPengerjaan;
+    }
+
+    public String getPathPenilaian() {
+        return pathPenilaian;
+    }
+
+    public void setPathPenilaian(String pathPenilaian) {
+        this.pathPenilaian = pathPenilaian;
     }
 
     public String getNipPenilai() {

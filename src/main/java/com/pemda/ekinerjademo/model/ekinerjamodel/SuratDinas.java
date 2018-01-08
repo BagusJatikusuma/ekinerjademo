@@ -4,14 +4,15 @@ import javax.persistence.*;
 import java.util.List;
 
 /**
- * Created by bagus on 04/01/18.
+ * Created by bayu on 07/01/18.
  */
 @Entity
-@Table(name = "memorandum")
-public class Memorandum {
+@Table(name = "surat_dinas")
+public class SuratDinas {
     @Id
-    @Column(name = "kd_memorandum")
-    private String kdMemorandum;
+    @Column(name = "nomor_urusan")
+    private String kdSuratDinas;
+
     @Column(name = "nomor_urusan")
     private String nomorUrusan;
     @Column(name = "nomor_urut")
@@ -22,22 +23,28 @@ public class Memorandum {
     private String nomorUnit;
     @Column(name = "nomor_tahun")
     private Integer nomorTahun;
-    @Column(name = "nip_penerima_memorandum")
-    private String nipPenerimaMemorandum;
-    @Column(name = "nip_pemberi_memorandum")
-    private String nipPemberiMemorandum;
+
+    @Column(name = "sifat")
+    private String sifat;
+    @Column(name = "lampiran")
+    private Integer lampiran;
     @Column(name = "hal")
     private String hal;
+    @Column(name = "kd_jabatan_penerima_surat_dinas")
+    private String kdJabatanPenerimaSuratDinas;
     @Column(name = "tanggal_pembuatan_milis")
     private Long tanggalPembuatanMilis;
-    @Column(name = "isi_memorandum")
-    private String isiMemorandum;
-    @Column(name = "nip_pembuat_surat")
-    private String nipPembuatSurat;
+    @Column(name = "kota_pembuatan_surat")
+    private String kotaPembuatanSurat;
+    @Column(name = "isi_surat_dinas")
+    private String isiSuratDinas;
     @Column(name = "nip_penandatangan")
     private String nipPenandatangan;
+    @Column(name = "nip_pembuat_surat")
+    private String nipPembuatSurat;
     @Column(name = "kd_unit_kerja")
     private String kdUnitKerja;
+
     @Column(name = "kd_naskah_penugasan")
     private String kdNaskahPenugasan;
     @Column(name = "jenis_naskah_penugasan")
@@ -53,26 +60,19 @@ public class Memorandum {
     @Column(name = "alasan_penolakan")
     private String alasanPenolakan;
 
-    @Column(name = "approval_penandatangan")
-    private Integer approvalPenandatangan;
-    @Column(name = "status_penyebaran")
-    private Integer statusPenyebaran;
-    @Column(name = "status_baca")
-    private Integer statusBaca;
+    @OneToOne(mappedBy = "suratDinas", fetch = FetchType.LAZY)
+    private SuratDinasNonPejabat suratDinasNonPejabat;
+    @OneToOne(mappedBy = "suratDinas", fetch = FetchType.LAZY)
+    private SuratDinasPejabat suratDinasPejabat;
+    @OneToMany(mappedBy = "suratDinas")
+    private List<TembusanSuratDinas> tembusanSuratDinasList;
 
-    @OneToOne(mappedBy = "memorandum", fetch = FetchType.LAZY)
-    private MemorandumNonPejabat memorandumNonPejabat;
-    @OneToOne(mappedBy = "memorandum", fetch = FetchType.LAZY)
-    private MemorandumPejabat memorandumPejabat;
-    @OneToMany(mappedBy = "memorandum")
-    private List<TembusanMemorandum> tembusanMemorandumList;
-
-    public String getKdMemorandum() {
-        return kdMemorandum;
+    public String getKdSuratDinas() {
+        return kdSuratDinas;
     }
 
-    public void setKdMemorandum(String kdMemorandum) {
-        this.kdMemorandum = kdMemorandum;
+    public void setKdSuratDinas(String kdSuratDinas) {
+        this.kdSuratDinas = kdSuratDinas;
     }
 
     public String getNomorUrusan() {
@@ -115,20 +115,20 @@ public class Memorandum {
         this.nomorTahun = nomorTahun;
     }
 
-    public String getNipPenerimaMemorandum() {
-        return nipPenerimaMemorandum;
+    public String getSifat() {
+        return sifat;
     }
 
-    public void setNipPenerimaMemorandum(String nipPenerimaMemorandum) {
-        this.nipPenerimaMemorandum = nipPenerimaMemorandum;
+    public void setSifat(String sifat) {
+        this.sifat = sifat;
     }
 
-    public String getNipPemberiMemorandum() {
-        return nipPemberiMemorandum;
+    public Integer getLampiran() {
+        return lampiran;
     }
 
-    public void setNipPemberiMemorandum(String nipPemberiMemorandum) {
-        this.nipPemberiMemorandum = nipPemberiMemorandum;
+    public void setLampiran(Integer lampiran) {
+        this.lampiran = lampiran;
     }
 
     public String getHal() {
@@ -139,6 +139,14 @@ public class Memorandum {
         this.hal = hal;
     }
 
+    public String getKdJabatanPenerimaSuratDinas() {
+        return kdJabatanPenerimaSuratDinas;
+    }
+
+    public void setKdJabatanPenerimaSuratDinas(String kdJabatanPenerimaSuratDinas) {
+        this.kdJabatanPenerimaSuratDinas = kdJabatanPenerimaSuratDinas;
+    }
+
     public Long getTanggalPembuatanMilis() {
         return tanggalPembuatanMilis;
     }
@@ -147,20 +155,20 @@ public class Memorandum {
         this.tanggalPembuatanMilis = tanggalPembuatanMilis;
     }
 
-    public String getIsiMemorandum() {
-        return isiMemorandum;
+    public String getKotaPembuatanSurat() {
+        return kotaPembuatanSurat;
     }
 
-    public void setIsiMemorandum(String isiMemorandum) {
-        this.isiMemorandum = isiMemorandum;
+    public void setKotaPembuatanSurat(String kotaPembuatanSurat) {
+        this.kotaPembuatanSurat = kotaPembuatanSurat;
     }
 
-    public String getNipPembuatSurat() {
-        return nipPembuatSurat;
+    public String getIsiSuratDinas() {
+        return isiSuratDinas;
     }
 
-    public void setNipPembuatSurat(String nipPembuatSurat) {
-        this.nipPembuatSurat = nipPembuatSurat;
+    public void setIsiSuratDinas(String isiSuratDinas) {
+        this.isiSuratDinas = isiSuratDinas;
     }
 
     public String getNipPenandatangan() {
@@ -169,6 +177,14 @@ public class Memorandum {
 
     public void setNipPenandatangan(String nipPenandatangan) {
         this.nipPenandatangan = nipPenandatangan;
+    }
+
+    public String getNipPembuatSurat() {
+        return nipPembuatSurat;
+    }
+
+    public void setNipPembuatSurat(String nipPembuatSurat) {
+        this.nipPembuatSurat = nipPembuatSurat;
     }
 
     public String getKdUnitKerja() {
@@ -235,51 +251,27 @@ public class Memorandum {
         this.alasanPenolakan = alasanPenolakan;
     }
 
-    public MemorandumNonPejabat getMemorandumNonPejabat() {
-        return memorandumNonPejabat;
+    public SuratDinasNonPejabat getSuratDinasNonPejabat() {
+        return suratDinasNonPejabat;
     }
 
-    public void setMemorandumNonPejabat(MemorandumNonPejabat memorandumNonPejabat) {
-        this.memorandumNonPejabat = memorandumNonPejabat;
+    public void setSuratDinasNonPejabat(SuratDinasNonPejabat suratDinasNonPejabat) {
+        this.suratDinasNonPejabat = suratDinasNonPejabat;
     }
 
-    public MemorandumPejabat getMemorandumPejabat() {
-        return memorandumPejabat;
+    public SuratDinasPejabat getSuratDinasPejabat() {
+        return suratDinasPejabat;
     }
 
-    public void setMemorandumPejabat(MemorandumPejabat memorandumPejabat) {
-        this.memorandumPejabat = memorandumPejabat;
+    public void setSuratDinasPejabat(SuratDinasPejabat suratDinasPejabat) {
+        this.suratDinasPejabat = suratDinasPejabat;
     }
 
-    public List<TembusanMemorandum> getTembusanMemorandumList() {
-        return tembusanMemorandumList;
+    public List<TembusanSuratDinas> getTembusanSuratDinasList() {
+        return tembusanSuratDinasList;
     }
 
-    public void setTembusanMemorandumList(List<TembusanMemorandum> tembusanMemorandumList) {
-        this.tembusanMemorandumList = tembusanMemorandumList;
-    }
-
-    public Integer getApprovalPenandatangan() {
-        return approvalPenandatangan;
-    }
-
-    public void setApprovalPenandatangan(Integer approvalPenandatangan) {
-        this.approvalPenandatangan = approvalPenandatangan;
-    }
-
-    public Integer getStatusPenyebaran() {
-        return statusPenyebaran;
-    }
-
-    public void setStatusPenyebaran(Integer statusPenyebaran) {
-        this.statusPenyebaran = statusPenyebaran;
-    }
-
-    public Integer getStatusBaca() {
-        return statusBaca;
-    }
-
-    public void setStatusBaca(Integer statusBaca) {
-        this.statusBaca = statusBaca;
+    public void setTembusanSuratDinasList(List<TembusanSuratDinas> tembusanSuratDinasList) {
+        this.tembusanSuratDinasList = tembusanSuratDinasList;
     }
 }
