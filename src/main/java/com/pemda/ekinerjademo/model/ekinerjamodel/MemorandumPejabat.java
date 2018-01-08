@@ -2,6 +2,7 @@ package com.pemda.ekinerjademo.model.ekinerjamodel;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Id;
 import javax.persistence.Table;
 
 /**
@@ -10,7 +11,12 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "memorandum_pejabat")
 public class MemorandumPejabat {
+    @Id
+    @Column(name = "kd_memorandum")
     private String kdMemorandum;
+
+
+
     @Column(name = "kd_jabatan")
     private String kdJabatan;
 
