@@ -4,14 +4,14 @@ import javax.persistence.*;
 import java.util.List;
 
 /**
- * Created by bayu on 07/01/18.
+ * Created by bayu on 09/01/18.
  */
 @Entity
-@Table(name = "surat_dinas")
-public class SuratDinas {
+@Table(name = "surat_pengantar")
+public class SuratPengantar {
     @Id
-    @Column(name = "kd_surat_dinas")
-    private String kdSuratDinas;
+    @Column(name = "kd_surat_pengantar")
+    private String kdSuratPengantar;
 
     @Column(name = "nomor_urusan")
     private String nomorUrusan;
@@ -24,27 +24,21 @@ public class SuratDinas {
     @Column(name = "nomor_tahun")
     private Integer nomorTahun;
 
-    @Column(name = "sifat")
-    private String sifat;
-    @Column(name = "lampiran")
-    private Integer lampiran;
-    @Column(name = "hal")
-    private String hal;
-    @Column(name = "kd_jabatan_penerima_surat_dinas")
-    private String kdJabatanPenerimaSuratDinas;
     @Column(name = "tanggal_pembuatan_milis")
     private Long tanggalPembuatanMilis;
-    @Column(name = "kota_pembuatan_surat")
-    private String kotaPembuatanSurat;
-    @Column(name = "isi_surat_dinas")
-    private String isiSuratDinas;
-    @Column(name = "nip_penandatangan")
-    private String nipPenandatangan;
+    @Column(name = "tanggal_diterima_surat_pengantar")
+    private Long tanggalDiterimaSuratPengantar;
+    @Column(name = "kd_jabatan_penerima_surat_pengantar")
+    private String kdJabatanPenerimaSuratPengantar;
+    @Column(name = "nip_pemberi_surat_pengantar")
+    private String nipPemberiSuratPengantar;
+    @Column(name = "nomor_telepon_pemberi")
+    private String nomorTeleponPemberi;
     @Column(name = "nip_pembuat_surat")
     private String nipPembuatSurat;
+
     @Column(name = "kd_unit_kerja")
     private String kdUnitKerja;
-
     @Column(name = "kd_naskah_penugasan")
     private String kdNaskahPenugasan;
     @Column(name = "jenis_naskah_penugasan")
@@ -60,19 +54,15 @@ public class SuratDinas {
     @Column(name = "alasan_penolakan")
     private String alasanPenolakan;
 
-    @OneToOne(mappedBy = "suratDinas", fetch = FetchType.LAZY)
-    private SuratDinasNonPejabat suratDinasNonPejabat;
-    @OneToOne(mappedBy = "suratDinas", fetch = FetchType.LAZY)
-    private SuratDinasPejabat suratDinasPejabat;
-    @OneToMany(mappedBy = "suratDinas")
-    private List<TembusanSuratDinas> tembusanSuratDinasList;
+    @OneToMany(mappedBy = "suratPengantar")
+    private List<SuratPengantarIsi> suratPengantarIsiList;
 
-    public String getKdSuratDinas() {
-        return kdSuratDinas;
+    public String getKdSuratPengantar() {
+        return kdSuratPengantar;
     }
 
-    public void setKdSuratDinas(String kdSuratDinas) {
-        this.kdSuratDinas = kdSuratDinas;
+    public void setKdSuratPengantar(String kdSuratPengantar) {
+        this.kdSuratPengantar = kdSuratPengantar;
     }
 
     public String getNomorUrusan() {
@@ -115,38 +105,6 @@ public class SuratDinas {
         this.nomorTahun = nomorTahun;
     }
 
-    public String getSifat() {
-        return sifat;
-    }
-
-    public void setSifat(String sifat) {
-        this.sifat = sifat;
-    }
-
-    public Integer getLampiran() {
-        return lampiran;
-    }
-
-    public void setLampiran(Integer lampiran) {
-        this.lampiran = lampiran;
-    }
-
-    public String getHal() {
-        return hal;
-    }
-
-    public void setHal(String hal) {
-        this.hal = hal;
-    }
-
-    public String getKdJabatanPenerimaSuratDinas() {
-        return kdJabatanPenerimaSuratDinas;
-    }
-
-    public void setKdJabatanPenerimaSuratDinas(String kdJabatanPenerimaSuratDinas) {
-        this.kdJabatanPenerimaSuratDinas = kdJabatanPenerimaSuratDinas;
-    }
-
     public Long getTanggalPembuatanMilis() {
         return tanggalPembuatanMilis;
     }
@@ -155,28 +113,36 @@ public class SuratDinas {
         this.tanggalPembuatanMilis = tanggalPembuatanMilis;
     }
 
-    public String getKotaPembuatanSurat() {
-        return kotaPembuatanSurat;
+    public Long getTanggalDiterimaSuratPengantar() {
+        return tanggalDiterimaSuratPengantar;
     }
 
-    public void setKotaPembuatanSurat(String kotaPembuatanSurat) {
-        this.kotaPembuatanSurat = kotaPembuatanSurat;
+    public void setTanggalDiterimaSuratPengantar(Long tanggalDiterimaSuratPengantar) {
+        this.tanggalDiterimaSuratPengantar = tanggalDiterimaSuratPengantar;
     }
 
-    public String getIsiSuratDinas() {
-        return isiSuratDinas;
+    public String getKdJabatanPenerimaSuratPengantar() {
+        return kdJabatanPenerimaSuratPengantar;
     }
 
-    public void setIsiSuratDinas(String isiSuratDinas) {
-        this.isiSuratDinas = isiSuratDinas;
+    public void setKdJabatanPenerimaSuratPengantar(String kdJabatanPenerimaSuratPengantar) {
+        this.kdJabatanPenerimaSuratPengantar = kdJabatanPenerimaSuratPengantar;
     }
 
-    public String getNipPenandatangan() {
-        return nipPenandatangan;
+    public String getNipPemberiSuratPengantar() {
+        return nipPemberiSuratPengantar;
     }
 
-    public void setNipPenandatangan(String nipPenandatangan) {
-        this.nipPenandatangan = nipPenandatangan;
+    public void setNipPemberiSuratPengantar(String nipPemberiSuratPengantar) {
+        this.nipPemberiSuratPengantar = nipPemberiSuratPengantar;
+    }
+
+    public String getNomorTeleponPemberi() {
+        return nomorTeleponPemberi;
+    }
+
+    public void setNomorTeleponPemberi(String nomorTeleponPemberi) {
+        this.nomorTeleponPemberi = nomorTeleponPemberi;
     }
 
     public String getNipPembuatSurat() {
@@ -251,27 +217,11 @@ public class SuratDinas {
         this.alasanPenolakan = alasanPenolakan;
     }
 
-    public SuratDinasNonPejabat getSuratDinasNonPejabat() {
-        return suratDinasNonPejabat;
+    public List<SuratPengantarIsi> getSuratPengantarIsiList() {
+        return suratPengantarIsiList;
     }
 
-    public void setSuratDinasNonPejabat(SuratDinasNonPejabat suratDinasNonPejabat) {
-        this.suratDinasNonPejabat = suratDinasNonPejabat;
-    }
-
-    public SuratDinasPejabat getSuratDinasPejabat() {
-        return suratDinasPejabat;
-    }
-
-    public void setSuratDinasPejabat(SuratDinasPejabat suratDinasPejabat) {
-        this.suratDinasPejabat = suratDinasPejabat;
-    }
-
-    public List<TembusanSuratDinas> getTembusanSuratDinasList() {
-        return tembusanSuratDinasList;
-    }
-
-    public void setTembusanSuratDinasList(List<TembusanSuratDinas> tembusanSuratDinasList) {
-        this.tembusanSuratDinasList = tembusanSuratDinasList;
+    public void setSuratPengantarIsiList(List<SuratPengantarIsi> suratPengantarIsiList) {
+        this.suratPengantarIsiList = suratPengantarIsiList;
     }
 }
