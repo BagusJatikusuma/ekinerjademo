@@ -1,8 +1,10 @@
 package com.pemda.ekinerjademo.service.impl;
 
+import com.pemda.ekinerjademo.model.bismamodel.TkdJabatan;
 import com.pemda.ekinerjademo.model.ekinerjamodel.*;
 import com.pemda.ekinerjademo.model.simdamodel.TaProgramId;
 import com.pemda.ekinerjademo.repository.ekinerjarepository.UrtugKegiatanPegawaiDao;
+import com.pemda.ekinerjademo.service.TkdJabatanService;
 import com.pemda.ekinerjademo.service.UrtugKegiatanPegawaiService;
 import com.pemda.ekinerjademo.wrapper.input.UrtugKegiatanPegawaiApprovalInputWrapper;
 import com.pemda.ekinerjademo.wrapper.output.UrtugKegiatanPegawaiByUrtugJabatanWrapper;
@@ -10,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -20,6 +23,9 @@ import java.util.List;
 public class UrtugKegiatanPegawaiServiceImpl implements UrtugKegiatanPegawaiService {
     @Autowired
     private UrtugKegiatanPegawaiDao urtugKegiatanPegawaiDao;
+
+    @Autowired
+    private TkdJabatanService tkdJabatanService;
 
     @Override
     public List<UrtugKegiatanPegawai> findByUrtugJabatan(UraianTugasJabatanJenisUrtugId uraianTugasJabatanJenisUrtugId) {
@@ -51,10 +57,36 @@ public class UrtugKegiatanPegawaiServiceImpl implements UrtugKegiatanPegawaiServ
                 .findUrtugKegiatanPegawaiByUrtugJabatanTahunAndNip(uraianTugasJabatanJenisUrtugId, nipPegawai);
     }
 
+    //terdapat revisi 14 januari 2018
+    //algoritma hanya berlaku hingga refactor database (penambahan field kdUnitKerja) selesai diimplement
     @Override
     public List<UrtugKegiatanPegawai> findByUnitKerja(String unitKerja) {
-        return urtugKegiatanPegawaiDao
-                .findByUnitKerja(unitKerja);
+        //mulai algoritma revisi
+        List<TkdJabatan> tkdJabatanList
+                = tkdJabatanService.getJabatanByUnitKerja(unitKerja);
+
+        List<UrtugKegiatanPegawai> urtugKegiatanPegawaiList = urtugKegiatanPegawaiDao.findAll();
+        List<UrtugKegiatanPegawai> urtugKegiatanPegawaiFilterList = new ArrayList<>();
+
+        for (UrtugKegiatanPegawai urtugKegiatanPegawai
+                : urtugKegiatanPegawaiList) {
+            for (TkdJabatan tkdJabatan : tkdJabatanList) {
+                if (urtugKegiatanPegawai.getUrtugKegiatanPegawaiId().getKdJabatan()
+                        .equals(tkdJabatan.getKdJabatan())) {
+                    urtugKegiatanPegawaiFilterList.add(urtugKegiatanPegawai);
+                    break;
+
+                }
+
+            }
+
+        }
+
+        return urtugKegiatanPegawaiFilterList;
+        //selesai algoritma revisi
+
+//        return urtugKegiatanPegawaiDao
+//                .findByUnitKerja(unitKerja);
     }
 
     @Override

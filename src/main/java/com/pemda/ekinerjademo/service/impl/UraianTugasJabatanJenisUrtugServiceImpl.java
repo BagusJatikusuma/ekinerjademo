@@ -1,13 +1,16 @@
 package com.pemda.ekinerjademo.service.impl;
 
+import com.pemda.ekinerjademo.model.bismamodel.TkdJabatan;
 import com.pemda.ekinerjademo.model.ekinerjamodel.UraianTugasJabatanJenisUrtug;
 import com.pemda.ekinerjademo.model.ekinerjamodel.UraianTugasJabatanJenisUrtugId;
 import com.pemda.ekinerjademo.repository.ekinerjarepository.UraianTugasJabatanJenisUrtugDao;
+import com.pemda.ekinerjademo.service.TkdJabatanService;
 import com.pemda.ekinerjademo.service.UraianTugasJabatanJenisUrtugService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -18,6 +21,8 @@ import java.util.List;
 public class UraianTugasJabatanJenisUrtugServiceImpl implements UraianTugasJabatanJenisUrtugService {
     @Autowired
     private UraianTugasJabatanJenisUrtugDao uraianTugasJabatanJenisUrtugDao;
+    @Autowired
+    private TkdJabatanService tkdJabatanService;
 
     @Override
     public List<UraianTugasJabatanJenisUrtug> get() {
@@ -29,9 +34,35 @@ public class UraianTugasJabatanJenisUrtugServiceImpl implements UraianTugasJabat
         return uraianTugasJabatanJenisUrtugDao.findUrtugNonDpaByJabatan(kdJabatan, "KJU002");
     }
 
+    //terdapat revisi 14 januari 2018
+    //algoritma hanya berlaku hingga refactor database (penambahan field kdUnitKerja) selesai diimplement
     @Override
     public List<UraianTugasJabatanJenisUrtug> getUrtugNonDpaByUnitKerja(String kdUnitKerja) {
-        return uraianTugasJabatanJenisUrtugDao.findUrtugNonDpaByUnitKerja(kdUnitKerja, "KJU002");
+        //mulai algoritma revisi
+        List<TkdJabatan> tkdJabatanList
+                = tkdJabatanService.getJabatanByUnitKerja(kdUnitKerja);
+
+        List<UraianTugasJabatanJenisUrtug> uraianTugasJabatanJenisUrtugList
+                = uraianTugasJabatanJenisUrtugDao.findAll();
+        List<UraianTugasJabatanJenisUrtug> uraianTugasJabatanJenisUrtugFilterList
+                = new ArrayList<>();
+
+        for (UraianTugasJabatanJenisUrtug uraianTugasJabatanJenisUrtug
+                : uraianTugasJabatanJenisUrtugList) {
+            for (TkdJabatan tkdJabatan
+                    : tkdJabatanList) {
+                if (uraianTugasJabatanJenisUrtug.getUraianTugasJabatanJenisUrtugId().getKdJabatan().equals(tkdJabatan.getKdJabatan())
+                        && uraianTugasJabatanJenisUrtug.getUraianTugasJabatanJenisUrtugId().getKdJenisUrtug().equals("KJU002")) {
+                    uraianTugasJabatanJenisUrtugFilterList.add(uraianTugasJabatanJenisUrtug);
+
+                    break;
+                }
+            }
+        }
+
+        return uraianTugasJabatanJenisUrtugFilterList;
+        //selesai algoritma revisi
+//        return uraianTugasJabatanJenisUrtugDao.findUrtugNonDpaByUnitKerja(kdUnitKerja, "KJU002");
     }
 
     @Override

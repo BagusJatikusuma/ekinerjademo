@@ -1,9 +1,11 @@
 package com.pemda.ekinerjademo.service.impl;
 
+import com.pemda.ekinerjademo.model.bismamodel.TkdJabatan;
 import com.pemda.ekinerjademo.model.ekinerjamodel.AkunPegawai;
 import com.pemda.ekinerjademo.model.ekinerjamodel.UraianTugasPegawaiTahunan;
 import com.pemda.ekinerjademo.model.ekinerjamodel.UraianTugasPegawaiTahunanId;
 import com.pemda.ekinerjademo.repository.ekinerjarepository.UraianTugasPegawaiTahunanDao;
+import com.pemda.ekinerjademo.service.TkdJabatanService;
 import com.pemda.ekinerjademo.service.UraianTugasPegawaiTahunanService;
 import com.pemda.ekinerjademo.wrapper.input.UraianTugasPegawaiTahunanInputWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Year;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -20,6 +23,8 @@ import java.util.List;
 @Transactional("ekinerjaTransactionManager")
 public class UraianTugasPegawaiTahunanServiceImpl implements UraianTugasPegawaiTahunanService {
     @Autowired private UraianTugasPegawaiTahunanDao urtugPegawaiTahunanDao;
+    @Autowired
+    private TkdJabatanService tkdJabatanService;
 
     @Override
     public void createUraianTugasPegawaiTahunanList(List<UraianTugasPegawaiTahunanInputWrapper> urtugPegawaiList) {
@@ -113,9 +118,34 @@ public class UraianTugasPegawaiTahunanServiceImpl implements UraianTugasPegawaiT
                 .findByUraianTugasPegawaiTahunanId_NipPegawai(nipPegawai);
     }
 
+    //terdapat revisi 14 januari 2018
+    //algoritma hanya berlaku hingga refactor database (penambahan field kdUnitKerja) selesai diimplement
     @Override
     public List<UraianTugasPegawaiTahunan> getByUnitKerja(String kdUnitKerja) {
-        return urtugPegawaiTahunanDao
-                .findByUnitKerja(kdUnitKerja);
+        //mulai algoritma revisi
+        List<TkdJabatan> tkdJabatanList
+                = tkdJabatanService.getJabatanByUnitKerja(kdUnitKerja);
+
+        List<UraianTugasPegawaiTahunan> uraianTugasPegawaiTahunanList =
+                urtugPegawaiTahunanDao.findAll();
+        List<UraianTugasPegawaiTahunan> uraianTugasPegawaiTahunanFilterList
+                = new ArrayList<>();
+
+        for (UraianTugasPegawaiTahunan uraianTugasPegawaiTahunan
+                : uraianTugasPegawaiTahunanList) {
+            for (TkdJabatan tkdJabatan : tkdJabatanList) {
+                if (uraianTugasPegawaiTahunan.getUraianTugasPegawaiTahunanId().getKdJabatan()
+                        .equals(tkdJabatan.getKdJabatan())) {
+                    uraianTugasPegawaiTahunanFilterList.add(uraianTugasPegawaiTahunan);
+                    break;
+                }
+            }
+        }
+
+        return uraianTugasPegawaiTahunanFilterList;
+        //selesai algoritma revisi
+
+//        return urtugPegawaiTahunanDao
+//                .findByUnitKerja(kdUnitKerja);
     }
 }
