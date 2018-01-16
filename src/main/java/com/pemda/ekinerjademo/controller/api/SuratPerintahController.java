@@ -763,6 +763,11 @@ public class SuratPerintahController {
         List<TkdJabatan> daftarTembusanSuratperintah
                 = new ArrayList<>();
 
+        List<String> daftarTargetPejabatSuratPerintahString
+                = new ArrayList<>();
+        List<String> daftarTembusanSuratperintahString
+                = new ArrayList<>();
+
         //get pembuat surat credential
         for (CustomPegawaiCredential qutPegawai : qutPegawaiList) {
             if (qutPegawai.getNip()
@@ -790,6 +795,8 @@ public class SuratPerintahController {
                 if (tkdJabatan.getKdJabatan()
                         .equals(target.getTargetSuratPerintahPejabatId().getKdJabatan())) {
                     daftarTargetPejabatSuratPerintah.add(tkdJabatan);
+                    daftarTargetPejabatSuratPerintahString.add(tkdJabatan.getJabatan());
+
                     break;
 
                 }
@@ -806,6 +813,8 @@ public class SuratPerintahController {
                         .equals(tembusan.getTembusanSuratPerintahId().getKdJabatan())) {
                     LOGGER.info("found");
                     daftarTembusanSuratperintah.add(tkdJabatan);
+                    daftarTembusanSuratperintahString.add(tkdJabatan.getJabatan());
+
                     break;
                 }
 
@@ -854,8 +863,8 @@ public class SuratPerintahController {
                         penandatanganSurat.getJabatan(),
                         "",
                         daftarTargetPegawaiSuratPerintah,
-                        daftarTargetPejabatSuratPerintah,
-                        daftarTembusanSuratperintah,
+                        daftarTargetPejabatSuratPerintahString,
+                        daftarTembusanSuratperintahString,
                         isSuratPejabat,
                         kdUnitKerjaPenandatangan,
                         unitKerjaPenandatangan,

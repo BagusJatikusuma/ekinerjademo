@@ -27,19 +27,19 @@ public class MemorandumPejabat {
         this.kdMemorandum = kdMemorandum;
     }
 
-    public Memorandum getMemorandum() {
-        return memorandum;
-    }
-
-    public void setMemorandum(Memorandum memorandum) {
-        this.memorandum = memorandum;
-    }
-
     public String getKdJabatan() {
         return kdJabatan;
     }
 
     public void setKdJabatan(String kdJabatan) {
         this.kdJabatan = kdJabatan;
+    }
+
+    public Memorandum getMemorandum() {
+        return memorandum;
+    }
+
+    public void setMemorandum(Memorandum memorandum) {
+        this.memorandum = memorandum;
     }
 }

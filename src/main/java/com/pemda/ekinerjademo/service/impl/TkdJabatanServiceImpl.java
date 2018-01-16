@@ -7,13 +7,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by bagus on 10/09/17.
  */
 @Service("TkdJabatanService")
-@Transactional
+@Transactional("bismaTransactionManager")
 public class TkdJabatanServiceImpl implements TkdJabatanService {
     @Autowired
     private TkdJabatanDao tkdJabatanDao;
@@ -23,8 +24,21 @@ public class TkdJabatanServiceImpl implements TkdJabatanService {
         return tkdJabatanDao.findByKdJabatan(kdJabatan);
     }
 
+    //terdapat sedikit revisi
     @Override
     public List<TkdJabatan> getAll() {
+//        List<TkdJabatan> tkdJabatanList = tkdJabatanDao.findAll();
+//        List<TkdJabatan> tkdJabatanListResult = new ArrayList<>();
+//
+//        for (TkdJabatan tkdJabatan : tkdJabatanList) {
+//            TkdJabatan newTkdJabatan = tkdJabatan;
+//
+//            newTkdJabatan.setKdUnitKerja(tkdJabatan.getKdUnitKerja());
+//
+//            tkdJabatanListResult.add(newTkdJabatan);
+//        }
+//
+//        return tkdJabatanListResult;
         return tkdJabatanDao.findAll();
     }
 
