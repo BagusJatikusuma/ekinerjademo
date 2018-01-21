@@ -6,45 +6,45 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 /**
- * Created by bayu on 07/01/18.
+ * Created by bayu on 08/01/18.
  */
 @Entity
-@Table(name = "pengumuman")
-public class Pengumuman {
+@Table(name = "surat_keputusan")
+public class SuratKeputusan {
     @Id
-    @Column(name = "kd_pengumuman")
-    private String kdPengumuman;
+    @Column(name = "kd_surat_keputusan")
+    private String kdSuratKeputusan;
 
-    @Column(name = "nomor_urusan")
-    private String nomorUrusan;
     @Column(name = "nomor_urut")
     private Integer nomorUrut;
-    @Column(name = "nomor_pasangan_urut")
-    private String nomorPasanganUrut;
-    @Column(name = "nomor_unit")
-    private String nomorUnit;
     @Column(name = "nomor_tahun")
     private Integer nomorTahun;
 
-    @Column(name = "tentang")
-    private String tentang;
-    @Column(name = "isi_pengumuman")
-    private String isiPengumuman;
     @Column(name = "nip_penandatangan")
     private String nipPenandatangan;
-    @Column(name = "kota_pembuatan_surat")
-    private String kotaPembuatanSurat;
+    @Column(name = "selaku")
+    private String selaku;
+    @Column(name = "tentang")
+    private String tentang;
+    @Column(name = "menimbang")
+    private String menimbang;
+    @Column(name = "mengingat")
+    private String mengingat;
+    @Column(name = "menetapkan")
+    private String menetapkan;
+
     @Column(name = "tanggal_pembuatan_milis")
     private Long tanggalPembuatanMilis;
+    @Column(name = "kota_pembuatan_surat")
+    private String kotaPembuatanSurat;
     @Column(name = "nip_pembuat_surat")
     private String nipPembuatSurat;
-
     @Column(name = "kd_unit_kerja")
     private String kdUnitKerja;
-    @Column(name = "jenis_naskah_penugasan")
-    private Integer jenisNaskahPenugasan;
     @Column(name = "kd_naskah_penugasan")
     private String kdNaskahPenugasan;
+    @Column(name = "jenis_naskah_penugasan")
+    private Integer jenisNaskahPenugasan;
     @Column(name = "durasi_pengerjaan")
     private Integer durasiPengerjaan;
     @Column(name = "path_penilaian")
@@ -56,20 +56,12 @@ public class Pengumuman {
     @Column(name = "alasan_penolakan")
     private String alasanPenolakan;
 
-    public String getKdPengumuman() {
-        return kdPengumuman;
+    public String getKdSuratKeputusan() {
+        return kdSuratKeputusan;
     }
 
-    public void setKdPengumuman(String kdPengumuman) {
-        this.kdPengumuman = kdPengumuman;
-    }
-
-    public String getNomorUrusan() {
-        return nomorUrusan;
-    }
-
-    public void setNomorUrusan(String nomorUrusan) {
-        this.nomorUrusan = nomorUrusan;
+    public void setKdSuratKeputusan(String kdSuratKeputusan) {
+        this.kdSuratKeputusan = kdSuratKeputusan;
     }
 
     public Integer getNomorUrut() {
@@ -80,44 +72,12 @@ public class Pengumuman {
         this.nomorUrut = nomorUrut;
     }
 
-    public String getNomorPasanganUrut() {
-        return nomorPasanganUrut;
-    }
-
-    public void setNomorPasanganUrut(String nomorPasanganUrut) {
-        this.nomorPasanganUrut = nomorPasanganUrut;
-    }
-
-    public String getNomorUnit() {
-        return nomorUnit;
-    }
-
-    public void setNomorUnit(String nomorUnit) {
-        this.nomorUnit = nomorUnit;
-    }
-
     public Integer getNomorTahun() {
         return nomorTahun;
     }
 
     public void setNomorTahun(Integer nomorTahun) {
         this.nomorTahun = nomorTahun;
-    }
-
-    public String getTentang() {
-        return tentang;
-    }
-
-    public void setTentang(String tentang) {
-        this.tentang = tentang;
-    }
-
-    public String getIsiPengumuman() {
-        return isiPengumuman;
-    }
-
-    public void setIsiPengumuman(String isiPengumuman) {
-        this.isiPengumuman = isiPengumuman;
     }
 
     public String getNipPenandatangan() {
@@ -128,12 +88,44 @@ public class Pengumuman {
         this.nipPenandatangan = nipPenandatangan;
     }
 
-    public String getKotaPembuatanSurat() {
-        return kotaPembuatanSurat;
+    public String getSelaku() {
+        return selaku;
     }
 
-    public void setKotaPembuatanSurat(String kotaPembuatanSurat) {
-        this.kotaPembuatanSurat = kotaPembuatanSurat;
+    public void setSelaku(String selaku) {
+        this.selaku = selaku;
+    }
+
+    public String getTentang() {
+        return tentang;
+    }
+
+    public void setTentang(String tentang) {
+        this.tentang = tentang;
+    }
+
+    public String getMenimbang() {
+        return menimbang;
+    }
+
+    public void setMenimbang(String menimbang) {
+        this.menimbang = menimbang;
+    }
+
+    public String getMengingat() {
+        return mengingat;
+    }
+
+    public void setMengingat(String mengingat) {
+        this.mengingat = mengingat;
+    }
+
+    public String getMenetapkan() {
+        return menetapkan;
+    }
+
+    public void setMenetapkan(String menetapkan) {
+        this.menetapkan = menetapkan;
     }
 
     public Long getTanggalPembuatanMilis() {
@@ -142,6 +134,14 @@ public class Pengumuman {
 
     public void setTanggalPembuatanMilis(Long tanggalPembuatanMilis) {
         this.tanggalPembuatanMilis = tanggalPembuatanMilis;
+    }
+
+    public String getKotaPembuatanSurat() {
+        return kotaPembuatanSurat;
+    }
+
+    public void setKotaPembuatanSurat(String kotaPembuatanSurat) {
+        this.kotaPembuatanSurat = kotaPembuatanSurat;
     }
 
     public String getNipPembuatSurat() {
@@ -160,20 +160,20 @@ public class Pengumuman {
         this.kdUnitKerja = kdUnitKerja;
     }
 
-    public Integer getJenisNaskahPenugasan() {
-        return jenisNaskahPenugasan;
-    }
-
-    public void setJenisNaskahPenugasan(Integer jenisNaskahPenugasan) {
-        this.jenisNaskahPenugasan = jenisNaskahPenugasan;
-    }
-
     public String getKdNaskahPenugasan() {
         return kdNaskahPenugasan;
     }
 
     public void setKdNaskahPenugasan(String kdNaskahPenugasan) {
         this.kdNaskahPenugasan = kdNaskahPenugasan;
+    }
+
+    public Integer getJenisNaskahPenugasan() {
+        return jenisNaskahPenugasan;
+    }
+
+    public void setJenisNaskahPenugasan(Integer jenisNaskahPenugasan) {
+        this.jenisNaskahPenugasan = jenisNaskahPenugasan;
     }
 
     public Integer getDurasiPengerjaan() {

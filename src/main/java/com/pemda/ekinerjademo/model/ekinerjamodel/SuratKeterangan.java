@@ -1,19 +1,17 @@
 package com.pemda.ekinerjademo.model.ekinerjamodel;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.List;
 
 /**
- * Created by bayu on 07/01/18.
+ * Created by bayu on 10/01/18.
  */
 @Entity
-@Table(name = "pengumuman")
-public class Pengumuman {
+@Table(name = "surat_keterangan")
+public class SuratKeterangan {
     @Id
-    @Column(name = "kd_pengumuman")
-    private String kdPengumuman;
+    @Column(name = "kd_surat_keterangan")
+    private String kdSuratKeterangan;
 
     @Column(name = "nomor_urusan")
     private String nomorUrusan;
@@ -26,25 +24,22 @@ public class Pengumuman {
     @Column(name = "nomor_tahun")
     private Integer nomorTahun;
 
-    @Column(name = "tentang")
-    private String tentang;
-    @Column(name = "isi_pengumuman")
-    private String isiPengumuman;
     @Column(name = "nip_penandatangan")
     private String nipPenandatangan;
+    @Column(name = "isi_surat_keterangan")
+    private String isiSuratKeterangan;
     @Column(name = "kota_pembuatan_surat")
     private String kotaPembuatanSurat;
-    @Column(name = "tanggal_pembuatan_milis")
-    private Long tanggalPembuatanMilis;
-    @Column(name = "nip_pembuat_surat")
+    @Column(name = "tanggal_pembuatan_surat")
+    private Long tanggalPembuatanSuratMilis;
+    @Column(name = "nip_pembuatan_surat")
     private String nipPembuatSurat;
-
     @Column(name = "kd_unit_kerja")
     private String kdUnitKerja;
-    @Column(name = "jenis_naskah_penugasan")
-    private Integer jenisNaskahPenugasan;
     @Column(name = "kd_naskah_penugasan")
     private String kdNaskahPenugasan;
+    @Column(name = "jenis_naskah_penugasan")
+    private Integer jenisNaskahPenugasan;
     @Column(name = "durasi_pengerjaan")
     private Integer durasiPengerjaan;
     @Column(name = "path_penilaian")
@@ -56,12 +51,15 @@ public class Pengumuman {
     @Column(name = "alasan_penolakan")
     private String alasanPenolakan;
 
-    public String getKdPengumuman() {
-        return kdPengumuman;
+    @OneToMany(mappedBy = "suratKeterangan")
+    private List<TargetSuratKeterangan> targetSuratKeteranganList;
+
+    public String getKdSuratKeterangan() {
+        return kdSuratKeterangan;
     }
 
-    public void setKdPengumuman(String kdPengumuman) {
-        this.kdPengumuman = kdPengumuman;
+    public void setKdSuratKeterangan(String kdSuratKeterangan) {
+        this.kdSuratKeterangan = kdSuratKeterangan;
     }
 
     public String getNomorUrusan() {
@@ -104,28 +102,20 @@ public class Pengumuman {
         this.nomorTahun = nomorTahun;
     }
 
-    public String getTentang() {
-        return tentang;
-    }
-
-    public void setTentang(String tentang) {
-        this.tentang = tentang;
-    }
-
-    public String getIsiPengumuman() {
-        return isiPengumuman;
-    }
-
-    public void setIsiPengumuman(String isiPengumuman) {
-        this.isiPengumuman = isiPengumuman;
-    }
-
     public String getNipPenandatangan() {
         return nipPenandatangan;
     }
 
     public void setNipPenandatangan(String nipPenandatangan) {
         this.nipPenandatangan = nipPenandatangan;
+    }
+
+    public String getIsiSuratKeterangan() {
+        return isiSuratKeterangan;
+    }
+
+    public void setIsiSuratKeterangan(String isiSuratKeterangan) {
+        this.isiSuratKeterangan = isiSuratKeterangan;
     }
 
     public String getKotaPembuatanSurat() {
@@ -136,12 +126,12 @@ public class Pengumuman {
         this.kotaPembuatanSurat = kotaPembuatanSurat;
     }
 
-    public Long getTanggalPembuatanMilis() {
-        return tanggalPembuatanMilis;
+    public Long getTanggalPembuatanSuratMilis() {
+        return tanggalPembuatanSuratMilis;
     }
 
-    public void setTanggalPembuatanMilis(Long tanggalPembuatanMilis) {
-        this.tanggalPembuatanMilis = tanggalPembuatanMilis;
+    public void setTanggalPembuatanSuratMilis(Long tanggalPembuatanSuratMilis) {
+        this.tanggalPembuatanSuratMilis = tanggalPembuatanSuratMilis;
     }
 
     public String getNipPembuatSurat() {
@@ -160,20 +150,20 @@ public class Pengumuman {
         this.kdUnitKerja = kdUnitKerja;
     }
 
-    public Integer getJenisNaskahPenugasan() {
-        return jenisNaskahPenugasan;
-    }
-
-    public void setJenisNaskahPenugasan(Integer jenisNaskahPenugasan) {
-        this.jenisNaskahPenugasan = jenisNaskahPenugasan;
-    }
-
     public String getKdNaskahPenugasan() {
         return kdNaskahPenugasan;
     }
 
     public void setKdNaskahPenugasan(String kdNaskahPenugasan) {
         this.kdNaskahPenugasan = kdNaskahPenugasan;
+    }
+
+    public Integer getJenisNaskahPenugasan() {
+        return jenisNaskahPenugasan;
+    }
+
+    public void setJenisNaskahPenugasan(Integer jenisNaskahPenugasan) {
+        this.jenisNaskahPenugasan = jenisNaskahPenugasan;
     }
 
     public Integer getDurasiPengerjaan() {
@@ -214,5 +204,14 @@ public class Pengumuman {
 
     public void setAlasanPenolakan(String alasanPenolakan) {
         this.alasanPenolakan = alasanPenolakan;
+    }
+
+
+    public List<TargetSuratKeterangan> getTargetSuratKeteranganList() {
+        return targetSuratKeteranganList;
+    }
+
+    public void setTargetSuratKeteranganList(List<TargetSuratKeterangan> targetSuratKeteranganList) {
+        this.targetSuratKeteranganList = targetSuratKeteranganList;
     }
 }
