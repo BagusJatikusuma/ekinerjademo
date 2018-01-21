@@ -28,8 +28,8 @@ public class LoginPegawaiServiceImpl implements LoginPegawaiService {
     }
 
     @Override
-    public List<LoginPegawai> getByBulanAndTahun(Integer bulan, Integer tahun) {
-        return loginPegawaiDao.findByBulanLoginAndTahunLogin(bulan, tahun);
+    public List<LoginPegawai> getByBulanAndTahun(Integer bulan, Integer tahun, String nipPegawai) {
+        return loginPegawaiDao.findByBulanLoginAndTahunLoginAndNipPegawai(bulan, tahun, nipPegawai);
     }
 
 }

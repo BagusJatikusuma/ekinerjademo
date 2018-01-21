@@ -1141,13 +1141,14 @@ public class AkunPegawaiController {
 
         List<Integer> daftarTanggalKehadiran = new ArrayList<>();
         List<LoginPegawai> loginPegawaiList
-                = loginPegawaiService.getByBulanAndTahun(bulan, tahun);
+                = loginPegawaiService.getByBulanAndTahun(bulan, tahun, nipPegawai);
 
         List<LaporanKinerjaPegawaiWrapper> laporanKinerjaPegawaiWrapperList
                 = new ArrayList<>();
 
         boolean found;
         for (LoginPegawai loginPegawai : loginPegawaiList) {
+//            LOGGER.info(loginPegawai.getTanggalLogin()+"-");
             found = false;
 
             for (Integer tanggal : daftarTanggalKehadiran) {
@@ -1342,6 +1343,7 @@ public class AkunPegawaiController {
 
 
         return new ResponseEntity<Object>(laporanKinerjaPegawaiWrapperList, HttpStatus.OK);
+//        return new ResponseEntity<Object>(daftarTanggalKehadiran, HttpStatus.OK);
 
     }
 

@@ -10,5 +10,5 @@ import java.util.List;
 public interface LoginPegawaiService {
     void createLog(LoginPegawai loginPegawai);
     LoginPegawai get(Long loginId);
-    List<LoginPegawai> getByBulanAndTahun(Integer bulan, Integer tahun);
+    List<LoginPegawai> getByBulanAndTahun(Integer bulan, Integer tahun, String nipPegawai);
 }

@@ -9,5 +9,5 @@ import java.util.List;
  * Created by bayu on 26/12/17.
  */
 public interface LoginPegawaiDao extends JpaRepository<LoginPegawai, Long> {
-    List<LoginPegawai> findByBulanLoginAndTahunLogin(Integer bulanLogin, Integer tahunLogin);
+    List<LoginPegawai> findByBulanLoginAndTahunLoginAndNipPegawai(Integer bulanLogin, Integer tahunLogin, String nipPegawai);
 }
