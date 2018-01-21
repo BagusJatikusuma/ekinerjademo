@@ -2,6 +2,7 @@ package com.pemda.ekinerjademo.model.ekinerjamodel;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Id;
 import javax.persistence.Table;
 
 /**
@@ -10,6 +11,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "surat_keputusan")
 public class SuratKeputusan {
+    @Id
     @Column(name = "kd_surat_keputusan")
     private String kdSuratKeputusan;
 

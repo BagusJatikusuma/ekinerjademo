@@ -52,7 +52,7 @@ public class SuratKeterangan {
     private String alasanPenolakan;
 
     @OneToMany(mappedBy = "suratKeterangan")
-    private List<SuratKeterangan> suratKeteranganList;
+    private List<TargetSuratKeterangan> targetSuratKeteranganList;
 
     public String getKdSuratKeterangan() {
         return kdSuratKeterangan;
@@ -206,12 +206,12 @@ public class SuratKeterangan {
         this.alasanPenolakan = alasanPenolakan;
     }
 
-    public List<SuratKeterangan> getSuratKeteranganList() {
-        return suratKeteranganList;
+
+    public List<TargetSuratKeterangan> getTargetSuratKeteranganList() {
+        return targetSuratKeteranganList;
     }
 
-    public void setSuratKeteranganList(List<SuratKeterangan> suratKeteranganList) {
-        this.suratKeteranganList = suratKeteranganList;
+    public void setTargetSuratKeteranganList(List<TargetSuratKeterangan> targetSuratKeteranganList) {
+        this.targetSuratKeteranganList = targetSuratKeteranganList;
     }
-
 }

@@ -38,6 +38,7 @@ public class Pengumuman {
     private Long tanggalPembuatanMilis;
     @Column(name = "nip_pembuat_surat")
     private String nipPembuatSurat;
+
     @Column(name = "kd_unit_kerja")
     private String kdUnitKerja;
     @Column(name = "jenis_naskah_penugasan")
