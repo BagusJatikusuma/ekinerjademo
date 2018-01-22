@@ -36,7 +36,7 @@ public class UraianTugasPegawaiTahunanServiceImpl implements UraianTugasPegawaiT
                                     urtugPegawai.getKdUrtug(),
                                     urtugPegawai.getKdJabatan(),
                                     urtugPegawai.getKdJenisUrtug(),
-                                    Year.now().getValue(),
+                                    Year.now().getValue(), //salah disini
                                     urtugPegawai.getNipPegawai()
                             ));
             urtugPegawaiTahunan.setAkunPegawai(new AkunPegawai(urtugPegawai.getNipPegawai()));
