@@ -6,12 +6,14 @@ import java.util.Set;
  * Created by bayu on 08/12/17.
  */
 public class NotaDinasInputWrapper {
+    private String kdNotaDinas;
     private String nomorUrusan;
     private String nomorPasanganUrut;
     private String nomorUnit;
-    private String kdJabatanPenerimaNotaDinas;
+    private String nipPenerimaNotadinas;
     private String nipPemberiNotaDinas;
     private String hal;
+    private Long tanggalNotaDinasMilis;
     private String isiNotaDinas;
     private String nipPenandatangan;
     private String nipPembuatSurat;
@@ -19,6 +21,15 @@ public class NotaDinasInputWrapper {
     private Integer durasiPengerjaan;
 
     private Set<String> kdTembusanList;
+    private String kdNotaDinasBawahan;
+
+    public String getKdNotaDinas() {
+        return kdNotaDinas;
+    }
+
+    public void setKdNotaDinas(String kdNotaDinas) {
+        this.kdNotaDinas = kdNotaDinas;
+    }
 
     public String getNomorUrusan() {
         return nomorUrusan;
@@ -44,12 +55,12 @@ public class NotaDinasInputWrapper {
         this.nomorUnit = nomorUnit;
     }
 
-    public String getKdJabatanPenerimaNotaDinas() {
-        return kdJabatanPenerimaNotaDinas;
+    public String getNipPenerimaNotadinas() {
+        return nipPenerimaNotadinas;
     }
 
-    public void setKdJabatanPenerimaNotaDinas(String kdJabatanPenerimaNotaDinas) {
-        this.kdJabatanPenerimaNotaDinas = kdJabatanPenerimaNotaDinas;
+    public void setNipPenerimaNotadinas(String nipPenerimaNotadinas) {
+        this.nipPenerimaNotadinas = nipPenerimaNotadinas;
     }
 
     public String getNipPemberiNotaDinas() {
@@ -66,6 +77,14 @@ public class NotaDinasInputWrapper {
 
     public void setHal(String hal) {
         this.hal = hal;
+    }
+
+    public Long getTanggalNotaDinasMilis() {
+        return tanggalNotaDinasMilis;
+    }
+
+    public void setTanggalNotaDinasMilis(Long tanggalNotaDinasMilis) {
+        this.tanggalNotaDinasMilis = tanggalNotaDinasMilis;
     }
 
     public String getIsiNotaDinas() {
@@ -100,6 +119,14 @@ public class NotaDinasInputWrapper {
         this.kdUnitKerja = kdUnitKerja;
     }
 
+    public Integer getDurasiPengerjaan() {
+        return durasiPengerjaan;
+    }
+
+    public void setDurasiPengerjaan(Integer durasiPengerjaan) {
+        this.durasiPengerjaan = durasiPengerjaan;
+    }
+
     public Set<String> getKdTembusanList() {
         return kdTembusanList;
     }
@@ -108,11 +135,11 @@ public class NotaDinasInputWrapper {
         this.kdTembusanList = kdTembusanList;
     }
 
-    public Integer getDurasiPengerjaan() {
-        return durasiPengerjaan;
+    public String getKdNotaDinasBawahan() {
+        return kdNotaDinasBawahan;
     }
 
-    public void setDurasiPengerjaan(Integer durasiPengerjaan) {
-        this.durasiPengerjaan = durasiPengerjaan;
+    public void setKdNotaDinasBawahan(String kdNotaDinasBawahan) {
+        this.kdNotaDinasBawahan = kdNotaDinasBawahan;
     }
 }

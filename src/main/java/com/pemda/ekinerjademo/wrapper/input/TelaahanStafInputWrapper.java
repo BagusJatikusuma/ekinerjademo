@@ -4,6 +4,7 @@ package com.pemda.ekinerjademo.wrapper.input;
  * Created by bayu on 15/12/17.
  */
 public class TelaahanStafInputWrapper {
+    private String kdTelaahanStaf;
     private String tentang;
     private String persoalan;
     private String praanggapan;
@@ -12,10 +13,19 @@ public class TelaahanStafInputWrapper {
     private String simpulan;
     private String saran;
     private String nipPenandatangan;
+    private Long tanggalTelaahanStafMilis;
     private String nipPembuatSurat;
     private String kdUnitKerja;
     private Integer durasiPengerjaan;
     private String kdTelaahanStafBawahan;
+
+    public String getKdTelaahanStaf() {
+        return kdTelaahanStaf;
+    }
+
+    public void setKdTelaahanStaf(String kdTelaahanStaf) {
+        this.kdTelaahanStaf = kdTelaahanStaf;
+    }
 
     public String getTentang() {
         return tentang;
@@ -79,6 +89,14 @@ public class TelaahanStafInputWrapper {
 
     public void setNipPenandatangan(String nipPenandatangan) {
         this.nipPenandatangan = nipPenandatangan;
+    }
+
+    public Long getTanggalTelaahanStafMilis() {
+        return tanggalTelaahanStafMilis;
+    }
+
+    public void setTanggalTelaahanStafMilis(Long tanggalTelaahanStafMilis) {
+        this.tanggalTelaahanStafMilis = tanggalTelaahanStafMilis;
     }
 
     public String getNipPembuatSurat() {

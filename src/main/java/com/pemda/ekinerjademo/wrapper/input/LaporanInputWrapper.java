@@ -4,6 +4,7 @@ package com.pemda.ekinerjademo.wrapper.input;
  * Created by bayu on 07/12/17.
  */
 public class LaporanInputWrapper {
+    private String kdLaporan;
     private String tentang;
     private String umum;
     private String maksudDanTujuan;
@@ -15,10 +16,19 @@ public class LaporanInputWrapper {
     private String penutup;
     private String nipPenandatangan;
     private String kotaPembuatanSurat;
+    private Long tanggalLaporanMilis;
     private String nipPembuatSurat;
     private String kdUnitKerja;
     private Integer durasiPengerjaan;
     private String kdLaporanBawahan;
+
+    public String getKdLaporan() {
+        return kdLaporan;
+    }
+
+    public void setKdLaporan(String kdLaporan) {
+        this.kdLaporan = kdLaporan;
+    }
 
     public String getTentang() {
         return tentang;
@@ -106,6 +116,14 @@ public class LaporanInputWrapper {
 
     public void setKotaPembuatanSurat(String kotaPembuatanSurat) {
         this.kotaPembuatanSurat = kotaPembuatanSurat;
+    }
+
+    public Long getTanggalLaporanMilis() {
+        return tanggalLaporanMilis;
+    }
+
+    public void setTanggalLaporanMilis(Long tanggalLaporanMilis) {
+        this.tanggalLaporanMilis = tanggalLaporanMilis;
     }
 
     public String getNipPembuatSurat() {
