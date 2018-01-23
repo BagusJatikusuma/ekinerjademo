@@ -1,10 +1,14 @@
 package com.pemda.ekinerjademo.controller.api;
 
+import com.pemda.ekinerjademo.model.bismamodel.QutPegawai;
 import com.pemda.ekinerjademo.model.ekinerjamodel.BeritaAcara;
+import com.pemda.ekinerjademo.projection.ekinerjaprojection.CustomPegawaiCredential;
 import com.pemda.ekinerjademo.service.BeritaAcaraService;
+import com.pemda.ekinerjademo.service.QutPegawaiService;
 import com.pemda.ekinerjademo.util.EkinerjaXMLBuilder;
 import com.pemda.ekinerjademo.wrapper.input.BeritaAcaraInputWrapper;
 import com.pemda.ekinerjademo.wrapper.output.BeritaAcaraHistoryWrapper;
+import com.pemda.ekinerjademo.wrapper.output.BeritaAcaraWrapper;
 import com.pemda.ekinerjademo.wrapper.output.CustomMessage;
 import groovy.transform.Synchronized;
 import org.slf4j.Logger;
@@ -29,6 +33,7 @@ public class BeritaAcaraController {
     public static final Logger LOGGER = LoggerFactory.getLogger(BeritaAcaraController.class);
 
     @Autowired private BeritaAcaraService beritaAcaraService;
+    @Autowired private QutPegawaiService qutPegawaiService;
 
     @RequestMapping(value = "/berita-acara/create-berita-acara", method = RequestMethod.POST)
     @Synchronized
@@ -123,6 +128,81 @@ public class BeritaAcaraController {
 
         return new ResponseEntity<Object>(new CustomMessage("berita acara opened by penilai"), HttpStatus.OK);
 
+    }
+
+    @RequestMapping(value = "/get-berita-acara-by-kd-berita-acara/{kdBeritaAcara}", method = RequestMethod.GET)
+    ResponseEntity<?> getBeritaAcaraByKdBeritaAcara(@RequestParam("kdBeritaAcara") String kdBeritaAcara) {
+        LOGGER.info("get berita acara by kd berita acara");
+
+        BeritaAcara beritaAcara = beritaAcaraService.getBeritaAcara(kdBeritaAcara);
+
+        if (beritaAcara == null)
+            return new ResponseEntity<Object>(new CustomMessage("berita acara tidak ditemukan"), HttpStatus.NOT_FOUND);
+
+        //get all pegawai
+        CustomPegawaiCredential
+                pihakKesatu = null,
+                pihakKedua = null,
+                pihakMengetahui = null;
+
+        List<CustomPegawaiCredential> qutPegawaiList
+                = qutPegawaiService.getCustomPegawaiCredentials();
+
+        // get pihak kesatu
+        for (CustomPegawaiCredential qutPegawai : qutPegawaiList) {
+            if (qutPegawai.getNip()
+                    .equals(beritaAcara.getNipPihakKesatu())) {
+                pihakKesatu = qutPegawai;
+                break;
+            }
+        }
+        // get pihak kedua
+        for (CustomPegawaiCredential qutPegawai : qutPegawaiList) {
+            if (qutPegawai.getNip()
+                    .equals(beritaAcara.getNipPihakKedua())) {
+                pihakKedua = qutPegawai;
+                break;
+            }
+        }
+        // get pihak mengetahui
+        for (CustomPegawaiCredential qutPegawai : qutPegawaiList) {
+            if (qutPegawai.getNip()
+                    .equals(beritaAcara.getNipMengetahui())) {
+                pihakMengetahui = qutPegawai;
+                break;
+            }
+        }
+
+        BeritaAcaraWrapper beritaAcaraWrapper
+                = new BeritaAcaraWrapper(
+                        beritaAcara.getKdBeritaAcara(),
+                        beritaAcara.getNomorUrusan(),
+                        beritaAcara.getNomorUrut(),
+                        beritaAcara.getNomorPasanganUrut(),
+                        beritaAcara.getNomorUnit(),
+                        beritaAcara.getNomorTahun(),
+                        pihakKesatu.getNip(),
+                        pihakKesatu.getNama(),
+                        pihakKesatu.getJabatan(),
+                        pihakKesatu.getUnitKerja(),
+                        beritaAcara.getPeranPihakKesatu(),
+                        beritaAcara.getStatusApprovalPihakKesatu(),
+                        pihakKedua.getNip(),
+                        pihakKedua.getNama(),
+                        pihakKedua.getJabatan(),
+                        pihakKedua.getUnitKerja(),
+                        beritaAcara.getPeranPihakKedua(),
+                        beritaAcara.getStatusApprovalPihakKedua(),
+                        beritaAcara.getIsiBeritaAcara(),
+                        beritaAcara.getDasarBeritaAcara(),
+                        pihakMengetahui.getNip(),
+                        pihakMengetahui.getNama(),
+                        pihakMengetahui.getJabatan(),
+                        pihakMengetahui.getUnitKerja(),
+                        beritaAcara.getKotaPembuatanSurat(),
+                        beritaAcara.getTanggalPembuatanMilis());
+
+        return new ResponseEntity<Object>(beritaAcaraWrapper, HttpStatus.OK);
     }
 
 }

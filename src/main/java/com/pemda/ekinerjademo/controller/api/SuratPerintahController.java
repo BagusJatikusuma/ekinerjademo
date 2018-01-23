@@ -731,7 +731,7 @@ public class SuratPerintahController {
                 = suratPerintahService.getSuratPerintahByKdSuratPerintah(kdSurat);
 
         if (suratPerintah == null)
-            return new ResponseEntity<Object>(new CustomMessage("surat tidak ditemukan"), HttpStatus.OK);
+            return new ResponseEntity<Object>(new CustomMessage("surat tidak ditemukan"), HttpStatus.NOT_FOUND);
 
         LOGGER.info(suratPerintah.getMenimbang());
         LOGGER.info(suratPerintah.getDasar());

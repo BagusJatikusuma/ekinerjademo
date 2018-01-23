@@ -36,7 +36,8 @@ public class UraianTugasPegawaiTahunanServiceImpl implements UraianTugasPegawaiT
                                     urtugPegawai.getKdUrtug(),
                                     urtugPegawai.getKdJabatan(),
                                     urtugPegawai.getKdJenisUrtug(),
-                                    Year.now().getValue(),
+//                                    Year.now().getValue(), //salah
+                                    urtugPegawai.getTahunUrtug(),
                                     urtugPegawai.getNipPegawai()
                             ));
             urtugPegawaiTahunan.setAkunPegawai(new AkunPegawai(urtugPegawai.getNipPegawai()));
@@ -96,7 +97,8 @@ public class UraianTugasPegawaiTahunanServiceImpl implements UraianTugasPegawaiT
                                 uraianTugasPegawaiTahunanInputWrapper.getKdUrtug(),
                                 uraianTugasPegawaiTahunanInputWrapper.getKdJabatan(),
                                 uraianTugasPegawaiTahunanInputWrapper.getKdJenisUrtug(),
-                                Year.now().getValue(),
+//                                Year.now().getValue(),
+                                uraianTugasPegawaiTahunanInputWrapper.getTahunUrtug(),
                                 uraianTugasPegawaiTahunanInputWrapper.getNipPegawai()
                         ));
         urtugPegawaiTahunan.setAkunPegawai(new AkunPegawai(uraianTugasPegawaiTahunanInputWrapper.getNipPegawai()));

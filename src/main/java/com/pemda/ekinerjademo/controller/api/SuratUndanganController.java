@@ -1,14 +1,15 @@
 package com.pemda.ekinerjademo.controller.api;
 
+import com.pemda.ekinerjademo.service.QutPegawaiService;
 import com.pemda.ekinerjademo.service.SuratUndanganService;
+import com.pemda.ekinerjademo.service.TkdJabatanService;
+import com.pemda.ekinerjademo.wrapper.output.CustomMessage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * Created by bayu on 18/01/18.
@@ -20,40 +21,14 @@ public class SuratUndanganController {
     public static final Logger LOGGER = LoggerFactory.getLogger(SuratUndanganController.class);
 
     @Autowired private SuratUndanganService suratUndanganService;
+    @Autowired private QutPegawaiService qutPegawaiService;
+    @Autowired private TkdJabatanService tkdJabatanService;
 
+    @RequestMapping(value = "/create-surat-undangan", method = RequestMethod.POST)
     ResponseEntity<?> createSuratUndangan() {
         LOGGER.info("create surat undangan");
 
-        return new ResponseEntity<Object>(null, HttpStatus.OK);
-
-    }
-
-    ResponseEntity<?> sebarSuratUndangan() {
-        LOGGER.info("sebar surat undangan");
-
-        return new ResponseEntity<Object>(null, HttpStatus.OK);
-
-    }
-
-    ResponseEntity<?> approveSuratUndangan() {
-        LOGGER.info("sebar surat undangan");
-
-        return new ResponseEntity<Object>(null, HttpStatus.OK);
-
-    }
-
-    ResponseEntity<?> terimaSuratUndangan() {
-        LOGGER.info("terima surat undangan");
-
-        return new ResponseEntity<Object>(null, HttpStatus.OK);
-
-    }
-
-    ResponseEntity<?> getDaftarSuratUndanganHistoryByPegawai() {
-        LOGGER.info("get surat undangan history");
-
-        return new ResponseEntity<Object>(null, HttpStatus.OK);
-
+        return new ResponseEntity<Object>(new CustomMessage("surat undangan created"), HttpStatus.OK);
     }
 
     ResponseEntity<?> getDaftarSuratUndanganTarget() {

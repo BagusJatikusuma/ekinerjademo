@@ -23,6 +23,7 @@ public class MemorandumInputWrapper {
     private Integer statusPenilaian;
     private String alasanPenolakan;
     private String kdMemorandumBawahan;
+    private String kdJabatanSuratPejabat;
 
     private boolean suratPejabat;
     private List<String> kdJabatanTembusanList;
@@ -177,5 +178,13 @@ public class MemorandumInputWrapper {
 
     public void setKdJabatanTembusanList(List<String> kdJabatanTembusanList) {
         this.kdJabatanTembusanList = kdJabatanTembusanList;
+    }
+
+    public String getKdJabatanSuratPejabat() {
+        return kdJabatanSuratPejabat;
+    }
+
+    public void setKdJabatanSuratPejabat(String kdJabatanSuratPejabat) {
+        this.kdJabatanSuratPejabat = kdJabatanSuratPejabat;
     }
 }

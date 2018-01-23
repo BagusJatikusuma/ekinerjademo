@@ -1,8 +1,6 @@
 package com.pemda.ekinerjademo.controller.api;
 
-import com.pemda.ekinerjademo.model.ekinerjamodel.Memorandum;
-import com.pemda.ekinerjademo.model.ekinerjamodel.TembusanMemorandum;
-import com.pemda.ekinerjademo.model.ekinerjamodel.TembusanMemorandumId;
+import com.pemda.ekinerjademo.model.ekinerjamodel.*;
 import com.pemda.ekinerjademo.projection.ekinerjaprojection.CustomPegawaiCredential;
 import com.pemda.ekinerjademo.repository.bismarepository.TkdUnkDao;
 import com.pemda.ekinerjademo.service.MemorandumService;
@@ -12,6 +10,7 @@ import com.pemda.ekinerjademo.wrapper.input.MemorandumInputWrapper;
 import com.pemda.ekinerjademo.wrapper.output.CustomMessage;
 import com.pemda.ekinerjademo.wrapper.output.MemorandumHistoryWrapper;
 import com.pemda.ekinerjademo.wrapper.output.MemorandumTargetWrapper;
+import com.pemda.ekinerjademo.wrapper.output.MemorandumWrapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.time.Year;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -68,15 +68,60 @@ public class MemorandumController {
         }
 
         //build memorandum
+        Memorandum memorandum = new Memorandum();
 
+        memorandum.setKdMemorandum(kdMemorandum);
+        memorandum.setNomorUrusan(inputWrapper.getNomorUrusan());
+        memorandum.setNomorUnit(inputWrapper.getNomorUnit());
+        memorandum.setNomorUrut(0);
+        memorandum.setNomorPasanganUrut(inputWrapper.getNomorPasanganUrut());
+        memorandum.setNomorTahun(Year.now().getValue());
+        memorandum.setNipPenerimaMemorandum(inputWrapper.getNipPenerimaMemorandum());
+        memorandum.setNipPemberiMemorandum(inputWrapper.getNipPemberiMemorandum());
+        memorandum.setHal(inputWrapper.getHal());
+        memorandum.setTanggalPembuatanMilis(new Date().getTime());
+        memorandum.setIsiMemorandum(inputWrapper.getIsiMemorandum());
+        memorandum.setNipPembuatSurat(inputWrapper.getNipPembuatSurat());
+        memorandum.setNipPenandatangan(inputWrapper.getNipPenandatangan());
+        memorandum.setKdUnitKerja(inputWrapper.getKdUnitKerja());
+        memorandum.setDurasiPengerjaan(inputWrapper.getDurasiPengerjaan());
+        memorandum.setNipPenilai("");
+
+        if (inputWrapper.getKdMemorandumBawahan() == null) {
+            memorandum.setPathPenilaian(kdMemorandum);
+            memorandum.setStatusPenilaian(0);
+        } else {
+            Memorandum memorandumBawahan
+                    = memorandumService.getByKdMemorandum(inputWrapper.getKdMemorandumBawahan());
+            memorandum.setPathPenilaian(memorandumBawahan.getPathPenilaian()+"."+kdMemorandum);
+
+            memorandumBawahan.setStatusPenilaian(2);
+            memorandumService.createMemorandum(memorandumBawahan);
+        }
         // attach list tembusan into memorandum
-
+        memorandum.setTembusanMemorandumList(tembusanMemorandumList);
         //save memorandum
+        memorandumService.createMemorandum(memorandum);
         //save tembusan memorandum
-
+        memorandumService.createTembusanMemorandum(tembusanMemorandumList);
         //save memorandum pejabat or non pejabat
+        if (inputWrapper.isSuratPejabat()) {
+            MemorandumPejabat memorandumPejabat
+                    = new MemorandumPejabat();
+            memorandumPejabat.setKdJabatan(inputWrapper.getKdJabatanSuratPejabat());
+            memorandumPejabat.setKdMemorandum(kdMemorandum);
 
-        return null;
+            memorandumService.createMemorandumPejabat(memorandumPejabat);
+        } else {
+            MemorandumNonPejabat memorandumNonPejabat
+                    = new MemorandumNonPejabat();
+            memorandumNonPejabat.setKdUnitKerja(inputWrapper.getKdUnitKerja());
+            memorandumNonPejabat.setKdMemorandum(kdMemorandum);
+
+            memorandumService.createMemorandumNonPejabat(memorandumNonPejabat);
+        }
+
+        return new ResponseEntity<Object>(new CustomMessage("memorandum created"), HttpStatus.OK);
     }
 
     @RequestMapping(value = "/sebar-memorandum/{kdMemorandum}", method = RequestMethod.PUT)
@@ -229,9 +274,80 @@ public class MemorandumController {
     ResponseEntity<?> getMemorandumBykdMemorandum(@PathVariable("kdMemorandum") String kdMemorandum) {
         LOGGER.info("get memorandum by kd memorandum");
 
+        Memorandum memorandum = memorandumService.getByKdMemorandum(kdMemorandum);
+
+        CustomPegawaiCredential
+                penerima = null,
+                pemberi = null,
+                pembuat = null,
+                penandatangan = null;
+
+        List<CustomPegawaiCredential> qutPegawaiList
+                = qutPegawaiService.getCustomPegawaiCredentials();
+
+        // get penerima
+        for (CustomPegawaiCredential qutPegawai : qutPegawaiList) {
+            if (qutPegawai.getNip()
+                    .equals(memorandum.getNipPenerimaMemorandum())) {
+                penerima = qutPegawai;
+                break;
+            }
+        }
+        // get pemberi
+        for (CustomPegawaiCredential qutPegawai : qutPegawaiList) {
+            if (qutPegawai.getNip()
+                    .equals(memorandum.getNipPemberiMemorandum())) {
+                pemberi = qutPegawai;
+                break;
+            }
+        }
+        // get pembuat
+        for (CustomPegawaiCredential qutPegawai : qutPegawaiList) {
+            if (qutPegawai.getNip()
+                    .equals(memorandum.getNipPembuatSurat())) {
+                pembuat = qutPegawai;
+                break;
+            }
+        }
+        // get penandatangan
+        for (CustomPegawaiCredential qutPegawai : qutPegawaiList) {
+            if (qutPegawai.getNip()
+                    .equals(memorandum.getNipPenandatangan())) {
+                penandatangan = qutPegawai;
+                break;
+            }
+        }
+
+        MemorandumWrapper memorandumWrapper
+                = new MemorandumWrapper(
+                        memorandum.getKdMemorandum(),
+                        memorandum.getNomorUrusan(),
+                        memorandum.getNomorUrut(),
+                        memorandum.getNomorPasanganUrut(),
+                        memorandum.getNomorUnit(),
+                        memorandum.getNomorTahun(),
+                        penerima.getNip(),
+                        penerima.getNama(),
+                        penerima.getJabatan(),
+                        penerima.getUnitKerja(),
+                        pemberi.getNip(),
+                        pemberi.getNama(),
+                        pemberi.getJabatan(),
+                        pemberi.getUnitKerja(),
+                        memorandum.getHal(),
+                        memorandum.getTanggalPembuatanMilis(),
+                        memorandum.getIsiMemorandum(),
+                        pembuat.getNip(),
+                        pembuat.getNama(),
+                        pembuat.getJabatan(),
+                        pembuat.getUnitKerja(),
+                        penandatangan.getNip(),
+                        penandatangan.getNama(),
+                        penandatangan.getJabatan(),
+                        penandatangan.getUnitKerja());
 
 
-        return null;
+        return new ResponseEntity<Object>(memorandumWrapper, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/open-memorandum-by-penilai/{kdMemorandum}", method = RequestMethod.PUT)

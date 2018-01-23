@@ -10,4 +10,5 @@ import java.util.List;
  */
 public interface SuratKuasaDao extends JpaRepository<SuratKuasa, String> {
     List<SuratKuasa> findByNipPembuatSurat(String nipPembuatSurat);
+    List<SuratKuasa> findByNipPenerimaKuasa(String nipPenerimaKuasa);
 }

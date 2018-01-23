@@ -12,6 +12,7 @@ public interface SuratPengantarService {
     List<SuratPengantar> getByKdUnitKerja(String kdUnitKerja);
     List<SuratPengantar> getByNipPembuat(String nipPembuat);
     List<SuratPengantar> getByNomorTahun(Integer nomorTahun);
+    List<SuratPengantar> getByJabatanTarget(String kdJabatan);
 
     SuratPengantar getByKdSuratPengantar(String kdSuratPengantar);
 

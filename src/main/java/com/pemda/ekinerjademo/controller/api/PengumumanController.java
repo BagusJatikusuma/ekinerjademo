@@ -1,14 +1,24 @@
 package com.pemda.ekinerjademo.controller.api;
 
+import com.pemda.ekinerjademo.model.bismamodel.QutPegawai;
+import com.pemda.ekinerjademo.model.ekinerjamodel.Pengumuman;
+import com.pemda.ekinerjademo.projection.ekinerjaprojection.CustomPegawaiCredential;
 import com.pemda.ekinerjademo.service.PengumumanService;
+import com.pemda.ekinerjademo.service.QutPegawaiCloneService;
+import com.pemda.ekinerjademo.wrapper.input.PengumumanInputWrapper;
+import com.pemda.ekinerjademo.wrapper.output.CustomMessage;
+import com.pemda.ekinerjademo.wrapper.output.PengumumanWrapper;
+import org.hibernate.loader.custom.Return;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.time.Year;
+import java.util.Date;
+import java.util.List;
 
 /**
  * Created by bayu on 18/01/18.
@@ -20,72 +30,130 @@ public class PengumumanController {
     public static final Logger LOGGER = LoggerFactory.getLogger(PengumumanController.class);
 
     @Autowired private PengumumanService pengumumanService;
+    @Autowired private QutPegawaiCloneService qutPegawaiService;
 
-    ResponseEntity<?> createPengumuman() {
+    @RequestMapping(value = "/create-pengumuman", method = RequestMethod.POST)
+    ResponseEntity<?> createPengumuman(@RequestBody PengumumanInputWrapper inputWrapper) {
         LOGGER.info("create pengumuman");
 
-        return new ResponseEntity<Object>(null, HttpStatus.OK);
+        Integer nomorUrut = 0;
+
+        String kdPengumuman = String.valueOf(new Date().getTime());
+
+        Pengumuman pengumuman = new Pengumuman();
+
+        pengumuman.setKdPengumuman(kdPengumuman);
+        pengumuman.setNomorUrusan(inputWrapper.getNomorUrusan());
+        pengumuman.setNomorUnit(inputWrapper.getNomorUnit());
+        pengumuman.setNomorUrut(nomorUrut);
+        pengumuman.setNomorPasanganUrut(inputWrapper.getNomorPasanganUrut());
+        pengumuman.setNomorTahun(Year.now().getValue());
+
+        pengumuman.setTentang(inputWrapper.getTentang());
+        pengumuman.setIsiPengumuman(inputWrapper.getIsiPengumuman());
+        pengumuman.setNipPenandatangan(inputWrapper.getNipPenandatangan());
+        pengumuman.setKotaPembuatanSurat(inputWrapper.getKotaPembuatanSurat());
+        pengumuman.setTanggalPembuatanMilis(new Date().getTime());
+        pengumuman.setNipPembuatSurat(inputWrapper.getNipPembuatSurat());
+
+        pengumuman.setKdUnitKerja(inputWrapper.getKdUnitKerja());
+        pengumuman.setDurasiPengerjaan(inputWrapper.getDurasiPengerjaan());
+        pengumuman.setNipPenilai("");
+
+        if (inputWrapper.getKdPengumumanBawahan() == null) {
+            pengumuman.setPathPenilaian(kdPengumuman);
+            pengumuman.setStatusPenilaian(0);
+        } else {
+            Pengumuman pengumumanBawahan
+                    = pengumumanService.getByKdPengumuman(inputWrapper.getKdPengumumanBawahan());
+            pengumuman.setPathPenilaian(pengumumanBawahan.getPathPenilaian()+"."+kdPengumuman);
+
+            pengumumanBawahan.setStatusPenilaian(2);
+            pengumumanService.create(pengumumanBawahan);
+        }
+
+        pengumumanService.create(pengumuman);
+
+        return new ResponseEntity<Object>(new CustomMessage("pengumuman created"), HttpStatus.OK);
 
     }
 
-    ResponseEntity<?> sebarPengumuman() {
+    @RequestMapping(value = "/sebar-pengumuman/{kdPengumuman}", method = RequestMethod.PUT)
+    ResponseEntity<?> sebarPengumuman(@PathVariable("kdPengumuman") String kdPengumuman) {
         LOGGER.info("sebar pengumuman");
 
+
         return new ResponseEntity<Object>(null, HttpStatus.OK);
 
     }
 
-    ResponseEntity<?> approvePengumuman() {
+    @RequestMapping(value = "/approve-pengumuman/{kdPengumuman}", method = RequestMethod.PUT)
+    ResponseEntity<?> approvePengumuman(@PathVariable("kdPengumuman") String kdPengumuman) {
         LOGGER.info("sebar pengumuman");
 
-        return new ResponseEntity<Object>(null, HttpStatus.OK);
 
+
+        return new ResponseEntity<>(new CustomMessage("pengumuman sudah disebar"), HttpStatus.OK);
     }
 
-    ResponseEntity<?> terimaPengumuman() {
-        LOGGER.info("terima pengumuman");
-
-        return new ResponseEntity<Object>(null, HttpStatus.OK);
-
-    }
-
-    ResponseEntity<?> getDaftarPengumumanHistoryByPegawai() {
-        LOGGER.info("get pengumuman history");
-
-        return new ResponseEntity<Object>(null, HttpStatus.OK);
-
-    }
-
-    ResponseEntity<?> getDaftarPengumumanTarget() {
-        LOGGER.info("get pengumuman target");
-
-        return new ResponseEntity<Object>(null, HttpStatus.OK);
-
-    }
-
-    ResponseEntity<?> getDaftarPengumumanTargetUnread() {
-        LOGGER.info("get pengumuman target unread");
-
-        return new ResponseEntity<Object>(null, HttpStatus.OK);
-
-    }
-
-    ResponseEntity<?> getPengumumanByKdPengumuman() {
+    @RequestMapping(value = "/get-pengumuman-by-kd-pengumuman/{kdPengumuman}", method = RequestMethod.GET)
+    ResponseEntity<?> getPengumumanByKdPengumuman(@PathVariable("kdPengumuman") String kdPengumuman) {
         LOGGER.info("get pengumuman kd pengumuman");
 
-        return new ResponseEntity<Object>(null, HttpStatus.OK);
+        Pengumuman pengumuman = pengumumanService.getByKdPengumuman(kdPengumuman);
+
+        CustomPegawaiCredential penandatangan = null;
+
+        List<CustomPegawaiCredential> qutPegawaiList
+                = qutPegawaiService.getCustomPegawaiCredentials();
+
+        // get penerima
+        for (CustomPegawaiCredential qutPegawai : qutPegawaiList) {
+            if (qutPegawai.getNip()
+                    .equals(pengumuman.getNipPenandatangan())) {
+                penandatangan = qutPegawai;
+                break;
+            }
+        }
+
+        PengumumanWrapper pengumumanWrapper
+                = new PengumumanWrapper(
+                        pengumuman.getNomorUrusan(),
+                        pengumuman.getNomorUrut(),
+                        pengumuman.getNomorPasanganUrut(),
+                        pengumuman.getNomorUnit(),
+                        pengumuman.getNomorTahun(),
+                        pengumuman.getTentang(),
+                        pengumuman.getIsiPengumuman(),
+                        penandatangan.getNip(),
+                        penandatangan.getNama(),
+                        penandatangan.getJabatan(),
+                        penandatangan.getUnitKerja(),
+                        pengumuman.getKotaPembuatanSurat(),
+                        pengumuman.getTanggalPembuatanMilis());
+
+        return new ResponseEntity<Object>(pengumumanWrapper, HttpStatus.OK);
 
     }
 
-    ResponseEntity<?> openPengumuman() {
+    @RequestMapping(value = "/open-pengumuman/{kdPengumuman}", method = RequestMethod.PUT)
+    ResponseEntity<?> openPengumuman(@PathVariable("kdPengumuman") String kdPengumuman) {
         LOGGER.info("open pengumuman");
 
+        Pengumuman pengumuman = pengumumanService.getByKdPengumuman(kdPengumuman);
+
         return new ResponseEntity<Object>(null, HttpStatus.OK);
 
     }
 
-    ResponseEntity<?> openPengumumanPenilai() {
+    @RequestMapping(value = "/open-pengumuman-penilai/{kdPengumuman}", method = RequestMethod.PUT)
+    ResponseEntity<?> openPengumumanPenilai(@PathVariable("kdPengumuman") String kdPengumuman) {
         LOGGER.info("open pengumuman penilai");
+
+        Pengumuman pengumuman = pengumumanService.getByKdPengumuman(kdPengumuman);
+        pengumuman.setStatusPenilaian(1);
+
+        pengumumanService.create(pengumuman);
 
         return new ResponseEntity<Object>(null, HttpStatus.OK);
 

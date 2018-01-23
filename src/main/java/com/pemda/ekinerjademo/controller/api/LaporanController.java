@@ -2,11 +2,14 @@ package com.pemda.ekinerjademo.controller.api;
 
 import com.pemda.ekinerjademo.model.ekinerjamodel.BeritaAcara;
 import com.pemda.ekinerjademo.model.ekinerjamodel.Laporan;
+import com.pemda.ekinerjademo.projection.ekinerjaprojection.CustomPegawaiCredential;
 import com.pemda.ekinerjademo.service.LaporanService;
+import com.pemda.ekinerjademo.service.QutPegawaiService;
 import com.pemda.ekinerjademo.wrapper.input.BeritaAcaraInputWrapper;
 import com.pemda.ekinerjademo.wrapper.input.LaporanInputWrapper;
 import com.pemda.ekinerjademo.wrapper.output.CustomMessage;
 import com.pemda.ekinerjademo.wrapper.output.LaporanHistoryWrapper;
+import com.pemda.ekinerjademo.wrapper.output.LaporanWrapper;
 import groovy.transform.Synchronized;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,6 +35,7 @@ public class LaporanController {
     public static final Logger LOGGER = LoggerFactory.getLogger(LaporanController.class);
 
     @Autowired private LaporanService laporanService;
+    @Autowired private QutPegawaiService qutPegawaiService;
 
     @RequestMapping(value = "/create-laporan", method = RequestMethod.POST)
     @Synchronized
@@ -121,6 +125,64 @@ public class LaporanController {
 
         return new ResponseEntity<Object>(new CustomMessage("laporan opened by penilai"), HttpStatus.OK);
 
+    }
+
+    @RequestMapping(value = "/get-laporan-by-kd-laporan/{kdLaporan}", method = RequestMethod.GET)
+    ResponseEntity<?> getLaporanByKdLaporan(@PathVariable("kdLaporan") String kdLaporan) {
+        LOGGER.info("get laporan by kode laporan");
+
+        Laporan laporan = laporanService.getLaporan(kdLaporan);
+
+        if (laporan == null)
+            return new ResponseEntity<Object>(new CustomMessage("laporan tidak ditemukan"), HttpStatus.NOT_FOUND);
+
+        CustomPegawaiCredential penandatangan = null, pembuat = null;
+
+        List<CustomPegawaiCredential> qutPegawaiList
+                = qutPegawaiService.getCustomPegawaiCredentials();
+
+        // get penandatangan
+        for (CustomPegawaiCredential qutPegawai : qutPegawaiList) {
+            if (qutPegawai.getNip()
+                    .equals(laporan.getNipPenandatangan())) {
+                penandatangan = qutPegawai;
+                break;
+            }
+        }
+        // get pembuat
+        for (CustomPegawaiCredential qutPegawai : qutPegawaiList) {
+            if (qutPegawai.getNip()
+                    .equals(laporan.getNipPembuatSurat())) {
+                pembuat = qutPegawai;
+                break;
+            }
+        }
+
+        LaporanWrapper laporanWrapper
+                = new LaporanWrapper(
+                        laporan.getKdLaporan(),
+                        laporan.getTentang(),
+                        laporan.getUmum(),
+                        laporan.getMaksudDanTujuan(),
+                        laporan.getRuangLingkup(),
+                        laporan.getDasar(),
+                        laporan.getKegiatanYangDilaksanakan(),
+                        laporan.getHasilYangDicapai(),
+                        laporan.getSimpulanDanSaran(),
+                        laporan.getPenutup(),
+                        penandatangan.getNip(),
+                        penandatangan.getNama(),
+                        penandatangan.getJabatan(),
+                        penandatangan.getUnitKerja(),
+                        laporan.getStatusBaca(),
+                        laporan.getKotaPembuatanSurat(),
+                        laporan.getTanggalPembuatanMilis(),
+                        pembuat.getNip(),
+                        pembuat.getNama(),
+                        pembuat.getJabatan(),
+                        pembuat.getUnitKerja());
+
+        return new ResponseEntity<Object>(laporanWrapper,HttpStatus.OK);
     }
 
 }

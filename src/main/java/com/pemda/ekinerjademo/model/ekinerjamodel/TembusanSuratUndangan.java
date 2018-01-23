@@ -1,9 +1,6 @@
 package com.pemda.ekinerjademo.model.ekinerjamodel;
 
-import javax.persistence.Column;
-import javax.persistence.EmbeddedId;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 /**
  * Created by bayu on 09/01/18.
@@ -13,10 +10,19 @@ import javax.persistence.Table;
 public class TembusanSuratUndangan {
     @EmbeddedId
     private TembusanSuratUndanganId tembusanSuratUndanganId;
+
     @Column(name = "status_diterima")
     private Integer statusDiterima;
     @Column(name = "status_baca")
     private Integer statusBaca;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(
+            name = "kd_surat_undangan",
+            insertable = false,
+            updatable = false,
+            referencedColumnName = "kd_surat_undangan")
+    private SuratUndangan suratUndangan;
 
     public TembusanSuratUndanganId getTembusanSuratUndanganId() {
         return tembusanSuratUndanganId;
@@ -40,5 +46,13 @@ public class TembusanSuratUndangan {
 
     public void setStatusBaca(Integer statusBaca) {
         this.statusBaca = statusBaca;
+    }
+
+    public SuratUndangan getSuratUndangan() {
+        return suratUndangan;
+    }
+
+    public void setSuratUndangan(SuratUndangan suratUndangan) {
+        this.suratUndangan = suratUndangan;
     }
 }

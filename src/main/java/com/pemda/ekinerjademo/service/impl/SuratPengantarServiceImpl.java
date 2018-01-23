@@ -36,6 +36,11 @@ public class SuratPengantarServiceImpl implements SuratPengantarService {
     }
 
     @Override
+    public List<SuratPengantar> getByJabatanTarget(String kdJabatan) {
+        return suratPengantarDao.findByKdJabatanTarget(kdJabatan);
+    }
+
+    @Override
     public SuratPengantar getByKdSuratPengantar(String kdSuratPengantar) {
         return suratPengantarDao.findByKdSuratPengantar(kdSuratPengantar);
     }

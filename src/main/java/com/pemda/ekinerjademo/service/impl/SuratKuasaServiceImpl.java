@@ -27,6 +27,11 @@ public class SuratKuasaServiceImpl implements SuratKuasaService{
     }
 
     @Override
+    public List<SuratKuasa> getByNipPenerimaKuasa(String nipPenerimaKuasa) {
+        return suratKuasaDao.findByNipPenerimaKuasa(nipPenerimaKuasa);
+    }
+
+    @Override
     public void createSuratKuasa(SuratKuasa suratKuasa) {
         suratKuasaDao.save(suratKuasa);
     }

@@ -14,6 +14,7 @@ public class SuratKuasa {
     @Id
     @Column(name = "kd_surat_kuasa")
     private String kdSuratKuasa;
+
     @Column(name = "nomor_urusan")
     private String nomorUrusan;
     @Column(name = "nomor_urut")

@@ -12,6 +12,7 @@ public class Memorandum {
     @Id
     @Column(name = "kd_memorandum")
     private String kdMemorandum;
+
     @Column(name = "nomor_urusan")
     private String nomorUrusan;
     @Column(name = "nomor_urut")
@@ -22,6 +23,7 @@ public class Memorandum {
     private String nomorUnit;
     @Column(name = "nomor_tahun")
     private Integer nomorTahun;
+
     @Column(name = "nip_penerima_memorandum")
     private String nipPenerimaMemorandum;
     @Column(name = "nip_pemberi_memorandum")
@@ -38,6 +40,7 @@ public class Memorandum {
     private String nipPenandatangan;
     @Column(name = "kd_unit_kerja")
     private String kdUnitKerja;
+
     @Column(name = "kd_naskah_penugasan")
     private String kdNaskahPenugasan;
     @Column(name = "jenis_naskah_penugasan")
