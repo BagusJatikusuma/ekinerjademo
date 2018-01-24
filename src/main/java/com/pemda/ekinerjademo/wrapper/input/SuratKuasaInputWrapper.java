@@ -5,18 +5,25 @@ package com.pemda.ekinerjademo.wrapper.input;
  */
 public class SuratKuasaInputWrapper {
     private String kdSuratKuasa;
+
     private String nomorUrusan;
     private String nomorPasanganUrut;
     private String nomorUnit;
+
     private String nipPemberiKuasa;
     private String nipPenerimaKuasa;
+
     private String isiKuasa;
     private String kotaPembuatanSurat;
     private String nipPembuatSurat;
     private String kdUnitKerja;
+
     private Integer durasiPengerjaan;
     private Long tanggalSuratKuasaMilis;
     private String kdSuratKuasaBawahan;
+
+    private String kdNaskahPenugasan;
+    private Integer jenisNaskahPenugasan;
 
     public String getKdSuratKuasa() {
         return kdSuratKuasa;
@@ -120,5 +127,21 @@ public class SuratKuasaInputWrapper {
 
     public void setKdSuratKuasaBawahan(String kdSuratKuasaBawahan) {
         this.kdSuratKuasaBawahan = kdSuratKuasaBawahan;
+    }
+
+    public String getKdNaskahPenugasan() {
+        return kdNaskahPenugasan;
+    }
+
+    public void setKdNaskahPenugasan(String kdNaskahPenugasan) {
+        this.kdNaskahPenugasan = kdNaskahPenugasan;
+    }
+
+    public Integer getJenisNaskahPenugasan() {
+        return jenisNaskahPenugasan;
+    }
+
+    public void setJenisNaskahPenugasan(Integer jenisNaskahPenugasan) {
+        this.jenisNaskahPenugasan = jenisNaskahPenugasan;
     }
 }

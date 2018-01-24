@@ -10,7 +10,7 @@ import javax.persistence.*;
 public class SuratPengantarIsi {
     @EmbeddedId
     private SuratPengantarIsiId suratPengantarIsiId;
-    @Column(name = "naskah_dinas_yang_dikirim")
+    @Column(name = "naskah_dinas_yang_dikirimkan")
     private String naskahDinasYangDikirim;
     @Column(name = "banyak_naskah")
     private Integer banyakNaskah;

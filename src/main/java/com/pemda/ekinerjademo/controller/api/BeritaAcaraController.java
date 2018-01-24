@@ -6,6 +6,7 @@ import com.pemda.ekinerjademo.projection.ekinerjaprojection.CustomPegawaiCredent
 import com.pemda.ekinerjademo.service.BeritaAcaraService;
 import com.pemda.ekinerjademo.service.QutPegawaiService;
 import com.pemda.ekinerjademo.util.EkinerjaXMLBuilder;
+import com.pemda.ekinerjademo.util.EkinerjaXMLParser;
 import com.pemda.ekinerjademo.wrapper.input.BeritaAcaraInputWrapper;
 import com.pemda.ekinerjademo.wrapper.output.BeritaAcaraHistoryWrapper;
 import com.pemda.ekinerjademo.wrapper.output.BeritaAcaraWrapper;
@@ -41,6 +42,8 @@ public class BeritaAcaraController {
             @RequestBody BeritaAcaraInputWrapper inputWrapper) {
         LOGGER.info("create berita acara");
 
+        EkinerjaXMLBuilder ekinerjaXMLBuilder = new EkinerjaXMLBuilder();
+
         String kdBeritaAcara = String.valueOf(new Date().getTime());
 
         BeritaAcara beritaAcara = new BeritaAcara();
@@ -60,7 +63,8 @@ public class BeritaAcaraController {
         beritaAcara.setPeranPihakKedua(inputWrapper.getPeranPihakKedua());
         beritaAcara.setStatusApprovalPihakKedua(0);
 
-        beritaAcara.setIsiBeritaAcara(inputWrapper.getIsiBeritaAcara());
+        beritaAcara.setIsiBeritaAcara(
+                ekinerjaXMLBuilder.convertListSuratPerintahIntoXml(inputWrapper.getIsiBeritaAcara(), "isi"));
         beritaAcara.setDasarBeritaAcara(inputWrapper.getDasarBeritaAcara());
         beritaAcara.setNipMengetahui(inputWrapper.getNipMengetahui());
         beritaAcara.setStatusApprovalNipMengetahui(0);
@@ -139,6 +143,8 @@ public class BeritaAcaraController {
         if (beritaAcara == null)
             return new ResponseEntity<Object>(new CustomMessage("berita acara tidak ditemukan"), HttpStatus.NOT_FOUND);
 
+        EkinerjaXMLParser ekinerjaXMLParser = new EkinerjaXMLParser();
+
         //get all pegawai
         CustomPegawaiCredential
                 pihakKesatu = null,
@@ -193,7 +199,8 @@ public class BeritaAcaraController {
                         pihakKedua.getUnitKerja(),
                         beritaAcara.getPeranPihakKedua(),
                         beritaAcara.getStatusApprovalPihakKedua(),
-                        beritaAcara.getIsiBeritaAcara(),
+                        ekinerjaXMLParser
+                                .convertXmlSuratPerintahIntoListofString(beritaAcara.getIsiBeritaAcara(), "isi"),
                         beritaAcara.getDasarBeritaAcara(),
                         pihakMengetahui.getNip(),
                         pihakMengetahui.getNama(),

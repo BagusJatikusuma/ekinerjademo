@@ -5,9 +5,11 @@ import com.pemda.ekinerjademo.model.ekinerjamodel.Pengumuman;
 import com.pemda.ekinerjademo.projection.ekinerjaprojection.CustomPegawaiCredential;
 import com.pemda.ekinerjademo.service.PengumumanService;
 import com.pemda.ekinerjademo.service.QutPegawaiCloneService;
+import com.pemda.ekinerjademo.util.DateUtilities;
 import com.pemda.ekinerjademo.wrapper.input.PengumumanInputWrapper;
 import com.pemda.ekinerjademo.wrapper.output.CustomMessage;
 import com.pemda.ekinerjademo.wrapper.output.PengumumanWrapper;
+import com.pemda.ekinerjademo.wrapper.output.SuratPerintahHistoryWrapper;
 import org.hibernate.loader.custom.Return;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,8 +19,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.Year;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by bayu on 18/01/18.
@@ -96,6 +100,35 @@ public class PengumumanController {
         return new ResponseEntity<>(new CustomMessage("pengumuman sudah disebar"), HttpStatus.OK);
     }
 
+    @RequestMapping(value = "/get-pengumuman-history-by-pembuat/{nipPembuat}", method = RequestMethod.GET)
+    ResponseEntity<?> getPengumumanHistoryByPembuat(@PathVariable("nipPembuat") String nipPembuat) {
+        LOGGER.info("get pengumuman history by pembuat");
+
+        List<Pengumuman> pengumumanList = pengumumanService.getByPembuat(nipPembuat);
+
+        List<SuratPerintahHistoryWrapper> pengumumanHistoryWrapperList
+                = new ArrayList<>();
+
+        Locale indoLocale = new Locale("id", "ID");
+
+        for (Pengumuman pengumuman : pengumumanList) {
+            pengumumanHistoryWrapperList
+                    .add(new SuratPerintahHistoryWrapper(
+                        pengumuman.getKdPengumuman(),
+                            DateUtilities.createLocalDate(new Date(pengumuman.getTanggalPembuatanMilis()), "dd MMMM yyyy", indoLocale),
+                            false,
+                            -1,
+                            "pengumuman",
+                            4,
+                            pengumuman.getTanggalPembuatanMilis(),
+                            pengumuman.getStatusPenilaian()
+                    ));
+        }
+
+        return new ResponseEntity<Object>(pengumumanHistoryWrapperList, HttpStatus.OK);
+
+    }
+
     @RequestMapping(value = "/get-pengumuman-by-kd-pengumuman/{kdPengumuman}", method = RequestMethod.GET)
     ResponseEntity<?> getPengumumanByKdPengumuman(@PathVariable("kdPengumuman") String kdPengumuman) {
         LOGGER.info("get pengumuman kd pengumuman");
@@ -142,7 +175,7 @@ public class PengumumanController {
 
         Pengumuman pengumuman = pengumumanService.getByKdPengumuman(kdPengumuman);
 
-        return new ResponseEntity<Object>(null, HttpStatus.OK);
+        return new ResponseEntity<Object>(new CustomMessage("pengumuman opened"), HttpStatus.OK);
 
     }
 
@@ -155,7 +188,7 @@ public class PengumumanController {
 
         pengumumanService.create(pengumuman);
 
-        return new ResponseEntity<Object>(null, HttpStatus.OK);
+        return new ResponseEntity<Object>(new CustomMessage("pengumuman opened"), HttpStatus.OK);
 
     }
 

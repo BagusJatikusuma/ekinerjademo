@@ -184,8 +184,8 @@ public class SuratPengantarController {
         DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
         for (SuratPengantar suratTarget : suratPengantarTargetList) {
             for (CustomPegawaiCredential pegawaiPemberi : qutPegawaiList) {
-                if (pegawaiPemberi.getNip()
-                        .equals(suratTarget.getNipPemberiSuratPengantar())) {
+                if (pegawaiPemberi.getKdJabatan()
+                        .equals(suratTarget.getKdJabatanPenerimaSuratPengantar())) {
                     suratPengantarTargetWrappers
                             .add(new SuratPengantarTargetWrapper(
                                     suratTarget.getKdSuratPengantar(),
@@ -209,7 +209,36 @@ public class SuratPengantarController {
     ResponseEntity<?> getDaftarSuratPengantarTargetUnread(@PathVariable("kdJabatanTarget") String kdJabatanTarget) {
         LOGGER.info("get surat pengantar target unread");
 
-        return new ResponseEntity<Object>(null, HttpStatus.OK);
+        List<SuratPengantar> suratPengantarTargetList
+                = suratPengantarService.getByJabatanTarget(kdJabatanTarget);
+
+        List<CustomPegawaiCredential> qutPegawaiList
+                = qutPegawaiService.getCustomPegawaiCredentials();
+
+        List<SuratPengantarTargetWrapper> suratPengantarTargetWrappers
+                = new ArrayList<>();
+
+        DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+        for (SuratPengantar suratTarget : suratPengantarTargetList) {
+            for (CustomPegawaiCredential pegawaiPemberi : qutPegawaiList) {
+                if (pegawaiPemberi.getKdJabatan()
+                        .equals(suratTarget.getKdJabatanPenerimaSuratPengantar())) {
+                    suratPengantarTargetWrappers
+                            .add(new SuratPengantarTargetWrapper(
+                                    suratTarget.getKdSuratPengantar(),
+                                    df.format(new Date(suratTarget.getTanggalPembuatanMilis())),
+                                    suratTarget.getTanggalPembuatanMilis(),
+                                    false,
+                                    pegawaiPemberi.getNip(),
+                                    pegawaiPemberi.getNama(),
+                                    pegawaiPemberi.getJabatan(),
+                                    0));
+                    break;
+                }
+            }
+        }
+
+        return new ResponseEntity<Object>(suratPengantarTargetWrappers, HttpStatus.OK);
 
     }
 

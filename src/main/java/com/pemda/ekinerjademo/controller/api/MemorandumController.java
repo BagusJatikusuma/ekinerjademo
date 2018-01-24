@@ -76,6 +76,7 @@ public class MemorandumController {
         memorandum.setNomorUrut(0);
         memorandum.setNomorPasanganUrut(inputWrapper.getNomorPasanganUrut());
         memorandum.setNomorTahun(Year.now().getValue());
+
         memorandum.setNipPenerimaMemorandum(inputWrapper.getNipPenerimaMemorandum());
         memorandum.setNipPemberiMemorandum(inputWrapper.getNipPemberiMemorandum());
         memorandum.setHal(inputWrapper.getHal());
@@ -86,6 +87,10 @@ public class MemorandumController {
         memorandum.setKdUnitKerja(inputWrapper.getKdUnitKerja());
         memorandum.setDurasiPengerjaan(inputWrapper.getDurasiPengerjaan());
         memorandum.setNipPenilai("");
+
+        memorandum.setStatusBaca(0);
+        memorandum.setStatusPenyebaran(0);
+        memorandum.setStatusPenilaian(0);
 
         if (inputWrapper.getKdMemorandumBawahan() == null) {
             memorandum.setPathPenilaian(kdMemorandum);
@@ -98,8 +103,6 @@ public class MemorandumController {
             memorandumBawahan.setStatusPenilaian(2);
             memorandumService.createMemorandum(memorandumBawahan);
         }
-        // attach list tembusan into memorandum
-        memorandum.setTembusanMemorandumList(tembusanMemorandumList);
         //save memorandum
         memorandumService.createMemorandum(memorandum);
         //save tembusan memorandum
@@ -179,8 +182,8 @@ public class MemorandumController {
         return new ResponseEntity<Object>(memorandumHistoryWrappers, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/get-daftar-memorandum-unread/{nipTarget}", method = RequestMethod.GET)
-    ResponseEntity<?> getDaftarMemorandumUnread(@PathVariable("nipTarget") String nipTarget) {
+    @RequestMapping(value = "/get-daftar-memorandum-target/{nipTarget}", method = RequestMethod.GET)
+    ResponseEntity<?> getDaftarMemorandumTarget(@PathVariable("nipTarget") String nipTarget) {
         LOGGER.info("get daftar memorandum unread pegawai : "+ nipTarget);
 
         List<CustomPegawaiCredential> qutPegawaiList
@@ -258,6 +261,102 @@ public class MemorandumController {
                                     tembusanMemorandum.getStatusBaca(),
                                     "memorandum",
                                     -1));
+
+                    break;
+
+                }
+
+            }
+
+        }
+
+        return new ResponseEntity<Object>(memorandumTargetWrappers, HttpStatus.OK);
+    }
+
+
+    @RequestMapping(value = "/get-daftar-memorandum-unread/{nipTarget}", method = RequestMethod.GET)
+    ResponseEntity<?> getDaftarMemorandumUnread(@PathVariable("nipTarget") String nipTarget) {
+        LOGGER.info("get daftar memorandum unread pegawai : "+ nipTarget);
+
+        List<CustomPegawaiCredential> qutPegawaiList
+                = qutPegawaiService.getCustomPegawaiCredentials();
+
+        CustomPegawaiCredential pegawaiTarget = null;
+
+        for (CustomPegawaiCredential pegawai : qutPegawaiList) {
+            if (nipTarget.equals(pegawai.getNip())) {
+                pegawaiTarget = pegawai;
+
+                break;
+            }
+        }
+
+        List<Memorandum> memorandumTargetList
+                = memorandumService.getByNipTarget(nipTarget);
+        List<TembusanMemorandum> tembusanMemorandumList
+                = memorandumService.getTembusanMemorandum(pegawaiTarget.getKdJabatan());
+        List<MemorandumTargetWrapper> memorandumTargetWrappers
+                = new ArrayList<>();
+
+        DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+        boolean isSuratPejabat = false;
+
+        //get surat perintah berdasarkan target
+        for (Memorandum memorandum
+                : memorandumTargetList) {
+            for (CustomPegawaiCredential pegawaiPemberi : qutPegawaiList) {
+                if (pegawaiPemberi.getNip()
+                        .equals(memorandum.getNipPenandatangan())) {
+                    if (memorandum.getMemorandumPejabat() != null)
+                        isSuratPejabat = true;
+                    else
+                        isSuratPejabat = false;
+
+                    if (memorandum.getStatusBaca() == 0) {
+                        memorandumTargetWrappers
+                                .add(new MemorandumTargetWrapper(memorandum.getKdMemorandum(),
+                                        df.format(new Date(memorandum.getTanggalPembuatanMilis())),
+                                        memorandum.getTanggalPembuatanMilis(),
+                                        isSuratPejabat,
+                                        pegawaiPemberi.getNip(),
+                                        pegawaiPemberi.getNama(),
+                                        pegawaiPemberi.getJabatan(),
+                                        memorandum.getStatusBaca(),
+                                        "memorandum",
+                                        -1));
+                    }
+
+                    break;
+
+                }
+
+            }
+
+        }
+        //get surat perintah berdasarkan tembusan
+        for (TembusanMemorandum tembusanMemorandum
+                : tembusanMemorandumList) {
+            for (CustomPegawaiCredential pegawaiPemberi : qutPegawaiList) {
+                if (pegawaiPemberi.getNip()
+                        .equals(tembusanMemorandum.getMemorandum().getNipPenandatangan())) {
+                    if (tembusanMemorandum.getMemorandum().getMemorandumPejabat() != null)
+                        isSuratPejabat = true;
+                    else
+                        isSuratPejabat = false;
+
+                    if (tembusanMemorandum.getStatusBaca() == 0) {
+                        memorandumTargetWrappers
+                                .add(new MemorandumTargetWrapper(tembusanMemorandum.getMemorandum().getKdMemorandum(),
+                                        df.format(new Date(tembusanMemorandum.getMemorandum().getTanggalPembuatanMilis())),
+                                        tembusanMemorandum.getMemorandum().getTanggalPembuatanMilis(),
+                                        isSuratPejabat,
+                                        pegawaiPemberi.getNip(),
+                                        pegawaiPemberi.getNama(),
+                                        pegawaiPemberi.getJabatan(),
+                                        tembusanMemorandum.getStatusBaca(),
+                                        "memorandum",
+                                        -1));
+                    }
 
                     break;
 
@@ -348,6 +447,15 @@ public class MemorandumController {
 
 
         return new ResponseEntity<Object>(memorandumWrapper, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/open-memorandum-by-target/{kdMemorandum}", method = RequestMethod.PUT)
+    ResponseEntity<?> openMemorandumByTarget(@PathVariable("kdMemorandum") String kdMemorandum) {
+        LOGGER.info("open memorandum by penilai");
+
+        memorandumService.openMemorandum(kdMemorandum);
+
+        return new ResponseEntity<Object>(new CustomMessage("laporan opened by penilai"), HttpStatus.OK);
     }
 
     @RequestMapping(value = "/open-memorandum-by-penilai/{kdMemorandum}", method = RequestMethod.PUT)

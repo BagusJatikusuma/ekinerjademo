@@ -12,20 +12,20 @@ import java.util.List;
  */
 @Repository
 public interface SuratPengantarDao extends JpaRepository<SuratPengantar, String> {
-    @Query("select sp from SuratPengantar sp " +
+    @Query("select distinct sp from SuratPengantar sp " +
             "left join fetch sp.suratPengantarIsiList " +
             "where sp.kdUnitKerja = ?1")
     List<SuratPengantar> findByKdUnitKerja(String kdUnitKerja);
-    @Query("select sp from SuratPengantar sp " +
+    @Query("select distinct sp from SuratPengantar sp " +
             "left join fetch sp.suratPengantarIsiList " +
             "where sp.nipPembuatSurat = ?1")
     List<SuratPengantar> findByNipPembuatSurat(String nipPembuatSurat);
-    @Query("select sp from SuratPengantar sp " +
+    @Query("select distinct sp from SuratPengantar sp " +
             "left join fetch sp.suratPengantarIsiList " +
             "where sp.nomorTahun = ?1")
     List<SuratPengantar> findByNomorTahun(Integer nomorTahun);
 
-    @Query("select sp from SuratPengantar sp " +
+    @Query("select distinct sp from SuratPengantar sp " +
             "left join fetch sp.suratPengantarIsiList " +
             "where sp.kdJabatanPenerimaSuratPengantar = ?1")
     List<SuratPengantar> findByKdJabatanTarget(String kdJabatanTarget);

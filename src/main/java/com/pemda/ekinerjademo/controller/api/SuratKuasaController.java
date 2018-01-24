@@ -86,7 +86,7 @@ public class SuratKuasaController {
                 new CustomMessage("surat kuasa created"), HttpStatus.CREATED);
     }
 
-    @RequestMapping(value = "/get-daftar-surat-kuasa-history-by-pegawai/{nipPegawai}", method = RequestMethod.GET)
+    @RequestMapping(value = "/get-daftar-surat-kuasa-history-by-pegawai/{nipPembuatSurat}", method = RequestMethod.GET)
     ResponseEntity<?> getDaftarSuratKuasaHistoryByPegawai(
             @PathVariable("nipPembuatSurat") String nipPembuatSurat) {
         LOGGER.info("get surat kuasa history by nip "+nipPembuatSurat);
@@ -112,9 +112,23 @@ public class SuratKuasaController {
         return new ResponseEntity<Object>(suratKuasaHistoryWrapperList, HttpStatus.OK);
     }
 
+    @RequestMapping(value = "/open-surat-kuasa/{kdSuratKuasa}", method = RequestMethod.PUT)
+    ResponseEntity<?> openSuratKuasa(
+            @PathVariable("kdSuratKuasa") String kdSuratKuasa) {
+        LOGGER.info("open surat kuasa");
+
+        SuratKuasa suratKuasa = suratKuasaService.getSuratKuasa(kdSuratKuasa);
+
+        suratKuasa.setStatusBaca(1);
+        suratKuasaService.createSuratKuasa(suratKuasa);
+
+        return new ResponseEntity<Object>(new CustomMessage("laporan opened by penilai"), HttpStatus.OK);
+
+    }
+
     @RequestMapping(value = "/open-surat-kuasa-penilai/{kdSuratKuasa}/{nipPegawai}", method = RequestMethod.PUT)
     ResponseEntity<?> openSuratKuasaPenilai(
-            @PathVariable("KdSuratkuasa") String kdSuratKuasa,
+            @PathVariable("kdSuratKuasa") String kdSuratKuasa,
             @PathVariable("nipPegawai") String nipPegawai) {
         LOGGER.info("open surat kuasa");
 
@@ -176,10 +190,10 @@ public class SuratKuasaController {
                         suratKuasa.getKotaPembuatanSurat(),
                         suratKuasa.getTanggalPembuatanMilis());
 
-        return new ResponseEntity<Object>(null, HttpStatus.OK);
+        return new ResponseEntity<Object>(suratKuasaWrapper, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "approve-surat-kuasa/{kdSuratKuasa}", method = RequestMethod.PUT)
+    @RequestMapping(value = "/approve-surat-kuasa/{kdSuratKuasa}", method = RequestMethod.PUT)
     ResponseEntity<?> approveSuratKuasa(@PathVariable("kdSuratKuasa") String kdSuratKuasa) {
         LOGGER.info("approve surat kuasa");
 

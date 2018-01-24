@@ -1,5 +1,7 @@
 package com.pemda.ekinerjademo.wrapper.output;
 
+import java.util.List;
+
 /**
  * Created by bagus on 21/01/18.
  */
@@ -26,7 +28,7 @@ public class BeritaAcaraWrapper {
     private String peranPihakKedua;
     private Integer statusApprovalPihakKedua;
 
-    private String isiBeritaAcara;
+    private List<String> isiBeritaAcara;
     private String dasarBeritaAcara;
     private String nipMengetahui;
     private String namaMengetahui;
@@ -58,7 +60,7 @@ public class BeritaAcaraWrapper {
             String unitKerjaPihakKedua,
             String peranPihakKedua,
             Integer statusApprovalPihakKedua,
-            String isiBeritaAcara,
+            List<String> isiBeritaAcara,
             String dasarBeritaAcara,
             String nipMengetahui,
             String namaMengetahui,
@@ -238,11 +240,11 @@ public class BeritaAcaraWrapper {
         this.statusApprovalPihakKedua = statusApprovalPihakKedua;
     }
 
-    public String getIsiBeritaAcara() {
+    public List<String> getIsiBeritaAcara() {
         return isiBeritaAcara;
     }
 
-    public void setIsiBeritaAcara(String isiBeritaAcara) {
+    public void setIsiBeritaAcara(List<String> isiBeritaAcara) {
         this.isiBeritaAcara = isiBeritaAcara;
     }
 

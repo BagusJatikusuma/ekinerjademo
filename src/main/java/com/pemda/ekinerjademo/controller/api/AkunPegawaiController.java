@@ -236,7 +236,9 @@ public class AkunPegawaiController {
                                     null,
                                     qutPegawai.getPangkat(),
                                     qutPegawai.getGol(),
-                                    akunPegawai.getRole().getRole()));
+                                    akunPegawai.getRole().getRole(),
+                                    qutPegawai.getGlrDpn(),
+                                    qutPegawai.getGlrBlk()));
                     break;
                 }
 

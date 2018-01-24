@@ -67,7 +67,7 @@ public class Memorandum {
     private MemorandumNonPejabat memorandumNonPejabat;
     @OneToOne(mappedBy = "memorandum", fetch = FetchType.LAZY)
     private MemorandumPejabat memorandumPejabat;
-    @OneToMany(mappedBy = "memorandum")
+    @OneToMany(mappedBy = "memorandum", fetch = FetchType.LAZY)
     private List<TembusanMemorandum> tembusanMemorandumList;
 
     public String getKdMemorandum() {
