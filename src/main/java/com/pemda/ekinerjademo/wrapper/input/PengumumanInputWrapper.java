@@ -1,26 +1,34 @@
 package com.pemda.ekinerjademo.wrapper.input;
 
-/**
- * Created by bagus on 22/01/18.
- */
+import java.util.List;
+
 public class PengumumanInputWrapper {
+    private String kdPengumuman;
     private String nomorUrusan;
     private String nomorPasanganUrut;
     private String nomorUnit;
-
     private String tentang;
     private String isiPengumuman;
     private String nipPenandatangan;
-    private String kotaPembuatanSurat;
+    private String kotaPembuatanPengumuman;
+    private Long tanggalPengumumanMilis;
     private String nipPembuatSurat;
-
     private String kdUnitKerja;
-    private Integer jenisNaskahPenugasan;
-    private String kdNaskahPenugasan;
     private Integer durasiPengerjaan;
-    private String nipPenilai;
+    private String kdSuratEdaranBawahan;
 
-    private String kdPengumumanBawahan;
+    private String kdNaskahPenugasan;
+    private Integer jenisNaskahPenugasan;
+    private Integer statusPenilaian;
+    private String alasanPenolakan;
+
+    public String getKdPengumuman() {
+        return kdPengumuman;
+    }
+
+    public void setKdPengumuman(String kdPengumuman) {
+        this.kdPengumuman = kdPengumuman;
+    }
 
     public String getNomorUrusan() {
         return nomorUrusan;
@@ -70,12 +78,20 @@ public class PengumumanInputWrapper {
         this.nipPenandatangan = nipPenandatangan;
     }
 
-    public String getKotaPembuatanSurat() {
-        return kotaPembuatanSurat;
+    public String getKotaPembuatanPengumuman() {
+        return kotaPembuatanPengumuman;
     }
 
-    public void setKotaPembuatanSurat(String kotaPembuatanSurat) {
-        this.kotaPembuatanSurat = kotaPembuatanSurat;
+    public void setKotaPembuatanPengumuman(String kotaPembuatanPengumuman) {
+        this.kotaPembuatanPengumuman = kotaPembuatanPengumuman;
+    }
+
+    public Long getTanggalPengumumanMilis() {
+        return tanggalPengumumanMilis;
+    }
+
+    public void setTanggalPengumumanMilis(Long tanggalPengumumanMilis) {
+        this.tanggalPengumumanMilis = tanggalPengumumanMilis;
     }
 
     public String getNipPembuatSurat() {
@@ -94,12 +110,20 @@ public class PengumumanInputWrapper {
         this.kdUnitKerja = kdUnitKerja;
     }
 
-    public Integer getJenisNaskahPenugasan() {
-        return jenisNaskahPenugasan;
+    public Integer getDurasiPengerjaan() {
+        return durasiPengerjaan;
     }
 
-    public void setJenisNaskahPenugasan(Integer jenisNaskahPenugasan) {
-        this.jenisNaskahPenugasan = jenisNaskahPenugasan;
+    public void setDurasiPengerjaan(Integer durasiPengerjaan) {
+        this.durasiPengerjaan = durasiPengerjaan;
+    }
+
+    public String getKdSuratEdaranBawahan() {
+        return kdSuratEdaranBawahan;
+    }
+
+    public void setKdSuratEdaranBawahan(String kdSuratEdaranBawahan) {
+        this.kdSuratEdaranBawahan = kdSuratEdaranBawahan;
     }
 
     public String getKdNaskahPenugasan() {
@@ -110,27 +134,27 @@ public class PengumumanInputWrapper {
         this.kdNaskahPenugasan = kdNaskahPenugasan;
     }
 
-    public Integer getDurasiPengerjaan() {
-        return durasiPengerjaan;
+    public Integer getJenisNaskahPenugasan() {
+        return jenisNaskahPenugasan;
     }
 
-    public void setDurasiPengerjaan(Integer durasiPengerjaan) {
-        this.durasiPengerjaan = durasiPengerjaan;
+    public void setJenisNaskahPenugasan(Integer jenisNaskahPenugasan) {
+        this.jenisNaskahPenugasan = jenisNaskahPenugasan;
     }
 
-    public String getNipPenilai() {
-        return nipPenilai;
+    public Integer getStatusPenilaian() {
+        return statusPenilaian;
     }
 
-    public void setNipPenilai(String nipPenilai) {
-        this.nipPenilai = nipPenilai;
+    public void setStatusPenilaian(Integer statusPenilaian) {
+        this.statusPenilaian = statusPenilaian;
     }
 
-    public String getKdPengumumanBawahan() {
-        return kdPengumumanBawahan;
+    public String getAlasanPenolakan() {
+        return alasanPenolakan;
     }
 
-    public void setKdPengumumanBawahan(String kdPengumumanBawahan) {
-        this.kdPengumumanBawahan = kdPengumumanBawahan;
+    public void setAlasanPenolakan(String alasanPenolakan) {
+        this.alasanPenolakan = alasanPenolakan;
     }
 }
