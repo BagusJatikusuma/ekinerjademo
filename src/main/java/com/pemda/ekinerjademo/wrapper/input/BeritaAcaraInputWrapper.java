@@ -24,6 +24,11 @@ public class BeritaAcaraInputWrapper {
     private Integer durasiPengerjaan;
     private String kdBeritaAcaraBawahan;
 
+    private String kdNaskahPenugasan;
+    private Integer jenisNaskahPenugasan;
+    private Integer statusPenilaian;
+    private String alasanPenolakan;
+
     public String getKdBeritaAcara() {
         return kdBeritaAcara;
     }
@@ -158,5 +163,37 @@ public class BeritaAcaraInputWrapper {
 
     public void setKdBeritaAcaraBawahan(String kdBeritaAcaraBawahan) {
         this.kdBeritaAcaraBawahan = kdBeritaAcaraBawahan;
+    }
+
+    public String getKdNaskahPenugasan() {
+        return kdNaskahPenugasan;
+    }
+
+    public void setKdNaskahPenugasan(String kdNaskahPenugasan) {
+        this.kdNaskahPenugasan = kdNaskahPenugasan;
+    }
+
+    public Integer getJenisNaskahPenugasan() {
+        return jenisNaskahPenugasan;
+    }
+
+    public void setJenisNaskahPenugasan(Integer jenisNaskahPenugasan) {
+        this.jenisNaskahPenugasan = jenisNaskahPenugasan;
+    }
+
+    public Integer getStatusPenilaian() {
+        return statusPenilaian;
+    }
+
+    public void setStatusPenilaian(Integer statusPenilaian) {
+        this.statusPenilaian = statusPenilaian;
+    }
+
+    public String getAlasanPenolakan() {
+        return alasanPenolakan;
+    }
+
+    public void setAlasanPenolakan(String alasanPenolakan) {
+        this.alasanPenolakan = alasanPenolakan;
     }
 }

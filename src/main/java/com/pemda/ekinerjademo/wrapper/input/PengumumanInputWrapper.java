@@ -1,39 +1,33 @@
 package com.pemda.ekinerjademo.wrapper.input;
 
-import java.util.Set;
+import java.util.List;
 
-/**
- * Created by bayu on 08/12/17.
- */
-public class NotaDinasInputWrapper {
-    private String kdNotaDinas;
+public class PengumumanInputWrapper {
+    private String kdPengumuman;
     private String nomorUrusan;
     private String nomorPasanganUrut;
     private String nomorUnit;
-    private String nipPenerimaNotadinas;
-    private String nipPemberiNotaDinas;
-    private String hal;
-    private Long tanggalNotaDinasMilis;
-    private String isiNotaDinas;
+    private String tentang;
+    private String isiPengumuman;
     private String nipPenandatangan;
+    private String kotaPembuatanPengumuman;
+    private Long tanggalPengumumanMilis;
     private String nipPembuatSurat;
     private String kdUnitKerja;
     private Integer durasiPengerjaan;
-
-    private Set<String> kdTembusanList;
-    private String kdNotaDinasBawahan;
+    private String kdSuratEdaranBawahan;
 
     private String kdNaskahPenugasan;
     private Integer jenisNaskahPenugasan;
     private Integer statusPenilaian;
     private String alasanPenolakan;
 
-    public String getKdNotaDinas() {
-        return kdNotaDinas;
+    public String getKdPengumuman() {
+        return kdPengumuman;
     }
 
-    public void setKdNotaDinas(String kdNotaDinas) {
-        this.kdNotaDinas = kdNotaDinas;
+    public void setKdPengumuman(String kdPengumuman) {
+        this.kdPengumuman = kdPengumuman;
     }
 
     public String getNomorUrusan() {
@@ -60,44 +54,20 @@ public class NotaDinasInputWrapper {
         this.nomorUnit = nomorUnit;
     }
 
-    public String getNipPenerimaNotadinas() {
-        return nipPenerimaNotadinas;
+    public String getTentang() {
+        return tentang;
     }
 
-    public void setNipPenerimaNotadinas(String nipPenerimaNotadinas) {
-        this.nipPenerimaNotadinas = nipPenerimaNotadinas;
+    public void setTentang(String tentang) {
+        this.tentang = tentang;
     }
 
-    public String getNipPemberiNotaDinas() {
-        return nipPemberiNotaDinas;
+    public String getIsiPengumuman() {
+        return isiPengumuman;
     }
 
-    public void setNipPemberiNotaDinas(String nipPemberiNotaDinas) {
-        this.nipPemberiNotaDinas = nipPemberiNotaDinas;
-    }
-
-    public String getHal() {
-        return hal;
-    }
-
-    public void setHal(String hal) {
-        this.hal = hal;
-    }
-
-    public Long getTanggalNotaDinasMilis() {
-        return tanggalNotaDinasMilis;
-    }
-
-    public void setTanggalNotaDinasMilis(Long tanggalNotaDinasMilis) {
-        this.tanggalNotaDinasMilis = tanggalNotaDinasMilis;
-    }
-
-    public String getIsiNotaDinas() {
-        return isiNotaDinas;
-    }
-
-    public void setIsiNotaDinas(String isiNotaDinas) {
-        this.isiNotaDinas = isiNotaDinas;
+    public void setIsiPengumuman(String isiPengumuman) {
+        this.isiPengumuman = isiPengumuman;
     }
 
     public String getNipPenandatangan() {
@@ -106,6 +76,22 @@ public class NotaDinasInputWrapper {
 
     public void setNipPenandatangan(String nipPenandatangan) {
         this.nipPenandatangan = nipPenandatangan;
+    }
+
+    public String getKotaPembuatanPengumuman() {
+        return kotaPembuatanPengumuman;
+    }
+
+    public void setKotaPembuatanPengumuman(String kotaPembuatanPengumuman) {
+        this.kotaPembuatanPengumuman = kotaPembuatanPengumuman;
+    }
+
+    public Long getTanggalPengumumanMilis() {
+        return tanggalPengumumanMilis;
+    }
+
+    public void setTanggalPengumumanMilis(Long tanggalPengumumanMilis) {
+        this.tanggalPengumumanMilis = tanggalPengumumanMilis;
     }
 
     public String getNipPembuatSurat() {
@@ -132,20 +118,12 @@ public class NotaDinasInputWrapper {
         this.durasiPengerjaan = durasiPengerjaan;
     }
 
-    public Set<String> getKdTembusanList() {
-        return kdTembusanList;
+    public String getKdSuratEdaranBawahan() {
+        return kdSuratEdaranBawahan;
     }
 
-    public void setKdTembusanList(Set<String> kdTembusanList) {
-        this.kdTembusanList = kdTembusanList;
-    }
-
-    public String getKdNotaDinasBawahan() {
-        return kdNotaDinasBawahan;
-    }
-
-    public void setKdNotaDinasBawahan(String kdNotaDinasBawahan) {
-        this.kdNotaDinasBawahan = kdNotaDinasBawahan;
+    public void setKdSuratEdaranBawahan(String kdSuratEdaranBawahan) {
+        this.kdSuratEdaranBawahan = kdSuratEdaranBawahan;
     }
 
     public String getKdNaskahPenugasan() {

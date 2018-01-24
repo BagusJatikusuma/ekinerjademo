@@ -8,46 +8,31 @@ import java.util.Set;
  */
 public class SuratPerintahInputWrapper {
     private String kdSuratPerintah;
-
     private String nipPembuat;
-
     private String nipPenandatangan;
-
     private Integer nomorSurat1;
-
     private String nomorSurat2;
-
     private String nomorSurat3;
-
     private Integer nomorTahun;
-
     private List<String> menimbangList;
-
     private List<String> dasarList;
-
     private List<String> untukList;
-
     private String tempat;
-
     private Long tanggalPerintahMilis;
-
     private String ttdPath;
-
     private Set<String> kdTargetPegawaiList;
-
     private Set<String> kdTargetPejabatList;
-
     private Set<String> kdTembusanList;
-
     private boolean suratPejabat;
-
     private String kdJabatanSuratPejabat;
-
     private String kdUnitKerja;
-
     private String kdSuratPerintahBawahan;
-
     private Integer durasiPengerjaan;
+
+    private String kdNaskahPenugasan;
+    private Integer jenisNaskahPenugasan;
+    private Integer statusPenilaian;
+    private String alasanPenolakan;
 
     public String getKdSuratPerintah() {
         return kdSuratPerintah;
@@ -63,6 +48,14 @@ public class SuratPerintahInputWrapper {
 
     public void setNipPembuat(String nipPembuat) {
         this.nipPembuat = nipPembuat;
+    }
+
+    public String getNipPenandatangan() {
+        return nipPenandatangan;
+    }
+
+    public void setNipPenandatangan(String nipPenandatangan) {
+        this.nipPenandatangan = nipPenandatangan;
     }
 
     public Integer getNomorSurat1() {
@@ -95,6 +88,14 @@ public class SuratPerintahInputWrapper {
 
     public void setNomorTahun(Integer nomorTahun) {
         this.nomorTahun = nomorTahun;
+    }
+
+    public List<String> getMenimbangList() {
+        return menimbangList;
+    }
+
+    public void setMenimbangList(List<String> menimbangList) {
+        this.menimbangList = menimbangList;
     }
 
     public List<String> getDasarList() {
@@ -145,22 +146,6 @@ public class SuratPerintahInputWrapper {
         this.kdTargetPegawaiList = kdTargetPegawaiList;
     }
 
-    public Set<String> getKdTembusanList() {
-        return kdTembusanList;
-    }
-
-    public void setKdTembusanList(Set<String> kdTembusanList) {
-        this.kdTembusanList = kdTembusanList;
-    }
-
-    public List<String> getMenimbangList() {
-        return menimbangList;
-    }
-
-    public void setMenimbangList(List<String> menimbangList) {
-        this.menimbangList = menimbangList;
-    }
-
     public Set<String> getKdTargetPejabatList() {
         return kdTargetPejabatList;
     }
@@ -169,12 +154,12 @@ public class SuratPerintahInputWrapper {
         this.kdTargetPejabatList = kdTargetPejabatList;
     }
 
-    public String getNipPenandatangan() {
-        return nipPenandatangan;
+    public Set<String> getKdTembusanList() {
+        return kdTembusanList;
     }
 
-    public void setNipPenandatangan(String nipPenandatangan) {
-        this.nipPenandatangan = nipPenandatangan;
+    public void setKdTembusanList(Set<String> kdTembusanList) {
+        this.kdTembusanList = kdTembusanList;
     }
 
     public boolean isSuratPejabat() {
@@ -215,5 +200,37 @@ public class SuratPerintahInputWrapper {
 
     public void setDurasiPengerjaan(Integer durasiPengerjaan) {
         this.durasiPengerjaan = durasiPengerjaan;
+    }
+
+    public String getKdNaskahPenugasan() {
+        return kdNaskahPenugasan;
+    }
+
+    public void setKdNaskahPenugasan(String kdNaskahPenugasan) {
+        this.kdNaskahPenugasan = kdNaskahPenugasan;
+    }
+
+    public Integer getJenisNaskahPenugasan() {
+        return jenisNaskahPenugasan;
+    }
+
+    public void setJenisNaskahPenugasan(Integer jenisNaskahPenugasan) {
+        this.jenisNaskahPenugasan = jenisNaskahPenugasan;
+    }
+
+    public Integer getStatusPenilaian() {
+        return statusPenilaian;
+    }
+
+    public void setStatusPenilaian(Integer statusPenilaian) {
+        this.statusPenilaian = statusPenilaian;
+    }
+
+    public String getAlasanPenolakan() {
+        return alasanPenolakan;
+    }
+
+    public void setAlasanPenolakan(String alasanPenolakan) {
+        this.alasanPenolakan = alasanPenolakan;
     }
 }

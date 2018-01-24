@@ -18,6 +18,11 @@ public class SuratKuasaInputWrapper {
     private Long tanggalSuratKuasaMilis;
     private String kdSuratKuasaBawahan;
 
+    private String kdNaskahPenugasan;
+    private Integer jenisNaskahPenugasan;
+    private Integer statusPenilaian;
+    private String alasanPenolakan;
+
     public String getKdSuratKuasa() {
         return kdSuratKuasa;
     }
@@ -120,5 +125,37 @@ public class SuratKuasaInputWrapper {
 
     public void setKdSuratKuasaBawahan(String kdSuratKuasaBawahan) {
         this.kdSuratKuasaBawahan = kdSuratKuasaBawahan;
+    }
+
+    public String getKdNaskahPenugasan() {
+        return kdNaskahPenugasan;
+    }
+
+    public void setKdNaskahPenugasan(String kdNaskahPenugasan) {
+        this.kdNaskahPenugasan = kdNaskahPenugasan;
+    }
+
+    public Integer getJenisNaskahPenugasan() {
+        return jenisNaskahPenugasan;
+    }
+
+    public void setJenisNaskahPenugasan(Integer jenisNaskahPenugasan) {
+        this.jenisNaskahPenugasan = jenisNaskahPenugasan;
+    }
+
+    public Integer getStatusPenilaian() {
+        return statusPenilaian;
+    }
+
+    public void setStatusPenilaian(Integer statusPenilaian) {
+        this.statusPenilaian = statusPenilaian;
+    }
+
+    public String getAlasanPenolakan() {
+        return alasanPenolakan;
+    }
+
+    public void setAlasanPenolakan(String alasanPenolakan) {
+        this.alasanPenolakan = alasanPenolakan;
     }
 }
