@@ -130,6 +130,22 @@ public class SuratEdaranInputWrapper {
         this.suratPejabat = suratPejabat;
     }
 
+    public String getNipPembuatSurat() {
+        return nipPembuatSurat;
+    }
+
+    public void setNipPembuatSurat(String nipPembuatSurat) {
+        this.nipPembuatSurat = nipPembuatSurat;
+    }
+
+    public String getKdUnitKerja() {
+        return kdUnitKerja;
+    }
+
+    public void setKdUnitKerja(String kdUnitKerja) {
+        this.kdUnitKerja = kdUnitKerja;
+    }
+
     public Integer getDurasiPengerjaan() {
         return durasiPengerjaan;
     }
