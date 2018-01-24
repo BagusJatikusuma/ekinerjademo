@@ -1,9 +1,12 @@
 package com.pemda.ekinerjademo.wrapper.input;
 
+import java.util.List;
+
 /**
  * Created by bayu on 07/12/17.
  */
 public class BeritaAcaraInputWrapper {
+    private String kdBeritaAcara;
     private String nomorUrusan;
     private String nomorPasanganUrut;
     private String nomorUnit;
@@ -11,14 +14,23 @@ public class BeritaAcaraInputWrapper {
     private String peranPihakKesatu;
     private String nipPihakKedua;
     private String peranPihakKedua;
-    private String isiBeritaAcara;
+    private List<String> isiBeritaAcara;
     private String dasarBeritaAcara;
     private String nipMengetahui;
     private String kotaPembuatanSurat;
     private String nipPembuatSurat;
     private String kdUnitKerja;
+    private Long tanggalBeritaAcaraMilis;
     private Integer durasiPengerjaan;
     private String kdBeritaAcaraBawahan;
+
+    public String getKdBeritaAcara() {
+        return kdBeritaAcara;
+    }
+
+    public void setKdBeritaAcara(String kdBeritaAcara) {
+        this.kdBeritaAcara = kdBeritaAcara;
+    }
 
     public String getNomorUrusan() {
         return nomorUrusan;
@@ -76,11 +88,11 @@ public class BeritaAcaraInputWrapper {
         this.peranPihakKedua = peranPihakKedua;
     }
 
-    public String getIsiBeritaAcara() {
+    public List<String> getIsiBeritaAcara() {
         return isiBeritaAcara;
     }
 
-    public void setIsiBeritaAcara(String isiBeritaAcara) {
+    public void setIsiBeritaAcara(List<String> isiBeritaAcara) {
         this.isiBeritaAcara = isiBeritaAcara;
     }
 
@@ -122,6 +134,14 @@ public class BeritaAcaraInputWrapper {
 
     public void setKdUnitKerja(String kdUnitKerja) {
         this.kdUnitKerja = kdUnitKerja;
+    }
+
+    public Long getTanggalBeritaAcaraMilis() {
+        return tanggalBeritaAcaraMilis;
+    }
+
+    public void setTanggalBeritaAcaraMilis(Long tanggalBeritaAcaraMilis) {
+        this.tanggalBeritaAcaraMilis = tanggalBeritaAcaraMilis;
     }
 
     public Integer getDurasiPengerjaan() {

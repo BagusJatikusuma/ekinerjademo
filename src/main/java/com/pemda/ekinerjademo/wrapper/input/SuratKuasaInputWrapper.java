@@ -4,6 +4,7 @@ package com.pemda.ekinerjademo.wrapper.input;
  * Created by bayu on 07/12/17.
  */
 public class SuratKuasaInputWrapper {
+    private String kdSuratKuasa;
     private String nomorUrusan;
     private String nomorPasanganUrut;
     private String nomorUnit;
@@ -14,7 +15,16 @@ public class SuratKuasaInputWrapper {
     private String nipPembuatSurat;
     private String kdUnitKerja;
     private Integer durasiPengerjaan;
+    private Long tanggalSuratKuasaMilis;
     private String kdSuratKuasaBawahan;
+
+    public String getKdSuratKuasa() {
+        return kdSuratKuasa;
+    }
+
+    public void setKdSuratKuasa(String kdSuratKuasa) {
+        this.kdSuratKuasa = kdSuratKuasa;
+    }
 
     public String getNomorUrusan() {
         return nomorUrusan;
@@ -94,6 +104,14 @@ public class SuratKuasaInputWrapper {
 
     public void setDurasiPengerjaan(Integer durasiPengerjaan) {
         this.durasiPengerjaan = durasiPengerjaan;
+    }
+
+    public Long getTanggalSuratKuasaMilis() {
+        return tanggalSuratKuasaMilis;
+    }
+
+    public void setTanggalSuratKuasaMilis(Long tanggalSuratKuasaMilis) {
+        this.tanggalSuratKuasaMilis = tanggalSuratKuasaMilis;
     }
 
     public String getKdSuratKuasaBawahan() {
