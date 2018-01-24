@@ -16,6 +16,8 @@ public class SuratEdaranInputWrapper {
     private String dasar;
     private List<String> subLain;
     private boolean suratPejabat;
+    private String nipPembuatSurat;
+    private String kdUnitKerja;
     private Integer durasiPengerjaan;
     private String kdSuratEdaranBawahan;
 

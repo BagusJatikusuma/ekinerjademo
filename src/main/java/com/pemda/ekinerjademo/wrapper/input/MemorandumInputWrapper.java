@@ -6,6 +6,7 @@ import java.util.List;
  * Created by bayu on 05/01/18.
  */
 public class MemorandumInputWrapper {
+    private String kdMemorandum;
     private String nomorUrusan;
     private String nomorPasanganUrut;
     private String nomorUnit;
@@ -27,6 +28,14 @@ public class MemorandumInputWrapper {
 
     private boolean suratPejabat;
     private List<String> kdJabatanTembusanList;
+
+    public String getKdMemorandum() {
+        return kdMemorandum;
+    }
+
+    public void setKdMemorandum(String kdMemorandum) {
+        this.kdMemorandum = kdMemorandum;
+    }
 
     public String getNomorUrusan() {
         return nomorUrusan;
@@ -164,6 +173,14 @@ public class MemorandumInputWrapper {
         this.kdMemorandumBawahan = kdMemorandumBawahan;
     }
 
+    public String getKdJabatanSuratPejabat() {
+        return kdJabatanSuratPejabat;
+    }
+
+    public void setKdJabatanSuratPejabat(String kdJabatanSuratPejabat) {
+        this.kdJabatanSuratPejabat = kdJabatanSuratPejabat;
+    }
+
     public boolean isSuratPejabat() {
         return suratPejabat;
     }
@@ -178,13 +195,5 @@ public class MemorandumInputWrapper {
 
     public void setKdJabatanTembusanList(List<String> kdJabatanTembusanList) {
         this.kdJabatanTembusanList = kdJabatanTembusanList;
-    }
-
-    public String getKdJabatanSuratPejabat() {
-        return kdJabatanSuratPejabat;
-    }
-
-    public void setKdJabatanSuratPejabat(String kdJabatanSuratPejabat) {
-        this.kdJabatanSuratPejabat = kdJabatanSuratPejabat;
     }
 }
