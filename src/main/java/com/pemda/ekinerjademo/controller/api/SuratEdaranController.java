@@ -1,5 +1,6 @@
 package com.pemda.ekinerjademo.controller.api;
 
+import com.pemda.ekinerjademo.model.ekinerjamodel.SuratEdaran;
 import com.pemda.ekinerjademo.service.SuratEdaranService;
 import com.pemda.ekinerjademo.wrapper.input.SuratEdaranInputWrapper;
 import com.pemda.ekinerjademo.wrapper.output.CustomMessage;
@@ -89,14 +90,21 @@ public class SuratEdaranController {
     ResponseEntity<?> openSuratEdaran(@PathVariable("kdSuratEdaran") String kdSuratEdaran) {
         LOGGER.info("open surat edaran");
 
+        SuratEdaran suratEdaran
+                = suratEdaranService.getByKdSuratEdaran(kdSuratEdaran);
+        suratEdaran.setStatusPenilaian(1);
         return new ResponseEntity<Object>(new CustomMessage("surat edaran opened"), HttpStatus.OK);
-
     }
 
     @RequestMapping(value = "/open-surat-edaran-penilai/{kdSuratEdaran}", method = RequestMethod.PUT)
     ResponseEntity<?> openSuratEdaranPenilai(@PathVariable("kdSuratEdaran") String kdSuratEdaran) {
         LOGGER.info("open surat edaran penilai");
 
+        SuratEdaran suratEdaran
+                = suratEdaranService.getByKdSuratEdaran(kdSuratEdaran);
+        suratEdaran.setStatusPenilaian(1);
+
+        suratEdaranService.create(suratEdaran);
         return new ResponseEntity<Object>(new CustomMessage("surat edaran opened by penilai"), HttpStatus.OK);
 
     }

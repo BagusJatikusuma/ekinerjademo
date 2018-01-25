@@ -1,5 +1,6 @@
 package com.pemda.ekinerjademo.controller.api;
 
+import com.pemda.ekinerjademo.model.ekinerjamodel.SuratKeputusan;
 import com.pemda.ekinerjademo.service.SuratKeputusanService;
 import com.pemda.ekinerjademo.wrapper.input.SuratKeputusanInputWrapper;
 import com.pemda.ekinerjademo.wrapper.output.CustomMessage;
@@ -89,6 +90,9 @@ public class SuratKeputusanController {
     ResponseEntity<?> openSuratKeputusan(@PathVariable("kdSuratKeputusan") String kdSuratKeputusan) {
         LOGGER.info("open surat keputusan");
 
+        SuratKeputusan suratKeputusan
+                = suratKeputusanService.getByKdSuratKeputusan(kdSuratKeputusan);
+        suratKeputusan.setStatusPenilaian(1);
         return new ResponseEntity<Object>(new CustomMessage("surat keputusan opened"), HttpStatus.OK);
 
     }
@@ -97,6 +101,11 @@ public class SuratKeputusanController {
     ResponseEntity<?> openSuratKeputusanPenilai(@PathVariable("kdSuratKeputusan") String kdSuratKeputusan) {
         LOGGER.info("open surat keputusan penilai");
 
+        SuratKeputusan suratKeputusan
+                = suratKeputusanService.getByKdSuratKeputusan(kdSuratKeputusan);
+        suratKeputusan.setStatusPenilaian(1);
+
+        suratKeputusanService.create(suratKeputusan);
         return new ResponseEntity<Object>(new CustomMessage("surat keputusan opened by penilai"), HttpStatus.OK);
 
     }

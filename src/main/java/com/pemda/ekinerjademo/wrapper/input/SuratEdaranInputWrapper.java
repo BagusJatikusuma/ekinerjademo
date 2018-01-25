@@ -14,7 +14,7 @@ public class SuratEdaranInputWrapper {
     private String maksudDanTujuan;
     private String ruangLingkup;
     private String dasar;
-    private List<String> subLain;
+    private List<SuratEdaranSubabInputWrapper> subLain;
     private boolean suratPejabat;
     private String nipPembuatSurat;
     private String kdUnitKerja;
@@ -114,11 +114,11 @@ public class SuratEdaranInputWrapper {
         this.dasar = dasar;
     }
 
-    public List<String> getSubLain() {
+    public List<SuratEdaranSubabInputWrapper> getSubLain() {
         return subLain;
     }
 
-    public void setSubLain(List<String> subLain) {
+    public void setSubLain(List<SuratEdaranSubabInputWrapper> subLain) {
         this.subLain = subLain;
     }
 

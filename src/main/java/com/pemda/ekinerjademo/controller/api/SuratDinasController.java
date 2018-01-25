@@ -1,5 +1,6 @@
 package com.pemda.ekinerjademo.controller.api;
 
+import com.pemda.ekinerjademo.model.ekinerjamodel.SuratDinas;
 import com.pemda.ekinerjademo.service.SuratDinasService;
 import com.pemda.ekinerjademo.wrapper.input.SuratDinasInputWrapper;
 import com.pemda.ekinerjademo.wrapper.output.CustomMessage;
@@ -90,6 +91,8 @@ public class SuratDinasController {
     ResponseEntity<?> openSuratDinas(@PathVariable("kdSuratDinas") String kdSuratDinas) {
         LOGGER.info("open surat dinas");
 
+        SuratDinas suratDinas = suratDinasService.getByKdSuratDinas(kdSuratDinas);
+        suratDinas.setStatusPenilaian(1);
         return new ResponseEntity<Object>(new CustomMessage("surat dinas opened"), HttpStatus.OK);
 
     }
@@ -98,6 +101,11 @@ public class SuratDinasController {
     ResponseEntity<?> openSuratDinasPenilai(@PathVariable("kdSuratDinas") String kdSuratDinas) {
         LOGGER.info("open surat dinas penilai");
 
+        SuratDinas suratDinas
+                = suratDinasService.getByKdSuratDinas(kdSuratDinas);
+        suratDinas.setStatusPenilaian(1);
+
+        suratDinasService.create(suratDinas);
         return new ResponseEntity<Object>(new CustomMessage("surat dinas opened by penilai"), HttpStatus.OK);
 
     }
