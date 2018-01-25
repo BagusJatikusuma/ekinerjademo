@@ -1,87 +1,97 @@
-package com.pemda.ekinerjademo.model.ekinerjamodel;
-
-import javax.persistence.*;
-import java.util.List;
+package com.pemda.ekinerjademo.wrapper.output;
 
 /**
- * Created by bayu on 09/01/18.
+ * Created by bagus on 24/01/18.
  */
-@Entity
-@Table(name = "surat_undangan")
-public class SuratUndangan {
-    @Id
-    @Column(name = "kd_surat_undangan")
+public class SuratUndanganWrapper {
     private String kdSuratUndangan;
 
-    @Column(name = "nomor_urusan")
     private String nomorUrusan;
-    @Column(name = "nomor_urut")
     private Integer nomorUrut;
-    @Column(name = "nomor_pasangan_urut")
     private String nomorPasanganUrut;
-    @Column(name = "nomor_unit")
     private String nomorUnit;
-    @Column(name = "nomor_tahun")
     private Integer nomorTahun;
 
-    @Column(name = "kd_jabatan_penerima_surat_undangan")
     private String kdJabatanPenerimaSuratUndangan;
-    @Column(name = "tanggal_pembuatan_surat")
+    private String jabatanPenerimaSuratUndangan;
     private Long tanggalPembuatanSurat;
-    @Column(name = "kota_pembuatan_surat")
     private String kotaPembuatanSurat;
-    @Column(name = "sifat")
     private String sifat;
-    @Column(name = "lampiran")
     private String lampiran;
-    @Column(name = "hal")
     private String hal;
-    @Column(name = "nip_penerima_surat_undangan")
+
     private String nipPenerimaSuratUndangan;
-    @Column(name = "bagian_pembuka_surat_undangan")
+    private String namaPenerimaSuratUndangan;
+    private String unitKerjaPenerimaSuratUndangan;
+
     private String bagianPembukaSuratUndangan;
-    @Column(name = "bagian_isi_hari_surat_undangan")
     private String bagianIsiHariSuratUndangan;
-    @Column(name = "bagian_isi_tanggal_surat_undangan")
     private Integer bagianIsiTanggalSuratUndangan;
-    @Column(name = "bagian_isi_waktu_surat_undangan")
     private String bagianIsiWaktuSuratUndangan;
-    @Column(name = "bagian_isi_tempat_surat_undangan")
     private String bagianIsiTempatSuratUndangan;
-    @Column(name = "bagian_isi_acara_surat_undangan")
     private String bagianIsiAcaraSuratUndangan;
-    @Column(name = "bagian_penutup_surat_undangan")
     private String bagianPenutupSuratUndangan;
-    @Column(name = "nip_penandatangan")
+
     private String nipPenandatangan;
-    @Column(name = "nip_pembuat_surat")
-    private String nipPembuatSurat;
+    private String namaPenandatangan;
+    private String unitKerjaPenandatangan;
 
-    @Column(name = "kd_unit_kerja")
-    private String kdUnitKerja;
-    @Column(name = "jenis_naskah_penugasan")
-    private Integer jenisNaskahPenugasan;
-    @Column(name = "kd_naskah_penugasan")
-    private String kdNaskahPenugasan;
-    @Column(name = "durasi_pengerjaan")
-    private Integer durasiPengerjaan;
-    @Column(name = "path_penilaian")
-    private String pathPenilaian;
-    @Column(name = "nip_penilai")
-    private String nipPenilai;
-    @Column(name = "status_penilaian")
-    private Integer statusPenilaian;
-    @Column(name = "alasan_penolakan")
-    private String alasanPenolakan;
-    @Column(name = "status_baca")
-    private Integer statusBaca;
-
-    @OneToOne(mappedBy = "suratUndangan", fetch = FetchType.LAZY)
-    private SuratUndanganNonPejabat suratUndanganNonPejabat;
-    @OneToOne(mappedBy = "suratUndangan", fetch = FetchType.LAZY)
-    private SuratUndanganPejabat suratUndanganPejabat;
-    @OneToMany(mappedBy = "suratUndangan")
-    private List<TembusanSuratUndangan> tembusanSuratUndanganList;
+    public SuratUndanganWrapper() {
+    }
+    public SuratUndanganWrapper(
+            String kdSuratUndangan,
+            String nomorUrusan,
+            Integer nomorUrut,
+            String nomorPasanganUrut,
+            String nomorUnit,
+            Integer nomorTahun,
+            String kdJabatanPenerimaSuratUndangan,
+            String jabatanPenerimaSuratUndangan,
+            Long tanggalPembuatanSurat,
+            String kotaPembuatanSurat,
+            String sifat,
+            String lampiran,
+            String hal,
+            String nipPenerimaSuratUndangan,
+            String namaPenerimaSuratUndangan,
+            String unitKerjaPenerimaSuratUndangan,
+            String bagianPembukaSuratUndangan,
+            String bagianIsiHariSuratUndangan,
+            Integer bagianIsiTanggalSuratUndangan,
+            String bagianIsiWaktuSuratUndangan,
+            String bagianIsiTempatSuratUndangan,
+            String bagianIsiAcaraSuratUndangan,
+            String bagianPenutupSuratUndangan,
+            String nipPenandatangan,
+            String namaPenandatangan,
+            String unitKerjaPenandatangan) {
+        this.kdSuratUndangan = kdSuratUndangan;
+        this.nomorUrusan = nomorUrusan;
+        this.nomorUrut = nomorUrut;
+        this.nomorPasanganUrut = nomorPasanganUrut;
+        this.nomorUnit = nomorUnit;
+        this.nomorTahun = nomorTahun;
+        this.kdJabatanPenerimaSuratUndangan = kdJabatanPenerimaSuratUndangan;
+        this.jabatanPenerimaSuratUndangan = jabatanPenerimaSuratUndangan;
+        this.tanggalPembuatanSurat = tanggalPembuatanSurat;
+        this.kotaPembuatanSurat = kotaPembuatanSurat;
+        this.sifat = sifat;
+        this.lampiran = lampiran;
+        this.hal = hal;
+        this.nipPenerimaSuratUndangan = nipPenerimaSuratUndangan;
+        this.namaPenerimaSuratUndangan = namaPenerimaSuratUndangan;
+        this.unitKerjaPenerimaSuratUndangan = unitKerjaPenerimaSuratUndangan;
+        this.bagianPembukaSuratUndangan = bagianPembukaSuratUndangan;
+        this.bagianIsiHariSuratUndangan = bagianIsiHariSuratUndangan;
+        this.bagianIsiTanggalSuratUndangan = bagianIsiTanggalSuratUndangan;
+        this.bagianIsiWaktuSuratUndangan = bagianIsiWaktuSuratUndangan;
+        this.bagianIsiTempatSuratUndangan = bagianIsiTempatSuratUndangan;
+        this.bagianIsiAcaraSuratUndangan = bagianIsiAcaraSuratUndangan;
+        this.bagianPenutupSuratUndangan = bagianPenutupSuratUndangan;
+        this.nipPenandatangan = nipPenandatangan;
+        this.namaPenandatangan = namaPenandatangan;
+        this.unitKerjaPenandatangan = unitKerjaPenandatangan;
+    }
 
     public String getKdSuratUndangan() {
         return kdSuratUndangan;
@@ -139,6 +149,14 @@ public class SuratUndangan {
         this.kdJabatanPenerimaSuratUndangan = kdJabatanPenerimaSuratUndangan;
     }
 
+    public String getJabatanPenerimaSuratUndangan() {
+        return jabatanPenerimaSuratUndangan;
+    }
+
+    public void setJabatanPenerimaSuratUndangan(String jabatanPenerimaSuratUndangan) {
+        this.jabatanPenerimaSuratUndangan = jabatanPenerimaSuratUndangan;
+    }
+
     public Long getTanggalPembuatanSurat() {
         return tanggalPembuatanSurat;
     }
@@ -185,6 +203,22 @@ public class SuratUndangan {
 
     public void setNipPenerimaSuratUndangan(String nipPenerimaSuratUndangan) {
         this.nipPenerimaSuratUndangan = nipPenerimaSuratUndangan;
+    }
+
+    public String getNamaPenerimaSuratUndangan() {
+        return namaPenerimaSuratUndangan;
+    }
+
+    public void setNamaPenerimaSuratUndangan(String namaPenerimaSuratUndangan) {
+        this.namaPenerimaSuratUndangan = namaPenerimaSuratUndangan;
+    }
+
+    public String getUnitKerjaPenerimaSuratUndangan() {
+        return unitKerjaPenerimaSuratUndangan;
+    }
+
+    public void setUnitKerjaPenerimaSuratUndangan(String unitKerjaPenerimaSuratUndangan) {
+        this.unitKerjaPenerimaSuratUndangan = unitKerjaPenerimaSuratUndangan;
     }
 
     public String getBagianPembukaSuratUndangan() {
@@ -251,107 +285,19 @@ public class SuratUndangan {
         this.nipPenandatangan = nipPenandatangan;
     }
 
-    public String getNipPembuatSurat() {
-        return nipPembuatSurat;
+    public String getNamaPenandatangan() {
+        return namaPenandatangan;
     }
 
-    public void setNipPembuatSurat(String nipPembuatSurat) {
-        this.nipPembuatSurat = nipPembuatSurat;
+    public void setNamaPenandatangan(String namaPenandatangan) {
+        this.namaPenandatangan = namaPenandatangan;
     }
 
-    public String getKdUnitKerja() {
-        return kdUnitKerja;
+    public String getUnitKerjaPenandatangan() {
+        return unitKerjaPenandatangan;
     }
 
-    public void setKdUnitKerja(String kdUnitKerja) {
-        this.kdUnitKerja = kdUnitKerja;
-    }
-
-    public Integer getJenisNaskahPenugasan() {
-        return jenisNaskahPenugasan;
-    }
-
-    public void setJenisNaskahPenugasan(Integer jenisNaskahPenugasan) {
-        this.jenisNaskahPenugasan = jenisNaskahPenugasan;
-    }
-
-    public String getKdNaskahPenugasan() {
-        return kdNaskahPenugasan;
-    }
-
-    public void setKdNaskahPenugasan(String kdNaskahPenugasan) {
-        this.kdNaskahPenugasan = kdNaskahPenugasan;
-    }
-
-    public Integer getDurasiPengerjaan() {
-        return durasiPengerjaan;
-    }
-
-    public void setDurasiPengerjaan(Integer durasiPengerjaan) {
-        this.durasiPengerjaan = durasiPengerjaan;
-    }
-
-    public String getPathPenilaian() {
-        return pathPenilaian;
-    }
-
-    public void setPathPenilaian(String pathPenilaian) {
-        this.pathPenilaian = pathPenilaian;
-    }
-
-    public String getNipPenilai() {
-        return nipPenilai;
-    }
-
-    public void setNipPenilai(String nipPenilai) {
-        this.nipPenilai = nipPenilai;
-    }
-
-    public Integer getStatusPenilaian() {
-        return statusPenilaian;
-    }
-
-    public void setStatusPenilaian(Integer statusPenilaian) {
-        this.statusPenilaian = statusPenilaian;
-    }
-
-    public String getAlasanPenolakan() {
-        return alasanPenolakan;
-    }
-
-    public void setAlasanPenolakan(String alasanPenolakan) {
-        this.alasanPenolakan = alasanPenolakan;
-    }
-
-    public SuratUndanganNonPejabat getSuratUndanganNonPejabat() {
-        return suratUndanganNonPejabat;
-    }
-
-    public void setSuratUndanganNonPejabat(SuratUndanganNonPejabat suratUndanganNonPejabat) {
-        this.suratUndanganNonPejabat = suratUndanganNonPejabat;
-    }
-
-    public SuratUndanganPejabat getSuratUndanganPejabat() {
-        return suratUndanganPejabat;
-    }
-
-    public void setSuratUndanganPejabat(SuratUndanganPejabat suratUndanganPejabat) {
-        this.suratUndanganPejabat = suratUndanganPejabat;
-    }
-
-    public List<TembusanSuratUndangan> getTembusanSuratUndanganList() {
-        return tembusanSuratUndanganList;
-    }
-
-    public void setTembusanSuratUndanganList(List<TembusanSuratUndangan> tembusanSuratUndanganList) {
-        this.tembusanSuratUndanganList = tembusanSuratUndanganList;
-    }
-
-    public Integer getStatusBaca() {
-        return statusBaca;
-    }
-
-    public void setStatusBaca(Integer statusBaca) {
-        this.statusBaca = statusBaca;
+    public void setUnitKerjaPenandatangan(String unitKerjaPenandatangan) {
+        this.unitKerjaPenandatangan = unitKerjaPenandatangan;
     }
 }

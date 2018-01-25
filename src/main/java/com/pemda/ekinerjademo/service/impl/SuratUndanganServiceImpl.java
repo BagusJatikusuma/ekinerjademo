@@ -39,6 +39,16 @@ public class SuratUndanganServiceImpl implements SuratUndanganService {
     }
 
     @Override
+    public List<SuratUndangan> getByNipPenerima(String nipPenerima) {
+        return null;
+    }
+
+    @Override
+    public List<TembusanSuratUndangan> getTembusanSuratUndangan(String kdJabatan) {
+        return null;
+    }
+
+    @Override
     public SuratUndangan getByKdSuratUndangan(String kdSuratUndangan) {
         return suratUndanganDao.findByKdSuratUndangan(kdSuratUndangan);
     }
@@ -67,6 +77,7 @@ public class SuratUndanganServiceImpl implements SuratUndanganService {
     public void openSuratUndangan(String kdSuratUndangan) {
         SuratUndangan suratUndangan
                 = suratUndanganDao.findByKdSuratUndangan(kdSuratUndangan);
+        suratUndangan.setStatusBaca(1);
     }
 
     @Override

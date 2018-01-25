@@ -68,6 +68,7 @@ public class SuratKuasaController {
         suratKuasa.setNipPenilai("");
         suratKuasa.setStatusPenilaian(0);
         suratKuasa.setAlasanPenolakan("");
+        suratKuasa.setStatusBaca(0);
 
         if (inputWrapper.getKdSuratKuasaBawahan() == null) {
             suratKuasa.setPathPenilaian(kdSuratKuasa);

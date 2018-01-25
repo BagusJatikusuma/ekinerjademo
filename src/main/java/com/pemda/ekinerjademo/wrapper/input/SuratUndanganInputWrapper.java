@@ -9,7 +9,7 @@ public class SuratUndanganInputWrapper {
     private String nomorPasanganUrut;
     private String nomorUnit;
 
-    private String kdJabatanPenerimaSuratPengumuman;
+    private String kdJabatanPenerimaSuratUndangan;
     private Long tanggalSuratUndanganMilis;
     private String kotaPembuatanSurat;
     private String sifat;
@@ -19,7 +19,7 @@ public class SuratUndanganInputWrapper {
 
     private String bagianPembukaSuratUndangan;
     private String bagianIsiHariSuratUndangan;
-    private Long bagianIsiTanggalSuratUndangan;
+    private Integer bagianIsiTanggalSuratUndangan;
     private String bagianIsiWaktuSuratUndangan;
     private String bagianIsiTempatSuratUndangan;
     private String bagianIsiAcaraSuratUndangan;
@@ -31,6 +31,7 @@ public class SuratUndanganInputWrapper {
     private Integer durasiPengerjaan;
     private List<String> kdTembusanList;
     private boolean suratPejabat;
+    private String kdJabatanSuratPejabat;
     private String kdSuratUndanganBawahan;
 
     private String kdNaskahPenugasan;
@@ -70,12 +71,12 @@ public class SuratUndanganInputWrapper {
         this.nomorUnit = nomorUnit;
     }
 
-    public String getKdJabatanPenerimaSuratPengumuman() {
-        return kdJabatanPenerimaSuratPengumuman;
+    public String getKdJabatanPenerimaSuratUndangan() {
+        return kdJabatanPenerimaSuratUndangan;
     }
 
-    public void setKdJabatanPenerimaSuratPengumuman(String kdJabatanPenerimaSuratPengumuman) {
-        this.kdJabatanPenerimaSuratPengumuman = kdJabatanPenerimaSuratPengumuman;
+    public void setKdJabatanPenerimaSuratUndangan(String kdJabatanPenerimaSuratUndangan) {
+        this.kdJabatanPenerimaSuratUndangan = kdJabatanPenerimaSuratUndangan;
     }
 
     public Long getTanggalSuratUndanganMilis() {
@@ -142,11 +143,11 @@ public class SuratUndanganInputWrapper {
         this.bagianIsiHariSuratUndangan = bagianIsiHariSuratUndangan;
     }
 
-    public Long getBagianIsiTanggalSuratUndangan() {
+    public Integer getBagianIsiTanggalSuratUndangan() {
         return bagianIsiTanggalSuratUndangan;
     }
 
-    public void setBagianIsiTanggalSuratUndangan(Long bagianIsiTanggalSuratUndangan) {
+    public void setBagianIsiTanggalSuratUndangan(Integer bagianIsiTanggalSuratUndangan) {
         this.bagianIsiTanggalSuratUndangan = bagianIsiTanggalSuratUndangan;
     }
 
@@ -268,5 +269,13 @@ public class SuratUndanganInputWrapper {
 
     public void setAlasanPenolakan(String alasanPenolakan) {
         this.alasanPenolakan = alasanPenolakan;
+    }
+
+    public String getKdJabatanSuratPejabat() {
+        return kdJabatanSuratPejabat;
+    }
+
+    public void setKdJabatanSuratPejabat(String kdJabatanSuratPejabat) {
+        this.kdJabatanSuratPejabat = kdJabatanSuratPejabat;
     }
 }

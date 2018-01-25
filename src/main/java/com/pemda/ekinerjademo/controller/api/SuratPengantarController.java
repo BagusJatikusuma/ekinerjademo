@@ -93,6 +93,7 @@ public class SuratPengantarController {
         suratPengantar.setNipPenilai("");
         suratPengantar.setStatusPenilaian(0);
         suratPengantar.setAlasanPenolakan("");
+        suratPengantar.setStatusBaca(0);
 
         if (inputWrapper.getKdSuratPengantarBawahan() == null) {
             suratPengantar.setPathPenilaian(kdSuratPengantar);
@@ -168,15 +169,26 @@ public class SuratPengantarController {
 
     }
 
-    @RequestMapping(value = "/get-daftar-surat-pengantar-by-target/{kdJabatanTarget}", method = RequestMethod.GET)
-    ResponseEntity<?> getDaftarSuratPengantarTarget(@PathVariable("kdJabatanTarget") String kdJabatanTarget) {
+    @RequestMapping(value = "/get-daftar-surat-pengantar-by-target/{nipTarget}", method = RequestMethod.GET)
+    ResponseEntity<?> getDaftarSuratPengantarTarget(@PathVariable("nipTarget") String nipTarget) {
         LOGGER.info("get surat pengantar target");
 
-        List<SuratPengantar> suratPengantarTargetList
-                = suratPengantarService.getByJabatanTarget(kdJabatanTarget);
 
         List<CustomPegawaiCredential> qutPegawaiList
                 = qutPegawaiService.getCustomPegawaiCredentials();
+
+        CustomPegawaiCredential pegawaiTarget = null;
+
+        for (CustomPegawaiCredential pegawai : qutPegawaiList) {
+            if (nipTarget.equals(pegawai.getNip())) {
+                pegawaiTarget = pegawai;
+
+                break;
+            }
+        }
+
+        List<SuratPengantar> suratPengantarTargetList
+                = suratPengantarService.getByJabatanTarget(pegawaiTarget.getKdJabatan());
 
         List<SuratPengantarTargetWrapper> suratPengantarTargetWrappers
                 = new ArrayList<>();
@@ -205,15 +217,25 @@ public class SuratPengantarController {
 
     }
 
-    @RequestMapping(value = "/get-daftar-surat-pengantar-by-target-unread/{kdJabatanTarget}", method = RequestMethod.GET)
-    ResponseEntity<?> getDaftarSuratPengantarTargetUnread(@PathVariable("kdJabatanTarget") String kdJabatanTarget) {
+    @RequestMapping(value = "/get-daftar-surat-pengantar-by-target-unread/{nipTarget}", method = RequestMethod.GET)
+    ResponseEntity<?> getDaftarSuratPengantarTargetUnread(@PathVariable("nipTarget") String nipTarget) {
         LOGGER.info("get surat pengantar target unread");
-
-        List<SuratPengantar> suratPengantarTargetList
-                = suratPengantarService.getByJabatanTarget(kdJabatanTarget);
 
         List<CustomPegawaiCredential> qutPegawaiList
                 = qutPegawaiService.getCustomPegawaiCredentials();
+
+        CustomPegawaiCredential pegawaiTarget = null;
+
+        for (CustomPegawaiCredential pegawai : qutPegawaiList) {
+            if (nipTarget.equals(pegawai.getNip())) {
+                pegawaiTarget = pegawai;
+
+                break;
+            }
+        }
+
+        List<SuratPengantar> suratPengantarTargetList
+                = suratPengantarService.getByJabatanTarget(pegawaiTarget.getKdJabatan());
 
         List<SuratPengantarTargetWrapper> suratPengantarTargetWrappers
                 = new ArrayList<>();
@@ -293,7 +315,7 @@ public class SuratPengantarController {
 
         SuratPengantar suratPengantar
                 = suratPengantarService.getByKdSuratPengantar(kdSuratPengantar);
-        suratPengantar.setStatusPenilaian(1);
+        suratPengantar.setStatusBaca(1);
 
         return new ResponseEntity<Object>(new CustomMessage("surat pengantar opened"), HttpStatus.OK);
 

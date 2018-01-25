@@ -53,6 +53,8 @@ public class SuratPengantar {
     private Integer statusPenilaian;
     @Column(name = "alasan_penolakan")
     private String alasanPenolakan;
+    @Column(name = "status_baca")
+    private Integer statusBaca;
 
     @OneToMany(mappedBy = "suratPengantar")
     private List<SuratPengantarIsi> suratPengantarIsiList;
@@ -225,4 +227,11 @@ public class SuratPengantar {
         this.suratPengantarIsiList = suratPengantarIsiList;
     }
 
+    public Integer getStatusBaca() {
+        return statusBaca;
+    }
+
+    public void setStatusBaca(Integer statusBaca) {
+        this.statusBaca = statusBaca;
+    }
 }

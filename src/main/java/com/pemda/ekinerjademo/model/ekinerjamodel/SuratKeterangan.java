@@ -50,6 +50,8 @@ public class SuratKeterangan {
     private Integer statusPenilaian;
     @Column(name = "alasan_penolakan")
     private String alasanPenolakan;
+    @Column(name = "status_baca")
+    private Integer statusBaca;
 
     @OneToMany(mappedBy = "suratKeterangan")
     private List<TargetSuratKeterangan> targetSuratKeteranganList;
@@ -213,5 +215,13 @@ public class SuratKeterangan {
 
     public void setTargetSuratKeteranganList(List<TargetSuratKeterangan> targetSuratKeteranganList) {
         this.targetSuratKeteranganList = targetSuratKeteranganList;
+    }
+
+    public Integer getStatusBaca() {
+        return statusBaca;
+    }
+
+    public void setStatusBaca(Integer statusBaca) {
+        this.statusBaca = statusBaca;
     }
 }

@@ -22,6 +22,9 @@ public class PengumumanInputWrapper {
     private Integer statusPenilaian;
     private String alasanPenolakan;
 
+    private String kotaPembuatanSurat;
+    private String kdPengumumanBawahan;
+
     public String getKdPengumuman() {
         return kdPengumuman;
     }
@@ -156,5 +159,21 @@ public class PengumumanInputWrapper {
 
     public void setAlasanPenolakan(String alasanPenolakan) {
         this.alasanPenolakan = alasanPenolakan;
+    }
+
+    public String getKotaPembuatanSurat() {
+        return kotaPembuatanSurat;
+    }
+
+    public void setKotaPembuatanSurat(String kotaPembuatanSurat) {
+        this.kotaPembuatanSurat = kotaPembuatanSurat;
+    }
+
+    public String getKdPengumumanBawahan() {
+        return kdPengumumanBawahan;
+    }
+
+    public void setKdPengumumanBawahan(String kdPengumumanBawahan) {
+        this.kdPengumumanBawahan = kdPengumumanBawahan;
     }
 }

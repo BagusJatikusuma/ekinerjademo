@@ -12,24 +12,31 @@ import java.util.List;
  */
 @Repository
 public interface SuratUndanganDao extends JpaRepository<SuratUndangan, String> {
-    @Query("select su from SuratUndangan su " +
+    @Query("select distinct su from SuratUndangan su " +
             "left join fetch su.suratUndanganNonPejabat " +
             "left join fetch su.suratUndanganPejabat " +
             "left join fetch su.tembusanSuratUndanganList " +
             "where su.kdUnitKerja = ?1")
     List<SuratUndangan> findByKdUnitKerja(String kdUnitKerja);
-    @Query("select su from SuratUndangan su " +
+    @Query("select distinct su from SuratUndangan su " +
             "left join fetch su.suratUndanganNonPejabat " +
             "left join fetch su.suratUndanganPejabat " +
             "left join fetch su.tembusanSuratUndanganList " +
             "where su.nipPembuatSurat = ?1")
     List<SuratUndangan> findByNipPembuatSurat(String nipPembuatSurat);
-    @Query("select su from SuratUndangan su " +
+    @Query("select distinct su from SuratUndangan su " +
             "left join fetch su.suratUndanganNonPejabat " +
             "left join fetch su.suratUndanganPejabat " +
             "left join fetch su.tembusanSuratUndanganList " +
             "where su.nomorTahun = ?1")
     List<SuratUndangan> findByNomorTahun(Integer nomorTahun);
+
+    @Query("select distinct su from SuratUndangan su " +
+            "left join fetch su.suratUndanganNonPejabat " +
+            "left join fetch su.suratUndanganPejabat " +
+            "left join fetch su.tembusanSuratUndanganList " +
+            "where su.nipPenerimaSuratUndangan = ?1")
+    List<SuratUndangan> findByNipPenerimaSuratUndangan(String nipPenerimaSuratUndangan);
 
     @Query("select su from SuratUndangan su " +
             "left join fetch su.suratUndanganNonPejabat " +
