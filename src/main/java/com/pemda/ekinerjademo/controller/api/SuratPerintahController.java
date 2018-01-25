@@ -763,9 +763,9 @@ public class SuratPerintahController {
         List<TkdJabatan> daftarTembusanSuratperintah
                 = new ArrayList<>();
 
-        List<String> daftarTargetPejabatSuratPerintahString
+        List<JabatanWrapper> daftarTargetPejabatSuratPerintahString
                 = new ArrayList<>();
-        List<String> daftarTembusanSuratperintahString
+        List<JabatanWrapper> daftarTembusanSuratperintahString
                 = new ArrayList<>();
 
         //get pembuat surat credential
@@ -795,7 +795,13 @@ public class SuratPerintahController {
                 if (tkdJabatan.getKdJabatan()
                         .equals(target.getTargetSuratPerintahPejabatId().getKdJabatan())) {
                     daftarTargetPejabatSuratPerintah.add(tkdJabatan);
-                    daftarTargetPejabatSuratPerintahString.add(tkdJabatan.getJabatan());
+                    JabatanWrapper jabatanWrapper = new JabatanWrapper();
+
+                    jabatanWrapper.setKdJabatan(tkdJabatan.getKdJabatan());
+                    jabatanWrapper.setJabatan(tkdJabatan.getJabatan());
+                    jabatanWrapper.setEselon(tkdJabatan.getEselon());
+
+                    daftarTargetPejabatSuratPerintahString.add(jabatanWrapper);
 
                     break;
 
@@ -813,7 +819,14 @@ public class SuratPerintahController {
                         .equals(tembusan.getTembusanSuratPerintahId().getKdJabatan())) {
                     LOGGER.info("found");
                     daftarTembusanSuratperintah.add(tkdJabatan);
-                    daftarTembusanSuratperintahString.add(tkdJabatan.getJabatan());
+
+                    JabatanWrapper jabatanWrapper = new JabatanWrapper();
+
+                    jabatanWrapper.setKdJabatan(tkdJabatan.getKdJabatan());
+                    jabatanWrapper.setJabatan(tkdJabatan.getJabatan());
+                    jabatanWrapper.setEselon(tkdJabatan.getEselon());
+
+                    daftarTembusanSuratperintahString.add(jabatanWrapper);
 
                     break;
                 }

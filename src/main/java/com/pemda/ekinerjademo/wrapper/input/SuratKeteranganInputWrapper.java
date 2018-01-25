@@ -23,6 +23,8 @@ public class SuratKeteranganInputWrapper {
     private Integer statusPenilaian;
     private String alasanPenolakan;
 
+    private List<String> targetSuratKeteranganList;
+
     public String getKdSuratKeterangan() {
         return kdSuratKeterangan;
     }
@@ -157,5 +159,13 @@ public class SuratKeteranganInputWrapper {
 
     public void setAlasanPenolakan(String alasanPenolakan) {
         this.alasanPenolakan = alasanPenolakan;
+    }
+
+    public List<String> getTargetSuratKeteranganList() {
+        return targetSuratKeteranganList;
+    }
+
+    public void setTargetSuratKeteranganList(List<String> targetSuratKeteranganList) {
+        this.targetSuratKeteranganList = targetSuratKeteranganList;
     }
 }

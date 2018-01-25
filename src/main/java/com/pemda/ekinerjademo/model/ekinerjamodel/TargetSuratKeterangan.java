@@ -23,6 +23,8 @@ public class TargetSuratKeterangan {
     private Integer approveStatus;
     @Column(name = "status_diterima")
     private Integer statusDiterima;
+    @Column(name = "status_baca")
+    private Integer statusBaca;
 
     public TargetSuratKeteranganId getTargetSuratKeteranganId() {
         return targetSuratKeteranganId;
@@ -54,5 +56,13 @@ public class TargetSuratKeterangan {
 
     public void setStatusDiterima(Integer statusDiterima) {
         this.statusDiterima = statusDiterima;
+    }
+
+    public Integer getStatusBaca() {
+        return statusBaca;
+    }
+
+    public void setStatusBaca(Integer statusBaca) {
+        this.statusBaca = statusBaca;
     }
 }

@@ -37,6 +37,11 @@ public class SuratKeteranganServiceImpl implements SuratKeteranganService {
     }
 
     @Override
+    public List<TargetSuratKeterangan> getTargetSuratKeteranganByNip(String nipTarget) {
+        return targetSuratKeteranganDao.findByTargetSuratKeteranganId_NipPegawai(nipTarget);
+    }
+
+    @Override
     public SuratKeterangan getByKdSuratKeterangan(String kdSuratKeterangan) {
         return suratKeteranganDao.findByKdSuratKeterangan(kdSuratKeterangan);
     }
@@ -55,6 +60,7 @@ public class SuratKeteranganServiceImpl implements SuratKeteranganService {
     public void openSuratKeterangan(String kdSuratKeterangan) {
         SuratKeterangan suratKeterangan
                 = suratKeteranganDao.findByKdSuratKeterangan(kdSuratKeterangan);
+        suratKeterangan.setStatusBaca(1);
     }
 
     @Override

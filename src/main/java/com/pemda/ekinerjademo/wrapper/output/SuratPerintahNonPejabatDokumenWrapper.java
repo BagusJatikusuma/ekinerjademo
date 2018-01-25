@@ -41,9 +41,9 @@ public class SuratPerintahNonPejabatDokumenWrapper {
 
     private List<CustomPegawaiCredential> daftarTargetPegawai;
 
-    private List<String> daftarTargetPejabat;
+    private List<JabatanWrapper> daftarTargetPejabat;
 
-    private List<String> daftarTembusan;
+    private List<JabatanWrapper> daftarTembusan;
 
     private boolean isSuratPejabat;
 
@@ -70,8 +70,8 @@ public class SuratPerintahNonPejabatDokumenWrapper {
             String nmJabatanPenandatangan,
             String ttdPath,
             List<CustomPegawaiCredential> daftarTargetPegawai,
-            List<String> daftarTargetPejabat,
-            List<String> daftarTembusan,
+            List<JabatanWrapper> daftarTargetPejabat,
+            List<JabatanWrapper> daftarTembusan,
             boolean isSuratPejabat,
             String kdUnitKerjaPenandatangan,
             String unitKerjaPenandatangan,
@@ -114,8 +114,8 @@ public class SuratPerintahNonPejabatDokumenWrapper {
             String nmJabatanPenandatangan,
             String ttdPath,
             List<CustomPegawaiCredential> daftarTargetPegawai,
-            List<String> daftarTargetPejabat,
-            List<String> daftarTembusan,
+            List<JabatanWrapper> daftarTargetPejabat,
+            List<JabatanWrapper> daftarTembusan,
             boolean isSuratPejabat,
             String kdUnitKerjaPenandatangan,
             String unitKerjaPenandatangan,
@@ -258,19 +258,19 @@ public class SuratPerintahNonPejabatDokumenWrapper {
         this.daftarTargetPegawai = daftarTargetPegawai;
     }
 
-    public List<String> getDaftarTembusan() {
+    public List<JabatanWrapper> getDaftarTembusan() {
         return daftarTembusan;
     }
 
-    public void setDaftarTembusan(List<String> daftarTembusan) {
+    public void setDaftarTembusan(List<JabatanWrapper> daftarTembusan) {
         this.daftarTembusan = daftarTembusan;
     }
 
-    public List<String> getDaftarTargetPejabat() {
+    public List<JabatanWrapper> getDaftarTargetPejabat() {
         return daftarTargetPejabat;
     }
 
-    public void setDaftarTargetPejabat(List<String> daftarTargetPejabat) {
+    public void setDaftarTargetPejabat(List<JabatanWrapper> daftarTargetPejabat) {
         this.daftarTargetPejabat = daftarTargetPejabat;
     }
 

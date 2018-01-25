@@ -11,10 +11,7 @@ import com.pemda.ekinerjademo.util.DateUtilities;
 import com.pemda.ekinerjademo.util.EkinerjaXMLBuilder;
 import com.pemda.ekinerjademo.util.EkinerjaXMLParser;
 import com.pemda.ekinerjademo.wrapper.input.SuratInstruksiInputWrapper;
-import com.pemda.ekinerjademo.wrapper.output.CustomMessage;
-import com.pemda.ekinerjademo.wrapper.output.DokumenSuratInstruksiWrapper;
-import com.pemda.ekinerjademo.wrapper.output.QutPegawaiWrapper;
-import com.pemda.ekinerjademo.wrapper.output.SuratInstruksiWrapper;
+import com.pemda.ekinerjademo.wrapper.output.*;
 import groovy.transform.Synchronized;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -183,7 +180,7 @@ public class SuratInstruksiController {
                         suratInstruksi.getIsiInstruksi(), "instruksi");
 //        List<String> targetNamaPegawai = new ArrayList<>();
         List<QutPegawaiWrapper> targetPegawai = new ArrayList<>();
-        List<String> targetJabatan = new ArrayList<>();
+        List<JabatanWrapper> targetJabatan = new ArrayList<>();
 
         TkdJabatan tkdJabatan = null;
         CustomPegawaiCredential penandatanganSurat = null;
@@ -227,7 +224,13 @@ public class SuratInstruksiController {
             for (TkdJabatan jabatan : tkdJabatanList) {
                 if (jabatan.getKdJabatan()
                         .equals(instruksiPejabat.getInstruksiPejabatId().getKdJabatan())) {
-                    targetJabatan.add(jabatan.getJabatan());
+                    JabatanWrapper jabatanWrapper = new JabatanWrapper();
+
+                    jabatanWrapper.setKdJabatan(tkdJabatan.getKdJabatan());
+                    jabatanWrapper.setJabatan(tkdJabatan.getJabatan());
+                    jabatanWrapper.setEselon(tkdJabatan.getEselon());
+
+                    targetJabatan.add(jabatanWrapper);
                     break;
                 }
 
@@ -482,7 +485,5 @@ public class SuratInstruksiController {
 
         return new ResponseEntity<Object>(new CustomMessage("surat instruksi opened"), HttpStatus.OK);
     }
-
-
 
 }

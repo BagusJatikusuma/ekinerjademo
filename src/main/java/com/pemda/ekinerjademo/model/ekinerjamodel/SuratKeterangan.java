@@ -52,6 +52,8 @@ public class SuratKeterangan {
     private String alasanPenolakan;
     @Column(name = "status_baca")
     private Integer statusBaca;
+    @Column(name = "nip_pegawai_keterangan")
+    private String nipPegawaiKeterangan;
 
     @OneToMany(mappedBy = "suratKeterangan")
     private List<TargetSuratKeterangan> targetSuratKeteranganList;
@@ -223,5 +225,13 @@ public class SuratKeterangan {
 
     public void setStatusBaca(Integer statusBaca) {
         this.statusBaca = statusBaca;
+    }
+
+    public String getNipPegawaiKeterangan() {
+        return nipPegawaiKeterangan;
+    }
+
+    public void setNipPegawaiKeterangan(String nipPegawaiKeterangan) {
+        this.nipPegawaiKeterangan = nipPegawaiKeterangan;
     }
 }

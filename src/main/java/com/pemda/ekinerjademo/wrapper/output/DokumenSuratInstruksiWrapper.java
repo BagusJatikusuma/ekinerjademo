@@ -1,5 +1,7 @@
 package com.pemda.ekinerjademo.wrapper.output;
 
+import com.pemda.ekinerjademo.projection.ekinerjaprojection.CustomPegawaiCredential;
+
 import java.util.List;
 
 /**
@@ -20,7 +22,7 @@ public class DokumenSuratInstruksiWrapper {
     private String nipPenandatangan;
     private String namaPenandatangan;
     private List<QutPegawaiWrapper> targetPegawaiList;
-    private List<String> targetJabatanList;
+    private List<JabatanWrapper> targetJabatanList;
     private boolean suratPejabat;
     private String jabatanSuratPejabat;
     private String unitKerja;
@@ -42,7 +44,7 @@ public class DokumenSuratInstruksiWrapper {
             String nipPenandatangan,
             String namaPenandatangan,
             List<QutPegawaiWrapper> targetPegawaiList,
-            List<String> targetJabatanList,
+            List<JabatanWrapper> targetJabatanList,
             boolean suratPejabat,
             String jabatanSuratPejabat,
             String unitKerja) {
@@ -162,11 +164,11 @@ public class DokumenSuratInstruksiWrapper {
         this.nipPenandatangan = nipPenandatangan;
     }
 
-    public List<String> getTargetJabatanList() {
+    public List<JabatanWrapper> getTargetJabatanList() {
         return targetJabatanList;
     }
 
-    public void setTargetJabatanList(List<String> targetJabatanList) {
+    public void setTargetJabatanList(List<JabatanWrapper> targetJabatanList) {
         this.targetJabatanList = targetJabatanList;
     }
 
