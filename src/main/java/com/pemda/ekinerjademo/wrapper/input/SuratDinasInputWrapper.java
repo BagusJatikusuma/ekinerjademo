@@ -1,5 +1,7 @@
 package com.pemda.ekinerjademo.wrapper.input;
 
+import java.util.Set;
+
 public class SuratDinasInputWrapper {
 
     private String kdSuratDinas;
@@ -7,7 +9,7 @@ public class SuratDinasInputWrapper {
     private String nomorPasanganUrut;
     private String nomorUnit;
     private String sifat;
-    private String lampiran;
+    private Integer lampiran;
     private String hal;
     private String kdJabatanPenerimaSuratDinas;
     private Long tanggalSuratDinasMilis;
@@ -17,12 +19,16 @@ public class SuratDinasInputWrapper {
     private String nipPembuatSurat;
     private String kdUnitKerja;
     private Integer durasiPengerjaan;
-    private String kdSuratEdaranBawahan;
+    private String kdSuratDinasBawahan;
 
     private String kdNaskahPenugasan;
     private Integer jenisNaskahPenugasan;
     private Integer statusPenilaian;
     private String alasanPenolakan;
+
+    private boolean suratPejabat;
+    private String kdJabatanSuratPejabat;
+    private Set<String> kdTembusanList;
 
     public String getKdSuratDinas() {
         return kdSuratDinas;
@@ -64,11 +70,11 @@ public class SuratDinasInputWrapper {
         this.sifat = sifat;
     }
 
-    public String getLampiran() {
+    public Integer getLampiran() {
         return lampiran;
     }
 
-    public void setLampiran(String lampiran) {
+    public void setLampiran(Integer lampiran) {
         this.lampiran = lampiran;
     }
 
@@ -144,14 +150,6 @@ public class SuratDinasInputWrapper {
         this.durasiPengerjaan = durasiPengerjaan;
     }
 
-    public String getKdSuratEdaranBawahan() {
-        return kdSuratEdaranBawahan;
-    }
-
-    public void setKdSuratEdaranBawahan(String kdSuratEdaranBawahan) {
-        this.kdSuratEdaranBawahan = kdSuratEdaranBawahan;
-    }
-
     public String getKdNaskahPenugasan() {
         return kdNaskahPenugasan;
     }
@@ -182,5 +180,37 @@ public class SuratDinasInputWrapper {
 
     public void setAlasanPenolakan(String alasanPenolakan) {
         this.alasanPenolakan = alasanPenolakan;
+    }
+
+    public String getKdSuratDinasBawahan() {
+        return kdSuratDinasBawahan;
+    }
+
+    public void setKdSuratDinasBawahan(String kdSuratDinasBawahan) {
+        this.kdSuratDinasBawahan = kdSuratDinasBawahan;
+    }
+
+    public boolean isSuratPejabat() {
+        return suratPejabat;
+    }
+
+    public void setSuratPejabat(boolean suratPejabat) {
+        this.suratPejabat = suratPejabat;
+    }
+
+    public String getKdJabatanSuratPejabat() {
+        return kdJabatanSuratPejabat;
+    }
+
+    public void setKdJabatanSuratPejabat(String kdJabatanSuratPejabat) {
+        this.kdJabatanSuratPejabat = kdJabatanSuratPejabat;
+    }
+
+    public Set<String> getKdTembusanList() {
+        return kdTembusanList;
+    }
+
+    public void setKdTembusanList(Set<String> kdTembusanList) {
+        this.kdTembusanList = kdTembusanList;
     }
 }

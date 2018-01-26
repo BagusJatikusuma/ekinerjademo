@@ -17,7 +17,7 @@ public class SuratKeputusanInputWrapper {
     private String nipPembuatSurat;
     private String kdUnitKerja;
     private Integer durasiPengerjaan;
-    private String kdSuratKuasaBawahan;
+    private String kdSuratKeputusanBawahan;
 
     private String kdNaskahPenugasan;
     private Integer jenisNaskahPenugasan;
@@ -136,12 +136,12 @@ public class SuratKeputusanInputWrapper {
         this.durasiPengerjaan = durasiPengerjaan;
     }
 
-    public String getKdSuratKuasaBawahan() {
-        return kdSuratKuasaBawahan;
+    public String getKdSuratKeputusanBawahan() {
+        return kdSuratKeputusanBawahan;
     }
 
-    public void setKdSuratKuasaBawahan(String kdSuratKuasaBawahan) {
-        this.kdSuratKuasaBawahan = kdSuratKuasaBawahan;
+    public void setKdSuratKeputusanBawahan(String kdSuratKeputusanBawahan) {
+        this.kdSuratKeputusanBawahan = kdSuratKeputusanBawahan;
     }
 
     public String getKdNaskahPenugasan() {

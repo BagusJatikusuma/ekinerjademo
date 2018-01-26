@@ -3,6 +3,8 @@ package com.pemda.ekinerjademo.wrapper.output;
 import java.util.List;
 
 public class SuratKeputusanWrapper {
+    private String kdSuratKeputusan;
+
     private Integer nomorUrut;
     private Integer nomorTahun;
 
@@ -21,6 +23,23 @@ public class SuratKeputusanWrapper {
     private String kotaPembuatanSurat;
 
     public SuratKeputusanWrapper() {
+    }
+
+    public SuratKeputusanWrapper(String kdSuratKeputusan, Integer nomorUrut, Integer nomorTahun, String nipPenandatangan, String namaPenandatangan, String jabatanPenandatangan, String unitKerjaPenandatangan, String selaku, String tentang, List<String> menimbang, List<String> mengingat, List<String> menetapkan, Long tanggalPembuatanMilis, String kotaPembuatanSurat) {
+        this.kdSuratKeputusan = kdSuratKeputusan;
+        this.nomorUrut = nomorUrut;
+        this.nomorTahun = nomorTahun;
+        this.nipPenandatangan = nipPenandatangan;
+        this.namaPenandatangan = namaPenandatangan;
+        this.jabatanPenandatangan = jabatanPenandatangan;
+        this.unitKerjaPenandatangan = unitKerjaPenandatangan;
+        this.selaku = selaku;
+        this.tentang = tentang;
+        this.menimbang = menimbang;
+        this.mengingat = mengingat;
+        this.menetapkan = menetapkan;
+        this.tanggalPembuatanMilis = tanggalPembuatanMilis;
+        this.kotaPembuatanSurat = kotaPembuatanSurat;
     }
 
     public SuratKeputusanWrapper(Integer nomorUrut,
@@ -153,5 +172,13 @@ public class SuratKeputusanWrapper {
 
     public void setKotaPembuatanSurat(String kotaPembuatanSurat) {
         this.kotaPembuatanSurat = kotaPembuatanSurat;
+    }
+
+    public String getKdSuratKeputusan() {
+        return kdSuratKeputusan;
+    }
+
+    public void setKdSuratKeputusan(String kdSuratKeputusan) {
+        this.kdSuratKeputusan = kdSuratKeputusan;
     }
 }

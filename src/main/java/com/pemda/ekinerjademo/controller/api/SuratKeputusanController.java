@@ -1,15 +1,26 @@
 package com.pemda.ekinerjademo.controller.api;
 
 import com.pemda.ekinerjademo.model.ekinerjamodel.SuratKeputusan;
+import com.pemda.ekinerjademo.projection.ekinerjaprojection.CustomPegawaiCredential;
+import com.pemda.ekinerjademo.service.QutPegawaiService;
 import com.pemda.ekinerjademo.service.SuratKeputusanService;
+import com.pemda.ekinerjademo.util.EkinerjaXMLBuilder;
+import com.pemda.ekinerjademo.util.EkinerjaXMLParser;
 import com.pemda.ekinerjademo.wrapper.input.SuratKeputusanInputWrapper;
 import com.pemda.ekinerjademo.wrapper.output.CustomMessage;
+import com.pemda.ekinerjademo.wrapper.output.SuratKeputusanWrapper;
+import com.pemda.ekinerjademo.wrapper.output.SuratPerintahHistoryWrapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.time.Year;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 /**
  * Created by bayu on 18/01/18.
@@ -21,10 +32,56 @@ public class SuratKeputusanController {
     public static final Logger LOGGER = LoggerFactory.getLogger(SuratKeputusanController.class);
 
     @Autowired private SuratKeputusanService suratKeputusanService;
+    @Autowired private QutPegawaiService qutPegawaiService;
 
     @RequestMapping(value = "/create-surat-keputusan", method = RequestMethod.POST)
     ResponseEntity<?> createSuratKeputusan(@RequestBody SuratKeputusanInputWrapper inputWrapper) {
         LOGGER.info("create surat keputusan");
+
+        EkinerjaXMLBuilder ekinerjaXMLBuilder = new EkinerjaXMLBuilder();
+
+        String kdSuratKeputusan = String.valueOf(new Date().getTime());
+
+        SuratKeputusan suratKeputusan = new SuratKeputusan();
+
+        suratKeputusan.setKdSuratKeputusan(kdSuratKeputusan);
+        suratKeputusan.setNomorUrut(0);
+        suratKeputusan.setNomorTahun(Year.now().getValue());
+
+        suratKeputusan.setNipPenandatangan(inputWrapper.getNipPenandatangan());
+        suratKeputusan.setSelaku(inputWrapper.getSelaku());
+        suratKeputusan.setTentang(inputWrapper.getTentang());
+        suratKeputusan
+                .setMenimbang(ekinerjaXMLBuilder.convertListSuratPerintahIntoXml(inputWrapper.getMenimbang(), "menimbang"));
+        suratKeputusan
+                .setMengingat(ekinerjaXMLBuilder.convertListSuratPerintahIntoXml(inputWrapper.getMengingat(), "mengingat"));
+        suratKeputusan
+                .setMenetapkan(ekinerjaXMLBuilder.convertListSuratPerintahIntoXml(inputWrapper.getMenetapkan(), "menetapkan"));
+
+        suratKeputusan.setTanggalPembuatanMilis(new Date().getTime());
+        suratKeputusan.setKotaPembuatanSurat(inputWrapper.getKotaPembuatanSurat());
+        suratKeputusan.setNipPembuatSurat(inputWrapper.getNipPembuatSurat());
+        suratKeputusan.setKdUnitKerja(inputWrapper.getKdUnitKerja());
+        suratKeputusan.setKdNaskahPenugasan(inputWrapper.getKdNaskahPenugasan());
+        suratKeputusan.setJenisNaskahPenugasan(inputWrapper.getJenisNaskahPenugasan());
+        suratKeputusan.setDurasiPengerjaan(inputWrapper.getDurasiPengerjaan());
+
+        if (inputWrapper.getKdSuratKeputusanBawahan() == null) {
+            suratKeputusan.setPathPenilaian(kdSuratKeputusan);
+        } else {
+            SuratKeputusan suratKeputusanBawahan
+                    = suratKeputusanService.getByKdSuratKeputusan(inputWrapper.getKdSuratKeputusanBawahan());
+            suratKeputusan.setPathPenilaian(suratKeputusanBawahan.getPathPenilaian()+"."+kdSuratKeputusan);
+
+            suratKeputusanBawahan.setStatusPenilaian(2);
+            suratKeputusanService.create(suratKeputusan);
+        }
+
+        suratKeputusan.setNipPenilai("");
+        suratKeputusan.setStatusPenilaian(0);
+        suratKeputusan.setAlasanPenolakan("");
+
+        suratKeputusanService.create(suratKeputusan);
 
         return new ResponseEntity<Object>(new CustomMessage("surat keputusan created"), HttpStatus.OK);
 
@@ -58,13 +115,33 @@ public class SuratKeputusanController {
     ResponseEntity<?> getDaftarSuratKeputusanHistoryByPegawai(@PathVariable("nipPembuat") String nipPembuat) {
         LOGGER.info("get surat keputusan history");
 
-        return new ResponseEntity<Object>(null, HttpStatus.OK);
+        List<SuratKeputusan> suratKeputusanList
+                = suratKeputusanService.getByNipPembuat(nipPembuat);
+        List<SuratPerintahHistoryWrapper> suratKeputusanHistoryList
+                = new ArrayList<>();
+
+        for (SuratKeputusan suratKeputusan
+                : suratKeputusanList) {
+            suratKeputusanHistoryList
+                    .add(new SuratPerintahHistoryWrapper(suratKeputusan.getKdSuratKeputusan(),
+                            "",
+                            false,
+                            -1,
+                            "surat keputusan",
+                            7,
+                            suratKeputusan.getTanggalPembuatanMilis(),
+                            suratKeputusan.getStatusPenilaian()));
+        }
+
+        return new ResponseEntity<Object>(suratKeputusanHistoryList, HttpStatus.OK);
 
     }
 
     @RequestMapping(value = "/get-daftar-surat-keputusan-by-target/{kdJabatanTarget}", method = RequestMethod.GET)
     ResponseEntity<?> getDaftarSuratKeputusanTarget(@PathVariable("kdJabatanTarget") String kdJabatanTarget) {
         LOGGER.info("get surat keputusan target");
+
+
 
         return new ResponseEntity<Object>(null, HttpStatus.OK);
 
@@ -82,7 +159,42 @@ public class SuratKeputusanController {
     ResponseEntity<?> getSuratKeputusanByKdSuratKeputusan(@PathVariable("kdSuratKeputusan") String kdSuratKeputusan) {
         LOGGER.info("get surat keputusan kd surat keputusan");
 
-        return new ResponseEntity<Object>(null, HttpStatus.OK);
+        SuratKeputusan suratKeputusan = suratKeputusanService.getByKdSuratKeputusan(kdSuratKeputusan);
+
+        EkinerjaXMLParser ekinerjaXMLParser = new EkinerjaXMLParser();
+
+        CustomPegawaiCredential penandatangan = null;
+
+        List<CustomPegawaiCredential> qutPegawaiList
+                = qutPegawaiService.getCustomPegawaiCredentials();
+
+        for (CustomPegawaiCredential customPegawaiCredential : qutPegawaiList) {
+            if (customPegawaiCredential.getNip()
+                    .equals(suratKeputusan.getNipPenandatangan())) {
+                penandatangan = customPegawaiCredential;
+                break;
+            }
+        }
+
+        SuratKeputusanWrapper suratKeputusanWrapper
+                = new SuratKeputusanWrapper(
+                        suratKeputusan.getKdSuratKeputusan(),
+                        suratKeputusan.getNomorUrut(),
+                        suratKeputusan.getNomorTahun(),
+                        penandatangan.getNip(),
+                        penandatangan.getNama(),
+                        penandatangan.getJabatan(),
+                        penandatangan.getUnitKerja(),
+                        suratKeputusan.getSelaku(),
+                        suratKeputusan.getTentang(),
+                        ekinerjaXMLParser.convertXmlSuratPerintahIntoListofString(suratKeputusan.getMenimbang(), "menimbang"),
+                        ekinerjaXMLParser.convertXmlSuratPerintahIntoListofString(suratKeputusan.getMengingat(), "mengingat"),
+                        ekinerjaXMLParser.convertXmlSuratPerintahIntoListofString(suratKeputusan.getMenetapkan(), "menetapkan"),
+                        suratKeputusan.getTanggalPembuatanMilis(),
+                        suratKeputusan.getKotaPembuatanSurat());
+
+
+        return new ResponseEntity<Object>(suratKeputusanWrapper, HttpStatus.OK);
 
     }
 

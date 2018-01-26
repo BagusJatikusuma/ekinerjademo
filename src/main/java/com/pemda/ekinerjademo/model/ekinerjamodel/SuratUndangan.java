@@ -26,7 +26,7 @@ public class SuratUndangan {
 
     @Column(name = "kd_jabatan_penerima_surat_undangan")
     private String kdJabatanPenerimaSuratUndangan;
-    @Column(name = "tanggal_pembuatan_surat")
+    @Column(name = "tanggal_pembuatan_milis")
     private Long tanggalPembuatanSurat;
     @Column(name = "kota_pembuatan_surat")
     private String kotaPembuatanSurat;

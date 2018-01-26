@@ -14,6 +14,9 @@ public class TembusanSuratDinas {
     @Column(name = "status_diterima")
     private Integer statusDiterima;
 
+    @Column(name = "status_baca")
+    private Integer statusBaca;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(
             name = "kd_surat_dinas",
@@ -44,5 +47,13 @@ public class TembusanSuratDinas {
 
     public void setSuratDinas(SuratDinas suratDinas) {
         this.suratDinas = suratDinas;
+    }
+
+    public Integer getStatusBaca() {
+        return statusBaca;
+    }
+
+    public void setStatusBaca(Integer statusBaca) {
+        this.statusBaca = statusBaca;
     }
 }
