@@ -39,6 +39,16 @@ public class SuratDinasServiceImpl implements SuratDinasService {
     }
 
     @Override
+    public List<SuratDinas> getByJabatanPenerima(String kdJabatan) {
+        return suratDinasDao.findByKdJabatanPenerimaSuratDinas(kdJabatan);
+    }
+
+    @Override
+    public List<TembusanSuratDinas> getTembusanSuratDinas(String kdJabatan) {
+        return tembusanSuratDinasDao.findByTembusanSuratDinasId_KdJabatan(kdJabatan);
+    }
+
+    @Override
     public SuratDinas getByKdSuratDinas(String kdSuratDinas) {
         return suratDinasDao.findByKdSuratDinas(kdSuratDinas);
     }

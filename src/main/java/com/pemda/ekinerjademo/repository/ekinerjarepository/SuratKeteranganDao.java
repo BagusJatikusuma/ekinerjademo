@@ -12,15 +12,15 @@ import java.util.List;
  */
 @Repository
 public interface SuratKeteranganDao extends JpaRepository<SuratKeterangan, String> {
-    @Query("select sk from SuratKeterangan sk " +
+    @Query("select distinct sk from SuratKeterangan sk " +
             "left join fetch sk.targetSuratKeteranganList " +
             "where sk.kdUnitKerja = ?1")
     List<SuratKeterangan> findByKdUnitKerja(String kdUnitKerja);
-    @Query("select sk from SuratKeterangan sk " +
+    @Query("select distinct sk from SuratKeterangan sk " +
             "left join fetch sk.targetSuratKeteranganList " +
             "where sk.nipPembuatSurat = ?1")
     List<SuratKeterangan> findByNipPembuatSurat(String nipPembuatSurat);
-    @Query("select sk from SuratKeterangan sk " +
+    @Query("select distinct sk from SuratKeterangan sk " +
             "left join fetch sk.targetSuratKeteranganList " +
             "where sk.nomorTahun = ?1")
     List<SuratKeterangan> findByNomorTahun(Integer nomorTahun);

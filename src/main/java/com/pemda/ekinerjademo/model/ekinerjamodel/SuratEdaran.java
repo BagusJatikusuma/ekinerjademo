@@ -51,7 +51,7 @@ public class SuratEdaran {
     private String nipPenilai;
     @Column(name = "status_penilaian")
     private Integer statusPenilaian;
-    @Column(name = "alasan_penilaian")
+    @Column(name = "alasan_penolakan")
     private String alasanPenolakan;
 
     @OneToOne(mappedBy = "suratEdaran", fetch = FetchType.LAZY)

@@ -12,26 +12,33 @@ import java.util.List;
  */
 @Repository
 public interface SuratDinasDao extends JpaRepository<SuratDinas, String> {
-    @Query("select sd from SuratDinas sd " +
+    @Query("select distinct sd from SuratDinas sd " +
             "left join fetch sd.suratDinasNonPejabat " +
             "left join fetch sd.suratDinasPejabat " +
             "left join fetch sd.tembusanSuratDinasList " +
             "where sd.kdUnitKerja = ?1")
     List<SuratDinas> findByKdUnitKerja(String kdUnitKerja);
 
-    @Query("select sd from SuratDinas sd " +
+    @Query("select distinct sd from SuratDinas sd " +
             "left join fetch sd.suratDinasNonPejabat " +
             "left join fetch sd.suratDinasPejabat " +
             "left join fetch sd.tembusanSuratDinasList " +
             "where sd.nipPembuatSurat = ?1")
     List<SuratDinas> findByNipPembuatSurat(String nipPembuatSurat);
 
-    @Query("select sd from SuratDinas sd " +
+    @Query("select distinct sd from SuratDinas sd " +
             "left join fetch sd.suratDinasNonPejabat " +
             "left join fetch sd.suratDinasPejabat " +
             "left join fetch sd.tembusanSuratDinasList " +
             "where sd.nomorTahun = ?1")
     List<SuratDinas> findByNomorTahun(Integer nomorTahun);
+
+    @Query("select distinct sd from SuratDinas sd " +
+            "left join fetch sd.suratDinasNonPejabat " +
+            "left join fetch sd.suratDinasPejabat " +
+            "left join fetch sd.tembusanSuratDinasList " +
+            "where sd.kdJabatanPenerimaSuratDinas = ?1")
+    List<SuratDinas> findByKdJabatanPenerimaSuratDinas(String kdJabatanPenerimaSuratDinas);
 
     @Query("select sd from SuratDinas sd " +
             "left join fetch sd.suratDinasNonPejabat " +

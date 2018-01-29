@@ -3,6 +3,8 @@ package com.pemda.ekinerjademo.wrapper.output;
 import java.util.List;
 
 public class SuratEdaranWrapper {
+    private String kdSuratEdaran;
+
     private Integer nomorUrut;
     private Integer nomorTahun;
 
@@ -24,7 +26,8 @@ public class SuratEdaranWrapper {
     public SuratEdaranWrapper() {
     }
 
-    public SuratEdaranWrapper(Integer nomorUrut,
+    public SuratEdaranWrapper(String kdSuratEdaran,
+                              Integer nomorUrut,
                               Integer nomorTahun,
                               String tentang,
                               String latarBelakang,
@@ -38,6 +41,7 @@ public class SuratEdaranWrapper {
                               String namaPenandatangan,
                               String jabatanPenandatangan,
                               String unitKerjaPenandatangan) {
+        this.kdSuratEdaran = kdSuratEdaran;
         this.nomorUrut = nomorUrut;
         this.nomorTahun = nomorTahun;
         this.tentang = tentang;
@@ -164,5 +168,13 @@ public class SuratEdaranWrapper {
 
     public void setUnitKerjaPenandatangan(String unitKerjaPenandatangan) {
         this.unitKerjaPenandatangan = unitKerjaPenandatangan;
+    }
+
+    public String getKdSuratEdaran() {
+        return kdSuratEdaran;
+    }
+
+    public void setKdSuratEdaran(String kdSuratEdaran) {
+        this.kdSuratEdaran = kdSuratEdaran;
     }
 }

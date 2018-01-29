@@ -11,6 +11,8 @@ public interface SuratDinasService {
     List<SuratDinas> getByKdUnitKerja(String kdUnitKerja);
     List<SuratDinas> getByNipPembuat(String nipPembuat);
     List<SuratDinas> getByNomorTahun(Integer nomorTahun);
+    List<SuratDinas> getByJabatanPenerima(String kdJabatan);
+    List<TembusanSuratDinas> getTembusanSuratDinas(String kdJabatan);
 
     SuratDinas getByKdSuratDinas(String kdSuratDinas);
 

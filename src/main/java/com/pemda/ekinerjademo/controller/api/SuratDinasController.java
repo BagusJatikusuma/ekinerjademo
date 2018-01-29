@@ -1,10 +1,13 @@
 package com.pemda.ekinerjademo.controller.api;
 
+import com.pemda.ekinerjademo.model.bismamodel.TkdJabatan;
 import com.pemda.ekinerjademo.model.ekinerjamodel.*;
+import com.pemda.ekinerjademo.projection.ekinerjaprojection.CustomPegawaiCredential;
+import com.pemda.ekinerjademo.service.QutPegawaiService;
 import com.pemda.ekinerjademo.service.SuratDinasService;
+import com.pemda.ekinerjademo.service.TkdJabatanService;
 import com.pemda.ekinerjademo.wrapper.input.SuratDinasInputWrapper;
-import com.pemda.ekinerjademo.wrapper.output.CustomMessage;
-import com.pemda.ekinerjademo.wrapper.output.SuratPerintahHistoryWrapper;
+import com.pemda.ekinerjademo.wrapper.output.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +32,8 @@ public class SuratDinasController {
     public static final Logger LOGGER = LoggerFactory.getLogger(SuratDinasController.class);
 
     @Autowired private SuratDinasService suratDinasService;
+    @Autowired private QutPegawaiService qutPegawaiService;
+    @Autowired private TkdJabatanService tkdJabatanService;
 
     @RequestMapping(value = "/create-surat-dinas", method = RequestMethod.POST)
     ResponseEntity<?> createSuratDinas(@RequestBody SuratDinasInputWrapper inputWrapper) {
@@ -180,19 +185,102 @@ public class SuratDinasController {
 
     }
 
-    @RequestMapping(value = "/get-daftar-surat-dinas-by-target/{kdJabatanTarget}", method = RequestMethod.GET)
-    ResponseEntity<?> getDaftarSuratDinasTarget(@PathVariable("kdJabatanTarget") String kdJabatanTarget) {
+    @RequestMapping(value = "/get-daftar-surat-dinas-by-target/{nipTarget}", method = RequestMethod.GET)
+    ResponseEntity<?> getDaftarSuratDinasTarget(@PathVariable("nipTarget") String nipTarget) {
         LOGGER.info("get surat dinas target");
 
+        List<CustomPegawaiCredential> qutPegawaiList
+                = qutPegawaiService.getCustomPegawaiCredentials();
+        List<SuratPerintahTargetWrapper> targetSuratDinasListWrapper
+                = new ArrayList<>();
 
+        CustomPegawaiCredential pegawaiTarget = null;
 
-        return new ResponseEntity<Object>(null, HttpStatus.OK);
+        for (CustomPegawaiCredential pegawai : qutPegawaiList) {
+            if (nipTarget.equals(pegawai.getNip())) {
+                pegawaiTarget = pegawai;
+
+                break;
+            }
+        }
+
+        List<SuratDinas> suratDinasTargetList
+                = suratDinasService.getByJabatanPenerima(pegawaiTarget.getKdJabatan());
+        List<TembusanSuratDinas> tembusanSuratDinasTargetList
+                = suratDinasService.getTembusanSuratDinas(pegawaiTarget.getKdJabatan());
+
+        //get by target
+        boolean isSuratPejabat = false;
+        for (SuratDinas suratDinas
+                : suratDinasTargetList) {
+            for (CustomPegawaiCredential pegawaiPemberi : qutPegawaiList) {
+                if (pegawaiPemberi.getNip()
+                        .equals(suratDinas.getNipPenandatangan())) {
+
+                    if (suratDinas.getSuratDinasPejabat() != null) {
+                        isSuratPejabat = true;
+                    } else {
+                        isSuratPejabat = false;
+                    }
+
+                    targetSuratDinasListWrapper
+                            .add(new SuratPerintahTargetWrapper(
+                                    suratDinas.getKdSuratDinas(),
+                                    "",
+                                    isSuratPejabat,
+                                    pegawaiPemberi.getNip(),
+                                    pegawaiPemberi.getNama(),
+                                    pegawaiPemberi.getJabatan()));
+                    break;
+                }
+            }
+        }
+        //get by tembusan
+        for (TembusanSuratDinas tembusanSuratDinas
+                : tembusanSuratDinasTargetList) {
+            for (CustomPegawaiCredential pegawaiPemberi : qutPegawaiList) {
+                if (pegawaiPemberi.getKdJabatan()
+                        .equals(tembusanSuratDinas.getSuratDinas().getKdJabatanPenerimaSuratDinas())) {
+
+                    if (tembusanSuratDinas.getSuratDinas().getSuratDinasPejabat() != null) {
+                        isSuratPejabat = true;
+                    } else {
+                        isSuratPejabat = false;
+                    }
+
+                    targetSuratDinasListWrapper
+                            .add(new SuratPerintahTargetWrapper(
+                                    tembusanSuratDinas.getSuratDinas().getKdSuratDinas(),
+                                    "",
+                                    isSuratPejabat,
+                                    pegawaiPemberi.getNip(),
+                                    pegawaiPemberi.getNama(),
+                                    pegawaiPemberi.getJabatan()));
+                    break;
+                }
+            }
+        }
+
+        return new ResponseEntity<Object>(targetSuratDinasListWrapper, HttpStatus.OK);
 
     }
 
-    @RequestMapping(value = "/get-daftar-surat-dinas-by-target-unread/{kdJabatanTarget}", method = RequestMethod.GET)
-    ResponseEntity<?> getDaftarSuratDinasTargetUnread(@PathVariable("kdJabatanTarget") String kdJabatanTarget) {
+    @RequestMapping(value = "/get-daftar-surat-dinas-by-target-unread/{nipTarget}", method = RequestMethod.GET)
+    ResponseEntity<?> getDaftarSuratDinasTargetUnread(@PathVariable("nipTarget") String nipTarget) {
         LOGGER.info("get surat dinas target unread");
+
+        List<CustomPegawaiCredential> qutPegawaiList
+                = qutPegawaiService.getCustomPegawaiCredentials();
+
+        CustomPegawaiCredential pegawaiTarget = null;
+
+        for (CustomPegawaiCredential pegawai : qutPegawaiList) {
+            if (nipTarget.equals(pegawai.getNip())) {
+                pegawaiTarget = pegawai;
+
+                break;
+            }
+        }
 
         return new ResponseEntity<Object>(null, HttpStatus.OK);
 
@@ -202,7 +290,78 @@ public class SuratDinasController {
     ResponseEntity<?> getSuratDinasByKdSuratDinas(@PathVariable("kdSuratDinas") String kdSuratDinas) {
         LOGGER.info("get surat dinas kd surat dinas");
 
-        return new ResponseEntity<Object>(null, HttpStatus.OK);
+        SuratDinas suratDinas
+                = suratDinasService.getByKdSuratDinas(kdSuratDinas);
+        SuratDinasWrapper suratDinasWrapper
+                = new SuratDinasWrapper();
+
+        suratDinasWrapper.setNomorUrusan(suratDinas.getNomorUrusan());
+        suratDinasWrapper.setNomorUrut(suratDinas.getNomorUrut());
+        suratDinasWrapper.setNomorPasanganUrut(suratDinas.getNomorPasanganUrut());
+        suratDinasWrapper.setNomorUnit(suratDinas.getNomorUnit());
+        suratDinasWrapper.setNomorTahun(suratDinas.getNomorTahun());
+
+        suratDinasWrapper.setSifat(suratDinas.getSifat());
+        suratDinasWrapper.setHal(suratDinas.getHal());
+        suratDinasWrapper.setLampiran(suratDinas.getLampiran());
+
+        List<TkdJabatan> tkdJabatanList
+                = tkdJabatanService.getAll();
+        TkdJabatan jabatanPenerima = new TkdJabatan();
+        List<JabatanWrapper> tembusanJabatanWrapperList
+                = new ArrayList<>();
+
+        for (TkdJabatan tkdJabatan
+                : tkdJabatanList) {
+            if (tkdJabatan.getKdJabatan()
+                    .equals(suratDinas.getKdJabatanPenerimaSuratDinas())) {
+                jabatanPenerima = tkdJabatan;
+                break;
+            }
+        }
+        for (TembusanSuratDinas tembusanSuratDinas
+                : suratDinas.getTembusanSuratDinasList()) {
+            for (TkdJabatan tkdJabatan
+                    : tkdJabatanList) {
+                if (tkdJabatan.getKdJabatan()
+                        .equals(tembusanSuratDinas.getTembusanSuratDinasId().getKdJabatan())) {
+                    tembusanJabatanWrapperList
+                            .add(new JabatanWrapper(
+                                    tkdJabatan.getKdJabatan(),
+                                    tkdJabatan.getJabatan(),
+                                    tkdJabatan.getEselon()));
+                    break;
+                }
+            }
+        }
+
+        suratDinasWrapper.setKdJabatanPenerimaSuratDinas(jabatanPenerima.getKdJabatan());
+        suratDinasWrapper.setJabatanPenerimaSuratDinas(jabatanPenerima.getJabatan());
+        suratDinasWrapper.setTanggalPembuatanMilis(suratDinas.getTanggalPembuatanMilis());
+        suratDinasWrapper.setKotaPembuatanSurat(suratDinas.getKotaPembuatanSurat());
+        suratDinasWrapper.setIsiSuratDinas(suratDinas.getIsiSuratDinas());
+
+        suratDinasWrapper.setTembusanSuratDinasWrapper(tembusanJabatanWrapperList);
+
+        List<CustomPegawaiCredential> qutPegawaiList
+                = qutPegawaiService.getCustomPegawaiCredentials();
+
+        CustomPegawaiCredential penandatangan = null;
+
+        for (CustomPegawaiCredential pegawai : qutPegawaiList) {
+            if (suratDinas.getNipPenandatangan()
+                    .equals(pegawai.getNip())) {
+                penandatangan = pegawai;
+
+                break;
+            }
+        }
+        suratDinasWrapper.setNipPenandatangan(penandatangan.getNip());
+        suratDinasWrapper.setNamaPenandatangan(penandatangan.getNama());
+        suratDinasWrapper.setJabatanPenandatangan(penandatangan.getJabatan());
+        suratDinasWrapper.setUnitKerjaPenandatangan(penandatangan.getUnitKerja());
+
+        return new ResponseEntity<Object>(suratDinasWrapper, HttpStatus.OK);
 
     }
 

@@ -1,5 +1,7 @@
 package com.pemda.ekinerjademo.wrapper.output;
 
+import java.util.List;
+
 public class SuratDinasWrapper {
     private String nomorUrusan;
     private Integer nomorUrut;
@@ -8,7 +10,7 @@ public class SuratDinasWrapper {
     private Integer nomorTahun;
 
     private String sifat;
-    private String lampiran;
+    private Integer lampiran;
     private String hal;
 
     private String kdJabatanPenerimaSuratDinas;
@@ -23,26 +25,30 @@ public class SuratDinasWrapper {
     private String jabatanPenandatangan;
     private String unitKerjaPenandatangan;
 
+    private List<JabatanWrapper> tembusanSuratDinasWrapper;
+
     public SuratDinasWrapper() {
     }
 
-    public SuratDinasWrapper(String nomorUrusan,
-                             Integer nomorUrut,
-                             String nomorPasanganUrut,
-                             String nomorUnit,
-                             Integer nomorTahun,
-                             String sifat,
-                             String lampiran,
-                             String hal,
-                             String kdJabatanPenerimaSuratDinas,
-                             String jabatanPenerimaSuratDinas,
-                             Long tanggalPembuatanMilis,
-                             String kotaPembuatanSurat,
-                             String isiSuratDinas,
-                             String nipPenandatangan,
-                             String namaPenandatangan,
-                             String jabatanPenandatangan,
-                             String unitKerjaPenandatangan) {
+    public SuratDinasWrapper(
+            String nomorUrusan,
+            Integer nomorUrut,
+            String nomorPasanganUrut,
+            String nomorUnit,
+            Integer nomorTahun,
+            String sifat,
+            Integer lampiran,
+            String hal,
+            String kdJabatanPenerimaSuratDinas,
+            String jabatanPenerimaSuratDinas,
+            Long tanggalPembuatanMilis,
+            String kotaPembuatanSurat,
+            String isiSuratDinas,
+            String nipPenandatangan,
+            String namaPenandatangan,
+            String jabatanPenandatangan,
+            String unitKerjaPenandatangan,
+            List<JabatanWrapper> tembusanSuratDinasWrapper) {
         this.nomorUrusan = nomorUrusan;
         this.nomorUrut = nomorUrut;
         this.nomorPasanganUrut = nomorPasanganUrut;
@@ -60,6 +66,7 @@ public class SuratDinasWrapper {
         this.namaPenandatangan = namaPenandatangan;
         this.jabatanPenandatangan = jabatanPenandatangan;
         this.unitKerjaPenandatangan = unitKerjaPenandatangan;
+        this.tembusanSuratDinasWrapper = tembusanSuratDinasWrapper;
     }
 
     public String getNomorUrusan() {
@@ -110,11 +117,11 @@ public class SuratDinasWrapper {
         this.sifat = sifat;
     }
 
-    public String getLampiran() {
+    public Integer getLampiran() {
         return lampiran;
     }
 
-    public void setLampiran(String lampiran) {
+    public void setLampiran(Integer lampiran) {
         this.lampiran = lampiran;
     }
 
@@ -196,5 +203,13 @@ public class SuratDinasWrapper {
 
     public void setUnitKerjaPenandatangan(String unitKerjaPenandatangan) {
         this.unitKerjaPenandatangan = unitKerjaPenandatangan;
+    }
+
+    public List<JabatanWrapper> getTembusanSuratDinasWrapper() {
+        return tembusanSuratDinasWrapper;
+    }
+
+    public void setTembusanSuratDinasWrapper(List<JabatanWrapper> tembusanSuratDinasWrapper) {
+        this.tembusanSuratDinasWrapper = tembusanSuratDinasWrapper;
     }
 }

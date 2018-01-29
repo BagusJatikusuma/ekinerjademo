@@ -26,6 +26,8 @@ public class SuratEdaranInputWrapper {
     private Integer statusPenilaian;
     private String alasanPenolakan;
 
+    private String kdJabatanSuratPejabat;
+
     public String getKdSuratEdaran() {
         return kdSuratEdaran;
     }
@@ -192,5 +194,13 @@ public class SuratEdaranInputWrapper {
 
     public void setAlasanPenolakan(String alasanPenolakan) {
         this.alasanPenolakan = alasanPenolakan;
+    }
+
+    public String getKdJabatanSuratPejabat() {
+        return kdJabatanSuratPejabat;
+    }
+
+    public void setKdJabatanSuratPejabat(String kdJabatanSuratPejabat) {
+        this.kdJabatanSuratPejabat = kdJabatanSuratPejabat;
     }
 }

@@ -32,7 +32,7 @@ public class SuratKeterangan {
     private String kotaPembuatanSurat;
     @Column(name = "tanggal_pembuatan_surat")
     private Long tanggalPembuatanSuratMilis;
-    @Column(name = "nip_pembuatan_surat")
+    @Column(name = "nip_pembuat_surat")
     private String nipPembuatSurat;
     @Column(name = "kd_unit_kerja")
     private String kdUnitKerja;
