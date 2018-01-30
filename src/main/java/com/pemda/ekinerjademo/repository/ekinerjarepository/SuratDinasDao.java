@@ -47,4 +47,7 @@ public interface SuratDinasDao extends JpaRepository<SuratDinas, String> {
             "where sd.kdSuratDinas = ?1")
     SuratDinas findByKdSuratDinas(String kdSuratDinas);
 
+    @Query("select sd from SuratDinas sd " +
+            "where sd.pathPenilaian like concat('%',?1)")
+    List<SuratDinas> findByLastTree(String kdSuratDinas);
 }

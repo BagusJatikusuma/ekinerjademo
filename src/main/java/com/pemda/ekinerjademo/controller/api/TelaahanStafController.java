@@ -81,7 +81,7 @@ public class TelaahanStafController {
                 new CustomMessage("telaahan staf created"), HttpStatus.CREATED);
     }
 
-    @RequestMapping(value = "/get-daftar-telaahan-staff-history-by-pegawai/{nipPegawai}", method = RequestMethod.GET)
+    @RequestMapping(value = "/get-daftar-telaahan-staff-history-by-pegawai/{nipPembuatSurat}", method = RequestMethod.GET)
     ResponseEntity<?> getDaftarTelaahanStaffHistoryByPegawai(
             @PathVariable("nipPembuatSurat") String nipPembuatSurat) {
         LOGGER.info("get telaahan staff history by nip "+nipPembuatSurat);

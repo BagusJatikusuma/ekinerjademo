@@ -1,9 +1,7 @@
 package com.pemda.ekinerjademo.model.ekinerjamodel;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.Set;
 
 /**
  * Created by bagus on 27/11/17.
@@ -14,10 +12,12 @@ public class SuratTugas {
     @Id
     @Column(name = "kd_surat_tugas")
     private String kdSuratTugas;
+
     @Column(name = "nip_pembuat")
     private String nipPembuat;
     @Column(name = "nip_penandatangan")
     private String nipPenandatangan;
+
     @Column(name = "nomor_surat_1")
     private Integer nomorSurat1;
     @Column(name = "nomor_surat_2")
@@ -26,12 +26,16 @@ public class SuratTugas {
     private String nomorSurat3;
     @Column(name = "nomor_tahun")
     private Integer nomorTahun;
+    @Column(name = "nomor_pasangan_urut")
+    private String nomorPasanganUrut;
+
     @Column(name = "dasar")
     private String dasar;
     @Column(name = "untuk")
     private String untuk;
     @Column(name = "tempat")
     private String tempat;
+
     @Column(name = "tanggal_tugas_milis")
     private Long tanggalTugasMilis;
     @Column(name = "ttd_path")
@@ -52,6 +56,20 @@ public class SuratTugas {
     private Integer statusPenilaian;
     @Column(name = "alasan_penolakan")
     private String alasanPenolakan;
+
+    @Column(name = "kd_unit_kerja")
+    private String kdUnitKerja;
+
+    @OneToMany(mappedBy = "suratTugas")
+    private Set<TargetSuratTugasPegawai> targetSuratTugasPegawaiSet;
+    @OneToMany(mappedBy = "suratTugas")
+    private Set<TargetSuratTugasPejabat> targetSuratTugasPejabatSet;
+    @OneToMany(mappedBy = "suratTugas")
+    private Set<TembusanSuratTugas> tembusanSuratTugasSet;
+    @OneToOne(mappedBy = "suratTugas", fetch = FetchType.LAZY)
+    private SuratTugasPejabat suratTugasPejabat;
+    @OneToOne(mappedBy = "suratTugas", fetch = FetchType.LAZY)
+    private SuratTugasNonPejabat suratTugasNonPejabat;
 
     public String getKdSuratTugas() {
         return kdSuratTugas;
@@ -211,5 +229,61 @@ public class SuratTugas {
 
     public void setAlasanPenolakan(String alasanPenolakan) {
         this.alasanPenolakan = alasanPenolakan;
+    }
+
+    public Set<TargetSuratTugasPegawai> getTargetSuratTugasPegawaiSet() {
+        return targetSuratTugasPegawaiSet;
+    }
+
+    public void setTargetSuratTugasPegawaiSet(Set<TargetSuratTugasPegawai> targetSuratTugasPegawaiSet) {
+        this.targetSuratTugasPegawaiSet = targetSuratTugasPegawaiSet;
+    }
+
+    public Set<TargetSuratTugasPejabat> getTargetSuratTugasPejabatSet() {
+        return targetSuratTugasPejabatSet;
+    }
+
+    public void setTargetSuratTugasPejabatSet(Set<TargetSuratTugasPejabat> targetSuratTugasPejabatSet) {
+        this.targetSuratTugasPejabatSet = targetSuratTugasPejabatSet;
+    }
+
+    public Set<TembusanSuratTugas> getTembusanSuratTugasSet() {
+        return tembusanSuratTugasSet;
+    }
+
+    public void setTembusanSuratTugasSet(Set<TembusanSuratTugas> tembusanSuratTugasSet) {
+        this.tembusanSuratTugasSet = tembusanSuratTugasSet;
+    }
+
+    public SuratTugasPejabat getSuratTugasPejabat() {
+        return suratTugasPejabat;
+    }
+
+    public void setSuratTugasPejabat(SuratTugasPejabat suratTugasPejabat) {
+        this.suratTugasPejabat = suratTugasPejabat;
+    }
+
+    public SuratTugasNonPejabat getSuratTugasNonPejabat() {
+        return suratTugasNonPejabat;
+    }
+
+    public void setSuratTugasNonPejabat(SuratTugasNonPejabat suratTugasNonPejabat) {
+        this.suratTugasNonPejabat = suratTugasNonPejabat;
+    }
+
+    public String getNomorPasanganUrut() {
+        return nomorPasanganUrut;
+    }
+
+    public void setNomorPasanganUrut(String nomorPasanganUrut) {
+        this.nomorPasanganUrut = nomorPasanganUrut;
+    }
+
+    public String getKdUnitKerja() {
+        return kdUnitKerja;
+    }
+
+    public void setKdUnitKerja(String kdUnitKerja) {
+        this.kdUnitKerja = kdUnitKerja;
     }
 }

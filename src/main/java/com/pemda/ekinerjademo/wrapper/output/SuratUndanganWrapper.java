@@ -26,7 +26,7 @@ public class SuratUndanganWrapper {
 
     private String bagianPembukaSuratUndangan;
     private String bagianIsiHariSuratUndangan;
-    private Integer bagianIsiTanggalSuratUndangan;
+    private Long bagianIsiTanggalSuratUndangan;
     private String bagianIsiWaktuSuratUndangan;
     private String bagianIsiTempatSuratUndangan;
     private String bagianIsiAcaraSuratUndangan;
@@ -57,7 +57,7 @@ public class SuratUndanganWrapper {
             String unitKerjaPenerimaSuratUndangan,
             String bagianPembukaSuratUndangan,
             String bagianIsiHariSuratUndangan,
-            Integer bagianIsiTanggalSuratUndangan,
+            Long bagianIsiTanggalSuratUndangan,
             String bagianIsiWaktuSuratUndangan,
             String bagianIsiTempatSuratUndangan,
             String bagianIsiAcaraSuratUndangan,
@@ -237,11 +237,11 @@ public class SuratUndanganWrapper {
         this.bagianIsiHariSuratUndangan = bagianIsiHariSuratUndangan;
     }
 
-    public Integer getBagianIsiTanggalSuratUndangan() {
+    public Long getBagianIsiTanggalSuratUndangan() {
         return bagianIsiTanggalSuratUndangan;
     }
 
-    public void setBagianIsiTanggalSuratUndangan(Integer bagianIsiTanggalSuratUndangan) {
+    public void setBagianIsiTanggalSuratUndangan(Long bagianIsiTanggalSuratUndangan) {
         this.bagianIsiTanggalSuratUndangan = bagianIsiTanggalSuratUndangan;
     }
 

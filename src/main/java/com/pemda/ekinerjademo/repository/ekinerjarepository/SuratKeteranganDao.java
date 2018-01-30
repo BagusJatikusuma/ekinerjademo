@@ -29,4 +29,8 @@ public interface SuratKeteranganDao extends JpaRepository<SuratKeterangan, Strin
             "left join fetch sk.targetSuratKeteranganList " +
             "where sk.kdSuratKeterangan = ?1")
     SuratKeterangan findByKdSuratKeterangan(String kdSuratKeterangan);
+
+    @Query("select sk from SuratKeterangan sk " +
+            "where sk.pathPenilaian like concat('%',?1)")
+    List<SuratKeterangan> findByLastTree(String kdSuratKeterangan);
 }

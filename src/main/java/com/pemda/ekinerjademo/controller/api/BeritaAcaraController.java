@@ -96,6 +96,13 @@ public class BeritaAcaraController {
                 new CustomMessage("berita acara created"), HttpStatus.CREATED);
     }
 
+    @RequestMapping(value = "/approve-berita-acara/{kdBeritaAcara}", method = RequestMethod.PUT)
+    ResponseEntity<?> approveBeritaAcara(@PathVariable("kdBeritaAcara") String kdBeritaAcara) {
+        LOGGER.info("approve berita acara");
+
+        return new ResponseEntity<Object>(new CustomMessage("berita acara approved"), HttpStatus.OK);
+    }
+
     @RequestMapping(value = "/get-daftar-berita-acara-history-by-pegawai/{nipPegawai}", method = RequestMethod.GET)
     ResponseEntity<?> getDaftarBeritaAcaraHistoryByPegawai(
             @PathVariable("nipPembuatSurat") String nipPembuatSurat) {

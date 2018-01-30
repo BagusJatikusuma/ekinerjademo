@@ -43,7 +43,7 @@ public class SuratUndangan {
     @Column(name = "bagian_isi_hari_surat_undangan")
     private String bagianIsiHariSuratUndangan;
     @Column(name = "bagian_isi_tanggal_surat_undangan")
-    private Integer bagianIsiTanggalSuratUndangan;
+    private Long bagianIsiTanggalSuratUndangan;
     @Column(name = "bagian_isi_waktu_surat_undangan")
     private String bagianIsiWaktuSuratUndangan;
     @Column(name = "bagian_isi_tempat_surat_undangan")
@@ -203,11 +203,11 @@ public class SuratUndangan {
         this.bagianIsiHariSuratUndangan = bagianIsiHariSuratUndangan;
     }
 
-    public Integer getBagianIsiTanggalSuratUndangan() {
+    public Long getBagianIsiTanggalSuratUndangan() {
         return bagianIsiTanggalSuratUndangan;
     }
 
-    public void setBagianIsiTanggalSuratUndangan(Integer bagianIsiTanggalSuratUndangan) {
+    public void setBagianIsiTanggalSuratUndangan(Long bagianIsiTanggalSuratUndangan) {
         this.bagianIsiTanggalSuratUndangan = bagianIsiTanggalSuratUndangan;
     }
 

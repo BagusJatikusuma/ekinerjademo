@@ -10,6 +10,7 @@ import java.util.List;
 public interface BeritaAcaraService {
 
     List<BeritaAcara> getByNipPembuatSurat(String nipPembuatSurat);
+    List<BeritaAcara> getBeritaAcaraByLastTree(String kdBeritaAcara);
 
     void createBeritaAcara(BeritaAcara beritaAcara);
 

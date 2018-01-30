@@ -27,6 +27,11 @@ public class BeritaAcaraServiceImpl implements BeritaAcaraService{
     }
 
     @Override
+    public List<BeritaAcara> getBeritaAcaraByLastTree(String kdBeritaAcara) {
+        return null;
+    }
+
+    @Override
     public void createBeritaAcara(BeritaAcara beritaAcara) {
         beritaAcaraDao.save(beritaAcara);
 

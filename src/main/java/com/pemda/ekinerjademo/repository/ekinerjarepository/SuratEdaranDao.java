@@ -38,4 +38,8 @@ public interface SuratEdaranDao extends JpaRepository<SuratEdaran, String> {
             "where se.kdSuratEdaran = ?1")
     SuratEdaran findByKdSuratEdaran(String kdSuratEdaran);
 
+    @Query("select se from SuratEdaran se " +
+            "where se.pathPenilaian like concat('%',?1)")
+    List<SuratEdaran> findByLastTree(String kdSuratEdaran);
+
 }
