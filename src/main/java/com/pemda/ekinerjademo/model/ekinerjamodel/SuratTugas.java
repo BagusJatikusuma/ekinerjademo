@@ -29,6 +29,8 @@ public class SuratTugas {
     @Column(name = "nomor_pasangan_urut")
     private String nomorPasanganUrut;
 
+    @Column(name = "menimbang")
+    private String menimbang;
     @Column(name = "dasar")
     private String dasar;
     @Column(name = "untuk")
@@ -285,5 +287,13 @@ public class SuratTugas {
 
     public void setKdUnitKerja(String kdUnitKerja) {
         this.kdUnitKerja = kdUnitKerja;
+    }
+
+    public String getMenimbang() {
+        return menimbang;
+    }
+
+    public void setMenimbang(String menimbang) {
+        this.menimbang = menimbang;
     }
 }
