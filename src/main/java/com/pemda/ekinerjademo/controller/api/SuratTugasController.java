@@ -1,12 +1,18 @@
 package com.pemda.ekinerjademo.controller.api;
 
 import com.pemda.ekinerjademo.model.bismamodel.QutPegawai;
+import com.pemda.ekinerjademo.model.bismamodel.TkdJabatan;
+import com.pemda.ekinerjademo.model.bismamodel.TkdUnk;
 import com.pemda.ekinerjademo.model.ekinerjamodel.*;
+import com.pemda.ekinerjademo.projection.ekinerjaprojection.CustomPegawaiCredential;
+import com.pemda.ekinerjademo.repository.bismarepository.TkdUnkDao;
 import com.pemda.ekinerjademo.service.QutPegawaiService;
 import com.pemda.ekinerjademo.service.SuratTugasService;
+import com.pemda.ekinerjademo.service.TkdJabatanService;
 import com.pemda.ekinerjademo.util.EkinerjaXMLBuilder;
+import com.pemda.ekinerjademo.util.EkinerjaXMLParser;
 import com.pemda.ekinerjademo.wrapper.input.SuratTugasInputWrapper;
-import com.pemda.ekinerjademo.wrapper.output.CustomMessage;
+import com.pemda.ekinerjademo.wrapper.output.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,9 +21,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.Year;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Created by bagus on 29/01/18.
@@ -32,6 +36,10 @@ public class SuratTugasController {
     private SuratTugasService suratTugasService;
     @Autowired
     private QutPegawaiService qutPegawaiService;
+    @Autowired
+    private TkdJabatanService tkdJabatanService;
+    @Autowired
+    private TkdUnkDao tkdUnkDao;
 
     @RequestMapping(value = "/create-surat-tugas", method = RequestMethod.POST)
     ResponseEntity<?> createSuratTugas(@RequestBody SuratTugasInputWrapper inputWrapper) {
@@ -127,8 +135,51 @@ public class SuratTugasController {
             SuratTugas suratTugasBawahan
                     = suratTugasService.getByKdSuratTugas(inputWrapper.getKdSuratTugasBawahan());
             suratTugas.setPathPenilaian(suratTugasBawahan.getPathPenilaian()+"."+kdSuratTugas);
+
+            suratTugasBawahan.setStatusPenilaian(2);
+            suratTugasService.create(suratTugasBawahan);
         }
 
+        suratTugas.setStatusBaca(0);
+        suratTugas.setDurasiPengerjaan(inputWrapper.getDurasiPengerjaan());
+        suratTugas.setNipPenilai(null);
+        suratTugas.setStatusPenilaian(0);
+        suratTugas.setAlasanPenolakan(null);
+
+        suratTugas.setKdUnitKerja(inputWrapper.getKdUnitKerja());
+
+        suratTugasService.create(suratTugas);
+
+        for (TargetSuratTugasPegawai targetSuratTugasPegawai
+                : targetSuratTugasPegawaiSet) {
+            suratTugasService.createTargetSuratTugasPegawai(targetSuratTugasPegawai);
+        }
+
+        for (TargetSuratTugasPejabat targetSuratTugasPejabat
+                : targetSuratTugasPejabatSet) {
+            suratTugasService.createTargetSuratTugasPejabat(targetSuratTugasPejabat);
+        }
+
+        for (TembusanSuratTugas tembusanSuratTugas
+                : tembusanSuratTugasSet) {
+            suratTugasService.createTembusanSuratTugas(tembusanSuratTugas);
+        }
+
+        if (inputWrapper.isSuratPejabat()) {
+            SuratTugasPejabat suratTugasPejabat
+                    = new SuratTugasPejabat();
+            suratTugasPejabat.setKdJabatan(inputWrapper.getKdJabatanSuratPejabat());
+            suratTugasPejabat.setKdSuratTugas(kdSuratTugas);
+
+            suratTugasService.createSuratTugasPejabat(suratTugasPejabat);
+        } else {
+            SuratTugasNonPejabat suratTugasNonPejabat
+                    = new SuratTugasNonPejabat();
+            suratTugasNonPejabat.setKdSuratTugas(kdSuratTugas);
+            suratTugasNonPejabat.setKdUnitKerja(inputWrapper.getKdUnitKerja());
+
+            suratTugasService.createSuratTugasNonPejabat(suratTugasNonPejabat);
+        }
 
         return new ResponseEntity<Object>(new CustomMessage("surat tugas created"), HttpStatus.OK);
     }
@@ -145,7 +196,32 @@ public class SuratTugasController {
             @PathVariable("nipPembuatSurat") String nipPembuatSurat) {
         LOGGER.info("get surat tugas by pembuat");
 
-        return new ResponseEntity<Object>(null, HttpStatus.OK);
+        Set<SuratTugas> suratTugasSet
+                = suratTugasService.getByNipPembuat(nipPembuatSurat);
+        List<SuratPerintahHistoryWrapper> suratTugasHistoryList
+                = new ArrayList<>();
+
+        boolean isSuratPejabat = false;
+        for (SuratTugas suratTugas
+                : suratTugasSet) {
+            if (suratTugas.getSuratTugasPejabat() != null)
+                isSuratPejabat = true;
+            else
+                isSuratPejabat = false;
+
+            suratTugasHistoryList
+                    .add(new SuratPerintahHistoryWrapper(
+                            suratTugas.getKdSuratTugas(),
+                            "",
+                            isSuratPejabat,
+                            suratTugas.getStatusBaca(),
+                            "surat tugas",
+                            12,
+                            suratTugas.getTanggalTugasMilis(),
+                            suratTugas.getStatusPenilaian()));
+        }
+
+        return new ResponseEntity<Object>(suratTugasHistoryList, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/get-surat-tugas-by-target/{nipTarget}", method = RequestMethod.GET)
@@ -153,13 +229,203 @@ public class SuratTugasController {
             @PathVariable("nipTarget") String nipTarget) {
         LOGGER.info("get surat tugas by target");
 
-        return new ResponseEntity<Object>(null, HttpStatus.OK);
+        List<CustomPegawaiCredential> qutPegawaiList
+                = qutPegawaiService.getCustomPegawaiCredentials();
+        List<SuratPerintahTargetWrapper> suratTugasTargetList
+                = new ArrayList<>();
+
+        CustomPegawaiCredential pegawaiTarget = null;
+
+        for (CustomPegawaiCredential pegawai : qutPegawaiList) {
+            if (nipTarget.equals(pegawai.getNip())) {
+                pegawaiTarget = pegawai;
+
+                break;
+            }
+        }
+
+        List<TargetSuratTugasPegawai> targetSuratTugasPegawaiList
+                = suratTugasService.getTargetSuratTugasPegawai(pegawaiTarget.getNip());
+        List<TargetSuratTugasPejabat> targetSuratTugasPejabatList
+                = suratTugasService.getTargetSuratTugasPejabat(pegawaiTarget.getKdJabatan());
+        List<TembusanSuratTugas> tembusanSuratTugasList
+                = suratTugasService.getTembusanSuratTugas(pegawaiTarget.getKdJabatan());
+
+        boolean isSuratPejabat = false;
+        for (TargetSuratTugasPegawai suratTarget
+                : targetSuratTugasPegawaiList) {
+            for (CustomPegawaiCredential pegawaiPemberi : qutPegawaiList) {
+                if (pegawaiPemberi.getNip()
+                        .equals(suratTarget.getSuratTugas().getNipPenandatangan())) {
+                    if (suratTarget.getSuratTugas().getSuratTugasPejabat() != null)
+                        isSuratPejabat = true;
+                    else
+                        isSuratPejabat = false;
+
+                    suratTugasTargetList
+                            .add(new SuratPerintahTargetWrapper(
+                                    suratTarget.getSuratTugas().getKdSuratTugas(),
+                                    "",
+                                    isSuratPejabat,
+                                    pegawaiPemberi.getNip(),
+                                    pegawaiPemberi.getNama(),
+                                    pegawaiPemberi.getJabatan()));
+                    break;
+                }
+            }
+        }
+        for (TargetSuratTugasPejabat suratTarget
+                : targetSuratTugasPejabatList) {
+            for (CustomPegawaiCredential pegawaiPemberi : qutPegawaiList) {
+                if (pegawaiPemberi.getNip()
+                        .equals(suratTarget.getSuratTugas().getNipPenandatangan())) {
+                    if (suratTarget.getSuratTugas().getSuratTugasPejabat() != null)
+                        isSuratPejabat = true;
+                    else
+                        isSuratPejabat = false;
+
+                    suratTugasTargetList
+                            .add(new SuratPerintahTargetWrapper(
+                                    suratTarget.getSuratTugas().getKdSuratTugas(),
+                                    "",
+                                    isSuratPejabat,
+                                    pegawaiPemberi.getNip(),
+                                    pegawaiPemberi.getNama(),
+                                    pegawaiPemberi.getJabatan()));
+                    break;
+                }
+            }
+        }
+
+        for (TembusanSuratTugas suratTarget
+                : tembusanSuratTugasList) {
+            for (CustomPegawaiCredential pegawaiPemberi : qutPegawaiList) {
+                if (pegawaiPemberi.getNip()
+                        .equals(suratTarget.getSuratTugas().getNipPenandatangan())) {
+                    if (suratTarget.getSuratTugas().getSuratTugasPejabat() != null)
+                        isSuratPejabat = true;
+                    else
+                        isSuratPejabat = false;
+
+                    suratTugasTargetList
+                            .add(new SuratPerintahTargetWrapper(
+                                    suratTarget.getSuratTugas().getKdSuratTugas(),
+                                    "",
+                                    isSuratPejabat,
+                                    pegawaiPemberi.getNip(),
+                                    pegawaiPemberi.getNama(),
+                                    pegawaiPemberi.getJabatan()));
+                    break;
+                }
+            }
+        }
+
+
+        return new ResponseEntity<Object>(suratTugasTargetList, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/get-surat-tugas-by-target-unread/{nipTarget}", method = RequestMethod.GET)
     ResponseEntity<?> getSuratTugasByTargetUnread(
             @PathVariable("nipTarget") String nipTarget) {
         LOGGER.info("get surat tugas unread by target");
+
+        List<CustomPegawaiCredential> qutPegawaiList
+                = qutPegawaiService.getCustomPegawaiCredentials();
+        List<SuratPerintahTargetWrapper> suratTugasTargetList
+                = new ArrayList<>();
+
+        CustomPegawaiCredential pegawaiTarget = null;
+
+        for (CustomPegawaiCredential pegawai : qutPegawaiList) {
+            if (nipTarget.equals(pegawai.getNip())) {
+                pegawaiTarget = pegawai;
+
+                break;
+            }
+        }
+
+        List<TargetSuratTugasPegawai> targetSuratTugasPegawaiList
+                = suratTugasService.getTargetSuratTugasPegawai(pegawaiTarget.getNip());
+        List<TargetSuratTugasPejabat> targetSuratTugasPejabatList
+                = suratTugasService.getTargetSuratTugasPejabat(pegawaiTarget.getKdJabatan());
+        List<TembusanSuratTugas> tembusanSuratTugasList
+                = suratTugasService.getTembusanSuratTugas(pegawaiTarget.getKdJabatan());
+
+        boolean isSuratPejabat = false;
+        for (TargetSuratTugasPegawai suratTarget
+                : targetSuratTugasPegawaiList) {
+            for (CustomPegawaiCredential pegawaiPemberi : qutPegawaiList) {
+                if (pegawaiPemberi.getNip()
+                        .equals(suratTarget.getSuratTugas().getNipPenandatangan())) {
+                    if (suratTarget.getSuratTugas().getSuratTugasPejabat() != null)
+                        isSuratPejabat = true;
+                    else
+                        isSuratPejabat = false;
+
+                    if (suratTarget.getSuratTugas().getStatusBaca() == 0) {
+                        suratTugasTargetList
+                                .add(new SuratPerintahTargetWrapper(
+                                        suratTarget.getSuratTugas().getKdSuratTugas(),
+                                        "",
+                                        isSuratPejabat,
+                                        pegawaiPemberi.getNip(),
+                                        pegawaiPemberi.getNama(),
+                                        pegawaiPemberi.getJabatan()));
+                    }
+                    break;
+                }
+            }
+        }
+        for (TargetSuratTugasPejabat suratTarget
+                : targetSuratTugasPejabatList) {
+            for (CustomPegawaiCredential pegawaiPemberi : qutPegawaiList) {
+                if (pegawaiPemberi.getNip()
+                        .equals(suratTarget.getSuratTugas().getNipPenandatangan())) {
+                    if (suratTarget.getSuratTugas().getSuratTugasPejabat() != null)
+                        isSuratPejabat = true;
+                    else
+                        isSuratPejabat = false;
+
+                    if (suratTarget.getSuratTugas().getStatusBaca() == 0) {
+                        suratTugasTargetList
+                                .add(new SuratPerintahTargetWrapper(
+                                        suratTarget.getSuratTugas().getKdSuratTugas(),
+                                        "",
+                                        isSuratPejabat,
+                                        pegawaiPemberi.getNip(),
+                                        pegawaiPemberi.getNama(),
+                                        pegawaiPemberi.getJabatan()));
+                    }
+
+                    break;
+                }
+            }
+        }
+
+        for (TembusanSuratTugas suratTarget
+                : tembusanSuratTugasList) {
+            for (CustomPegawaiCredential pegawaiPemberi : qutPegawaiList) {
+                if (pegawaiPemberi.getNip()
+                        .equals(suratTarget.getSuratTugas().getNipPenandatangan())) {
+                    if (suratTarget.getSuratTugas().getSuratTugasPejabat() != null)
+                        isSuratPejabat = true;
+                    else
+                        isSuratPejabat = false;
+
+                    if (suratTarget.getSuratTugas().getStatusBaca() == 0) {
+                        suratTugasTargetList
+                                .add(new SuratPerintahTargetWrapper(
+                                        suratTarget.getSuratTugas().getKdSuratTugas(),
+                                        "",
+                                        isSuratPejabat,
+                                        pegawaiPemberi.getNip(),
+                                        pegawaiPemberi.getNama(),
+                                        pegawaiPemberi.getJabatan()));
+                    }
+                    break;
+                }
+            }
+        }
 
         return new ResponseEntity<Object>(null, HttpStatus.OK);
     }
@@ -169,13 +435,142 @@ public class SuratTugasController {
             @PathVariable("kdSuratTugas") String kdSuratTugas) {
         LOGGER.info("get surat tugas by kode surat");
 
-        return new ResponseEntity<Object>(null, HttpStatus.OK);
+        EkinerjaXMLParser ekinerjaXMLParser = new EkinerjaXMLParser();
+
+        SuratTugas suratTugas = suratTugasService.getByKdSuratTugas(kdSuratTugas);
+
+        List<CustomPegawaiCredential> qutPegawaiList
+                = qutPegawaiService.getCustomPegawaiCredentials();
+        List<SuratPerintahTargetWrapper> suratTugasTargetList
+                = new ArrayList<>();
+        Set<CustomPegawaiCredential> targetSuratTugasPegawaiListWrapper
+                = new HashSet<>();
+        Set<JabatanWrapper> targetSuratTugasPejabatListWrapper
+                = new HashSet<>();
+        Set<JabatanWrapper> tembusanSuratTugasListWrapper
+                = new HashSet<>();
+
+
+        CustomPegawaiCredential penandatanganSurat = null;
+
+        for (CustomPegawaiCredential pegawai : qutPegawaiList) {
+            if (suratTugas.getNipPenandatangan().equals(pegawai.getNip())) {
+                penandatanganSurat = pegawai;
+
+                break;
+            }
+        }
+        for (TargetSuratTugasPegawai target
+                :suratTugas.getTargetSuratTugasPegawaiSet()) {
+            for (CustomPegawaiCredential customPegawaiCredential : qutPegawaiList) {
+                if (customPegawaiCredential.getNip()
+                        .equals(target.getTargetSuratTugasPegawaiId().getNipPegawai())) {
+                    targetSuratTugasPegawaiListWrapper.add(customPegawaiCredential);
+
+                    break;
+                }
+            }
+        }
+
+        List<TkdJabatan> tkdJabatanList = tkdJabatanService.getAll();
+
+        for (TargetSuratTugasPejabat target
+                : suratTugas.getTargetSuratTugasPejabatSet()) {
+            for (TkdJabatan tkdJabatan : tkdJabatanList){
+                if (tkdJabatan.getKdJabatan()
+                        .equals(target.getTargetSuratTugasPejabatId().getKdJabatan())) {
+
+                    JabatanWrapper jabatanWrapper = new JabatanWrapper();
+
+                    jabatanWrapper.setKdJabatan(tkdJabatan.getKdJabatan());
+                    jabatanWrapper.setJabatan(tkdJabatan.getJabatan());
+                    jabatanWrapper.setEselon(tkdJabatan.getEselon());
+
+                    targetSuratTugasPejabatListWrapper.add(jabatanWrapper);
+
+                    break;
+
+                }
+
+            }
+
+        }
+        for (TembusanSuratTugas target
+                : suratTugas.getTembusanSuratTugasSet()) {
+            for (TkdJabatan tkdJabatan : tkdJabatanList){
+                if (tkdJabatan.getKdJabatan()
+                        .equals(target.getTembusanSuratTugasId().getKdJabatan())) {
+
+                    JabatanWrapper jabatanWrapper = new JabatanWrapper();
+
+                    jabatanWrapper.setKdJabatan(tkdJabatan.getKdJabatan());
+                    jabatanWrapper.setJabatan(tkdJabatan.getJabatan());
+                    jabatanWrapper.setEselon(tkdJabatan.getEselon());
+
+                    tembusanSuratTugasListWrapper.add(jabatanWrapper);
+
+                    break;
+
+                }
+
+            }
+
+        }
+
+        boolean isSuratPejabat = false;
+        String kdUnitKerjaPenandatangan = null;
+        String unitKerjaPenandatangan = null;
+        String kdJabatanPenandatangan = null;
+        String jabatanPenandatangan = null;
+
+        if (suratTugas.getSuratTugasPejabat() != null) {
+            isSuratPejabat = true;
+            kdJabatanPenandatangan = penandatanganSurat.getKdJabatan();
+            jabatanPenandatangan = penandatanganSurat.getJabatan();
+        } else {
+            kdUnitKerjaPenandatangan = penandatanganSurat.getKdUnitKerja();
+
+            TkdUnk tkdUnk = tkdUnkDao.findOne(kdUnitKerjaPenandatangan);
+
+            unitKerjaPenandatangan = tkdUnk.getUnitKerja();
+        }
+
+        SuratTugasWrapper suratTugasWrapper
+                = new SuratTugasWrapper(
+                        suratTugas.getKdSuratTugas(),
+                        penandatanganSurat,
+                        suratTugas.getNomorSurat1(),
+                        suratTugas.getNomorSurat2(),
+                        suratTugas.getNomorSurat3(),
+                        suratTugas.getNomorTahun(),
+                        suratTugas.getNomorPasanganUrut(),
+                        ekinerjaXMLParser.convertXmlSuratPerintahIntoListofString(
+                                suratTugas.getMenimbang(), "menimbang"),
+                        ekinerjaXMLParser.convertXmlSuratPerintahIntoListofString(
+                                suratTugas.getDasar(), "dasar"),
+                        ekinerjaXMLParser.convertXmlSuratPerintahIntoListofString(
+                                suratTugas.getUntuk(), "untuk"),
+                        suratTugas.getTempat(),
+                        suratTugas.getTanggalTugasMilis(),
+                        suratTugas.getKdUnitKerja(),
+                        targetSuratTugasPegawaiListWrapper,
+                        targetSuratTugasPejabatListWrapper,
+                        tembusanSuratTugasListWrapper);
+        suratTugasWrapper.setSuratPejabat(isSuratPejabat);
+        suratTugasWrapper.setKdUnitKerjaPenandatangan(kdUnitKerjaPenandatangan);
+        suratTugasWrapper.setUnitKerjaPenandatangan(unitKerjaPenandatangan);
+        suratTugasWrapper.setKdJabatanPenandatangan(kdJabatanPenandatangan);
+        suratTugasWrapper.setJabatanPenandatangan(jabatanPenandatangan);
+
+        return new ResponseEntity<Object>(suratTugasWrapper, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/open-surat-tugas/{kdSuratTugas}", method = RequestMethod.PUT)
     ResponseEntity<?> openSuratTugas(
             @PathVariable("kdSuratTugas") String kdSuratTugas) {
         LOGGER.info("open surat tugas");
+
+        suratTugasService.openSuratTugas(kdSuratTugas);
 
         return new ResponseEntity<Object>(new CustomMessage("surat tugas opened"), HttpStatus.OK);
     }
@@ -185,7 +580,7 @@ public class SuratTugasController {
             @PathVariable("kdSuratTugas") String kdSuratTugas) {
         LOGGER.info("open surat tugas by penilai");
 
-        SuratTugas suratTugas;
+        suratTugasService.openSuratTugasPenilai(kdSuratTugas);
 
         return new ResponseEntity<Object>(new CustomMessage("surat tugas opened"), HttpStatus.OK);
     }

@@ -1,9 +1,6 @@
 package com.pemda.ekinerjademo.service;
 
-import com.pemda.ekinerjademo.model.ekinerjamodel.SuratTugas;
-import com.pemda.ekinerjademo.model.ekinerjamodel.TargetSuratTugasPegawai;
-import com.pemda.ekinerjademo.model.ekinerjamodel.TargetSuratTugasPejabat;
-import com.pemda.ekinerjademo.model.ekinerjamodel.TembusanSuratTugas;
+import com.pemda.ekinerjademo.model.ekinerjamodel.*;
 
 import java.util.List;
 import java.util.Set;
@@ -25,6 +22,8 @@ public interface SuratTugasService {
     void createTargetSuratTugasPegawai(TargetSuratTugasPegawai targetSuratTugasPegawai);
     void createTargetSuratTugasPejabat(TargetSuratTugasPejabat targetSuratTugasPejabat);
     void createTembusanSuratTugas(TembusanSuratTugas tembusanSuratTugas);
+    void createSuratTugasPejabat(SuratTugasPejabat suratTugasPejabat);
+    void createSuratTugasNonPejabat(SuratTugasNonPejabat suratTugasNonPejabat);
 
     void openSuratTugas(String kdSuratTugas);
     void openSuratTugasPenilai(String kdSuratTugas);

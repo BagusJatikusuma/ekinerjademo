@@ -2,6 +2,7 @@ package com.pemda.ekinerjademo.wrapper.output;
 
 import com.pemda.ekinerjademo.projection.ekinerjaprojection.CustomPegawaiCredential;
 
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -18,12 +19,23 @@ public class SuratTugasWrapper {
     private Integer nomorTahun;
     private String nomorPasanganUrut;
 
-    private Set<String> dasar;
-    private Set<String> untuk;
-    private Set<String> tempat;
+    private List<String> menimbangList;
+    private List<String> dasarList;
+    private List<String> untukList;
+    private String tempat;
 
     private Long tanggalTugasMilis;
     private String kdUnitKerja;
+
+    private boolean isSuratPejabat;
+
+    private String kdUnitKerjaPenandatangan;
+
+    private String unitKerjaPenandatangan;
+
+    private String kdJabatanPenandatangan;
+
+    private String jabatanPenandatangan;
 
     private Set<CustomPegawaiCredential> targetSuratTugasPegawaiSet;
 
@@ -34,22 +46,7 @@ public class SuratTugasWrapper {
     public SuratTugasWrapper() {
     }
 
-    public SuratTugasWrapper(
-            String kdSuratTugas,
-            CustomPegawaiCredential nipPenandatangan,
-            Integer nomorUrut,
-            String nomorUrusan,
-            String nomorUnit,
-            Integer nomorTahun,
-            String nomorPasanganUrut,
-            Set<String> dasar,
-            Set<String> untuk,
-            Set<String> tempat,
-            Long tanggalTugasMilis,
-            String kdUnitKerja,
-            Set<CustomPegawaiCredential> targetSuratTugasPegawaiSet,
-            Set<JabatanWrapper> targetSuratTugasPejabatSet,
-            Set<JabatanWrapper> tembusanSuratTugasSet) {
+    public SuratTugasWrapper(String kdSuratTugas, CustomPegawaiCredential nipPenandatangan, Integer nomorUrut, String nomorUrusan, String nomorUnit, Integer nomorTahun, String nomorPasanganUrut, List<String> menimbangList, List<String> dasarList, List<String> untukList, String tempat, Long tanggalTugasMilis, String kdUnitKerja, Set<CustomPegawaiCredential> targetSuratTugasPegawaiSet, Set<JabatanWrapper> targetSuratTugasPejabatSet, Set<JabatanWrapper> tembusanSuratTugasSet) {
         this.kdSuratTugas = kdSuratTugas;
         this.nipPenandatangan = nipPenandatangan;
         this.nomorUrut = nomorUrut;
@@ -57,8 +54,9 @@ public class SuratTugasWrapper {
         this.nomorUnit = nomorUnit;
         this.nomorTahun = nomorTahun;
         this.nomorPasanganUrut = nomorPasanganUrut;
-        this.dasar = dasar;
-        this.untuk = untuk;
+        this.menimbangList = menimbangList;
+        this.dasarList = dasarList;
+        this.untukList = untukList;
         this.tempat = tempat;
         this.tanggalTugasMilis = tanggalTugasMilis;
         this.kdUnitKerja = kdUnitKerja;
@@ -123,27 +121,35 @@ public class SuratTugasWrapper {
         this.nomorPasanganUrut = nomorPasanganUrut;
     }
 
-    public Set<String> getDasar() {
-        return dasar;
+    public List<String> getMenimbangList() {
+        return menimbangList;
     }
 
-    public void setDasar(Set<String> dasar) {
-        this.dasar = dasar;
+    public void setMenimbangList(List<String> menimbangList) {
+        this.menimbangList = menimbangList;
     }
 
-    public Set<String> getUntuk() {
-        return untuk;
+    public List<String> getDasarList() {
+        return dasarList;
     }
 
-    public void setUntuk(Set<String> untuk) {
-        this.untuk = untuk;
+    public void setDasarList(List<String> dasarList) {
+        this.dasarList = dasarList;
     }
 
-    public Set<String> getTempat() {
+    public List<String> getUntukList() {
+        return untukList;
+    }
+
+    public void setUntukList(List<String> untukList) {
+        this.untukList = untukList;
+    }
+
+    public String getTempat() {
         return tempat;
     }
 
-    public void setTempat(Set<String> tempat) {
+    public void setTempat(String tempat) {
         this.tempat = tempat;
     }
 
@@ -185,5 +191,45 @@ public class SuratTugasWrapper {
 
     public void setTembusanSuratTugasSet(Set<JabatanWrapper> tembusanSuratTugasSet) {
         this.tembusanSuratTugasSet = tembusanSuratTugasSet;
+    }
+
+    public boolean isSuratPejabat() {
+        return isSuratPejabat;
+    }
+
+    public void setSuratPejabat(boolean suratPejabat) {
+        isSuratPejabat = suratPejabat;
+    }
+
+    public String getKdUnitKerjaPenandatangan() {
+        return kdUnitKerjaPenandatangan;
+    }
+
+    public void setKdUnitKerjaPenandatangan(String kdUnitKerjaPenandatangan) {
+        this.kdUnitKerjaPenandatangan = kdUnitKerjaPenandatangan;
+    }
+
+    public String getUnitKerjaPenandatangan() {
+        return unitKerjaPenandatangan;
+    }
+
+    public void setUnitKerjaPenandatangan(String unitKerjaPenandatangan) {
+        this.unitKerjaPenandatangan = unitKerjaPenandatangan;
+    }
+
+    public String getKdJabatanPenandatangan() {
+        return kdJabatanPenandatangan;
+    }
+
+    public void setKdJabatanPenandatangan(String kdJabatanPenandatangan) {
+        this.kdJabatanPenandatangan = kdJabatanPenandatangan;
+    }
+
+    public String getJabatanPenandatangan() {
+        return jabatanPenandatangan;
+    }
+
+    public void setJabatanPenandatangan(String jabatanPenandatangan) {
+        this.jabatanPenandatangan = jabatanPenandatangan;
     }
 }

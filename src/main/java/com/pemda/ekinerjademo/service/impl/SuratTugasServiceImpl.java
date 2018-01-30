@@ -1,13 +1,7 @@
 package com.pemda.ekinerjademo.service.impl;
 
-import com.pemda.ekinerjademo.model.ekinerjamodel.SuratTugas;
-import com.pemda.ekinerjademo.model.ekinerjamodel.TargetSuratTugasPegawai;
-import com.pemda.ekinerjademo.model.ekinerjamodel.TargetSuratTugasPejabat;
-import com.pemda.ekinerjademo.model.ekinerjamodel.TembusanSuratTugas;
-import com.pemda.ekinerjademo.repository.ekinerjarepository.SuratTugasDao;
-import com.pemda.ekinerjademo.repository.ekinerjarepository.TargetSuratTugasPegawaiDao;
-import com.pemda.ekinerjademo.repository.ekinerjarepository.TargetSuratTugasPejabatDao;
-import com.pemda.ekinerjademo.repository.ekinerjarepository.TembusanSuratTugasDao;
+import com.pemda.ekinerjademo.model.ekinerjamodel.*;
+import com.pemda.ekinerjademo.repository.ekinerjarepository.*;
 import com.pemda.ekinerjademo.service.SuratTugasService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,6 +20,8 @@ public class SuratTugasServiceImpl implements SuratTugasService {
     @Autowired private TargetSuratTugasPejabatDao targetSuratTugasPejabatDao;
     @Autowired private TargetSuratTugasPegawaiDao targetSuratTugasPegawaiDao;
     @Autowired private TembusanSuratTugasDao tembusanSuratTugasDao;
+    @Autowired private SuratTugasPejabatDao suratTugasPejabatDao;
+    @Autowired private SuratTugasNonPejabatDao suratTugasNonPejabatDao;
 
     @Override
     public SuratTugas getByKdSuratTugas(String kdSuratTugas) {
@@ -83,6 +79,16 @@ public class SuratTugasServiceImpl implements SuratTugasService {
     }
 
     @Override
+    public void createSuratTugasPejabat(SuratTugasPejabat suratTugasPejabat) {
+        suratTugasPejabatDao.save(suratTugasPejabat);
+    }
+
+    @Override
+    public void createSuratTugasNonPejabat(SuratTugasNonPejabat suratTugasNonPejabat) {
+        suratTugasNonPejabatDao.save(suratTugasNonPejabat);
+    }
+
+    @Override
     public void openSuratTugas(String kdSuratTugas) {
         SuratTugas suratTugas
                 = getByKdSuratTugas(kdSuratTugas);
@@ -95,6 +101,6 @@ public class SuratTugasServiceImpl implements SuratTugasService {
         SuratTugas suratTugas
                 = getByKdSuratTugas(kdSuratTugas);
 
-        suratTugas.setStatusPenilaian(2);
+        suratTugas.setStatusPenilaian(1);
     }
 }
