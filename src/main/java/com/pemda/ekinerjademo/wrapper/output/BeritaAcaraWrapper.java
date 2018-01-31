@@ -44,6 +44,7 @@ public class BeritaAcaraWrapper {
     private String namaMengetahui;
     private String jabatanMengetahui;
     private String unitKerjaMengetahui;
+    private String pangkatMengetahui;
 
     private String kotaPembuatanSurat;
     private Long tanggalPembuatanMilis;
@@ -77,7 +78,7 @@ public class BeritaAcaraWrapper {
             String namaMengetahui,
             String jabatanMengetahui,
             String unitKerjaMengetahui,
-            String kotaPembuatanSurat,
+            String pangkatMengetahui, String kotaPembuatanSurat,
             Long tanggalPembuatanMilis) {
         this.kdBeritaAcara = kdBeritaAcara;
         this.nomorUrusan = nomorUrusan;
@@ -111,6 +112,7 @@ public class BeritaAcaraWrapper {
         this.namaMengetahui = namaMengetahui;
         this.jabatanMengetahui = jabatanMengetahui;
         this.unitKerjaMengetahui = unitKerjaMengetahui;
+        this.pangkatMengetahui = pangkatMengetahui;
         this.kotaPembuatanSurat = kotaPembuatanSurat;
         this.tanggalPembuatanMilis = tanggalPembuatanMilis;
     }
@@ -385,5 +387,13 @@ public class BeritaAcaraWrapper {
 
     public void setGelarBelakangPihakKedua(String gelarBelakangPihakKedua) {
         this.gelarBelakangPihakKedua = gelarBelakangPihakKedua;
+    }
+
+    public String getPangkatMengetahui() {
+        return pangkatMengetahui;
+    }
+
+    public void setPangkatMengetahui(String pangkatMengetahui) {
+        this.pangkatMengetahui = pangkatMengetahui;
     }
 }

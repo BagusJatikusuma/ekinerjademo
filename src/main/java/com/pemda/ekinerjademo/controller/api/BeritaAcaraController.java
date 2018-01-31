@@ -216,7 +216,7 @@ public class BeritaAcaraController {
                         pihakMengetahui.getNama(),
                         pihakMengetahui.getJabatan(),
                         pihakMengetahui.getUnitKerja(),
-                        beritaAcara.getKotaPembuatanSurat(),
+                pihakMengetahui.getPangkat(), beritaAcara.getKotaPembuatanSurat(),
                         beritaAcara.getTanggalPembuatanMilis());
 
         return new ResponseEntity<Object>(beritaAcaraWrapper, HttpStatus.OK);

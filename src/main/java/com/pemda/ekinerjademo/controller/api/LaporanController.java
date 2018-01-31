@@ -2,6 +2,7 @@ package com.pemda.ekinerjademo.controller.api;
 
 import com.pemda.ekinerjademo.model.ekinerjamodel.BeritaAcara;
 import com.pemda.ekinerjademo.model.ekinerjamodel.Laporan;
+import com.pemda.ekinerjademo.model.ekinerjamodel.SuratPerintah;
 import com.pemda.ekinerjademo.projection.ekinerjaprojection.CustomPegawaiCredential;
 import com.pemda.ekinerjademo.service.LaporanService;
 import com.pemda.ekinerjademo.service.QutPegawaiService;
@@ -10,6 +11,7 @@ import com.pemda.ekinerjademo.wrapper.input.LaporanInputWrapper;
 import com.pemda.ekinerjademo.wrapper.output.CustomMessage;
 import com.pemda.ekinerjademo.wrapper.output.LaporanHistoryWrapper;
 import com.pemda.ekinerjademo.wrapper.output.LaporanWrapper;
+import com.pemda.ekinerjademo.wrapper.output.SuratPerintahHistoryWrapper;
 import groovy.transform.Synchronized;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -96,23 +98,23 @@ public class LaporanController {
 
         List<Laporan> laporanList
                 = laporanService.getByNipPembuatSurat(nipPembuatSurat);
-
-        List<LaporanHistoryWrapper> laporanHistoryWrapperList
+        List<SuratPerintahHistoryWrapper> laporanHistoryList
                 = new ArrayList<>();
 
-        DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
         for (Laporan laporan
                 : laporanList) {
-
-            laporanHistoryWrapperList
-                    .add(new LaporanHistoryWrapper(
-                            laporan.getKdLaporan(),
-                            df.format(new Date(laporan.getTanggalPembuatanMilis())),
-                            laporan.getStatusBaca()
-                    ));
+            laporanHistoryList
+                    .add(new SuratPerintahHistoryWrapper(laporan.getKdLaporan(),
+                            "",
+                            false,
+                            laporan.getStatusBaca(),
+                            "laporan",
+                            1,
+                            laporan.getTanggalPembuatanMilis(),
+                            laporan.getStatusPenilaian()));
         }
 
-        return new ResponseEntity<Object>(laporanHistoryWrapperList, HttpStatus.OK);
+        return new ResponseEntity<Object>(laporanHistoryList, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/open-laporan-penilai/{kdLaporan}/{nipPegawai}", method = RequestMethod.PUT)
