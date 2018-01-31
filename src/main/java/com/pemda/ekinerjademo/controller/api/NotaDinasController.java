@@ -3,10 +3,13 @@ package com.pemda.ekinerjademo.controller.api;
 import com.pemda.ekinerjademo.model.ekinerjamodel.NotaDinas;
 import com.pemda.ekinerjademo.model.ekinerjamodel.TembusanNotaDinas;
 import com.pemda.ekinerjademo.model.ekinerjamodel.TembusanNotaDinasId;
+import com.pemda.ekinerjademo.service.NotaDinasService;
 import com.pemda.ekinerjademo.wrapper.input.NotaDinasInputWrapper;
 import com.pemda.ekinerjademo.wrapper.output.CustomMessage;
+import com.pemda.ekinerjademo.wrapper.output.SuratPerintahHistoryWrapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,6 +28,8 @@ import java.util.List;
 @RequestMapping(value = "/api")
 public class NotaDinasController {
     public static final Logger LOGGER = LoggerFactory.getLogger(PejabatPenilaiDinilaiController.class);
+
+    @Autowired private NotaDinasService notaDinasService;
 
     @RequestMapping(value = "/create-nota-dinas", method = RequestMethod.POST)
     ResponseEntity<?> createNotaDinas(@RequestBody NotaDinasInputWrapper inputWrapper) {
@@ -62,6 +67,24 @@ public class NotaDinasController {
         notaDinas.setHal(inputWrapper.getHal());
         notaDinas.setTanggalPembuatanMilis(new Date().getTime());
         notaDinas.setIsiNotaDinas(inputWrapper.getIsiNotaDinas());
+        notaDinas.setNipPenandatangan(inputWrapper.getNipPenandatangan());
+        notaDinas.setNipPembuatSurat(inputWrapper.getNipPembuatSurat());
+        notaDinas.setKdUnitKerja(inputWrapper.getKdUnitKerja());
+
+        notaDinas.setKdNaskahPenugasan(inputWrapper.getKdNaskahPenugasan());
+        notaDinas.setJenisNaskahPenugasan(inputWrapper.getJenisNaskahPenugasan());
+
+        notaDinas.setDurasiPengerjaan(inputWrapper.getDurasiPengerjaan());
+        notaDinas.setNipPenilai("");
+        notaDinas.setStatusPenilaian(0);
+        notaDinas.setAlasanPenolakan("");
+
+        notaDinasService.create(notaDinas);
+
+        for (TembusanNotaDinas tembusanNotaDinas
+                : tembusanNotaDinasList) {
+            notaDinasService.createTembusanNotaDinas(tembusanNotaDinas);
+        }
 
 
         return new ResponseEntity<Object>(new CustomMessage("nota dinas created"), HttpStatus.OK);
@@ -70,6 +93,10 @@ public class NotaDinasController {
     @RequestMapping(value = "/get-nota-dinas-by-pembuat/{nipPembuat}", method = RequestMethod.GET)
     ResponseEntity<?> getNotaDinasByPembuat(@PathVariable("nipPembuat") String nipPembuat) {
         LOGGER.info("get nota dinas by pembuat");
+
+        List<NotaDinas> notaDinasList
+                = notaDinasService.getByNipPembuat(nipPembuat);
+        List<SuratPerintahHistoryWrapper> notaDinasHistory;
 
         return new ResponseEntity<Object>(null, HttpStatus.OK);
     }
