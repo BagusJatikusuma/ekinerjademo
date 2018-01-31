@@ -1,5 +1,7 @@
 package com.pemda.ekinerjademo.wrapper.output;
 
+import java.util.List;
+
 /**
  * Created by bagus on 24/01/18.
  */
@@ -35,6 +37,9 @@ public class SuratUndanganWrapper {
     private String nipPenandatangan;
     private String namaPenandatangan;
     private String unitKerjaPenandatangan;
+    private List<JabatanWrapper> tembusanSuratUndanganList;
+
+    private boolean isSuratPejabat;
 
     public SuratUndanganWrapper() {
     }
@@ -64,7 +69,9 @@ public class SuratUndanganWrapper {
             String bagianPenutupSuratUndangan,
             String nipPenandatangan,
             String namaPenandatangan,
-            String unitKerjaPenandatangan) {
+            String unitKerjaPenandatangan,
+            List<JabatanWrapper> tembusanSuratUndanganList,
+            boolean isSuratPejabat) {
         this.kdSuratUndangan = kdSuratUndangan;
         this.nomorUrusan = nomorUrusan;
         this.nomorUrut = nomorUrut;
@@ -91,6 +98,8 @@ public class SuratUndanganWrapper {
         this.nipPenandatangan = nipPenandatangan;
         this.namaPenandatangan = namaPenandatangan;
         this.unitKerjaPenandatangan = unitKerjaPenandatangan;
+        this.tembusanSuratUndanganList = tembusanSuratUndanganList;
+        this.isSuratPejabat = isSuratPejabat;
     }
 
     public String getKdSuratUndangan() {
@@ -299,5 +308,21 @@ public class SuratUndanganWrapper {
 
     public void setUnitKerjaPenandatangan(String unitKerjaPenandatangan) {
         this.unitKerjaPenandatangan = unitKerjaPenandatangan;
+    }
+
+    public List<JabatanWrapper> getTembusanSuratUndanganList() {
+        return tembusanSuratUndanganList;
+    }
+
+    public void setTembusanSuratUndanganList(List<JabatanWrapper> tembusanSuratUndanganList) {
+        this.tembusanSuratUndanganList = tembusanSuratUndanganList;
+    }
+
+    public boolean isSuratPejabat() {
+        return isSuratPejabat;
+    }
+
+    public void setSuratPejabat(boolean suratPejabat) {
+        isSuratPejabat = suratPejabat;
     }
 }

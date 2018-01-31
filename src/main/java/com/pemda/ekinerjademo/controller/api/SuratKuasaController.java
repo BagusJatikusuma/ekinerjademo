@@ -248,24 +248,41 @@ public class SuratKuasaController {
             @PathVariable("nipPenerimaKuasa") String nipPenerimaKuasa) {
         LOGGER.info("get surat kuasa by penerima kuasa");
 
+        List<CustomPegawaiCredential> qutPegawaiList
+                = qutPegawaiService.getCustomPegawaiCredentials();
+
+
         List<SuratKuasa> suratKuasaList
                 = suratKuasaService.getByNipPenerimaKuasa(nipPenerimaKuasa);
 
-        List<SuratKuasaHistoryWrapper> suratKuasaPenerimaKuasaList
+        List<SuratKuasaPenerimaKuasaWrapper> suratKuasaPenerimaKuasaList
                 = new ArrayList<>();
 
         DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
         for (SuratKuasa suratKuasa
                 : suratKuasaList) {
-            suratKuasaPenerimaKuasaList
-                    .add(new SuratKuasaHistoryWrapper(
-                            suratKuasa.getKdSuratKuasa(),
-                            df.format(new Date(suratKuasa.getTanggalPembuatanMilis())),
-                            suratKuasa.getStatusBaca()
-                    ));
+            for (CustomPegawaiCredential pegawaiPemberi : qutPegawaiList) {
+                if (pegawaiPemberi.getNip()
+                        .equals(suratKuasa.getNipPemberiKuasa())) {
+                    if (suratKuasa.getStatusBaca() == 0) {
+                        suratKuasaPenerimaKuasaList
+                                .add(new SuratKuasaPenerimaKuasaWrapper(
+                                        suratKuasa.getKdSuratKuasa(),
+                                        df.format(new Date(suratKuasa.getTanggalPembuatanMilis())),
+                                        suratKuasa.getTanggalPembuatanMilis(),
+                                        pegawaiPemberi.getNip(),
+                                        pegawaiPemberi.getNama(),
+                                        pegawaiPemberi.getJabatan()
+                                ));
+                    }
+                    break;
+                }
+
+            }
+
         }
 
-        return new ResponseEntity<Object>(null, HttpStatus.OK);
+        return new ResponseEntity<Object>(suratKuasaPenerimaKuasaList, HttpStatus.OK);
     }
 
 }

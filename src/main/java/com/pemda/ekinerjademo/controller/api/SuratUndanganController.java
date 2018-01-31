@@ -1,15 +1,13 @@
 package com.pemda.ekinerjademo.controller.api;
 
+import com.pemda.ekinerjademo.model.bismamodel.TkdJabatan;
 import com.pemda.ekinerjademo.model.ekinerjamodel.*;
 import com.pemda.ekinerjademo.projection.ekinerjaprojection.CustomPegawaiCredential;
 import com.pemda.ekinerjademo.service.QutPegawaiService;
 import com.pemda.ekinerjademo.service.SuratUndanganService;
 import com.pemda.ekinerjademo.service.TkdJabatanService;
 import com.pemda.ekinerjademo.wrapper.input.SuratUndanganInputWrapper;
-import com.pemda.ekinerjademo.wrapper.output.CustomMessage;
-import com.pemda.ekinerjademo.wrapper.output.SuratPerintahHistoryWrapper;
-import com.pemda.ekinerjademo.wrapper.output.SuratPerintahTargetWrapper;
-import com.pemda.ekinerjademo.wrapper.output.SuratUndanganWrapper;
+import com.pemda.ekinerjademo.wrapper.output.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -340,6 +338,8 @@ public class SuratUndanganController {
         SuratUndangan suratUndangan
                 = suratUndanganService.getByKdSuratUndangan(kdSuratUndangan);
 
+        List<JabatanWrapper> tembusanSuratUndanganList
+                = new ArrayList<>();
         CustomPegawaiCredential
                 penerima = null,
                 penandatangan = null;
@@ -363,6 +363,33 @@ public class SuratUndanganController {
                 break;
             }
         }
+
+        List<TkdJabatan> tkdJabatanList = tkdJabatanService.getAll();
+        for (TembusanSuratUndangan target
+                : suratUndangan.getTembusanSuratUndanganList()) {
+            for (TkdJabatan tkdJabatan : tkdJabatanList){
+                if (tkdJabatan.getKdJabatan()
+                        .equals(target.getTembusanSuratUndanganId().getKdJabatan())) {
+                    JabatanWrapper jabatanWrapper = new JabatanWrapper();
+
+                    jabatanWrapper.setKdJabatan(tkdJabatan.getKdJabatan());
+                    jabatanWrapper.setJabatan(tkdJabatan.getJabatan());
+                    jabatanWrapper.setEselon(tkdJabatan.getEselon());
+
+                    tembusanSuratUndanganList.add(jabatanWrapper);
+
+                    break;
+
+                }
+
+            }
+
+        }
+
+        boolean isSuratPejabat = false;
+
+        if (suratUndangan.getSuratUndanganPejabat() != null)
+            isSuratPejabat = true;
 
         SuratUndanganWrapper suratUndanganWrapper = new SuratUndanganWrapper();
 
@@ -397,6 +424,9 @@ public class SuratUndanganController {
         suratUndanganWrapper.setNipPenandatangan(penandatangan.getNip());
         suratUndanganWrapper.setNamaPenandatangan(penandatangan.getNama());
         suratUndanganWrapper.setUnitKerjaPenandatangan(penandatangan.getUnitKerja());
+
+        suratUndanganWrapper.setTembusanSuratUndanganList(tembusanSuratUndanganList);
+        suratUndanganWrapper.setSuratPejabat(isSuratPejabat);
 
         return new ResponseEntity<Object>(suratUndanganWrapper, HttpStatus.OK);
 
