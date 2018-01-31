@@ -18,14 +18,24 @@ public class BeritaAcaraWrapper {
     private String namaPihakKesatu;
     private String jabatanPihakKesatu;
     private String unitKerjaPihakKesatu;
+    private String pangkatPihakKesatu;
+    private String GolonganPihakKesatu;
     private String peranPihakKesatu;
+    private String gelarDepanPihakKesatu;
+    private String gelarBelakangPihakKesatu;
+
     private Integer statusApprovalPihakKesatu;
 
     private String nipPihakKedua;
     private String namaPihakKedua;
     private String jabatanPihakKedua;
     private String unitKerjaPihakKedua;
+    private String pangkatPihakKedua;
+    private String GolonganPihakKedua;
     private String peranPihakKedua;
+    private String gelarDepanPihakKedua;
+    private String gelarBelakangPihakKedua;
+
     private Integer statusApprovalPihakKedua;
 
     private List<String> isiBeritaAcara;
@@ -52,14 +62,15 @@ public class BeritaAcaraWrapper {
             String namaPihakKesatu,
             String jabatanPihakKesatu,
             String unitKerjaPihakKesatu,
-            String peranPihakKesatu,
-            Integer statusApprovalPihakKesatu,
+            String pangkatPihakKesatu, String golonganPihakKesatu, String peranPihakKesatu,
+            String gelarDepanPihakKesatu, String gelarBelakangPihakKesatu, Integer statusApprovalPihakKesatu,
             String nipPihakKedua,
             String namaPihakKedua,
             String jabatanPihakKedua,
             String unitKerjaPihakKedua,
-            String peranPihakKedua,
-            Integer statusApprovalPihakKedua,
+            String pangkatPihakKedua,
+            String golonganPihakKedua, String peranPihakKedua,
+            String gelarDepanPihakKedua, String gelarBelakangPihakKedua, Integer statusApprovalPihakKedua,
             List<String> isiBeritaAcara,
             String dasarBeritaAcara,
             String nipMengetahui,
@@ -78,13 +89,21 @@ public class BeritaAcaraWrapper {
         this.namaPihakKesatu = namaPihakKesatu;
         this.jabatanPihakKesatu = jabatanPihakKesatu;
         this.unitKerjaPihakKesatu = unitKerjaPihakKesatu;
+        this.pangkatPihakKesatu = pangkatPihakKesatu;
+        this.GolonganPihakKesatu = golonganPihakKesatu;
         this.peranPihakKesatu = peranPihakKesatu;
+        this.gelarDepanPihakKesatu = gelarDepanPihakKesatu;
+        this.gelarBelakangPihakKesatu = gelarBelakangPihakKesatu;
         this.statusApprovalPihakKesatu = statusApprovalPihakKesatu;
         this.nipPihakKedua = nipPihakKedua;
         this.namaPihakKedua = namaPihakKedua;
         this.jabatanPihakKedua = jabatanPihakKedua;
         this.unitKerjaPihakKedua = unitKerjaPihakKedua;
+        this.pangkatPihakKedua = pangkatPihakKedua;
+        this.GolonganPihakKedua = golonganPihakKedua;
         this.peranPihakKedua = peranPihakKedua;
+        this.gelarDepanPihakKedua = gelarDepanPihakKedua;
+        this.gelarBelakangPihakKedua = gelarBelakangPihakKedua;
         this.statusApprovalPihakKedua = statusApprovalPihakKedua;
         this.isiBeritaAcara = isiBeritaAcara;
         this.dasarBeritaAcara = dasarBeritaAcara;
@@ -302,5 +321,69 @@ public class BeritaAcaraWrapper {
 
     public void setTanggalPembuatanMilis(Long tanggalPembuatanMilis) {
         this.tanggalPembuatanMilis = tanggalPembuatanMilis;
+    }
+
+    public String getPangkatPihakKesatu() {
+        return pangkatPihakKesatu;
+    }
+
+    public void setPangkatPihakKesatu(String pangkatPihakKesatu) {
+        this.pangkatPihakKesatu = pangkatPihakKesatu;
+    }
+
+    public String getGolonganPihakKesatu() {
+        return GolonganPihakKesatu;
+    }
+
+    public void setGolonganPihakKesatu(String golonganPihakKesatu) {
+        GolonganPihakKesatu = golonganPihakKesatu;
+    }
+
+    public String getGolonganPihakKedua() {
+        return GolonganPihakKedua;
+    }
+
+    public void setGolonganPihakKedua(String golonganPihakKedua) {
+        GolonganPihakKedua = golonganPihakKedua;
+    }
+
+    public String getPangkatPihakKedua() {
+        return pangkatPihakKedua;
+    }
+
+    public void setPangkatPihakKedua(String pangkatPihakKedua) {
+        this.pangkatPihakKedua = pangkatPihakKedua;
+    }
+
+    public String getGelarDepanPihakKesatu() {
+        return gelarDepanPihakKesatu;
+    }
+
+    public void setGelarDepanPihakKesatu(String gelarDepanPihakKesatu) {
+        this.gelarDepanPihakKesatu = gelarDepanPihakKesatu;
+    }
+
+    public String getGelarBelakangPihakKesatu() {
+        return gelarBelakangPihakKesatu;
+    }
+
+    public void setGelarBelakangPihakKesatu(String gelarBelakangPihakKesatu) {
+        this.gelarBelakangPihakKesatu = gelarBelakangPihakKesatu;
+    }
+
+    public String getGelarDepanPihakKedua() {
+        return gelarDepanPihakKedua;
+    }
+
+    public void setGelarDepanPihakKedua(String gelarDepanPihakKedua) {
+        this.gelarDepanPihakKedua = gelarDepanPihakKedua;
+    }
+
+    public String getGelarBelakangPihakKedua() {
+        return gelarBelakangPihakKedua;
+    }
+
+    public void setGelarBelakangPihakKedua(String gelarBelakangPihakKedua) {
+        this.gelarBelakangPihakKedua = gelarBelakangPihakKedua;
     }
 }

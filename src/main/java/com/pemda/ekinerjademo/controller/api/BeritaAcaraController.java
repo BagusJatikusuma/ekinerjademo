@@ -1,6 +1,5 @@
 package com.pemda.ekinerjademo.controller.api;
 
-import com.pemda.ekinerjademo.model.bismamodel.QutPegawai;
 import com.pemda.ekinerjademo.model.ekinerjamodel.BeritaAcara;
 import com.pemda.ekinerjademo.projection.ekinerjaprojection.CustomPegawaiCredential;
 import com.pemda.ekinerjademo.service.BeritaAcaraService;
@@ -198,14 +197,18 @@ public class BeritaAcaraController {
                         pihakKesatu.getNama(),
                         pihakKesatu.getJabatan(),
                         pihakKesatu.getUnitKerja(),
+                        pihakKesatu.getPangkat(),
+                        pihakKesatu.getGol(),
                         beritaAcara.getPeranPihakKesatu(),
-                        beritaAcara.getStatusApprovalPihakKesatu(),
+                pihakKesatu.getGlrDpn(), pihakKesatu.getGlrBlk(), beritaAcara.getStatusApprovalPihakKesatu(),
                         pihakKedua.getNip(),
                         pihakKedua.getNama(),
                         pihakKedua.getJabatan(),
                         pihakKedua.getUnitKerja(),
+                        pihakKedua.getPangkat(),
+                        pihakKedua.getGol(),
                         beritaAcara.getPeranPihakKedua(),
-                        beritaAcara.getStatusApprovalPihakKedua(),
+                pihakKedua.getGlrDpn(), pihakKedua.getGlrBlk(), beritaAcara.getStatusApprovalPihakKedua(),
                         ekinerjaXMLParser
                                 .convertXmlSuratPerintahIntoListofString(beritaAcara.getIsiBeritaAcara(), "isi"),
                         beritaAcara.getDasarBeritaAcara(),

@@ -10,10 +10,7 @@ import com.pemda.ekinerjademo.service.SuratPengantarService;
 import com.pemda.ekinerjademo.service.TkdJabatanService;
 import com.pemda.ekinerjademo.wrapper.input.SuratPengantarInputWrapper;
 import com.pemda.ekinerjademo.wrapper.input.SuratPengantarIsiInputWrapper;
-import com.pemda.ekinerjademo.wrapper.output.CustomMessage;
-import com.pemda.ekinerjademo.wrapper.output.SuratPengantarHistoryWrapper;
-import com.pemda.ekinerjademo.wrapper.output.SuratPengantarTargetWrapper;
-import com.pemda.ekinerjademo.wrapper.output.SuratPengantarWrapper;
+import com.pemda.ekinerjademo.wrapper.output.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -288,6 +285,18 @@ public class SuratPengantarController {
         TkdJabatan jabatan
                 = tkdJabatanService.getTkdJabatan(suratPengantar.getKdJabatanPenerimaSuratPengantar());
 
+        List<SuratPengantarIsiWrapper> suratPengantarIsiWrapperList
+                = new ArrayList<>();
+
+        for (SuratPengantarIsi isi
+                : suratPengantar.getSuratPengantarIsiList()) {
+            suratPengantarIsiWrapperList
+                    .add(new SuratPengantarIsiWrapper(
+                            isi.getNaskahDinasYangDikirim(),
+                            isi.getBanyakNaskah(),
+                            isi.getKeterangan()));
+        }
+
         SuratPengantarWrapper suratPengantarWrapper
                 = new SuratPengantarWrapper(
                         suratPengantar.getNomorUrusan(),
@@ -303,7 +312,8 @@ public class SuratPengantarController {
                         pemberiSurat.getNama(),
                         pemberiSurat.getJabatan(),
                         pemberiSurat.getUnitKerja(),
-                        suratPengantar.getNomorTeleponPemberi());
+                        suratPengantar.getNomorTeleponPemberi(),
+                        suratPengantarIsiWrapperList);
 
         return new ResponseEntity<Object>(suratPengantarWrapper, HttpStatus.OK);
 

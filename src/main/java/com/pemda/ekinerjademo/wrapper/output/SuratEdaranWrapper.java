@@ -23,6 +23,8 @@ public class SuratEdaranWrapper {
     private String jabatanPenandatangan;
     private String unitKerjaPenandatangan;
 
+    private boolean isSuratPejabat;
+
     public SuratEdaranWrapper() {
     }
 
@@ -40,7 +42,7 @@ public class SuratEdaranWrapper {
                               String nipPenandatangan,
                               String namaPenandatangan,
                               String jabatanPenandatangan,
-                              String unitKerjaPenandatangan) {
+                              String unitKerjaPenandatangan, boolean isSuratPejabat) {
         this.kdSuratEdaran = kdSuratEdaran;
         this.nomorUrut = nomorUrut;
         this.nomorTahun = nomorTahun;
@@ -56,6 +58,7 @@ public class SuratEdaranWrapper {
         this.namaPenandatangan = namaPenandatangan;
         this.jabatanPenandatangan = jabatanPenandatangan;
         this.unitKerjaPenandatangan = unitKerjaPenandatangan;
+        this.isSuratPejabat = isSuratPejabat;
     }
 
     public Integer getNomorUrut() {
@@ -176,5 +179,13 @@ public class SuratEdaranWrapper {
 
     public void setKdSuratEdaran(String kdSuratEdaran) {
         this.kdSuratEdaran = kdSuratEdaran;
+    }
+
+    public boolean isSuratPejabat() {
+        return isSuratPejabat;
+    }
+
+    public void setSuratPejabat(boolean suratPejabat) {
+        isSuratPejabat = suratPejabat;
     }
 }

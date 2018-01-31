@@ -1,5 +1,7 @@
 package com.pemda.ekinerjademo.wrapper.output;
 
+import java.util.List;
+
 /**
  * Created by bagus on 22/01/18.
  */
@@ -22,6 +24,7 @@ public class SuratPengantarWrapper {
     private String unitKerjaPemberiSuratPengantar;
 
     private String nomorTeleponPemberi;
+    private List<SuratPengantarIsiWrapper> suratPengantarIsiWrapperList;
 
     public SuratPengantarWrapper() {
     }
@@ -40,7 +43,7 @@ public class SuratPengantarWrapper {
             String namaPemberiSuratPengantar,
             String jabatanPemberiSuratPengantar,
             String unitKerjaPemberiSuratPengantar,
-            String nomorTeleponPemberi) {
+            String nomorTeleponPemberi, List<SuratPengantarIsiWrapper> suratPengantarIsiWrapperList) {
         this.nomorUrusan = nomorUrusan;
         this.nomorUrut = nomorUrut;
         this.nomorPasanganUrut = nomorPasanganUrut;
@@ -55,6 +58,7 @@ public class SuratPengantarWrapper {
         this.jabatanPemberiSuratPengantar = jabatanPemberiSuratPengantar;
         this.unitKerjaPemberiSuratPengantar = unitKerjaPemberiSuratPengantar;
         this.nomorTeleponPemberi = nomorTeleponPemberi;
+        this.suratPengantarIsiWrapperList = suratPengantarIsiWrapperList;
     }
 
     public String getNomorUrusan() {
@@ -167,5 +171,13 @@ public class SuratPengantarWrapper {
 
     public void setNomorTeleponPemberi(String nomorTeleponPemberi) {
         this.nomorTeleponPemberi = nomorTeleponPemberi;
+    }
+
+    public List<SuratPengantarIsiWrapper> getSuratPengantarIsiWrapperList() {
+        return suratPengantarIsiWrapperList;
+    }
+
+    public void setSuratPengantarIsiWrapperList(List<SuratPengantarIsiWrapper> suratPengantarIsiWrapperList) {
+        this.suratPengantarIsiWrapperList = suratPengantarIsiWrapperList;
     }
 }

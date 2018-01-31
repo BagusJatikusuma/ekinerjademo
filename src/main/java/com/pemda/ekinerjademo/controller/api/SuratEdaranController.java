@@ -220,6 +220,11 @@ public class SuratEdaranController {
             }
         }
 
+        boolean isSuratPejabat = false;
+
+        if (suratEdaran.getSuratEdaranPejabat() != null)
+            isSuratPejabat = true;
+
         suratEdaranWrapper.setKdSuratEdaran(suratEdaran.getKdSuratEdaran());
         suratEdaranWrapper.setNomorTahun(suratEdaran.getNomorTahun());
         suratEdaranWrapper.setNomorUrut(suratEdaran.getNomorUrut());
@@ -247,6 +252,7 @@ public class SuratEdaranController {
         suratEdaranWrapper.setNamaPenandatangan(penandatangan.getNama());
         suratEdaranWrapper.setJabatanPenandatangan(penandatangan.getJabatan());
         suratEdaranWrapper.setUnitKerjaPenandatangan(penandatangan.getUnitKerja());
+        suratEdaranWrapper.setSuratPejabat(isSuratPejabat);
 
         return new ResponseEntity<Object>(suratEdaranWrapper, HttpStatus.OK);
 
