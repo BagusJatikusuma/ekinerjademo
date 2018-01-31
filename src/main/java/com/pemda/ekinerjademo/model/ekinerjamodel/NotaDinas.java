@@ -217,4 +217,12 @@ public class NotaDinas {
     public void setAlasanPenolakan(String alasanPenolakan) {
         this.alasanPenolakan = alasanPenolakan;
     }
+
+    public List<TembusanNotaDinas> getTembusanNotaDinasList() {
+        return tembusanNotaDinasList;
+    }
+
+    public void setTembusanNotaDinasList(List<TembusanNotaDinas> tembusanNotaDinasList) {
+        this.tembusanNotaDinasList = tembusanNotaDinasList;
+    }
 }

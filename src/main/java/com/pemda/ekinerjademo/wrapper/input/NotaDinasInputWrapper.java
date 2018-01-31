@@ -10,7 +10,7 @@ public class NotaDinasInputWrapper {
     private String nomorUrusan;
     private String nomorPasanganUrut;
     private String nomorUnit;
-    private String nipPenerimaNotadinas;
+    private String kdJabatanPenerimaNotaDinas;
     private String nipPemberiNotaDinas;
     private String hal;
     private Long tanggalNotaDinasMilis;
@@ -27,6 +27,9 @@ public class NotaDinasInputWrapper {
     private Integer jenisNaskahPenugasan;
     private Integer statusPenilaian;
     private String alasanPenolakan;
+
+
+    private String nipPenerimaNotadinas;
 
     public String getKdNotaDinas() {
         return kdNotaDinas;
@@ -178,5 +181,13 @@ public class NotaDinasInputWrapper {
 
     public void setAlasanPenolakan(String alasanPenolakan) {
         this.alasanPenolakan = alasanPenolakan;
+    }
+
+    public String getKdJabatanPenerimaNotaDinas() {
+        return kdJabatanPenerimaNotaDinas;
+    }
+
+    public void setKdJabatanPenerimaNotaDinas(String kdJabatanPenerimaNotaDinas) {
+        this.kdJabatanPenerimaNotaDinas = kdJabatanPenerimaNotaDinas;
     }
 }
