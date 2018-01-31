@@ -360,6 +360,14 @@ public class SuratDinasController {
         suratDinasWrapper.setNamaPenandatangan(penandatangan.getNama());
         suratDinasWrapper.setJabatanPenandatangan(penandatangan.getJabatan());
         suratDinasWrapper.setUnitKerjaPenandatangan(penandatangan.getUnitKerja());
+        suratDinasWrapper.setPangkatPenandatangan(penandatangan.getPangkat());
+        suratDinasWrapper.setGelarDepanPenandatangan(penandatangan.getGlrDpn());
+        suratDinasWrapper.setGelarBelakangPenandatangan(penandatangan.getGlrBlk());
+        boolean isSuratPejabat = false;
+
+        if (suratDinas.getSuratDinasPejabat() != null) isSuratPejabat = true;
+
+        suratDinasWrapper.setSuratPejabat(isSuratPejabat);
 
         return new ResponseEntity<Object>(suratDinasWrapper, HttpStatus.OK);
 

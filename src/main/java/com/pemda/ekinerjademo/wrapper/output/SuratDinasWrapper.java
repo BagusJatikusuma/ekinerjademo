@@ -24,8 +24,13 @@ public class SuratDinasWrapper {
     private String namaPenandatangan;
     private String jabatanPenandatangan;
     private String unitKerjaPenandatangan;
+    private String pangkatPenandatangan;
+    private String gelarDepanPenandatangan;
+    private String gelarBelakangPenandatangan;
 
     private List<JabatanWrapper> tembusanSuratDinasWrapper;
+
+    private boolean isSuratPejabat;
 
     public SuratDinasWrapper() {
     }
@@ -48,7 +53,7 @@ public class SuratDinasWrapper {
             String namaPenandatangan,
             String jabatanPenandatangan,
             String unitKerjaPenandatangan,
-            List<JabatanWrapper> tembusanSuratDinasWrapper) {
+            String pangkatPenandatangan, String gelarDepanPenandatangan, String gelarBelakangPenandatangan, List<JabatanWrapper> tembusanSuratDinasWrapper, boolean isSuratPejabat) {
         this.nomorUrusan = nomorUrusan;
         this.nomorUrut = nomorUrut;
         this.nomorPasanganUrut = nomorPasanganUrut;
@@ -66,7 +71,11 @@ public class SuratDinasWrapper {
         this.namaPenandatangan = namaPenandatangan;
         this.jabatanPenandatangan = jabatanPenandatangan;
         this.unitKerjaPenandatangan = unitKerjaPenandatangan;
+        this.pangkatPenandatangan = pangkatPenandatangan;
+        this.gelarDepanPenandatangan = gelarDepanPenandatangan;
+        this.gelarBelakangPenandatangan = gelarBelakangPenandatangan;
         this.tembusanSuratDinasWrapper = tembusanSuratDinasWrapper;
+        this.isSuratPejabat = isSuratPejabat;
     }
 
     public String getNomorUrusan() {
@@ -211,5 +220,37 @@ public class SuratDinasWrapper {
 
     public void setTembusanSuratDinasWrapper(List<JabatanWrapper> tembusanSuratDinasWrapper) {
         this.tembusanSuratDinasWrapper = tembusanSuratDinasWrapper;
+    }
+
+    public String getPangkatPenandatangan() {
+        return pangkatPenandatangan;
+    }
+
+    public void setPangkatPenandatangan(String pangkatPenandatangan) {
+        this.pangkatPenandatangan = pangkatPenandatangan;
+    }
+
+    public String getGelarDepanPenandatangan() {
+        return gelarDepanPenandatangan;
+    }
+
+    public void setGelarDepanPenandatangan(String gelarDepanPenandatangan) {
+        this.gelarDepanPenandatangan = gelarDepanPenandatangan;
+    }
+
+    public String getGelarBelakangPenandatangan() {
+        return gelarBelakangPenandatangan;
+    }
+
+    public void setGelarBelakangPenandatangan(String gelarBelakangPenandatangan) {
+        this.gelarBelakangPenandatangan = gelarBelakangPenandatangan;
+    }
+
+    public boolean isSuratPejabat() {
+        return isSuratPejabat;
+    }
+
+    public void setSuratPejabat(boolean suratPejabat) {
+        isSuratPejabat = suratPejabat;
     }
 }
