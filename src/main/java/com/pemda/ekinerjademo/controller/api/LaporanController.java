@@ -91,7 +91,7 @@ public class LaporanController {
 
     @RequestMapping(value = "/get-daftar-laporan-history-by-pegawai/{nipPegawai}", method = RequestMethod.GET)
     ResponseEntity<?> getDaftarLaporanHistoryByPegawai(
-            @PathVariable("nipPembuatSurat") String nipPembuatSurat) {
+            @PathVariable("nipPegawai") String nipPegawai) {
         LOGGER.info("get laporan history by nip "+nipPembuatSurat);
 
         List<Laporan> laporanList

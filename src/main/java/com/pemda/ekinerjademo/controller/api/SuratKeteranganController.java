@@ -156,10 +156,11 @@ public class SuratKeteranganController {
         DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
         for (SuratKeterangan suratKeterangan : suratKeteranganList) {
             suratKeteranganHistoryList
-                    .add(new SuratPerintahHistoryWrapper(suratKeterangan.getKdSuratKeterangan(),
+                    .add(new SuratPerintahHistoryWrapper(
+                            suratKeterangan.getKdSuratKeterangan(),
                             df.format(new Date(suratKeterangan.getTanggalPembuatanSuratMilis())),
                             false,
-                            suratKeterangan.getTargetSuratKeteranganList().get(0).getStatusBaca(),
+                            -1,//how if surat keterangan doesnot have target?
                             "surat keterangan",
                             8,
                             suratKeterangan.getTanggalPembuatanSuratMilis(),

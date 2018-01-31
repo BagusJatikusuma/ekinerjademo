@@ -3,15 +3,13 @@ package com.pemda.ekinerjademo.controller.api;
 import com.pemda.ekinerjademo.model.bismamodel.QutPegawai;
 import com.pemda.ekinerjademo.model.ekinerjamodel.BeritaAcara;
 import com.pemda.ekinerjademo.model.ekinerjamodel.SuratKuasa;
+import com.pemda.ekinerjademo.model.ekinerjamodel.SuratPerintah;
 import com.pemda.ekinerjademo.projection.ekinerjaprojection.CustomPegawaiCredential;
 import com.pemda.ekinerjademo.service.QutPegawaiService;
 import com.pemda.ekinerjademo.service.SuratKuasaService;
 import com.pemda.ekinerjademo.wrapper.input.BeritaAcaraInputWrapper;
 import com.pemda.ekinerjademo.wrapper.input.SuratKuasaInputWrapper;
-import com.pemda.ekinerjademo.wrapper.output.CustomMessage;
-import com.pemda.ekinerjademo.wrapper.output.SuratKuasaHistoryWrapper;
-import com.pemda.ekinerjademo.wrapper.output.SuratKuasaPenerimaKuasaWrapper;
-import com.pemda.ekinerjademo.wrapper.output.SuratKuasaWrapper;
+import com.pemda.ekinerjademo.wrapper.output.*;
 import groovy.transform.Synchronized;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -94,23 +92,23 @@ public class SuratKuasaController {
 
         List<SuratKuasa> suratKuasaList
                 = suratKuasaService.getByNipPembuatSurat(nipPembuatSurat);
-
-        List<SuratKuasaHistoryWrapper> suratKuasaHistoryWrapperList
+        List<SuratPerintahHistoryWrapper> suratKuasaHistoryWrappers
                 = new ArrayList<>();
 
-        DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
         for (SuratKuasa suratKuasa
                 : suratKuasaList) {
-
-            suratKuasaHistoryWrapperList
-                    .add(new SuratKuasaHistoryWrapper(
-                            suratKuasa.getKdSuratKuasa(),
-                            df.format(new Date(suratKuasa.getTanggalPembuatanMilis())),
-                            suratKuasa.getStatusBaca()
-                    ));
+            suratKuasaHistoryWrappers
+                    .add(new SuratPerintahHistoryWrapper(suratKuasa.getKdSuratKuasa(),
+                            "",
+                            false,
+                            suratKuasa.getStatusBaca(),
+                            "surat kuasa",
+                            9,
+                            suratKuasa.getTanggalPembuatanMilis(),
+                            suratKuasa.getStatusPenilaian()));
         }
 
-        return new ResponseEntity<Object>(suratKuasaHistoryWrapperList, HttpStatus.OK);
+        return new ResponseEntity<Object>(suratKuasaHistoryWrappers, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/open-surat-kuasa/{kdSuratKuasa}", method = RequestMethod.PUT)
