@@ -91,6 +91,7 @@ public class SuratPengantarController {
         suratPengantar.setStatusPenilaian(0);
         suratPengantar.setAlasanPenolakan("");
         suratPengantar.setStatusBaca(0);
+        suratPengantar.setNipPenerima(inputWrapper.getNipPenerimaSuratPengantar());
 
         if (inputWrapper.getKdSuratPengantarBawahan() == null) {
             suratPengantar.setPathPenilaian(kdSuratPengantar);
@@ -173,19 +174,19 @@ public class SuratPengantarController {
 
         List<CustomPegawaiCredential> qutPegawaiList
                 = qutPegawaiService.getCustomPegawaiCredentials();
-
-        CustomPegawaiCredential pegawaiTarget = null;
-
-        for (CustomPegawaiCredential pegawai : qutPegawaiList) {
-            if (nipTarget.equals(pegawai.getNip())) {
-                pegawaiTarget = pegawai;
-
-                break;
-            }
-        }
+//
+//        CustomPegawaiCredential pegawaiTarget = null;
+//
+//        for (CustomPegawaiCredential pegawai : qutPegawaiList) {
+//            if (nipTarget.equals(pegawai.getNip())) {
+//                pegawaiTarget = pegawai;
+//
+//                break;
+//            }
+//        }
 
         List<SuratPengantar> suratPengantarTargetList
-                = suratPengantarService.getByJabatanTarget(pegawaiTarget.getKdJabatan());
+                = suratPengantarService.getByPegawaiTarget(nipTarget);
 
         List<SuratPengantarTargetWrapper> suratPengantarTargetWrappers
                 = new ArrayList<>();
@@ -221,18 +222,18 @@ public class SuratPengantarController {
         List<CustomPegawaiCredential> qutPegawaiList
                 = qutPegawaiService.getCustomPegawaiCredentials();
 
-        CustomPegawaiCredential pegawaiTarget = null;
-
-        for (CustomPegawaiCredential pegawai : qutPegawaiList) {
-            if (nipTarget.equals(pegawai.getNip())) {
-                pegawaiTarget = pegawai;
-
-                break;
-            }
-        }
+//        CustomPegawaiCredential pegawaiTarget = null;
+//
+//        for (CustomPegawaiCredential pegawai : qutPegawaiList) {
+//            if (nipTarget.equals(pegawai.getNip())) {
+//                pegawaiTarget = pegawai;
+//
+//                break;
+//            }
+//        }
 
         List<SuratPengantar> suratPengantarTargetList
-                = suratPengantarService.getByJabatanTarget(pegawaiTarget.getKdJabatan());
+                = suratPengantarService.getByPegawaiTarget(nipTarget);
 
         List<SuratPengantarTargetWrapper> suratPengantarTargetWrappers
                 = new ArrayList<>();
@@ -268,7 +269,8 @@ public class SuratPengantarController {
         SuratPengantar suratPengantar
                 = suratPengantarService.getByKdSuratPengantar(kdSuratPengantar);
 
-        CustomPegawaiCredential pemberiSurat = null;
+        CustomPegawaiCredential pemberiSurat  = null,
+                                penerimaSurat = null;
 
         List<CustomPegawaiCredential> qutPegawaiList
                 = qutPegawaiService.getCustomPegawaiCredentials();
@@ -277,6 +279,15 @@ public class SuratPengantarController {
             if (suratPengantar.getNipPemberiSuratPengantar()
                     .equals(pegawai.getNip())) {
                 pemberiSurat = pegawai;
+
+                break;
+            }
+        }
+
+        for (CustomPegawaiCredential pegawai : qutPegawaiList) {
+            if (suratPengantar.getNipPenerima()
+                    .equals(pegawai.getNip())) {
+                penerimaSurat = pegawai;
 
                 break;
             }
@@ -308,6 +319,7 @@ public class SuratPengantarController {
                         suratPengantar.getTanggalDiterimaSuratPengantar(),
                         jabatan.getKdJabatan(),
                         jabatan.getJabatan(),
+                        penerimaSurat,
                         pemberiSurat.getNip(),
                         pemberiSurat.getNama(),
                         pemberiSurat.getJabatan(),

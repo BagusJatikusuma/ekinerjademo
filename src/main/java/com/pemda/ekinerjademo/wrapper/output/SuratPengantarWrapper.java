@@ -1,5 +1,7 @@
 package com.pemda.ekinerjademo.wrapper.output;
 
+import com.pemda.ekinerjademo.projection.ekinerjaprojection.CustomPegawaiCredential;
+
 import java.util.List;
 
 /**
@@ -17,6 +19,8 @@ public class SuratPengantarWrapper {
 
     private String kdJabatanPenerimaSuratPengantar;
     private String jabatanPenerimaSuratPengantar;
+
+    private CustomPegawaiCredential penerimaSuratPengantar;
 
     private String nipPemberiSuratPengantar;
     private String namaPemberiSuratPengantar;
@@ -39,7 +43,7 @@ public class SuratPengantarWrapper {
             Long tanggalDiterimaSuratPengantar,
             String kdJabatanPenerimaSuratPengantar,
             String jabatanPenerimaSuratPengantar,
-            String nipPemberiSuratPengantar,
+            CustomPegawaiCredential penerimaSuratPengantar, String nipPemberiSuratPengantar,
             String namaPemberiSuratPengantar,
             String jabatanPemberiSuratPengantar,
             String unitKerjaPemberiSuratPengantar,
@@ -53,6 +57,7 @@ public class SuratPengantarWrapper {
         this.tanggalDiterimaSuratPengantar = tanggalDiterimaSuratPengantar;
         this.kdJabatanPenerimaSuratPengantar = kdJabatanPenerimaSuratPengantar;
         this.jabatanPenerimaSuratPengantar = jabatanPenerimaSuratPengantar;
+        this.penerimaSuratPengantar = penerimaSuratPengantar;
         this.nipPemberiSuratPengantar = nipPemberiSuratPengantar;
         this.namaPemberiSuratPengantar = namaPemberiSuratPengantar;
         this.jabatanPemberiSuratPengantar = jabatanPemberiSuratPengantar;
@@ -179,5 +184,13 @@ public class SuratPengantarWrapper {
 
     public void setSuratPengantarIsiWrapperList(List<SuratPengantarIsiWrapper> suratPengantarIsiWrapperList) {
         this.suratPengantarIsiWrapperList = suratPengantarIsiWrapperList;
+    }
+
+    public CustomPegawaiCredential getPenerimaSuratPengantar() {
+        return penerimaSuratPengantar;
+    }
+
+    public void setPenerimaSuratPengantar(CustomPegawaiCredential penerimaSuratPengantar) {
+        this.penerimaSuratPengantar = penerimaSuratPengantar;
     }
 }

@@ -13,6 +13,7 @@ public class SuratPengantarInputWrapper {
     private Long tanggalPembuatanMilis;
     private Long tanggalDiterimaSuratPengantar;
     private String kdJabatanPenerimaSuratPengantar;
+    private String nipPenerimaSuratPengantar;
     private String nipPemberiSuratPengantar;
     private String nomorTeleponPemberi;
     private String nipPembuatSurat;
@@ -144,5 +145,13 @@ public class SuratPengantarInputWrapper {
 
     public void setKdSuratPengantarBawahan(String kdSuratPengantarBawahan) {
         this.kdSuratPengantarBawahan = kdSuratPengantarBawahan;
+    }
+
+    public String getNipPenerimaSuratPengantar() {
+        return nipPenerimaSuratPengantar;
+    }
+
+    public void setNipPenerimaSuratPengantar(String nipPenerimaSuratPengantar) {
+        this.nipPenerimaSuratPengantar = nipPenerimaSuratPengantar;
     }
 }

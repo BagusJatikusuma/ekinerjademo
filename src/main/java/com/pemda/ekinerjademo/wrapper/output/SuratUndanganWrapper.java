@@ -37,6 +37,9 @@ public class SuratUndanganWrapper {
     private String nipPenandatangan;
     private String namaPenandatangan;
     private String unitKerjaPenandatangan;
+    private String jabatanPenandatangan;
+    private String gelarDepanPenandatangan;
+    private String gelarBelakangPenandatangan;
     private List<JabatanWrapper> tembusanSuratUndanganList;
 
     private boolean isSuratPejabat;
@@ -70,7 +73,7 @@ public class SuratUndanganWrapper {
             String nipPenandatangan,
             String namaPenandatangan,
             String unitKerjaPenandatangan,
-            List<JabatanWrapper> tembusanSuratUndanganList,
+            String jabatanPenandatangan, String gelarDepanPenandatangan, String gelarBelakangPenandatangan, List<JabatanWrapper> tembusanSuratUndanganList,
             boolean isSuratPejabat) {
         this.kdSuratUndangan = kdSuratUndangan;
         this.nomorUrusan = nomorUrusan;
@@ -98,6 +101,9 @@ public class SuratUndanganWrapper {
         this.nipPenandatangan = nipPenandatangan;
         this.namaPenandatangan = namaPenandatangan;
         this.unitKerjaPenandatangan = unitKerjaPenandatangan;
+        this.jabatanPenandatangan = jabatanPenandatangan;
+        this.gelarDepanPenandatangan = gelarDepanPenandatangan;
+        this.gelarBelakangPenandatangan = gelarBelakangPenandatangan;
         this.tembusanSuratUndanganList = tembusanSuratUndanganList;
         this.isSuratPejabat = isSuratPejabat;
     }
@@ -324,5 +330,29 @@ public class SuratUndanganWrapper {
 
     public void setSuratPejabat(boolean suratPejabat) {
         isSuratPejabat = suratPejabat;
+    }
+
+    public String getJabatanPenandatangan() {
+        return jabatanPenandatangan;
+    }
+
+    public void setJabatanPenandatangan(String jabatanPenandatangan) {
+        this.jabatanPenandatangan = jabatanPenandatangan;
+    }
+
+    public String getGelarDepanPenandatangan() {
+        return gelarDepanPenandatangan;
+    }
+
+    public void setGelarDepanPenandatangan(String gelarDepanPenandatangan) {
+        this.gelarDepanPenandatangan = gelarDepanPenandatangan;
+    }
+
+    public String getGelarBelakangPenandatangan() {
+        return gelarBelakangPenandatangan;
+    }
+
+    public void setGelarBelakangPenandatangan(String gelarBelakangPenandatangan) {
+        this.gelarBelakangPenandatangan = gelarBelakangPenandatangan;
     }
 }

@@ -29,6 +29,10 @@ public interface SuratPengantarDao extends JpaRepository<SuratPengantar, String>
             "left join fetch sp.suratPengantarIsiList " +
             "where sp.kdJabatanPenerimaSuratPengantar = ?1")
     List<SuratPengantar> findByKdJabatanTarget(String kdJabatanTarget);
+    @Query("select distinct sp from SuratPengantar sp " +
+            "left join fetch sp.suratPengantarIsiList " +
+            "where sp.nipPenerima = ?1")
+    List<SuratPengantar> findByNipPenerima(String nipPenerima);
 
     @Query("select sp from SuratPengantar sp " +
             "left join fetch sp.suratPengantarIsiList " +

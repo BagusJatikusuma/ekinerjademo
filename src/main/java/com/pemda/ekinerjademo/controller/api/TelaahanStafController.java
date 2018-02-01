@@ -163,6 +163,6 @@ public class TelaahanStafController {
                         pembuatSurat,
                         tkdUnkDao.findOne(pembuatSurat.getKdUnitKerja()).getUnitKerja());
 
-        return new ResponseEntity<Object>(telaahanStaf, HttpStatus.OK);
+        return new ResponseEntity<Object>(telaahanStaffWrapper, HttpStatus.OK);
     }
 }

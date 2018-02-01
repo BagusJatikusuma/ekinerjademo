@@ -56,6 +56,9 @@ public class SuratPengantar {
     @Column(name = "status_baca")
     private Integer statusBaca;
 
+    @Column(name = "nip_penerima")
+    private String nipPenerima;
+
     @OneToMany(mappedBy = "suratPengantar")
     private List<SuratPengantarIsi> suratPengantarIsiList;
 
@@ -233,5 +236,13 @@ public class SuratPengantar {
 
     public void setStatusBaca(Integer statusBaca) {
         this.statusBaca = statusBaca;
+    }
+
+    public String getNipPenerima() {
+        return nipPenerima;
+    }
+
+    public void setNipPenerima(String nipPenerima) {
+        this.nipPenerima = nipPenerima;
     }
 }

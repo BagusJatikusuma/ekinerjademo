@@ -424,6 +424,9 @@ public class SuratUndanganController {
         suratUndanganWrapper.setNipPenandatangan(penandatangan.getNip());
         suratUndanganWrapper.setNamaPenandatangan(penandatangan.getNama());
         suratUndanganWrapper.setUnitKerjaPenandatangan(penandatangan.getUnitKerja());
+        suratUndanganWrapper.setJabatanPenandatangan(penandatangan.getJabatan());
+        suratUndanganWrapper.setGelarDepanPenandatangan(penandatangan.getGlrDpn());
+        suratUndanganWrapper.setGelarBelakangPenandatangan(penandatangan.getGlrBlk());
 
         suratUndanganWrapper.setTembusanSuratUndanganList(tembusanSuratUndanganList);
         suratUndanganWrapper.setSuratPejabat(isSuratPejabat);
