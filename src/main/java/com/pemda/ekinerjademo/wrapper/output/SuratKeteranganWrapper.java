@@ -20,6 +20,8 @@ public class SuratKeteranganWrapper {
     private String namaPenandatangan;
     private String jabatanPenandatangan;
     private String unitKerjaPenandatangan;
+    private String gelarDepanPenandatangan;
+    private String gelarBelakangPenandatangan;
 
     private String isiSuratKeterangan;
     private String kotaPembuatanSurat;
@@ -41,7 +43,7 @@ public class SuratKeteranganWrapper {
             String namaPenandatangan,
             String jabatanPenandatangan,
             String unitKerjaPenandatangan,
-            String isiSuratKeterangan,
+            String gelarDepanPenandatangan, String gelarBelakangPenandatangan, String isiSuratKeterangan,
             String kotaPembuatanSurat,
             Long tanggalPembuatanSuratMilis,
             List<CustomPegawaiCredential> nipPegawaiKeteranganList,
@@ -56,6 +58,8 @@ public class SuratKeteranganWrapper {
         this.namaPenandatangan = namaPenandatangan;
         this.jabatanPenandatangan = jabatanPenandatangan;
         this.unitKerjaPenandatangan = unitKerjaPenandatangan;
+        this.gelarDepanPenandatangan = gelarDepanPenandatangan;
+        this.gelarBelakangPenandatangan = gelarBelakangPenandatangan;
         this.isiSuratKeterangan = isiSuratKeterangan;
         this.kotaPembuatanSurat = kotaPembuatanSurat;
         this.tanggalPembuatanSuratMilis = tanggalPembuatanSuratMilis;
@@ -181,5 +185,21 @@ public class SuratKeteranganWrapper {
 
     public void setTargetPegawaiSuratKeteranganList(List<CustomPegawaiCredential> targetPegawaiSuratKeteranganList) {
         this.targetPegawaiSuratKeteranganList = targetPegawaiSuratKeteranganList;
+    }
+
+    public String getGelarDepanPenandatangan() {
+        return gelarDepanPenandatangan;
+    }
+
+    public void setGelarDepanPenandatangan(String gelarDepanPenandatangan) {
+        this.gelarDepanPenandatangan = gelarDepanPenandatangan;
+    }
+
+    public String getGelarBelakangPenandatangan() {
+        return gelarBelakangPenandatangan;
+    }
+
+    public void setGelarBelakangPenandatangan(String gelarBelakangPenandatangan) {
+        this.gelarBelakangPenandatangan = gelarBelakangPenandatangan;
     }
 }

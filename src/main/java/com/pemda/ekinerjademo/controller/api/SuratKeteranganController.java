@@ -1,7 +1,6 @@
 package com.pemda.ekinerjademo.controller.api;
 
 import com.pemda.ekinerjademo.model.ekinerjamodel.SuratKeterangan;
-import com.pemda.ekinerjademo.model.ekinerjamodel.SuratPerintah;
 import com.pemda.ekinerjademo.model.ekinerjamodel.TargetSuratKeterangan;
 import com.pemda.ekinerjademo.model.ekinerjamodel.TargetSuratKeteranganId;
 import com.pemda.ekinerjademo.projection.ekinerjaprojection.CustomPegawaiCredential;
@@ -312,7 +311,7 @@ public class SuratKeteranganController {
                         penandatangan.getNama(),
                         penandatangan.getJabatan(),
                         penandatangan.getUnitKerja(),
-                        suratKeterangan.getIsiSuratKeterangan(),
+                penandatangan.getGlrDpn(), penandatangan.getGlrBlk(), suratKeterangan.getIsiSuratKeterangan(),
                         suratKeterangan.getKotaPembuatanSurat(),
                         suratKeterangan.getTanggalPembuatanSuratMilis(),
                         pegawaiKeteranganList,

@@ -45,6 +45,8 @@ public class BeritaAcaraWrapper {
     private String jabatanMengetahui;
     private String unitKerjaMengetahui;
     private String pangkatMengetahui;
+    private String gelarDepanPihakMengetahui;
+    private String gelarBelakangPihakMengetahui;
 
     private String kotaPembuatanSurat;
     private Long tanggalPembuatanMilis;
@@ -78,7 +80,7 @@ public class BeritaAcaraWrapper {
             String namaMengetahui,
             String jabatanMengetahui,
             String unitKerjaMengetahui,
-            String pangkatMengetahui, String kotaPembuatanSurat,
+            String pangkatMengetahui, String gelarDepanPihakMengetahui, String gelarBelakangPihakMengetahui, String kotaPembuatanSurat,
             Long tanggalPembuatanMilis) {
         this.kdBeritaAcara = kdBeritaAcara;
         this.nomorUrusan = nomorUrusan;
@@ -113,6 +115,8 @@ public class BeritaAcaraWrapper {
         this.jabatanMengetahui = jabatanMengetahui;
         this.unitKerjaMengetahui = unitKerjaMengetahui;
         this.pangkatMengetahui = pangkatMengetahui;
+        this.gelarDepanPihakMengetahui = gelarDepanPihakMengetahui;
+        this.gelarBelakangPihakMengetahui = gelarBelakangPihakMengetahui;
         this.kotaPembuatanSurat = kotaPembuatanSurat;
         this.tanggalPembuatanMilis = tanggalPembuatanMilis;
     }
@@ -395,5 +399,21 @@ public class BeritaAcaraWrapper {
 
     public void setPangkatMengetahui(String pangkatMengetahui) {
         this.pangkatMengetahui = pangkatMengetahui;
+    }
+
+    public String getGelarDepanPihakMengetahui() {
+        return gelarDepanPihakMengetahui;
+    }
+
+    public void setGelarDepanPihakMengetahui(String gelarDepanPihakMengetahui) {
+        this.gelarDepanPihakMengetahui = gelarDepanPihakMengetahui;
+    }
+
+    public String getGelarBelakangPihakMengetahui() {
+        return gelarBelakangPihakMengetahui;
+    }
+
+    public void setGelarBelakangPihakMengetahui(String gelarBelakangPihakMengetahui) {
+        this.gelarBelakangPihakMengetahui = gelarBelakangPihakMengetahui;
     }
 }

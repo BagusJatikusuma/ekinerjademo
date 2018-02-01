@@ -26,6 +26,8 @@ public class SuratPengantarWrapper {
     private String namaPemberiSuratPengantar;
     private String jabatanPemberiSuratPengantar;
     private String unitKerjaPemberiSuratPengantar;
+    private String gelarDepanPemberiSuratPengantar;
+    private String gelarBelakangPemberiSuratPengantar;
 
     private String nomorTeleponPemberi;
     private List<SuratPengantarIsiWrapper> suratPengantarIsiWrapperList;
@@ -47,7 +49,7 @@ public class SuratPengantarWrapper {
             String namaPemberiSuratPengantar,
             String jabatanPemberiSuratPengantar,
             String unitKerjaPemberiSuratPengantar,
-            String nomorTeleponPemberi, List<SuratPengantarIsiWrapper> suratPengantarIsiWrapperList) {
+            String gelarDepanPemberiSuratPengantar, String gelarBelakangPemberiSuratPengantar, String nomorTeleponPemberi, List<SuratPengantarIsiWrapper> suratPengantarIsiWrapperList) {
         this.nomorUrusan = nomorUrusan;
         this.nomorUrut = nomorUrut;
         this.nomorPasanganUrut = nomorPasanganUrut;
@@ -62,6 +64,8 @@ public class SuratPengantarWrapper {
         this.namaPemberiSuratPengantar = namaPemberiSuratPengantar;
         this.jabatanPemberiSuratPengantar = jabatanPemberiSuratPengantar;
         this.unitKerjaPemberiSuratPengantar = unitKerjaPemberiSuratPengantar;
+        this.gelarDepanPemberiSuratPengantar = gelarDepanPemberiSuratPengantar;
+        this.gelarBelakangPemberiSuratPengantar = gelarBelakangPemberiSuratPengantar;
         this.nomorTeleponPemberi = nomorTeleponPemberi;
         this.suratPengantarIsiWrapperList = suratPengantarIsiWrapperList;
     }
@@ -192,5 +196,21 @@ public class SuratPengantarWrapper {
 
     public void setPenerimaSuratPengantar(CustomPegawaiCredential penerimaSuratPengantar) {
         this.penerimaSuratPengantar = penerimaSuratPengantar;
+    }
+
+    public String getGelarDepanPemberiSuratPengantar() {
+        return gelarDepanPemberiSuratPengantar;
+    }
+
+    public void setGelarDepanPemberiSuratPengantar(String gelarDepanPemberiSuratPengantar) {
+        this.gelarDepanPemberiSuratPengantar = gelarDepanPemberiSuratPengantar;
+    }
+
+    public String getGelarBelakangPemberiSuratPengantar() {
+        return gelarBelakangPemberiSuratPengantar;
+    }
+
+    public void setGelarBelakangPemberiSuratPengantar(String gelarBelakangPemberiSuratPengantar) {
+        this.gelarBelakangPemberiSuratPengantar = gelarBelakangPemberiSuratPengantar;
     }
 }

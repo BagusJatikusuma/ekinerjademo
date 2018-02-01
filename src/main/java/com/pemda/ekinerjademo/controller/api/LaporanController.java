@@ -119,7 +119,7 @@ public class LaporanController {
 
     @RequestMapping(value = "/open-laporan-penilai/{kdLaporan}/{nipPegawai}", method = RequestMethod.PUT)
     ResponseEntity<?> openLaporanPenilai(
-            @PathVariable("KdLaporan") String kdLaporan,
+            @PathVariable("kdLaporan") String kdLaporan,
             @PathVariable("nipPegawai") String nipPegawai) {
         LOGGER.info("open laporan");
 

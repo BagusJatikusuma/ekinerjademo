@@ -1,13 +1,9 @@
 package com.pemda.ekinerjademo.controller.api;
 
-import com.pemda.ekinerjademo.model.bismamodel.QutPegawai;
-import com.pemda.ekinerjademo.model.ekinerjamodel.BeritaAcara;
 import com.pemda.ekinerjademo.model.ekinerjamodel.SuratKuasa;
-import com.pemda.ekinerjademo.model.ekinerjamodel.SuratPerintah;
 import com.pemda.ekinerjademo.projection.ekinerjaprojection.CustomPegawaiCredential;
 import com.pemda.ekinerjademo.service.QutPegawaiService;
 import com.pemda.ekinerjademo.service.SuratKuasaService;
-import com.pemda.ekinerjademo.wrapper.input.BeritaAcaraInputWrapper;
 import com.pemda.ekinerjademo.wrapper.input.SuratKuasaInputWrapper;
 import com.pemda.ekinerjademo.wrapper.output.*;
 import groovy.transform.Synchronized;
@@ -181,11 +177,11 @@ public class SuratKuasaController {
                         pemberiKuasa.getNama(),
                         pemberiKuasa.getJabatan(),
                         pemberiKuasa.getUnitKerja(),
-                        penerimaKuasa.getNip(),
+                pemberiKuasa.getGlrDpn(), pemberiKuasa.getGlrBlk(), penerimaKuasa.getNip(),
                         penerimaKuasa.getNama(),
                         penerimaKuasa.getJabatan(),
                         penerimaKuasa.getUnitKerja(),
-                        suratKuasa.getIsiKuasa(),
+                penerimaKuasa.getGlrDpn(), penerimaKuasa.getGlrBlk(), suratKuasa.getIsiKuasa(),
                         suratKuasa.getKotaPembuatanSurat(),
                         suratKuasa.getTanggalPembuatanMilis());
 

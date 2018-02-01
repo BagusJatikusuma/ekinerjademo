@@ -324,7 +324,7 @@ public class SuratPengantarController {
                         pemberiSurat.getNama(),
                         pemberiSurat.getJabatan(),
                         pemberiSurat.getUnitKerja(),
-                        suratPengantar.getNomorTeleponPemberi(),
+                pemberiSurat.getGlrDpn(), pemberiSurat.getGlrBlk(), suratPengantar.getNomorTeleponPemberi(),
                         suratPengantarIsiWrapperList);
 
         return new ResponseEntity<Object>(suratPengantarWrapper, HttpStatus.OK);
