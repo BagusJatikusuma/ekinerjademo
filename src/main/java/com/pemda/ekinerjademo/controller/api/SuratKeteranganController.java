@@ -4,6 +4,7 @@ import com.pemda.ekinerjademo.model.ekinerjamodel.SuratKeterangan;
 import com.pemda.ekinerjademo.model.ekinerjamodel.TargetSuratKeterangan;
 import com.pemda.ekinerjademo.model.ekinerjamodel.TargetSuratKeteranganId;
 import com.pemda.ekinerjademo.projection.ekinerjaprojection.CustomPegawaiCredential;
+import com.pemda.ekinerjademo.repository.bismarepository.TkdUnkDao;
 import com.pemda.ekinerjademo.service.QutPegawaiService;
 import com.pemda.ekinerjademo.service.SuratKeteranganService;
 import com.pemda.ekinerjademo.util.DateUtilities;
@@ -40,6 +41,7 @@ public class SuratKeteranganController {
 
     @Autowired private SuratKeteranganService suratKeteranganService;
     @Autowired private QutPegawaiService qutPegawaiService;
+    @Autowired private TkdUnkDao tkdUnkDao;
 
     @RequestMapping(value = "/create-surat-keterangan", method = RequestMethod.POST)
     ResponseEntity<?> createSuratKeterangan(@RequestBody SuratKeteranganInputWrapper inputWrapper) {
@@ -281,6 +283,8 @@ public class SuratKeteranganController {
             for (CustomPegawaiCredential customPegawaiCredential : qutPegawaiList) {
                 if (customPegawaiCredential.getNip()
                         .equals(nip)) {
+                    customPegawaiCredential
+                            .setUnitKerja(tkdUnkDao.findOne(customPegawaiCredential.getKdUnitKerja()).getUnitKerja());
                     pegawaiKeteranganList.add(customPegawaiCredential);
                     break;
                 }
@@ -293,6 +297,9 @@ public class SuratKeteranganController {
                     : qutPegawaiList) {
                 if (customPegawaiCredential.getNip()
                         .equals(targetSuratKeterangan.getTargetSuratKeteranganId().getNipPegawai())) {
+                    customPegawaiCredential
+                            .setUnitKerja(tkdUnkDao.findOne(customPegawaiCredential.getKdUnitKerja()).getUnitKerja());
+
                     pegawaiKeteranganList.add(customPegawaiCredential);
                     break;
                 }
@@ -310,8 +317,10 @@ public class SuratKeteranganController {
                         penandatangan.getNip(),
                         penandatangan.getNama(),
                         penandatangan.getJabatan(),
-                        penandatangan.getUnitKerja(),
-                penandatangan.getGlrDpn(), penandatangan.getGlrBlk(), suratKeterangan.getIsiSuratKeterangan(),
+                        tkdUnkDao.findOne(penandatangan.getKdUnitKerja()).getUnitKerja(),
+                        penandatangan.getGlrDpn(),
+                        penandatangan.getGlrBlk(),
+                        suratKeterangan.getIsiSuratKeterangan(),
                         suratKeterangan.getKotaPembuatanSurat(),
                         suratKeterangan.getTanggalPembuatanSuratMilis(),
                         pegawaiKeteranganList,

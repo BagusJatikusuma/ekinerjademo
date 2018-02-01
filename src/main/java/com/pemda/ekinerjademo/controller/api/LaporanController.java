@@ -4,6 +4,7 @@ import com.pemda.ekinerjademo.model.ekinerjamodel.BeritaAcara;
 import com.pemda.ekinerjademo.model.ekinerjamodel.Laporan;
 import com.pemda.ekinerjademo.model.ekinerjamodel.SuratPerintah;
 import com.pemda.ekinerjademo.projection.ekinerjaprojection.CustomPegawaiCredential;
+import com.pemda.ekinerjademo.repository.bismarepository.TkdUnkDao;
 import com.pemda.ekinerjademo.service.LaporanService;
 import com.pemda.ekinerjademo.service.QutPegawaiService;
 import com.pemda.ekinerjademo.wrapper.input.BeritaAcaraInputWrapper;
@@ -38,6 +39,7 @@ public class LaporanController {
 
     @Autowired private LaporanService laporanService;
     @Autowired private QutPegawaiService qutPegawaiService;
+    @Autowired private TkdUnkDao tkdUnkDao;
 
     @RequestMapping(value = "/create-laporan", method = RequestMethod.POST)
     @Synchronized
@@ -175,14 +177,14 @@ public class LaporanController {
                         penandatangan.getNip(),
                         penandatangan.getNama(),
                         penandatangan.getJabatan(),
-                        penandatangan.getUnitKerja(),
+                        tkdUnkDao.findOne(penandatangan.getKdUnitKerja()).getUnitKerja(),
                         laporan.getStatusBaca(),
                         laporan.getKotaPembuatanSurat(),
                         laporan.getTanggalPembuatanMilis(),
                         pembuat.getNip(),
                         pembuat.getNama(),
                         pembuat.getJabatan(),
-                        pembuat.getUnitKerja());
+                        tkdUnkDao.findOne(pembuat.getKdUnitKerja()).getUnitKerja());
 
         return new ResponseEntity<Object>(laporanWrapper,HttpStatus.OK);
     }

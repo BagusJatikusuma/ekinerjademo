@@ -17,7 +17,7 @@ public interface QutPegawaiDao extends JpaRepository<QutPegawai, Long>{
     QutPegawai findByNip(String nip);
     List<QutPegawai> findByKdUnitKerja(String kdUnitKerja);
     @Query("select " +
-            "new com.pemda.ekinerjademo.projection.ekinerjaprojection.CustomPegawaiCredential(q.nip, q.nama, q.gol, q.pangkat, q.kdJabatan, q.jabatan, q.kdUnitKerja, q.unitKerja) " +
+            "new com.pemda.ekinerjademo.projection.ekinerjaprojection.CustomPegawaiCredential(q.nip, q.nama, q.gol, q.pangkat, q.kdJabatan, q.jabatan, q.kdUnitKerja, q.unitKerja, q.glrDpn, q.glrBlk, q.alRumah) " +
             "from QutPegawai q")
     List<CustomPegawaiCredential> findByCustomPegawaiCredential();
 }

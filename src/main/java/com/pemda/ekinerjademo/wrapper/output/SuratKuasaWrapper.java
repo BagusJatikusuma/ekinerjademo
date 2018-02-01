@@ -16,6 +16,7 @@ public class SuratKuasaWrapper {
     private String unitKerjaPemberiKuasa;
     private String gelarDepanPemberiKuasa;
     private String gelarBelakangPemberiKuasa;
+    private String alamatRumahPemberiKuasa;
 
     private String nipPenerimaKuasa;
     private String namaPenerimaKuasa;
@@ -23,6 +24,7 @@ public class SuratKuasaWrapper {
     private String unitKerjaPenerimaKuasa;
     private String gelarDepanPenerimaKuasa;
     private String gelarBelakangPenerimaKuasa;
+    private String alamatRumahPenerimaKuasa;
 
     private String isiKuasa;
     private String kotaPembuatanSurat;
@@ -41,11 +43,11 @@ public class SuratKuasaWrapper {
             String namaPemberiKuasa,
             String jabatanPemberiKuasa,
             String unitKerjaPemberiKuasa,
-            String gelarDepanPemberiKuasa, String gelarBelakangPemberiKuasa, String nipPenerimaKuasa,
+            String gelarDepanPemberiKuasa, String gelarBelakangPemberiKuasa, String alamatRumahPemberiKuasa, String nipPenerimaKuasa,
             String namaPenerimaKuasa,
             String jabatanPenerimaKuasa,
             String unitKerjaPenerimaKuasa,
-            String gelarDepanPenerimaKuasa, String gelarBelakangPenerimaKuasa, String isiKuasa,
+            String gelarDepanPenerimaKuasa, String gelarBelakangPenerimaKuasa, String alamatRumahPenerimaKuasa, String isiKuasa,
             String kotaPembuatanSurat,
             Long tanggalPembuatanMilis) {
         this.nomorUrusan = nomorUrusan;
@@ -59,12 +61,14 @@ public class SuratKuasaWrapper {
         this.unitKerjaPemberiKuasa = unitKerjaPemberiKuasa;
         this.gelarDepanPemberiKuasa = gelarDepanPemberiKuasa;
         this.gelarBelakangPemberiKuasa = gelarBelakangPemberiKuasa;
+        this.alamatRumahPemberiKuasa = alamatRumahPemberiKuasa;
         this.nipPenerimaKuasa = nipPenerimaKuasa;
         this.namaPenerimaKuasa = namaPenerimaKuasa;
         this.jabatanPenerimaKuasa = jabatanPenerimaKuasa;
         this.unitKerjaPenerimaKuasa = unitKerjaPenerimaKuasa;
         this.gelarDepanPenerimaKuasa = gelarDepanPenerimaKuasa;
         this.gelarBelakangPenerimaKuasa = gelarBelakangPenerimaKuasa;
+        this.alamatRumahPenerimaKuasa = alamatRumahPenerimaKuasa;
         this.isiKuasa = isiKuasa;
         this.kotaPembuatanSurat = kotaPembuatanSurat;
         this.tanggalPembuatanMilis = tanggalPembuatanMilis;
@@ -228,5 +232,21 @@ public class SuratKuasaWrapper {
 
     public void setGelarBelakangPenerimaKuasa(String gelarBelakangPenerimaKuasa) {
         this.gelarBelakangPenerimaKuasa = gelarBelakangPenerimaKuasa;
+    }
+
+    public String getAlamatRumahPemberiKuasa() {
+        return alamatRumahPemberiKuasa;
+    }
+
+    public void setAlamatRumahPemberiKuasa(String alamatRumahPemberiKuasa) {
+        this.alamatRumahPemberiKuasa = alamatRumahPemberiKuasa;
+    }
+
+    public String getAlamatRumahPenerimaKuasa() {
+        return alamatRumahPenerimaKuasa;
+    }
+
+    public void setAlamatRumahPenerimaKuasa(String alamatRumahPenerimaKuasa) {
+        this.alamatRumahPenerimaKuasa = alamatRumahPenerimaKuasa;
     }
 }

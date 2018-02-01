@@ -3,6 +3,7 @@ package com.pemda.ekinerjademo.controller.api;
 import com.pemda.ekinerjademo.model.bismamodel.TkdJabatan;
 import com.pemda.ekinerjademo.model.ekinerjamodel.*;
 import com.pemda.ekinerjademo.projection.ekinerjaprojection.CustomPegawaiCredential;
+import com.pemda.ekinerjademo.repository.bismarepository.TkdUnkDao;
 import com.pemda.ekinerjademo.service.QutPegawaiService;
 import com.pemda.ekinerjademo.service.SuratDinasService;
 import com.pemda.ekinerjademo.service.TkdJabatanService;
@@ -34,6 +35,7 @@ public class SuratDinasController {
     @Autowired private SuratDinasService suratDinasService;
     @Autowired private QutPegawaiService qutPegawaiService;
     @Autowired private TkdJabatanService tkdJabatanService;
+    @Autowired private TkdUnkDao tkdUnkDao;
 
     @RequestMapping(value = "/create-surat-dinas", method = RequestMethod.POST)
     ResponseEntity<?> createSuratDinas(@RequestBody SuratDinasInputWrapper inputWrapper) {
@@ -359,7 +361,7 @@ public class SuratDinasController {
         suratDinasWrapper.setNipPenandatangan(penandatangan.getNip());
         suratDinasWrapper.setNamaPenandatangan(penandatangan.getNama());
         suratDinasWrapper.setJabatanPenandatangan(penandatangan.getJabatan());
-        suratDinasWrapper.setUnitKerjaPenandatangan(penandatangan.getUnitKerja());
+        suratDinasWrapper.setUnitKerjaPenandatangan(tkdUnkDao.findOne(penandatangan.getKdUnitKerja()).getUnitKerja());
         suratDinasWrapper.setPangkatPenandatangan(penandatangan.getPangkat());
         suratDinasWrapper.setGelarDepanPenandatangan(penandatangan.getGlrDpn());
         suratDinasWrapper.setGelarBelakangPenandatangan(penandatangan.getGlrBlk());

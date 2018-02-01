@@ -133,6 +133,8 @@ public class TelaahanStafController {
         for (CustomPegawaiCredential pegawai : qutPegawaiList) {
             if (telaahanStaf.getNipPenandatangan()
                     .equals(pegawai.getNip())) {
+                pegawai.setUnitKerja(tkdUnkDao.findOne(pegawai.getKdUnitKerja()).getUnitKerja());
+
                 penandatangan = pegawai;
 
                 break;
@@ -142,6 +144,8 @@ public class TelaahanStafController {
         for (CustomPegawaiCredential pegawai : qutPegawaiList) {
             if (telaahanStaf.getNipPembuatSurat()
                     .equals(pegawai.getNip())) {
+                pegawai.setUnitKerja(tkdUnkDao.findOne(pegawai.getKdUnitKerja()).getUnitKerja());
+
                 pembuatSurat = pegawai;
 
                 break;

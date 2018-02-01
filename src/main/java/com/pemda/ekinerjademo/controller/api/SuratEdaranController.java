@@ -2,6 +2,7 @@ package com.pemda.ekinerjademo.controller.api;
 
 import com.pemda.ekinerjademo.model.ekinerjamodel.*;
 import com.pemda.ekinerjademo.projection.ekinerjaprojection.CustomPegawaiCredential;
+import com.pemda.ekinerjademo.repository.bismarepository.TkdUnkDao;
 import com.pemda.ekinerjademo.service.QutPegawaiService;
 import com.pemda.ekinerjademo.service.SuratEdaranService;
 import com.pemda.ekinerjademo.wrapper.input.SuratEdaranInputWrapper;
@@ -34,6 +35,7 @@ public class SuratEdaranController {
 
     @Autowired private SuratEdaranService suratEdaranService;
     @Autowired private QutPegawaiService qutPegawaiService;
+    @Autowired private TkdUnkDao tkdUnkDao;
 
     @RequestMapping(value = "/create-surat-edaran", method = RequestMethod.POST)
     ResponseEntity<?> createSuratEdaran(@RequestBody SuratEdaranInputWrapper inputWrapper) {
@@ -251,7 +253,7 @@ public class SuratEdaranController {
         suratEdaranWrapper.setNipPenandatangan(penandatangan.getNip());
         suratEdaranWrapper.setNamaPenandatangan(penandatangan.getNama());
         suratEdaranWrapper.setJabatanPenandatangan(penandatangan.getJabatan());
-        suratEdaranWrapper.setUnitKerjaPenandatangan(penandatangan.getUnitKerja());
+        suratEdaranWrapper.setUnitKerjaPenandatangan(tkdUnkDao.findOne(penandatangan.getKdUnitKerja()).getUnitKerja());
         suratEdaranWrapper.setSuratPejabat(isSuratPejabat);
 
         return new ResponseEntity<Object>(suratEdaranWrapper, HttpStatus.OK);

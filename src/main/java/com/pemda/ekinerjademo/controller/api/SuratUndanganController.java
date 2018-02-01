@@ -3,6 +3,7 @@ package com.pemda.ekinerjademo.controller.api;
 import com.pemda.ekinerjademo.model.bismamodel.TkdJabatan;
 import com.pemda.ekinerjademo.model.ekinerjamodel.*;
 import com.pemda.ekinerjademo.projection.ekinerjaprojection.CustomPegawaiCredential;
+import com.pemda.ekinerjademo.repository.bismarepository.TkdUnkDao;
 import com.pemda.ekinerjademo.service.QutPegawaiService;
 import com.pemda.ekinerjademo.service.SuratUndanganService;
 import com.pemda.ekinerjademo.service.TkdJabatanService;
@@ -34,6 +35,7 @@ public class SuratUndanganController {
     @Autowired private SuratUndanganService suratUndanganService;
     @Autowired private QutPegawaiService qutPegawaiService;
     @Autowired private TkdJabatanService tkdJabatanService;
+    @Autowired private TkdUnkDao tkdUnkDao;
 
     @RequestMapping(value = "/create-surat-undangan", method = RequestMethod.POST)
     ResponseEntity<?> createSuratUndangan(
@@ -411,7 +413,8 @@ public class SuratUndanganController {
 
         suratUndanganWrapper.setNipPenerimaSuratUndangan(penerima.getNip());
         suratUndanganWrapper.setNamaPenerimaSuratUndangan(penerima.getNama());
-        suratUndanganWrapper.setUnitKerjaPenerimaSuratUndangan(penerima.getUnitKerja());
+        suratUndanganWrapper
+                .setUnitKerjaPenerimaSuratUndangan(tkdUnkDao.findOne(penerima.getKdUnitKerja()).getUnitKerja());
 
         suratUndanganWrapper.setBagianPembukaSuratUndangan(suratUndangan.getBagianPembukaSuratUndangan());
         suratUndanganWrapper.setBagianIsiHariSuratUndangan(suratUndangan.getBagianIsiHariSuratUndangan());
@@ -423,7 +426,7 @@ public class SuratUndanganController {
 
         suratUndanganWrapper.setNipPenandatangan(penandatangan.getNip());
         suratUndanganWrapper.setNamaPenandatangan(penandatangan.getNama());
-        suratUndanganWrapper.setUnitKerjaPenandatangan(penandatangan.getUnitKerja());
+        suratUndanganWrapper.setUnitKerjaPenandatangan(tkdUnkDao.findOne(penandatangan.getKdUnitKerja()).getUnitKerja());
         suratUndanganWrapper.setJabatanPenandatangan(penandatangan.getJabatan());
         suratUndanganWrapper.setGelarDepanPenandatangan(penandatangan.getGlrDpn());
         suratUndanganWrapper.setGelarBelakangPenandatangan(penandatangan.getGlrBlk());

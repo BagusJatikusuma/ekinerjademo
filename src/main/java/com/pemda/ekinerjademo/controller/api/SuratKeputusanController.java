@@ -2,6 +2,7 @@ package com.pemda.ekinerjademo.controller.api;
 
 import com.pemda.ekinerjademo.model.ekinerjamodel.SuratKeputusan;
 import com.pemda.ekinerjademo.projection.ekinerjaprojection.CustomPegawaiCredential;
+import com.pemda.ekinerjademo.repository.bismarepository.TkdUnkDao;
 import com.pemda.ekinerjademo.service.QutPegawaiService;
 import com.pemda.ekinerjademo.service.SuratKeputusanService;
 import com.pemda.ekinerjademo.util.EkinerjaXMLBuilder;
@@ -33,6 +34,7 @@ public class SuratKeputusanController {
 
     @Autowired private SuratKeputusanService suratKeputusanService;
     @Autowired private QutPegawaiService qutPegawaiService;
+    @Autowired private TkdUnkDao tkdUnkDao;
 
     @RequestMapping(value = "/create-surat-keputusan", method = RequestMethod.POST)
     ResponseEntity<?> createSuratKeputusan(@RequestBody SuratKeputusanInputWrapper inputWrapper) {
@@ -184,7 +186,7 @@ public class SuratKeputusanController {
                         penandatangan.getNip(),
                         penandatangan.getNama(),
                         penandatangan.getJabatan(),
-                        penandatangan.getUnitKerja(),
+                        tkdUnkDao.findOne(penandatangan.getKdUnitKerja()).getUnitKerja(),
                         suratKeputusan.getSelaku(),
                         suratKeputusan.getTentang(),
                         ekinerjaXMLParser.convertXmlSuratPerintahIntoListofString(suratKeputusan.getMenimbang(), "menimbang"),

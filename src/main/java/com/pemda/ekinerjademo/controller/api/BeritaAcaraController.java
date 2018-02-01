@@ -1,7 +1,9 @@
 package com.pemda.ekinerjademo.controller.api;
 
+import com.pemda.ekinerjademo.model.bismamodel.TkdUnk;
 import com.pemda.ekinerjademo.model.ekinerjamodel.BeritaAcara;
 import com.pemda.ekinerjademo.projection.ekinerjaprojection.CustomPegawaiCredential;
+import com.pemda.ekinerjademo.repository.bismarepository.TkdUnkDao;
 import com.pemda.ekinerjademo.service.BeritaAcaraService;
 import com.pemda.ekinerjademo.service.QutPegawaiService;
 import com.pemda.ekinerjademo.util.EkinerjaXMLBuilder;
@@ -34,6 +36,7 @@ public class BeritaAcaraController {
 
     @Autowired private BeritaAcaraService beritaAcaraService;
     @Autowired private QutPegawaiService qutPegawaiService;
+    @Autowired private TkdUnkDao tkdUnkDao;
 
     @RequestMapping(value = "/berita-acara/create-berita-acara", method = RequestMethod.POST)
     @Synchronized
@@ -196,26 +199,30 @@ public class BeritaAcaraController {
                         pihakKesatu.getNip(),
                         pihakKesatu.getNama(),
                         pihakKesatu.getJabatan(),
-                        pihakKesatu.getUnitKerja(),
+                        tkdUnkDao.findOne(pihakKesatu.getKdUnitKerja()).getUnitKerja(),
                         pihakKesatu.getPangkat(),
                         pihakKesatu.getGol(),
                         beritaAcara.getPeranPihakKesatu(),
-                pihakKesatu.getGlrDpn(), pihakKesatu.getGlrBlk(), beritaAcara.getStatusApprovalPihakKesatu(),
+                        pihakKesatu.getGlrDpn(),
+                        pihakKesatu.getGlrBlk(),
+                        beritaAcara.getStatusApprovalPihakKesatu(),
                         pihakKedua.getNip(),
                         pihakKedua.getNama(),
                         pihakKedua.getJabatan(),
-                        pihakKedua.getUnitKerja(),
+                        tkdUnkDao.findOne(pihakKedua.getKdUnitKerja()).getUnitKerja(),
                         pihakKedua.getPangkat(),
                         pihakKedua.getGol(),
                         beritaAcara.getPeranPihakKedua(),
-                pihakKedua.getGlrDpn(), pihakKedua.getGlrBlk(), beritaAcara.getStatusApprovalPihakKedua(),
+                        pihakKedua.getGlrDpn(),
+                        pihakKedua.getGlrBlk(),
+                        beritaAcara.getStatusApprovalPihakKedua(),
                         ekinerjaXMLParser
                                 .convertXmlSuratPerintahIntoListofString(beritaAcara.getIsiBeritaAcara(), "isi"),
                         beritaAcara.getDasarBeritaAcara(),
                         pihakMengetahui.getNip(),
                         pihakMengetahui.getNama(),
                         pihakMengetahui.getJabatan(),
-                        pihakMengetahui.getUnitKerja(),
+                        tkdUnkDao.findOne(pihakMengetahui.getKdUnitKerja()).getUnitKerja(),
                         pihakMengetahui.getPangkat(),
                         pihakMengetahui.getGlrDpn(),
                         pihakMengetahui.getGlrBlk(),

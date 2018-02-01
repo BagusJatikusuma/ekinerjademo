@@ -16,6 +16,7 @@ public class CustomPegawaiCredential {
     private String unitKerja;
     private String glrDpn;
     private String glrBlk;
+    private String alRumah;
 
     public CustomPegawaiCredential() {
     }
@@ -49,6 +50,20 @@ public class CustomPegawaiCredential {
         this.unitKerja = unitKerja;
         this.glrDpn = glrDpn;
         this.glrBlk = glrBlk;
+    }
+
+    public CustomPegawaiCredential(String nip, String nama, String gol, String pangkat, String kdJabatan, String jabatan, String kdUnitKerja, String unitKerja, String glrDpn, String glrBlk, String alRumah) {
+        this.nip = nip;
+        this.nama = nama;
+        this.gol = gol;
+        this.pangkat = pangkat;
+        this.kdJabatan = kdJabatan;
+        this.jabatan = jabatan;
+        this.kdUnitKerja = kdUnitKerja;
+        this.unitKerja = unitKerja;
+        this.glrDpn = glrDpn;
+        this.glrBlk = glrBlk;
+        this.alRumah = alRumah;
     }
 
     public String getNip() {
@@ -129,5 +144,13 @@ public class CustomPegawaiCredential {
 
     public void setGlrBlk(String glrBlk) {
         this.glrBlk = glrBlk;
+    }
+
+    public String getAlRumah() {
+        return alRumah;
+    }
+
+    public void setAlRumah(String alRumah) {
+        this.alRumah = alRumah;
     }
 }

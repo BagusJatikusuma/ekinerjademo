@@ -428,22 +428,22 @@ public class MemorandumController {
                         penerima.getNip(),
                         penerima.getNama(),
                         penerima.getJabatan(),
-                        penerima.getUnitKerja(),
+                        tkdUnkDao.findOne(penerima.getKdUnitKerja()).getUnitKerja(),
                         pemberi.getNip(),
                         pemberi.getNama(),
                         pemberi.getJabatan(),
-                        pemberi.getUnitKerja(),
+                        tkdUnkDao.findOne(pemberi.getKdUnitKerja()).getUnitKerja(),
                         memorandum.getHal(),
                         memorandum.getTanggalPembuatanMilis(),
                         memorandum.getIsiMemorandum(),
                         pembuat.getNip(),
                         pembuat.getNama(),
                         pembuat.getJabatan(),
-                        pembuat.getUnitKerja(),
+                        tkdUnkDao.findOne(pembuat.getKdUnitKerja()).getUnitKerja(),
                         penandatangan.getNip(),
                         penandatangan.getNama(),
                         penandatangan.getJabatan(),
-                        penandatangan.getUnitKerja());
+                        tkdUnkDao.findOne(penandatangan.getKdUnitKerja()).getUnitKerja());
 
 
         return new ResponseEntity<Object>(memorandumWrapper, HttpStatus.OK);

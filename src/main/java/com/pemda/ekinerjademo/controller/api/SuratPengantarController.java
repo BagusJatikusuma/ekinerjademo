@@ -5,6 +5,7 @@ import com.pemda.ekinerjademo.model.ekinerjamodel.SuratPengantar;
 import com.pemda.ekinerjademo.model.ekinerjamodel.SuratPengantarIsi;
 import com.pemda.ekinerjademo.model.ekinerjamodel.SuratPengantarIsiId;
 import com.pemda.ekinerjademo.projection.ekinerjaprojection.CustomPegawaiCredential;
+import com.pemda.ekinerjademo.repository.bismarepository.TkdUnkDao;
 import com.pemda.ekinerjademo.service.QutPegawaiService;
 import com.pemda.ekinerjademo.service.SuratPengantarService;
 import com.pemda.ekinerjademo.service.TkdJabatanService;
@@ -37,6 +38,7 @@ public class SuratPengantarController {
     @Autowired private SuratPengantarService suratPengantarService;
     @Autowired private QutPegawaiService qutPegawaiService;
     @Autowired private TkdJabatanService tkdJabatanService;
+    @Autowired private TkdUnkDao tkdUnkDao;
 
     @RequestMapping(value = "/create-surat-pengantar", method = RequestMethod.POST)
     ResponseEntity<?> createSuratPengantar(@RequestBody SuratPengantarInputWrapper inputWrapper) {
@@ -287,6 +289,8 @@ public class SuratPengantarController {
         for (CustomPegawaiCredential pegawai : qutPegawaiList) {
             if (suratPengantar.getNipPenerima()
                     .equals(pegawai.getNip())) {
+                pegawai.setUnitKerja(tkdUnkDao.findOne(pegawai.getKdUnitKerja()).getUnitKerja());
+
                 penerimaSurat = pegawai;
 
                 break;
@@ -323,8 +327,10 @@ public class SuratPengantarController {
                         pemberiSurat.getNip(),
                         pemberiSurat.getNama(),
                         pemberiSurat.getJabatan(),
-                        pemberiSurat.getUnitKerja(),
-                pemberiSurat.getGlrDpn(), pemberiSurat.getGlrBlk(), suratPengantar.getNomorTeleponPemberi(),
+                        tkdUnkDao.findOne(pemberiSurat.getKdUnitKerja()).getUnitKerja(),
+                        pemberiSurat.getGlrDpn(),
+                        pemberiSurat.getGlrBlk(),
+                        suratPengantar.getNomorTeleponPemberi(),
                         suratPengantarIsiWrapperList);
 
         return new ResponseEntity<Object>(suratPengantarWrapper, HttpStatus.OK);

@@ -279,6 +279,9 @@ public class NotaDinasController {
 
         }
 
+        pemberiNotaDinas.setUnitKerja(tkdUnkDao.findOne(pemberiNotaDinas.getKdUnitKerja()).getUnitKerja());
+        penandatangan.setUnitKerja(tkdUnkDao.findOne(penandatangan.getKdUnitKerja()).getUnitKerja());
+
         NotaDinasWrapper notaDinasWrapper
                 = new NotaDinasWrapper(
                         notaDinas.getKdNotaDinas(),
