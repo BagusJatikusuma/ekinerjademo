@@ -565,9 +565,10 @@ public class SuratTugasController {
         return new ResponseEntity<Object>(suratTugasWrapper, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/open-surat-tugas/{kdSuratTugas}", method = RequestMethod.PUT)
+    @RequestMapping(value = "/open-surat-tugas/{kdSuratTugas}/{nipTarget}", method = RequestMethod.PUT)
     ResponseEntity<?> openSuratTugas(
-            @PathVariable("kdSuratTugas") String kdSuratTugas) {
+            @PathVariable("kdSuratTugas") String kdSuratTugas,
+            @PathVariable("nipTarget") String nipTarget) {
         LOGGER.info("open surat tugas");
 
         suratTugasService.openSuratTugas(kdSuratTugas);

@@ -20,6 +20,8 @@ public class SuratKeteranganWrapper {
     private String namaPenandatangan;
     private String jabatanPenandatangan;
     private String unitKerjaPenandatangan;
+    private String pangkatPenandatangan;
+    private String golonganPenandatangan;
     private String gelarDepanPenandatangan;
     private String gelarBelakangPenandatangan;
 
@@ -43,7 +45,7 @@ public class SuratKeteranganWrapper {
             String namaPenandatangan,
             String jabatanPenandatangan,
             String unitKerjaPenandatangan,
-            String gelarDepanPenandatangan, String gelarBelakangPenandatangan, String isiSuratKeterangan,
+            String pangkatPenandatangan, String golonganPenandatangan, String gelarDepanPenandatangan, String gelarBelakangPenandatangan, String isiSuratKeterangan,
             String kotaPembuatanSurat,
             Long tanggalPembuatanSuratMilis,
             List<CustomPegawaiCredential> nipPegawaiKeteranganList,
@@ -58,6 +60,8 @@ public class SuratKeteranganWrapper {
         this.namaPenandatangan = namaPenandatangan;
         this.jabatanPenandatangan = jabatanPenandatangan;
         this.unitKerjaPenandatangan = unitKerjaPenandatangan;
+        this.pangkatPenandatangan = pangkatPenandatangan;
+        this.golonganPenandatangan = golonganPenandatangan;
         this.gelarDepanPenandatangan = gelarDepanPenandatangan;
         this.gelarBelakangPenandatangan = gelarBelakangPenandatangan;
         this.isiSuratKeterangan = isiSuratKeterangan;
@@ -201,5 +205,21 @@ public class SuratKeteranganWrapper {
 
     public void setGelarBelakangPenandatangan(String gelarBelakangPenandatangan) {
         this.gelarBelakangPenandatangan = gelarBelakangPenandatangan;
+    }
+
+    public String getPangkatPenandatangan() {
+        return pangkatPenandatangan;
+    }
+
+    public void setPangkatPenandatangan(String pangkatPenandatangan) {
+        this.pangkatPenandatangan = pangkatPenandatangan;
+    }
+
+    public String getGolonganPenandatangan() {
+        return golonganPenandatangan;
+    }
+
+    public void setGolonganPenandatangan(String golonganPenandatangan) {
+        this.golonganPenandatangan = golonganPenandatangan;
     }
 }

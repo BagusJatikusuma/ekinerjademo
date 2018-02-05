@@ -2,6 +2,7 @@ package com.pemda.ekinerjademo.service.impl;
 
 import com.pemda.ekinerjademo.model.ekinerjamodel.NotaDinas;
 import com.pemda.ekinerjademo.model.ekinerjamodel.TembusanNotaDinas;
+import com.pemda.ekinerjademo.model.ekinerjamodel.TembusanNotaDinasId;
 import com.pemda.ekinerjademo.repository.ekinerjarepository.NotaDinasDao;
 import com.pemda.ekinerjademo.repository.ekinerjarepository.TembusanNotaDinasDao;
 import com.pemda.ekinerjademo.service.NotaDinasService;
@@ -59,6 +60,13 @@ public class NotaDinasServiceImpl implements NotaDinasService {
     public void openNotaDinas(String kdNotaDinas) {
         NotaDinas notaDinas
                 = findBykdNotaDinas(kdNotaDinas);
+    }
+
+    @Override
+    public void openTembusanNotaDinas(TembusanNotaDinasId id) {
+        TembusanNotaDinas tembusanNotaDinas
+                = tembusanNotaDinasDao.findOne(id);
+        tembusanNotaDinas.setStatusBaca(1);
     }
 
     @Override

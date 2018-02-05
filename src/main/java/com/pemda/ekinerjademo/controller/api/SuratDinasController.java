@@ -438,8 +438,10 @@ public class SuratDinasController {
 
     }
 
-    @RequestMapping(value = "/open-surat-dinas/{kdSuratDinas}", method = RequestMethod.PUT)
-    ResponseEntity<?> openSuratDinas(@PathVariable("kdSuratDinas") String kdSuratDinas) {
+    @RequestMapping(value = "/open-surat-dinas/{kdSuratDinas}/{nipTarget}", method = RequestMethod.PUT)
+    ResponseEntity<?> openSuratDinas(
+            @PathVariable("kdSuratDinas") String kdSuratDinas,
+            @PathVariable("nipTarget") String nipTarget) {
         LOGGER.info("open surat dinas");
 
         SuratDinas suratDinas = suratDinasService.getByKdSuratDinas(kdSuratDinas);

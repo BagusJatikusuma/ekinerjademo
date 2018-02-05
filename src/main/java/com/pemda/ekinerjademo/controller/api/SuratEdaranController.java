@@ -254,6 +254,10 @@ public class SuratEdaranController {
         suratEdaranWrapper.setNamaPenandatangan(penandatangan.getNama());
         suratEdaranWrapper.setJabatanPenandatangan(penandatangan.getJabatan());
         suratEdaranWrapper.setUnitKerjaPenandatangan(tkdUnkDao.findOne(penandatangan.getKdUnitKerja()).getUnitKerja());
+        suratEdaranWrapper.setGelarDepanPenandatangan(penandatangan.getGlrDpn());
+        suratEdaranWrapper.setGelarBelakangPenandatangan(penandatangan.getGlrBlk());
+        suratEdaranWrapper.setPangkatPenandatangan(penandatangan.getPangkat());
+        suratEdaranWrapper.setGolonganPenandatangan(penandatangan.getGol());
         suratEdaranWrapper.setSuratPejabat(isSuratPejabat);
 
         return new ResponseEntity<Object>(suratEdaranWrapper, HttpStatus.OK);

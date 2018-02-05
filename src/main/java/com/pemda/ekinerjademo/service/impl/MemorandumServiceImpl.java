@@ -1,9 +1,6 @@
 package com.pemda.ekinerjademo.service.impl;
 
-import com.pemda.ekinerjademo.model.ekinerjamodel.Memorandum;
-import com.pemda.ekinerjademo.model.ekinerjamodel.MemorandumNonPejabat;
-import com.pemda.ekinerjademo.model.ekinerjamodel.MemorandumPejabat;
-import com.pemda.ekinerjademo.model.ekinerjamodel.TembusanMemorandum;
+import com.pemda.ekinerjademo.model.ekinerjamodel.*;
 import com.pemda.ekinerjademo.repository.ekinerjarepository.MemorandumDao;
 import com.pemda.ekinerjademo.repository.ekinerjarepository.MemorandumNonPejabatDao;
 import com.pemda.ekinerjademo.repository.ekinerjarepository.MemorandumPejabatDao;
@@ -66,7 +63,16 @@ public class MemorandumServiceImpl implements MemorandumService {
 
     @Override
     public void openMemorandum(String kdMemorandum) {
+        Memorandum memorandum
+                = memorandumDao.findByKdMemorandum(kdMemorandum);
+        memorandum.setStatusBaca(1);
+    }
 
+    @Override
+    public void openTembusanMemorandum(TembusanMemorandumId id) {
+        TembusanMemorandum tembusanMemorandum
+                = tembusanMemorandumDao.findOne(id);
+        tembusanMemorandum.setStatusBaca(1);
     }
 
     @Override

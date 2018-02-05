@@ -1,5 +1,6 @@
 package com.pemda.ekinerjademo.controller.api;
 
+import com.pemda.ekinerjademo.model.bismamodel.QutPegawai;
 import com.pemda.ekinerjademo.model.bismamodel.TkdJabatan;
 import com.pemda.ekinerjademo.model.ekinerjamodel.NotaDinas;
 import com.pemda.ekinerjademo.model.ekinerjamodel.TembusanNotaDinas;
@@ -88,6 +89,7 @@ public class NotaDinasController {
         notaDinas.setNipPenilai("");
         notaDinas.setStatusPenilaian(0);
         notaDinas.setAlasanPenolakan("");
+        notaDinas.setStatusBaca(0);
 
         notaDinasService.create(notaDinas);
 
@@ -115,7 +117,7 @@ public class NotaDinasController {
                             notaDinas.getKdNotaDinas(),
                             "",
                             false,
-                            -1,
+                            notaDinas.getStatusBaca(),
                             "nota dinas",
                             3,
                             notaDinas.getTanggalPembuatanMilis(),
@@ -302,9 +304,35 @@ public class NotaDinasController {
         return new ResponseEntity<Object>(notaDinasWrapper, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/open-nota-dinas/{kdNotaDinas}", method = RequestMethod.PUT)
-    ResponseEntity<?> openNotaDinas(@PathVariable("kdNotaDinas") String kdNotaDinas) {
+    @RequestMapping(value = "/open-nota-dinas/{kdNotaDinas}/{nipTarget}", method = RequestMethod.PUT)
+    ResponseEntity<?> openNotaDinas(
+            @PathVariable("kdNotaDinas") String kdNotaDinas,
+            @PathVariable("nipTarget") String nipTarget) {
         LOGGER.info("open nota dinas");
+
+        QutPegawai pegawaiTarget = qutPegawaiService.getQutPegawai(nipTarget);
+        NotaDinas notaDinas = notaDinasService.findBykdNotaDinas(kdNotaDinas);
+
+        if (pegawaiTarget.getKdJabatan()
+                .equals(notaDinas.getKdJabatanPenerimaNotaDinas())) {
+            notaDinasService.openNotaDinas(kdNotaDinas);
+        }
+
+        boolean exist = false;
+        for (TembusanNotaDinas tembusanNotaDinas
+                : notaDinas.getTembusanNotaDinasList()) {
+            if (tembusanNotaDinas.getTembusanNotaDinasId().getKdJabatan()
+                    .equals(pegawaiTarget.getKdJabatan())) {
+                exist = true;
+                break;
+            }
+        }
+
+        if (exist) {
+            notaDinasService
+                    .openTembusanNotaDinas(
+                            new TembusanNotaDinasId(kdNotaDinas, pegawaiTarget.getKdJabatan()));
+        }
 
         return new ResponseEntity<Object>(
                 new CustomMessage("nota dinas opened"), HttpStatus.OK);

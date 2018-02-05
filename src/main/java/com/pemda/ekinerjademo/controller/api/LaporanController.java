@@ -1,16 +1,12 @@
 package com.pemda.ekinerjademo.controller.api;
 
-import com.pemda.ekinerjademo.model.ekinerjamodel.BeritaAcara;
 import com.pemda.ekinerjademo.model.ekinerjamodel.Laporan;
-import com.pemda.ekinerjademo.model.ekinerjamodel.SuratPerintah;
 import com.pemda.ekinerjademo.projection.ekinerjaprojection.CustomPegawaiCredential;
 import com.pemda.ekinerjademo.repository.bismarepository.TkdUnkDao;
 import com.pemda.ekinerjademo.service.LaporanService;
 import com.pemda.ekinerjademo.service.QutPegawaiService;
-import com.pemda.ekinerjademo.wrapper.input.BeritaAcaraInputWrapper;
 import com.pemda.ekinerjademo.wrapper.input.LaporanInputWrapper;
 import com.pemda.ekinerjademo.wrapper.output.CustomMessage;
-import com.pemda.ekinerjademo.wrapper.output.LaporanHistoryWrapper;
 import com.pemda.ekinerjademo.wrapper.output.LaporanWrapper;
 import com.pemda.ekinerjademo.wrapper.output.SuratPerintahHistoryWrapper;
 import groovy.transform.Synchronized;
@@ -21,9 +17,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.time.Year;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -162,30 +155,35 @@ public class LaporanController {
             }
         }
 
+
         LaporanWrapper laporanWrapper
                 = new LaporanWrapper(
-                        laporan.getKdLaporan(),
-                        laporan.getTentang(),
-                        laporan.getUmum(),
-                        laporan.getMaksudDanTujuan(),
-                        laporan.getRuangLingkup(),
-                        laporan.getDasar(),
-                        laporan.getKegiatanYangDilaksanakan(),
-                        laporan.getHasilYangDicapai(),
-                        laporan.getSimpulanDanSaran(),
-                        laporan.getPenutup(),
-                        penandatangan.getNip(),
-                        penandatangan.getNama(),
-                        penandatangan.getJabatan(),
-                        tkdUnkDao.findOne(penandatangan.getKdUnitKerja()).getUnitKerja(),
-                        laporan.getStatusBaca(),
-                        laporan.getKotaPembuatanSurat(),
-                        laporan.getTanggalPembuatanMilis(),
-                        pembuat.getNip(),
-                        pembuat.getNama(),
-                        pembuat.getJabatan(),
-                        tkdUnkDao.findOne(pembuat.getKdUnitKerja()).getUnitKerja());
-
+                laporan.getKdLaporan(),
+                laporan.getTentang(),
+                laporan.getUmum(),
+                laporan.getMaksudDanTujuan(),
+                laporan.getRuangLingkup(),
+                laporan.getDasar(),
+                laporan.getKegiatanYangDilaksanakan(),
+                laporan.getHasilYangDicapai(),
+                laporan.getSimpulanDanSaran(),
+                laporan.getPenutup(),
+                penandatangan.getNip(),
+                penandatangan.getNama(),
+                penandatangan.getJabatan(),
+                tkdUnkDao.findOne(penandatangan.getKdUnitKerja()).getUnitKerja(),
+                penandatangan.getGlrDpn(),
+                penandatangan.getGlrBlk(),
+                penandatangan.getPangkat(),
+                penandatangan.getGol(),
+                laporan.getStatusBaca(),
+                laporan.getKotaPembuatanSurat(),
+                laporan.getTanggalPembuatanMilis(),
+                pembuat.getNip(),
+                pembuat.getNama(),
+                pembuat.getJabatan(),
+                tkdUnkDao.findOne(pembuat.getKdUnitKerja()).getUnitKerja(),
+                pembuat.getGlrDpn(), pembuat.getGlrBlk(), pembuat.getPangkat(), pembuat.getGol());
         return new ResponseEntity<Object>(laporanWrapper,HttpStatus.OK);
     }
 

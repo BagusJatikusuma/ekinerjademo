@@ -25,6 +25,10 @@ public class SuratUndanganWrapper {
     private String nipPenerimaSuratUndangan;
     private String namaPenerimaSuratUndangan;
     private String unitKerjaPenerimaSuratUndangan;
+    private String gelarDepanPenerimaSuratUndangan;
+    private String gelarBelakangPenerimaSuratUndangan;
+    private String pangkatPenerimaSuratUndangan;
+    private String golonganPenerimaSuratUndangan;
 
     private String bagianPembukaSuratUndangan;
     private String bagianIsiHariSuratUndangan;
@@ -40,6 +44,9 @@ public class SuratUndanganWrapper {
     private String jabatanPenandatangan;
     private String gelarDepanPenandatangan;
     private String gelarBelakangPenandatangan;
+    private String pangkatPenandatangan;
+    private String golonganPenandatangan;
+
     private List<JabatanWrapper> tembusanSuratUndanganList;
 
     private boolean isSuratPejabat;
@@ -63,7 +70,7 @@ public class SuratUndanganWrapper {
             String nipPenerimaSuratUndangan,
             String namaPenerimaSuratUndangan,
             String unitKerjaPenerimaSuratUndangan,
-            String bagianPembukaSuratUndangan,
+            String gelarDepanPenerimaSuratUndangan, String gelarBelakangPenerimaSuratUndangan, String pangkatPenerimaSuratUndangan, String golonganPenerimaSuratUndangan, String bagianPembukaSuratUndangan,
             String bagianIsiHariSuratUndangan,
             Long bagianIsiTanggalSuratUndangan,
             String bagianIsiWaktuSuratUndangan,
@@ -73,7 +80,7 @@ public class SuratUndanganWrapper {
             String nipPenandatangan,
             String namaPenandatangan,
             String unitKerjaPenandatangan,
-            String jabatanPenandatangan, String gelarDepanPenandatangan, String gelarBelakangPenandatangan, List<JabatanWrapper> tembusanSuratUndanganList,
+            String jabatanPenandatangan, String gelarDepanPenandatangan, String gelarBelakangPenandatangan, String pangkatPenandatangan, String golonganPenandatangan, List<JabatanWrapper> tembusanSuratUndanganList,
             boolean isSuratPejabat) {
         this.kdSuratUndangan = kdSuratUndangan;
         this.nomorUrusan = nomorUrusan;
@@ -91,6 +98,10 @@ public class SuratUndanganWrapper {
         this.nipPenerimaSuratUndangan = nipPenerimaSuratUndangan;
         this.namaPenerimaSuratUndangan = namaPenerimaSuratUndangan;
         this.unitKerjaPenerimaSuratUndangan = unitKerjaPenerimaSuratUndangan;
+        this.gelarDepanPenerimaSuratUndangan = gelarDepanPenerimaSuratUndangan;
+        this.gelarBelakangPenerimaSuratUndangan = gelarBelakangPenerimaSuratUndangan;
+        this.pangkatPenerimaSuratUndangan = pangkatPenerimaSuratUndangan;
+        this.golonganPenerimaSuratUndangan = golonganPenerimaSuratUndangan;
         this.bagianPembukaSuratUndangan = bagianPembukaSuratUndangan;
         this.bagianIsiHariSuratUndangan = bagianIsiHariSuratUndangan;
         this.bagianIsiTanggalSuratUndangan = bagianIsiTanggalSuratUndangan;
@@ -104,6 +115,8 @@ public class SuratUndanganWrapper {
         this.jabatanPenandatangan = jabatanPenandatangan;
         this.gelarDepanPenandatangan = gelarDepanPenandatangan;
         this.gelarBelakangPenandatangan = gelarBelakangPenandatangan;
+        this.pangkatPenandatangan = pangkatPenandatangan;
+        this.golonganPenandatangan = golonganPenandatangan;
         this.tembusanSuratUndanganList = tembusanSuratUndanganList;
         this.isSuratPejabat = isSuratPejabat;
     }
@@ -354,5 +367,53 @@ public class SuratUndanganWrapper {
 
     public void setGelarBelakangPenandatangan(String gelarBelakangPenandatangan) {
         this.gelarBelakangPenandatangan = gelarBelakangPenandatangan;
+    }
+
+    public String getPangkatPenandatangan() {
+        return pangkatPenandatangan;
+    }
+
+    public void setPangkatPenandatangan(String pangkatPenandatangan) {
+        this.pangkatPenandatangan = pangkatPenandatangan;
+    }
+
+    public String getGolonganPenandatangan() {
+        return golonganPenandatangan;
+    }
+
+    public void setGolonganPenandatangan(String golonganPenandatangan) {
+        this.golonganPenandatangan = golonganPenandatangan;
+    }
+
+    public String getGelarDepanPenerimaSuratUndangan() {
+        return gelarDepanPenerimaSuratUndangan;
+    }
+
+    public void setGelarDepanPenerimaSuratUndangan(String gelarDepanPenerimaSuratUndangan) {
+        this.gelarDepanPenerimaSuratUndangan = gelarDepanPenerimaSuratUndangan;
+    }
+
+    public String getGelarBelakangPenerimaSuratUndangan() {
+        return gelarBelakangPenerimaSuratUndangan;
+    }
+
+    public void setGelarBelakangPenerimaSuratUndangan(String gelarBelakangPenerimaSuratUndangan) {
+        this.gelarBelakangPenerimaSuratUndangan = gelarBelakangPenerimaSuratUndangan;
+    }
+
+    public String getPangkatPenerimaSuratUndangan() {
+        return pangkatPenerimaSuratUndangan;
+    }
+
+    public void setPangkatPenerimaSuratUndangan(String pangkatPenerimaSuratUndangan) {
+        this.pangkatPenerimaSuratUndangan = pangkatPenerimaSuratUndangan;
+    }
+
+    public String getGolonganPenerimaSuratUndangan() {
+        return golonganPenerimaSuratUndangan;
+    }
+
+    public void setGolonganPenerimaSuratUndangan(String golonganPenerimaSuratUndangan) {
+        this.golonganPenerimaSuratUndangan = golonganPenerimaSuratUndangan;
     }
 }

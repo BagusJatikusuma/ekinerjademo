@@ -12,10 +12,16 @@ public class PengumumanWrapper {
 
     private String tentang;
     private String isiPengumuman;
+
     private String nipPenandatangan;
     private String namaPenandatangan;
     private String jabatanPenandatangan;
     private String unitKerjaPenandatangan;
+    private String gelarDepanPenandatangan;
+    private String gelarBelakangPenandatangan;
+    private String pangkatPenandatangan;
+    private String golonganPenandatangan;
+
     private String kotaPembuatanSurat;
     private Long tanggalPembuatanMilis;
 
@@ -34,7 +40,7 @@ public class PengumumanWrapper {
             String namaPenandatangan,
             String jabatanPenandatangan,
             String unitKerjaPenandatangan,
-            String kotaPembuatanSurat,
+            String gelarDepanPenandatangan, String gelarBelakangPenandatangan, String pangkatPenandatangan, String golonganPenandatangan, String kotaPembuatanSurat,
             Long tanggalPembuatanMilis) {
         this.nomorUrusan = nomorUrusan;
         this.nomorUrut = nomorUrut;
@@ -47,6 +53,10 @@ public class PengumumanWrapper {
         this.namaPenandatangan = namaPenandatangan;
         this.jabatanPenandatangan = jabatanPenandatangan;
         this.unitKerjaPenandatangan = unitKerjaPenandatangan;
+        this.gelarDepanPenandatangan = gelarDepanPenandatangan;
+        this.gelarBelakangPenandatangan = gelarBelakangPenandatangan;
+        this.pangkatPenandatangan = pangkatPenandatangan;
+        this.golonganPenandatangan = golonganPenandatangan;
         this.kotaPembuatanSurat = kotaPembuatanSurat;
         this.tanggalPembuatanMilis = tanggalPembuatanMilis;
     }
@@ -153,5 +163,37 @@ public class PengumumanWrapper {
 
     public void setTanggalPembuatanMilis(Long tanggalPembuatanMilis) {
         this.tanggalPembuatanMilis = tanggalPembuatanMilis;
+    }
+
+    public String getGelarDepanPenandatangan() {
+        return gelarDepanPenandatangan;
+    }
+
+    public void setGelarDepanPenandatangan(String gelarDepanPenandatangan) {
+        this.gelarDepanPenandatangan = gelarDepanPenandatangan;
+    }
+
+    public String getGelarBelakangPenandatangan() {
+        return gelarBelakangPenandatangan;
+    }
+
+    public void setGelarBelakangPenandatangan(String gelarBelakangPenandatangan) {
+        this.gelarBelakangPenandatangan = gelarBelakangPenandatangan;
+    }
+
+    public String getPangkatPenandatangan() {
+        return pangkatPenandatangan;
+    }
+
+    public void setPangkatPenandatangan(String pangkatPenandatangan) {
+        this.pangkatPenandatangan = pangkatPenandatangan;
+    }
+
+    public String getGolonganPenandatangan() {
+        return golonganPenandatangan;
+    }
+
+    public void setGolonganPenandatangan(String golonganPenandatangan) {
+        this.golonganPenandatangan = golonganPenandatangan;
     }
 }

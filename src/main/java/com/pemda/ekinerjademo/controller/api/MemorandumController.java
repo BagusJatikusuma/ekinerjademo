@@ -1,5 +1,7 @@
 package com.pemda.ekinerjademo.controller.api;
 
+import com.pemda.ekinerjademo.model.bismamodel.QutPegawai;
+import com.pemda.ekinerjademo.model.bismamodel.TkdJabatan;
 import com.pemda.ekinerjademo.model.ekinerjamodel.*;
 import com.pemda.ekinerjademo.projection.ekinerjaprojection.CustomPegawaiCredential;
 import com.pemda.ekinerjademo.repository.bismarepository.TkdUnkDao;
@@ -7,10 +9,7 @@ import com.pemda.ekinerjademo.service.MemorandumService;
 import com.pemda.ekinerjademo.service.QutPegawaiCloneService;
 import com.pemda.ekinerjademo.service.TkdJabatanService;
 import com.pemda.ekinerjademo.wrapper.input.MemorandumInputWrapper;
-import com.pemda.ekinerjademo.wrapper.output.CustomMessage;
-import com.pemda.ekinerjademo.wrapper.output.MemorandumHistoryWrapper;
-import com.pemda.ekinerjademo.wrapper.output.MemorandumTargetWrapper;
-import com.pemda.ekinerjademo.wrapper.output.MemorandumWrapper;
+import com.pemda.ekinerjademo.wrapper.output.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -373,7 +372,30 @@ public class MemorandumController {
     ResponseEntity<?> getMemorandumBykdMemorandum(@PathVariable("kdMemorandum") String kdMemorandum) {
         LOGGER.info("get memorandum by kd memorandum");
 
+        List<JabatanWrapper> tembusanMemorandumList = new ArrayList<>();
         Memorandum memorandum = memorandumService.getByKdMemorandum(kdMemorandum);
+
+        List<TkdJabatan> tkdJabatanList = tkdJabatanService.getAll();
+        for (TembusanMemorandum tembusanMemorandum
+                : memorandum.getTembusanMemorandumList()) {
+            for (TkdJabatan tkdJabatan : tkdJabatanList){
+                if (tkdJabatan.getKdJabatan()
+                        .equals(tembusanMemorandum.getTembusanMemorandumId().getKdJabatan())) {
+                    JabatanWrapper jabatanWrapper = new JabatanWrapper();
+
+                    jabatanWrapper.setKdJabatan(tkdJabatan.getKdJabatan());
+                    jabatanWrapper.setJabatan(tkdJabatan.getJabatan());
+                    jabatanWrapper.setEselon(tkdJabatan.getEselon());
+
+                    tembusanMemorandumList.add(jabatanWrapper);
+
+                    break;
+
+                }
+
+            }
+
+        }
 
         CustomPegawaiCredential
                 penerima = null,
@@ -429,21 +451,23 @@ public class MemorandumController {
                         penerima.getNama(),
                         penerima.getJabatan(),
                         tkdUnkDao.findOne(penerima.getKdUnitKerja()).getUnitKerja(),
-                        pemberi.getNip(),
+                penerima.getGlrDpn(), penerima.getGlrBlk(), penerima.getPangkat(), penerima.getGol(), pemberi.getNip(),
                         pemberi.getNama(),
                         pemberi.getJabatan(),
                         tkdUnkDao.findOne(pemberi.getKdUnitKerja()).getUnitKerja(),
-                        memorandum.getHal(),
+                pemberi.getGlrDpn(), pemberi.getGlrBlk(), pemberi.getPangkat(), pemberi.getGol(), memorandum.getHal(),
                         memorandum.getTanggalPembuatanMilis(),
                         memorandum.getIsiMemorandum(),
                         pembuat.getNip(),
                         pembuat.getNama(),
                         pembuat.getJabatan(),
                         tkdUnkDao.findOne(pembuat.getKdUnitKerja()).getUnitKerja(),
-                        penandatangan.getNip(),
+                pembuat.getGlrDpn(), pembuat.getGlrBlk(), pembuat.getPangkat(), pembuat.getGol(), penandatangan.getNip(),
                         penandatangan.getNama(),
                         penandatangan.getJabatan(),
-                        tkdUnkDao.findOne(penandatangan.getKdUnitKerja()).getUnitKerja());
+                        tkdUnkDao.findOne(penandatangan.getKdUnitKerja()).getUnitKerja(),
+                penandatangan.getGlrDpn(), penandatangan.getGlrBlk(), penandatangan.getPangkat(), penandatangan.getGol(),
+                tembusanMemorandumList);
 
 
         return new ResponseEntity<Object>(memorandumWrapper, HttpStatus.OK);
@@ -455,7 +479,30 @@ public class MemorandumController {
             @PathVariable("nipTarget") String nipTarget) {
         LOGGER.info("open memorandum by penilai");
 
-        memorandumService.openMemorandum(kdMemorandum);
+        QutPegawai pegawaiTarget = qutPegawaiService.getQutPegawai(nipTarget);
+
+        Memorandum memorandum = memorandumService.getByKdMemorandum(kdMemorandum);
+
+        if (pegawaiTarget.getNip()
+                .equals(memorandum.getNipPenerimaMemorandum())) {
+            memorandumService.openMemorandum(kdMemorandum);
+        }
+
+        boolean exist = false;
+        for (TembusanMemorandum tembusanMemorandum
+                : memorandum.getTembusanMemorandumList()) {
+            if (tembusanMemorandum.getTembusanMemorandumId().getKdJabatan()
+                    .equals(pegawaiTarget.getKdJabatan())) {
+                exist = true;
+                break;
+            }
+        }
+
+        if (exist) {
+            memorandumService
+                    .openTembusanMemorandum(
+                            new TembusanMemorandumId(kdMemorandum, pegawaiTarget.getKdJabatan()));
+        }
 
         return new ResponseEntity<Object>(new CustomMessage("laporan opened by penilai"), HttpStatus.OK);
     }

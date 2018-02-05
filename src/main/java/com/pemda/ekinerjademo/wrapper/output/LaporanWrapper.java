@@ -15,18 +15,28 @@ public class LaporanWrapper {
     private String hasilYangDicapai;
     private String simpulanDanSaran;
     private String penutup;
+
     private String nipPenandatangan;
     private String namaPenandatangan;
     private String jabatanPenandatangan;
     private String unitKerjaPenandatangan;
+    private String gelarDepanPenandantangan;
+    private String gelarBelakangPenandatangan;
+    private String pangkatPenandantangan;
+    private String golonganPenandatangan;
 
     private Integer statusBaca;
     private String kotaPembuatanSurat;
     private Long tanggalPembuatanMilis;
+
     private String nipPembuatSurat;
     private String namaPembuatSurat;
     private String jabatanPembuatSurat;
     private String unitKerjaPembuatSurat;
+    private String gelarDepanPembuatSurat;
+    private String gelarBelakangPembuatSurat;
+    private String pangkatPembuatSurat;
+    private String golonganPembuatSurat;
 
     public LaporanWrapper() {
     }
@@ -46,13 +56,13 @@ public class LaporanWrapper {
             String namaPenandatangan,
             String jabatanPenandatangan,
             String unitKerjaPenandatangan,
-            Integer statusBaca,
+            String gelarDepanPenandantangan, String gelarBelakangPenandatangan, String pangkatPenandantangan, String golonganPenandatangan, Integer statusBaca,
             String kotaPembuatanSurat,
             Long tanggalPembuatanMilis,
             String nipPembuatSurat,
             String namaPembuatSurat,
             String jabatanPembuatSurat,
-            String unitKerjaPembuatSurat) {
+            String unitKerjaPembuatSurat, String gelarDepanPembuatSurat, String gelarBelakangPembuatSurat, String pangkatPembuatSurat, String golonganPembuatSurat) {
         this.kdLaporan = kdLaporan;
         this.tentang = tentang;
         this.umum = umum;
@@ -67,6 +77,10 @@ public class LaporanWrapper {
         this.namaPenandatangan = namaPenandatangan;
         this.jabatanPenandatangan = jabatanPenandatangan;
         this.unitKerjaPenandatangan = unitKerjaPenandatangan;
+        this.gelarDepanPenandantangan = gelarDepanPenandantangan;
+        this.gelarBelakangPenandatangan = gelarBelakangPenandatangan;
+        this.pangkatPenandantangan = pangkatPenandantangan;
+        this.golonganPenandatangan = golonganPenandatangan;
         this.statusBaca = statusBaca;
         this.kotaPembuatanSurat = kotaPembuatanSurat;
         this.tanggalPembuatanMilis = tanggalPembuatanMilis;
@@ -74,6 +88,10 @@ public class LaporanWrapper {
         this.namaPembuatSurat = namaPembuatSurat;
         this.jabatanPembuatSurat = jabatanPembuatSurat;
         this.unitKerjaPembuatSurat = unitKerjaPembuatSurat;
+        this.gelarDepanPembuatSurat = gelarDepanPembuatSurat;
+        this.gelarBelakangPembuatSurat = gelarBelakangPembuatSurat;
+        this.pangkatPembuatSurat = pangkatPembuatSurat;
+        this.golonganPembuatSurat = golonganPembuatSurat;
     }
 
     public String getKdLaporan() {
@@ -242,5 +260,69 @@ public class LaporanWrapper {
 
     public void setUnitKerjaPembuatSurat(String unitKerjaPembuatSurat) {
         this.unitKerjaPembuatSurat = unitKerjaPembuatSurat;
+    }
+
+    public String getGelarDepanPenandantangan() {
+        return gelarDepanPenandantangan;
+    }
+
+    public void setGelarDepanPenandantangan(String gelarDepanPenandantangan) {
+        this.gelarDepanPenandantangan = gelarDepanPenandantangan;
+    }
+
+    public String getGelarBelakangPenandatangan() {
+        return gelarBelakangPenandatangan;
+    }
+
+    public void setGelarBelakangPenandatangan(String gelarBelakangPenandatangan) {
+        this.gelarBelakangPenandatangan = gelarBelakangPenandatangan;
+    }
+
+    public String getPangkatPenandantangan() {
+        return pangkatPenandantangan;
+    }
+
+    public void setPangkatPenandantangan(String pangkatPenandantangan) {
+        this.pangkatPenandantangan = pangkatPenandantangan;
+    }
+
+    public String getGolonganPenandatangan() {
+        return golonganPenandatangan;
+    }
+
+    public void setGolonganPenandatangan(String golonganPenandatangan) {
+        this.golonganPenandatangan = golonganPenandatangan;
+    }
+
+    public String getGelarDepanPembuatSurat() {
+        return gelarDepanPembuatSurat;
+    }
+
+    public void setGelarDepanPembuatSurat(String gelarDepanPembuatSurat) {
+        this.gelarDepanPembuatSurat = gelarDepanPembuatSurat;
+    }
+
+    public String getGelarBelakangPembuatSurat() {
+        return gelarBelakangPembuatSurat;
+    }
+
+    public void setGelarBelakangPembuatSurat(String gelarBelakangPembuatSurat) {
+        this.gelarBelakangPembuatSurat = gelarBelakangPembuatSurat;
+    }
+
+    public String getPangkatPembuatSurat() {
+        return pangkatPembuatSurat;
+    }
+
+    public void setPangkatPembuatSurat(String pangkatPembuatSurat) {
+        this.pangkatPembuatSurat = pangkatPembuatSurat;
+    }
+
+    public String getGolonganPembuatSurat() {
+        return golonganPembuatSurat;
+    }
+
+    public void setGolonganPembuatSurat(String golonganPembuatSurat) {
+        this.golonganPembuatSurat = golonganPembuatSurat;
     }
 }

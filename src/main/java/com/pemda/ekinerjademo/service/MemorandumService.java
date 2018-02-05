@@ -1,9 +1,6 @@
 package com.pemda.ekinerjademo.service;
 
-import com.pemda.ekinerjademo.model.ekinerjamodel.Memorandum;
-import com.pemda.ekinerjademo.model.ekinerjamodel.MemorandumNonPejabat;
-import com.pemda.ekinerjademo.model.ekinerjamodel.MemorandumPejabat;
-import com.pemda.ekinerjademo.model.ekinerjamodel.TembusanMemorandum;
+import com.pemda.ekinerjademo.model.ekinerjamodel.*;
 
 import java.util.List;
 
@@ -21,6 +18,7 @@ public interface MemorandumService {
     void createTembusanMemorandum(List<TembusanMemorandum> tembusanMemorandumList);
 
     void openMemorandum(String kdMemorandum);
+    void openTembusanMemorandum(TembusanMemorandumId id);
     void openMemorandumByPenilai(String kdMemorandum);
 
     void update(Memorandum memorandum);

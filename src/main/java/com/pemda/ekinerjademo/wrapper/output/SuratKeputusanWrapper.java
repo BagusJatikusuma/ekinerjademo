@@ -12,6 +12,10 @@ public class SuratKeputusanWrapper {
     private String namaPenandatangan;
     private String jabatanPenandatangan;
     private String unitKerjaPenandatangan;
+    private String gelarDepanPenandatangan;
+    private String gelarBelakangPenandatangan;
+    private String pangkatPenandatangan;
+    private String golonganPenandatangan;
 
     private String selaku;
     private String tentang;
@@ -25,7 +29,7 @@ public class SuratKeputusanWrapper {
     public SuratKeputusanWrapper() {
     }
 
-    public SuratKeputusanWrapper(String kdSuratKeputusan, Integer nomorUrut, Integer nomorTahun, String nipPenandatangan, String namaPenandatangan, String jabatanPenandatangan, String unitKerjaPenandatangan, String selaku, String tentang, List<String> menimbang, List<String> mengingat, List<String> menetapkan, Long tanggalPembuatanMilis, String kotaPembuatanSurat) {
+    public SuratKeputusanWrapper(String kdSuratKeputusan, Integer nomorUrut, Integer nomorTahun, String nipPenandatangan, String namaPenandatangan, String jabatanPenandatangan, String unitKerjaPenandatangan, String gelarDepanPenandatangan, String gelarBelakangPenandatangan, String pangkatPenandatangan, String golonganPenandatangan, String selaku, String tentang, List<String> menimbang, List<String> mengingat, List<String> menetapkan, Long tanggalPembuatanMilis, String kotaPembuatanSurat) {
         this.kdSuratKeputusan = kdSuratKeputusan;
         this.nomorUrut = nomorUrut;
         this.nomorTahun = nomorTahun;
@@ -33,6 +37,10 @@ public class SuratKeputusanWrapper {
         this.namaPenandatangan = namaPenandatangan;
         this.jabatanPenandatangan = jabatanPenandatangan;
         this.unitKerjaPenandatangan = unitKerjaPenandatangan;
+        this.gelarDepanPenandatangan = gelarDepanPenandatangan;
+        this.gelarBelakangPenandatangan = gelarBelakangPenandatangan;
+        this.pangkatPenandatangan = pangkatPenandatangan;
+        this.golonganPenandatangan = golonganPenandatangan;
         this.selaku = selaku;
         this.tentang = tentang;
         this.menimbang = menimbang;
@@ -180,5 +188,37 @@ public class SuratKeputusanWrapper {
 
     public void setKdSuratKeputusan(String kdSuratKeputusan) {
         this.kdSuratKeputusan = kdSuratKeputusan;
+    }
+
+    public String getGelarDepanPenandatangan() {
+        return gelarDepanPenandatangan;
+    }
+
+    public void setGelarDepanPenandatangan(String gelarDepanPenandatangan) {
+        this.gelarDepanPenandatangan = gelarDepanPenandatangan;
+    }
+
+    public String getGelarBelakangPenandatangan() {
+        return gelarBelakangPenandatangan;
+    }
+
+    public void setGelarBelakangPenandatangan(String gelarBelakangPenandatangan) {
+        this.gelarBelakangPenandatangan = gelarBelakangPenandatangan;
+    }
+
+    public String getPangkatPenandatangan() {
+        return pangkatPenandatangan;
+    }
+
+    public void setPangkatPenandatangan(String pangkatPenandatangan) {
+        this.pangkatPenandatangan = pangkatPenandatangan;
+    }
+
+    public String getGolonganPenandatangan() {
+        return golonganPenandatangan;
+    }
+
+    public void setGolonganPenandatangan(String golonganPenandatangan) {
+        this.golonganPenandatangan = golonganPenandatangan;
     }
 }

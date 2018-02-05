@@ -13,6 +13,8 @@ public class SuratKuasaWrapper {
     private String nipPemberiKuasa;
     private String namaPemberiKuasa;
     private String jabatanPemberiKuasa;
+    private String pangkatPemberiKuasa;
+    private String golonganPemberiKuasa;
     private String unitKerjaPemberiKuasa;
     private String gelarDepanPemberiKuasa;
     private String gelarBelakangPemberiKuasa;
@@ -21,6 +23,8 @@ public class SuratKuasaWrapper {
     private String nipPenerimaKuasa;
     private String namaPenerimaKuasa;
     private String jabatanPenerimaKuasa;
+    private String pangkatPenerimaKuasa;
+    private String golonganPenerimaKuasa;
     private String unitKerjaPenerimaKuasa;
     private String gelarDepanPenerimaKuasa;
     private String gelarBelakangPenerimaKuasa;
@@ -42,11 +46,11 @@ public class SuratKuasaWrapper {
             String nipPemberiKuasa,
             String namaPemberiKuasa,
             String jabatanPemberiKuasa,
-            String unitKerjaPemberiKuasa,
+            String pangkatPemberiKuasa, String golonganPemberiKuasa, String unitKerjaPemberiKuasa,
             String gelarDepanPemberiKuasa, String gelarBelakangPemberiKuasa, String alamatRumahPemberiKuasa, String nipPenerimaKuasa,
             String namaPenerimaKuasa,
             String jabatanPenerimaKuasa,
-            String unitKerjaPenerimaKuasa,
+            String pangkatPenerimaKuasa, String golonganPenerimaKuasa, String unitKerjaPenerimaKuasa,
             String gelarDepanPenerimaKuasa, String gelarBelakangPenerimaKuasa, String alamatRumahPenerimaKuasa, String isiKuasa,
             String kotaPembuatanSurat,
             Long tanggalPembuatanMilis) {
@@ -58,6 +62,8 @@ public class SuratKuasaWrapper {
         this.nipPemberiKuasa = nipPemberiKuasa;
         this.namaPemberiKuasa = namaPemberiKuasa;
         this.jabatanPemberiKuasa = jabatanPemberiKuasa;
+        this.pangkatPemberiKuasa = pangkatPemberiKuasa;
+        this.golonganPemberiKuasa = golonganPemberiKuasa;
         this.unitKerjaPemberiKuasa = unitKerjaPemberiKuasa;
         this.gelarDepanPemberiKuasa = gelarDepanPemberiKuasa;
         this.gelarBelakangPemberiKuasa = gelarBelakangPemberiKuasa;
@@ -65,6 +71,8 @@ public class SuratKuasaWrapper {
         this.nipPenerimaKuasa = nipPenerimaKuasa;
         this.namaPenerimaKuasa = namaPenerimaKuasa;
         this.jabatanPenerimaKuasa = jabatanPenerimaKuasa;
+        this.pangkatPenerimaKuasa = pangkatPenerimaKuasa;
+        this.golonganPenerimaKuasa = golonganPenerimaKuasa;
         this.unitKerjaPenerimaKuasa = unitKerjaPenerimaKuasa;
         this.gelarDepanPenerimaKuasa = gelarDepanPenerimaKuasa;
         this.gelarBelakangPenerimaKuasa = gelarBelakangPenerimaKuasa;
@@ -248,5 +256,37 @@ public class SuratKuasaWrapper {
 
     public void setAlamatRumahPenerimaKuasa(String alamatRumahPenerimaKuasa) {
         this.alamatRumahPenerimaKuasa = alamatRumahPenerimaKuasa;
+    }
+
+    public String getPangkatPemberiKuasa() {
+        return pangkatPemberiKuasa;
+    }
+
+    public void setPangkatPemberiKuasa(String pangkatPemberiKuasa) {
+        this.pangkatPemberiKuasa = pangkatPemberiKuasa;
+    }
+
+    public String getGolonganPemberiKuasa() {
+        return golonganPemberiKuasa;
+    }
+
+    public void setGolonganPemberiKuasa(String golonganPemberiKuasa) {
+        this.golonganPemberiKuasa = golonganPemberiKuasa;
+    }
+
+    public String getPangkatPenerimaKuasa() {
+        return pangkatPenerimaKuasa;
+    }
+
+    public void setPangkatPenerimaKuasa(String pangkatPenerimaKuasa) {
+        this.pangkatPenerimaKuasa = pangkatPenerimaKuasa;
+    }
+
+    public String getGolonganPenerimaKuasa() {
+        return golonganPenerimaKuasa;
+    }
+
+    public void setGolonganPenerimaKuasa(String golonganPenerimaKuasa) {
+        this.golonganPenerimaKuasa = golonganPenerimaKuasa;
     }
 }

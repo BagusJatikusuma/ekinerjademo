@@ -415,6 +415,10 @@ public class SuratUndanganController {
         suratUndanganWrapper.setNamaPenerimaSuratUndangan(penerima.getNama());
         suratUndanganWrapper
                 .setUnitKerjaPenerimaSuratUndangan(tkdUnkDao.findOne(penerima.getKdUnitKerja()).getUnitKerja());
+        suratUndanganWrapper.setGelarDepanPenerimaSuratUndangan(penerima.getGlrDpn());
+        suratUndanganWrapper.setGelarBelakangPenerimaSuratUndangan(penerima.getGlrBlk());
+        suratUndanganWrapper.setPangkatPenerimaSuratUndangan(penerima.getPangkat());
+        suratUndanganWrapper.setGolonganPenerimaSuratUndangan(penerima.getGol());
 
         suratUndanganWrapper.setBagianPembukaSuratUndangan(suratUndangan.getBagianPembukaSuratUndangan());
         suratUndanganWrapper.setBagianIsiHariSuratUndangan(suratUndangan.getBagianIsiHariSuratUndangan());
@@ -430,6 +434,8 @@ public class SuratUndanganController {
         suratUndanganWrapper.setJabatanPenandatangan(penandatangan.getJabatan());
         suratUndanganWrapper.setGelarDepanPenandatangan(penandatangan.getGlrDpn());
         suratUndanganWrapper.setGelarBelakangPenandatangan(penandatangan.getGlrBlk());
+        suratUndanganWrapper.setPangkatPenandatangan(penandatangan.getPangkat());
+        suratUndanganWrapper.setGolonganPenandatangan(penandatangan.getGol());
 
         suratUndanganWrapper.setTembusanSuratUndanganList(tembusanSuratUndanganList);
         suratUndanganWrapper.setSuratPejabat(isSuratPejabat);
@@ -438,8 +444,10 @@ public class SuratUndanganController {
 
     }
 
-    @RequestMapping(value = "/open-surat-undangan/{kdSuratUndangan}", method = RequestMethod.PUT)
-    ResponseEntity<?> openSuratUndangan(@PathVariable("kdSuratUndangan") String kdSuratUndangan) {
+    @RequestMapping(value = "/open-surat-undangan/{kdSuratUndangan}/{nipTarget}", method = RequestMethod.PUT)
+    ResponseEntity<?> openSuratUndangan(
+            @PathVariable("kdSuratUndangan") String kdSuratUndangan,
+            @PathVariable("nipTarget") String nipTarget) {
         LOGGER.info("open surat undangan");
 
         suratUndanganService.openSuratUndangan(kdSuratUndangan);

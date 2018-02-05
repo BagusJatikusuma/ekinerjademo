@@ -1,6 +1,5 @@
 package com.pemda.ekinerjademo.controller.api;
 
-import com.pemda.ekinerjademo.model.bismamodel.QutPegawai;
 import com.pemda.ekinerjademo.model.ekinerjamodel.Pengumuman;
 import com.pemda.ekinerjademo.projection.ekinerjaprojection.CustomPegawaiCredential;
 import com.pemda.ekinerjademo.repository.bismarepository.TkdUnkDao;
@@ -11,7 +10,6 @@ import com.pemda.ekinerjademo.wrapper.input.PengumumanInputWrapper;
 import com.pemda.ekinerjademo.wrapper.output.CustomMessage;
 import com.pemda.ekinerjademo.wrapper.output.PengumumanWrapper;
 import com.pemda.ekinerjademo.wrapper.output.SuratPerintahHistoryWrapper;
-import org.hibernate.loader.custom.Return;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -164,7 +162,9 @@ public class PengumumanController {
                         penandatangan.getNama(),
                         penandatangan.getJabatan(),
                         tkdUnkDao.findOne(penandatangan.getKdUnitKerja()).getUnitKerja(),
-                        pengumuman.getKotaPembuatanSurat(),
+                penandatangan.getGlrDpn(), penandatangan.getGlrBlk(),
+                penandatangan.getPangkat(), penandatangan.getGol(),
+                pengumuman.getKotaPembuatanSurat(),
                         pengumuman.getTanggalPembuatanMilis());
 
         return new ResponseEntity<Object>(pengumumanWrapper, HttpStatus.OK);

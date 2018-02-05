@@ -143,7 +143,7 @@ public class BeritaAcaraController {
     }
 
     @RequestMapping(value = "/get-berita-acara-by-kd-berita-acara/{kdBeritaAcara}", method = RequestMethod.GET)
-    ResponseEntity<?> getBeritaAcaraByKdBeritaAcara(@RequestParam("kdBeritaAcara") String kdBeritaAcara) {
+    ResponseEntity<?> getBeritaAcaraByKdBeritaAcara(@PathVariable("kdBeritaAcara") String kdBeritaAcara) {
         LOGGER.info("get berita acara by kd berita acara");
 
         BeritaAcara beritaAcara = beritaAcaraService.getBeritaAcara(kdBeritaAcara);

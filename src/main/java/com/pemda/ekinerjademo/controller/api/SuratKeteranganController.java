@@ -318,7 +318,7 @@ public class SuratKeteranganController {
                         penandatangan.getNama(),
                         penandatangan.getJabatan(),
                         tkdUnkDao.findOne(penandatangan.getKdUnitKerja()).getUnitKerja(),
-                        penandatangan.getGlrDpn(),
+                penandatangan.getPangkat(), penandatangan.getGol(), penandatangan.getGlrDpn(),
                         penandatangan.getGlrBlk(),
                         suratKeterangan.getIsiSuratKeterangan(),
                         suratKeterangan.getKotaPembuatanSurat(),
@@ -330,8 +330,10 @@ public class SuratKeteranganController {
 
     }
 
-    @RequestMapping(value = "/open-surat-keterangan/{kdSuratKeterangan}", method = RequestMethod.PUT)
-    ResponseEntity<?> openSuratKeterangan(@PathVariable("kdSuratKeterangan") String kdSuratKeterangan) {
+    @RequestMapping(value = "/open-surat-keterangan/{kdSuratKeterangan}/{nipTarget}", method = RequestMethod.PUT)
+    ResponseEntity<?> openSuratKeterangan(
+            @PathVariable("kdSuratKeterangan") String kdSuratKeterangan,
+            @PathVariable("nipTarget") String nipTarget) {
         LOGGER.info("open surat keterangan");
 
         suratKeteranganService.openSuratKeterangan(kdSuratKeterangan);
