@@ -158,7 +158,7 @@ public class SuratPengantarController {
                             suratPengantar.getKdSuratPengantar(),
                             df.format(new Date(suratPengantar.getTanggalPembuatanMilis())),
                             false,
-                            0,
+                            suratPengantar.getStatusBaca(),
                             "surat pengantar",
                             10,
                             suratPengantar.getTanggalPembuatanMilis(),
@@ -245,16 +245,18 @@ public class SuratPengantarController {
             for (CustomPegawaiCredential pegawaiPemberi : qutPegawaiList) {
                 if (pegawaiPemberi.getKdJabatan()
                         .equals(suratTarget.getKdJabatanPenerimaSuratPengantar())) {
-                    suratPengantarTargetWrappers
-                            .add(new SuratPengantarTargetWrapper(
-                                    suratTarget.getKdSuratPengantar(),
-                                    df.format(new Date(suratTarget.getTanggalPembuatanMilis())),
-                                    suratTarget.getTanggalPembuatanMilis(),
-                                    false,
-                                    pegawaiPemberi.getNip(),
-                                    pegawaiPemberi.getNama(),
-                                    pegawaiPemberi.getJabatan(),
-                                    0));
+                    if (suratTarget.getStatusBaca() == 0) {
+                        suratPengantarTargetWrappers
+                                .add(new SuratPengantarTargetWrapper(
+                                        suratTarget.getKdSuratPengantar(),
+                                        df.format(new Date(suratTarget.getTanggalPembuatanMilis())),
+                                        suratTarget.getTanggalPembuatanMilis(),
+                                        false,
+                                        pegawaiPemberi.getNip(),
+                                        pegawaiPemberi.getNama(),
+                                        pegawaiPemberi.getJabatan(),
+                                        0));
+                    }
                     break;
                 }
             }

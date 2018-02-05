@@ -160,7 +160,7 @@ public class SuratUndanganController {
                             suratUndangan.getKdSuratUndangan(),
                             df.format(new Date(suratUndangan.getTanggalPembuatanSurat())),
                             isSuratPejabat,
-                            -1,
+                            suratUndangan.getStatusBaca(),
                             "suratUndangan",
                             13,
                             suratUndangan.getTanggalPembuatanSurat(),

@@ -60,6 +60,9 @@ public class SuratDinas {
     @Column(name = "alasan_penolakan")
     private String alasanPenolakan;
 
+    @Column(name = "status_baca")
+    private Integer statusBaca;
+
     @OneToOne(mappedBy = "suratDinas", fetch = FetchType.LAZY)
     private SuratDinasNonPejabat suratDinasNonPejabat;
     @OneToOne(mappedBy = "suratDinas", fetch = FetchType.LAZY)
@@ -273,5 +276,13 @@ public class SuratDinas {
 
     public void setTembusanSuratDinasList(List<TembusanSuratDinas> tembusanSuratDinasList) {
         this.tembusanSuratDinasList = tembusanSuratDinasList;
+    }
+
+    public Integer getStatusBaca() {
+        return statusBaca;
+    }
+
+    public void setStatusBaca(Integer statusBaca) {
+        this.statusBaca = statusBaca;
     }
 }

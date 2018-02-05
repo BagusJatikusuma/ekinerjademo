@@ -174,7 +174,7 @@ public class MemorandumController {
                             isSuratPejabat,
                             memorandum.getStatusBaca(),
                             "memorandum",
-                            -1,
+                            2,
                             memorandum.getTanggalPembuatanMilis(),
                             memorandum.getStatusPenilaian()));
         }
@@ -230,7 +230,7 @@ public class MemorandumController {
                                     pegawaiPemberi.getJabatan(),
                                     memorandum.getStatusBaca(),
                                     "memorandum",
-                                    -1));
+                                    2));
 
                     break;
 
@@ -260,7 +260,7 @@ public class MemorandumController {
                                     pegawaiPemberi.getJabatan(),
                                     tembusanMemorandum.getStatusBaca(),
                                     "memorandum",
-                                    -1));
+                                    2));
 
                     break;
 
@@ -323,7 +323,7 @@ public class MemorandumController {
                                         pegawaiPemberi.getJabatan(),
                                         memorandum.getStatusBaca(),
                                         "memorandum",
-                                        -1));
+                                        2));
                     }
 
                     break;
@@ -355,7 +355,7 @@ public class MemorandumController {
                                         pegawaiPemberi.getJabatan(),
                                         tembusanMemorandum.getStatusBaca(),
                                         "memorandum",
-                                        -1));
+                                        2));
                     }
 
                     break;
@@ -449,8 +449,10 @@ public class MemorandumController {
         return new ResponseEntity<Object>(memorandumWrapper, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/open-memorandum-by-target/{kdMemorandum}", method = RequestMethod.PUT)
-    ResponseEntity<?> openMemorandumByTarget(@PathVariable("kdMemorandum") String kdMemorandum) {
+    @RequestMapping(value = "/open-memorandum-by-target/{kdMemorandum}/{nipTarget}", method = RequestMethod.PUT)
+    ResponseEntity<?> openMemorandumByTarget(
+            @PathVariable("kdMemorandum") String kdMemorandum,
+            @PathVariable("nipTarget") String nipTarget) {
         LOGGER.info("open memorandum by penilai");
 
         memorandumService.openMemorandum(kdMemorandum);

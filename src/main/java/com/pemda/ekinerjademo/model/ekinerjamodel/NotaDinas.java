@@ -55,6 +55,9 @@ public class NotaDinas {
     @Column(name = "alasan_penolakan")
     private String alasanPenolakan;
 
+    @Column(name = "status_baca")
+    private Integer statusBaca;
+
     @OneToMany(mappedBy = "notaDinas")
     private List<TembusanNotaDinas> tembusanNotaDinasList;
 
@@ -224,5 +227,13 @@ public class NotaDinas {
 
     public void setTembusanNotaDinasList(List<TembusanNotaDinas> tembusanNotaDinasList) {
         this.tembusanNotaDinasList = tembusanNotaDinasList;
+    }
+
+    public Integer getStatusBaca() {
+        return statusBaca;
+    }
+
+    public void setStatusBaca(Integer statusBaca) {
+        this.statusBaca = statusBaca;
     }
 }

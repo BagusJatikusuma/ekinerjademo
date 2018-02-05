@@ -12,6 +12,7 @@ import com.pemda.ekinerjademo.wrapper.input.BeritaAcaraInputWrapper;
 import com.pemda.ekinerjademo.wrapper.output.BeritaAcaraHistoryWrapper;
 import com.pemda.ekinerjademo.wrapper.output.BeritaAcaraWrapper;
 import com.pemda.ekinerjademo.wrapper.output.CustomMessage;
+import com.pemda.ekinerjademo.wrapper.output.SuratPerintahHistoryWrapper;
 import groovy.transform.Synchronized;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -112,23 +113,21 @@ public class BeritaAcaraController {
 
         List<BeritaAcara> beritaAcaraList
                 = beritaAcaraService.getByNipPembuatSurat(nipPembuatSurat);
-
-        List<BeritaAcaraHistoryWrapper> beritaAcaraHistoryWrapperList
+        List<SuratPerintahHistoryWrapper> beritaAcaraHistoryList
                 = new ArrayList<>();
 
-        DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
         for (BeritaAcara beritaAcara
                 : beritaAcaraList) {
-
-            beritaAcaraHistoryWrapperList
-                    .add(new BeritaAcaraHistoryWrapper(
-                            beritaAcara.getKdBeritaAcara(),
-                            df.format(new Date(beritaAcara.getTanggalPembuatanMilis())),
-                            beritaAcara.getStatusBaca()
-                    ));
+            beritaAcaraHistoryList
+                    .add(new SuratPerintahHistoryWrapper(beritaAcara.getKdBeritaAcara(),
+                            "",
+                            false,
+                            beritaAcara.getStatusBaca(),
+                            "Berita Acara",
+                            0));
         }
 
-        return new ResponseEntity<Object>(beritaAcaraHistoryWrapperList, HttpStatus.OK);
+        return new ResponseEntity<Object>(beritaAcaraHistoryList, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/open-berita-acara-penilai/{kdBeritaAcara}/{nipPegawai}", method = RequestMethod.PUT)

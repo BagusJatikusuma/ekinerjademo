@@ -176,7 +176,7 @@ public class SuratDinasController {
                             suratDinas.getKdSuratDinas(),
                             null,
                             isSuratPejabat,
-                            -1,
+                            suratDinas.getStatusBaca(),
                             "surat dinas",
                             5,
                             suratDinas.getTanggalPembuatanMilis(),
@@ -273,6 +273,8 @@ public class SuratDinasController {
 
         List<CustomPegawaiCredential> qutPegawaiList
                 = qutPegawaiService.getCustomPegawaiCredentials();
+        List<SuratPerintahTargetWrapper> targetSuratDinasListWrapper
+                = new ArrayList<>();
 
         CustomPegawaiCredential pegawaiTarget = null;
 
@@ -284,7 +286,68 @@ public class SuratDinasController {
             }
         }
 
-        return new ResponseEntity<Object>(null, HttpStatus.OK);
+        List<SuratDinas> suratDinasTargetList
+                = suratDinasService.getByJabatanPenerima(pegawaiTarget.getKdJabatan());
+        List<TembusanSuratDinas> tembusanSuratDinasTargetList
+                = suratDinasService.getTembusanSuratDinas(pegawaiTarget.getKdJabatan());
+
+        //get by target
+        boolean isSuratPejabat = false;
+        for (SuratDinas suratDinas
+                : suratDinasTargetList) {
+            for (CustomPegawaiCredential pegawaiPemberi : qutPegawaiList) {
+                if (pegawaiPemberi.getNip()
+                        .equals(suratDinas.getNipPenandatangan())) {
+
+                    if (suratDinas.getSuratDinasPejabat() != null) {
+                        isSuratPejabat = true;
+                    } else {
+                        isSuratPejabat = false;
+                    }
+
+                    if (suratDinas.getStatusBaca() == 0) {
+                        targetSuratDinasListWrapper
+                                .add(new SuratPerintahTargetWrapper(
+                                        suratDinas.getKdSuratDinas(),
+                                        "",
+                                        isSuratPejabat,
+                                        pegawaiPemberi.getNip(),
+                                        pegawaiPemberi.getNama(),
+                                        pegawaiPemberi.getJabatan()));
+                    }
+                    break;
+                }
+            }
+        }
+        //get by tembusan
+        for (TembusanSuratDinas tembusanSuratDinas
+                : tembusanSuratDinasTargetList) {
+            for (CustomPegawaiCredential pegawaiPemberi : qutPegawaiList) {
+                if (pegawaiPemberi.getKdJabatan()
+                        .equals(tembusanSuratDinas.getSuratDinas().getKdJabatanPenerimaSuratDinas())) {
+
+                    if (tembusanSuratDinas.getSuratDinas().getSuratDinasPejabat() != null) {
+                        isSuratPejabat = true;
+                    } else {
+                        isSuratPejabat = false;
+                    }
+
+                    if (tembusanSuratDinas.getStatusBaca() == 0) {
+                        targetSuratDinasListWrapper
+                                .add(new SuratPerintahTargetWrapper(
+                                        tembusanSuratDinas.getSuratDinas().getKdSuratDinas(),
+                                        "",
+                                        isSuratPejabat,
+                                        pegawaiPemberi.getNip(),
+                                        pegawaiPemberi.getNama(),
+                                        pegawaiPemberi.getJabatan()));
+                    }
+                    break;
+                }
+            }
+        }
+
+        return new ResponseEntity<Object>(targetSuratDinasListWrapper, HttpStatus.OK);
 
     }
 
@@ -380,7 +443,7 @@ public class SuratDinasController {
         LOGGER.info("open surat dinas");
 
         SuratDinas suratDinas = suratDinasService.getByKdSuratDinas(kdSuratDinas);
-        suratDinas.setStatusPenilaian(1);
+        suratDinas.setStatusBaca(1);
         return new ResponseEntity<Object>(new CustomMessage("surat dinas opened"), HttpStatus.OK);
 
     }

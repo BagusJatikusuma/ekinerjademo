@@ -161,7 +161,7 @@ public class SuratKeteranganController {
                             suratKeterangan.getKdSuratKeterangan(),
                             df.format(new Date(suratKeterangan.getTanggalPembuatanSuratMilis())),
                             false,
-                            -1,//how if surat keterangan doesnot have target?
+                            suratKeterangan.getStatusBaca(),//how if surat keterangan doesnot have target?
                             "surat keterangan",
                             8,
                             suratKeterangan.getTanggalPembuatanSuratMilis(),

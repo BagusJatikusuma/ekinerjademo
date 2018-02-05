@@ -362,7 +362,7 @@ public class SuratTugasController {
                     else
                         isSuratPejabat = false;
 
-                    if (suratTarget.getSuratTugas().getStatusBaca() == 0) {
+                    if (suratTarget.getStatusBaca() == 0) {
                         suratTugasTargetList
                                 .add(new SuratPerintahTargetWrapper(
                                         suratTarget.getSuratTugas().getKdSuratTugas(),
@@ -386,7 +386,7 @@ public class SuratTugasController {
                     else
                         isSuratPejabat = false;
 
-                    if (suratTarget.getSuratTugas().getStatusBaca() == 0) {
+                    if (suratTarget.getStatusBaca() == 0) {
                         suratTugasTargetList
                                 .add(new SuratPerintahTargetWrapper(
                                         suratTarget.getSuratTugas().getKdSuratTugas(),
@@ -412,7 +412,7 @@ public class SuratTugasController {
                     else
                         isSuratPejabat = false;
 
-                    if (suratTarget.getSuratTugas().getStatusBaca() == 0) {
+                    if (suratTarget.getStatusBaca() == 0) {
                         suratTugasTargetList
                                 .add(new SuratPerintahTargetWrapper(
                                         suratTarget.getSuratTugas().getKdSuratTugas(),

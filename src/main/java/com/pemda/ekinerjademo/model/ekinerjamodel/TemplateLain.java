@@ -43,6 +43,9 @@ public class TemplateLain {
     @Column(name = "durasi_pengerjaan")
     private Integer durasiPengerjaan;
 
+    @Column(name = "status_baca")
+    private Integer statusBaca;
+
     public String getKdTemplateLain() {
         return kdTemplateLain;
     }
@@ -161,5 +164,13 @@ public class TemplateLain {
 
     public void setDurasiPengerjaan(Integer durasiPengerjaan) {
         this.durasiPengerjaan = durasiPengerjaan;
+    }
+
+    public Integer getStatusBaca() {
+        return statusBaca;
+    }
+
+    public void setStatusBaca(Integer statusBaca) {
+        this.statusBaca = statusBaca;
     }
 }
