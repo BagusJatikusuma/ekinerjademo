@@ -313,7 +313,8 @@ public class MemorandumController {
 
                     if (memorandum.getStatusBaca() == 0) {
                         memorandumTargetWrappers
-                                .add(new MemorandumTargetWrapper(memorandum.getKdMemorandum(),
+                                .add(new MemorandumTargetWrapper(
+                                        memorandum.getKdMemorandum(),
                                         df.format(new Date(memorandum.getTanggalPembuatanMilis())),
                                         memorandum.getTanggalPembuatanMilis(),
                                         isSuratPejabat,
@@ -439,6 +440,12 @@ public class MemorandumController {
             }
         }
 
+        boolean isSuratPejabat = false;
+
+        if (memorandum.getMemorandumPejabat() != null) {
+            isSuratPejabat = true;
+        }
+
         MemorandumWrapper memorandumWrapper
                 = new MemorandumWrapper(
                         memorandum.getKdMemorandum(),
@@ -467,7 +474,7 @@ public class MemorandumController {
                         penandatangan.getJabatan(),
                         tkdUnkDao.findOne(penandatangan.getKdUnitKerja()).getUnitKerja(),
                 penandatangan.getGlrDpn(), penandatangan.getGlrBlk(), penandatangan.getPangkat(), penandatangan.getGol(),
-                tembusanMemorandumList);
+                tembusanMemorandumList, isSuratPejabat);
 
 
         return new ResponseEntity<Object>(memorandumWrapper, HttpStatus.OK);

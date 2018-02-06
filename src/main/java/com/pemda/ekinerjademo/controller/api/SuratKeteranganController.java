@@ -1,5 +1,6 @@
 package com.pemda.ekinerjademo.controller.api;
 
+import com.pemda.ekinerjademo.model.bismamodel.QutPegawai;
 import com.pemda.ekinerjademo.model.ekinerjamodel.SuratKeterangan;
 import com.pemda.ekinerjademo.model.ekinerjamodel.TargetSuratKeterangan;
 import com.pemda.ekinerjademo.model.ekinerjamodel.TargetSuratKeteranganId;
@@ -63,6 +64,7 @@ public class SuratKeteranganController {
             targetSuratKeterangan.setTargetSuratKeteranganId(targetSuratKeteranganId);
             targetSuratKeterangan.setApproveStatus(0);
             targetSuratKeterangan.setStatusDiterima(0);
+            targetSuratKeterangan.setStatusBaca(0);
 
             targetSuratKeteranganList.add(targetSuratKeterangan);
 
@@ -102,6 +104,7 @@ public class SuratKeteranganController {
         suratKeterangan.setNipPenilai("");
         suratKeterangan.setStatusPenilaian(0);
         suratKeterangan.setAlasanPenolakan(null);
+        suratKeterangan.setStatusBaca(0);
         suratKeterangan.setNipPegawaiKeterangan(
                 ekinerjaXMLBuilder.convertListSuratPerintahIntoXml(
                         inputWrapper.getNipPegawaiKeterangan(),
@@ -192,13 +195,18 @@ public class SuratKeteranganController {
                 if (pegawaiPemberi.getNip()
                         .equals(targetSuratKeterangan.getSuratKeterangan().getNipPenandatangan())) {
                     suratTargetKeteranganList
-                            .add(new SuratPerintahTargetWrapper(targetSuratKeterangan.getSuratKeterangan().getKdSuratKeterangan(),
+                            .add(new SuratPerintahTargetWrapper(
+                                    targetSuratKeterangan.getSuratKeterangan().getKdSuratKeterangan(),
                                     DateUtilities.createLocalDate(
                                             new Date(targetSuratKeterangan.getSuratKeterangan().getTanggalPembuatanSuratMilis()), "dd MMMM yyyy", indoLocale),
+                                    targetSuratKeterangan.getSuratKeterangan().getTanggalPembuatanSuratMilis(),
                                     false,
                                     pegawaiPemberi.getNip(),
                                     pegawaiPemberi.getNama(),
-                                    pegawaiPemberi.getJabatan()));
+                                    pegawaiPemberi.getJabatan(),
+                                    targetSuratKeterangan.getStatusBaca(),
+                                    "Surat Keterangan",
+                                    8));
 
                     break;
 
@@ -223,6 +231,14 @@ public class SuratKeteranganController {
 
         Locale indoLocale = new Locale("id", "ID");
 
+        if (targetSuratKeteranganList.isEmpty()) {
+            return new ResponseEntity<Object>(new CustomMessage("target is empty"), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
+        if (targetSuratKeteranganList.get(0).getSuratKeterangan() == null) {
+            return new ResponseEntity<Object>(new CustomMessage("there is error"), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
         for (TargetSuratKeterangan targetSuratKeterangan
                 : targetSuratKeteranganList) {
             for (CustomPegawaiCredential pegawaiPemberi : qutPegawaiList) {
@@ -230,13 +246,18 @@ public class SuratKeteranganController {
                         .equals(targetSuratKeterangan.getSuratKeterangan().getNipPenandatangan())) {
                     if (targetSuratKeterangan.getStatusBaca() == 0 ) {
                         suratTargetKeteranganList
-                                .add(new SuratPerintahTargetWrapper(targetSuratKeterangan.getSuratKeterangan().getKdSuratKeterangan(),
+                                .add(new SuratPerintahTargetWrapper(
+                                        targetSuratKeterangan.getSuratKeterangan().getKdSuratKeterangan(),
                                         DateUtilities.createLocalDate(
                                                 new Date(targetSuratKeterangan.getSuratKeterangan().getTanggalPembuatanSuratMilis()), "dd MMMM yyyy", indoLocale),
+                                        targetSuratKeterangan.getSuratKeterangan().getTanggalPembuatanSuratMilis(),
                                         false,
                                         pegawaiPemberi.getNip(),
                                         pegawaiPemberi.getNama(),
-                                        pegawaiPemberi.getJabatan()));
+                                        pegawaiPemberi.getJabatan(),
+                                        targetSuratKeterangan.getStatusBaca(),
+                                        "Surat Keterangan",
+                                        8));
                     }
 
                     break;
@@ -335,8 +356,13 @@ public class SuratKeteranganController {
             @PathVariable("kdSuratKeterangan") String kdSuratKeterangan,
             @PathVariable("nipTarget") String nipTarget) {
         LOGGER.info("open surat keterangan");
+        SuratKeterangan suratKeterangan
+                = suratKeteranganService.getByKdSuratKeterangan(kdSuratKeterangan);
 
         suratKeteranganService.openSuratKeterangan(kdSuratKeterangan);
+
+        suratKeteranganService
+                .openTargetSuratKeterangan(new TargetSuratKeteranganId(kdSuratKeterangan, nipTarget));
 
         return new ResponseEntity<Object>(new CustomMessage("surat keterangan opened"), HttpStatus.OK);
 

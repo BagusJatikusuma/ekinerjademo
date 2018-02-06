@@ -1,5 +1,6 @@
 package com.pemda.ekinerjademo.controller.api;
 
+import com.pemda.ekinerjademo.model.bismamodel.QutPegawai;
 import com.pemda.ekinerjademo.model.bismamodel.TkdJabatan;
 import com.pemda.ekinerjademo.model.ekinerjamodel.*;
 import com.pemda.ekinerjademo.projection.ekinerjaprojection.CustomPegawaiCredential;
@@ -82,6 +83,7 @@ public class SuratDinasController {
         suratDinas.setKdNaskahPenugasan(inputWrapper.getKdNaskahPenugasan());
         suratDinas.setJenisNaskahPenugasan(inputWrapper.getJenisNaskahPenugasan());
         suratDinas.setDurasiPengerjaan(inputWrapper.getDurasiPengerjaan());
+        suratDinas.setStatusBaca(0);
 
         if (inputWrapper.getKdSuratDinasBawahan() == null) {
             suratDinas.setPathPenilaian(kdSuratDinas);
@@ -229,10 +231,14 @@ public class SuratDinasController {
                             .add(new SuratPerintahTargetWrapper(
                                     suratDinas.getKdSuratDinas(),
                                     "",
+                                    suratDinas.getTanggalPembuatanMilis(),
                                     isSuratPejabat,
                                     pegawaiPemberi.getNip(),
                                     pegawaiPemberi.getNama(),
-                                    pegawaiPemberi.getJabatan()));
+                                    pegawaiPemberi.getJabatan(),
+                                    suratDinas.getStatusBaca(),
+                                    "Surat Dinas",
+                                    5));
                     break;
                 }
             }
@@ -254,10 +260,14 @@ public class SuratDinasController {
                             .add(new SuratPerintahTargetWrapper(
                                     tembusanSuratDinas.getSuratDinas().getKdSuratDinas(),
                                     "",
+                                    tembusanSuratDinas.getSuratDinas().getTanggalPembuatanMilis(),
                                     isSuratPejabat,
                                     pegawaiPemberi.getNip(),
                                     pegawaiPemberi.getNama(),
-                                    pegawaiPemberi.getJabatan()));
+                                    pegawaiPemberi.getJabatan(),
+                                    tembusanSuratDinas.getStatusBaca(),
+                                    "Surat Dinas",
+                                    5));
                     break;
                 }
             }
@@ -310,10 +320,14 @@ public class SuratDinasController {
                                 .add(new SuratPerintahTargetWrapper(
                                         suratDinas.getKdSuratDinas(),
                                         "",
+                                        suratDinas.getTanggalPembuatanMilis(),
                                         isSuratPejabat,
                                         pegawaiPemberi.getNip(),
                                         pegawaiPemberi.getNama(),
-                                        pegawaiPemberi.getJabatan()));
+                                        pegawaiPemberi.getJabatan(),
+                                        suratDinas.getStatusBaca(),
+                                        "Surat Dinas",
+                                        5));
                     }
                     break;
                 }
@@ -337,10 +351,14 @@ public class SuratDinasController {
                                 .add(new SuratPerintahTargetWrapper(
                                         tembusanSuratDinas.getSuratDinas().getKdSuratDinas(),
                                         "",
+                                        tembusanSuratDinas.getSuratDinas().getTanggalPembuatanMilis(),
                                         isSuratPejabat,
                                         pegawaiPemberi.getNip(),
                                         pegawaiPemberi.getNama(),
-                                        pegawaiPemberi.getJabatan()));
+                                        pegawaiPemberi.getJabatan(),
+                                        tembusanSuratDinas.getStatusBaca(),
+                                        "Surat Dinas",
+                                        5));
                     }
                     break;
                 }
@@ -444,8 +462,30 @@ public class SuratDinasController {
             @PathVariable("nipTarget") String nipTarget) {
         LOGGER.info("open surat dinas");
 
+        QutPegawai pegawaiTarget = qutPegawaiService.getQutPegawai(nipTarget);
         SuratDinas suratDinas = suratDinasService.getByKdSuratDinas(kdSuratDinas);
-        suratDinas.setStatusBaca(1);
+
+        if (pegawaiTarget.getKdJabatan()
+                .equals(suratDinas.getKdJabatanPenerimaSuratDinas())) {
+            suratDinasService.openSuratDinas(kdSuratDinas);
+        }
+
+        boolean exist = false;
+        for (TembusanSuratDinas tembusanSuratDinas
+                : suratDinas.getTembusanSuratDinasList()) {
+            if (tembusanSuratDinas.getTembusanSuratDinasId().getKdJabatan()
+                    .equals(pegawaiTarget.getKdJabatan())) {
+                exist = true;
+                break;
+            }
+        }
+
+        if (exist) {
+            suratDinasService
+                    .openTembusanSuratDinas(
+                            new TembusanSuratDinasId(kdSuratDinas, pegawaiTarget.getKdJabatan()));
+        }
+
         return new ResponseEntity<Object>(new CustomMessage("surat dinas opened"), HttpStatus.OK);
 
     }

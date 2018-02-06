@@ -190,7 +190,7 @@ public class SuratPengantarController {
         List<SuratPengantar> suratPengantarTargetList
                 = suratPengantarService.getByPegawaiTarget(nipTarget);
 
-        List<SuratPengantarTargetWrapper> suratPengantarTargetWrappers
+        List<SuratPerintahTargetWrapper> suratPengantarTargetWrappers
                 = new ArrayList<>();
 
         DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
@@ -199,15 +199,18 @@ public class SuratPengantarController {
                 if (pegawaiPemberi.getKdJabatan()
                         .equals(suratTarget.getKdJabatanPenerimaSuratPengantar())) {
                     suratPengantarTargetWrappers
-                            .add(new SuratPengantarTargetWrapper(
+                            .add(new SuratPerintahTargetWrapper(
                                     suratTarget.getKdSuratPengantar(),
-                                    df.format(new Date(suratTarget.getTanggalPembuatanMilis())),
+                                    "",
                                     suratTarget.getTanggalPembuatanMilis(),
                                     false,
                                     pegawaiPemberi.getNip(),
                                     pegawaiPemberi.getNama(),
                                     pegawaiPemberi.getJabatan(),
-                                    0));
+                                    suratTarget.getStatusBaca(),
+                                    "Surat Pengantar",
+                                    10
+                            ));
                     break;
                 }
             }
@@ -237,7 +240,7 @@ public class SuratPengantarController {
         List<SuratPengantar> suratPengantarTargetList
                 = suratPengantarService.getByPegawaiTarget(nipTarget);
 
-        List<SuratPengantarTargetWrapper> suratPengantarTargetWrappers
+        List<SuratPerintahTargetWrapper> suratPengantarTargetWrappers
                 = new ArrayList<>();
 
         DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
@@ -247,15 +250,18 @@ public class SuratPengantarController {
                         .equals(suratTarget.getKdJabatanPenerimaSuratPengantar())) {
                     if (suratTarget.getStatusBaca() == 0) {
                         suratPengantarTargetWrappers
-                                .add(new SuratPengantarTargetWrapper(
+                                .add(new SuratPerintahTargetWrapper(
                                         suratTarget.getKdSuratPengantar(),
-                                        df.format(new Date(suratTarget.getTanggalPembuatanMilis())),
+                                        "",
                                         suratTarget.getTanggalPembuatanMilis(),
                                         false,
                                         pegawaiPemberi.getNip(),
                                         pegawaiPemberi.getNama(),
                                         pegawaiPemberi.getJabatan(),
-                                        0));
+                                        suratTarget.getStatusBaca(),
+                                        "Surat Pengantar",
+                                        10
+                                ));
                     }
                     break;
                 }

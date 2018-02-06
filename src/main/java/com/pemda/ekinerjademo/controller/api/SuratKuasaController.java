@@ -215,7 +215,7 @@ public class SuratKuasaController {
         List<SuratKuasa> suratKuasaList
                 = suratKuasaService.getByNipPenerimaKuasa(nipPenerimaKuasa);
 
-        List<SuratKuasaPenerimaKuasaWrapper> suratKuasaPenerimaKuasaList
+        List<SuratPerintahTargetWrapper> suratKuasaPenerimaKuasaList
                 = new ArrayList<>();
 
         DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
@@ -225,14 +225,16 @@ public class SuratKuasaController {
                 if (pegawaiPemberi.getNip()
                         .equals(suratKuasa.getNipPemberiKuasa())) {
                     suratKuasaPenerimaKuasaList
-                            .add(new SuratKuasaPenerimaKuasaWrapper(
-                                    suratKuasa.getKdSuratKuasa(),
-                                    df.format(new Date(suratKuasa.getTanggalPembuatanMilis())),
+                            .add(new SuratPerintahTargetWrapper(suratKuasa.getKdSuratKuasa(),
+                                    "",
                                     suratKuasa.getTanggalPembuatanMilis(),
+                                    false,
                                     pegawaiPemberi.getNip(),
                                     pegawaiPemberi.getNama(),
-                                    pegawaiPemberi.getJabatan()
-                                    ));
+                                    pegawaiPemberi.getJabatan(),
+                                    suratKuasa.getStatusBaca(),
+                                    "Surat Kuasa",
+                                    9));
                     break;
                 }
 
@@ -257,7 +259,7 @@ public class SuratKuasaController {
         List<SuratKuasa> suratKuasaList
                 = suratKuasaService.getByNipPenerimaKuasa(nipPenerimaKuasa);
 
-        List<SuratKuasaPenerimaKuasaWrapper> suratKuasaPenerimaKuasaList
+        List<SuratPerintahTargetWrapper> suratKuasaPenerimaKuasaList
                 = new ArrayList<>();
 
         DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
@@ -268,14 +270,16 @@ public class SuratKuasaController {
                         .equals(suratKuasa.getNipPemberiKuasa())) {
                     if (suratKuasa.getStatusBaca() == 0) {
                         suratKuasaPenerimaKuasaList
-                                .add(new SuratKuasaPenerimaKuasaWrapper(
-                                        suratKuasa.getKdSuratKuasa(),
-                                        df.format(new Date(suratKuasa.getTanggalPembuatanMilis())),
+                                .add(new SuratPerintahTargetWrapper(suratKuasa.getKdSuratKuasa(),
+                                        "",
                                         suratKuasa.getTanggalPembuatanMilis(),
+                                        false,
                                         pegawaiPemberi.getNip(),
                                         pegawaiPemberi.getNama(),
-                                        pegawaiPemberi.getJabatan()
-                                ));
+                                        pegawaiPemberi.getJabatan(),
+                                        suratKuasa.getStatusBaca(),
+                                        "Surat Kuasa",
+                                        9));
                     }
                     break;
                 }

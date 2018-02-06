@@ -280,7 +280,7 @@ public class SuratInstruksiController {
             @PathVariable("nipPegawai") String nipPegawai) {
         LOGGER.info("get instruksi pegawai");
 
-        List<SuratInstruksiWrapper> suratInstruksiWrapperList
+        List<SuratPerintahTargetWrapper> suratInstruksiWrapperList
                 = new ArrayList<>();
         List<InstruksiPegawai> instruksiPegawaiList
                 = suratInstruksiService.getInstruksiPegawai(nipPegawai);
@@ -297,16 +297,17 @@ public class SuratInstruksiController {
                 isSuratPejabat = false;
             }
             suratInstruksiWrapperList
-                    .add(new SuratInstruksiWrapper(
+                    .add(new SuratPerintahTargetWrapper(
                             instruksiPegawai.getSuratInstruksi().getKdInstruksi(),
-                            instruksiPegawai.getSuratInstruksi().getJudulInstruksi(),
-                            DateUtilities.createLocalDate(new Date(instruksiPegawai.getSuratInstruksi().getCreateddateMilis()), "dd MMMM yyyy", indoLocale),
+                            "",
                             instruksiPegawai.getSuratInstruksi().getCreateddateMilis(),
                             isSuratPejabat,
-                            null,
-                            instruksiPegawai.getSuratInstruksi().getNipPembuat(),
+                            pegawaiPengirim.getNip(),
                             pegawaiPengirim.getNama(),
-                            instruksiPegawai.getStatusBaca()
+                            pegawaiPengirim.getJabatan(),
+                            instruksiPegawai.getStatusBaca(),
+                            "Surat Instruksi",
+                            3
                     ));
 
         }
@@ -319,7 +320,7 @@ public class SuratInstruksiController {
             @PathVariable("nipPegawai") String nipPegawai) {
         LOGGER.info("get instruksi pegawai unread");
 
-        List<SuratInstruksiWrapper> suratInstruksiWrapperList
+        List<SuratPerintahTargetWrapper> suratInstruksiWrapperList
                 = new ArrayList<>();
         List<InstruksiPegawai> instruksiPegawaiList
                 = suratInstruksiService.getInstruksiPegawai(nipPegawai);
@@ -337,16 +338,17 @@ public class SuratInstruksiController {
             }
             if (instruksiPegawai.getStatusBaca() == 0) {
                 suratInstruksiWrapperList
-                        .add(new SuratInstruksiWrapper(
+                        .add(new SuratPerintahTargetWrapper(
                                 instruksiPegawai.getSuratInstruksi().getKdInstruksi(),
-                                instruksiPegawai.getSuratInstruksi().getJudulInstruksi(),
-                                DateUtilities.createLocalDate(new Date(instruksiPegawai.getSuratInstruksi().getCreateddateMilis()), "dd MMMM yyyy", indoLocale),
+                                "",
                                 instruksiPegawai.getSuratInstruksi().getCreateddateMilis(),
                                 isSuratPejabat,
-                                instruksiPegawai.getStatusBaca(),
-                                instruksiPegawai.getSuratInstruksi().getNipPembuat(),
+                                pegawaiPengirim.getNip(),
                                 pegawaiPengirim.getNama(),
-                                instruksiPegawai.getStatusBaca()
+                                pegawaiPengirim.getJabatan(),
+                                instruksiPegawai.getStatusBaca(),
+                                "Surat Instruksi",
+                                3
                         ));
             }
 

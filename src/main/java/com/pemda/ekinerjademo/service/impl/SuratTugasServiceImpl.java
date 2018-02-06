@@ -59,6 +59,21 @@ public class SuratTugasServiceImpl implements SuratTugasService {
     }
 
     @Override
+    public TargetSuratTugasPegawai getTargetSuratTugasPegawaiById(TargetSuratTugasPegawaiId id) {
+        return targetSuratTugasPegawaiDao.findOne(id);
+    }
+
+    @Override
+    public TargetSuratTugasPejabat getTargetSuratTugasPejabatById(TargetSuratTugasPejabatId id) {
+        return targetSuratTugasPejabatDao.findOne(id);
+    }
+
+    @Override
+    public TembusanSuratTugas getTembusanSuratTugasById(TembusanSuratTugasId id) {
+        return tembusanSuratTugasDao.findOne(id);
+    }
+
+    @Override
     public void create(SuratTugas suratTugas) {
         suratTugasDao.save(suratTugas);
     }
@@ -94,6 +109,27 @@ public class SuratTugasServiceImpl implements SuratTugasService {
                 = getByKdSuratTugas(kdSuratTugas);
 
         suratTugas.setStatusBaca(1);
+    }
+
+    @Override
+    public void openTargetSuratTugasPegawai(TargetSuratTugasPegawaiId id) {
+        TargetSuratTugasPegawai targetSuratTugasPegawai
+                = targetSuratTugasPegawaiDao.findOne(id);
+        targetSuratTugasPegawai.setStatusBaca(1);
+    }
+
+    @Override
+    public void openTargetSuratTugasPejabat(TargetSuratTugasPejabatId id) {
+        TargetSuratTugasPejabat targetSuratTugasPejabat
+                = targetSuratTugasPejabatDao.findOne(id);
+        targetSuratTugasPejabat.setStatusBaca(1);
+    }
+
+    @Override
+    public void openTembusanSuratTugas(TembusanSuratTugasId id) {
+        TembusanSuratTugas tembusanSuratTugas
+                = tembusanSuratTugasDao.findOne(id);
+        tembusanSuratTugas.setStatusBaca(1);
     }
 
     @Override

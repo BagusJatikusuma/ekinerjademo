@@ -1,5 +1,6 @@
 package com.pemda.ekinerjademo.controller.api;
 
+import com.pemda.ekinerjademo.model.bismamodel.QutPegawai;
 import com.pemda.ekinerjademo.model.bismamodel.TkdJabatan;
 import com.pemda.ekinerjademo.model.ekinerjamodel.*;
 import com.pemda.ekinerjademo.projection.ekinerjaprojection.CustomPegawaiCredential;
@@ -213,10 +214,14 @@ public class SuratUndanganController {
                             .add(new SuratPerintahTargetWrapper(
                                     suratUndangan.getKdSuratUndangan(),
                                     df.format(new Date(suratUndangan.getTanggalPembuatanSurat())),
+                                    suratUndangan.getTanggalPembuatanSurat(),
                                     isSuratPejabat,
                                     pegawaiPemberi.getNip(),
                                     pegawaiPemberi.getNama(),
-                                    pegawaiPemberi.getJabatan()));
+                                    pegawaiPemberi.getJabatan(),
+                                    suratUndangan.getStatusBaca(),
+                                    "Surat Undangan",
+                                    13));
                 }
 
             }
@@ -236,10 +241,14 @@ public class SuratUndanganController {
                             .add(new SuratPerintahTargetWrapper(
                                     tembusanSuratUndangan.getSuratUndangan().getKdSuratUndangan(),
                                     df.format(new Date(tembusanSuratUndangan.getSuratUndangan().getTanggalPembuatanSurat())),
+                                    tembusanSuratUndangan.getSuratUndangan().getTanggalPembuatanSurat(),
                                     isSuratPejabat,
                                     pegawaiPemberi.getNip(),
                                     pegawaiPemberi.getNama(),
-                                    pegawaiPemberi.getJabatan()));
+                                    pegawaiPemberi.getJabatan(),
+                                    tembusanSuratUndangan.getStatusBaca(),
+                                    "Surat Undangan",
+                                    13));
 
                 }
 
@@ -293,10 +302,14 @@ public class SuratUndanganController {
                                 .add(new SuratPerintahTargetWrapper(
                                         suratUndangan.getKdSuratUndangan(),
                                         df.format(new Date(suratUndangan.getTanggalPembuatanSurat())),
+                                        suratUndangan.getTanggalPembuatanSurat(),
                                         isSuratPejabat,
                                         pegawaiPemberi.getNip(),
                                         pegawaiPemberi.getNama(),
-                                        pegawaiPemberi.getJabatan()));
+                                        pegawaiPemberi.getJabatan(),
+                                        suratUndangan.getStatusBaca(),
+                                        "Surat Undangan",
+                                        13));
                     }
                 }
 
@@ -318,10 +331,14 @@ public class SuratUndanganController {
                                 .add(new SuratPerintahTargetWrapper(
                                         tembusanSuratUndangan.getSuratUndangan().getKdSuratUndangan(),
                                         df.format(new Date(tembusanSuratUndangan.getSuratUndangan().getTanggalPembuatanSurat())),
+                                        tembusanSuratUndangan.getSuratUndangan().getTanggalPembuatanSurat(),
                                         isSuratPejabat,
                                         pegawaiPemberi.getNip(),
                                         pegawaiPemberi.getNama(),
-                                        pegawaiPemberi.getJabatan()));
+                                        pegawaiPemberi.getJabatan(),
+                                        tembusanSuratUndangan.getStatusBaca(),
+                                        "Surat Undangan",
+                                        13));
                     }
 
                 }
@@ -450,7 +467,29 @@ public class SuratUndanganController {
             @PathVariable("nipTarget") String nipTarget) {
         LOGGER.info("open surat undangan");
 
-        suratUndanganService.openSuratUndangan(kdSuratUndangan);
+        QutPegawai pegawaiTarget = qutPegawaiService.getQutPegawai(nipTarget);
+        SuratUndangan suratUndangan = suratUndanganService.getByKdSuratUndangan(kdSuratUndangan);
+
+        if (pegawaiTarget.getKdJabatan()
+                .equals(suratUndangan.getKdJabatanPenerimaSuratUndangan())) {
+            suratUndanganService.openSuratUndangan(kdSuratUndangan);
+        }
+
+        boolean exist = false;
+        for (TembusanSuratUndangan tembusanSuratUndangan
+                : suratUndangan.getTembusanSuratUndanganList()) {
+            if (tembusanSuratUndangan.getTembusanSuratUndanganId().getKdJabatan()
+                    .equals(pegawaiTarget.getKdJabatan())) {
+                exist = true;
+                break;
+            }
+        }
+
+        if (exist) {
+            suratUndanganService
+                    .openTembusanSuratUndangan(
+                            new TembusanSuratUndanganId(kdSuratUndangan, pegawaiTarget.getKdJabatan()));
+        }
 
         return new ResponseEntity<Object>(new CustomMessage("surat undangan opened"), HttpStatus.OK);
 

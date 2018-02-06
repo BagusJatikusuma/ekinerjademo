@@ -533,7 +533,9 @@ public class SuratPerintahController {
                                     pegawaiPemberi.getNip(),
                                     pegawaiPemberi.getNama(),
                                     pegawaiPemberi.getJabatan(),
-                                    suratTarget.getStatusBaca())
+                                    suratTarget.getStatusBaca(),
+                                    "Surat Perintah",
+                                    2)
                             );
                     break;
                 }
@@ -560,7 +562,9 @@ public class SuratPerintahController {
                                     pegawaiPemberi.getNip(),
                                     pegawaiPemberi.getNama(),
                                     pegawaiPemberi.getJabatan(),
-                                    suratTarget.getStatusBaca())
+                                    suratTarget.getStatusBaca(),
+                                    "Surat Perintah",
+                                    2)
                             );
                     break;
                 }
@@ -587,7 +591,9 @@ public class SuratPerintahController {
                                     pegawaiPemberi.getNip(),
                                     pegawaiPemberi.getNama(),
                                     pegawaiPemberi.getJabatan(),
-                                    suratTarget.getStatusBaca())
+                                    suratTarget.getStatusBaca(),
+                                    "Surat Perintah",
+                                    2)
                             );
                     break;
                 }
@@ -649,7 +655,9 @@ public class SuratPerintahController {
                                         pegawaiPemberi.getNip(),
                                         pegawaiPemberi.getNama(),
                                         pegawaiPemberi.getJabatan(),
-                                        suratTarget.getStatusBaca())
+                                        suratTarget.getStatusBaca(),
+                                        "Surat Perintah",
+                                        2)
                                 );
                     }
                     break;
@@ -678,7 +686,9 @@ public class SuratPerintahController {
                                         pegawaiPemberi.getNip(),
                                         pegawaiPemberi.getNama(),
                                         pegawaiPemberi.getJabatan(),
-                                        suratTarget.getStatusBaca())
+                                        suratTarget.getStatusBaca(),
+                                        "Surat Perintah",
+                                        2)
                                 );
                     }
                     break;
@@ -707,7 +717,9 @@ public class SuratPerintahController {
                                         pegawaiPemberi.getNip(),
                                         pegawaiPemberi.getNama(),
                                         pegawaiPemberi.getJabatan(),
-                                        suratTarget.getStatusBaca())
+                                        suratTarget.getStatusBaca(),
+                                        "Surat Perintah",
+                                        2)
                                 );
                     }
                     break;

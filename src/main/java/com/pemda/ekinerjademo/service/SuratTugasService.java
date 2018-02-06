@@ -18,6 +18,10 @@ public interface SuratTugasService {
     List<TargetSuratTugasPejabat> getTargetSuratTugasPejabat(String kdJabatanTarget);
     List<TembusanSuratTugas> getTembusanSuratTugas(String kdJabatanTembusan);
 
+    TargetSuratTugasPegawai getTargetSuratTugasPegawaiById(TargetSuratTugasPegawaiId id);
+    TargetSuratTugasPejabat getTargetSuratTugasPejabatById(TargetSuratTugasPejabatId id);
+    TembusanSuratTugas getTembusanSuratTugasById(TembusanSuratTugasId id);
+
     void create(SuratTugas suratTugas);
     void createTargetSuratTugasPegawai(TargetSuratTugasPegawai targetSuratTugasPegawai);
     void createTargetSuratTugasPejabat(TargetSuratTugasPejabat targetSuratTugasPejabat);
@@ -26,6 +30,9 @@ public interface SuratTugasService {
     void createSuratTugasNonPejabat(SuratTugasNonPejabat suratTugasNonPejabat);
 
     void openSuratTugas(String kdSuratTugas);
+    void openTargetSuratTugasPegawai(TargetSuratTugasPegawaiId id);
+    void openTargetSuratTugasPejabat(TargetSuratTugasPejabatId id);
+    void openTembusanSuratTugas(TembusanSuratTugasId id);
     void openSuratTugasPenilai(String kdSuratTugas);
 
 }

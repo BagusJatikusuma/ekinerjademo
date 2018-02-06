@@ -266,10 +266,14 @@ public class SuratTugasController {
                             .add(new SuratPerintahTargetWrapper(
                                     suratTarget.getSuratTugas().getKdSuratTugas(),
                                     "",
+                                    suratTarget.getSuratTugas().getTanggalTugasMilis(),
                                     isSuratPejabat,
                                     pegawaiPemberi.getNip(),
                                     pegawaiPemberi.getNama(),
-                                    pegawaiPemberi.getJabatan()));
+                                    pegawaiPemberi.getJabatan(),
+                                    suratTarget.getStatusBaca(),
+                                    "Surat Tugas",
+                                    4));
                     break;
                 }
             }
@@ -288,10 +292,14 @@ public class SuratTugasController {
                             .add(new SuratPerintahTargetWrapper(
                                     suratTarget.getSuratTugas().getKdSuratTugas(),
                                     "",
+                                    suratTarget.getSuratTugas().getTanggalTugasMilis(),
                                     isSuratPejabat,
                                     pegawaiPemberi.getNip(),
                                     pegawaiPemberi.getNama(),
-                                    pegawaiPemberi.getJabatan()));
+                                    pegawaiPemberi.getJabatan(),
+                                    suratTarget.getStatusBaca(),
+                                    "Surat Tugas",
+                                    4));
                     break;
                 }
             }
@@ -311,10 +319,14 @@ public class SuratTugasController {
                             .add(new SuratPerintahTargetWrapper(
                                     suratTarget.getSuratTugas().getKdSuratTugas(),
                                     "",
+                                    suratTarget.getSuratTugas().getTanggalTugasMilis(),
                                     isSuratPejabat,
                                     pegawaiPemberi.getNip(),
                                     pegawaiPemberi.getNama(),
-                                    pegawaiPemberi.getJabatan()));
+                                    pegawaiPemberi.getJabatan(),
+                                    suratTarget.getStatusBaca(),
+                                    "Surat Tugas",
+                                    4));
                     break;
                 }
             }
@@ -367,10 +379,14 @@ public class SuratTugasController {
                                 .add(new SuratPerintahTargetWrapper(
                                         suratTarget.getSuratTugas().getKdSuratTugas(),
                                         "",
+                                        suratTarget.getSuratTugas().getTanggalTugasMilis(),
                                         isSuratPejabat,
                                         pegawaiPemberi.getNip(),
                                         pegawaiPemberi.getNama(),
-                                        pegawaiPemberi.getJabatan()));
+                                        pegawaiPemberi.getJabatan(),
+                                        suratTarget.getStatusBaca(),
+                                        "Surat Tugas",
+                                        4));
                     }
                     break;
                 }
@@ -391,10 +407,14 @@ public class SuratTugasController {
                                 .add(new SuratPerintahTargetWrapper(
                                         suratTarget.getSuratTugas().getKdSuratTugas(),
                                         "",
+                                        suratTarget.getSuratTugas().getTanggalTugasMilis(),
                                         isSuratPejabat,
                                         pegawaiPemberi.getNip(),
                                         pegawaiPemberi.getNama(),
-                                        pegawaiPemberi.getJabatan()));
+                                        pegawaiPemberi.getJabatan(),
+                                        suratTarget.getStatusBaca(),
+                                        "Surat Tugas",
+                                        4));
                     }
 
                     break;
@@ -417,10 +437,14 @@ public class SuratTugasController {
                                 .add(new SuratPerintahTargetWrapper(
                                         suratTarget.getSuratTugas().getKdSuratTugas(),
                                         "",
+                                        suratTarget.getSuratTugas().getTanggalTugasMilis(),
                                         isSuratPejabat,
                                         pegawaiPemberi.getNip(),
                                         pegawaiPemberi.getNama(),
-                                        pegawaiPemberi.getJabatan()));
+                                        pegawaiPemberi.getJabatan(),
+                                        suratTarget.getStatusBaca(),
+                                        "Surat Tugas",
+                                        4));
                     }
                     break;
                 }
@@ -570,8 +594,33 @@ public class SuratTugasController {
             @PathVariable("kdSuratTugas") String kdSuratTugas,
             @PathVariable("nipTarget") String nipTarget) {
         LOGGER.info("open surat tugas");
+        QutPegawai pegawaiTarget = qutPegawaiService.getQutPegawai(nipTarget);
 
         suratTugasService.openSuratTugas(kdSuratTugas);
+
+        TargetSuratTugasPegawai targetSuratTugasPegawai
+                = suratTugasService
+                        .getTargetSuratTugasPegawaiById(
+                                new TargetSuratTugasPegawaiId(kdSuratTugas, nipTarget));
+        TargetSuratTugasPejabat targetSuratTugasPejabat
+                = suratTugasService
+                        .getTargetSuratTugasPejabatById(
+                                new TargetSuratTugasPejabatId(kdSuratTugas, pegawaiTarget.getKdJabatan()));
+        TembusanSuratTugas tembusanSuratTugas
+                = suratTugasService
+                        .getTembusanSuratTugasById(
+                                new TembusanSuratTugasId(kdSuratTugas, pegawaiTarget.getKdJabatan()));
+
+        if (targetSuratTugasPegawai != null)
+            suratTugasService
+                    .openTargetSuratTugasPegawai(targetSuratTugasPegawai.getTargetSuratTugasPegawaiId());
+        if (targetSuratTugasPejabat != null)
+            suratTugasService
+                    .openTargetSuratTugasPejabat(targetSuratTugasPejabat.getTargetSuratTugasPejabatId());
+        if (tembusanSuratTugas != null) {
+            suratTugasService
+                    .openTembusanSuratTugas(tembusanSuratTugas.getTembusanSuratTugasId());
+        }
 
         return new ResponseEntity<Object>(new CustomMessage("surat tugas opened"), HttpStatus.OK);
     }

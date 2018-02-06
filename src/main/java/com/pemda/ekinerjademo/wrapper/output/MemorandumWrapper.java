@@ -54,6 +54,7 @@ public class MemorandumWrapper {
     private String pangkatPenandatangan;
     private String golonganPenandatangan;
     private List<JabatanWrapper> tembusanMemorandumList;
+    private boolean isSuratPejabat;
 
     public MemorandumWrapper() {
     }
@@ -83,7 +84,7 @@ public class MemorandumWrapper {
             String gelarDepanPembuatSurat, String gelarBelakangPembuatSurat, String pangkatPembuatSurat, String golonganPembuatSurat, String nipPenandatangan,
             String namaPenandatangan,
             String jabatanPenandatangan,
-            String unitKerjaPenandatangan, String gelarDepanPenandatangan, String gelarBelakangPenandatangan, String pangkatPenandatangan, String golonganPenandatangan, List<JabatanWrapper> tembusanMemorandumList) {
+            String unitKerjaPenandatangan, String gelarDepanPenandatangan, String gelarBelakangPenandatangan, String pangkatPenandatangan, String golonganPenandatangan, List<JabatanWrapper> tembusanMemorandumList, boolean isSuratPejabat) {
         this.kdMemorandum = kdMemorandum;
         this.nomorUrusan = nomorUrusan;
         this.nomorUrut = nomorUrut;
@@ -126,6 +127,7 @@ public class MemorandumWrapper {
         this.pangkatPenandatangan = pangkatPenandatangan;
         this.golonganPenandatangan = golonganPenandatangan;
         this.tembusanMemorandumList = tembusanMemorandumList;
+        this.isSuratPejabat = isSuratPejabat;
     }
 
     public String getKdMemorandum() {
@@ -462,5 +464,13 @@ public class MemorandumWrapper {
 
     public void setGolonganPenandatangan(String golonganPenandatangan) {
         this.golonganPenandatangan = golonganPenandatangan;
+    }
+
+    public boolean isSuratPejabat() {
+        return isSuratPejabat;
+    }
+
+    public void setSuratPejabat(boolean suratPejabat) {
+        isSuratPejabat = suratPejabat;
     }
 }

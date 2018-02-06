@@ -236,7 +236,10 @@ public class LembarDisposisiController {
                             DateUtilities.createLocalDate(new Date(targetLembarDisposisi.getLembarDisposisi().getTanggalPengirimanMilis()), "dd MMMM yyyy", indoLocale),
                             targetLembarDisposisi.getLembarDisposisi().getTanggalPengirimanMilis(),
                             targetLembarDisposisi.getLembarDisposisi().getNipPembuat(),
-                            pegawaiPengirim.getNama()
+                            pegawaiPengirim.getNama(),
+                            targetLembarDisposisi.getLembarDisposisi().getNoSuratDisposisi().getRingkasanIsi(),
+                            "Lembar Disposisi",
+                            1
                     ));
         }
 
@@ -278,7 +281,9 @@ public class LembarDisposisiController {
                                 targetLembarDisposisi.getLembarDisposisi().getTanggalPengirimanMilis(),
                                 targetLembarDisposisi.getLembarDisposisi().getNipPembuat(),
                                 pegawaiPengirim.getNama(),
-                                targetLembarDisposisi.getLembarDisposisi().getNoSuratDisposisi().getRingkasanIsi()
+                                targetLembarDisposisi.getLembarDisposisi().getNoSuratDisposisi().getRingkasanIsi(),
+                                "Lembar Disposisi",
+                                1
                         ));
             }
         }

@@ -156,12 +156,17 @@ public class NotaDinasController {
                 if (pegawaiPemberi.getNip()
                         .equals(suratTarget.getNotaDinas().getNipPenandatangan())) {
                     notaDinasTargetWrappers
-                            .add(new SuratPerintahTargetWrapper(suratTarget.getNotaDinas().getKdNotaDinas(),
+                            .add(new SuratPerintahTargetWrapper(
+                                    suratTarget.getNotaDinas().getKdNotaDinas(),
                                     "",
+                                    suratTarget.getNotaDinas().getTanggalPembuatanMilis(),
                                     false,
                                     pegawaiPemberi.getNip(),
                                     pegawaiPemberi.getNama(),
-                                    pegawaiPemberi.getJabatan()));
+                                    pegawaiPemberi.getJabatan(),
+                                    suratTarget.getStatusBaca(),
+                                    "Nota Dinas",
+                                    3));
                     break;
                 }
             }
@@ -199,12 +204,17 @@ public class NotaDinasController {
                         .equals(suratTarget.getNotaDinas().getNipPenandatangan())) {
                     if (suratTarget.getStatusBaca() == 0) {
                         notaDinasTargetWrappers
-                                .add(new SuratPerintahTargetWrapper(suratTarget.getNotaDinas().getKdNotaDinas(),
+                                .add(new SuratPerintahTargetWrapper(
+                                        suratTarget.getNotaDinas().getKdNotaDinas(),
                                         "",
+                                        suratTarget.getNotaDinas().getTanggalPembuatanMilis(),
                                         false,
                                         pegawaiPemberi.getNip(),
                                         pegawaiPemberi.getNama(),
-                                        pegawaiPemberi.getJabatan()));
+                                        pegawaiPemberi.getJabatan(),
+                                        suratTarget.getStatusBaca(),
+                                        "Nota Dinas",
+                                        3));
                     }
 
                     break;

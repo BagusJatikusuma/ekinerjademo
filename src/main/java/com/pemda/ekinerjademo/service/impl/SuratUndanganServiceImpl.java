@@ -40,7 +40,7 @@ public class SuratUndanganServiceImpl implements SuratUndanganService {
 
     @Override
     public List<SuratUndangan> getByNipPenerima(String nipPenerima) {
-        return null;
+        return suratUndanganDao.findByNipPenerimaSuratUndangan(nipPenerima);
     }
 
     @Override

@@ -17,6 +17,8 @@ public class LembarDisposisiWrapper {
     private String nipPengirim;
     private String namaPengirim;
     private String ringkasanIsi;
+    private String jenisSurat;
+    private Integer kdJenisSurat;
 
     public LembarDisposisiWrapper() {
     }
@@ -109,6 +111,24 @@ public class LembarDisposisiWrapper {
         this.statusBaca = statusBaca;
         this.tglPengiriman = tglPengiriman;
         this.tglPengirimanMilis = tglPengirimanMilis;
+    }
+
+    public LembarDisposisiWrapper(String kdLembarDisposisi, String path, String tanggalPenerimaan, Long tanggalPenerimaanMilis, Integer tktKeamanan, String tglPenyelesaian, Long tglPenyelesaianMilis, Integer statusBaca, String tglPengiriman, Long tglPengirimanMilis, String nipPengirim, String namaPengirim, String ringkasanIsi, String jenisSurat, Integer kdJenisSurat) {
+        this.kdLembarDisposisi = kdLembarDisposisi;
+        this.path = path;
+        this.tanggalPenerimaan = tanggalPenerimaan;
+        this.tanggalPenerimaanMilis = tanggalPenerimaanMilis;
+        this.tktKeamanan = tktKeamanan;
+        this.tglPenyelesaian = tglPenyelesaian;
+        this.tglPenyelesaianMilis = tglPenyelesaianMilis;
+        this.statusBaca = statusBaca;
+        this.tglPengiriman = tglPengiriman;
+        this.tglPengirimanMilis = tglPengirimanMilis;
+        this.nipPengirim = nipPengirim;
+        this.namaPengirim = namaPengirim;
+        this.ringkasanIsi = ringkasanIsi;
+        this.jenisSurat = jenisSurat;
+        this.kdJenisSurat = kdJenisSurat;
     }
 
     public String getKdLembarDisposisi() {
@@ -213,5 +233,21 @@ public class LembarDisposisiWrapper {
 
     public void setRingkasanIsi(String ringkasanIsi) {
         this.ringkasanIsi = ringkasanIsi;
+    }
+
+    public String getJenisSurat() {
+        return jenisSurat;
+    }
+
+    public void setJenisSurat(String jenisSurat) {
+        this.jenisSurat = jenisSurat;
+    }
+
+    public Integer getKdJenisSurat() {
+        return kdJenisSurat;
+    }
+
+    public void setKdJenisSurat(Integer kdJenisSurat) {
+        this.kdJenisSurat = kdJenisSurat;
     }
 }
