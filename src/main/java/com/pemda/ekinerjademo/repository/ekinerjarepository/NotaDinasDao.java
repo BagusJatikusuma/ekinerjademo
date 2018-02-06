@@ -25,6 +25,11 @@ public interface NotaDinasDao extends JpaRepository<NotaDinas, String> {
             "where nd.nomorTahun = ?1")
     List<NotaDinas> findByNomorTahun(Integer nomorTahun);
 
+    @Query("select distinct nd from NotaDinas nd " +
+            "left join fetch nd.tembusanNotaDinasList " +
+            "where nd.kdJabatanPenerimaNotaDinas = ?1")
+    List<NotaDinas> findByKdJabatanPenerimaNotaDinas(String kdJabatanPenerimaNotaDinas);
+
     @Query("select nd from NotaDinas nd " +
             "left join fetch nd.tembusanNotaDinasList " +
             "where nd.kdNotaDinas = ?1")

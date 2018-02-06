@@ -14,6 +14,7 @@ public interface NotaDinasService {
     List<NotaDinas> getByNipPembuat(String nipPembuat);
     List<NotaDinas> getByByNomorTahun(Integer nomorTahun);
     List<TembusanNotaDinas> getTembusanNotaDinasByJabatan(String kdJabatan);
+    List<NotaDinas> getNotaDinasByJabatanPenerima(String kdJabatan);
 
     NotaDinas findBykdNotaDinas(String kdNotaDinas);
 

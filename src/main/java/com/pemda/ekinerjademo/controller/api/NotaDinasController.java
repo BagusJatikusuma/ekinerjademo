@@ -147,8 +147,32 @@ public class NotaDinasController {
             }
         }
 
+        List<NotaDinas> notaDinasList
+                = notaDinasService.getNotaDinasByJabatanPenerima(pegawaiTarget.getKdJabatan());
         List<TembusanNotaDinas> tembusanNotaDinasList
                 = notaDinasService.getTembusanNotaDinasByJabatan(pegawaiTarget.getKdJabatan());
+
+        for (NotaDinas notaDinas
+                : notaDinasList) {
+            for (CustomPegawaiCredential pegawaiPemberi : qutPegawaiList) {
+                if (pegawaiPemberi.getNip()
+                        .equals(notaDinas.getNipPenandatangan())) {
+                    notaDinasTargetWrappers
+                            .add(new SuratPerintahTargetWrapper(
+                                    notaDinas.getKdNotaDinas(),
+                                    "",
+                                    notaDinas.getTanggalPembuatanMilis(),
+                                    false,
+                                    pegawaiPemberi.getNip(),
+                                    pegawaiPemberi.getNama(),
+                                    pegawaiPemberi.getJabatan(),
+                                    notaDinas.getStatusBaca(),
+                                    "Nota Dinas",
+                                    3));
+                    break;
+                }
+            }
+        }
 
         for (TembusanNotaDinas suratTarget
                 : tembusanNotaDinasList) {
@@ -194,8 +218,34 @@ public class NotaDinasController {
             }
         }
 
+        List<NotaDinas> notaDinasList
+                = notaDinasService.getNotaDinasByJabatanPenerima(pegawaiTarget.getKdJabatan());
         List<TembusanNotaDinas> tembusanNotaDinasList
                 = notaDinasService.getTembusanNotaDinasByJabatan(pegawaiTarget.getKdJabatan());
+
+        for (NotaDinas notaDinas
+                : notaDinasList) {
+            for (CustomPegawaiCredential pegawaiPemberi : qutPegawaiList) {
+                if (pegawaiPemberi.getNip()
+                        .equals(notaDinas.getNipPenandatangan())) {
+                    if (notaDinas.getStatusBaca() == 0) {
+                        notaDinasTargetWrappers
+                                .add(new SuratPerintahTargetWrapper(
+                                        notaDinas.getKdNotaDinas(),
+                                        "",
+                                        notaDinas.getTanggalPembuatanMilis(),
+                                        false,
+                                        pegawaiPemberi.getNip(),
+                                        pegawaiPemberi.getNama(),
+                                        pegawaiPemberi.getJabatan(),
+                                        notaDinas.getStatusBaca(),
+                                        "Nota Dinas",
+                                        3));
+                    }
+                    break;
+                }
+            }
+        }
 
         for (TembusanNotaDinas suratTarget
                 : tembusanNotaDinasList) {

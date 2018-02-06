@@ -42,6 +42,11 @@ public class NotaDinasServiceImpl implements NotaDinasService {
     }
 
     @Override
+    public List<NotaDinas> getNotaDinasByJabatanPenerima(String kdJabatan) {
+        return notaDinasDao.findByKdJabatanPenerimaNotaDinas(kdJabatan);
+    }
+
+    @Override
     public NotaDinas findBykdNotaDinas(String kdNotaDinas) {
         return notaDinasDao.findByKdNotaDinas(kdNotaDinas);
     }

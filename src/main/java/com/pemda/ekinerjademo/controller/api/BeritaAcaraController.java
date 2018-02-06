@@ -81,6 +81,7 @@ public class BeritaAcaraController {
         beritaAcara.setNipPenilai("");
         beritaAcara.setStatusPenilaian(0);
         beritaAcara.setAlasanPenolakan("");
+        beritaAcara.setStatusBaca(0);
 
         if (inputWrapper.getKdBeritaAcaraBawahan() == null) {
             beritaAcara.setPathPenilaian(kdBeritaAcara);
@@ -106,7 +107,7 @@ public class BeritaAcaraController {
         return new ResponseEntity<Object>(new CustomMessage("berita acara approved"), HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/get-daftar-berita-acara-history-by-pegawai/{nipPegawai}", method = RequestMethod.GET)
+    @RequestMapping(value = "/get-daftar-berita-acara-history-by-pegawai/{nipPembuatSurat}", method = RequestMethod.GET)
     ResponseEntity<?> getDaftarBeritaAcaraHistoryByPegawai(
             @PathVariable("nipPembuatSurat") String nipPembuatSurat) {
         LOGGER.info("get berita acara history by nip "+nipPembuatSurat);
@@ -119,12 +120,15 @@ public class BeritaAcaraController {
         for (BeritaAcara beritaAcara
                 : beritaAcaraList) {
             beritaAcaraHistoryList
-                    .add(new SuratPerintahHistoryWrapper(beritaAcara.getKdBeritaAcara(),
+                    .add(new SuratPerintahHistoryWrapper(
+                            beritaAcara.getKdBeritaAcara(),
                             "",
                             false,
                             beritaAcara.getStatusBaca(),
                             "Berita Acara",
-                            0));
+                            0,
+                            beritaAcara.getTanggalPembuatanMilis(),
+                            beritaAcara.getStatusPenilaian()));
         }
 
         return new ResponseEntity<Object>(beritaAcaraHistoryList, HttpStatus.OK);

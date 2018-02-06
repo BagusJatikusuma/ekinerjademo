@@ -353,6 +353,8 @@ public class SuratPengantarController {
                 = suratPengantarService.getByKdSuratPengantar(kdSuratPengantar);
         suratPengantar.setStatusBaca(1);
 
+        suratPengantarService.create(suratPengantar);
+
         return new ResponseEntity<Object>(new CustomMessage("surat pengantar opened"), HttpStatus.OK);
 
     }

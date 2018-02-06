@@ -14,6 +14,8 @@ import java.util.List;
 @Repository
 public interface TembusanNotaDinasDao
         extends JpaRepository<TembusanNotaDinas, TembusanNotaDinasId> {
-    @Query("select tnd from TembusanNotaDinas tnd left join fetch tnd.notaDinas")
+    @Query("select tnd from TembusanNotaDinas tnd " +
+            "left join fetch tnd.notaDinas " +
+            "where tnd.tembusanNotaDinasId.kdJabatan = ?1")
     List<TembusanNotaDinas> findByTembusanNotaDinasId_KdJabatan(String kdJabatan);
 }
