@@ -53,7 +53,17 @@ public class AkunPegawaiController {
     @Autowired private BeritaAcaraService beritaAcaraService;
     @Autowired private SuratPerintahService suratPerintahService;
     @Autowired private LaporanService laporanService;
+    @Autowired private MemorandumService memorandumService;
+    @Autowired private NotaDinasService notaDinasService;
+    @Autowired private PengumumanService pengumumanService;
+    @Autowired private SuratDinasService suratDinasService;
+    @Autowired private SuratEdaranService suratEdaranService;
+    @Autowired private SuratKeputusanService suratKeputusanService;
+    @Autowired private SuratKeteranganService suratKeteranganService;
     @Autowired private SuratKuasaService suratKuasaService;
+    @Autowired private SuratPengantarService suratPengantarService;
+    @Autowired private SuratTugasService suratTugasService;
+    @Autowired private SuratUndanganService suratUndanganService;
     @Autowired private TelaahanStafService telaahanStafService;
     @Autowired private TemplateLainService templateLainService;
     @Autowired private LoginPegawaiService loginPegawaiService;
@@ -843,6 +853,174 @@ public class AkunPegawaiController {
                                 0,
                                 beritaAcaraBawahan.getTanggalPembuatanMilis()));
             }
+            List<Memorandum> memorandums
+                    = memorandumService.getByNipPembuat(pegawaiBawahan.getNip());
+            for (Memorandum memorandum : memorandums) {
+                if (memorandum.getMemorandumPejabat() != null)
+                    suratPejabat = 1;
+                else
+                    suratPejabat = 2;
+
+                laporanBawahanWrapperList
+                        .add(new LaporanBawahanWrapper(
+                                memorandum.getKdMemorandum(),
+                                "Memorandum",
+                                pegawaiBawahan.getNip(),
+                                pegawaiBawahan.getNama(),
+                                memorandum.getStatusPenilaian(),
+                                2,
+                                suratPejabat,
+                                memorandum.getTanggalPembuatanMilis()));
+            }
+            List<NotaDinas> notaDinasList
+                    = notaDinasService.getByNipPembuat(pegawaiBawahan.getNip());
+            for (NotaDinas notaDinas : notaDinasList) {
+                laporanBawahanWrapperList
+                        .add(new LaporanBawahanWrapper(
+                                notaDinas.getKdNotaDinas(),
+                                "Nota Dinas",
+                                pegawaiBawahan.getNip(),
+                                pegawaiBawahan.getNama(),
+                                notaDinas.getStatusPenilaian(),
+                                3,
+                                0,
+                                notaDinas.getTanggalPembuatanMilis()));
+            }
+            List<Pengumuman> pengumumanList
+                    = pengumumanService.getByPembuat(pegawaiBawahan.getNip());
+            for (Pengumuman pengumuman : pengumumanList) {
+                laporanBawahanWrapperList
+                        .add(new LaporanBawahanWrapper(
+                                pengumuman.getKdPengumuman(),
+                                "Pengumuman",
+                                pegawaiBawahan.getNip(),
+                                pegawaiBawahan.getNama(),
+                                pengumuman.getStatusPenilaian(),
+                                4,
+                                0,
+                                pengumuman.getTanggalPembuatanMilis()));
+            }
+            List<SuratDinas> suratDinasList
+                    = suratDinasService.getByNipPembuat(pegawaiBawahan.getNip());
+            for (SuratDinas suratDinas : suratDinasList) {
+                if (suratDinas.getSuratDinasPejabat() != null)
+                    suratPejabat = 1;
+                else
+                    suratPejabat = 2;
+
+                laporanBawahanWrapperList
+                        .add(new LaporanBawahanWrapper(
+                                suratDinas.getKdSuratDinas(),
+                                "Surat Dinas",
+                                pegawaiBawahan.getNip(),
+                                pegawaiBawahan.getNama(),
+                                suratDinas.getStatusPenilaian(),
+                                5,
+                                suratPejabat,
+                                suratDinas.getTanggalPembuatanMilis()));
+            }
+            List<SuratEdaran> suratEdaranList
+                    = suratEdaranService.getByNipPembuat(pegawaiBawahan.getNip());
+            for (SuratEdaran suratEdaran : suratEdaranList) {
+                if (suratEdaran.getSuratEdaranPejabat() != null)
+                    suratPejabat = 1;
+                else
+                    suratPejabat = 2;
+
+                laporanBawahanWrapperList
+                        .add(new LaporanBawahanWrapper(
+                                suratEdaran.getKdSuratEdaran(),
+                                "Surat Edaran",
+                                pegawaiBawahan.getNip(),
+                                pegawaiBawahan.getNama(),
+                                suratEdaran.getStatusPenilaian(),
+                                6,
+                                suratPejabat,
+                                suratEdaran.getTanggalPembuatanMilis()));
+            }
+            List<SuratKeputusan> suratKeputusanList
+                    = suratKeputusanService.getByNipPembuat(pegawaiBawahan.getNip());
+            for (SuratKeputusan suratKeputusan : suratKeputusanList) {
+
+                laporanBawahanWrapperList
+                        .add(new LaporanBawahanWrapper(
+                                suratKeputusan.getKdSuratKeputusan(),
+                                "Surat Keputusan",
+                                pegawaiBawahan.getNip(),
+                                pegawaiBawahan.getNama(),
+                                suratKeputusan.getStatusPenilaian(),
+                                7,
+                                0,
+                                suratKeputusan.getTanggalPembuatanMilis()));
+            }
+            List<SuratKeterangan> suratKeterangans
+                    = suratKeteranganService.getByNipPembuat(pegawaiBawahan.getNip());
+            for (SuratKeterangan suratKeterangan : suratKeterangans) {
+
+                laporanBawahanWrapperList
+                        .add(new LaporanBawahanWrapper(
+                                suratKeterangan.getKdSuratKeterangan(),
+                                "Surat Keterangan",
+                                pegawaiBawahan.getNip(),
+                                pegawaiBawahan.getNama(),
+                                suratKeterangan.getStatusPenilaian(),
+                                8,
+                                0,
+                                suratKeterangan.getTanggalPembuatanSuratMilis()));
+            }
+            List<SuratPengantar> suratPengantarList
+                    = suratPengantarService.getByNipPembuat(pegawaiBawahan.getNip());
+            for (SuratPengantar suratPengantar : suratPengantarList) {
+
+                laporanBawahanWrapperList
+                        .add(new LaporanBawahanWrapper(
+                                suratPengantar.getKdSuratPengantar(),
+                                "Surat Pengantar",
+                                pegawaiBawahan.getNip(),
+                                pegawaiBawahan.getNama(),
+                                suratPengantar.getStatusPenilaian(),
+                                10,
+                                0,
+                                suratPengantar.getTanggalPembuatanMilis()));
+            }
+            Set<SuratTugas> suratTugases
+                    = suratTugasService.getByNipPembuat(pegawaiBawahan.getNip());
+            for (SuratTugas suratTugas : suratTugases) {
+                if (suratTugas.getSuratTugasPejabat() != null)
+                    suratPejabat = 1;
+                else
+                    suratPejabat = 2;
+
+                laporanBawahanWrapperList
+                        .add(new LaporanBawahanWrapper(
+                                suratTugas.getKdSuratTugas(),
+                                "Surat Tugas",
+                                pegawaiBawahan.getNip(),
+                                pegawaiBawahan.getNama(),
+                                suratTugas.getStatusPenilaian(),
+                                12,
+                                suratPejabat,
+                                suratTugas.getTanggalTugasMilis()));
+            }
+            List<SuratUndangan> suratUndanganList
+                    = suratUndanganService.getByNipPembuat(pegawaiBawahan.getNip());
+            for (SuratUndangan suratUndangan : suratUndanganList) {
+                if (suratUndangan.getSuratUndanganPejabat() != null)
+                    suratPejabat = 1;
+                else
+                    suratPejabat = 2;
+
+                laporanBawahanWrapperList
+                        .add(new LaporanBawahanWrapper(
+                                suratUndangan.getKdSuratUndangan(),
+                                "Surat Undangan",
+                                pegawaiBawahan.getNip(),
+                                pegawaiBawahan.getNama(),
+                                suratUndangan.getStatusPenilaian(),
+                                13,
+                                suratPejabat,
+                                suratUndangan.getTanggalPembuatanSurat()));
+            }
             //ambil data surat perintah yang dilaporkan bawahan
             Set<SuratPerintah> suratPerintahList
                     = suratPerintahService.getByNipPembuat(pegawaiBawahan.getNip());
@@ -971,6 +1149,174 @@ public class AkunPegawaiController {
                                 0,
                                 beritaAcaraBawahan.getTanggalPembuatanMilis()));
             }
+            List<Memorandum> memorandums
+                    = memorandumService.getByNipPembuat(pegawaiBawahan.getNip());
+            for (Memorandum memorandum : memorandums) {
+                if (memorandum.getMemorandumPejabat() != null)
+                    suratPejabat = 1;
+                else
+                    suratPejabat = 2;
+
+                laporanBawahanWrapperList
+                        .add(new LaporanBawahanWrapper(
+                                memorandum.getKdMemorandum(),
+                                "Memorandum",
+                                pegawaiBawahan.getNip(),
+                                pegawaiBawahan.getNama(),
+                                memorandum.getStatusPenilaian(),
+                                2,
+                                suratPejabat,
+                                memorandum.getTanggalPembuatanMilis()));
+            }
+            List<NotaDinas> notaDinasList
+                    = notaDinasService.getByNipPembuat(pegawaiBawahan.getNip());
+            for (NotaDinas notaDinas : notaDinasList) {
+                laporanBawahanWrapperList
+                        .add(new LaporanBawahanWrapper(
+                                notaDinas.getKdNotaDinas(),
+                                "Nota Dinas",
+                                pegawaiBawahan.getNip(),
+                                pegawaiBawahan.getNama(),
+                                notaDinas.getStatusPenilaian(),
+                                3,
+                                0,
+                                notaDinas.getTanggalPembuatanMilis()));
+            }
+            List<Pengumuman> pengumumanList
+                    = pengumumanService.getByPembuat(pegawaiBawahan.getNip());
+            for (Pengumuman pengumuman : pengumumanList) {
+                laporanBawahanWrapperList
+                        .add(new LaporanBawahanWrapper(
+                                pengumuman.getKdPengumuman(),
+                                "Pengumuman",
+                                pegawaiBawahan.getNip(),
+                                pegawaiBawahan.getNama(),
+                                pengumuman.getStatusPenilaian(),
+                                4,
+                                0,
+                                pengumuman.getTanggalPembuatanMilis()));
+            }
+            List<SuratDinas> suratDinasList
+                    = suratDinasService.getByNipPembuat(pegawaiBawahan.getNip());
+            for (SuratDinas suratDinas : suratDinasList) {
+                if (suratDinas.getSuratDinasPejabat() != null)
+                    suratPejabat = 1;
+                else
+                    suratPejabat = 2;
+
+                laporanBawahanWrapperList
+                        .add(new LaporanBawahanWrapper(
+                                suratDinas.getKdSuratDinas(),
+                                "Surat Dinas",
+                                pegawaiBawahan.getNip(),
+                                pegawaiBawahan.getNama(),
+                                suratDinas.getStatusPenilaian(),
+                                5,
+                                suratPejabat,
+                                suratDinas.getTanggalPembuatanMilis()));
+            }
+            List<SuratEdaran> suratEdaranList
+                    = suratEdaranService.getByNipPembuat(pegawaiBawahan.getNip());
+            for (SuratEdaran suratEdaran : suratEdaranList) {
+                if (suratEdaran.getSuratEdaranPejabat() != null)
+                    suratPejabat = 1;
+                else
+                    suratPejabat = 2;
+
+                laporanBawahanWrapperList
+                        .add(new LaporanBawahanWrapper(
+                                suratEdaran.getKdSuratEdaran(),
+                                "Surat Edaran",
+                                pegawaiBawahan.getNip(),
+                                pegawaiBawahan.getNama(),
+                                suratEdaran.getStatusPenilaian(),
+                                6,
+                                suratPejabat,
+                                suratEdaran.getTanggalPembuatanMilis()));
+            }
+            List<SuratKeputusan> suratKeputusanList
+                    = suratKeputusanService.getByNipPembuat(pegawaiBawahan.getNip());
+            for (SuratKeputusan suratKeputusan : suratKeputusanList) {
+
+                laporanBawahanWrapperList
+                        .add(new LaporanBawahanWrapper(
+                                suratKeputusan.getKdSuratKeputusan(),
+                                "Surat Keputusan",
+                                pegawaiBawahan.getNip(),
+                                pegawaiBawahan.getNama(),
+                                suratKeputusan.getStatusPenilaian(),
+                                7,
+                                0,
+                                suratKeputusan.getTanggalPembuatanMilis()));
+            }
+            List<SuratKeterangan> suratKeterangans
+                    = suratKeteranganService.getByNipPembuat(pegawaiBawahan.getNip());
+            for (SuratKeterangan suratKeterangan : suratKeterangans) {
+
+                laporanBawahanWrapperList
+                        .add(new LaporanBawahanWrapper(
+                                suratKeterangan.getKdSuratKeterangan(),
+                                "Surat Keterangan",
+                                pegawaiBawahan.getNip(),
+                                pegawaiBawahan.getNama(),
+                                suratKeterangan.getStatusPenilaian(),
+                                8,
+                                0,
+                                suratKeterangan.getTanggalPembuatanSuratMilis()));
+            }
+            List<SuratPengantar> suratPengantarList
+                    = suratPengantarService.getByNipPembuat(pegawaiBawahan.getNip());
+            for (SuratPengantar suratPengantar : suratPengantarList) {
+
+                laporanBawahanWrapperList
+                        .add(new LaporanBawahanWrapper(
+                                suratPengantar.getKdSuratPengantar(),
+                                "Surat Pengantar",
+                                pegawaiBawahan.getNip(),
+                                pegawaiBawahan.getNama(),
+                                suratPengantar.getStatusPenilaian(),
+                                10,
+                                0,
+                                suratPengantar.getTanggalPembuatanMilis()));
+            }
+            Set<SuratTugas> suratTugases
+                    = suratTugasService.getByNipPembuat(pegawaiBawahan.getNip());
+            for (SuratTugas suratTugas : suratTugases) {
+                if (suratTugas.getSuratTugasPejabat() != null)
+                    suratPejabat = 1;
+                else
+                    suratPejabat = 2;
+
+                laporanBawahanWrapperList
+                        .add(new LaporanBawahanWrapper(
+                                suratTugas.getKdSuratTugas(),
+                                "Surat Tugas",
+                                pegawaiBawahan.getNip(),
+                                pegawaiBawahan.getNama(),
+                                suratTugas.getStatusPenilaian(),
+                                12,
+                                suratPejabat,
+                                suratTugas.getTanggalTugasMilis()));
+            }
+            List<SuratUndangan> suratUndanganList
+                    = suratUndanganService.getByNipPembuat(pegawaiBawahan.getNip());
+            for (SuratUndangan suratUndangan : suratUndanganList) {
+                if (suratUndangan.getSuratUndanganPejabat() != null)
+                    suratPejabat = 1;
+                else
+                    suratPejabat = 2;
+
+                laporanBawahanWrapperList
+                        .add(new LaporanBawahanWrapper(
+                                suratUndangan.getKdSuratUndangan(),
+                                "Surat Undangan",
+                                pegawaiBawahan.getNip(),
+                                pegawaiBawahan.getNama(),
+                                suratUndangan.getStatusPenilaian(),
+                                13,
+                                suratPejabat,
+                                suratUndangan.getTanggalPembuatanSurat()));
+            }
             //ambil data surat perintah yang dilaporkan bawahan
             Set<SuratPerintah> suratPerintahList
                     = suratPerintahService.getByNipPembuat(pegawaiBawahan.getNip());
@@ -1071,7 +1417,7 @@ public class AkunPegawaiController {
         LOGGER.info("tolak laporan");
 
         switch (inputWrapper.getKdJenisSurat()) {
-            case 1 :
+            case 0 :
                 BeritaAcara beritaAcara
                         = beritaAcaraService.getBeritaAcara(inputWrapper.getKdSurat());
                 beritaAcara.setStatusPenilaian(3);
@@ -1079,7 +1425,7 @@ public class AkunPegawaiController {
 
                 beritaAcaraService.createBeritaAcara(beritaAcara);
                 break;
-            case 2 :
+            case 1 :
                 Laporan laporan
                         = laporanService.getLaporan(inputWrapper.getKdSurat());
                 laporan.setStatusPenilaian(3);
@@ -1087,12 +1433,62 @@ public class AkunPegawaiController {
 
                 laporanService.createLaporan(laporan);
                 break;
-            case 3 : break;
-            case 4 : break;
-            case 5 : break;
-            case 6 : break;
-            case 7 : break;
-            case 8 : break;
+            case 2 :
+                Memorandum memorandum
+                        = memorandumService.getByKdMemorandum(inputWrapper.getKdSurat());
+                memorandum.setStatusPenilaian(3);
+                memorandum.setAlasanPenolakan(inputWrapper.getAlasanPenolakan());
+
+                memorandumService.createMemorandum(memorandum);
+                break;
+            case 3 :
+                NotaDinas notaDinas
+                        = notaDinasService.findBykdNotaDinas(inputWrapper.getKdSurat());
+                notaDinas.setStatusPenilaian(3);
+                notaDinas.setAlasanPenolakan(inputWrapper.getAlasanPenolakan());
+
+                notaDinasService.create(notaDinas);
+                break;
+            case 4 :
+                Pengumuman pengumuman
+                        = pengumumanService.getByKdPengumuman(inputWrapper.getKdSurat());
+                pengumuman.setStatusPenilaian(3);
+                pengumuman.setAlasanPenolakan(inputWrapper.getAlasanPenolakan());
+
+                pengumumanService.create(pengumuman);
+                break;
+            case 5 :
+                SuratDinas suratDinas
+                        = suratDinasService.getByKdSuratDinas(inputWrapper.getKdSurat());
+                suratDinas.setStatusPenilaian(3);
+                suratDinas.setAlasanPenolakan(inputWrapper.getAlasanPenolakan());
+
+                suratDinasService.create(suratDinas);
+                break;
+            case 6 :
+                SuratEdaran suratEdaran
+                        = suratEdaranService.getByKdSuratEdaran(inputWrapper.getKdSurat());
+                suratEdaran.setStatusPenilaian(3);
+                suratEdaran.setAlasanPenolakan(inputWrapper.getAlasanPenolakan());
+
+                suratEdaranService.create(suratEdaran);
+                break;
+            case 7 :
+                SuratKeputusan suratKeputusan
+                        = suratKeputusanService.getByKdSuratKeputusan(inputWrapper.getKdSurat());
+                suratKeputusan.setStatusPenilaian(3);
+                suratKeputusan.setAlasanPenolakan(inputWrapper.getAlasanPenolakan());
+
+                suratKeputusanService.create(suratKeputusan);
+                break;
+            case 8 :
+                SuratKeterangan suratKeterangan
+                        = suratKeteranganService.getByKdSuratKeterangan(inputWrapper.getKdSurat());
+                suratKeterangan.setStatusPenilaian(3);
+                suratKeterangan.setAlasanPenolakan(inputWrapper.getAlasanPenolakan());
+
+                suratKeteranganService.create(suratKeterangan);
+                break;
             case 9 :
                 SuratKuasa suratKuasa
                         = suratKuasaService.getSuratKuasa(inputWrapper.getKdSurat());
@@ -1101,7 +1497,14 @@ public class AkunPegawaiController {
 
                 suratKuasaService.createSuratKuasa(suratKuasa);
                 break;
-            case 10 : break;
+            case 10 :
+                SuratPengantar suratPengantar
+                        = suratPengantarService.getByKdSuratPengantar(inputWrapper.getKdSurat());
+                suratPengantar.setStatusPenilaian(3);
+                suratPengantar.setAlasanPenolakan(inputWrapper.getAlasanPenolakan());
+
+                suratPengantarService.create(suratPengantar);
+                break;
             case 11 :
                 SuratPerintah suratPerintah
                         = suratPerintahService.getSuratPerintahByKdSuratPerintah(inputWrapper.getKdSurat());
@@ -1110,8 +1513,22 @@ public class AkunPegawaiController {
 
                 suratPerintahService.creteSurat(suratPerintah);
                 break;
-            case 12 : break;
-            case 13 : break;
+            case 12 :
+                SuratTugas suratTugas
+                        = suratTugasService.getByKdSuratTugas(inputWrapper.getKdSurat());
+                suratTugas.setStatusPenilaian(3);
+                suratTugas.setAlasanPenolakan(inputWrapper.getAlasanPenolakan());
+
+                suratTugasService.create(suratTugas);
+                break;
+            case 13 :
+                SuratUndangan suratUndangan
+                        = suratUndanganService.getByKdSuratUndangan(inputWrapper.getKdSurat());
+                suratUndangan.setStatusPenilaian(3);
+                suratUndangan.setAlasanPenolakan(inputWrapper.getAlasanPenolakan());
+
+                suratUndanganService.create(suratUndangan);
+                break;
             case 14 :
                 TelaahanStaf telaahanStaf
                         = telaahanStafService.getTelaahanStaf(inputWrapper.getKdSurat());

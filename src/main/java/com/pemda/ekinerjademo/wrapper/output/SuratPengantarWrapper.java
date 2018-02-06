@@ -28,6 +28,8 @@ public class SuratPengantarWrapper {
     private String unitKerjaPemberiSuratPengantar;
     private String gelarDepanPemberiSuratPengantar;
     private String gelarBelakangPemberiSuratPengantar;
+    private String pangkatPemberiSuratPengantar;
+    private String golonganPemberiSuratPengantar;
 
     private String nomorTeleponPemberi;
     private List<SuratPengantarIsiWrapper> suratPengantarIsiWrapperList;
@@ -49,7 +51,7 @@ public class SuratPengantarWrapper {
             String namaPemberiSuratPengantar,
             String jabatanPemberiSuratPengantar,
             String unitKerjaPemberiSuratPengantar,
-            String gelarDepanPemberiSuratPengantar, String gelarBelakangPemberiSuratPengantar, String nomorTeleponPemberi, List<SuratPengantarIsiWrapper> suratPengantarIsiWrapperList) {
+            String gelarDepanPemberiSuratPengantar, String gelarBelakangPemberiSuratPengantar, String pangkatPemberiSuratPengantar, String golonganPemberiSuratPengantar, String nomorTeleponPemberi, List<SuratPengantarIsiWrapper> suratPengantarIsiWrapperList) {
         this.nomorUrusan = nomorUrusan;
         this.nomorUrut = nomorUrut;
         this.nomorPasanganUrut = nomorPasanganUrut;
@@ -66,6 +68,8 @@ public class SuratPengantarWrapper {
         this.unitKerjaPemberiSuratPengantar = unitKerjaPemberiSuratPengantar;
         this.gelarDepanPemberiSuratPengantar = gelarDepanPemberiSuratPengantar;
         this.gelarBelakangPemberiSuratPengantar = gelarBelakangPemberiSuratPengantar;
+        this.pangkatPemberiSuratPengantar = pangkatPemberiSuratPengantar;
+        this.golonganPemberiSuratPengantar = golonganPemberiSuratPengantar;
         this.nomorTeleponPemberi = nomorTeleponPemberi;
         this.suratPengantarIsiWrapperList = suratPengantarIsiWrapperList;
     }
@@ -212,5 +216,21 @@ public class SuratPengantarWrapper {
 
     public void setGelarBelakangPemberiSuratPengantar(String gelarBelakangPemberiSuratPengantar) {
         this.gelarBelakangPemberiSuratPengantar = gelarBelakangPemberiSuratPengantar;
+    }
+
+    public String getPangkatPemberiSuratPengantar() {
+        return pangkatPemberiSuratPengantar;
+    }
+
+    public void setPangkatPemberiSuratPengantar(String pangkatPemberiSuratPengantar) {
+        this.pangkatPemberiSuratPengantar = pangkatPemberiSuratPengantar;
+    }
+
+    public String getGolonganPemberiSuratPengantar() {
+        return golonganPemberiSuratPengantar;
+    }
+
+    public void setGolonganPemberiSuratPengantar(String golonganPemberiSuratPengantar) {
+        this.golonganPemberiSuratPengantar = golonganPemberiSuratPengantar;
     }
 }

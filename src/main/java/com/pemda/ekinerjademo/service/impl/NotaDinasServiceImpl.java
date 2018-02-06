@@ -65,6 +65,7 @@ public class NotaDinasServiceImpl implements NotaDinasService {
     public void openNotaDinas(String kdNotaDinas) {
         NotaDinas notaDinas
                 = findBykdNotaDinas(kdNotaDinas);
+        notaDinas.setStatusBaca(1);
     }
 
     @Override

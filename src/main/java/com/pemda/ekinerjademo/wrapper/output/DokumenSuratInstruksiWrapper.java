@@ -26,6 +26,10 @@ public class DokumenSuratInstruksiWrapper {
     private boolean suratPejabat;
     private String jabatanSuratPejabat;
     private String unitKerja;
+    private String gelarDepanPenandatangan;
+    private String gelarBelakangPenandantangan;
+    private String pangkatPenandatangan;
+    private String golonganPenandatangan;
 
     public DokumenSuratInstruksiWrapper() {
     }
@@ -66,6 +70,31 @@ public class DokumenSuratInstruksiWrapper {
         this.suratPejabat = suratPejabat;
         this.jabatanSuratPejabat = jabatanSuratPejabat;
         this.unitKerja = unitKerja;
+    }
+
+    public DokumenSuratInstruksiWrapper(String kdInstruksi, String judulInstruksi, String nomor, Integer tahun, String tentang, String kdJabatanPenandatangan, String jabatanPenandaTangan, String alasan, List<String> daftarIsiInstruksi, String dikeluarkanDi, String tanggalDibuat, String nipPenandatangan, String namaPenandatangan, List<QutPegawaiWrapper> targetPegawaiList, List<JabatanWrapper> targetJabatanList, boolean suratPejabat, String jabatanSuratPejabat, String unitKerja, String gelarDepanPenandatangan, String gelarBelakangPenandantangan, String pangkatPenandatangan, String golonganPenandatangan) {
+        this.kdInstruksi = kdInstruksi;
+        this.judulInstruksi = judulInstruksi;
+        this.nomor = nomor;
+        this.tahun = tahun;
+        this.tentang = tentang;
+        this.kdJabatanPenandatangan = kdJabatanPenandatangan;
+        this.jabatanPenandaTangan = jabatanPenandaTangan;
+        this.alasan = alasan;
+        this.daftarIsiInstruksi = daftarIsiInstruksi;
+        this.dikeluarkanDi = dikeluarkanDi;
+        this.tanggalDibuat = tanggalDibuat;
+        this.nipPenandatangan = nipPenandatangan;
+        this.namaPenandatangan = namaPenandatangan;
+        this.targetPegawaiList = targetPegawaiList;
+        this.targetJabatanList = targetJabatanList;
+        this.suratPejabat = suratPejabat;
+        this.jabatanSuratPejabat = jabatanSuratPejabat;
+        this.unitKerja = unitKerja;
+        this.gelarDepanPenandatangan = gelarDepanPenandatangan;
+        this.gelarBelakangPenandantangan = gelarBelakangPenandantangan;
+        this.pangkatPenandatangan = pangkatPenandatangan;
+        this.golonganPenandatangan = golonganPenandatangan;
     }
 
     public String getKdInstruksi() {
@@ -210,5 +239,37 @@ public class DokumenSuratInstruksiWrapper {
 
     public void setTargetPegawaiList(List<QutPegawaiWrapper> targetPegawaiList) {
         this.targetPegawaiList = targetPegawaiList;
+    }
+
+    public String getGelarDepanPenandatangan() {
+        return gelarDepanPenandatangan;
+    }
+
+    public void setGelarDepanPenandatangan(String gelarDepanPenandatangan) {
+        this.gelarDepanPenandatangan = gelarDepanPenandatangan;
+    }
+
+    public String getGelarBelakangPenandantangan() {
+        return gelarBelakangPenandantangan;
+    }
+
+    public void setGelarBelakangPenandantangan(String gelarBelakangPenandantangan) {
+        this.gelarBelakangPenandantangan = gelarBelakangPenandantangan;
+    }
+
+    public String getPangkatPenandatangan() {
+        return pangkatPenandatangan;
+    }
+
+    public void setPangkatPenandatangan(String pangkatPenandatangan) {
+        this.pangkatPenandatangan = pangkatPenandatangan;
+    }
+
+    public String getGolonganPenandatangan() {
+        return golonganPenandatangan;
+    }
+
+    public void setGolonganPenandatangan(String golonganPenandatangan) {
+        this.golonganPenandatangan = golonganPenandatangan;
     }
 }

@@ -11,7 +11,6 @@ import com.pemda.ekinerjademo.util.DateUtilities;
 import com.pemda.ekinerjademo.util.EkinerjaXMLBuilder;
 import com.pemda.ekinerjademo.util.EkinerjaXMLParser;
 import com.pemda.ekinerjademo.wrapper.input.SuratPerintahInputWrapper;
-import com.pemda.ekinerjademo.wrapper.input.TargetSuratDiterimaInputWrapper;
 import com.pemda.ekinerjademo.wrapper.output.*;
 import groovy.transform.Synchronized;
 import org.slf4j.Logger;
@@ -894,7 +893,11 @@ public class SuratPerintahController {
                         kdUnitKerjaPenandatangan,
                         unitKerjaPenandatangan,
                         kdJabatanPenandatangan,
-                        jabatanPenandatangan);
+                        jabatanPenandatangan,
+                        penandatanganSurat.getGlrDpn(),
+                        penandatanganSurat.getGlrBlk(),
+                        penandatanganSurat.getPangkat(),
+                        penandatanganSurat.getGol());
 
         return new ResponseEntity<Object>(suratPerintahWrapper, HttpStatus.OK);
     }

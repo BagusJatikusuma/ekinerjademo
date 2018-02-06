@@ -1,6 +1,5 @@
 package com.pemda.ekinerjademo.wrapper.output;
 
-import com.pemda.ekinerjademo.model.bismamodel.TkdJabatan;
 import com.pemda.ekinerjademo.projection.ekinerjaprojection.CustomPegawaiCredential;
 
 import java.util.List;
@@ -54,6 +53,14 @@ public class SuratPerintahNonPejabatDokumenWrapper {
     private String kdJabatanPenandatangan;
 
     private String jabatanPenandatangan;
+
+    private String gelarDepanPenandatangan;
+
+    private String gelarBelakangPenandantangan;
+
+    private String pangkatPenandatangan;
+
+    private String golonganPenandatangan;
 
     public SuratPerintahNonPejabatDokumenWrapper() {
     }
@@ -120,7 +127,7 @@ public class SuratPerintahNonPejabatDokumenWrapper {
             String kdUnitKerjaPenandatangan,
             String unitKerjaPenandatangan,
             String kdJabatanPenandatangan,
-            String jabatanPenandatangan) {
+            String jabatanPenandatangan, String gelarDepanPenandatangan, String gelarBelakangPenandantangan, String pangkatPenandatangan, String golonganPenandatangan) {
         this.kdSuratPerintah = kdSuratPerintah;
         this.nipPenandatangan = nipPenandatangan;
         this.nmPenandatangan = nmPenandatangan;
@@ -144,6 +151,10 @@ public class SuratPerintahNonPejabatDokumenWrapper {
         this.unitKerjaPenandatangan = unitKerjaPenandatangan;
         this.kdJabatanPenandatangan = kdJabatanPenandatangan;
         this.jabatanPenandatangan = jabatanPenandatangan;
+        this.gelarDepanPenandatangan = gelarDepanPenandatangan;
+        this.gelarBelakangPenandantangan = gelarBelakangPenandantangan;
+        this.pangkatPenandatangan = pangkatPenandatangan;
+        this.golonganPenandatangan = golonganPenandatangan;
     }
 
     public String getKdSuratPerintah() {
@@ -328,5 +339,37 @@ public class SuratPerintahNonPejabatDokumenWrapper {
 
     public void setTanggalDibuatMilis(Long tanggalDibuatMilis) {
         this.tanggalDibuatMilis = tanggalDibuatMilis;
+    }
+
+    public String getGelarDepanPenandatangan() {
+        return gelarDepanPenandatangan;
+    }
+
+    public void setGelarDepanPenandatangan(String gelarDepanPenandatangan) {
+        this.gelarDepanPenandatangan = gelarDepanPenandatangan;
+    }
+
+    public String getGelarBelakangPenandantangan() {
+        return gelarBelakangPenandantangan;
+    }
+
+    public void setGelarBelakangPenandantangan(String gelarBelakangPenandantangan) {
+        this.gelarBelakangPenandantangan = gelarBelakangPenandantangan;
+    }
+
+    public String getPangkatPenandatangan() {
+        return pangkatPenandatangan;
+    }
+
+    public void setPangkatPenandatangan(String pangkatPenandatangan) {
+        this.pangkatPenandatangan = pangkatPenandatangan;
+    }
+
+    public String getGolonganPenandatangan() {
+        return golonganPenandatangan;
+    }
+
+    public void setGolonganPenandatangan(String golonganPenandatangan) {
+        this.golonganPenandatangan = golonganPenandatangan;
     }
 }

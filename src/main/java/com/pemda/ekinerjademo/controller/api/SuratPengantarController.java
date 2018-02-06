@@ -338,7 +338,7 @@ public class SuratPengantarController {
                         tkdUnkDao.findOne(pemberiSurat.getKdUnitKerja()).getUnitKerja(),
                         pemberiSurat.getGlrDpn(),
                         pemberiSurat.getGlrBlk(),
-                        suratPengantar.getNomorTeleponPemberi(),
+                pemberiSurat.getPangkat(), pemberiSurat.getGol(), suratPengantar.getNomorTeleponPemberi(),
                         suratPengantarIsiWrapperList);
 
         return new ResponseEntity<Object>(suratPengantarWrapper, HttpStatus.OK);

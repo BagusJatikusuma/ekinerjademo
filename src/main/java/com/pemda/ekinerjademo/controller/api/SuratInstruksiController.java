@@ -206,12 +206,16 @@ public class SuratInstruksiController {
                     targetPegawai
                             .add(new QutPegawaiWrapper(
                                     pegawai.getNip(),
-                                    pegawai.getNama(), pegawai.getKdJabatan(),
+                                    pegawai.getNama(),
+                                    pegawai.getKdJabatan(),
                                     pegawai.getJabatan(),
                                     pegawai.getKdUnitKerja(),
                                     pegawai.getUnitKerja(),
                                     pegawai.getPangkat(),
-                                    pegawai.getGol()));
+                                    pegawai.getGol(),
+                                    "",
+                                    pegawai.getGlrDpn(),
+                                    pegawai.getGlrBlk()));
                     break;
                 }
 
@@ -255,6 +259,10 @@ public class SuratInstruksiController {
         dokumenSuratInstruksiWrapper.setDikeluarkanDi(suratInstruksi.getDikeluarkanDi());
         dokumenSuratInstruksiWrapper.setTargetPegawaiList(targetPegawai);
         dokumenSuratInstruksiWrapper.setTargetJabatanList(targetJabatan);
+        dokumenSuratInstruksiWrapper.setGelarDepanPenandatangan(penandatanganSurat.getGlrDpn());
+        dokumenSuratInstruksiWrapper.setGelarBelakangPenandantangan(penandatanganSurat.getGlrBlk());
+        dokumenSuratInstruksiWrapper.setPangkatPenandatangan(penandatanganSurat.getPangkat());
+        dokumenSuratInstruksiWrapper.setGolonganPenandatangan(penandatanganSurat.getGol());
 
         if (suratInstruksi.getSuratInstruksiPejabat() != null) {
             tkdJabatan
