@@ -136,8 +136,16 @@ public class SuratPerintahServiceImpl implements SuratPerintahService {
     public void openSuratPerintahPegawai(TargetSuratPerintahPegawaiId targetSuratPerintahPegawaiId) {
         TargetSuratPerintahPegawai targetSuratPerintahPegawai
                 = targetSuratPerintahPegawaiDao.findOne(targetSuratPerintahPegawaiId);
+        if (targetSuratPerintahPegawai != null)
+            targetSuratPerintahPegawai.setStatusBaca(1);
+    }
 
-        targetSuratPerintahPegawai.setStatusBaca(1);
+    @Override
+    public void openSuratTembusan(TembusanSuratPerintahId tembusanSuratPerintahId) {
+        TembusanSuratPerintah tembusanSuratPerintah
+                = tembusanSuratPerintahDao.findOne(tembusanSuratPerintahId);
+        if (tembusanSuratPerintah != null)
+            tembusanSuratPerintah.setStatusBaca(1);
     }
 
     @Override

@@ -85,10 +85,14 @@ public class BeritaAcaraController {
 
         if (inputWrapper.getKdBeritaAcaraBawahan() == null) {
             beritaAcara.setPathPenilaian(kdBeritaAcara);
+            beritaAcara.setKdNaskahPenugasan(inputWrapper.getKdNaskahPenugasan());
+            beritaAcara.setJenisNaskahPenugasan(inputWrapper.getJenisNaskahPenugasan());
         } else {
             BeritaAcara beritaAcaraBawahan
                     = beritaAcaraService.getBeritaAcara(inputWrapper.getKdBeritaAcaraBawahan());
             beritaAcara.setPathPenilaian(beritaAcaraBawahan.getPathPenilaian()+"."+kdBeritaAcara);
+            beritaAcara.setKdNaskahPenugasan(beritaAcaraBawahan.getKdNaskahPenugasan());
+            beritaAcara.setJenisNaskahPenugasan(beritaAcaraBawahan.getJenisNaskahPenugasan());
 
             beritaAcaraBawahan.setStatusPenilaian(2);
             beritaAcaraService.createBeritaAcara(beritaAcaraBawahan);

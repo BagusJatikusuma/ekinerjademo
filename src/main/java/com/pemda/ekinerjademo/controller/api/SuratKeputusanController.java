@@ -64,16 +64,18 @@ public class SuratKeputusanController {
         suratKeputusan.setKotaPembuatanSurat(inputWrapper.getKotaPembuatanSurat());
         suratKeputusan.setNipPembuatSurat(inputWrapper.getNipPembuatSurat());
         suratKeputusan.setKdUnitKerja(inputWrapper.getKdUnitKerja());
-        suratKeputusan.setKdNaskahPenugasan(inputWrapper.getKdNaskahPenugasan());
-        suratKeputusan.setJenisNaskahPenugasan(inputWrapper.getJenisNaskahPenugasan());
         suratKeputusan.setDurasiPengerjaan(inputWrapper.getDurasiPengerjaan());
 
         if (inputWrapper.getKdSuratKeputusanBawahan() == null) {
             suratKeputusan.setPathPenilaian(kdSuratKeputusan);
+            suratKeputusan.setKdNaskahPenugasan(inputWrapper.getKdNaskahPenugasan());
+            suratKeputusan.setJenisNaskahPenugasan(inputWrapper.getJenisNaskahPenugasan());
         } else {
             SuratKeputusan suratKeputusanBawahan
                     = suratKeputusanService.getByKdSuratKeputusan(inputWrapper.getKdSuratKeputusanBawahan());
             suratKeputusan.setPathPenilaian(suratKeputusanBawahan.getPathPenilaian()+"."+kdSuratKeputusan);
+            suratKeputusan.setKdNaskahPenugasan(suratKeputusanBawahan.getKdNaskahPenugasan());
+            suratKeputusan.setJenisNaskahPenugasan(suratKeputusanBawahan.getJenisNaskahPenugasan());
 
             suratKeputusanBawahan.setStatusPenilaian(2);
             suratKeputusanService.create(suratKeputusan);
@@ -82,6 +84,7 @@ public class SuratKeputusanController {
         suratKeputusan.setNipPenilai("");
         suratKeputusan.setStatusPenilaian(0);
         suratKeputusan.setAlasanPenolakan("");
+        suratKeputusan.setStatusBaca(0);
 
         suratKeputusanService.create(suratKeputusan);
 

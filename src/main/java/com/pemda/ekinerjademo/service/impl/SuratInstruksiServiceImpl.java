@@ -63,8 +63,8 @@ public class SuratInstruksiServiceImpl implements SuratInstruksiService {
     public void openSuratInstruksiTarget(InstruksiPegawaiId instruksiPegawaiId) {
         InstruksiPegawai instruksiPegawai
                 = instruksiPegawaiDao.findOne(instruksiPegawaiId);
-
-        instruksiPegawai.setStatusBaca(1);
+        if (instruksiPegawai != null)
+            instruksiPegawai.setStatusBaca(1);
     }
 
     @Override

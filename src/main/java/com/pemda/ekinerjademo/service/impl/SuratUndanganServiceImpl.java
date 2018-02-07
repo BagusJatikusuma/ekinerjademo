@@ -45,7 +45,7 @@ public class SuratUndanganServiceImpl implements SuratUndanganService {
 
     @Override
     public List<TembusanSuratUndangan> getTembusanSuratUndangan(String kdJabatan) {
-        return null;
+        return tembusanSuratUndanganDao.findByTembusanSuratUndanganId_KdJabatan(kdJabatan);
     }
 
     @Override

@@ -67,7 +67,8 @@ public class SuratKeteranganServiceImpl implements SuratKeteranganService {
     public void openTargetSuratKeterangan(TargetSuratKeteranganId targetSuratKeteranganId) {
         TargetSuratKeterangan targetSuratKeterangan
                 = targetSuratKeteranganDao.findOne(targetSuratKeteranganId);
-        targetSuratKeterangan.setStatusBaca(1);
+        if (targetSuratKeterangan != null)
+            targetSuratKeterangan.setStatusBaca(1);
     }
 
     @Override

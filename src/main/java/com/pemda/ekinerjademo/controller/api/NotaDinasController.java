@@ -91,6 +91,21 @@ public class NotaDinasController {
         notaDinas.setAlasanPenolakan("");
         notaDinas.setStatusBaca(0);
 
+        if (inputWrapper.getKdNotaDinasBawahan() == null) {
+            notaDinas.setPathPenilaian(kdNotaDinas);
+            notaDinas.setKdNaskahPenugasan(inputWrapper.getKdNaskahPenugasan());
+            notaDinas.setJenisNaskahPenugasan(inputWrapper.getJenisNaskahPenugasan());
+        } else {
+            NotaDinas notaDinasBawahan
+                    = notaDinasService.findBykdNotaDinas(inputWrapper.getKdNotaDinasBawahan());
+            notaDinas.setPathPenilaian(notaDinasBawahan.getPathPenilaian()+"."+kdNotaDinas);
+            notaDinas.setKdNaskahPenugasan(notaDinasBawahan.getKdNaskahPenugasan());
+            notaDinas.setJenisNaskahPenugasan(notaDinasBawahan.getJenisNaskahPenugasan());
+
+            notaDinasBawahan.setStatusPenilaian(2);
+            notaDinasService.create(notaDinasBawahan);
+        }
+
         notaDinasService.create(notaDinas);
 
         for (TembusanNotaDinas tembusanNotaDinas
@@ -401,6 +416,8 @@ public class NotaDinasController {
     @RequestMapping(value = "/open-nota-dinas-by-penilai/{kdNotaDinas}", method = RequestMethod.PUT)
     ResponseEntity<?> openNotaDinasByPenilai(@PathVariable("kdNotaDinas") String kdNotaDinas) {
         LOGGER.info("open nota dinas by penilai");
+
+        notaDinasService.openNotaDinasByPenilai(kdNotaDinas);
 
         return new ResponseEntity<Object>(
                 new CustomMessage("nota dinas opened"), HttpStatus.OK);

@@ -63,14 +63,19 @@ public class PengumumanController {
         pengumuman.setKdUnitKerja(inputWrapper.getKdUnitKerja());
         pengumuman.setDurasiPengerjaan(inputWrapper.getDurasiPengerjaan());
         pengumuman.setNipPenilai("");
+        pengumuman.setStatusBaca(0);
 
         if (inputWrapper.getKdPengumumanBawahan() == null) {
             pengumuman.setPathPenilaian(kdPengumuman);
             pengumuman.setStatusPenilaian(0);
+            pengumuman.setKdNaskahPenugasan(inputWrapper.getKdNaskahPenugasan());
+            pengumuman.setJenisNaskahPenugasan(inputWrapper.getJenisNaskahPenugasan());
         } else {
             Pengumuman pengumumanBawahan
                     = pengumumanService.getByKdPengumuman(inputWrapper.getKdPengumumanBawahan());
             pengumuman.setPathPenilaian(pengumumanBawahan.getPathPenilaian()+"."+kdPengumuman);
+            pengumuman.setKdNaskahPenugasan(pengumumanBawahan.getKdNaskahPenugasan());
+            pengumuman.setJenisNaskahPenugasan(pengumumanBawahan.getJenisNaskahPenugasan());
 
             pengumumanBawahan.setStatusPenilaian(2);
             pengumumanService.create(pengumumanBawahan);

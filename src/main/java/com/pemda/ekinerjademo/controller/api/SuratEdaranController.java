@@ -78,16 +78,18 @@ public class SuratEdaranController {
         suratEdaran.setRuangLingkup(inputWrapper.getRuangLingkup());
         suratEdaran.setDasar(inputWrapper.getDasar());
 
-        suratEdaran.setKdNaskahPenugasan(inputWrapper.getKdNaskahPenugasan());
-        suratEdaran.setJenisNaskahPenugasan(inputWrapper.getJenisNaskahPenugasan());
         suratEdaran.setDurasiPengerjaan(inputWrapper.getDurasiPengerjaan());
 
         if (inputWrapper.getKdSuratEdaranBawahan() == null) {
             suratEdaran.setPathPenilaian(kdSuratEdaran);
+            suratEdaran.setKdNaskahPenugasan(inputWrapper.getKdNaskahPenugasan());
+            suratEdaran.setJenisNaskahPenugasan(inputWrapper.getJenisNaskahPenugasan());
         } else {
             SuratEdaran suratEdaranBawahan
                     = suratEdaranService.getByKdSuratEdaran(inputWrapper.getKdSuratEdaranBawahan());
             suratEdaran.setPathPenilaian(suratEdaranBawahan.getPathPenilaian()+"."+kdSuratEdaran);
+            suratEdaran.setKdNaskahPenugasan(suratEdaranBawahan.getKdNaskahPenugasan());
+            suratEdaran.setJenisNaskahPenugasan(suratEdaranBawahan.getJenisNaskahPenugasan());
 
             suratEdaranBawahan.setStatusPenilaian(2);
             suratEdaranService.create(suratEdaranBawahan);
@@ -96,6 +98,7 @@ public class SuratEdaranController {
         suratEdaran.setNipPenilai(null);
         suratEdaran.setStatusPenilaian(0);
         suratEdaran.setAlasanPenolakan(null);
+        suratEdaran.setStatusBaca(0);
 
         suratEdaranService.create(suratEdaran);
         for (SuratEdaranSub suratEdaranSub

@@ -170,10 +170,14 @@ public class SuratPerintahController {
 
         if (inputWrapper.getKdSuratPerintahBawahan() == null) {
             suratPerintah.setPathPenilaian(kdSuratPerintah);
+            suratPerintah.setKdNaskahPenugasan(inputWrapper.getKdNaskahPenugasan());
+            suratPerintah.setJenisNaskahPenugasan(inputWrapper.getJenisNaskahPenugasan());
         } else {
             SuratPerintah suratPerintahBawahan
                     = suratPerintahService.getSuratPerintahByKdSuratPerintah(inputWrapper.getKdSuratPerintahBawahan());
             suratPerintah.setPathPenilaian(suratPerintahBawahan.getPathPenilaian()+"."+kdSuratPerintah);
+            suratPerintah.setKdNaskahPenugasan(suratPerintahBawahan.getKdNaskahPenugasan());
+            suratPerintah.setJenisNaskahPenugasan(suratPerintahBawahan.getJenisNaskahPenugasan());
 
             suratPerintahBawahan.setStatusPenilaian(2);
             suratPerintahService.creteSurat(suratPerintahBawahan);
@@ -908,8 +912,11 @@ public class SuratPerintahController {
             @PathVariable("nipPegawai") String nipPegawai) {
         LOGGER.info("open surat perintah");
 
+        QutPegawai pegawaiTarget = qutPegawaiService.getQutPegawai(nipPegawai);
+
         suratPerintahService.openSuratPerintah(kdSuratPerintah);
         suratPerintahService.openSuratPerintahPegawai(new TargetSuratPerintahPegawaiId(kdSuratPerintah, nipPegawai));
+        suratPerintahService.openSuratTembusan(new TembusanSuratPerintahId(kdSuratPerintah, pegawaiTarget.getKdJabatan()));
 
         return new ResponseEntity<Object>(new CustomMessage("surat perintah opened"), HttpStatus.OK);
     }

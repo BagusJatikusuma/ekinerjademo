@@ -71,10 +71,14 @@ public class LaporanController {
 
         if (inputWrapper.getKdLaporanBawahan() == null) {
             laporan.setPathPenilaian(kdLaporan);
+            laporan.setKdNaskahPenugasan(inputWrapper.getKdNaskahPenugasan());
+            laporan.setJenisNaskahPenugasan(inputWrapper.getJenisNaskahPenugasan());
         } else {
             Laporan laporanBawahan
                     = laporanService.getLaporan(inputWrapper.getKdLaporanBawahan());
             laporan.setPathPenilaian(laporanBawahan.getPathPenilaian()+"."+kdLaporan);
+            laporan.setKdNaskahPenugasan(laporanBawahan.getKdNaskahPenugasan());
+            laporan.setJenisNaskahPenugasan(laporanBawahan.getJenisNaskahPenugasan());
 
             laporanBawahan.setStatusPenilaian(2);
             laporanService.createLaporan(laporanBawahan);

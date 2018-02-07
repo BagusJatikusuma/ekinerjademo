@@ -97,10 +97,14 @@ public class SuratPengantarController {
 
         if (inputWrapper.getKdSuratPengantarBawahan() == null) {
             suratPengantar.setPathPenilaian(kdSuratPengantar);
+            suratPengantar.setKdNaskahPenugasan(inputWrapper.getKdNaskahPenugasan());
+            suratPengantar.setJenisNaskahPenugasan(inputWrapper.getJenisNaskahPenugasan());
         } else {
             SuratPengantar suratPengantarBawahan
                     = suratPengantarService.getByKdSuratPengantar(inputWrapper.getKdSuratPengantarBawahan());
             suratPengantar.setPathPenilaian(suratPengantarBawahan.getPathPenilaian()+"."+kdSuratPengantar);
+            suratPengantar.setKdNaskahPenugasan(suratPengantarBawahan.getKdNaskahPenugasan());
+            suratPengantar.setJenisNaskahPenugasan(suratPengantarBawahan.getJenisNaskahPenugasan());
 
             suratPengantarBawahan.setStatusPenilaian(2);
             suratPengantarService.create(suratPengantarBawahan);
@@ -295,8 +299,8 @@ public class SuratPengantarController {
         }
 
         for (CustomPegawaiCredential pegawai : qutPegawaiList) {
-            if (suratPengantar.getNipPenerima()
-                    .equals(pegawai.getNip())) {
+            if (suratPengantar.getKdJabatanPenerimaSuratPengantar()
+                    .equals(pegawai.getKdJabatan())) {
                 pegawai.setUnitKerja(tkdUnkDao.findOne(pegawai.getKdUnitKerja()).getUnitKerja());
 
                 penerimaSurat = pegawai;

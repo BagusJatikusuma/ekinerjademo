@@ -59,6 +59,11 @@ public class Laporan {
     @Column(name = "alasan_penolakan")
     private String alasanPenolakan;
 
+    @Column(name = "kd_naskah_penugasan")
+    private String kdNaskahPenugasan;
+    @Column(name = "jenis_naskah_penugasan")
+    private Integer jenisNaskahPenugasan;
+
     public String getKdLaporan() {
         return kdLaporan;
     }
@@ -225,5 +230,21 @@ public class Laporan {
 
     public void setPathPenilaian(String pathPenilaian) {
         this.pathPenilaian = pathPenilaian;
+    }
+
+    public String getKdNaskahPenugasan() {
+        return kdNaskahPenugasan;
+    }
+
+    public void setKdNaskahPenugasan(String kdNaskahPenugasan) {
+        this.kdNaskahPenugasan = kdNaskahPenugasan;
+    }
+
+    public Integer getJenisNaskahPenugasan() {
+        return jenisNaskahPenugasan;
+    }
+
+    public void setJenisNaskahPenugasan(Integer jenisNaskahPenugasan) {
+        this.jenisNaskahPenugasan = jenisNaskahPenugasan;
     }
 }

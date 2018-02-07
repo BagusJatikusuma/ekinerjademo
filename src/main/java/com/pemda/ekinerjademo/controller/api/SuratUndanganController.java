@@ -90,16 +90,18 @@ public class SuratUndanganController {
         suratUndangan.setNipPembuatSurat(inputWrapper.getNipPembuatSurat());
 
         suratUndangan.setKdUnitKerja(inputWrapper.getKdUnitKerja());
-        suratUndangan.setJenisNaskahPenugasan(inputWrapper.getJenisNaskahPenugasan());
-        suratUndangan.setKdNaskahPenugasan(inputWrapper.getKdNaskahPenugasan());
         suratUndangan.setDurasiPengerjaan(inputWrapper.getDurasiPengerjaan());
 
         if (inputWrapper.getKdSuratUndanganBawahan() == null) {
             suratUndangan.setPathPenilaian(kdSuratUndangan);
+            suratUndangan.setJenisNaskahPenugasan(inputWrapper.getJenisNaskahPenugasan());
+            suratUndangan.setKdNaskahPenugasan(inputWrapper.getKdNaskahPenugasan());
         } else {
             SuratUndangan suratUndanganBawahan
                     = suratUndanganService.getByKdSuratUndangan(inputWrapper.getKdSuratUndanganBawahan());
             suratUndangan.setPathPenilaian(suratUndanganBawahan.getPathPenilaian()+"."+kdSuratUndangan);
+            suratUndangan.setJenisNaskahPenugasan(suratUndanganBawahan.getJenisNaskahPenugasan());
+            suratUndangan.setKdNaskahPenugasan(suratUndanganBawahan.getKdNaskahPenugasan());
 
             suratUndanganBawahan.setStatusPenilaian(2);
             suratUndanganService.create(suratUndanganBawahan);

@@ -48,6 +48,8 @@ public class NotaDinas {
 
     @Column(name = "durasi_pengerjaan")
     private Integer durasiPengerjaan;
+    @Column(name = "path_penilaian")
+    private String pathPenilaian;
     @Column(name = "nip_penilai")
     private String nipPenilai;
     @Column(name = "status_penilaian")
@@ -235,5 +237,13 @@ public class NotaDinas {
 
     public void setStatusBaca(Integer statusBaca) {
         this.statusBaca = statusBaca;
+    }
+
+    public String getPathPenilaian() {
+        return pathPenilaian;
+    }
+
+    public void setPathPenilaian(String pathPenilaian) {
+        this.pathPenilaian = pathPenilaian;
     }
 }

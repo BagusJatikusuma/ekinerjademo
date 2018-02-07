@@ -131,10 +131,14 @@ public class SuratTugasController {
         suratTugas.setApprovalPenandatangan(0);
         if (inputWrapper.getKdSuratTugasBawahan() == null) {
             suratTugas.setPathPenilaian(kdSuratTugas);
+            suratTugas.setKdNaskahPenugasan(inputWrapper.getKdNaskahPenugasan());
+            suratTugas.setJenisNaskahPenugasan(inputWrapper.getJenisNaskahPenugasan());
         } else {
             SuratTugas suratTugasBawahan
                     = suratTugasService.getByKdSuratTugas(inputWrapper.getKdSuratTugasBawahan());
             suratTugas.setPathPenilaian(suratTugasBawahan.getPathPenilaian()+"."+kdSuratTugas);
+            suratTugas.setKdNaskahPenugasan(suratTugasBawahan.getKdNaskahPenugasan());
+            suratTugas.setJenisNaskahPenugasan(suratTugasBawahan.getJenisNaskahPenugasan());
 
             suratTugasBawahan.setStatusPenilaian(2);
             suratTugasService.create(suratTugasBawahan);
@@ -451,7 +455,7 @@ public class SuratTugasController {
             }
         }
 
-        return new ResponseEntity<Object>(null, HttpStatus.OK);
+        return new ResponseEntity<Object>(suratTugasTargetList, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/get-surat-tugas-by-kd-surat/{kdSuratTugas}", method = RequestMethod.GET)

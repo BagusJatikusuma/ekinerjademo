@@ -104,6 +104,7 @@ public class TemplateLainController {
         templateLain.setTahunUrtug(templateLainInputWrapper.getTahunUrtug());
         templateLain.setStatusPenilaian(0);
         templateLain.setTanggalPembuatanMilis(new Date().getTime());
+        templateLain.setStatusBaca(0);
 
         if (templateLainInputWrapper.getKdTemplateLainBawahan() == null) {
 //            templateLain.setPathFile(kdTemplateLain+"."+fileTemplateLain.getOriginalFilename().split("\\.")[1]);

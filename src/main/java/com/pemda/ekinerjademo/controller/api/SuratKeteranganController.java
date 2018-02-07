@@ -86,16 +86,19 @@ public class SuratKeteranganController {
         suratKeterangan.setTanggalPembuatanSuratMilis(new Date().getTime());
         suratKeterangan.setNipPembuatSurat(inputWrapper.getNipPembuatSurat());
         suratKeterangan.setKdUnitKerja(inputWrapper.getKdUnitKerja());
-        suratKeterangan.setKdNaskahPenugasan(inputWrapper.getKdNaskahPenugasan());
-        suratKeterangan.setJenisNaskahPenugasan(inputWrapper.getJenisNaskahPenugasan());
+
         suratKeterangan.setDurasiPengerjaan(inputWrapper.getDurasiPengerjaan());
 
         if (inputWrapper.getKdSuratKeteranganBawahan() == null) {
             suratKeterangan.setPathPenilaian(kdSuratKeterangan);
+            suratKeterangan.setKdNaskahPenugasan(inputWrapper.getKdNaskahPenugasan());
+            suratKeterangan.setJenisNaskahPenugasan(inputWrapper.getJenisNaskahPenugasan());
         } else {
             SuratKeterangan suratKeteranganBawahan
                     = suratKeteranganService.getByKdSuratKeterangan(inputWrapper.getKdSuratKeteranganBawahan());
             suratKeterangan.setPathPenilaian(suratKeteranganBawahan.getPathPenilaian()+"."+kdSuratKeterangan);
+            suratKeterangan.setKdNaskahPenugasan(suratKeteranganBawahan.getKdNaskahPenugasan());
+            suratKeterangan.setJenisNaskahPenugasan(suratKeteranganBawahan.getJenisNaskahPenugasan());
 
             suratKeteranganBawahan.setStatusPenilaian(2);
             suratKeteranganService.create(suratKeteranganBawahan);
@@ -360,7 +363,7 @@ public class SuratKeteranganController {
                 = suratKeteranganService.getByKdSuratKeterangan(kdSuratKeterangan);
 
         suratKeteranganService.openSuratKeterangan(kdSuratKeterangan);
-
+        
         suratKeteranganService
                 .openTargetSuratKeterangan(new TargetSuratKeteranganId(kdSuratKeterangan, nipTarget));
 

@@ -105,6 +105,9 @@ public class UraianTugasPegawaiTahunanController {
             @RequestBody List<UraianTugasPegawaiTahunanInputWrapper> uraianTugasPegawaiTahunanInputWrapperList ){
         LOGGER.info("approval uraian tugas tahunan non DPA");
 
+        if (uraianTugasPegawaiTahunanInputWrapperList.isEmpty())
+            return new ResponseEntity<Object>(new CustomMessage("Uraian tugas yang dipilih telah disetujui"), HttpStatus.OK);
+
         //get current uraian tugas non dpa pegawai in database
         List<UraianTugasPegawaiTahunan> uraianTugasPegawaiTahunanList
                 = urtugPegawaiTahunanService.getByNipPegawai(

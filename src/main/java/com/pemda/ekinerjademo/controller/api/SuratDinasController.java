@@ -80,17 +80,19 @@ public class SuratDinasController {
         suratDinas.setNipPembuatSurat(inputWrapper.getNipPembuatSurat());
         suratDinas.setKdUnitKerja(inputWrapper.getKdUnitKerja());
 
-        suratDinas.setKdNaskahPenugasan(inputWrapper.getKdNaskahPenugasan());
-        suratDinas.setJenisNaskahPenugasan(inputWrapper.getJenisNaskahPenugasan());
         suratDinas.setDurasiPengerjaan(inputWrapper.getDurasiPengerjaan());
         suratDinas.setStatusBaca(0);
 
         if (inputWrapper.getKdSuratDinasBawahan() == null) {
             suratDinas.setPathPenilaian(kdSuratDinas);
+            suratDinas.setKdNaskahPenugasan(inputWrapper.getKdNaskahPenugasan());
+            suratDinas.setJenisNaskahPenugasan(inputWrapper.getJenisNaskahPenugasan());
         } else {
             SuratDinas suratDinasBawahan
                     = suratDinasService.getByKdSuratDinas(inputWrapper.getKdSuratDinasBawahan());
             suratDinas.setPathPenilaian(suratDinasBawahan.getPathPenilaian()+"."+kdSuratDinas);
+            suratDinas.setKdNaskahPenugasan(suratDinasBawahan.getKdNaskahPenugasan());
+            suratDinas.setJenisNaskahPenugasan(suratDinasBawahan.getJenisNaskahPenugasan());
 
             suratDinasBawahan.setStatusPenilaian(2);
             suratDinasService.create(suratDinasBawahan);

@@ -44,8 +44,8 @@ public class LembarDisposisiServiceImpl implements LembarDisposisiService {
     public void openLembarDisposisiTarget(TargetLembarDisposisiId targetLembarDisposisiId) {
         TargetLembarDisposisi targetLembarDisposisi
                 = targetLembarDisposisiDao.findOne(targetLembarDisposisiId);
-
-        targetLembarDisposisi.setStatusBaca(1);
+        if (targetLembarDisposisi != null)
+            targetLembarDisposisi.setStatusBaca(1);
     }
 
     @Override

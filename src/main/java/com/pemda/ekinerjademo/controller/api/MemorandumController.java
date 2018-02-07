@@ -94,10 +94,14 @@ public class MemorandumController {
         if (inputWrapper.getKdMemorandumBawahan() == null) {
             memorandum.setPathPenilaian(kdMemorandum);
             memorandum.setStatusPenilaian(0);
+            memorandum.setKdNaskahPenugasan(inputWrapper.getKdNaskahPenugasan());
+            memorandum.setJenisNaskahPenugasan(inputWrapper.getJenisNaskahPenugasan());
         } else {
             Memorandum memorandumBawahan
                     = memorandumService.getByKdMemorandum(inputWrapper.getKdMemorandumBawahan());
             memorandum.setPathPenilaian(memorandumBawahan.getPathPenilaian()+"."+kdMemorandum);
+            memorandum.setKdNaskahPenugasan(memorandumBawahan.getKdNaskahPenugasan());
+            memorandum.setJenisNaskahPenugasan(memorandumBawahan.getJenisNaskahPenugasan());
 
             memorandumBawahan.setStatusPenilaian(2);
             memorandumService.createMemorandum(memorandumBawahan);

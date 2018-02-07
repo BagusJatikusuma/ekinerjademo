@@ -56,6 +56,9 @@ public class Pengumuman {
     @Column(name = "alasan_penolakan")
     private String alasanPenolakan;
 
+    @Column(name = "status_baca")
+    private Integer statusBaca;
+
     public String getKdPengumuman() {
         return kdPengumuman;
     }
@@ -214,5 +217,13 @@ public class Pengumuman {
 
     public void setAlasanPenolakan(String alasanPenolakan) {
         this.alasanPenolakan = alasanPenolakan;
+    }
+
+    public Integer getStatusBaca() {
+        return statusBaca;
+    }
+
+    public void setStatusBaca(Integer statusBaca) {
+        this.statusBaca = statusBaca;
     }
 }

@@ -566,7 +566,7 @@ public class UrtugKegiatanPegawaiController {
 
     }
 
-    //get urtug dpa by nip
+    //get urtug dpa by nip, digunakan sebagai bahan ajuan, jika sudah diajukan tidak akan muncul dihalaman ajuan urtug
     @RequestMapping(value = "/get-urtug-dpa-pegawai/{nipPegawai}/{kdUnitKerja}", method = RequestMethod.GET)
     ResponseEntity<?> getUrtugDpaPegawaiByNipPegawai(
             @PathVariable("nipPegawai") String nipPegawai,
@@ -578,8 +578,16 @@ public class UrtugKegiatanPegawaiController {
 
         List<UrtugKegiatanPegawai> urtugKegiatanPegawaiList
                 = urtugKegiatanPegawaiService.findByNipPegawai(nipPegawai);
+        List<UrtugKegiatanPegawai> urtugKegiatanPegawaiBelumDiajukan
+                = new ArrayList<>();
 
         for (UrtugKegiatanPegawai urtugKegiatanPegawai : urtugKegiatanPegawaiList) {
+            if (urtugKegiatanPegawai.getStatusApproval() == 0) {
+                urtugKegiatanPegawaiBelumDiajukan.add(urtugKegiatanPegawai);
+            }
+        }
+
+        for (UrtugKegiatanPegawai urtugKegiatanPegawai : urtugKegiatanPegawaiBelumDiajukan) {
             boolean found = false;
             for (UraianTugasJabatanJenisWrapper uraianTugasJabatanOutputWrapper : outputWrappers) {
                 if (urtugKegiatanPegawai.getUrtugKegiatanPegawaiId().getKdUrtug()

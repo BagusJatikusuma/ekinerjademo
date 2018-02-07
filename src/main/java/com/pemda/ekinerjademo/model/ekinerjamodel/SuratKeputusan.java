@@ -56,6 +56,9 @@ public class SuratKeputusan {
     @Column(name = "alasan_penolakan")
     private String alasanPenolakan;
 
+    @Column(name = "status_baca")
+    private Integer statusBaca;
+
     public String getKdSuratKeputusan() {
         return kdSuratKeputusan;
     }
@@ -214,5 +217,13 @@ public class SuratKeputusan {
 
     public void setAlasanPenolakan(String alasanPenolakan) {
         this.alasanPenolakan = alasanPenolakan;
+    }
+
+    public Integer getStatusBaca() {
+        return statusBaca;
+    }
+
+    public void setStatusBaca(Integer statusBaca) {
+        this.statusBaca = statusBaca;
     }
 }

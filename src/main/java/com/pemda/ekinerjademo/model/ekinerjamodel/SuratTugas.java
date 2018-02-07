@@ -62,6 +62,11 @@ public class SuratTugas {
     @Column(name = "kd_unit_kerja")
     private String kdUnitKerja;
 
+    @Column(name = "kd_naskah_penugasan")
+    private String kdNaskahPenugasan;
+    @Column(name = "jenis_naskah_penugasan")
+    private Integer jenisNaskahPenugasan;
+
     @OneToMany(mappedBy = "suratTugas")
     private Set<TargetSuratTugasPegawai> targetSuratTugasPegawaiSet;
     @OneToMany(mappedBy = "suratTugas")
@@ -295,5 +300,21 @@ public class SuratTugas {
 
     public void setMenimbang(String menimbang) {
         this.menimbang = menimbang;
+    }
+
+    public String getKdNaskahPenugasan() {
+        return kdNaskahPenugasan;
+    }
+
+    public void setKdNaskahPenugasan(String kdNaskahPenugasan) {
+        this.kdNaskahPenugasan = kdNaskahPenugasan;
+    }
+
+    public Integer getJenisNaskahPenugasan() {
+        return jenisNaskahPenugasan;
+    }
+
+    public void setJenisNaskahPenugasan(Integer jenisNaskahPenugasan) {
+        this.jenisNaskahPenugasan = jenisNaskahPenugasan;
     }
 }

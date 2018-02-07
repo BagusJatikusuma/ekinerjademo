@@ -66,10 +66,14 @@ public class SuratKuasaController {
 
         if (inputWrapper.getKdSuratKuasaBawahan() == null) {
             suratKuasa.setPathPenilaian(kdSuratKuasa);
+            suratKuasa.setKdNaskahPenugasan(inputWrapper.getKdNaskahPenugasan());
+            suratKuasa.setJenisNaskahPenugasan(inputWrapper.getJenisNaskahPenugasan());
         } else {
             SuratKuasa suratKuasaBawahan
                     = suratKuasaService.getSuratKuasa(inputWrapper.getKdSuratKuasaBawahan());
             suratKuasa.setPathPenilaian(suratKuasaBawahan.getPathPenilaian()+"."+kdSuratKuasa);
+            suratKuasa.setKdNaskahPenugasan(suratKuasaBawahan.getKdNaskahPenugasan());
+            suratKuasa.setJenisNaskahPenugasan(suratKuasaBawahan.getJenisNaskahPenugasan());
 
             suratKuasaBawahan.setStatusPenilaian(2);
             suratKuasaService.createSuratKuasa(suratKuasaBawahan);
