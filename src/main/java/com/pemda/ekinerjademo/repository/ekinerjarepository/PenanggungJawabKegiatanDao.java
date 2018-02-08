@@ -23,5 +23,5 @@ public interface PenanggungJawabKegiatanDao
             "where pjk.penanggungJawabKegiatanId.kdUrusan = ?1 " +
             "and pjk.penanggungJawabKegiatanId.kdBidang = ?2 " +
             "and pjk.penanggungJawabKegiatanId.kdUnit = ?3")
-    List<PenanggungJawabKegiatan> findByUnitKerja(String kdUrusan, String kdBidang, String kdUnit);
+    List<PenanggungJawabKegiatan> findByUnitKerja(Integer kdUrusan, Integer kdBidang, Integer kdUnit);
 }

@@ -72,17 +72,18 @@ public class TelaahanStafController {
         telaahanStaf.setNipPenilai("");
         telaahanStaf.setStatusPenilaian(0);
         telaahanStaf.setAlasanPenolakan("");
+        telaahanStaf.setPathPenilaian(kdTelahaanStaf);
 
-        if (inputWrapper.getKdTelaahanStafBawahan() == null) {
-            telaahanStaf.setPathPenilaian(kdTelahaanStaf);
-        } else {
-            TelaahanStaf telaahanStafBawahan
-                    = telaahanStafService.getTelaahanStaf(inputWrapper.getKdTelaahanStafBawahan());
-            telaahanStaf.setPathPenilaian(telaahanStafBawahan.getPathPenilaian()+"."+kdTelahaanStaf);
-
-            telaahanStafBawahan.setStatusPenilaian(2);
-            telaahanStafService.createTelaahanStaf(telaahanStafBawahan);
-        }
+//        if (inputWrapper.getKdTelaahanStafBawahan() == null) {
+//            telaahanStaf.setPathPenilaian(kdTelahaanStaf);
+//        } else {
+//            TelaahanStaf telaahanStafBawahan
+//                    = telaahanStafService.getTelaahanStaf(inputWrapper.getKdTelaahanStafBawahan());
+//            telaahanStaf.setPathPenilaian(telaahanStafBawahan.getPathPenilaian()+"."+kdTelahaanStaf);
+//
+//            telaahanStafBawahan.setStatusPenilaian(2);
+//            telaahanStafService.createTelaahanStaf(telaahanStafBawahan);
+//        }
 
         telaahanStafService.createTelaahanStaf(telaahanStaf);
 
@@ -168,5 +169,18 @@ public class TelaahanStafController {
                         tkdUnkDao.findOne(pembuatSurat.getKdUnitKerja()).getUnitKerja());
 
         return new ResponseEntity<Object>(telaahanStaffWrapper, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/open-telaahan-staff-by-penilai/{kdTelaahanStaff}", method = RequestMethod.PUT)
+    ResponseEntity<?> openTelaahanStafByPenilai(@PathVariable("kdTelaahanStaff") String kdTelaahanStaff) {
+        LOGGER.info("open telaahan staff by penilai");
+
+        TelaahanStaf telaahanStaf
+                = telaahanStafService.getTelaahanStaf(kdTelaahanStaff);
+
+        telaahanStaf.setStatusBaca(1);
+        telaahanStafService.createTelaahanStaf(telaahanStaf);
+
+        return new ResponseEntity<Object>(new CustomMessage("telaahan staff opened"), HttpStatus.OK);
     }
 }
