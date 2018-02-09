@@ -179,6 +179,7 @@ public class TelaahanStafController {
                 = telaahanStafService.getTelaahanStaf(kdTelaahanStaff);
 
         telaahanStaf.setStatusBaca(1);
+        telaahanStaf.setStatusPenilaian(1);
         telaahanStafService.createTelaahanStaf(telaahanStaf);
 
         return new ResponseEntity<Object>(new CustomMessage("telaahan staff opened"), HttpStatus.OK);
