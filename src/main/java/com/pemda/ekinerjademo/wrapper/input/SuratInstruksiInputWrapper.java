@@ -23,6 +23,9 @@ public class SuratInstruksiInputWrapper {
     private String kdSuratInstruksiParent;
     private Integer durasiPengerjaan;
 
+    private String kdUrtug;
+    private Integer tahunUrtug;
+
     public String getJudulInstruksi() {
         return judulInstruksi;
     }
@@ -59,8 +62,8 @@ public class SuratInstruksiInputWrapper {
         return daftarIsiInstruksi;
     }
 
-    public void setDaftarIsiInstruksi(List<String> isiInstruksi) {
-        this.daftarIsiInstruksi = isiInstruksi;
+    public void setDaftarIsiInstruksi(List<String> daftarIsiInstruksi) {
+        this.daftarIsiInstruksi = daftarIsiInstruksi;
     }
 
     public String getDikeluarkanDi() {
@@ -85,6 +88,14 @@ public class SuratInstruksiInputWrapper {
 
     public void setNipPembuat(String nipPembuat) {
         this.nipPembuat = nipPembuat;
+    }
+
+    public String getNipPenandatangan() {
+        return nipPenandatangan;
+    }
+
+    public void setNipPenandatangan(String nipPenandatangan) {
+        this.nipPenandatangan = nipPenandatangan;
     }
 
     public List<String> getTargetPegawaiList() {
@@ -127,14 +138,6 @@ public class SuratInstruksiInputWrapper {
         this.kdUnitKerja = kdUnitKerja;
     }
 
-    public String getNipPenandatangan() {
-        return nipPenandatangan;
-    }
-
-    public void setNipPenandatangan(String nipPenandatangan) {
-        this.nipPenandatangan = nipPenandatangan;
-    }
-
     public String getKdSuratInstruksiParent() {
         return kdSuratInstruksiParent;
     }
@@ -149,5 +152,21 @@ public class SuratInstruksiInputWrapper {
 
     public void setDurasiPengerjaan(Integer durasiPengerjaan) {
         this.durasiPengerjaan = durasiPengerjaan;
+    }
+
+    public String getKdUrtug() {
+        return kdUrtug;
+    }
+
+    public void setKdUrtug(String kdUrtug) {
+        this.kdUrtug = kdUrtug;
+    }
+
+    public Integer getTahunUrtug() {
+        return tahunUrtug;
+    }
+
+    public void setTahunUrtug(Integer tahunUrtug) {
+        this.tahunUrtug = tahunUrtug;
     }
 }

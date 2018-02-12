@@ -25,6 +25,9 @@ public class SuratKeteranganInputWrapper {
 
     private List<String> targetSuratKeteranganList;
 
+    private String kdUrtug;
+    private Integer tahunUrtug;
+
     public String getKdSuratKeterangan() {
         return kdSuratKeterangan;
     }
@@ -167,5 +170,21 @@ public class SuratKeteranganInputWrapper {
 
     public void setTargetSuratKeteranganList(List<String> targetSuratKeteranganList) {
         this.targetSuratKeteranganList = targetSuratKeteranganList;
+    }
+
+    public String getKdUrtug() {
+        return kdUrtug;
+    }
+
+    public void setKdUrtug(String kdUrtug) {
+        this.kdUrtug = kdUrtug;
+    }
+
+    public Integer getTahunUrtug() {
+        return tahunUrtug;
+    }
+
+    public void setTahunUrtug(Integer tahunUrtug) {
+        this.tahunUrtug = tahunUrtug;
     }
 }

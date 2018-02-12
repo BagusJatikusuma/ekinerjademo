@@ -35,6 +35,9 @@ public class SuratTugasInputWrapper {
     private String kdNaskahPenugasan;
     private Integer jenisNaskahPenugasan;
 
+    private String kdUrtug;
+    private Integer tahunUrtug;
+
     public String getNipPembuat() {
         return nipPembuat;
     }
@@ -185,5 +188,21 @@ public class SuratTugasInputWrapper {
 
     public void setJenisNaskahPenugasan(Integer jenisNaskahPenugasan) {
         this.jenisNaskahPenugasan = jenisNaskahPenugasan;
+    }
+
+    public String getKdUrtug() {
+        return kdUrtug;
+    }
+
+    public void setKdUrtug(String kdUrtug) {
+        this.kdUrtug = kdUrtug;
+    }
+
+    public Integer getTahunUrtug() {
+        return tahunUrtug;
+    }
+
+    public void setTahunUrtug(Integer tahunUrtug) {
+        this.tahunUrtug = tahunUrtug;
     }
 }

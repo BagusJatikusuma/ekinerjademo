@@ -30,6 +30,9 @@ public class SuratDinasInputWrapper {
     private String kdJabatanSuratPejabat;
     private Set<String> kdTembusanList;
 
+    private String kdUrtug;
+    private Integer tahunUrtug;
+
     public String getKdSuratDinas() {
         return kdSuratDinas;
     }
@@ -150,6 +153,14 @@ public class SuratDinasInputWrapper {
         this.durasiPengerjaan = durasiPengerjaan;
     }
 
+    public String getKdSuratDinasBawahan() {
+        return kdSuratDinasBawahan;
+    }
+
+    public void setKdSuratDinasBawahan(String kdSuratDinasBawahan) {
+        this.kdSuratDinasBawahan = kdSuratDinasBawahan;
+    }
+
     public String getKdNaskahPenugasan() {
         return kdNaskahPenugasan;
     }
@@ -182,14 +193,6 @@ public class SuratDinasInputWrapper {
         this.alasanPenolakan = alasanPenolakan;
     }
 
-    public String getKdSuratDinasBawahan() {
-        return kdSuratDinasBawahan;
-    }
-
-    public void setKdSuratDinasBawahan(String kdSuratDinasBawahan) {
-        this.kdSuratDinasBawahan = kdSuratDinasBawahan;
-    }
-
     public boolean isSuratPejabat() {
         return suratPejabat;
     }
@@ -212,5 +215,21 @@ public class SuratDinasInputWrapper {
 
     public void setKdTembusanList(Set<String> kdTembusanList) {
         this.kdTembusanList = kdTembusanList;
+    }
+
+    public String getKdUrtug() {
+        return kdUrtug;
+    }
+
+    public void setKdUrtug(String kdUrtug) {
+        this.kdUrtug = kdUrtug;
+    }
+
+    public Integer getTahunUrtug() {
+        return tahunUrtug;
+    }
+
+    public void setTahunUrtug(Integer tahunUrtug) {
+        this.tahunUrtug = tahunUrtug;
     }
 }

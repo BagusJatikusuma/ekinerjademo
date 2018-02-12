@@ -23,6 +23,9 @@ public class LembarDisposisiInputWrapper {
     private String isiDisposisi;
     private Integer durasiPengerjaan;
 
+    private String kdUrtug;
+    private Integer tahunUrtug;
+
     public String getNipPembuat() {
         return nipPembuat;
     }
@@ -79,12 +82,12 @@ public class LembarDisposisiInputWrapper {
         this.noSuratDisposisi = noSuratDisposisi;
     }
 
-    public List<String> getDaftarTargetLembarDisposisi() {
-        return daftarTargetLembarDisposisi;
+    public Long getTanggalSuratDisposisiMilis() {
+        return tanggalSuratDisposisiMilis;
     }
 
-    public void setDaftarTargetLembarDisposisi(List<String> daftarTargetLembarDisposisi) {
-        this.daftarTargetLembarDisposisi = daftarTargetLembarDisposisi;
+    public void setTanggalSuratDisposisiMilis(Long tanggalSuratDisposisiMilis) {
+        this.tanggalSuratDisposisiMilis = tanggalSuratDisposisiMilis;
     }
 
     public String getDariSuratDisposisi() {
@@ -111,12 +114,12 @@ public class LembarDisposisiInputWrapper {
         this.lampiran = lampiran;
     }
 
-    public Long getTanggalSuratDisposisiMilis() {
-        return tanggalSuratDisposisiMilis;
+    public List<String> getDaftarTargetLembarDisposisi() {
+        return daftarTargetLembarDisposisi;
     }
 
-    public void setTanggalSuratDisposisiMilis(Long tanggalSuratDisposisiMilis) {
-        this.tanggalSuratDisposisiMilis = tanggalSuratDisposisiMilis;
+    public void setDaftarTargetLembarDisposisi(List<String> daftarTargetLembarDisposisi) {
+        this.daftarTargetLembarDisposisi = daftarTargetLembarDisposisi;
     }
 
     public String getIsiDisposisi() {
@@ -133,5 +136,21 @@ public class LembarDisposisiInputWrapper {
 
     public void setDurasiPengerjaan(Integer durasiPengerjaan) {
         this.durasiPengerjaan = durasiPengerjaan;
+    }
+
+    public String getKdUrtug() {
+        return kdUrtug;
+    }
+
+    public void setKdUrtug(String kdUrtug) {
+        this.kdUrtug = kdUrtug;
+    }
+
+    public Integer getTahunUrtug() {
+        return tahunUrtug;
+    }
+
+    public void setTahunUrtug(Integer tahunUrtug) {
+        this.tahunUrtug = tahunUrtug;
     }
 }

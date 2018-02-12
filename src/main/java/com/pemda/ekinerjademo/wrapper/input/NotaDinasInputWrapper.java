@@ -28,8 +28,10 @@ public class NotaDinasInputWrapper {
     private Integer statusPenilaian;
     private String alasanPenolakan;
 
-
     private String nipPenerimaNotadinas;
+
+    private String kdUrtug;
+    private Integer tahunUrtug;
 
     public String getKdNotaDinas() {
         return kdNotaDinas;
@@ -63,12 +65,12 @@ public class NotaDinasInputWrapper {
         this.nomorUnit = nomorUnit;
     }
 
-    public String getNipPenerimaNotadinas() {
-        return nipPenerimaNotadinas;
+    public String getKdJabatanPenerimaNotaDinas() {
+        return kdJabatanPenerimaNotaDinas;
     }
 
-    public void setNipPenerimaNotadinas(String nipPenerimaNotadinas) {
-        this.nipPenerimaNotadinas = nipPenerimaNotadinas;
+    public void setKdJabatanPenerimaNotaDinas(String kdJabatanPenerimaNotaDinas) {
+        this.kdJabatanPenerimaNotaDinas = kdJabatanPenerimaNotaDinas;
     }
 
     public String getNipPemberiNotaDinas() {
@@ -183,11 +185,27 @@ public class NotaDinasInputWrapper {
         this.alasanPenolakan = alasanPenolakan;
     }
 
-    public String getKdJabatanPenerimaNotaDinas() {
-        return kdJabatanPenerimaNotaDinas;
+    public String getNipPenerimaNotadinas() {
+        return nipPenerimaNotadinas;
     }
 
-    public void setKdJabatanPenerimaNotaDinas(String kdJabatanPenerimaNotaDinas) {
-        this.kdJabatanPenerimaNotaDinas = kdJabatanPenerimaNotaDinas;
+    public void setNipPenerimaNotadinas(String nipPenerimaNotadinas) {
+        this.nipPenerimaNotadinas = nipPenerimaNotadinas;
+    }
+
+    public String getKdUrtug() {
+        return kdUrtug;
+    }
+
+    public void setKdUrtug(String kdUrtug) {
+        this.kdUrtug = kdUrtug;
+    }
+
+    public Integer getTahunUrtug() {
+        return tahunUrtug;
+    }
+
+    public void setTahunUrtug(Integer tahunUrtug) {
+        this.tahunUrtug = tahunUrtug;
     }
 }

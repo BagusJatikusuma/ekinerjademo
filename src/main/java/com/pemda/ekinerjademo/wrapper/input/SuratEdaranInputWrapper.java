@@ -28,6 +28,9 @@ public class SuratEdaranInputWrapper {
 
     private String kdJabatanSuratPejabat;
 
+    private String kdUrtug;
+    private Integer tahunUrtug;
+
     public String getKdSuratEdaran() {
         return kdSuratEdaran;
     }
@@ -202,5 +205,21 @@ public class SuratEdaranInputWrapper {
 
     public void setKdJabatanSuratPejabat(String kdJabatanSuratPejabat) {
         this.kdJabatanSuratPejabat = kdJabatanSuratPejabat;
+    }
+
+    public String getKdUrtug() {
+        return kdUrtug;
+    }
+
+    public void setKdUrtug(String kdUrtug) {
+        this.kdUrtug = kdUrtug;
+    }
+
+    public Integer getTahunUrtug() {
+        return tahunUrtug;
+    }
+
+    public void setTahunUrtug(Integer tahunUrtug) {
+        this.tahunUrtug = tahunUrtug;
     }
 }

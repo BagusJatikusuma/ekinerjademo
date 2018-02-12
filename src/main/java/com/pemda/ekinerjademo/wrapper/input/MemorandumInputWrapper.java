@@ -29,6 +29,9 @@ public class MemorandumInputWrapper {
     private boolean suratPejabat;
     private List<String> kdJabatanTembusanList;
 
+    private String kdUrtug;
+    private Integer tahunUrtug;
+
     public String getKdMemorandum() {
         return kdMemorandum;
     }
@@ -195,5 +198,21 @@ public class MemorandumInputWrapper {
 
     public void setKdJabatanTembusanList(List<String> kdJabatanTembusanList) {
         this.kdJabatanTembusanList = kdJabatanTembusanList;
+    }
+
+    public String getKdUrtug() {
+        return kdUrtug;
+    }
+
+    public void setKdUrtug(String kdUrtug) {
+        this.kdUrtug = kdUrtug;
+    }
+
+    public Integer getTahunUrtug() {
+        return tahunUrtug;
+    }
+
+    public void setTahunUrtug(Integer tahunUrtug) {
+        this.tahunUrtug = tahunUrtug;
     }
 }

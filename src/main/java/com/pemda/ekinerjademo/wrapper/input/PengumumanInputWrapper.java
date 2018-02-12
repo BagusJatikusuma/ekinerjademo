@@ -25,6 +25,9 @@ public class PengumumanInputWrapper {
     private String kotaPembuatanSurat;
     private String kdPengumumanBawahan;
 
+    private String kdUrtug;
+    private Integer tahunUrtug;
+
     public String getKdPengumuman() {
         return kdPengumuman;
     }
@@ -175,5 +178,21 @@ public class PengumumanInputWrapper {
 
     public void setKdPengumumanBawahan(String kdPengumumanBawahan) {
         this.kdPengumumanBawahan = kdPengumumanBawahan;
+    }
+
+    public String getKdUrtug() {
+        return kdUrtug;
+    }
+
+    public void setKdUrtug(String kdUrtug) {
+        this.kdUrtug = kdUrtug;
+    }
+
+    public Integer getTahunUrtug() {
+        return tahunUrtug;
+    }
+
+    public void setTahunUrtug(Integer tahunUrtug) {
+        this.tahunUrtug = tahunUrtug;
     }
 }

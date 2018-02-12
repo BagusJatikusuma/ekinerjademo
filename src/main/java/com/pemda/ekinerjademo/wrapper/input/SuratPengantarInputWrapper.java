@@ -27,6 +27,9 @@ public class SuratPengantarInputWrapper {
 
     private List<SuratPengantarIsiInputWrapper> suratPengantarIsiList;
 
+    private String kdUrtug;
+    private Integer tahunUrtug;
+
     public String getNomorUrusan() {
         return nomorUrusan;
     }
@@ -73,6 +76,14 @@ public class SuratPengantarInputWrapper {
 
     public void setKdJabatanPenerimaSuratPengantar(String kdJabatanPenerimaSuratPengantar) {
         this.kdJabatanPenerimaSuratPengantar = kdJabatanPenerimaSuratPengantar;
+    }
+
+    public String getNipPenerimaSuratPengantar() {
+        return nipPenerimaSuratPengantar;
+    }
+
+    public void setNipPenerimaSuratPengantar(String nipPenerimaSuratPengantar) {
+        this.nipPenerimaSuratPengantar = nipPenerimaSuratPengantar;
     }
 
     public String getNipPemberiSuratPengantar() {
@@ -131,14 +142,6 @@ public class SuratPengantarInputWrapper {
         this.durasiPengerjaan = durasiPengerjaan;
     }
 
-    public List<SuratPengantarIsiInputWrapper> getSuratPengantarIsiList() {
-        return suratPengantarIsiList;
-    }
-
-    public void setSuratPengantarIsiList(List<SuratPengantarIsiInputWrapper> suratPengantarIsiList) {
-        this.suratPengantarIsiList = suratPengantarIsiList;
-    }
-
     public String getKdSuratPengantarBawahan() {
         return kdSuratPengantarBawahan;
     }
@@ -147,11 +150,27 @@ public class SuratPengantarInputWrapper {
         this.kdSuratPengantarBawahan = kdSuratPengantarBawahan;
     }
 
-    public String getNipPenerimaSuratPengantar() {
-        return nipPenerimaSuratPengantar;
+    public List<SuratPengantarIsiInputWrapper> getSuratPengantarIsiList() {
+        return suratPengantarIsiList;
     }
 
-    public void setNipPenerimaSuratPengantar(String nipPenerimaSuratPengantar) {
-        this.nipPenerimaSuratPengantar = nipPenerimaSuratPengantar;
+    public void setSuratPengantarIsiList(List<SuratPengantarIsiInputWrapper> suratPengantarIsiList) {
+        this.suratPengantarIsiList = suratPengantarIsiList;
+    }
+
+    public String getKdUrtug() {
+        return kdUrtug;
+    }
+
+    public void setKdUrtug(String kdUrtug) {
+        this.kdUrtug = kdUrtug;
+    }
+
+    public Integer getTahunUrtug() {
+        return tahunUrtug;
+    }
+
+    public void setTahunUrtug(Integer tahunUrtug) {
+        this.tahunUrtug = tahunUrtug;
     }
 }

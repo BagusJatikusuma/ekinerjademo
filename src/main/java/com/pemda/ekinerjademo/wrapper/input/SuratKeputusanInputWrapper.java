@@ -24,6 +24,9 @@ public class SuratKeputusanInputWrapper {
     private Integer statusPenilaian;
     private String alasanPenolakan;
 
+    private String kdUrtug;
+    private Integer tahunUrtug;
+
     public String getKdSuratKeputusan() {
         return kdSuratKeputusan;
     }
@@ -174,5 +177,21 @@ public class SuratKeputusanInputWrapper {
 
     public void setAlasanPenolakan(String alasanPenolakan) {
         this.alasanPenolakan = alasanPenolakan;
+    }
+
+    public String getKdUrtug() {
+        return kdUrtug;
+    }
+
+    public void setKdUrtug(String kdUrtug) {
+        this.kdUrtug = kdUrtug;
+    }
+
+    public Integer getTahunUrtug() {
+        return tahunUrtug;
+    }
+
+    public void setTahunUrtug(Integer tahunUrtug) {
+        this.tahunUrtug = tahunUrtug;
     }
 }

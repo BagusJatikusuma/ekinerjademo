@@ -39,6 +39,9 @@ public class SuratUndanganInputWrapper {
     private Integer statusPenilaian;
     private String alasanPenolakan;
 
+    private String kdUrtug;
+    private Integer tahunUrtug;
+
     public String getKdSuratUndangan() {
         return kdSuratUndangan;
     }
@@ -231,6 +234,14 @@ public class SuratUndanganInputWrapper {
         this.suratPejabat = suratPejabat;
     }
 
+    public String getKdJabatanSuratPejabat() {
+        return kdJabatanSuratPejabat;
+    }
+
+    public void setKdJabatanSuratPejabat(String kdJabatanSuratPejabat) {
+        this.kdJabatanSuratPejabat = kdJabatanSuratPejabat;
+    }
+
     public String getKdSuratUndanganBawahan() {
         return kdSuratUndanganBawahan;
     }
@@ -271,11 +282,19 @@ public class SuratUndanganInputWrapper {
         this.alasanPenolakan = alasanPenolakan;
     }
 
-    public String getKdJabatanSuratPejabat() {
-        return kdJabatanSuratPejabat;
+    public String getKdUrtug() {
+        return kdUrtug;
     }
 
-    public void setKdJabatanSuratPejabat(String kdJabatanSuratPejabat) {
-        this.kdJabatanSuratPejabat = kdJabatanSuratPejabat;
+    public void setKdUrtug(String kdUrtug) {
+        this.kdUrtug = kdUrtug;
+    }
+
+    public Integer getTahunUrtug() {
+        return tahunUrtug;
+    }
+
+    public void setTahunUrtug(Integer tahunUrtug) {
+        this.tahunUrtug = tahunUrtug;
     }
 }
