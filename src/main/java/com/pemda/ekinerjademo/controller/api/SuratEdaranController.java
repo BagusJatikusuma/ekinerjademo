@@ -262,6 +262,7 @@ public class SuratEdaranController {
         suratEdaranWrapper.setPangkatPenandatangan(penandatangan.getPangkat());
         suratEdaranWrapper.setGolonganPenandatangan(penandatangan.getGol());
         suratEdaranWrapper.setSuratPejabat(isSuratPejabat);
+        suratEdaranWrapper.setBarcodeImage(null);
 
         return new ResponseEntity<Object>(suratEdaranWrapper, HttpStatus.OK);
 

@@ -374,7 +374,8 @@ public class NotaDinasController {
                         notaDinas.getTanggalPembuatanMilis(),
                         notaDinas.getIsiNotaDinas(),
                         penandatangan,
-                        tembusanNotaDinasList);
+                        tembusanNotaDinasList,
+                        null);
 
         return new ResponseEntity<Object>(notaDinasWrapper, HttpStatus.OK);
     }

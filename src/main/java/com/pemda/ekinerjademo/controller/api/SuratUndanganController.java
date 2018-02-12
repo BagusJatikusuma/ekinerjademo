@@ -455,6 +455,7 @@ public class SuratUndanganController {
         suratUndanganWrapper.setGelarBelakangPenandatangan(penandatangan.getGlrBlk());
         suratUndanganWrapper.setPangkatPenandatangan(penandatangan.getPangkat());
         suratUndanganWrapper.setGolonganPenandatangan(penandatangan.getGol());
+        suratUndanganWrapper.setBarcodeImage(null);
 
         suratUndanganWrapper.setTembusanSuratUndanganList(tembusanSuratUndanganList);
         suratUndanganWrapper.setSuratPejabat(isSuratPejabat);

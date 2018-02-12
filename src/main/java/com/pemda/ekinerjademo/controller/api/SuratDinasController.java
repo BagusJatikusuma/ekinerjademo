@@ -448,6 +448,7 @@ public class SuratDinasController {
         suratDinasWrapper.setPangkatPenandatangan(penandatangan.getPangkat());
         suratDinasWrapper.setGelarDepanPenandatangan(penandatangan.getGlrDpn());
         suratDinasWrapper.setGelarBelakangPenandatangan(penandatangan.getGlrBlk());
+        suratDinasWrapper.setBarcodeImage(null);
         boolean isSuratPejabat = false;
 
         if (suratDinas.getSuratDinasPejabat() != null) isSuratPejabat = true;

@@ -170,7 +170,8 @@ public class PengumumanController {
                 penandatangan.getGlrDpn(), penandatangan.getGlrBlk(),
                 penandatangan.getPangkat(), penandatangan.getGol(),
                 pengumuman.getKotaPembuatanSurat(),
-                        pengumuman.getTanggalPembuatanMilis());
+                        pengumuman.getTanggalPembuatanMilis(),
+                null);
 
         return new ResponseEntity<Object>(pengumumanWrapper, HttpStatus.OK);
 

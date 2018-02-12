@@ -564,31 +564,32 @@ public class SuratTugasController {
         }
 
         SuratTugasWrapper suratTugasWrapper
-                = new SuratTugasWrapper(
-                        suratTugas.getKdSuratTugas(),
-                        penandatanganSurat,
-                        suratTugas.getNomorSurat1(),
-                        suratTugas.getNomorSurat2(),
-                        suratTugas.getNomorSurat3(),
-                        suratTugas.getNomorTahun(),
-                        suratTugas.getNomorPasanganUrut(),
-                        ekinerjaXMLParser.convertXmlSuratPerintahIntoListofString(
-                                suratTugas.getMenimbang(), "menimbang"),
-                        ekinerjaXMLParser.convertXmlSuratPerintahIntoListofString(
-                                suratTugas.getDasar(), "dasar"),
-                        ekinerjaXMLParser.convertXmlSuratPerintahIntoListofString(
-                                suratTugas.getUntuk(), "untuk"),
-                        suratTugas.getTempat(),
-                        suratTugas.getTanggalTugasMilis(),
-                        suratTugas.getKdUnitKerja(),
-                        targetSuratTugasPegawaiListWrapper,
-                        targetSuratTugasPejabatListWrapper,
-                        tembusanSuratTugasListWrapper);
-        suratTugasWrapper.setSuratPejabat(isSuratPejabat);
-        suratTugasWrapper.setKdUnitKerjaPenandatangan(kdUnitKerjaPenandatangan);
-        suratTugasWrapper.setUnitKerjaPenandatangan(unitKerjaPenandatangan);
-        suratTugasWrapper.setKdJabatanPenandatangan(kdJabatanPenandatangan);
-        suratTugasWrapper.setJabatanPenandatangan(jabatanPenandatangan);
+                = new SuratTugasWrapper(suratTugas.getKdSuratTugas(),
+                penandatanganSurat,
+                suratTugas.getNomorSurat1(),
+                suratTugas.getNomorSurat2(),
+                suratTugas.getNomorSurat3(),
+                suratTugas.getNomorTahun(),suratTugas.getNomorPasanganUrut(),
+                ekinerjaXMLParser.convertXmlSuratPerintahIntoListofString(
+                        suratTugas.getMenimbang(), "menimbang"),
+                ekinerjaXMLParser.convertXmlSuratPerintahIntoListofString(
+                        suratTugas.getDasar(), "dasar"),
+                ekinerjaXMLParser.convertXmlSuratPerintahIntoListofString(
+                        suratTugas.getUntuk(), "untuk"),
+                suratTugas.getTempat(),
+                suratTugas.getTanggalTugasMilis(),
+                suratTugas.getKdUnitKerja(),
+                isSuratPejabat,
+                penandatanganSurat.getKdUnitKerja(),
+                tkdUnkDao.findOne(penandatanganSurat.getKdUnitKerja()).getUnitKerja(),
+                penandatanganSurat.getKdJabatan(),
+                penandatanganSurat.getJabatan(),
+                penandatanganSurat.getGlrDpn(),
+                penandatanganSurat.getGlrBlk(),
+                penandatanganSurat.getGol(),
+                targetSuratTugasPegawaiListWrapper,
+                targetSuratTugasPejabatListWrapper,
+                tembusanSuratTugasListWrapper);
 
         return new ResponseEntity<Object>(suratTugasWrapper, HttpStatus.OK);
     }

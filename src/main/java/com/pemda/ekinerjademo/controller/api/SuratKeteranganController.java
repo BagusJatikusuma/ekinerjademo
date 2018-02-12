@@ -348,7 +348,8 @@ public class SuratKeteranganController {
                         suratKeterangan.getKotaPembuatanSurat(),
                         suratKeterangan.getTanggalPembuatanSuratMilis(),
                         pegawaiKeteranganList,
-                        targetPegawaiKeteranganList);
+                        targetPegawaiKeteranganList,
+                null);
 
         return new ResponseEntity<Object>(suratKeteranganWrapper, HttpStatus.OK);
 

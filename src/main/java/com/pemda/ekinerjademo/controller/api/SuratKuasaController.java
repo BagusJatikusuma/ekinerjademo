@@ -193,7 +193,8 @@ public class SuratKuasaController {
                         penerimaKuasa.getAlRumah(),
                         suratKuasa.getIsiKuasa(),
                         suratKuasa.getKotaPembuatanSurat(),
-                        suratKuasa.getTanggalPembuatanMilis());
+                        suratKuasa.getTanggalPembuatanMilis(),
+                null);
 
         return new ResponseEntity<Object>(suratKuasaWrapper, HttpStatus.OK);
     }

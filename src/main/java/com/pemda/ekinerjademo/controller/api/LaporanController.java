@@ -187,7 +187,8 @@ public class LaporanController {
                 pembuat.getNama(),
                 pembuat.getJabatan(),
                 tkdUnkDao.findOne(pembuat.getKdUnitKerja()).getUnitKerja(),
-                pembuat.getGlrDpn(), pembuat.getGlrBlk(), pembuat.getPangkat(), pembuat.getGol());
+                pembuat.getGlrDpn(), pembuat.getGlrBlk(), pembuat.getPangkat(), pembuat.getGol(),
+                null);
         return new ResponseEntity<Object>(laporanWrapper,HttpStatus.OK);
     }
 

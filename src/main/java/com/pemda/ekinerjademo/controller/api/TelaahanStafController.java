@@ -166,7 +166,8 @@ public class TelaahanStafController {
                         penandatangan,
                         telaahanStaf.getTanggalPembuatanMilis(),
                         pembuatSurat,
-                        tkdUnkDao.findOne(pembuatSurat.getKdUnitKerja()).getUnitKerja());
+                        tkdUnkDao.findOne(pembuatSurat.getKdUnitKerja()).getUnitKerja(),
+                        null);
 
         return new ResponseEntity<Object>(telaahanStaffWrapper, HttpStatus.OK);
     }

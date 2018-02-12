@@ -37,6 +37,12 @@ public class SuratTugasWrapper {
 
     private String jabatanPenandatangan;
 
+    private String gelarDepanPenandatangan;
+
+    private String gelarBelakangPenandatangan;
+
+    private String golonganPenandatangan;
+
     private Set<CustomPegawaiCredential> targetSuratTugasPegawaiSet;
 
     private Set<JabatanWrapper> targetSuratTugasPejabatSet;
@@ -47,7 +53,28 @@ public class SuratTugasWrapper {
     public SuratTugasWrapper() {
     }
 
-    public SuratTugasWrapper(String kdSuratTugas, CustomPegawaiCredential nipPenandatangan, Integer nomorUrut, String nomorUrusan, String nomorUnit, Integer nomorTahun, String nomorPasanganUrut, List<String> menimbangList, List<String> dasarList, List<String> untukList, String tempat, Long tanggalTugasMilis, String kdUnitKerja, boolean isSuratPejabat, String kdUnitKerjaPenandatangan, String unitKerjaPenandatangan, String kdJabatanPenandatangan, String jabatanPenandatangan, Set<CustomPegawaiCredential> targetSuratTugasPegawaiSet, Set<JabatanWrapper> targetSuratTugasPejabatSet, Set<JabatanWrapper> tembusanSuratTugasSet, byte[] barcodeImage) {
+    public SuratTugasWrapper(
+            String kdSuratTugas,
+            CustomPegawaiCredential nipPenandatangan,
+            Integer nomorUrut,
+            String nomorUrusan,
+            String nomorUnit,
+            Integer nomorTahun,
+            String nomorPasanganUrut,
+            List<String> menimbangList,
+            List<String> dasarList,
+            List<String> untukList,
+            String tempat,
+            Long tanggalTugasMilis,
+            String kdUnitKerja,
+            boolean isSuratPejabat,
+            String kdUnitKerjaPenandatangan,
+            String unitKerjaPenandatangan,
+            String kdJabatanPenandatangan,
+            String jabatanPenandatangan,
+            String gelarDepanPenandatangan, String gelarBelakangPenandatangan, String golonganPenandatangan, Set<CustomPegawaiCredential> targetSuratTugasPegawaiSet,
+            Set<JabatanWrapper> targetSuratTugasPejabatSet,
+            Set<JabatanWrapper> tembusanSuratTugasSet) {
         this.kdSuratTugas = kdSuratTugas;
         this.nipPenandatangan = nipPenandatangan;
         this.nomorUrut = nomorUrut;
@@ -66,10 +93,12 @@ public class SuratTugasWrapper {
         this.unitKerjaPenandatangan = unitKerjaPenandatangan;
         this.kdJabatanPenandatangan = kdJabatanPenandatangan;
         this.jabatanPenandatangan = jabatanPenandatangan;
+        this.gelarDepanPenandatangan = gelarDepanPenandatangan;
+        this.gelarBelakangPenandatangan = gelarBelakangPenandatangan;
+        this.golonganPenandatangan = golonganPenandatangan;
         this.targetSuratTugasPegawaiSet = targetSuratTugasPegawaiSet;
         this.targetSuratTugasPejabatSet = targetSuratTugasPejabatSet;
         this.tembusanSuratTugasSet = tembusanSuratTugasSet;
-        this.barcodeImage = barcodeImage;
     }
 
     public String getKdSuratTugas() {
@@ -246,5 +275,29 @@ public class SuratTugasWrapper {
 
     public void setBarcodeImage(byte[] barcodeImage) {
         this.barcodeImage = barcodeImage;
+    }
+
+    public String getGelarDepanPenandatangan() {
+        return gelarDepanPenandatangan;
+    }
+
+    public void setGelarDepanPenandatangan(String gelarDepanPenandatangan) {
+        this.gelarDepanPenandatangan = gelarDepanPenandatangan;
+    }
+
+    public String getGelarBelakangPenandatangan() {
+        return gelarBelakangPenandatangan;
+    }
+
+    public void setGelarBelakangPenandatangan(String gelarBelakangPenandatangan) {
+        this.gelarBelakangPenandatangan = gelarBelakangPenandatangan;
+    }
+
+    public String getGolonganPenandatangan() {
+        return golonganPenandatangan;
+    }
+
+    public void setGolonganPenandatangan(String golonganPenandatangan) {
+        this.golonganPenandatangan = golonganPenandatangan;
     }
 }

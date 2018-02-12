@@ -478,7 +478,8 @@ public class MemorandumController {
                         penandatangan.getJabatan(),
                         tkdUnkDao.findOne(penandatangan.getKdUnitKerja()).getUnitKerja(),
                 penandatangan.getGlrDpn(), penandatangan.getGlrBlk(), penandatangan.getPangkat(), penandatangan.getGol(),
-                tembusanMemorandumList, isSuratPejabat);
+                tembusanMemorandumList, isSuratPejabat,
+                null);
 
 
         return new ResponseEntity<Object>(memorandumWrapper, HttpStatus.OK);

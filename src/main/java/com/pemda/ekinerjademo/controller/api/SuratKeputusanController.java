@@ -200,7 +200,8 @@ public class SuratKeputusanController {
                         ekinerjaXMLParser.convertXmlSuratPerintahIntoListofString(suratKeputusan.getMengingat(), "mengingat"),
                         ekinerjaXMLParser.convertXmlSuratPerintahIntoListofString(suratKeputusan.getMenetapkan(), "menetapkan"),
                         suratKeputusan.getTanggalPembuatanMilis(),
-                        suratKeputusan.getKotaPembuatanSurat());
+                        suratKeputusan.getKotaPembuatanSurat(),
+                        null);
 
 
         return new ResponseEntity<Object>(suratKeputusanWrapper, HttpStatus.OK);

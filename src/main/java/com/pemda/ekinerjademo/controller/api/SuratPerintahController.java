@@ -901,7 +901,8 @@ public class SuratPerintahController {
                         penandatanganSurat.getGlrDpn(),
                         penandatanganSurat.getGlrBlk(),
                         penandatanganSurat.getPangkat(),
-                        penandatanganSurat.getGol());
+                        penandatanganSurat.getGol(),
+                null);
 
         return new ResponseEntity<Object>(suratPerintahWrapper, HttpStatus.OK);
     }
