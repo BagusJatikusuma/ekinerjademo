@@ -234,7 +234,8 @@ public class BeritaAcaraController {
                         pihakMengetahui.getGlrDpn(),
                         pihakMengetahui.getGlrBlk(),
                         beritaAcara.getKotaPembuatanSurat(),
-                        beritaAcara.getTanggalPembuatanMilis());
+                        beritaAcara.getTanggalPembuatanMilis(),
+                        null);
 
         return new ResponseEntity<Object>(beritaAcaraWrapper, HttpStatus.OK);
     }

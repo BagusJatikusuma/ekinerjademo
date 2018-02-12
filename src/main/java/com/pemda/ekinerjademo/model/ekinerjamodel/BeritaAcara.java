@@ -76,6 +76,9 @@ public class BeritaAcara {
     @Column(name = "alasan_penolakan")
     private String alasanPenolakan;
 
+    @Column(name = "kd_barcode")
+    private String kdBarcode;
+
     public String getKdBeritaAcara() {
         return kdBeritaAcara;
     }
@@ -298,5 +301,13 @@ public class BeritaAcara {
 
     public void setPathPenilaian(String pathPenilaian) {
         this.pathPenilaian = pathPenilaian;
+    }
+
+    public String getKdBarcode() {
+        return kdBarcode;
+    }
+
+    public void setKdBarcode(String kdBarcode) {
+        this.kdBarcode = kdBarcode;
     }
 }
