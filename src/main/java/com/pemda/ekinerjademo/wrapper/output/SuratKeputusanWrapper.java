@@ -25,11 +25,12 @@ public class SuratKeputusanWrapper {
 
     private Long tanggalPembuatanMilis;
     private String kotaPembuatanSurat;
+    private byte[] barcodeImage;
 
     public SuratKeputusanWrapper() {
     }
 
-    public SuratKeputusanWrapper(String kdSuratKeputusan, Integer nomorUrut, Integer nomorTahun, String nipPenandatangan, String namaPenandatangan, String jabatanPenandatangan, String unitKerjaPenandatangan, String gelarDepanPenandatangan, String gelarBelakangPenandatangan, String pangkatPenandatangan, String golonganPenandatangan, String selaku, String tentang, List<String> menimbang, List<String> mengingat, List<String> menetapkan, Long tanggalPembuatanMilis, String kotaPembuatanSurat) {
+    public SuratKeputusanWrapper(String kdSuratKeputusan, Integer nomorUrut, Integer nomorTahun, String nipPenandatangan, String namaPenandatangan, String jabatanPenandatangan, String unitKerjaPenandatangan, String gelarDepanPenandatangan, String gelarBelakangPenandatangan, String pangkatPenandatangan, String golonganPenandatangan, String selaku, String tentang, List<String> menimbang, List<String> mengingat, List<String> menetapkan, Long tanggalPembuatanMilis, String kotaPembuatanSurat, byte[] barcodeImage) {
         this.kdSuratKeputusan = kdSuratKeputusan;
         this.nomorUrut = nomorUrut;
         this.nomorTahun = nomorTahun;
@@ -48,34 +49,15 @@ public class SuratKeputusanWrapper {
         this.menetapkan = menetapkan;
         this.tanggalPembuatanMilis = tanggalPembuatanMilis;
         this.kotaPembuatanSurat = kotaPembuatanSurat;
+        this.barcodeImage = barcodeImage;
     }
 
-    public SuratKeputusanWrapper(Integer nomorUrut,
-                                 Integer nomorTahun,
-                                 String nipPenandatangan,
-                                 String namaPenandatangan,
-                                 String jabatanPenandatangan,
-                                 String unitKerjaPenandatangan,
-                                 String selaku,
-                                 String tentang,
-                                 List<String> menimbang,
-                                 List<String> mengingat,
-                                 List<String> menetapkan,
-                                 Long tanggalPembuatanMilis,
-                                 String kotaPembuatanSurat) {
-        this.nomorUrut = nomorUrut;
-        this.nomorTahun = nomorTahun;
-        this.nipPenandatangan = nipPenandatangan;
-        this.namaPenandatangan = namaPenandatangan;
-        this.jabatanPenandatangan = jabatanPenandatangan;
-        this.unitKerjaPenandatangan = unitKerjaPenandatangan;
-        this.selaku = selaku;
-        this.tentang = tentang;
-        this.menimbang = menimbang;
-        this.mengingat = mengingat;
-        this.menetapkan = menetapkan;
-        this.tanggalPembuatanMilis = tanggalPembuatanMilis;
-        this.kotaPembuatanSurat = kotaPembuatanSurat;
+    public String getKdSuratKeputusan() {
+        return kdSuratKeputusan;
+    }
+
+    public void setKdSuratKeputusan(String kdSuratKeputusan) {
+        this.kdSuratKeputusan = kdSuratKeputusan;
     }
 
     public Integer getNomorUrut() {
@@ -124,6 +106,38 @@ public class SuratKeputusanWrapper {
 
     public void setUnitKerjaPenandatangan(String unitKerjaPenandatangan) {
         this.unitKerjaPenandatangan = unitKerjaPenandatangan;
+    }
+
+    public String getGelarDepanPenandatangan() {
+        return gelarDepanPenandatangan;
+    }
+
+    public void setGelarDepanPenandatangan(String gelarDepanPenandatangan) {
+        this.gelarDepanPenandatangan = gelarDepanPenandatangan;
+    }
+
+    public String getGelarBelakangPenandatangan() {
+        return gelarBelakangPenandatangan;
+    }
+
+    public void setGelarBelakangPenandatangan(String gelarBelakangPenandatangan) {
+        this.gelarBelakangPenandatangan = gelarBelakangPenandatangan;
+    }
+
+    public String getPangkatPenandatangan() {
+        return pangkatPenandatangan;
+    }
+
+    public void setPangkatPenandatangan(String pangkatPenandatangan) {
+        this.pangkatPenandatangan = pangkatPenandatangan;
+    }
+
+    public String getGolonganPenandatangan() {
+        return golonganPenandatangan;
+    }
+
+    public void setGolonganPenandatangan(String golonganPenandatangan) {
+        this.golonganPenandatangan = golonganPenandatangan;
     }
 
     public String getSelaku() {
@@ -182,43 +196,11 @@ public class SuratKeputusanWrapper {
         this.kotaPembuatanSurat = kotaPembuatanSurat;
     }
 
-    public String getKdSuratKeputusan() {
-        return kdSuratKeputusan;
+    public byte[] getBarcodeImage() {
+        return barcodeImage;
     }
 
-    public void setKdSuratKeputusan(String kdSuratKeputusan) {
-        this.kdSuratKeputusan = kdSuratKeputusan;
-    }
-
-    public String getGelarDepanPenandatangan() {
-        return gelarDepanPenandatangan;
-    }
-
-    public void setGelarDepanPenandatangan(String gelarDepanPenandatangan) {
-        this.gelarDepanPenandatangan = gelarDepanPenandatangan;
-    }
-
-    public String getGelarBelakangPenandatangan() {
-        return gelarBelakangPenandatangan;
-    }
-
-    public void setGelarBelakangPenandatangan(String gelarBelakangPenandatangan) {
-        this.gelarBelakangPenandatangan = gelarBelakangPenandatangan;
-    }
-
-    public String getPangkatPenandatangan() {
-        return pangkatPenandatangan;
-    }
-
-    public void setPangkatPenandatangan(String pangkatPenandatangan) {
-        this.pangkatPenandatangan = pangkatPenandatangan;
-    }
-
-    public String getGolonganPenandatangan() {
-        return golonganPenandatangan;
-    }
-
-    public void setGolonganPenandatangan(String golonganPenandatangan) {
-        this.golonganPenandatangan = golonganPenandatangan;
+    public void setBarcodeImage(byte[] barcodeImage) {
+        this.barcodeImage = barcodeImage;
     }
 }

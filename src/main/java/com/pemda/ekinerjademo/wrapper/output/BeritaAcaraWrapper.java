@@ -50,38 +50,49 @@ public class BeritaAcaraWrapper {
 
     private String kotaPembuatanSurat;
     private Long tanggalPembuatanMilis;
+    private byte[] barcodeImage;
 
-    public BeritaAcaraWrapper() {
+    public BeritaAcaraWrapper(){
     }
 
-    public BeritaAcaraWrapper(
-            String kdBeritaAcara,
-            String nomorUrusan,
-            Integer nomorUrut,
-            String nomorPasanganUrut,
-            String nomorUnit,
-            Integer nomorTahun,
-            String nipPihakKesatu,
-            String namaPihakKesatu,
-            String jabatanPihakKesatu,
-            String unitKerjaPihakKesatu,
-            String pangkatPihakKesatu, String golonganPihakKesatu, String peranPihakKesatu,
-            String gelarDepanPihakKesatu, String gelarBelakangPihakKesatu, Integer statusApprovalPihakKesatu,
-            String nipPihakKedua,
-            String namaPihakKedua,
-            String jabatanPihakKedua,
-            String unitKerjaPihakKedua,
-            String pangkatPihakKedua,
-            String golonganPihakKedua, String peranPihakKedua,
-            String gelarDepanPihakKedua, String gelarBelakangPihakKedua, Integer statusApprovalPihakKedua,
-            List<String> isiBeritaAcara,
-            String dasarBeritaAcara,
-            String nipMengetahui,
-            String namaMengetahui,
-            String jabatanMengetahui,
-            String unitKerjaMengetahui,
-            String pangkatMengetahui, String gelarDepanPihakMengetahui, String gelarBelakangPihakMengetahui, String kotaPembuatanSurat,
-            Long tanggalPembuatanMilis) {
+    public BeritaAcaraWrapper(String kdBeritaAcara,
+                              String nomorUrusan,
+                              Integer nomorUrut,
+                              String nomorPasanganUrut,
+                              String nomorUnit,
+                              Integer nomorTahun,
+                              String nipPihakKesatu,
+                              String namaPihakKesatu,
+                              String jabatanPihakKesatu,
+                              String unitKerjaPihakKesatu,
+                              String pangkatPihakKesatu,
+                              String golonganPihakKesatu,
+                              String peranPihakKesatu,
+                              String gelarDepanPihakKesatu,
+                              String gelarBelakangPihakKesatu,
+                              Integer statusApprovalPihakKesatu,
+                              String nipPihakKedua,
+                              String namaPihakKedua,
+                              String jabatanPihakKedua,
+                              String unitKerjaPihakKedua,
+                              String pangkatPihakKedua,
+                              String golonganPihakKedua,
+                              String peranPihakKedua,
+                              String gelarDepanPihakKedua,
+                              String gelarBelakangPihakKedua,
+                              Integer statusApprovalPihakKedua,
+                              List<String> isiBeritaAcara,
+                              String dasarBeritaAcara,
+                              String nipMengetahui,
+                              String namaMengetahui,
+                              String jabatanMengetahui,
+                              String unitKerjaMengetahui,
+                              String pangkatMengetahui,
+                              String gelarDepanPihakMengetahui,
+                              String gelarBelakangPihakMengetahui,
+                              String kotaPembuatanSurat,
+                              Long tanggalPembuatanMilis,
+                              byte[] barcodeImage) {
         this.kdBeritaAcara = kdBeritaAcara;
         this.nomorUrusan = nomorUrusan;
         this.nomorUrut = nomorUrut;
@@ -93,7 +104,7 @@ public class BeritaAcaraWrapper {
         this.jabatanPihakKesatu = jabatanPihakKesatu;
         this.unitKerjaPihakKesatu = unitKerjaPihakKesatu;
         this.pangkatPihakKesatu = pangkatPihakKesatu;
-        this.GolonganPihakKesatu = golonganPihakKesatu;
+        GolonganPihakKesatu = golonganPihakKesatu;
         this.peranPihakKesatu = peranPihakKesatu;
         this.gelarDepanPihakKesatu = gelarDepanPihakKesatu;
         this.gelarBelakangPihakKesatu = gelarBelakangPihakKesatu;
@@ -103,7 +114,7 @@ public class BeritaAcaraWrapper {
         this.jabatanPihakKedua = jabatanPihakKedua;
         this.unitKerjaPihakKedua = unitKerjaPihakKedua;
         this.pangkatPihakKedua = pangkatPihakKedua;
-        this.GolonganPihakKedua = golonganPihakKedua;
+        GolonganPihakKedua = golonganPihakKedua;
         this.peranPihakKedua = peranPihakKedua;
         this.gelarDepanPihakKedua = gelarDepanPihakKedua;
         this.gelarBelakangPihakKedua = gelarBelakangPihakKedua;
@@ -119,6 +130,7 @@ public class BeritaAcaraWrapper {
         this.gelarBelakangPihakMengetahui = gelarBelakangPihakMengetahui;
         this.kotaPembuatanSurat = kotaPembuatanSurat;
         this.tanggalPembuatanMilis = tanggalPembuatanMilis;
+        this.barcodeImage = barcodeImage;
     }
 
     public String getKdBeritaAcara() {
@@ -201,12 +213,44 @@ public class BeritaAcaraWrapper {
         this.unitKerjaPihakKesatu = unitKerjaPihakKesatu;
     }
 
+    public String getPangkatPihakKesatu() {
+        return pangkatPihakKesatu;
+    }
+
+    public void setPangkatPihakKesatu(String pangkatPihakKesatu) {
+        this.pangkatPihakKesatu = pangkatPihakKesatu;
+    }
+
+    public String getGolonganPihakKesatu() {
+        return GolonganPihakKesatu;
+    }
+
+    public void setGolonganPihakKesatu(String golonganPihakKesatu) {
+        GolonganPihakKesatu = golonganPihakKesatu;
+    }
+
     public String getPeranPihakKesatu() {
         return peranPihakKesatu;
     }
 
     public void setPeranPihakKesatu(String peranPihakKesatu) {
         this.peranPihakKesatu = peranPihakKesatu;
+    }
+
+    public String getGelarDepanPihakKesatu() {
+        return gelarDepanPihakKesatu;
+    }
+
+    public void setGelarDepanPihakKesatu(String gelarDepanPihakKesatu) {
+        this.gelarDepanPihakKesatu = gelarDepanPihakKesatu;
+    }
+
+    public String getGelarBelakangPihakKesatu() {
+        return gelarBelakangPihakKesatu;
+    }
+
+    public void setGelarBelakangPihakKesatu(String gelarBelakangPihakKesatu) {
+        this.gelarBelakangPihakKesatu = gelarBelakangPihakKesatu;
     }
 
     public Integer getStatusApprovalPihakKesatu() {
@@ -249,12 +293,44 @@ public class BeritaAcaraWrapper {
         this.unitKerjaPihakKedua = unitKerjaPihakKedua;
     }
 
+    public String getPangkatPihakKedua() {
+        return pangkatPihakKedua;
+    }
+
+    public void setPangkatPihakKedua(String pangkatPihakKedua) {
+        this.pangkatPihakKedua = pangkatPihakKedua;
+    }
+
+    public String getGolonganPihakKedua() {
+        return GolonganPihakKedua;
+    }
+
+    public void setGolonganPihakKedua(String golonganPihakKedua) {
+        GolonganPihakKedua = golonganPihakKedua;
+    }
+
     public String getPeranPihakKedua() {
         return peranPihakKedua;
     }
 
     public void setPeranPihakKedua(String peranPihakKedua) {
         this.peranPihakKedua = peranPihakKedua;
+    }
+
+    public String getGelarDepanPihakKedua() {
+        return gelarDepanPihakKedua;
+    }
+
+    public void setGelarDepanPihakKedua(String gelarDepanPihakKedua) {
+        this.gelarDepanPihakKedua = gelarDepanPihakKedua;
+    }
+
+    public String getGelarBelakangPihakKedua() {
+        return gelarBelakangPihakKedua;
+    }
+
+    public void setGelarBelakangPihakKedua(String gelarBelakangPihakKedua) {
+        this.gelarBelakangPihakKedua = gelarBelakangPihakKedua;
     }
 
     public Integer getStatusApprovalPihakKedua() {
@@ -313,86 +389,6 @@ public class BeritaAcaraWrapper {
         this.unitKerjaMengetahui = unitKerjaMengetahui;
     }
 
-    public String getKotaPembuatanSurat() {
-        return kotaPembuatanSurat;
-    }
-
-    public void setKotaPembuatanSurat(String kotaPembuatanSurat) {
-        this.kotaPembuatanSurat = kotaPembuatanSurat;
-    }
-
-    public Long getTanggalPembuatanMilis() {
-        return tanggalPembuatanMilis;
-    }
-
-    public void setTanggalPembuatanMilis(Long tanggalPembuatanMilis) {
-        this.tanggalPembuatanMilis = tanggalPembuatanMilis;
-    }
-
-    public String getPangkatPihakKesatu() {
-        return pangkatPihakKesatu;
-    }
-
-    public void setPangkatPihakKesatu(String pangkatPihakKesatu) {
-        this.pangkatPihakKesatu = pangkatPihakKesatu;
-    }
-
-    public String getGolonganPihakKesatu() {
-        return GolonganPihakKesatu;
-    }
-
-    public void setGolonganPihakKesatu(String golonganPihakKesatu) {
-        GolonganPihakKesatu = golonganPihakKesatu;
-    }
-
-    public String getGolonganPihakKedua() {
-        return GolonganPihakKedua;
-    }
-
-    public void setGolonganPihakKedua(String golonganPihakKedua) {
-        GolonganPihakKedua = golonganPihakKedua;
-    }
-
-    public String getPangkatPihakKedua() {
-        return pangkatPihakKedua;
-    }
-
-    public void setPangkatPihakKedua(String pangkatPihakKedua) {
-        this.pangkatPihakKedua = pangkatPihakKedua;
-    }
-
-    public String getGelarDepanPihakKesatu() {
-        return gelarDepanPihakKesatu;
-    }
-
-    public void setGelarDepanPihakKesatu(String gelarDepanPihakKesatu) {
-        this.gelarDepanPihakKesatu = gelarDepanPihakKesatu;
-    }
-
-    public String getGelarBelakangPihakKesatu() {
-        return gelarBelakangPihakKesatu;
-    }
-
-    public void setGelarBelakangPihakKesatu(String gelarBelakangPihakKesatu) {
-        this.gelarBelakangPihakKesatu = gelarBelakangPihakKesatu;
-    }
-
-    public String getGelarDepanPihakKedua() {
-        return gelarDepanPihakKedua;
-    }
-
-    public void setGelarDepanPihakKedua(String gelarDepanPihakKedua) {
-        this.gelarDepanPihakKedua = gelarDepanPihakKedua;
-    }
-
-    public String getGelarBelakangPihakKedua() {
-        return gelarBelakangPihakKedua;
-    }
-
-    public void setGelarBelakangPihakKedua(String gelarBelakangPihakKedua) {
-        this.gelarBelakangPihakKedua = gelarBelakangPihakKedua;
-    }
-
     public String getPangkatMengetahui() {
         return pangkatMengetahui;
     }
@@ -415,5 +411,29 @@ public class BeritaAcaraWrapper {
 
     public void setGelarBelakangPihakMengetahui(String gelarBelakangPihakMengetahui) {
         this.gelarBelakangPihakMengetahui = gelarBelakangPihakMengetahui;
+    }
+
+    public String getKotaPembuatanSurat() {
+        return kotaPembuatanSurat;
+    }
+
+    public void setKotaPembuatanSurat(String kotaPembuatanSurat) {
+        this.kotaPembuatanSurat = kotaPembuatanSurat;
+    }
+
+    public Long getTanggalPembuatanMilis() {
+        return tanggalPembuatanMilis;
+    }
+
+    public void setTanggalPembuatanMilis(Long tanggalPembuatanMilis) {
+        this.tanggalPembuatanMilis = tanggalPembuatanMilis;
+    }
+
+    public byte[] getBarcodeImage() {
+        return barcodeImage;
+    }
+
+    public void setBarcodeImage(byte[] barcodeImage) {
+        this.barcodeImage = barcodeImage;
     }
 }

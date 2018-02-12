@@ -30,49 +30,12 @@ public class DokumenSuratInstruksiWrapper {
     private String gelarBelakangPenandantangan;
     private String pangkatPenandatangan;
     private String golonganPenandatangan;
+    private byte[] barcodeImage;
 
     public DokumenSuratInstruksiWrapper() {
     }
-    public DokumenSuratInstruksiWrapper(
-            String kdInstruksi,
-            String judulInstruksi,
-            String nomor,
-            Integer tahun,
-            String tentang,
-            String kdJabatanPenandatangan,
-            String jabatanPenandaTangan,
-            String alasan,
-            List<String> daftarIsiInstruksi,
-            String dikeluarkanDi,
-            String tanggalDibuat,
-            String nipPenandatangan,
-            String namaPenandatangan,
-            List<QutPegawaiWrapper> targetPegawaiList,
-            List<JabatanWrapper> targetJabatanList,
-            boolean suratPejabat,
-            String jabatanSuratPejabat,
-            String unitKerja) {
-        this.kdInstruksi = kdInstruksi;
-        this.judulInstruksi = judulInstruksi;
-        this.nomor = nomor;
-        this.tahun = tahun;
-        this.tentang = tentang;
-        this.kdJabatanPenandatangan = kdJabatanPenandatangan;
-        this.jabatanPenandaTangan = jabatanPenandaTangan;
-        this.alasan = alasan;
-        this.daftarIsiInstruksi = daftarIsiInstruksi;
-        this.dikeluarkanDi = dikeluarkanDi;
-        this.tanggalDibuat = tanggalDibuat;
-        this.nipPenandatangan = nipPenandatangan;
-        this.namaPenandatangan = namaPenandatangan;
-        this.targetPegawaiList = targetPegawaiList;
-        this.targetJabatanList = targetJabatanList;
-        this.suratPejabat = suratPejabat;
-        this.jabatanSuratPejabat = jabatanSuratPejabat;
-        this.unitKerja = unitKerja;
-    }
 
-    public DokumenSuratInstruksiWrapper(String kdInstruksi, String judulInstruksi, String nomor, Integer tahun, String tentang, String kdJabatanPenandatangan, String jabatanPenandaTangan, String alasan, List<String> daftarIsiInstruksi, String dikeluarkanDi, String tanggalDibuat, String nipPenandatangan, String namaPenandatangan, List<QutPegawaiWrapper> targetPegawaiList, List<JabatanWrapper> targetJabatanList, boolean suratPejabat, String jabatanSuratPejabat, String unitKerja, String gelarDepanPenandatangan, String gelarBelakangPenandantangan, String pangkatPenandatangan, String golonganPenandatangan) {
+    public DokumenSuratInstruksiWrapper(String kdInstruksi, String judulInstruksi, String nomor, Integer tahun, String tentang, String kdJabatanPenandatangan, String jabatanPenandaTangan, String alasan, List<String> daftarIsiInstruksi, String dikeluarkanDi, String tanggalDibuat, String nipPenandatangan, String namaPenandatangan, List<QutPegawaiWrapper> targetPegawaiList, List<JabatanWrapper> targetJabatanList, boolean suratPejabat, String jabatanSuratPejabat, String unitKerja, String gelarDepanPenandatangan, String gelarBelakangPenandantangan, String pangkatPenandatangan, String golonganPenandatangan, byte[] barcodeImage) {
         this.kdInstruksi = kdInstruksi;
         this.judulInstruksi = judulInstruksi;
         this.nomor = nomor;
@@ -95,6 +58,7 @@ public class DokumenSuratInstruksiWrapper {
         this.gelarBelakangPenandantangan = gelarBelakangPenandantangan;
         this.pangkatPenandatangan = pangkatPenandatangan;
         this.golonganPenandatangan = golonganPenandatangan;
+        this.barcodeImage = barcodeImage;
     }
 
     public String getKdInstruksi() {
@@ -193,6 +157,22 @@ public class DokumenSuratInstruksiWrapper {
         this.nipPenandatangan = nipPenandatangan;
     }
 
+    public String getNamaPenandatangan() {
+        return namaPenandatangan;
+    }
+
+    public void setNamaPenandatangan(String namaPenandatangan) {
+        this.namaPenandatangan = namaPenandatangan;
+    }
+
+    public List<QutPegawaiWrapper> getTargetPegawaiList() {
+        return targetPegawaiList;
+    }
+
+    public void setTargetPegawaiList(List<QutPegawaiWrapper> targetPegawaiList) {
+        this.targetPegawaiList = targetPegawaiList;
+    }
+
     public List<JabatanWrapper> getTargetJabatanList() {
         return targetJabatanList;
     }
@@ -225,22 +205,6 @@ public class DokumenSuratInstruksiWrapper {
         this.unitKerja = unitKerja;
     }
 
-    public String getNamaPenandatangan() {
-        return namaPenandatangan;
-    }
-
-    public void setNamaPenandatangan(String namaPenandatangan) {
-        this.namaPenandatangan = namaPenandatangan;
-    }
-
-    public List<QutPegawaiWrapper> getTargetPegawaiList() {
-        return targetPegawaiList;
-    }
-
-    public void setTargetPegawaiList(List<QutPegawaiWrapper> targetPegawaiList) {
-        this.targetPegawaiList = targetPegawaiList;
-    }
-
     public String getGelarDepanPenandatangan() {
         return gelarDepanPenandatangan;
     }
@@ -271,5 +235,13 @@ public class DokumenSuratInstruksiWrapper {
 
     public void setGolonganPenandatangan(String golonganPenandatangan) {
         this.golonganPenandatangan = golonganPenandatangan;
+    }
+
+    public byte[] getBarcodeImage() {
+        return barcodeImage;
+    }
+
+    public void setBarcodeImage(byte[] barcodeImage) {
+        this.barcodeImage = barcodeImage;
     }
 }

@@ -17,23 +17,13 @@ public class TelaahanStaffWrapper {
     private Long tanggalPembuatanMilis;
     private CustomPegawaiCredential nipPembuatSurat;
     private String unitKerjaPembuatSurat;
+    private byte[] barcodeImage;
 
 
     public TelaahanStaffWrapper() {
     }
 
-    public TelaahanStaffWrapper(String kdTelaahanStaf,
-                                String tentang,
-                                String persoalan,
-                                String praanggapan,
-                                String faktaYangMemppengaruhi,
-                                String analisis,
-                                String simpulan,
-                                String saran,
-                                CustomPegawaiCredential nipPenandatangan,
-                                Long tanggalPembuatanMilis,
-                                CustomPegawaiCredential nipPembuatSurat,
-                                String unitKerjaPembuatSurat) {
+    public TelaahanStaffWrapper(String kdTelaahanStaf, String tentang, String persoalan, String praanggapan, String faktaYangMemppengaruhi, String analisis, String simpulan, String saran, CustomPegawaiCredential nipPenandatangan, Long tanggalPembuatanMilis, CustomPegawaiCredential nipPembuatSurat, String unitKerjaPembuatSurat, byte[] barcodeImage) {
         this.kdTelaahanStaf = kdTelaahanStaf;
         this.tentang = tentang;
         this.persoalan = persoalan;
@@ -46,6 +36,7 @@ public class TelaahanStaffWrapper {
         this.tanggalPembuatanMilis = tanggalPembuatanMilis;
         this.nipPembuatSurat = nipPembuatSurat;
         this.unitKerjaPembuatSurat = unitKerjaPembuatSurat;
+        this.barcodeImage = barcodeImage;
     }
 
     public String getKdTelaahanStaf() {
@@ -142,5 +133,13 @@ public class TelaahanStaffWrapper {
 
     public void setUnitKerjaPembuatSurat(String unitKerjaPembuatSurat) {
         this.unitKerjaPembuatSurat = unitKerjaPembuatSurat;
+    }
+
+    public byte[] getBarcodeImage() {
+        return barcodeImage;
+    }
+
+    public void setBarcodeImage(byte[] barcodeImage) {
+        this.barcodeImage = barcodeImage;
     }
 }

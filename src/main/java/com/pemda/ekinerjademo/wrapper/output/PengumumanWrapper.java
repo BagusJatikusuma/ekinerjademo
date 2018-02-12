@@ -24,24 +24,12 @@ public class PengumumanWrapper {
 
     private String kotaPembuatanSurat;
     private Long tanggalPembuatanMilis;
+    private byte[] barcodeImage;
 
     public PengumumanWrapper() {
     }
 
-    public PengumumanWrapper(
-            String nomorUrusan,
-            Integer nomorUrut,
-            String nomorPasanganUrut,
-            String nomorUnit,
-            Integer nomorTahun,
-            String tentang,
-            String isiPengumuman,
-            String nipPenandatangan,
-            String namaPenandatangan,
-            String jabatanPenandatangan,
-            String unitKerjaPenandatangan,
-            String gelarDepanPenandatangan, String gelarBelakangPenandatangan, String pangkatPenandatangan, String golonganPenandatangan, String kotaPembuatanSurat,
-            Long tanggalPembuatanMilis) {
+    public PengumumanWrapper(String nomorUrusan, Integer nomorUrut, String nomorPasanganUrut, String nomorUnit, Integer nomorTahun, String tentang, String isiPengumuman, String nipPenandatangan, String namaPenandatangan, String jabatanPenandatangan, String unitKerjaPenandatangan, String gelarDepanPenandatangan, String gelarBelakangPenandatangan, String pangkatPenandatangan, String golonganPenandatangan, String kotaPembuatanSurat, Long tanggalPembuatanMilis, byte[] barcodeImage) {
         this.nomorUrusan = nomorUrusan;
         this.nomorUrut = nomorUrut;
         this.nomorPasanganUrut = nomorPasanganUrut;
@@ -59,6 +47,7 @@ public class PengumumanWrapper {
         this.golonganPenandatangan = golonganPenandatangan;
         this.kotaPembuatanSurat = kotaPembuatanSurat;
         this.tanggalPembuatanMilis = tanggalPembuatanMilis;
+        this.barcodeImage = barcodeImage;
     }
 
     public String getNomorUrusan() {
@@ -149,22 +138,6 @@ public class PengumumanWrapper {
         this.unitKerjaPenandatangan = unitKerjaPenandatangan;
     }
 
-    public String getKotaPembuatanSurat() {
-        return kotaPembuatanSurat;
-    }
-
-    public void setKotaPembuatanSurat(String kotaPembuatanSurat) {
-        this.kotaPembuatanSurat = kotaPembuatanSurat;
-    }
-
-    public Long getTanggalPembuatanMilis() {
-        return tanggalPembuatanMilis;
-    }
-
-    public void setTanggalPembuatanMilis(Long tanggalPembuatanMilis) {
-        this.tanggalPembuatanMilis = tanggalPembuatanMilis;
-    }
-
     public String getGelarDepanPenandatangan() {
         return gelarDepanPenandatangan;
     }
@@ -195,5 +168,29 @@ public class PengumumanWrapper {
 
     public void setGolonganPenandatangan(String golonganPenandatangan) {
         this.golonganPenandatangan = golonganPenandatangan;
+    }
+
+    public String getKotaPembuatanSurat() {
+        return kotaPembuatanSurat;
+    }
+
+    public void setKotaPembuatanSurat(String kotaPembuatanSurat) {
+        this.kotaPembuatanSurat = kotaPembuatanSurat;
+    }
+
+    public Long getTanggalPembuatanMilis() {
+        return tanggalPembuatanMilis;
+    }
+
+    public void setTanggalPembuatanMilis(Long tanggalPembuatanMilis) {
+        this.tanggalPembuatanMilis = tanggalPembuatanMilis;
+    }
+
+    public byte[] getBarcodeImage() {
+        return barcodeImage;
+    }
+
+    public void setBarcodeImage(byte[] barcodeImage) {
+        this.barcodeImage = barcodeImage;
     }
 }

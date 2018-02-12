@@ -30,26 +30,12 @@ public class SuratKeteranganWrapper {
     private Long tanggalPembuatanSuratMilis;
     private List<CustomPegawaiCredential> nipPegawaiKeteranganList;
     private List<CustomPegawaiCredential> targetPegawaiSuratKeteranganList;
+    private byte[] barcodeImage;
 
     public SuratKeteranganWrapper() {
     }
 
-    public SuratKeteranganWrapper(
-            String kdSuratKeterangan,
-            String nomorUrusan,
-            Integer nomorUrut,
-            String nomorPasanganUrut,
-            String nomorUnit,
-            Integer nomorTahun,
-            String nipPenandatangan,
-            String namaPenandatangan,
-            String jabatanPenandatangan,
-            String unitKerjaPenandatangan,
-            String pangkatPenandatangan, String golonganPenandatangan, String gelarDepanPenandatangan, String gelarBelakangPenandatangan, String isiSuratKeterangan,
-            String kotaPembuatanSurat,
-            Long tanggalPembuatanSuratMilis,
-            List<CustomPegawaiCredential> nipPegawaiKeteranganList,
-            List<CustomPegawaiCredential> targetPegawaiSuratKeteranganList) {
+    public SuratKeteranganWrapper(String kdSuratKeterangan, String nomorUrusan, Integer nomorUrut, String nomorPasanganUrut, String nomorUnit, Integer nomorTahun, String nipPenandatangan, String namaPenandatangan, String jabatanPenandatangan, String unitKerjaPenandatangan, String pangkatPenandatangan, String golonganPenandatangan, String gelarDepanPenandatangan, String gelarBelakangPenandatangan, String isiSuratKeterangan, String kotaPembuatanSurat, Long tanggalPembuatanSuratMilis, List<CustomPegawaiCredential> nipPegawaiKeteranganList, List<CustomPegawaiCredential> targetPegawaiSuratKeteranganList, byte[] barcodeImage) {
         this.kdSuratKeterangan = kdSuratKeterangan;
         this.nomorUrusan = nomorUrusan;
         this.nomorUrut = nomorUrut;
@@ -69,6 +55,7 @@ public class SuratKeteranganWrapper {
         this.tanggalPembuatanSuratMilis = tanggalPembuatanSuratMilis;
         this.nipPegawaiKeteranganList = nipPegawaiKeteranganList;
         this.targetPegawaiSuratKeteranganList = targetPegawaiSuratKeteranganList;
+        this.barcodeImage = barcodeImage;
     }
 
     public String getKdSuratKeterangan() {
@@ -151,6 +138,38 @@ public class SuratKeteranganWrapper {
         this.unitKerjaPenandatangan = unitKerjaPenandatangan;
     }
 
+    public String getPangkatPenandatangan() {
+        return pangkatPenandatangan;
+    }
+
+    public void setPangkatPenandatangan(String pangkatPenandatangan) {
+        this.pangkatPenandatangan = pangkatPenandatangan;
+    }
+
+    public String getGolonganPenandatangan() {
+        return golonganPenandatangan;
+    }
+
+    public void setGolonganPenandatangan(String golonganPenandatangan) {
+        this.golonganPenandatangan = golonganPenandatangan;
+    }
+
+    public String getGelarDepanPenandatangan() {
+        return gelarDepanPenandatangan;
+    }
+
+    public void setGelarDepanPenandatangan(String gelarDepanPenandatangan) {
+        this.gelarDepanPenandatangan = gelarDepanPenandatangan;
+    }
+
+    public String getGelarBelakangPenandatangan() {
+        return gelarBelakangPenandatangan;
+    }
+
+    public void setGelarBelakangPenandatangan(String gelarBelakangPenandatangan) {
+        this.gelarBelakangPenandatangan = gelarBelakangPenandatangan;
+    }
+
     public String getIsiSuratKeterangan() {
         return isiSuratKeterangan;
     }
@@ -191,35 +210,11 @@ public class SuratKeteranganWrapper {
         this.targetPegawaiSuratKeteranganList = targetPegawaiSuratKeteranganList;
     }
 
-    public String getGelarDepanPenandatangan() {
-        return gelarDepanPenandatangan;
+    public byte[] getBarcodeImage() {
+        return barcodeImage;
     }
 
-    public void setGelarDepanPenandatangan(String gelarDepanPenandatangan) {
-        this.gelarDepanPenandatangan = gelarDepanPenandatangan;
-    }
-
-    public String getGelarBelakangPenandatangan() {
-        return gelarBelakangPenandatangan;
-    }
-
-    public void setGelarBelakangPenandatangan(String gelarBelakangPenandatangan) {
-        this.gelarBelakangPenandatangan = gelarBelakangPenandatangan;
-    }
-
-    public String getPangkatPenandatangan() {
-        return pangkatPenandatangan;
-    }
-
-    public void setPangkatPenandatangan(String pangkatPenandatangan) {
-        this.pangkatPenandatangan = pangkatPenandatangan;
-    }
-
-    public String getGolonganPenandatangan() {
-        return golonganPenandatangan;
-    }
-
-    public void setGolonganPenandatangan(String golonganPenandatangan) {
-        this.golonganPenandatangan = golonganPenandatangan;
+    public void setBarcodeImage(byte[] barcodeImage) {
+        this.barcodeImage = barcodeImage;
     }
 }

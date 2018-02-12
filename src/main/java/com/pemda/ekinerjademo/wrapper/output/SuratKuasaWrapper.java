@@ -33,27 +33,12 @@ public class SuratKuasaWrapper {
     private String isiKuasa;
     private String kotaPembuatanSurat;
     private Long tanggalPembuatanMilis;
+    private byte[] barcodeImage;
 
     public SuratKuasaWrapper() {
     }
 
-    public SuratKuasaWrapper(
-            String nomorUrusan,
-            Integer nomorUrut,
-            String nomorPasanganUrut,
-            String nomorUnit,
-            Integer nomorTahun,
-            String nipPemberiKuasa,
-            String namaPemberiKuasa,
-            String jabatanPemberiKuasa,
-            String pangkatPemberiKuasa, String golonganPemberiKuasa, String unitKerjaPemberiKuasa,
-            String gelarDepanPemberiKuasa, String gelarBelakangPemberiKuasa, String alamatRumahPemberiKuasa, String nipPenerimaKuasa,
-            String namaPenerimaKuasa,
-            String jabatanPenerimaKuasa,
-            String pangkatPenerimaKuasa, String golonganPenerimaKuasa, String unitKerjaPenerimaKuasa,
-            String gelarDepanPenerimaKuasa, String gelarBelakangPenerimaKuasa, String alamatRumahPenerimaKuasa, String isiKuasa,
-            String kotaPembuatanSurat,
-            Long tanggalPembuatanMilis) {
+    public SuratKuasaWrapper(String nomorUrusan, Integer nomorUrut, String nomorPasanganUrut, String nomorUnit, Integer nomorTahun, String nipPemberiKuasa, String namaPemberiKuasa, String jabatanPemberiKuasa, String pangkatPemberiKuasa, String golonganPemberiKuasa, String unitKerjaPemberiKuasa, String gelarDepanPemberiKuasa, String gelarBelakangPemberiKuasa, String alamatRumahPemberiKuasa, String nipPenerimaKuasa, String namaPenerimaKuasa, String jabatanPenerimaKuasa, String pangkatPenerimaKuasa, String golonganPenerimaKuasa, String unitKerjaPenerimaKuasa, String gelarDepanPenerimaKuasa, String gelarBelakangPenerimaKuasa, String alamatRumahPenerimaKuasa, String isiKuasa, String kotaPembuatanSurat, Long tanggalPembuatanMilis, byte[] barcodeImage) {
         this.nomorUrusan = nomorUrusan;
         this.nomorUrut = nomorUrut;
         this.nomorPasanganUrut = nomorPasanganUrut;
@@ -80,6 +65,7 @@ public class SuratKuasaWrapper {
         this.isiKuasa = isiKuasa;
         this.kotaPembuatanSurat = kotaPembuatanSurat;
         this.tanggalPembuatanMilis = tanggalPembuatanMilis;
+        this.barcodeImage = barcodeImage;
     }
 
     public String getNomorUrusan() {
@@ -146,12 +132,52 @@ public class SuratKuasaWrapper {
         this.jabatanPemberiKuasa = jabatanPemberiKuasa;
     }
 
+    public String getPangkatPemberiKuasa() {
+        return pangkatPemberiKuasa;
+    }
+
+    public void setPangkatPemberiKuasa(String pangkatPemberiKuasa) {
+        this.pangkatPemberiKuasa = pangkatPemberiKuasa;
+    }
+
+    public String getGolonganPemberiKuasa() {
+        return golonganPemberiKuasa;
+    }
+
+    public void setGolonganPemberiKuasa(String golonganPemberiKuasa) {
+        this.golonganPemberiKuasa = golonganPemberiKuasa;
+    }
+
     public String getUnitKerjaPemberiKuasa() {
         return unitKerjaPemberiKuasa;
     }
 
     public void setUnitKerjaPemberiKuasa(String unitKerjaPemberiKuasa) {
         this.unitKerjaPemberiKuasa = unitKerjaPemberiKuasa;
+    }
+
+    public String getGelarDepanPemberiKuasa() {
+        return gelarDepanPemberiKuasa;
+    }
+
+    public void setGelarDepanPemberiKuasa(String gelarDepanPemberiKuasa) {
+        this.gelarDepanPemberiKuasa = gelarDepanPemberiKuasa;
+    }
+
+    public String getGelarBelakangPemberiKuasa() {
+        return gelarBelakangPemberiKuasa;
+    }
+
+    public void setGelarBelakangPemberiKuasa(String gelarBelakangPemberiKuasa) {
+        this.gelarBelakangPemberiKuasa = gelarBelakangPemberiKuasa;
+    }
+
+    public String getAlamatRumahPemberiKuasa() {
+        return alamatRumahPemberiKuasa;
+    }
+
+    public void setAlamatRumahPemberiKuasa(String alamatRumahPemberiKuasa) {
+        this.alamatRumahPemberiKuasa = alamatRumahPemberiKuasa;
     }
 
     public String getNipPenerimaKuasa() {
@@ -178,12 +204,52 @@ public class SuratKuasaWrapper {
         this.jabatanPenerimaKuasa = jabatanPenerimaKuasa;
     }
 
+    public String getPangkatPenerimaKuasa() {
+        return pangkatPenerimaKuasa;
+    }
+
+    public void setPangkatPenerimaKuasa(String pangkatPenerimaKuasa) {
+        this.pangkatPenerimaKuasa = pangkatPenerimaKuasa;
+    }
+
+    public String getGolonganPenerimaKuasa() {
+        return golonganPenerimaKuasa;
+    }
+
+    public void setGolonganPenerimaKuasa(String golonganPenerimaKuasa) {
+        this.golonganPenerimaKuasa = golonganPenerimaKuasa;
+    }
+
     public String getUnitKerjaPenerimaKuasa() {
         return unitKerjaPenerimaKuasa;
     }
 
     public void setUnitKerjaPenerimaKuasa(String unitKerjaPenerimaKuasa) {
         this.unitKerjaPenerimaKuasa = unitKerjaPenerimaKuasa;
+    }
+
+    public String getGelarDepanPenerimaKuasa() {
+        return gelarDepanPenerimaKuasa;
+    }
+
+    public void setGelarDepanPenerimaKuasa(String gelarDepanPenerimaKuasa) {
+        this.gelarDepanPenerimaKuasa = gelarDepanPenerimaKuasa;
+    }
+
+    public String getGelarBelakangPenerimaKuasa() {
+        return gelarBelakangPenerimaKuasa;
+    }
+
+    public void setGelarBelakangPenerimaKuasa(String gelarBelakangPenerimaKuasa) {
+        this.gelarBelakangPenerimaKuasa = gelarBelakangPenerimaKuasa;
+    }
+
+    public String getAlamatRumahPenerimaKuasa() {
+        return alamatRumahPenerimaKuasa;
+    }
+
+    public void setAlamatRumahPenerimaKuasa(String alamatRumahPenerimaKuasa) {
+        this.alamatRumahPenerimaKuasa = alamatRumahPenerimaKuasa;
     }
 
     public String getIsiKuasa() {
@@ -210,83 +276,11 @@ public class SuratKuasaWrapper {
         this.tanggalPembuatanMilis = tanggalPembuatanMilis;
     }
 
-    public String getGelarDepanPemberiKuasa() {
-        return gelarDepanPemberiKuasa;
+    public byte[] getBarcodeImage() {
+        return barcodeImage;
     }
 
-    public void setGelarDepanPemberiKuasa(String gelarDepanPemberiKuasa) {
-        this.gelarDepanPemberiKuasa = gelarDepanPemberiKuasa;
-    }
-
-    public String getGelarBelakangPemberiKuasa() {
-        return gelarBelakangPemberiKuasa;
-    }
-
-    public void setGelarBelakangPemberiKuasa(String gelarBelakangPemberiKuasa) {
-        this.gelarBelakangPemberiKuasa = gelarBelakangPemberiKuasa;
-    }
-
-    public String getGelarDepanPenerimaKuasa() {
-        return gelarDepanPenerimaKuasa;
-    }
-
-    public void setGelarDepanPenerimaKuasa(String gelarDepanPenerimaKuasa) {
-        this.gelarDepanPenerimaKuasa = gelarDepanPenerimaKuasa;
-    }
-
-    public String getGelarBelakangPenerimaKuasa() {
-        return gelarBelakangPenerimaKuasa;
-    }
-
-    public void setGelarBelakangPenerimaKuasa(String gelarBelakangPenerimaKuasa) {
-        this.gelarBelakangPenerimaKuasa = gelarBelakangPenerimaKuasa;
-    }
-
-    public String getAlamatRumahPemberiKuasa() {
-        return alamatRumahPemberiKuasa;
-    }
-
-    public void setAlamatRumahPemberiKuasa(String alamatRumahPemberiKuasa) {
-        this.alamatRumahPemberiKuasa = alamatRumahPemberiKuasa;
-    }
-
-    public String getAlamatRumahPenerimaKuasa() {
-        return alamatRumahPenerimaKuasa;
-    }
-
-    public void setAlamatRumahPenerimaKuasa(String alamatRumahPenerimaKuasa) {
-        this.alamatRumahPenerimaKuasa = alamatRumahPenerimaKuasa;
-    }
-
-    public String getPangkatPemberiKuasa() {
-        return pangkatPemberiKuasa;
-    }
-
-    public void setPangkatPemberiKuasa(String pangkatPemberiKuasa) {
-        this.pangkatPemberiKuasa = pangkatPemberiKuasa;
-    }
-
-    public String getGolonganPemberiKuasa() {
-        return golonganPemberiKuasa;
-    }
-
-    public void setGolonganPemberiKuasa(String golonganPemberiKuasa) {
-        this.golonganPemberiKuasa = golonganPemberiKuasa;
-    }
-
-    public String getPangkatPenerimaKuasa() {
-        return pangkatPenerimaKuasa;
-    }
-
-    public void setPangkatPenerimaKuasa(String pangkatPenerimaKuasa) {
-        this.pangkatPenerimaKuasa = pangkatPenerimaKuasa;
-    }
-
-    public String getGolonganPenerimaKuasa() {
-        return golonganPenerimaKuasa;
-    }
-
-    public void setGolonganPenerimaKuasa(String golonganPenerimaKuasa) {
-        this.golonganPenerimaKuasa = golonganPenerimaKuasa;
+    public void setBarcodeImage(byte[] barcodeImage) {
+        this.barcodeImage = barcodeImage;
     }
 }

@@ -42,11 +42,12 @@ public class SuratTugasWrapper {
     private Set<JabatanWrapper> targetSuratTugasPejabatSet;
 
     private Set<JabatanWrapper> tembusanSuratTugasSet;
+    private byte[] barcodeImage;
 
     public SuratTugasWrapper() {
     }
 
-    public SuratTugasWrapper(String kdSuratTugas, CustomPegawaiCredential nipPenandatangan, Integer nomorUrut, String nomorUrusan, String nomorUnit, Integer nomorTahun, String nomorPasanganUrut, List<String> menimbangList, List<String> dasarList, List<String> untukList, String tempat, Long tanggalTugasMilis, String kdUnitKerja, Set<CustomPegawaiCredential> targetSuratTugasPegawaiSet, Set<JabatanWrapper> targetSuratTugasPejabatSet, Set<JabatanWrapper> tembusanSuratTugasSet) {
+    public SuratTugasWrapper(String kdSuratTugas, CustomPegawaiCredential nipPenandatangan, Integer nomorUrut, String nomorUrusan, String nomorUnit, Integer nomorTahun, String nomorPasanganUrut, List<String> menimbangList, List<String> dasarList, List<String> untukList, String tempat, Long tanggalTugasMilis, String kdUnitKerja, boolean isSuratPejabat, String kdUnitKerjaPenandatangan, String unitKerjaPenandatangan, String kdJabatanPenandatangan, String jabatanPenandatangan, Set<CustomPegawaiCredential> targetSuratTugasPegawaiSet, Set<JabatanWrapper> targetSuratTugasPejabatSet, Set<JabatanWrapper> tembusanSuratTugasSet, byte[] barcodeImage) {
         this.kdSuratTugas = kdSuratTugas;
         this.nipPenandatangan = nipPenandatangan;
         this.nomorUrut = nomorUrut;
@@ -60,9 +61,15 @@ public class SuratTugasWrapper {
         this.tempat = tempat;
         this.tanggalTugasMilis = tanggalTugasMilis;
         this.kdUnitKerja = kdUnitKerja;
+        this.isSuratPejabat = isSuratPejabat;
+        this.kdUnitKerjaPenandatangan = kdUnitKerjaPenandatangan;
+        this.unitKerjaPenandatangan = unitKerjaPenandatangan;
+        this.kdJabatanPenandatangan = kdJabatanPenandatangan;
+        this.jabatanPenandatangan = jabatanPenandatangan;
         this.targetSuratTugasPegawaiSet = targetSuratTugasPegawaiSet;
         this.targetSuratTugasPejabatSet = targetSuratTugasPejabatSet;
         this.tembusanSuratTugasSet = tembusanSuratTugasSet;
+        this.barcodeImage = barcodeImage;
     }
 
     public String getKdSuratTugas() {
@@ -169,30 +176,6 @@ public class SuratTugasWrapper {
         this.kdUnitKerja = kdUnitKerja;
     }
 
-    public Set<CustomPegawaiCredential> getTargetSuratTugasPegawaiSet() {
-        return targetSuratTugasPegawaiSet;
-    }
-
-    public void setTargetSuratTugasPegawaiSet(Set<CustomPegawaiCredential> targetSuratTugasPegawaiSet) {
-        this.targetSuratTugasPegawaiSet = targetSuratTugasPegawaiSet;
-    }
-
-    public Set<JabatanWrapper> getTargetSuratTugasPejabatSet() {
-        return targetSuratTugasPejabatSet;
-    }
-
-    public void setTargetSuratTugasPejabatSet(Set<JabatanWrapper> targetSuratTugasPejabatSet) {
-        this.targetSuratTugasPejabatSet = targetSuratTugasPejabatSet;
-    }
-
-    public Set<JabatanWrapper> getTembusanSuratTugasSet() {
-        return tembusanSuratTugasSet;
-    }
-
-    public void setTembusanSuratTugasSet(Set<JabatanWrapper> tembusanSuratTugasSet) {
-        this.tembusanSuratTugasSet = tembusanSuratTugasSet;
-    }
-
     public boolean isSuratPejabat() {
         return isSuratPejabat;
     }
@@ -231,5 +214,37 @@ public class SuratTugasWrapper {
 
     public void setJabatanPenandatangan(String jabatanPenandatangan) {
         this.jabatanPenandatangan = jabatanPenandatangan;
+    }
+
+    public Set<CustomPegawaiCredential> getTargetSuratTugasPegawaiSet() {
+        return targetSuratTugasPegawaiSet;
+    }
+
+    public void setTargetSuratTugasPegawaiSet(Set<CustomPegawaiCredential> targetSuratTugasPegawaiSet) {
+        this.targetSuratTugasPegawaiSet = targetSuratTugasPegawaiSet;
+    }
+
+    public Set<JabatanWrapper> getTargetSuratTugasPejabatSet() {
+        return targetSuratTugasPejabatSet;
+    }
+
+    public void setTargetSuratTugasPejabatSet(Set<JabatanWrapper> targetSuratTugasPejabatSet) {
+        this.targetSuratTugasPejabatSet = targetSuratTugasPejabatSet;
+    }
+
+    public Set<JabatanWrapper> getTembusanSuratTugasSet() {
+        return tembusanSuratTugasSet;
+    }
+
+    public void setTembusanSuratTugasSet(Set<JabatanWrapper> tembusanSuratTugasSet) {
+        this.tembusanSuratTugasSet = tembusanSuratTugasSet;
+    }
+
+    public byte[] getBarcodeImage() {
+        return barcodeImage;
+    }
+
+    public void setBarcodeImage(byte[] barcodeImage) {
+        this.barcodeImage = barcodeImage;
     }
 }

@@ -31,29 +31,12 @@ public class SuratDinasWrapper {
     private List<JabatanWrapper> tembusanSuratDinasWrapper;
 
     private boolean isSuratPejabat;
+    private byte[] barcodeImage;
 
     public SuratDinasWrapper() {
     }
 
-    public SuratDinasWrapper(
-            String nomorUrusan,
-            Integer nomorUrut,
-            String nomorPasanganUrut,
-            String nomorUnit,
-            Integer nomorTahun,
-            String sifat,
-            Integer lampiran,
-            String hal,
-            String kdJabatanPenerimaSuratDinas,
-            String jabatanPenerimaSuratDinas,
-            Long tanggalPembuatanMilis,
-            String kotaPembuatanSurat,
-            String isiSuratDinas,
-            String nipPenandatangan,
-            String namaPenandatangan,
-            String jabatanPenandatangan,
-            String unitKerjaPenandatangan,
-            String pangkatPenandatangan, String gelarDepanPenandatangan, String gelarBelakangPenandatangan, List<JabatanWrapper> tembusanSuratDinasWrapper, boolean isSuratPejabat) {
+    public SuratDinasWrapper(String nomorUrusan, Integer nomorUrut, String nomorPasanganUrut, String nomorUnit, Integer nomorTahun, String sifat, Integer lampiran, String hal, String kdJabatanPenerimaSuratDinas, String jabatanPenerimaSuratDinas, Long tanggalPembuatanMilis, String kotaPembuatanSurat, String isiSuratDinas, String nipPenandatangan, String namaPenandatangan, String jabatanPenandatangan, String unitKerjaPenandatangan, String pangkatPenandatangan, String gelarDepanPenandatangan, String gelarBelakangPenandatangan, List<JabatanWrapper> tembusanSuratDinasWrapper, boolean isSuratPejabat, byte[] barcodeImage) {
         this.nomorUrusan = nomorUrusan;
         this.nomorUrut = nomorUrut;
         this.nomorPasanganUrut = nomorPasanganUrut;
@@ -76,6 +59,7 @@ public class SuratDinasWrapper {
         this.gelarBelakangPenandatangan = gelarBelakangPenandatangan;
         this.tembusanSuratDinasWrapper = tembusanSuratDinasWrapper;
         this.isSuratPejabat = isSuratPejabat;
+        this.barcodeImage = barcodeImage;
     }
 
     public String getNomorUrusan() {
@@ -214,14 +198,6 @@ public class SuratDinasWrapper {
         this.unitKerjaPenandatangan = unitKerjaPenandatangan;
     }
 
-    public List<JabatanWrapper> getTembusanSuratDinasWrapper() {
-        return tembusanSuratDinasWrapper;
-    }
-
-    public void setTembusanSuratDinasWrapper(List<JabatanWrapper> tembusanSuratDinasWrapper) {
-        this.tembusanSuratDinasWrapper = tembusanSuratDinasWrapper;
-    }
-
     public String getPangkatPenandatangan() {
         return pangkatPenandatangan;
     }
@@ -246,11 +222,27 @@ public class SuratDinasWrapper {
         this.gelarBelakangPenandatangan = gelarBelakangPenandatangan;
     }
 
+    public List<JabatanWrapper> getTembusanSuratDinasWrapper() {
+        return tembusanSuratDinasWrapper;
+    }
+
+    public void setTembusanSuratDinasWrapper(List<JabatanWrapper> tembusanSuratDinasWrapper) {
+        this.tembusanSuratDinasWrapper = tembusanSuratDinasWrapper;
+    }
+
     public boolean isSuratPejabat() {
         return isSuratPejabat;
     }
 
     public void setSuratPejabat(boolean suratPejabat) {
         isSuratPejabat = suratPejabat;
+    }
+
+    public byte[] getBarcodeImage() {
+        return barcodeImage;
+    }
+
+    public void setBarcodeImage(byte[] barcodeImage) {
+        this.barcodeImage = barcodeImage;
     }
 }

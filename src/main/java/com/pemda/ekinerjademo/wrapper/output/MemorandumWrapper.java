@@ -55,36 +55,55 @@ public class MemorandumWrapper {
     private String golonganPenandatangan;
     private List<JabatanWrapper> tembusanMemorandumList;
     private boolean isSuratPejabat;
+    private byte[] barcodeImage;
 
     public MemorandumWrapper() {
     }
 
-    public MemorandumWrapper(
-            String kdMemorandum,
-            String nomorUrusan,
-            Integer nomorUrut,
-            String nomorPasanganUrut,
-            String nomorUnit,
-            Integer nomorTahun,
-            String nipPenerimaMemorandum,
-            String namaPenerimaMemorandum,
-            String jabatanPenerimaMemorandum,
-            String unitKerjaPenerimaMemorandum,
-            String gelarDepanPenerimaMemorandum, String gelarBelakangPenerimaMemorandum, String pangkatPenerimaMemorandum, String golonganPenerimaMemorandum, String nipPemberiMemorandum,
-            String namaPemberiMemorandum,
-            String jabatanPemberiMemorandum,
-            String unitKerjaPemberiMemorandum,
-            String gelarDepanPemberiMemorandum, String gelarBelakangPemberiMemorandum, String pangkatPemberiMemorandum, String golonganPemberiMemorandum, String hal,
-            Long tanggalPembuatanMilis,
-            String isiMemorandum,
-            String nipPembuatSurat,
-            String namaPembuatSurat,
-            String jabatanPembuatSurat,
-            String unitKerjaPembuatSurat,
-            String gelarDepanPembuatSurat, String gelarBelakangPembuatSurat, String pangkatPembuatSurat, String golonganPembuatSurat, String nipPenandatangan,
-            String namaPenandatangan,
-            String jabatanPenandatangan,
-            String unitKerjaPenandatangan, String gelarDepanPenandatangan, String gelarBelakangPenandatangan, String pangkatPenandatangan, String golonganPenandatangan, List<JabatanWrapper> tembusanMemorandumList, boolean isSuratPejabat) {
+    public MemorandumWrapper(String kdMemorandum,
+                             String nomorUrusan,
+                             Integer nomorUrut,
+                             String nomorPasanganUrut,
+                             String nomorUnit,
+                             Integer nomorTahun,
+                             String nipPenerimaMemorandum,
+                             String namaPenerimaMemorandum,
+                             String jabatanPenerimaMemorandum,
+                             String unitKerjaPenerimaMemorandum,
+                             String gelarDepanPenerimaMemorandum,
+                             String gelarBelakangPenerimaMemorandum,
+                             String pangkatPenerimaMemorandum,
+                             String golonganPenerimaMemorandum,
+                             String nipPemberiMemorandum,
+                             String namaPemberiMemorandum,
+                             String jabatanPemberiMemorandum,
+                             String unitKerjaPemberiMemorandum,
+                             String gelarDepanPemberiMemorandum,
+                             String gelarBelakangPemberiMemorandum,
+                             String pangkatPemberiMemorandum,
+                             String golonganPemberiMemorandum,
+                             String hal,
+                             Long tanggalPembuatanMilis,
+                             String isiMemorandum,
+                             String nipPembuatSurat,
+                             String namaPembuatSurat,
+                             String jabatanPembuatSurat,
+                             String unitKerjaPembuatSurat,
+                             String gelarDepanPembuatSurat,
+                             String gelarBelakangPembuatSurat,
+                             String pangkatPembuatSurat,
+                             String golonganPembuatSurat,
+                             String nipPenandatangan,
+                             String namaPenandatangan,
+                             String jabatanPenandatangan,
+                             String unitKerjaPenandatangan,
+                             String gelarDepanPenandatangan,
+                             String gelarBelakangPenandatangan,
+                             String pangkatPenandatangan,
+                             String golonganPenandatangan,
+                             List<JabatanWrapper> tembusanMemorandumList,
+                             boolean isSuratPejabat,
+                             byte[] barcodeImage) {
         this.kdMemorandum = kdMemorandum;
         this.nomorUrusan = nomorUrusan;
         this.nomorUrut = nomorUrut;
@@ -128,6 +147,7 @@ public class MemorandumWrapper {
         this.golonganPenandatangan = golonganPenandatangan;
         this.tembusanMemorandumList = tembusanMemorandumList;
         this.isSuratPejabat = isSuratPejabat;
+        this.barcodeImage = barcodeImage;
     }
 
     public String getKdMemorandum() {
@@ -210,6 +230,38 @@ public class MemorandumWrapper {
         this.unitKerjaPenerimaMemorandum = unitKerjaPenerimaMemorandum;
     }
 
+    public String getGelarDepanPenerimaMemorandum() {
+        return gelarDepanPenerimaMemorandum;
+    }
+
+    public void setGelarDepanPenerimaMemorandum(String gelarDepanPenerimaMemorandum) {
+        this.gelarDepanPenerimaMemorandum = gelarDepanPenerimaMemorandum;
+    }
+
+    public String getGelarBelakangPenerimaMemorandum() {
+        return gelarBelakangPenerimaMemorandum;
+    }
+
+    public void setGelarBelakangPenerimaMemorandum(String gelarBelakangPenerimaMemorandum) {
+        this.gelarBelakangPenerimaMemorandum = gelarBelakangPenerimaMemorandum;
+    }
+
+    public String getPangkatPenerimaMemorandum() {
+        return pangkatPenerimaMemorandum;
+    }
+
+    public void setPangkatPenerimaMemorandum(String pangkatPenerimaMemorandum) {
+        this.pangkatPenerimaMemorandum = pangkatPenerimaMemorandum;
+    }
+
+    public String getGolonganPenerimaMemorandum() {
+        return golonganPenerimaMemorandum;
+    }
+
+    public void setGolonganPenerimaMemorandum(String golonganPenerimaMemorandum) {
+        this.golonganPenerimaMemorandum = golonganPenerimaMemorandum;
+    }
+
     public String getNipPemberiMemorandum() {
         return nipPemberiMemorandum;
     }
@@ -240,6 +292,38 @@ public class MemorandumWrapper {
 
     public void setUnitKerjaPemberiMemorandum(String unitKerjaPemberiMemorandum) {
         this.unitKerjaPemberiMemorandum = unitKerjaPemberiMemorandum;
+    }
+
+    public String getGelarDepanPemberiMemorandum() {
+        return gelarDepanPemberiMemorandum;
+    }
+
+    public void setGelarDepanPemberiMemorandum(String gelarDepanPemberiMemorandum) {
+        this.gelarDepanPemberiMemorandum = gelarDepanPemberiMemorandum;
+    }
+
+    public String getGelarBelakangPemberiMemorandum() {
+        return gelarBelakangPemberiMemorandum;
+    }
+
+    public void setGelarBelakangPemberiMemorandum(String gelarBelakangPemberiMemorandum) {
+        this.gelarBelakangPemberiMemorandum = gelarBelakangPemberiMemorandum;
+    }
+
+    public String getPangkatPemberiMemorandum() {
+        return pangkatPemberiMemorandum;
+    }
+
+    public void setPangkatPemberiMemorandum(String pangkatPemberiMemorandum) {
+        this.pangkatPemberiMemorandum = pangkatPemberiMemorandum;
+    }
+
+    public String getGolonganPemberiMemorandum() {
+        return golonganPemberiMemorandum;
+    }
+
+    public void setGolonganPemberiMemorandum(String golonganPemberiMemorandum) {
+        this.golonganPemberiMemorandum = golonganPemberiMemorandum;
     }
 
     public String getHal() {
@@ -298,110 +382,6 @@ public class MemorandumWrapper {
         this.unitKerjaPembuatSurat = unitKerjaPembuatSurat;
     }
 
-    public String getNipPenandatangan() {
-        return nipPenandatangan;
-    }
-
-    public void setNipPenandatangan(String nipPenandatangan) {
-        this.nipPenandatangan = nipPenandatangan;
-    }
-
-    public String getNamaPenandatangan() {
-        return namaPenandatangan;
-    }
-
-    public void setNamaPenandatangan(String namaPenandatangan) {
-        this.namaPenandatangan = namaPenandatangan;
-    }
-
-    public String getJabatanPenandatangan() {
-        return jabatanPenandatangan;
-    }
-
-    public void setJabatanPenandatangan(String jabatanPenandatangan) {
-        this.jabatanPenandatangan = jabatanPenandatangan;
-    }
-
-    public String getUnitKerjaPenandatangan() {
-        return unitKerjaPenandatangan;
-    }
-
-    public void setUnitKerjaPenandatangan(String unitKerjaPenandatangan) {
-        this.unitKerjaPenandatangan = unitKerjaPenandatangan;
-    }
-
-    public List<JabatanWrapper> getTembusanMemorandumList() {
-        return tembusanMemorandumList;
-    }
-
-    public void setTembusanMemorandumList(List<JabatanWrapper> tembusanMemorandumList) {
-        this.tembusanMemorandumList = tembusanMemorandumList;
-    }
-
-    public String getGelarDepanPenerimaMemorandum() {
-        return gelarDepanPenerimaMemorandum;
-    }
-
-    public void setGelarDepanPenerimaMemorandum(String gelarDepanPenerimaMemorandum) {
-        this.gelarDepanPenerimaMemorandum = gelarDepanPenerimaMemorandum;
-    }
-
-    public String getGelarBelakangPenerimaMemorandum() {
-        return gelarBelakangPenerimaMemorandum;
-    }
-
-    public void setGelarBelakangPenerimaMemorandum(String gelarBelakangPenerimaMemorandum) {
-        this.gelarBelakangPenerimaMemorandum = gelarBelakangPenerimaMemorandum;
-    }
-
-    public String getPangkatPenerimaMemorandum() {
-        return pangkatPenerimaMemorandum;
-    }
-
-    public void setPangkatPenerimaMemorandum(String pangkatPenerimaMemorandum) {
-        this.pangkatPenerimaMemorandum = pangkatPenerimaMemorandum;
-    }
-
-    public String getGolonganPenerimaMemorandum() {
-        return golonganPenerimaMemorandum;
-    }
-
-    public void setGolonganPenerimaMemorandum(String golonganPenerimaMemorandum) {
-        this.golonganPenerimaMemorandum = golonganPenerimaMemorandum;
-    }
-
-    public String getGelarDepanPemberiMemorandum() {
-        return gelarDepanPemberiMemorandum;
-    }
-
-    public void setGelarDepanPemberiMemorandum(String gelarDepanPemberiMemorandum) {
-        this.gelarDepanPemberiMemorandum = gelarDepanPemberiMemorandum;
-    }
-
-    public String getGelarBelakangPemberiMemorandum() {
-        return gelarBelakangPemberiMemorandum;
-    }
-
-    public void setGelarBelakangPemberiMemorandum(String gelarBelakangPemberiMemorandum) {
-        this.gelarBelakangPemberiMemorandum = gelarBelakangPemberiMemorandum;
-    }
-
-    public String getPangkatPemberiMemorandum() {
-        return pangkatPemberiMemorandum;
-    }
-
-    public void setPangkatPemberiMemorandum(String pangkatPemberiMemorandum) {
-        this.pangkatPemberiMemorandum = pangkatPemberiMemorandum;
-    }
-
-    public String getGolonganPemberiMemorandum() {
-        return golonganPemberiMemorandum;
-    }
-
-    public void setGolonganPemberiMemorandum(String golonganPemberiMemorandum) {
-        this.golonganPemberiMemorandum = golonganPemberiMemorandum;
-    }
-
     public String getGelarDepanPembuatSurat() {
         return gelarDepanPembuatSurat;
     }
@@ -432,6 +412,38 @@ public class MemorandumWrapper {
 
     public void setGolonganPembuatSurat(String golonganPembuatSurat) {
         this.golonganPembuatSurat = golonganPembuatSurat;
+    }
+
+    public String getNipPenandatangan() {
+        return nipPenandatangan;
+    }
+
+    public void setNipPenandatangan(String nipPenandatangan) {
+        this.nipPenandatangan = nipPenandatangan;
+    }
+
+    public String getNamaPenandatangan() {
+        return namaPenandatangan;
+    }
+
+    public void setNamaPenandatangan(String namaPenandatangan) {
+        this.namaPenandatangan = namaPenandatangan;
+    }
+
+    public String getJabatanPenandatangan() {
+        return jabatanPenandatangan;
+    }
+
+    public void setJabatanPenandatangan(String jabatanPenandatangan) {
+        this.jabatanPenandatangan = jabatanPenandatangan;
+    }
+
+    public String getUnitKerjaPenandatangan() {
+        return unitKerjaPenandatangan;
+    }
+
+    public void setUnitKerjaPenandatangan(String unitKerjaPenandatangan) {
+        this.unitKerjaPenandatangan = unitKerjaPenandatangan;
     }
 
     public String getGelarDepanPenandatangan() {
@@ -466,11 +478,27 @@ public class MemorandumWrapper {
         this.golonganPenandatangan = golonganPenandatangan;
     }
 
+    public List<JabatanWrapper> getTembusanMemorandumList() {
+        return tembusanMemorandumList;
+    }
+
+    public void setTembusanMemorandumList(List<JabatanWrapper> tembusanMemorandumList) {
+        this.tembusanMemorandumList = tembusanMemorandumList;
+    }
+
     public boolean isSuratPejabat() {
         return isSuratPejabat;
     }
 
     public void setSuratPejabat(boolean suratPejabat) {
         isSuratPejabat = suratPejabat;
+    }
+
+    public byte[] getBarcodeImage() {
+        return barcodeImage;
+    }
+
+    public void setBarcodeImage(byte[] barcodeImage) {
+        this.barcodeImage = barcodeImage;
     }
 }

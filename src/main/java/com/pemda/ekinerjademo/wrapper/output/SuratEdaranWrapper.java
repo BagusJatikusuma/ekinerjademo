@@ -28,25 +28,12 @@ public class SuratEdaranWrapper {
     private String golonganPenandatangan;
 
     private boolean isSuratPejabat;
+    private byte[] barcodeImage;
 
     public SuratEdaranWrapper() {
     }
 
-    public SuratEdaranWrapper(String kdSuratEdaran,
-                              Integer nomorUrut,
-                              Integer nomorTahun,
-                              String tentang,
-                              String latarBelakang,
-                              String maksudDanTujuan,
-                              String ruangLingkup,
-                              String dasar,
-                              List<SuratEdaranSubWrapper> subLain,
-                              Long tanggalPembuatanMilis,
-                              String kotaPembuatanSurat,
-                              String nipPenandatangan,
-                              String namaPenandatangan,
-                              String jabatanPenandatangan,
-                              String unitKerjaPenandatangan, String gelarDepanPenandatangan, String gelarBelakangPenandatangan, String pangkatPenandatangan, String golonganPenandatangan, boolean isSuratPejabat) {
+    public SuratEdaranWrapper(String kdSuratEdaran, Integer nomorUrut, Integer nomorTahun, String tentang, String latarBelakang, String maksudDanTujuan, String ruangLingkup, String dasar, List<SuratEdaranSubWrapper> subLain, Long tanggalPembuatanMilis, String kotaPembuatanSurat, String nipPenandatangan, String namaPenandatangan, String jabatanPenandatangan, String unitKerjaPenandatangan, String gelarDepanPenandatangan, String gelarBelakangPenandatangan, String pangkatPenandatangan, String golonganPenandatangan, boolean isSuratPejabat, byte[] barcodeImage) {
         this.kdSuratEdaran = kdSuratEdaran;
         this.nomorUrut = nomorUrut;
         this.nomorTahun = nomorTahun;
@@ -67,6 +54,15 @@ public class SuratEdaranWrapper {
         this.pangkatPenandatangan = pangkatPenandatangan;
         this.golonganPenandatangan = golonganPenandatangan;
         this.isSuratPejabat = isSuratPejabat;
+        this.barcodeImage = barcodeImage;
+    }
+
+    public String getKdSuratEdaran() {
+        return kdSuratEdaran;
+    }
+
+    public void setKdSuratEdaran(String kdSuratEdaran) {
+        this.kdSuratEdaran = kdSuratEdaran;
     }
 
     public Integer getNomorUrut() {
@@ -181,22 +177,6 @@ public class SuratEdaranWrapper {
         this.unitKerjaPenandatangan = unitKerjaPenandatangan;
     }
 
-    public String getKdSuratEdaran() {
-        return kdSuratEdaran;
-    }
-
-    public void setKdSuratEdaran(String kdSuratEdaran) {
-        this.kdSuratEdaran = kdSuratEdaran;
-    }
-
-    public boolean isSuratPejabat() {
-        return isSuratPejabat;
-    }
-
-    public void setSuratPejabat(boolean suratPejabat) {
-        isSuratPejabat = suratPejabat;
-    }
-
     public String getGelarDepanPenandatangan() {
         return gelarDepanPenandatangan;
     }
@@ -227,5 +207,21 @@ public class SuratEdaranWrapper {
 
     public void setGolonganPenandatangan(String golonganPenandatangan) {
         this.golonganPenandatangan = golonganPenandatangan;
+    }
+
+    public boolean isSuratPejabat() {
+        return isSuratPejabat;
+    }
+
+    public void setSuratPejabat(boolean suratPejabat) {
+        isSuratPejabat = suratPejabat;
+    }
+
+    public byte[] getBarcodeImage() {
+        return barcodeImage;
+    }
+
+    public void setBarcodeImage(byte[] barcodeImage) {
+        this.barcodeImage = barcodeImage;
     }
 }

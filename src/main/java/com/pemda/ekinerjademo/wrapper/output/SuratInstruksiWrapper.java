@@ -14,9 +14,11 @@ public class SuratInstruksiWrapper {
     private String namaPengirim;
     private Integer statusBaca;
     private String path;
+    private byte[] barcodeImage;
 
     public SuratInstruksiWrapper() {
     }
+
     public SuratInstruksiWrapper(
             String kdInstruksi,
             String judulInstruksi,
@@ -100,6 +102,20 @@ public class SuratInstruksiWrapper {
         this.path = path;
     }
 
+    public SuratInstruksiWrapper(String kdInstruksi, String judulInstruksi, String tanggalDibuat, Long tanggalDibuatMilis, boolean suratPejabat, Integer statusbaca, String nipPengirim, String namaPengirim, Integer statusBaca, String path, byte[] barcodeImage) {
+        this.kdInstruksi = kdInstruksi;
+        this.judulInstruksi = judulInstruksi;
+        this.tanggalDibuat = tanggalDibuat;
+        this.tanggalDibuatMilis = tanggalDibuatMilis;
+        this.suratPejabat = suratPejabat;
+        this.statusbaca = statusbaca;
+        this.nipPengirim = nipPengirim;
+        this.namaPengirim = namaPengirim;
+        this.statusBaca = statusBaca;
+        this.path = path;
+        this.barcodeImage = barcodeImage;
+    }
+
     public String getKdInstruksi() {
         return kdInstruksi;
     }
@@ -124,6 +140,14 @@ public class SuratInstruksiWrapper {
         this.tanggalDibuat = tanggalDibuat;
     }
 
+    public Long getTanggalDibuatMilis() {
+        return tanggalDibuatMilis;
+    }
+
+    public void setTanggalDibuatMilis(Long tanggalDibuatMilis) {
+        this.tanggalDibuatMilis = tanggalDibuatMilis;
+    }
+
     public boolean isSuratPejabat() {
         return suratPejabat;
     }
@@ -138,14 +162,6 @@ public class SuratInstruksiWrapper {
 
     public void setStatusbaca(Integer statusbaca) {
         this.statusbaca = statusbaca;
-    }
-
-    public Long getTanggalDibuatMilis() {
-        return tanggalDibuatMilis;
-    }
-
-    public void setTanggalDibuatMilis(Long tanggalDibuatMilis) {
-        this.tanggalDibuatMilis = tanggalDibuatMilis;
     }
 
     public String getNipPengirim() {
@@ -178,5 +194,13 @@ public class SuratInstruksiWrapper {
 
     public void setPath(String path) {
         this.path = path;
+    }
+
+    public byte[] getBarcodeImage() {
+        return barcodeImage;
+    }
+
+    public void setBarcodeImage(byte[] barcodeImage) {
+        this.barcodeImage = barcodeImage;
     }
 }

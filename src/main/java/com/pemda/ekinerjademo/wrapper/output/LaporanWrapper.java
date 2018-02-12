@@ -37,32 +37,42 @@ public class LaporanWrapper {
     private String gelarBelakangPembuatSurat;
     private String pangkatPembuatSurat;
     private String golonganPembuatSurat;
+    private byte[] barcodeImage;
 
-    public LaporanWrapper() {
+
+    public LaporanWrapper(){
     }
 
-    public LaporanWrapper(
-            String kdLaporan,
-            String tentang,
-            String umum,
-            String maksudDanTujuan,
-            String ruangLingkup,
-            String dasar,
-            String kegiatanYangDilaksanakan,
-            String hasilYangDicapai,
-            String simpulanDanSaran,
-            String penutup,
-            String nipPenandatangan,
-            String namaPenandatangan,
-            String jabatanPenandatangan,
-            String unitKerjaPenandatangan,
-            String gelarDepanPenandantangan, String gelarBelakangPenandatangan, String pangkatPenandantangan, String golonganPenandatangan, Integer statusBaca,
-            String kotaPembuatanSurat,
-            Long tanggalPembuatanMilis,
-            String nipPembuatSurat,
-            String namaPembuatSurat,
-            String jabatanPembuatSurat,
-            String unitKerjaPembuatSurat, String gelarDepanPembuatSurat, String gelarBelakangPembuatSurat, String pangkatPembuatSurat, String golonganPembuatSurat) {
+    public LaporanWrapper(String kdLaporan,
+                          String tentang,
+                          String umum,
+                          String maksudDanTujuan,
+                          String ruangLingkup,
+                          String dasar,
+                          String kegiatanYangDilaksanakan,
+                          String hasilYangDicapai,
+                          String simpulanDanSaran,
+                          String penutup,
+                          String nipPenandatangan,
+                          String namaPenandatangan,
+                          String jabatanPenandatangan,
+                          String unitKerjaPenandatangan,
+                          String gelarDepanPenandantangan,
+                          String gelarBelakangPenandatangan,
+                          String pangkatPenandantangan,
+                          String golonganPenandatangan,
+                          Integer statusBaca,
+                          String kotaPembuatanSurat,
+                          Long tanggalPembuatanMilis,
+                          String nipPembuatSurat,
+                          String namaPembuatSurat,
+                          String jabatanPembuatSurat,
+                          String unitKerjaPembuatSurat,
+                          String gelarDepanPembuatSurat,
+                          String gelarBelakangPembuatSurat,
+                          String pangkatPembuatSurat,
+                          String golonganPembuatSurat,
+                          byte[] barcodeImage) {
         this.kdLaporan = kdLaporan;
         this.tentang = tentang;
         this.umum = umum;
@@ -92,6 +102,7 @@ public class LaporanWrapper {
         this.gelarBelakangPembuatSurat = gelarBelakangPembuatSurat;
         this.pangkatPembuatSurat = pangkatPembuatSurat;
         this.golonganPembuatSurat = golonganPembuatSurat;
+        this.barcodeImage = barcodeImage;
     }
 
     public String getKdLaporan() {
@@ -206,6 +217,38 @@ public class LaporanWrapper {
         this.unitKerjaPenandatangan = unitKerjaPenandatangan;
     }
 
+    public String getGelarDepanPenandantangan() {
+        return gelarDepanPenandantangan;
+    }
+
+    public void setGelarDepanPenandantangan(String gelarDepanPenandantangan) {
+        this.gelarDepanPenandantangan = gelarDepanPenandantangan;
+    }
+
+    public String getGelarBelakangPenandatangan() {
+        return gelarBelakangPenandatangan;
+    }
+
+    public void setGelarBelakangPenandatangan(String gelarBelakangPenandatangan) {
+        this.gelarBelakangPenandatangan = gelarBelakangPenandatangan;
+    }
+
+    public String getPangkatPenandantangan() {
+        return pangkatPenandantangan;
+    }
+
+    public void setPangkatPenandantangan(String pangkatPenandantangan) {
+        this.pangkatPenandantangan = pangkatPenandantangan;
+    }
+
+    public String getGolonganPenandatangan() {
+        return golonganPenandatangan;
+    }
+
+    public void setGolonganPenandatangan(String golonganPenandatangan) {
+        this.golonganPenandatangan = golonganPenandatangan;
+    }
+
     public Integer getStatusBaca() {
         return statusBaca;
     }
@@ -262,38 +305,6 @@ public class LaporanWrapper {
         this.unitKerjaPembuatSurat = unitKerjaPembuatSurat;
     }
 
-    public String getGelarDepanPenandantangan() {
-        return gelarDepanPenandantangan;
-    }
-
-    public void setGelarDepanPenandantangan(String gelarDepanPenandantangan) {
-        this.gelarDepanPenandantangan = gelarDepanPenandantangan;
-    }
-
-    public String getGelarBelakangPenandatangan() {
-        return gelarBelakangPenandatangan;
-    }
-
-    public void setGelarBelakangPenandatangan(String gelarBelakangPenandatangan) {
-        this.gelarBelakangPenandatangan = gelarBelakangPenandatangan;
-    }
-
-    public String getPangkatPenandantangan() {
-        return pangkatPenandantangan;
-    }
-
-    public void setPangkatPenandantangan(String pangkatPenandantangan) {
-        this.pangkatPenandantangan = pangkatPenandantangan;
-    }
-
-    public String getGolonganPenandatangan() {
-        return golonganPenandatangan;
-    }
-
-    public void setGolonganPenandatangan(String golonganPenandatangan) {
-        this.golonganPenandatangan = golonganPenandatangan;
-    }
-
     public String getGelarDepanPembuatSurat() {
         return gelarDepanPembuatSurat;
     }
@@ -324,5 +335,13 @@ public class LaporanWrapper {
 
     public void setGolonganPembuatSurat(String golonganPembuatSurat) {
         this.golonganPembuatSurat = golonganPembuatSurat;
+    }
+
+    public byte[] getBarcodeImage() {
+        return barcodeImage;
+    }
+
+    public void setBarcodeImage(byte[] barcodeImage) {
+        this.barcodeImage = barcodeImage;
     }
 }

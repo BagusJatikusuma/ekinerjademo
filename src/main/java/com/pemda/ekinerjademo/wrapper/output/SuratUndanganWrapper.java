@@ -50,38 +50,12 @@ public class SuratUndanganWrapper {
     private List<JabatanWrapper> tembusanSuratUndanganList;
 
     private boolean isSuratPejabat;
+    private byte[] barcodeImage;
 
     public SuratUndanganWrapper() {
     }
-    public SuratUndanganWrapper(
-            String kdSuratUndangan,
-            String nomorUrusan,
-            Integer nomorUrut,
-            String nomorPasanganUrut,
-            String nomorUnit,
-            Integer nomorTahun,
-            String kdJabatanPenerimaSuratUndangan,
-            String jabatanPenerimaSuratUndangan,
-            Long tanggalPembuatanSurat,
-            String kotaPembuatanSurat,
-            String sifat,
-            String lampiran,
-            String hal,
-            String nipPenerimaSuratUndangan,
-            String namaPenerimaSuratUndangan,
-            String unitKerjaPenerimaSuratUndangan,
-            String gelarDepanPenerimaSuratUndangan, String gelarBelakangPenerimaSuratUndangan, String pangkatPenerimaSuratUndangan, String golonganPenerimaSuratUndangan, String bagianPembukaSuratUndangan,
-            String bagianIsiHariSuratUndangan,
-            Long bagianIsiTanggalSuratUndangan,
-            String bagianIsiWaktuSuratUndangan,
-            String bagianIsiTempatSuratUndangan,
-            String bagianIsiAcaraSuratUndangan,
-            String bagianPenutupSuratUndangan,
-            String nipPenandatangan,
-            String namaPenandatangan,
-            String unitKerjaPenandatangan,
-            String jabatanPenandatangan, String gelarDepanPenandatangan, String gelarBelakangPenandatangan, String pangkatPenandatangan, String golonganPenandatangan, List<JabatanWrapper> tembusanSuratUndanganList,
-            boolean isSuratPejabat) {
+
+    public SuratUndanganWrapper(String kdSuratUndangan, String nomorUrusan, Integer nomorUrut, String nomorPasanganUrut, String nomorUnit, Integer nomorTahun, String kdJabatanPenerimaSuratUndangan, String jabatanPenerimaSuratUndangan, Long tanggalPembuatanSurat, String kotaPembuatanSurat, String sifat, String lampiran, String hal, String nipPenerimaSuratUndangan, String namaPenerimaSuratUndangan, String unitKerjaPenerimaSuratUndangan, String gelarDepanPenerimaSuratUndangan, String gelarBelakangPenerimaSuratUndangan, String pangkatPenerimaSuratUndangan, String golonganPenerimaSuratUndangan, String bagianPembukaSuratUndangan, String bagianIsiHariSuratUndangan, Long bagianIsiTanggalSuratUndangan, String bagianIsiWaktuSuratUndangan, String bagianIsiTempatSuratUndangan, String bagianIsiAcaraSuratUndangan, String bagianPenutupSuratUndangan, String nipPenandatangan, String namaPenandatangan, String unitKerjaPenandatangan, String jabatanPenandatangan, String gelarDepanPenandatangan, String gelarBelakangPenandatangan, String pangkatPenandatangan, String golonganPenandatangan, List<JabatanWrapper> tembusanSuratUndanganList, boolean isSuratPejabat, byte[] barcodeImage) {
         this.kdSuratUndangan = kdSuratUndangan;
         this.nomorUrusan = nomorUrusan;
         this.nomorUrut = nomorUrut;
@@ -119,6 +93,7 @@ public class SuratUndanganWrapper {
         this.golonganPenandatangan = golonganPenandatangan;
         this.tembusanSuratUndanganList = tembusanSuratUndanganList;
         this.isSuratPejabat = isSuratPejabat;
+        this.barcodeImage = barcodeImage;
     }
 
     public String getKdSuratUndangan() {
@@ -249,6 +224,38 @@ public class SuratUndanganWrapper {
         this.unitKerjaPenerimaSuratUndangan = unitKerjaPenerimaSuratUndangan;
     }
 
+    public String getGelarDepanPenerimaSuratUndangan() {
+        return gelarDepanPenerimaSuratUndangan;
+    }
+
+    public void setGelarDepanPenerimaSuratUndangan(String gelarDepanPenerimaSuratUndangan) {
+        this.gelarDepanPenerimaSuratUndangan = gelarDepanPenerimaSuratUndangan;
+    }
+
+    public String getGelarBelakangPenerimaSuratUndangan() {
+        return gelarBelakangPenerimaSuratUndangan;
+    }
+
+    public void setGelarBelakangPenerimaSuratUndangan(String gelarBelakangPenerimaSuratUndangan) {
+        this.gelarBelakangPenerimaSuratUndangan = gelarBelakangPenerimaSuratUndangan;
+    }
+
+    public String getPangkatPenerimaSuratUndangan() {
+        return pangkatPenerimaSuratUndangan;
+    }
+
+    public void setPangkatPenerimaSuratUndangan(String pangkatPenerimaSuratUndangan) {
+        this.pangkatPenerimaSuratUndangan = pangkatPenerimaSuratUndangan;
+    }
+
+    public String getGolonganPenerimaSuratUndangan() {
+        return golonganPenerimaSuratUndangan;
+    }
+
+    public void setGolonganPenerimaSuratUndangan(String golonganPenerimaSuratUndangan) {
+        this.golonganPenerimaSuratUndangan = golonganPenerimaSuratUndangan;
+    }
+
     public String getBagianPembukaSuratUndangan() {
         return bagianPembukaSuratUndangan;
     }
@@ -329,22 +336,6 @@ public class SuratUndanganWrapper {
         this.unitKerjaPenandatangan = unitKerjaPenandatangan;
     }
 
-    public List<JabatanWrapper> getTembusanSuratUndanganList() {
-        return tembusanSuratUndanganList;
-    }
-
-    public void setTembusanSuratUndanganList(List<JabatanWrapper> tembusanSuratUndanganList) {
-        this.tembusanSuratUndanganList = tembusanSuratUndanganList;
-    }
-
-    public boolean isSuratPejabat() {
-        return isSuratPejabat;
-    }
-
-    public void setSuratPejabat(boolean suratPejabat) {
-        isSuratPejabat = suratPejabat;
-    }
-
     public String getJabatanPenandatangan() {
         return jabatanPenandatangan;
     }
@@ -385,35 +376,27 @@ public class SuratUndanganWrapper {
         this.golonganPenandatangan = golonganPenandatangan;
     }
 
-    public String getGelarDepanPenerimaSuratUndangan() {
-        return gelarDepanPenerimaSuratUndangan;
+    public List<JabatanWrapper> getTembusanSuratUndanganList() {
+        return tembusanSuratUndanganList;
     }
 
-    public void setGelarDepanPenerimaSuratUndangan(String gelarDepanPenerimaSuratUndangan) {
-        this.gelarDepanPenerimaSuratUndangan = gelarDepanPenerimaSuratUndangan;
+    public void setTembusanSuratUndanganList(List<JabatanWrapper> tembusanSuratUndanganList) {
+        this.tembusanSuratUndanganList = tembusanSuratUndanganList;
     }
 
-    public String getGelarBelakangPenerimaSuratUndangan() {
-        return gelarBelakangPenerimaSuratUndangan;
+    public boolean isSuratPejabat() {
+        return isSuratPejabat;
     }
 
-    public void setGelarBelakangPenerimaSuratUndangan(String gelarBelakangPenerimaSuratUndangan) {
-        this.gelarBelakangPenerimaSuratUndangan = gelarBelakangPenerimaSuratUndangan;
+    public void setSuratPejabat(boolean suratPejabat) {
+        isSuratPejabat = suratPejabat;
     }
 
-    public String getPangkatPenerimaSuratUndangan() {
-        return pangkatPenerimaSuratUndangan;
+    public byte[] getBarcodeImage() {
+        return barcodeImage;
     }
 
-    public void setPangkatPenerimaSuratUndangan(String pangkatPenerimaSuratUndangan) {
-        this.pangkatPenerimaSuratUndangan = pangkatPenerimaSuratUndangan;
-    }
-
-    public String getGolonganPenerimaSuratUndangan() {
-        return golonganPenerimaSuratUndangan;
-    }
-
-    public void setGolonganPenerimaSuratUndangan(String golonganPenerimaSuratUndangan) {
-        this.golonganPenerimaSuratUndangan = golonganPenerimaSuratUndangan;
+    public void setBarcodeImage(byte[] barcodeImage) {
+        this.barcodeImage = barcodeImage;
     }
 }
