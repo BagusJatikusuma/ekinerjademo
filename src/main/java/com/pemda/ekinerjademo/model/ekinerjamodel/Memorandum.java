@@ -63,6 +63,9 @@ public class Memorandum {
     @Column(name = "status_baca")
     private Integer statusBaca;
 
+    @Column(name = "kd_barcode")
+    private String kdBarcode;
+
     @OneToOne(mappedBy = "memorandum", fetch = FetchType.LAZY)
     private MemorandumNonPejabat memorandumNonPejabat;
     @OneToOne(mappedBy = "memorandum", fetch = FetchType.LAZY)
@@ -238,30 +241,6 @@ public class Memorandum {
         this.alasanPenolakan = alasanPenolakan;
     }
 
-    public MemorandumNonPejabat getMemorandumNonPejabat() {
-        return memorandumNonPejabat;
-    }
-
-    public void setMemorandumNonPejabat(MemorandumNonPejabat memorandumNonPejabat) {
-        this.memorandumNonPejabat = memorandumNonPejabat;
-    }
-
-    public MemorandumPejabat getMemorandumPejabat() {
-        return memorandumPejabat;
-    }
-
-    public void setMemorandumPejabat(MemorandumPejabat memorandumPejabat) {
-        this.memorandumPejabat = memorandumPejabat;
-    }
-
-    public List<TembusanMemorandum> getTembusanMemorandumList() {
-        return tembusanMemorandumList;
-    }
-
-    public void setTembusanMemorandumList(List<TembusanMemorandum> tembusanMemorandumList) {
-        this.tembusanMemorandumList = tembusanMemorandumList;
-    }
-
     public Integer getApprovalPenandatangan() {
         return approvalPenandatangan;
     }
@@ -284,5 +263,37 @@ public class Memorandum {
 
     public void setStatusBaca(Integer statusBaca) {
         this.statusBaca = statusBaca;
+    }
+
+    public String getKdBarcode() {
+        return kdBarcode;
+    }
+
+    public void setKdBarcode(String kdBarcode) {
+        this.kdBarcode = kdBarcode;
+    }
+
+    public MemorandumNonPejabat getMemorandumNonPejabat() {
+        return memorandumNonPejabat;
+    }
+
+    public void setMemorandumNonPejabat(MemorandumNonPejabat memorandumNonPejabat) {
+        this.memorandumNonPejabat = memorandumNonPejabat;
+    }
+
+    public MemorandumPejabat getMemorandumPejabat() {
+        return memorandumPejabat;
+    }
+
+    public void setMemorandumPejabat(MemorandumPejabat memorandumPejabat) {
+        this.memorandumPejabat = memorandumPejabat;
+    }
+
+    public List<TembusanMemorandum> getTembusanMemorandumList() {
+        return tembusanMemorandumList;
+    }
+
+    public void setTembusanMemorandumList(List<TembusanMemorandum> tembusanMemorandumList) {
+        this.tembusanMemorandumList = tembusanMemorandumList;
     }
 }

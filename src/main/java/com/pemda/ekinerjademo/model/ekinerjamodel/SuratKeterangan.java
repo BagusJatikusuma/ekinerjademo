@@ -55,6 +55,9 @@ public class SuratKeterangan {
     @Column(name = "nip_pegawai_keterangan")
     private String nipPegawaiKeterangan;
 
+    @Column(name = "kd_barcode")
+    private String kdBarcode;
+
     @OneToMany(mappedBy = "suratKeterangan")
     private List<TargetSuratKeterangan> targetSuratKeteranganList;
 
@@ -210,15 +213,6 @@ public class SuratKeterangan {
         this.alasanPenolakan = alasanPenolakan;
     }
 
-
-    public List<TargetSuratKeterangan> getTargetSuratKeteranganList() {
-        return targetSuratKeteranganList;
-    }
-
-    public void setTargetSuratKeteranganList(List<TargetSuratKeterangan> targetSuratKeteranganList) {
-        this.targetSuratKeteranganList = targetSuratKeteranganList;
-    }
-
     public Integer getStatusBaca() {
         return statusBaca;
     }
@@ -233,5 +227,21 @@ public class SuratKeterangan {
 
     public void setNipPegawaiKeterangan(String nipPegawaiKeterangan) {
         this.nipPegawaiKeterangan = nipPegawaiKeterangan;
+    }
+
+    public String getKdBarcode() {
+        return kdBarcode;
+    }
+
+    public void setKdBarcode(String kdBarcode) {
+        this.kdBarcode = kdBarcode;
+    }
+
+    public List<TargetSuratKeterangan> getTargetSuratKeteranganList() {
+        return targetSuratKeteranganList;
+    }
+
+    public void setTargetSuratKeteranganList(List<TargetSuratKeterangan> targetSuratKeteranganList) {
+        this.targetSuratKeteranganList = targetSuratKeteranganList;
     }
 }

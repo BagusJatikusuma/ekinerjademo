@@ -56,6 +56,8 @@ public class SuratEdaran {
 
     @Column(name = "status_baca")
     private Integer statusBaca;
+    @Column(name = "kd_barcode")
+    private String kdBarcode;
 
     @OneToOne(mappedBy = "suratEdaran", fetch = FetchType.LAZY)
     private SuratEdaranNonPejabat suratEdaranNonPejabat;
@@ -224,6 +226,22 @@ public class SuratEdaran {
         this.alasanPenolakan = alasanPenolakan;
     }
 
+    public Integer getStatusBaca() {
+        return statusBaca;
+    }
+
+    public void setStatusBaca(Integer statusBaca) {
+        this.statusBaca = statusBaca;
+    }
+
+    public String getKdBarcode() {
+        return kdBarcode;
+    }
+
+    public void setKdBarcode(String kdBarcode) {
+        this.kdBarcode = kdBarcode;
+    }
+
     public SuratEdaranNonPejabat getSuratEdaranNonPejabat() {
         return suratEdaranNonPejabat;
     }
@@ -246,13 +264,5 @@ public class SuratEdaran {
 
     public void setSuratEdaranSubList(List<SuratEdaranSub> suratEdaranSubList) {
         this.suratEdaranSubList = suratEdaranSubList;
-    }
-
-    public Integer getStatusBaca() {
-        return statusBaca;
-    }
-
-    public void setStatusBaca(Integer statusBaca) {
-        this.statusBaca = statusBaca;
     }
 }

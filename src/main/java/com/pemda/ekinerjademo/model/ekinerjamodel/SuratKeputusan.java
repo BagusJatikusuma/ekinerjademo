@@ -58,6 +58,8 @@ public class SuratKeputusan {
 
     @Column(name = "status_baca")
     private Integer statusBaca;
+    @Column(name = "kd_barcode")
+    private String kdBarcode;
 
     public String getKdSuratKeputusan() {
         return kdSuratKeputusan;
@@ -225,5 +227,13 @@ public class SuratKeputusan {
 
     public void setStatusBaca(Integer statusBaca) {
         this.statusBaca = statusBaca;
+    }
+
+    public String getKdBarcode() {
+        return kdBarcode;
+    }
+
+    public void setKdBarcode(String kdBarcode) {
+        this.kdBarcode = kdBarcode;
     }
 }

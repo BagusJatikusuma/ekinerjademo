@@ -76,6 +76,9 @@ public class SuratUndangan {
     @Column(name = "status_baca")
     private Integer statusBaca;
 
+    @Column(name = "kd_barcode")
+    private String kdBarcode;
+
     @OneToOne(mappedBy = "suratUndangan", fetch = FetchType.LAZY)
     private SuratUndanganNonPejabat suratUndanganNonPejabat;
     @OneToOne(mappedBy = "suratUndangan", fetch = FetchType.LAZY)
@@ -323,6 +326,22 @@ public class SuratUndangan {
         this.alasanPenolakan = alasanPenolakan;
     }
 
+    public Integer getStatusBaca() {
+        return statusBaca;
+    }
+
+    public void setStatusBaca(Integer statusBaca) {
+        this.statusBaca = statusBaca;
+    }
+
+    public String getKdBarcode() {
+        return kdBarcode;
+    }
+
+    public void setKdBarcode(String kdBarcode) {
+        this.kdBarcode = kdBarcode;
+    }
+
     public SuratUndanganNonPejabat getSuratUndanganNonPejabat() {
         return suratUndanganNonPejabat;
     }
@@ -345,13 +364,5 @@ public class SuratUndangan {
 
     public void setTembusanSuratUndanganList(List<TembusanSuratUndangan> tembusanSuratUndanganList) {
         this.tembusanSuratUndanganList = tembusanSuratUndanganList;
-    }
-
-    public Integer getStatusBaca() {
-        return statusBaca;
-    }
-
-    public void setStatusBaca(Integer statusBaca) {
-        this.statusBaca = statusBaca;
     }
 }
