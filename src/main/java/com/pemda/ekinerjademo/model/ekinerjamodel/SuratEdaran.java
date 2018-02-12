@@ -59,6 +59,11 @@ public class SuratEdaran {
     @Column(name = "kd_barcode")
     private String kdBarcode;
 
+    @Column(name = "kd_urtug")
+    private String kdUrtug;
+    @Column(name = "tahun_urtug")
+    private Integer tahunUrtug;
+
     @OneToOne(mappedBy = "suratEdaran", fetch = FetchType.LAZY)
     private SuratEdaranNonPejabat suratEdaranNonPejabat;
     @OneToOne(mappedBy = "suratEdaran", fetch = FetchType.LAZY)
@@ -240,6 +245,22 @@ public class SuratEdaran {
 
     public void setKdBarcode(String kdBarcode) {
         this.kdBarcode = kdBarcode;
+    }
+
+    public String getKdUrtug() {
+        return kdUrtug;
+    }
+
+    public void setKdUrtug(String kdUrtug) {
+        this.kdUrtug = kdUrtug;
+    }
+
+    public Integer getTahunUrtug() {
+        return tahunUrtug;
+    }
+
+    public void setTahunUrtug(Integer tahunUrtug) {
+        this.tahunUrtug = tahunUrtug;
     }
 
     public SuratEdaranNonPejabat getSuratEdaranNonPejabat() {

@@ -40,6 +40,11 @@ public class LembarDisposisi {
     @Column(name = "kd_barcode")
     private String kdBarcode;
 
+    @Column(name = "kd_urtug")
+    private String kdUrtug;
+    @Column(name = "tahun_urtug")
+    private Integer tahunUrtug;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(
             name = "kd_lembar_dispoisisi_parent",
@@ -171,6 +176,22 @@ public class LembarDisposisi {
 
     public void setKdBarcode(String kdBarcode) {
         this.kdBarcode = kdBarcode;
+    }
+
+    public String getKdUrtug() {
+        return kdUrtug;
+    }
+
+    public void setKdUrtug(String kdUrtug) {
+        this.kdUrtug = kdUrtug;
+    }
+
+    public Integer getTahunUrtug() {
+        return tahunUrtug;
+    }
+
+    public void setTahunUrtug(Integer tahunUrtug) {
+        this.tahunUrtug = tahunUrtug;
     }
 
     public LembarDisposisi getKdLembarDisposisiParent() {

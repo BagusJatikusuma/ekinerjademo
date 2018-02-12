@@ -63,6 +63,11 @@ public class NotaDinas {
     @Column(name = "kd_barcode")
     private String kdBarcode;
 
+    @Column(name = "kd_urtug")
+    private String kdUrtug;
+    @Column(name = "tahun_urtug")
+    private Integer tahunUrtug;
+
     @OneToMany(mappedBy = "notaDinas")
     private List<TembusanNotaDinas> tembusanNotaDinasList;
 
@@ -248,6 +253,22 @@ public class NotaDinas {
 
     public void setKdBarcode(String kdBarcode) {
         this.kdBarcode = kdBarcode;
+    }
+
+    public String getKdUrtug() {
+        return kdUrtug;
+    }
+
+    public void setKdUrtug(String kdUrtug) {
+        this.kdUrtug = kdUrtug;
+    }
+
+    public Integer getTahunUrtug() {
+        return tahunUrtug;
+    }
+
+    public void setTahunUrtug(Integer tahunUrtug) {
+        this.tahunUrtug = tahunUrtug;
     }
 
     public List<TembusanNotaDinas> getTembusanNotaDinasList() {
