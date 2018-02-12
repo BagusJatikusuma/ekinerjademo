@@ -271,6 +271,14 @@ public class BeritaAcara {
         this.durasiPengerjaan = durasiPengerjaan;
     }
 
+    public String getPathPenilaian() {
+        return pathPenilaian;
+    }
+
+    public void setPathPenilaian(String pathPenilaian) {
+        this.pathPenilaian = pathPenilaian;
+    }
+
     public String getNipPenilai() {
         return nipPenilai;
     }
@@ -295,12 +303,12 @@ public class BeritaAcara {
         this.alasanPenolakan = alasanPenolakan;
     }
 
-    public String getPathPenilaian() {
-        return pathPenilaian;
+    public String getKdBarcode() {
+        return kdBarcode;
     }
 
-    public void setPathPenilaian(String pathPenilaian) {
-        this.pathPenilaian = pathPenilaian;
+    public void setKdBarcode(String kdBarcode) {
+        this.kdBarcode = kdBarcode;
     }
 
     public String getKdBarcode() {

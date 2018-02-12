@@ -59,6 +59,9 @@ public class SuratPerintah {
     @Column(name = "alasan_penolakan")
     private String alasanPenolakan;
 
+    @Column(name = "kd_barcode")
+    private String kdBarcode;
+
     @OneToMany(mappedBy = "suratPerintah")
     private Set<TargetSuratPerintahPegawai> targetSuratPerintahPegawaiList;
     @OneToMany(mappedBy = "suratPerintah")
@@ -77,6 +80,22 @@ public class SuratPerintah {
 
     public void setKdSuratPerintah(String kdSuratPerintah) {
         this.kdSuratPerintah = kdSuratPerintah;
+    }
+
+    public String getNipPembuat() {
+        return nipPembuat;
+    }
+
+    public void setNipPembuat(String nipPembuat) {
+        this.nipPembuat = nipPembuat;
+    }
+
+    public String getNipPenandatangan() {
+        return nipPenandatangan;
+    }
+
+    public void setNipPenandatangan(String nipPenandatangan) {
+        this.nipPenandatangan = nipPenandatangan;
     }
 
     public Integer getNomorSurat1() {
@@ -151,68 +170,12 @@ public class SuratPerintah {
         this.ttdPath = ttdPath;
     }
 
-    public String getNipPembuat() {
-        return nipPembuat;
-    }
-
-    public void setNipPembuat(String nipPembuat) {
-        this.nipPembuat = nipPembuat;
-    }
-
-    public Set<TargetSuratPerintahPegawai> getTargetSuratPerintahPegawaiList() {
-        return targetSuratPerintahPegawaiList;
-    }
-
-    public void setTargetSuratPerintahPegawaiList(Set<TargetSuratPerintahPegawai> targetSuratPerintahPegawaiList) {
-        this.targetSuratPerintahPegawaiList = targetSuratPerintahPegawaiList;
-    }
-
-    public Set<TembusanSuratPerintah> getTembusanSuratPerintahList() {
-        return tembusanSuratPerintahList;
-    }
-
-    public void setTembusanSuratPerintahList(Set<TembusanSuratPerintah> tembusanSuratPerintahList) {
-        this.tembusanSuratPerintahList = tembusanSuratPerintahList;
-    }
-
     public String getMenimbang() {
         return menimbang;
     }
 
     public void setMenimbang(String menimbang) {
         this.menimbang = menimbang;
-    }
-
-    public Set<TargetSuratPerintahPejabat> getTargetSuratPerintahPejabatSet() {
-        return targetSuratPerintahPejabatSet;
-    }
-
-    public void setTargetSuratPerintahPejabatSet(Set<TargetSuratPerintahPejabat> targetSuratPerintahPejabatSet) {
-        this.targetSuratPerintahPejabatSet = targetSuratPerintahPejabatSet;
-    }
-
-    public SuratPerintahPejabat getSuratPerintahPejabat() {
-        return suratPerintahPejabat;
-    }
-
-    public void setSuratPerintahPejabat(SuratPerintahPejabat suratPerintahPejabat) {
-        this.suratPerintahPejabat = suratPerintahPejabat;
-    }
-
-    public SuratPerintahNonPejabat getSuratPerintahNonPejabat() {
-        return suratPerintahNonPejabat;
-    }
-
-    public void setSuratPerintahNonPejabat(SuratPerintahNonPejabat suratPerintahNonPejabat) {
-        this.suratPerintahNonPejabat = suratPerintahNonPejabat;
-    }
-
-    public String getNipPenandatangan() {
-        return nipPenandatangan;
-    }
-
-    public void setNipPenandatangan(String nipPenandatangan) {
-        this.nipPenandatangan = nipPenandatangan;
     }
 
     public String getKdUnitKerja() {
@@ -301,5 +264,53 @@ public class SuratPerintah {
 
     public void setAlasanPenolakan(String alasanPenolakan) {
         this.alasanPenolakan = alasanPenolakan;
+    }
+
+    public String getKdBarcode() {
+        return kdBarcode;
+    }
+
+    public void setKdBarcode(String kdBarcode) {
+        this.kdBarcode = kdBarcode;
+    }
+
+    public Set<TargetSuratPerintahPegawai> getTargetSuratPerintahPegawaiList() {
+        return targetSuratPerintahPegawaiList;
+    }
+
+    public void setTargetSuratPerintahPegawaiList(Set<TargetSuratPerintahPegawai> targetSuratPerintahPegawaiList) {
+        this.targetSuratPerintahPegawaiList = targetSuratPerintahPegawaiList;
+    }
+
+    public Set<TargetSuratPerintahPejabat> getTargetSuratPerintahPejabatSet() {
+        return targetSuratPerintahPejabatSet;
+    }
+
+    public void setTargetSuratPerintahPejabatSet(Set<TargetSuratPerintahPejabat> targetSuratPerintahPejabatSet) {
+        this.targetSuratPerintahPejabatSet = targetSuratPerintahPejabatSet;
+    }
+
+    public SuratPerintahPejabat getSuratPerintahPejabat() {
+        return suratPerintahPejabat;
+    }
+
+    public void setSuratPerintahPejabat(SuratPerintahPejabat suratPerintahPejabat) {
+        this.suratPerintahPejabat = suratPerintahPejabat;
+    }
+
+    public SuratPerintahNonPejabat getSuratPerintahNonPejabat() {
+        return suratPerintahNonPejabat;
+    }
+
+    public void setSuratPerintahNonPejabat(SuratPerintahNonPejabat suratPerintahNonPejabat) {
+        this.suratPerintahNonPejabat = suratPerintahNonPejabat;
+    }
+
+    public Set<TembusanSuratPerintah> getTembusanSuratPerintahList() {
+        return tembusanSuratPerintahList;
+    }
+
+    public void setTembusanSuratPerintahList(Set<TembusanSuratPerintah> tembusanSuratPerintahList) {
+        this.tembusanSuratPerintahList = tembusanSuratPerintahList;
     }
 }

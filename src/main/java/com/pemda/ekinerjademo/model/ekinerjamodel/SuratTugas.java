@@ -66,6 +66,8 @@ public class SuratTugas {
     private String kdNaskahPenugasan;
     @Column(name = "jenis_naskah_penugasan")
     private Integer jenisNaskahPenugasan;
+    @Column(name = "kd_barcode")
+    private String kdBarcode;
 
     @OneToMany(mappedBy = "suratTugas")
     private Set<TargetSuratTugasPegawai> targetSuratTugasPegawaiSet;
@@ -132,6 +134,22 @@ public class SuratTugas {
 
     public void setNomorTahun(Integer nomorTahun) {
         this.nomorTahun = nomorTahun;
+    }
+
+    public String getNomorPasanganUrut() {
+        return nomorPasanganUrut;
+    }
+
+    public void setNomorPasanganUrut(String nomorPasanganUrut) {
+        this.nomorPasanganUrut = nomorPasanganUrut;
+    }
+
+    public String getMenimbang() {
+        return menimbang;
+    }
+
+    public void setMenimbang(String menimbang) {
+        this.menimbang = menimbang;
     }
 
     public String getDasar() {
@@ -238,6 +256,38 @@ public class SuratTugas {
         this.alasanPenolakan = alasanPenolakan;
     }
 
+    public String getKdUnitKerja() {
+        return kdUnitKerja;
+    }
+
+    public void setKdUnitKerja(String kdUnitKerja) {
+        this.kdUnitKerja = kdUnitKerja;
+    }
+
+    public String getKdNaskahPenugasan() {
+        return kdNaskahPenugasan;
+    }
+
+    public void setKdNaskahPenugasan(String kdNaskahPenugasan) {
+        this.kdNaskahPenugasan = kdNaskahPenugasan;
+    }
+
+    public Integer getJenisNaskahPenugasan() {
+        return jenisNaskahPenugasan;
+    }
+
+    public void setJenisNaskahPenugasan(Integer jenisNaskahPenugasan) {
+        this.jenisNaskahPenugasan = jenisNaskahPenugasan;
+    }
+
+    public String getKdBarcode() {
+        return kdBarcode;
+    }
+
+    public void setKdBarcode(String kdBarcode) {
+        this.kdBarcode = kdBarcode;
+    }
+
     public Set<TargetSuratTugasPegawai> getTargetSuratTugasPegawaiSet() {
         return targetSuratTugasPegawaiSet;
     }
@@ -276,45 +326,5 @@ public class SuratTugas {
 
     public void setSuratTugasNonPejabat(SuratTugasNonPejabat suratTugasNonPejabat) {
         this.suratTugasNonPejabat = suratTugasNonPejabat;
-    }
-
-    public String getNomorPasanganUrut() {
-        return nomorPasanganUrut;
-    }
-
-    public void setNomorPasanganUrut(String nomorPasanganUrut) {
-        this.nomorPasanganUrut = nomorPasanganUrut;
-    }
-
-    public String getKdUnitKerja() {
-        return kdUnitKerja;
-    }
-
-    public void setKdUnitKerja(String kdUnitKerja) {
-        this.kdUnitKerja = kdUnitKerja;
-    }
-
-    public String getMenimbang() {
-        return menimbang;
-    }
-
-    public void setMenimbang(String menimbang) {
-        this.menimbang = menimbang;
-    }
-
-    public String getKdNaskahPenugasan() {
-        return kdNaskahPenugasan;
-    }
-
-    public void setKdNaskahPenugasan(String kdNaskahPenugasan) {
-        this.kdNaskahPenugasan = kdNaskahPenugasan;
-    }
-
-    public Integer getJenisNaskahPenugasan() {
-        return jenisNaskahPenugasan;
-    }
-
-    public void setJenisNaskahPenugasan(Integer jenisNaskahPenugasan) {
-        this.jenisNaskahPenugasan = jenisNaskahPenugasan;
     }
 }

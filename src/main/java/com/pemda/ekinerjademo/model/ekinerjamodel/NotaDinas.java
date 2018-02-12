@@ -60,6 +60,9 @@ public class NotaDinas {
     @Column(name = "status_baca")
     private Integer statusBaca;
 
+    @Column(name = "kd_barcode")
+    private String kdBarcode;
+
     @OneToMany(mappedBy = "notaDinas")
     private List<TembusanNotaDinas> tembusanNotaDinasList;
 
@@ -199,6 +202,14 @@ public class NotaDinas {
         this.durasiPengerjaan = durasiPengerjaan;
     }
 
+    public String getPathPenilaian() {
+        return pathPenilaian;
+    }
+
+    public void setPathPenilaian(String pathPenilaian) {
+        this.pathPenilaian = pathPenilaian;
+    }
+
     public String getNipPenilai() {
         return nipPenilai;
     }
@@ -223,14 +234,6 @@ public class NotaDinas {
         this.alasanPenolakan = alasanPenolakan;
     }
 
-    public List<TembusanNotaDinas> getTembusanNotaDinasList() {
-        return tembusanNotaDinasList;
-    }
-
-    public void setTembusanNotaDinasList(List<TembusanNotaDinas> tembusanNotaDinasList) {
-        this.tembusanNotaDinasList = tembusanNotaDinasList;
-    }
-
     public Integer getStatusBaca() {
         return statusBaca;
     }
@@ -239,11 +242,19 @@ public class NotaDinas {
         this.statusBaca = statusBaca;
     }
 
-    public String getPathPenilaian() {
-        return pathPenilaian;
+    public String getKdBarcode() {
+        return kdBarcode;
     }
 
-    public void setPathPenilaian(String pathPenilaian) {
-        this.pathPenilaian = pathPenilaian;
+    public void setKdBarcode(String kdBarcode) {
+        this.kdBarcode = kdBarcode;
+    }
+
+    public List<TembusanNotaDinas> getTembusanNotaDinasList() {
+        return tembusanNotaDinasList;
+    }
+
+    public void setTembusanNotaDinasList(List<TembusanNotaDinas> tembusanNotaDinasList) {
+        this.tembusanNotaDinasList = tembusanNotaDinasList;
     }
 }

@@ -59,6 +59,9 @@ public class SuratPengantar {
     @Column(name = "nip_penerima")
     private String nipPenerima;
 
+    @Column(name = "kd_barcode")
+    private String kdBarcode;
+
     @OneToMany(mappedBy = "suratPengantar")
     private List<SuratPengantarIsi> suratPengantarIsiList;
 
@@ -222,14 +225,6 @@ public class SuratPengantar {
         this.alasanPenolakan = alasanPenolakan;
     }
 
-    public List<SuratPengantarIsi> getSuratPengantarIsiList() {
-        return suratPengantarIsiList;
-    }
-
-    public void setSuratPengantarIsiList(List<SuratPengantarIsi> suratPengantarIsiList) {
-        this.suratPengantarIsiList = suratPengantarIsiList;
-    }
-
     public Integer getStatusBaca() {
         return statusBaca;
     }
@@ -244,5 +239,21 @@ public class SuratPengantar {
 
     public void setNipPenerima(String nipPenerima) {
         this.nipPenerima = nipPenerima;
+    }
+
+    public String getKdBarcode() {
+        return kdBarcode;
+    }
+
+    public void setKdBarcode(String kdBarcode) {
+        this.kdBarcode = kdBarcode;
+    }
+
+    public List<SuratPengantarIsi> getSuratPengantarIsiList() {
+        return suratPengantarIsiList;
+    }
+
+    public void setSuratPengantarIsiList(List<SuratPengantarIsi> suratPengantarIsiList) {
+        this.suratPengantarIsiList = suratPengantarIsiList;
     }
 }

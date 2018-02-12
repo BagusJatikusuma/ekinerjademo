@@ -39,6 +39,8 @@ public class SuratInstruksi {
 
     @Column(name = "durasi_pengerjaan")
     private Integer durasiPengerjaan;
+    @Column(name = "kd_barcode")
+    private String kdBarcode;
 
     @OneToMany(mappedBy = "suratInstruksi")
     private Set<InstruksiPegawai> instruksiPegawaiSet;
@@ -135,38 +137,6 @@ public class SuratInstruksi {
         this.nipPembuat = nipPembuat;
     }
 
-    public Set<InstruksiPegawai> getInstruksiPegawaiSet() {
-        return instruksiPegawaiSet;
-    }
-
-    public void setInstruksiPegawaiSet(Set<InstruksiPegawai> instruksiPegawaiSet) {
-        this.instruksiPegawaiSet = instruksiPegawaiSet;
-    }
-
-    public Set<InstruksiPejabat> getInstruksiPejabatSet() {
-        return instruksiPejabatSet;
-    }
-
-    public void setInstruksiPejabatSet(Set<InstruksiPejabat> instruksiPejabatSet) {
-        this.instruksiPejabatSet = instruksiPejabatSet;
-    }
-
-    public SuratInstruksiPejabat getSuratInstruksiPejabat() {
-        return suratInstruksiPejabat;
-    }
-
-    public void setSuratInstruksiPejabat(SuratInstruksiPejabat suratInstruksiPejabat) {
-        this.suratInstruksiPejabat = suratInstruksiPejabat;
-    }
-
-    public SuratInstruksiNonPejabat getSuratInstruksiNonPejabat() {
-        return suratInstruksiNonPejabat;
-    }
-
-    public void setSuratInstruksiNonPejabat(SuratInstruksiNonPejabat suratInstruksiNonPejabat) {
-        this.suratInstruksiNonPejabat = suratInstruksiNonPejabat;
-    }
-
     public String getNipPenandatangan() {
         return nipPenandatangan;
     }
@@ -197,5 +167,45 @@ public class SuratInstruksi {
 
     public void setDurasiPengerjaan(Integer durasiPengerjaan) {
         this.durasiPengerjaan = durasiPengerjaan;
+    }
+
+    public String getKdBarcode() {
+        return kdBarcode;
+    }
+
+    public void setKdBarcode(String kdBarcode) {
+        this.kdBarcode = kdBarcode;
+    }
+
+    public Set<InstruksiPegawai> getInstruksiPegawaiSet() {
+        return instruksiPegawaiSet;
+    }
+
+    public void setInstruksiPegawaiSet(Set<InstruksiPegawai> instruksiPegawaiSet) {
+        this.instruksiPegawaiSet = instruksiPegawaiSet;
+    }
+
+    public Set<InstruksiPejabat> getInstruksiPejabatSet() {
+        return instruksiPejabatSet;
+    }
+
+    public void setInstruksiPejabatSet(Set<InstruksiPejabat> instruksiPejabatSet) {
+        this.instruksiPejabatSet = instruksiPejabatSet;
+    }
+
+    public SuratInstruksiPejabat getSuratInstruksiPejabat() {
+        return suratInstruksiPejabat;
+    }
+
+    public void setSuratInstruksiPejabat(SuratInstruksiPejabat suratInstruksiPejabat) {
+        this.suratInstruksiPejabat = suratInstruksiPejabat;
+    }
+
+    public SuratInstruksiNonPejabat getSuratInstruksiNonPejabat() {
+        return suratInstruksiNonPejabat;
+    }
+
+    public void setSuratInstruksiNonPejabat(SuratInstruksiNonPejabat suratInstruksiNonPejabat) {
+        this.suratInstruksiNonPejabat = suratInstruksiNonPejabat;
     }
 }

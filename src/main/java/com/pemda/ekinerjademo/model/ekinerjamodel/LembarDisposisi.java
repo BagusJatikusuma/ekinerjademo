@@ -37,6 +37,8 @@ public class LembarDisposisi {
     private Long tanggalPengirimanMilis;
     @Column(name = "durasi_pengerjaan")
     private Integer durasiPengerjaan;
+    @Column(name = "kd_barcode")
+    private String kdBarcode;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(
@@ -115,38 +117,6 @@ public class LembarDisposisi {
         this.tglPenyelesaianMilis = tglPenyelesaianMilis;
     }
 
-    public LembarDisposisi getKdLembarDisposisiParent() {
-        return kdLembarDisposisiParent;
-    }
-
-    public void setKdLembarDisposisiParent(LembarDisposisi kdLembarDisposisiParent) {
-        this.kdLembarDisposisiParent = kdLembarDisposisiParent;
-    }
-
-    public Set<LembarDisposisi> getKdLembarDisposisiChild() {
-        return kdLembarDisposisiChild;
-    }
-
-    public void setKdLembarDisposisiChild(Set<LembarDisposisi> kdLembarDisposisiChild) {
-        this.kdLembarDisposisiChild = kdLembarDisposisiChild;
-    }
-
-    public SuratDisposisi getNoSuratDisposisi() {
-        return noSuratDisposisi;
-    }
-
-    public void setNoSuratDisposisi(SuratDisposisi noSuratDisposisi) {
-        this.noSuratDisposisi = noSuratDisposisi;
-    }
-
-    public Set<TargetLembarDisposisi> getTargetLembarDisposisiSet() {
-        return targetLembarDisposisiSet;
-    }
-
-    public void setTargetLembarDisposisiSet(Set<TargetLembarDisposisi> targetLembarDisposisiSet) {
-        this.targetLembarDisposisiSet = targetLembarDisposisiSet;
-    }
-
     public String getIsiDisposisi() {
         return isiDisposisi;
     }
@@ -193,5 +163,45 @@ public class LembarDisposisi {
 
     public void setDurasiPengerjaan(Integer durasiPengerjaan) {
         this.durasiPengerjaan = durasiPengerjaan;
+    }
+
+    public String getKdBarcode() {
+        return kdBarcode;
+    }
+
+    public void setKdBarcode(String kdBarcode) {
+        this.kdBarcode = kdBarcode;
+    }
+
+    public LembarDisposisi getKdLembarDisposisiParent() {
+        return kdLembarDisposisiParent;
+    }
+
+    public void setKdLembarDisposisiParent(LembarDisposisi kdLembarDisposisiParent) {
+        this.kdLembarDisposisiParent = kdLembarDisposisiParent;
+    }
+
+    public Set<LembarDisposisi> getKdLembarDisposisiChild() {
+        return kdLembarDisposisiChild;
+    }
+
+    public void setKdLembarDisposisiChild(Set<LembarDisposisi> kdLembarDisposisiChild) {
+        this.kdLembarDisposisiChild = kdLembarDisposisiChild;
+    }
+
+    public SuratDisposisi getNoSuratDisposisi() {
+        return noSuratDisposisi;
+    }
+
+    public void setNoSuratDisposisi(SuratDisposisi noSuratDisposisi) {
+        this.noSuratDisposisi = noSuratDisposisi;
+    }
+
+    public Set<TargetLembarDisposisi> getTargetLembarDisposisiSet() {
+        return targetLembarDisposisiSet;
+    }
+
+    public void setTargetLembarDisposisiSet(Set<TargetLembarDisposisi> targetLembarDisposisiSet) {
+        this.targetLembarDisposisiSet = targetLembarDisposisiSet;
     }
 }

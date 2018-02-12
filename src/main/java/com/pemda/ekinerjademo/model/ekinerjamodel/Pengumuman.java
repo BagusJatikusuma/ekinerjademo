@@ -59,6 +59,9 @@ public class Pengumuman {
     @Column(name = "status_baca")
     private Integer statusBaca;
 
+    @Column(name = "kd_barcode")
+    private String kdBarcode;
+
     public String getKdPengumuman() {
         return kdPengumuman;
     }
@@ -225,5 +228,13 @@ public class Pengumuman {
 
     public void setStatusBaca(Integer statusBaca) {
         this.statusBaca = statusBaca;
+    }
+
+    public String getKdBarcode() {
+        return kdBarcode;
+    }
+
+    public void setKdBarcode(String kdBarcode) {
+        this.kdBarcode = kdBarcode;
     }
 }

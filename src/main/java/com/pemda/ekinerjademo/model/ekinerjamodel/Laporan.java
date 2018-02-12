@@ -64,6 +64,9 @@ public class Laporan {
     @Column(name = "jenis_naskah_penugasan")
     private Integer jenisNaskahPenugasan;
 
+    @Column(name = "kd_barcode")
+    private String kdBarcode;
+
     public String getKdLaporan() {
         return kdLaporan;
     }
@@ -200,6 +203,14 @@ public class Laporan {
         this.durasiPengerjaan = durasiPengerjaan;
     }
 
+    public String getPathPenilaian() {
+        return pathPenilaian;
+    }
+
+    public void setPathPenilaian(String pathPenilaian) {
+        this.pathPenilaian = pathPenilaian;
+    }
+
     public String getNipPenilai() {
         return nipPenilai;
     }
@@ -224,14 +235,6 @@ public class Laporan {
         this.alasanPenolakan = alasanPenolakan;
     }
 
-    public String getPathPenilaian() {
-        return pathPenilaian;
-    }
-
-    public void setPathPenilaian(String pathPenilaian) {
-        this.pathPenilaian = pathPenilaian;
-    }
-
     public String getKdNaskahPenugasan() {
         return kdNaskahPenugasan;
     }
@@ -246,5 +249,13 @@ public class Laporan {
 
     public void setJenisNaskahPenugasan(Integer jenisNaskahPenugasan) {
         this.jenisNaskahPenugasan = jenisNaskahPenugasan;
+    }
+
+    public String getKdBarcode() {
+        return kdBarcode;
+    }
+
+    public void setKdBarcode(String kdBarcode) {
+        this.kdBarcode = kdBarcode;
     }
 }
