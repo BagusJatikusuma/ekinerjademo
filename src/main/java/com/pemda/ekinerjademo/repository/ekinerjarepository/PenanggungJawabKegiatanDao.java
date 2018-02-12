@@ -24,4 +24,23 @@ public interface PenanggungJawabKegiatanDao
             "and pjk.penanggungJawabKegiatanId.kdBidang = ?2 " +
             "and pjk.penanggungJawabKegiatanId.kdUnit = ?3")
     List<PenanggungJawabKegiatan> findByUnitKerja(Integer kdUrusan, Integer kdBidang, Integer kdUnit);
+
+    @Query("select pjk from PenanggungJawabKegiatan pjk " +
+            "left join fetch pjk.statusPenanggungJawabKegiatan " +
+            "where pjk.penanggungJawabKegiatanId.kdUrusan = ?1 " +
+            "and pjk.penanggungJawabKegiatanId.kdBidang = ?2 " +
+            "and pjk.penanggungJawabKegiatanId.kdUnit = ?3 " +
+            "and pjk.penanggungJawabKegiatanId.kdSub = ?4 " +
+            "and pjk.penanggungJawabKegiatanId.tahun = ?5 " +
+            "and pjk.penanggungJawabKegiatanId.kdProg = ?6 " +
+            "and pjk.penanggungJawabKegiatanId.idProg = ?7 " +
+            "and pjk.penanggungJawabKegiatanId.kdKeg = ?8")
+    List<PenanggungJawabKegiatan> findByKegiatan(Integer kdUrusan,
+                                                 Integer kdBidang,
+                                                 Integer kdUnit,
+                                                 Integer kdSub,
+                                                 Integer tahun,
+                                                 Integer kdProg,
+                                                 Integer idProg,
+                                                 Integer kdKeg);
 }

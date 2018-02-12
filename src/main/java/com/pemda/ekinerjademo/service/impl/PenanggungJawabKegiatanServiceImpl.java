@@ -29,6 +29,27 @@ public class PenanggungJawabKegiatanServiceImpl implements PenanggungJawabKegiat
     }
 
     @Override
+    public List<PenanggungJawabKegiatan> getByKegiatan(
+            Integer kdUrusan,
+            Integer kdBidang,
+            Integer kdUnit,
+            Integer kdSub,
+            Integer tahun,
+            Integer kdProg,
+            Integer idProg,
+            Integer kdKeg) {
+        return penanggungJawabKegiatanDao.findByKegiatan(
+                                            kdUrusan,
+                                            kdBidang,
+                                            kdUnit,
+                                            kdSub,
+                                            tahun,
+                                            kdProg,
+                                            idProg,
+                                            kdKeg);
+    }
+
+    @Override
     public void delete(PenanggungJawabKegiatanId id) {
         penanggungJawabKegiatanDao.delete(id);
     }
