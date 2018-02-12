@@ -77,6 +77,9 @@ public class SuratInstruksiController {
         suratInstruksi.setStatusBaca(0);
         suratInstruksi.setDurasiPengerjaan(inputWrapper.getDurasiPengerjaan());
 
+        suratInstruksi.setKdUrtug(inputWrapper.getKdUrtug());
+        suratInstruksi.setTahunUrtug(inputWrapper.getTahunUrtug());
+
         if (inputWrapper.getKdSuratInstruksiParent() == null) {
             suratInstruksi.setPath(kdSuratInstruksi);
         } else {

@@ -113,6 +113,9 @@ public class SuratKeteranganController {
                         inputWrapper.getNipPegawaiKeterangan(),
                         "nip"));
 
+        suratKeterangan.setKdUrtug(inputWrapper.getKdUrtug());
+        suratKeterangan.setTahunUrtug(inputWrapper.getTahunUrtug());
+
         suratKeteranganService.create(suratKeterangan);
 
         for (TargetSuratKeterangan targetSuratKeterangan

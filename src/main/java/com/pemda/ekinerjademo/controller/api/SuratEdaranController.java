@@ -80,6 +80,9 @@ public class SuratEdaranController {
 
         suratEdaran.setDurasiPengerjaan(inputWrapper.getDurasiPengerjaan());
 
+        suratEdaran.setKdUrtug(inputWrapper.getKdUrtug());
+        suratEdaran.setTahunUrtug(inputWrapper.getTahunUrtug());
+
         if (inputWrapper.getKdSuratEdaranBawahan() == null) {
             suratEdaran.setPathPenilaian(kdSuratEdaran);
             suratEdaran.setKdNaskahPenugasan(inputWrapper.getKdNaskahPenugasan());

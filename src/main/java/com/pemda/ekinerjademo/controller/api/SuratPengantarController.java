@@ -95,6 +95,9 @@ public class SuratPengantarController {
         suratPengantar.setStatusBaca(0);
         suratPengantar.setNipPenerima(inputWrapper.getNipPenerimaSuratPengantar());
 
+        suratPengantar.setKdUrtug(inputWrapper.getKdUrtug());
+        suratPengantar.setTahunUrtug(inputWrapper.getTahunUrtug());
+
         if (inputWrapper.getKdSuratPengantarBawahan() == null) {
             suratPengantar.setPathPenilaian(kdSuratPengantar);
             suratPengantar.setKdNaskahPenugasan(inputWrapper.getKdNaskahPenugasan());

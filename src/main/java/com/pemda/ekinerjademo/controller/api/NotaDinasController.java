@@ -91,6 +91,9 @@ public class NotaDinasController {
         notaDinas.setAlasanPenolakan("");
         notaDinas.setStatusBaca(0);
 
+        notaDinas.setKdUrtug(inputWrapper.getKdUrtug());
+        notaDinas.setTahunUrtug(inputWrapper.getTahunUrtug());
+
         if (inputWrapper.getKdNotaDinasBawahan() == null) {
             notaDinas.setPathPenilaian(kdNotaDinas);
             notaDinas.setKdNaskahPenugasan(inputWrapper.getKdNaskahPenugasan());

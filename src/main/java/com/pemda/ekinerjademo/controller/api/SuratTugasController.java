@@ -150,6 +150,9 @@ public class SuratTugasController {
         suratTugas.setStatusPenilaian(0);
         suratTugas.setAlasanPenolakan(null);
 
+        suratTugas.setKdUrtug(inputWrapper.getKdUrtug());
+        suratTugas.setTahunUrtug(inputWrapper.getTahunUrtug());
+
         suratTugas.setKdUnitKerja(inputWrapper.getKdUnitKerja());
 
         suratTugasService.create(suratTugas);

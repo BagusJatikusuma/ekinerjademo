@@ -165,6 +165,9 @@ public class SuratPerintahController {
         suratPerintah.setNipPenilai("");
         suratPerintah.setStatusPenilaian(0);
         suratPerintah.setAlasanPenolakan("");
+
+        suratPerintah.setKdUrtug(inputWrapper.getKdUrtug());
+        suratPerintah.setTahunUrtug(inputWrapper.getTahunUrtug());
 //        suratPerintah.setTargetSuratPerintahPegawaiList(targetSuratPerintahPegawaiList);
 //        suratPerintah.setTembusanSuratPerintahList(tembusanSuratPerintahList);
 

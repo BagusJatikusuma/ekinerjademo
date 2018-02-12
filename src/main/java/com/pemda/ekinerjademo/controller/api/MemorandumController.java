@@ -91,6 +91,9 @@ public class MemorandumController {
         memorandum.setStatusPenyebaran(0);
         memorandum.setStatusPenilaian(0);
 
+        memorandum.setKdUrtug(inputWrapper.getKdUrtug());
+        memorandum.setTahunUrtug(inputWrapper.getTahunUrtug());
+
         if (inputWrapper.getKdMemorandumBawahan() == null) {
             memorandum.setPathPenilaian(kdMemorandum);
             memorandum.setStatusPenilaian(0);

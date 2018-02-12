@@ -83,6 +83,9 @@ public class BeritaAcaraController {
         beritaAcara.setAlasanPenolakan("");
         beritaAcara.setStatusBaca(0);
 
+        beritaAcara.setKdUrtug(inputWrapper.getKdUrtug());
+        beritaAcara.setTahunUrtug(inputWrapper.getTahunUrtug());
+
         if (inputWrapper.getKdBeritaAcaraBawahan() == null) {
             beritaAcara.setPathPenilaian(kdBeritaAcara);
             beritaAcara.setKdNaskahPenugasan(inputWrapper.getKdNaskahPenugasan());

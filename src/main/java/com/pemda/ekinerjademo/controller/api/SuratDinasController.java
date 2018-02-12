@@ -102,6 +102,9 @@ public class SuratDinasController {
         suratDinas.setStatusPenilaian(0);
         suratDinas.setAlasanPenolakan("");
 
+        suratDinas.setKdUrtug(inputWrapper.getKdUrtug());
+        suratDinas.setTahunUrtug(inputWrapper.getTahunUrtug());
+
         suratDinasService.create(suratDinas);
         for (TembusanSuratDinas tembusanSuratDinas
                 : tembusanSuratDinasList) {

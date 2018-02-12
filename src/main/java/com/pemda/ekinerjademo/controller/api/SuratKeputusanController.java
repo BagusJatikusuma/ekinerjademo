@@ -86,6 +86,9 @@ public class SuratKeputusanController {
         suratKeputusan.setAlasanPenolakan("");
         suratKeputusan.setStatusBaca(0);
 
+        suratKeputusan.setKdUrtug(inputWrapper.getKdUrtug());
+        suratKeputusan.setTahunUrtug(inputWrapper.getTahunUrtug());
+
         suratKeputusanService.create(suratKeputusan);
 
         return new ResponseEntity<Object>(new CustomMessage("surat keputusan created"), HttpStatus.OK);

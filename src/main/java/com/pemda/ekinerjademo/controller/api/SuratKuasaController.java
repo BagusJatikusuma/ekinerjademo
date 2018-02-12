@@ -64,6 +64,9 @@ public class SuratKuasaController {
         suratKuasa.setAlasanPenolakan("");
         suratKuasa.setStatusBaca(0);
 
+        suratKuasa.setKdUrtug(inputWrapper.getKdUrtug());
+        suratKuasa.setTahunUrtug(inputWrapper.getTahunUrtug());
+
         if (inputWrapper.getKdSuratKuasaBawahan() == null) {
             suratKuasa.setPathPenilaian(kdSuratKuasa);
             suratKuasa.setKdNaskahPenugasan(inputWrapper.getKdNaskahPenugasan());

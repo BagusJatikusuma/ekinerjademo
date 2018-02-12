@@ -92,6 +92,9 @@ public class SuratUndanganController {
         suratUndangan.setKdUnitKerja(inputWrapper.getKdUnitKerja());
         suratUndangan.setDurasiPengerjaan(inputWrapper.getDurasiPengerjaan());
 
+        suratUndangan.setKdUrtug(inputWrapper.getKdUrtug());
+        suratUndangan.setTahunUrtug(inputWrapper.getTahunUrtug());
+
         if (inputWrapper.getKdSuratUndanganBawahan() == null) {
             suratUndangan.setPathPenilaian(kdSuratUndangan);
             suratUndangan.setJenisNaskahPenugasan(inputWrapper.getJenisNaskahPenugasan());

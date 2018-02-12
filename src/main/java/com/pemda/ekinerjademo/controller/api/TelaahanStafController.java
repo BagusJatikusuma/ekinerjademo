@@ -74,6 +74,9 @@ public class TelaahanStafController {
         telaahanStaf.setAlasanPenolakan("");
         telaahanStaf.setPathPenilaian(kdTelahaanStaf);
 
+        telaahanStaf.setKdUrtug(inputWrapper.getKdUrtug());
+        telaahanStaf.setTahunUrtug(inputWrapper.getTahunUrtug());
+
 //        if (inputWrapper.getKdTelaahanStafBawahan() == null) {
 //            telaahanStaf.setPathPenilaian(kdTelahaanStaf);
 //        } else {

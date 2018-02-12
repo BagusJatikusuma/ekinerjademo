@@ -69,6 +69,9 @@ public class LaporanController {
         laporan.setStatusPenilaian(0);
         laporan.setAlasanPenolakan("");
 
+        laporan.setKdUrtug(inputWrapper.getKdUrtug());
+        laporan.setTahunUrtug(inputWrapper.getTahunUrtug());
+
         if (inputWrapper.getKdLaporanBawahan() == null) {
             laporan.setPathPenilaian(kdLaporan);
             laporan.setKdNaskahPenugasan(inputWrapper.getKdNaskahPenugasan());
