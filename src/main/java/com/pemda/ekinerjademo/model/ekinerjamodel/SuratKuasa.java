@@ -68,6 +68,9 @@ public class SuratKuasa {
     @Column(name = "tahun_urtug")
     private Integer tahunUrtug;
 
+    @Column(name = "approval_penandatangan")
+    private Integer approvalPenandatangan;
+
     public String getKdSuratKuasa() {
         return kdSuratKuasa;
     }
@@ -258,5 +261,13 @@ public class SuratKuasa {
 
     public void setTahunUrtug(Integer tahunUrtug) {
         this.tahunUrtug = tahunUrtug;
+    }
+
+    public Integer getApprovalPenandatangan() {
+        return approvalPenandatangan;
+    }
+
+    public void setApprovalPenandatangan(Integer approvalPenandatangan) {
+        this.approvalPenandatangan = approvalPenandatangan;
     }
 }

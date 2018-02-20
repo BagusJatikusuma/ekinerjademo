@@ -78,4 +78,15 @@ public class SuratKeteranganServiceImpl implements SuratKeteranganService {
         suratKeterangan.setStatusPenilaian(1);
     }
 
+    @Override
+    public void approveSuratKeterangan(String kdSuratKeterangan) {
+        List<SuratKeterangan> suratKeteranganList
+                = suratKeteranganDao.findByLastTree(kdSuratKeterangan);
+        for (SuratKeterangan suratKeterangan
+                : suratKeteranganList) {
+            suratKeterangan.setApprovalPenandatangan(1);
+        }
+
+    }
+
 }

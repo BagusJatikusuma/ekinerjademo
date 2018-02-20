@@ -15,5 +15,7 @@ public interface SuratKeputusanService {
     SuratKeputusan getByKdSuratKeputusan(String kdSuratKeputusan);
 
     void create(SuratKeputusan suratKeputusan);
+
+    void approveSuratKeputusan(String kdSuratKeputusan);
     
 }

@@ -22,4 +22,6 @@ public interface SuratEdaranService {
     void createSuratEdaranPejabat(SuratEdaranPejabat suratEdaranPejabat);
     void createSuratEdaranSub(SuratEdaranSub suratEdaranSub);
 
+    void approveSuratEdaran(String kdSuratEdaran);
+
 }

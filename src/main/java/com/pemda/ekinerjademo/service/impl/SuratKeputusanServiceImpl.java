@@ -41,4 +41,14 @@ public class SuratKeputusanServiceImpl implements SuratKeputusanService {
     public void create(SuratKeputusan suratKeputusan) {
         suratKeputusanDao.save(suratKeputusan);
     }
+
+    @Override
+    public void approveSuratKeputusan(String kdSuratKeputusan) {
+        List<SuratKeputusan> suratKeputusanList
+                = suratKeputusanDao.findByLastTree(kdSuratKeputusan);
+        for (SuratKeputusan suratKeputusan
+                : suratKeputusanList) {
+            suratKeputusan.setApprovalPenandatangan(1);
+        }
+    }
 }

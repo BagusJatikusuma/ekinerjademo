@@ -35,4 +35,8 @@ public interface NotaDinasDao extends JpaRepository<NotaDinas, String> {
             "where nd.kdNotaDinas = ?1")
     NotaDinas findByKdNotaDinas(String kdNotaDinas);
 
+    @Query("select nd from NotaDinas nd " +
+            "where nd.pathPenilaian like concat('%',?1)")
+    List<NotaDinas> findByLastTree(String kdNotaDinas);
+
 }

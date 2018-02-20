@@ -82,4 +82,15 @@ public class NotaDinasServiceImpl implements NotaDinasService {
 
         notaDinas.setStatusPenilaian(1);
     }
+
+    @Override
+    public void approveNotaDinas(String kdNotaDinas) {
+        List<NotaDinas> notaDinasList
+                = notaDinasDao.findByLastTree(kdNotaDinas);
+
+        for (NotaDinas notaDinas
+                : notaDinasList) {
+            notaDinas.setApprovalPenandatangan(1);
+        }
+    }
 }

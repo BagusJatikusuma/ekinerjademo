@@ -119,6 +119,17 @@ public class NotaDinasController {
         return new ResponseEntity<Object>(new CustomMessage("nota dinas created"), HttpStatus.OK);
     }
 
+    @RequestMapping(value = "/approve-nota-dinas/{kdNotaDinas}", method = RequestMethod.GET)
+    ResponseEntity<?> approveNotaDinas(@PathVariable("kdNotaDinas") String kdNotaDinas) {
+        LOGGER.info("approve nota dinas");
+
+        notaDinasService.approveNotaDinas(kdNotaDinas);
+
+        NotaDinas notaDinas = notaDinasService.findBykdNotaDinas(kdNotaDinas);
+
+        return new ResponseEntity<Object>(new CustomMessage("nota dinas sudah di approve"), HttpStatus.OK);
+    }
+
     @RequestMapping(value = "/get-nota-dinas-by-pembuat/{nipPembuat}", method = RequestMethod.GET)
     ResponseEntity<?> getNotaDinasByPembuat(@PathVariable("nipPembuat") String nipPembuat) {
         LOGGER.info("get nota dinas by pembuat");

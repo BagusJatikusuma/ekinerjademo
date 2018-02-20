@@ -45,4 +45,9 @@ public class LaporanServiceImpl implements LaporanService {
 
         laporan.setStatusPenilaian(1);
     }
+
+    @Override
+    public void approveLaporanService(String kdLaporan) {
+
+    }
 }

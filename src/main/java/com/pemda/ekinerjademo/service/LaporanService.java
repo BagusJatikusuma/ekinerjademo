@@ -15,4 +15,6 @@ public interface LaporanService {
     Laporan getLaporan(String kdLaporan);
 
     void openLaporanByPenilai(String kdLaporan);
+
+    void approveLaporanService(String kdLaporan);
 }

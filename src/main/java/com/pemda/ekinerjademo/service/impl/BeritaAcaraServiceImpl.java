@@ -48,4 +48,15 @@ public class BeritaAcaraServiceImpl implements BeritaAcaraService{
 
         beritaAcara.setStatusPenilaian(1);
     }
+
+    @Override
+    public void approveBeritaAcara(String kdBeritaAcara) {
+        List<BeritaAcara> beritaAcaraList
+                = beritaAcaraDao.findByLastTree(kdBeritaAcara);
+
+        for (BeritaAcara beritaAcara
+                : beritaAcaraList) {
+            beritaAcara.setStatusApprovalNipMengetahui(1);
+        }
+    }
 }

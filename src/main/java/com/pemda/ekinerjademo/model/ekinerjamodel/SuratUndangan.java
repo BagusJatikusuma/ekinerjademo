@@ -84,6 +84,9 @@ public class SuratUndangan {
     @Column(name = "tahun_urtug")
     private Integer tahunUrtug;
 
+    @Column(name = "approval_penandatangan")
+    private Integer approvalPenandatangan;
+
     @OneToOne(mappedBy = "suratUndangan", fetch = FetchType.LAZY)
     private SuratUndanganNonPejabat suratUndanganNonPejabat;
     @OneToOne(mappedBy = "suratUndangan", fetch = FetchType.LAZY)
@@ -385,5 +388,13 @@ public class SuratUndangan {
 
     public void setTembusanSuratUndanganList(List<TembusanSuratUndangan> tembusanSuratUndanganList) {
         this.tembusanSuratUndanganList = tembusanSuratUndanganList;
+    }
+
+    public Integer getApprovalPenandatangan() {
+        return approvalPenandatangan;
+    }
+
+    public void setApprovalPenandatangan(Integer approvalPenandatangan) {
+        this.approvalPenandatangan = approvalPenandatangan;
     }
 }

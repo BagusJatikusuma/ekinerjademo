@@ -150,6 +150,10 @@ public class MemorandumController {
     ResponseEntity<?> approveMemorandum(@PathVariable("kdMemorandum") String kdMemorandum) {
         LOGGER.info("approve memorandum");
 
+        memorandumService.approveMemorandum(kdMemorandum);
+
+        Memorandum memorandum = memorandumService.getByKdMemorandum(kdMemorandum);
+        memorandum.setStatusPenyebaran(1);
 
         return null;
     }

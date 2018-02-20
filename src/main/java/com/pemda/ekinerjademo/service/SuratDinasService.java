@@ -25,4 +25,6 @@ public interface SuratDinasService {
     void openTembusanSuratDinas(TembusanSuratDinasId tembusanSuratDinasId);
     void openSuratDinasPenilai(String kdSuratDinas);
 
+    void approveSuratDinas(String kdSuratDinas);
+
 }

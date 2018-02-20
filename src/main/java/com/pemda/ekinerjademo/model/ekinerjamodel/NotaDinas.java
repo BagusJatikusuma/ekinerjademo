@@ -68,6 +68,9 @@ public class NotaDinas {
     @Column(name = "tahun_urtug")
     private Integer tahunUrtug;
 
+    @Column(name = "approval_penandatangan")
+    private Integer approvalPenandatangan;
+
     @OneToMany(mappedBy = "notaDinas")
     private List<TembusanNotaDinas> tembusanNotaDinasList;
 
@@ -277,5 +280,13 @@ public class NotaDinas {
 
     public void setTembusanNotaDinasList(List<TembusanNotaDinas> tembusanNotaDinasList) {
         this.tembusanNotaDinasList = tembusanNotaDinasList;
+    }
+
+    public Integer getApprovalPenandatangan() {
+        return approvalPenandatangan;
+    }
+
+    public void setApprovalPenandatangan(Integer approvalPenandatangan) {
+        this.approvalPenandatangan = approvalPenandatangan;
     }
 }

@@ -24,4 +24,6 @@ public interface MemorandumService {
     void update(Memorandum memorandum);
 
     Memorandum getByKdMemorandum(String kdMemorandum);
+
+    void approveMemorandum(String kdMemorandum);
 }

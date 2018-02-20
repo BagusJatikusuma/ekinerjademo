@@ -41,4 +41,15 @@ public class PengumumanServiceImpl implements PengumumanService {
     public void create(Pengumuman pengumuman) {
         pengumumanDao.save(pengumuman);
     }
+
+    @Override
+    public void approvePengumuman(String kdPengumuman) {
+        List<Pengumuman> pengumumanList
+                = pengumumanDao.findBylastTree(kdPengumuman);
+        for (Pengumuman pengumuman
+                : pengumumanList) {
+            pengumuman.setApprovalPenandatangan(1);
+        }
+
+    }
 }

@@ -16,4 +16,5 @@ public interface PengumumanService {
 
     void create(Pengumuman pengumuman);
 
+    void approvePengumuman(String kdPengumuman);
 }

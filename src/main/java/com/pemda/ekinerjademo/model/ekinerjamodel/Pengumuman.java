@@ -67,6 +67,9 @@ public class Pengumuman {
     @Column(name = "tahun_urtug")
     private Integer tahunUrtug;
 
+    @Column(name = "approval_penandatangan")
+    private Integer approvalPenandatangan;
+
     public String getKdPengumuman() {
         return kdPengumuman;
     }
@@ -257,5 +260,13 @@ public class Pengumuman {
 
     public void setTahunUrtug(Integer tahunUrtug) {
         this.tahunUrtug = tahunUrtug;
+    }
+
+    public Integer getApprovalPenandatangan() {
+        return approvalPenandatangan;
+    }
+
+    public void setApprovalPenandatangan(Integer approvalPenandatangan) {
+        this.approvalPenandatangan = approvalPenandatangan;
     }
 }

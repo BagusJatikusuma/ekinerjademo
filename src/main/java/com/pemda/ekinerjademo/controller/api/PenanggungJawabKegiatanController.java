@@ -122,7 +122,7 @@ public class PenanggungJawabKegiatanController {
         }
 
 
-        return new ResponseEntity<Object>(null,HttpStatus.OK);
+        return new ResponseEntity<Object>(penanggungJawabWrappers,HttpStatus.OK);
     }
 
     //get calon penanggung jawab kegiatan

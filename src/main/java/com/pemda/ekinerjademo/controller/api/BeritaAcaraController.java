@@ -111,6 +111,10 @@ public class BeritaAcaraController {
     ResponseEntity<?> approveBeritaAcara(@PathVariable("kdBeritaAcara") String kdBeritaAcara) {
         LOGGER.info("approve berita acara");
 
+        //proses approve
+        beritaAcaraService.approveBeritaAcara(kdBeritaAcara);
+        //proses status penyebaran
+
         return new ResponseEntity<Object>(new CustomMessage("berita acara approved"), HttpStatus.OK);
     }
 

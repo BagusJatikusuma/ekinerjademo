@@ -23,5 +23,7 @@ public interface SuratKeteranganService {
     void openSuratKeterangan(String kdSuratKeterangan);
     void openTargetSuratKeterangan(TargetSuratKeteranganId targetSuratKeteranganId);
     void openSuratKeteranganPenilai(String kdSuratKeterangan);
+
+    void approveSuratKeterangan(String kdSuratKeterangan);
     
 }

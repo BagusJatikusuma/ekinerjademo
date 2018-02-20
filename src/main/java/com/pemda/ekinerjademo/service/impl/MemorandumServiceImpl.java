@@ -91,4 +91,15 @@ public class MemorandumServiceImpl implements MemorandumService {
     public Memorandum getByKdMemorandum(String kdMemorandum) {
         return memorandumDao.findByKdMemorandum(kdMemorandum);
     }
+
+    @Override
+    public void approveMemorandum(String kdMemorandum) {
+        List<Memorandum> memorandumList
+                = memorandumDao.findByLastTree(kdMemorandum);
+        for (Memorandum memorandum
+                : memorandumList) {
+            memorandum.setApprovalPenandatangan(1);
+        }
+    }
+
 }

@@ -25,4 +25,6 @@ public interface NotaDinasService {
     void openTembusanNotaDinas(TembusanNotaDinasId id);
     void openNotaDinasByPenilai(String kdNotaDinas);
 
+    void approveNotaDinas(String kdNotaDinas);
+
 }

@@ -65,4 +65,14 @@ public class SuratEdaranServiceImpl implements SuratEdaranService {
     public void createSuratEdaranSub(SuratEdaranSub suratEdaranSub) {
         suratEdaranSubDao.save(suratEdaranSub);
     }
+
+    @Override
+    public void approveSuratEdaran(String kdSuratEdaran) {
+        List<SuratEdaran> suratEdaranList
+                = suratEdaranDao.findByLastTree(kdSuratEdaran);
+        for (SuratEdaran suratEdaran
+                : suratEdaranList) {
+            suratEdaran.setApprovalPenandatangan(1);
+        }
+    }
 }

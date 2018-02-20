@@ -63,6 +63,9 @@ public class SuratKeterangan {
     @Column(name = "tahun_urtug")
     private Integer tahunUrtug;
 
+    @Column(name = "approval_penandatangan")
+    private Integer approvalPenandatangan;
+
     @OneToMany(mappedBy = "suratKeterangan")
     private List<TargetSuratKeterangan> targetSuratKeteranganList;
 
@@ -264,5 +267,13 @@ public class SuratKeterangan {
 
     public void setTargetSuratKeteranganList(List<TargetSuratKeterangan> targetSuratKeteranganList) {
         this.targetSuratKeteranganList = targetSuratKeteranganList;
+    }
+
+    public Integer getApprovalPenandatangan() {
+        return approvalPenandatangan;
+    }
+
+    public void setApprovalPenandatangan(Integer approvalPenandatangan) {
+        this.approvalPenandatangan = approvalPenandatangan;
     }
 }

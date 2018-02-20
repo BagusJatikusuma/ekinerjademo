@@ -92,4 +92,14 @@ public class SuratDinasServiceImpl implements SuratDinasService {
                 = suratDinasDao.findByKdSuratDinas(kdSuratDinas);
         suratDinas.setStatusPenilaian(1);
     }
+
+    @Override
+    public void approveSuratDinas(String kdSuratDinas) {
+        List<SuratDinas> suratDinasList
+                = suratDinasDao.findByLastTree(kdSuratDinas);
+        for (SuratDinas suratDinas
+                : suratDinasList) {
+            suratDinas.setApprovalPenandatangan(1);
+        }
+    }
 }
