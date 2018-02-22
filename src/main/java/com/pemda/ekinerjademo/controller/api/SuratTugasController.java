@@ -149,6 +149,7 @@ public class SuratTugasController {
         suratTugas.setNipPenilai(null);
         suratTugas.setStatusPenilaian(0);
         suratTugas.setAlasanPenolakan(null);
+        suratTugas.setStatusPenyebaran(0);
 
         suratTugas.setKdUrtug(inputWrapper.getKdUrtug());
         suratTugas.setTahunUrtug(inputWrapper.getTahunUrtug());
@@ -196,8 +197,6 @@ public class SuratTugasController {
         LOGGER.info("approve surat tugas");
 
         suratTugasService.approveSuratTugas(kdSuratTugas);
-        SuratTugas suratTugas = suratTugasService.getByKdSuratTugas(kdSuratTugas);
-        suratTugas.setStatusPenyebaran(1);
 
         return new ResponseEntity<Object>(new CustomMessage("surat tugas approved"), HttpStatus.OK);
     }
@@ -265,80 +264,86 @@ public class SuratTugasController {
         boolean isSuratPejabat = false;
         for (TargetSuratTugasPegawai suratTarget
                 : targetSuratTugasPegawaiList) {
-            for (CustomPegawaiCredential pegawaiPemberi : qutPegawaiList) {
-                if (pegawaiPemberi.getNip()
-                        .equals(suratTarget.getSuratTugas().getNipPenandatangan())) {
-                    if (suratTarget.getSuratTugas().getSuratTugasPejabat() != null)
-                        isSuratPejabat = true;
-                    else
-                        isSuratPejabat = false;
+            if (suratTarget.getSuratTugas().getStatusPenyebaran() == 1) {
+                for (CustomPegawaiCredential pegawaiPemberi : qutPegawaiList) {
+                    if (pegawaiPemberi.getNip()
+                            .equals(suratTarget.getSuratTugas().getNipPenandatangan())) {
+                        if (suratTarget.getSuratTugas().getSuratTugasPejabat() != null)
+                            isSuratPejabat = true;
+                        else
+                            isSuratPejabat = false;
 
-                    suratTugasTargetList
-                            .add(new SuratPerintahTargetWrapper(
-                                    suratTarget.getSuratTugas().getKdSuratTugas(),
-                                    "",
-                                    suratTarget.getSuratTugas().getTanggalTugasMilis(),
-                                    isSuratPejabat,
-                                    pegawaiPemberi.getNip(),
-                                    pegawaiPemberi.getNama(),
-                                    pegawaiPemberi.getJabatan(),
-                                    suratTarget.getStatusBaca(),
-                                    "Surat Tugas",
-                                    4));
-                    break;
+                        suratTugasTargetList
+                                .add(new SuratPerintahTargetWrapper(
+                                        suratTarget.getSuratTugas().getKdSuratTugas(),
+                                        "",
+                                        suratTarget.getSuratTugas().getTanggalTugasMilis(),
+                                        isSuratPejabat,
+                                        pegawaiPemberi.getNip(),
+                                        pegawaiPemberi.getNama(),
+                                        pegawaiPemberi.getJabatan(),
+                                        suratTarget.getStatusBaca(),
+                                        "Surat Tugas",
+                                        4));
+                        break;
+                    }
                 }
             }
         }
         for (TargetSuratTugasPejabat suratTarget
                 : targetSuratTugasPejabatList) {
-            for (CustomPegawaiCredential pegawaiPemberi : qutPegawaiList) {
-                if (pegawaiPemberi.getNip()
-                        .equals(suratTarget.getSuratTugas().getNipPenandatangan())) {
-                    if (suratTarget.getSuratTugas().getSuratTugasPejabat() != null)
-                        isSuratPejabat = true;
-                    else
-                        isSuratPejabat = false;
+            if (suratTarget.getSuratTugas().getStatusPenyebaran() == 1) {
+                for (CustomPegawaiCredential pegawaiPemberi : qutPegawaiList) {
+                    if (pegawaiPemberi.getNip()
+                            .equals(suratTarget.getSuratTugas().getNipPenandatangan())) {
+                        if (suratTarget.getSuratTugas().getSuratTugasPejabat() != null)
+                            isSuratPejabat = true;
+                        else
+                            isSuratPejabat = false;
 
-                    suratTugasTargetList
-                            .add(new SuratPerintahTargetWrapper(
-                                    suratTarget.getSuratTugas().getKdSuratTugas(),
-                                    "",
-                                    suratTarget.getSuratTugas().getTanggalTugasMilis(),
-                                    isSuratPejabat,
-                                    pegawaiPemberi.getNip(),
-                                    pegawaiPemberi.getNama(),
-                                    pegawaiPemberi.getJabatan(),
-                                    suratTarget.getStatusBaca(),
-                                    "Surat Tugas",
-                                    4));
-                    break;
+                        suratTugasTargetList
+                                .add(new SuratPerintahTargetWrapper(
+                                        suratTarget.getSuratTugas().getKdSuratTugas(),
+                                        "",
+                                        suratTarget.getSuratTugas().getTanggalTugasMilis(),
+                                        isSuratPejabat,
+                                        pegawaiPemberi.getNip(),
+                                        pegawaiPemberi.getNama(),
+                                        pegawaiPemberi.getJabatan(),
+                                        suratTarget.getStatusBaca(),
+                                        "Surat Tugas",
+                                        4));
+                        break;
+                    }
                 }
             }
         }
 
         for (TembusanSuratTugas suratTarget
                 : tembusanSuratTugasList) {
-            for (CustomPegawaiCredential pegawaiPemberi : qutPegawaiList) {
-                if (pegawaiPemberi.getNip()
-                        .equals(suratTarget.getSuratTugas().getNipPenandatangan())) {
-                    if (suratTarget.getSuratTugas().getSuratTugasPejabat() != null)
-                        isSuratPejabat = true;
-                    else
-                        isSuratPejabat = false;
+            if (suratTarget.getSuratTugas().getStatusPenyebaran() == 1) {
+                for (CustomPegawaiCredential pegawaiPemberi : qutPegawaiList) {
+                    if (pegawaiPemberi.getNip()
+                            .equals(suratTarget.getSuratTugas().getNipPenandatangan())) {
+                        if (suratTarget.getSuratTugas().getSuratTugasPejabat() != null)
+                            isSuratPejabat = true;
+                        else
+                            isSuratPejabat = false;
 
-                    suratTugasTargetList
-                            .add(new SuratPerintahTargetWrapper(
-                                    suratTarget.getSuratTugas().getKdSuratTugas(),
-                                    "",
-                                    suratTarget.getSuratTugas().getTanggalTugasMilis(),
-                                    isSuratPejabat,
-                                    pegawaiPemberi.getNip(),
-                                    pegawaiPemberi.getNama(),
-                                    pegawaiPemberi.getJabatan(),
-                                    suratTarget.getStatusBaca(),
-                                    "Surat Tugas",
-                                    4));
-                    break;
+                        suratTugasTargetList
+                                .add(new SuratPerintahTargetWrapper(
+                                        suratTarget.getSuratTugas().getKdSuratTugas(),
+                                        "",
+                                        suratTarget.getSuratTugas().getTanggalTugasMilis(),
+                                        isSuratPejabat,
+                                        pegawaiPemberi.getNip(),
+                                        pegawaiPemberi.getNama(),
+                                        pegawaiPemberi.getJabatan(),
+                                        suratTarget.getStatusBaca(),
+                                        "Surat Tugas",
+                                        4));
+                        break;
+                    }
                 }
             }
         }
@@ -377,87 +382,93 @@ public class SuratTugasController {
         boolean isSuratPejabat = false;
         for (TargetSuratTugasPegawai suratTarget
                 : targetSuratTugasPegawaiList) {
-            for (CustomPegawaiCredential pegawaiPemberi : qutPegawaiList) {
-                if (pegawaiPemberi.getNip()
-                        .equals(suratTarget.getSuratTugas().getNipPenandatangan())) {
-                    if (suratTarget.getSuratTugas().getSuratTugasPejabat() != null)
-                        isSuratPejabat = true;
-                    else
-                        isSuratPejabat = false;
+            if (suratTarget.getSuratTugas().getStatusPenyebaran() == 1) {
+                for (CustomPegawaiCredential pegawaiPemberi : qutPegawaiList) {
+                    if (pegawaiPemberi.getNip()
+                            .equals(suratTarget.getSuratTugas().getNipPenandatangan())) {
+                        if (suratTarget.getSuratTugas().getSuratTugasPejabat() != null)
+                            isSuratPejabat = true;
+                        else
+                            isSuratPejabat = false;
 
-                    if (suratTarget.getStatusBaca() == 0) {
-                        suratTugasTargetList
-                                .add(new SuratPerintahTargetWrapper(
-                                        suratTarget.getSuratTugas().getKdSuratTugas(),
-                                        "",
-                                        suratTarget.getSuratTugas().getTanggalTugasMilis(),
-                                        isSuratPejabat,
-                                        pegawaiPemberi.getNip(),
-                                        pegawaiPemberi.getNama(),
-                                        pegawaiPemberi.getJabatan(),
-                                        suratTarget.getStatusBaca(),
-                                        "Surat Tugas",
-                                        4));
+                        if (suratTarget.getStatusBaca() == 0) {
+                            suratTugasTargetList
+                                    .add(new SuratPerintahTargetWrapper(
+                                            suratTarget.getSuratTugas().getKdSuratTugas(),
+                                            "",
+                                            suratTarget.getSuratTugas().getTanggalTugasMilis(),
+                                            isSuratPejabat,
+                                            pegawaiPemberi.getNip(),
+                                            pegawaiPemberi.getNama(),
+                                            pegawaiPemberi.getJabatan(),
+                                            suratTarget.getStatusBaca(),
+                                            "Surat Tugas",
+                                            4));
+                        }
+                        break;
                     }
-                    break;
                 }
             }
         }
         for (TargetSuratTugasPejabat suratTarget
                 : targetSuratTugasPejabatList) {
-            for (CustomPegawaiCredential pegawaiPemberi : qutPegawaiList) {
-                if (pegawaiPemberi.getNip()
-                        .equals(suratTarget.getSuratTugas().getNipPenandatangan())) {
-                    if (suratTarget.getSuratTugas().getSuratTugasPejabat() != null)
-                        isSuratPejabat = true;
-                    else
-                        isSuratPejabat = false;
+            if (suratTarget.getSuratTugas().getStatusPenyebaran() == 1) {
+                for (CustomPegawaiCredential pegawaiPemberi : qutPegawaiList) {
+                    if (pegawaiPemberi.getNip()
+                            .equals(suratTarget.getSuratTugas().getNipPenandatangan())) {
+                        if (suratTarget.getSuratTugas().getSuratTugasPejabat() != null)
+                            isSuratPejabat = true;
+                        else
+                            isSuratPejabat = false;
 
-                    if (suratTarget.getStatusBaca() == 0) {
-                        suratTugasTargetList
-                                .add(new SuratPerintahTargetWrapper(
-                                        suratTarget.getSuratTugas().getKdSuratTugas(),
-                                        "",
-                                        suratTarget.getSuratTugas().getTanggalTugasMilis(),
-                                        isSuratPejabat,
-                                        pegawaiPemberi.getNip(),
-                                        pegawaiPemberi.getNama(),
-                                        pegawaiPemberi.getJabatan(),
-                                        suratTarget.getStatusBaca(),
-                                        "Surat Tugas",
-                                        4));
+                        if (suratTarget.getStatusBaca() == 0) {
+                            suratTugasTargetList
+                                    .add(new SuratPerintahTargetWrapper(
+                                            suratTarget.getSuratTugas().getKdSuratTugas(),
+                                            "",
+                                            suratTarget.getSuratTugas().getTanggalTugasMilis(),
+                                            isSuratPejabat,
+                                            pegawaiPemberi.getNip(),
+                                            pegawaiPemberi.getNama(),
+                                            pegawaiPemberi.getJabatan(),
+                                            suratTarget.getStatusBaca(),
+                                            "Surat Tugas",
+                                            4));
+                        }
+
+                        break;
                     }
-
-                    break;
                 }
             }
         }
 
         for (TembusanSuratTugas suratTarget
                 : tembusanSuratTugasList) {
-            for (CustomPegawaiCredential pegawaiPemberi : qutPegawaiList) {
-                if (pegawaiPemberi.getNip()
-                        .equals(suratTarget.getSuratTugas().getNipPenandatangan())) {
-                    if (suratTarget.getSuratTugas().getSuratTugasPejabat() != null)
-                        isSuratPejabat = true;
-                    else
-                        isSuratPejabat = false;
+            if (suratTarget.getSuratTugas().getStatusPenyebaran() == 1) {
+                for (CustomPegawaiCredential pegawaiPemberi : qutPegawaiList) {
+                    if (pegawaiPemberi.getNip()
+                            .equals(suratTarget.getSuratTugas().getNipPenandatangan())) {
+                        if (suratTarget.getSuratTugas().getSuratTugasPejabat() != null)
+                            isSuratPejabat = true;
+                        else
+                            isSuratPejabat = false;
 
-                    if (suratTarget.getStatusBaca() == 0) {
-                        suratTugasTargetList
-                                .add(new SuratPerintahTargetWrapper(
-                                        suratTarget.getSuratTugas().getKdSuratTugas(),
-                                        "",
-                                        suratTarget.getSuratTugas().getTanggalTugasMilis(),
-                                        isSuratPejabat,
-                                        pegawaiPemberi.getNip(),
-                                        pegawaiPemberi.getNama(),
-                                        pegawaiPemberi.getJabatan(),
-                                        suratTarget.getStatusBaca(),
-                                        "Surat Tugas",
-                                        4));
+                        if (suratTarget.getStatusBaca() == 0) {
+                            suratTugasTargetList
+                                    .add(new SuratPerintahTargetWrapper(
+                                            suratTarget.getSuratTugas().getKdSuratTugas(),
+                                            "",
+                                            suratTarget.getSuratTugas().getTanggalTugasMilis(),
+                                            isSuratPejabat,
+                                            pegawaiPemberi.getNip(),
+                                            pegawaiPemberi.getNama(),
+                                            pegawaiPemberi.getJabatan(),
+                                            suratTarget.getStatusBaca(),
+                                            "Surat Tugas",
+                                            4));
+                        }
+                        break;
                     }
-                    break;
                 }
             }
         }

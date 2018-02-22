@@ -152,10 +152,6 @@ public class MemorandumController {
 
         memorandumService.approveMemorandum(kdMemorandum);
 
-        Memorandum memorandum = memorandumService.getByKdMemorandum(kdMemorandum);
-        memorandum.setStatusPenyebaran(1);
-        memorandumService.createMemorandum(memorandum);
-
         return new ResponseEntity<Object>(new CustomMessage("memorandum sudah di approve"), HttpStatus.OK);
     }
 
@@ -223,57 +219,62 @@ public class MemorandumController {
         //get surat perintah berdasarkan target
         for (Memorandum memorandum
                 : memorandumTargetList) {
-            for (CustomPegawaiCredential pegawaiPemberi : qutPegawaiList) {
-                if (pegawaiPemberi.getNip()
-                        .equals(memorandum.getNipPenandatangan())) {
-                    if (memorandum.getMemorandumPejabat() != null)
-                        isSuratPejabat = true;
-                    else
-                        isSuratPejabat = false;
+            if (memorandum.getStatusPenyebaran() == 1) {
+                for (CustomPegawaiCredential pegawaiPemberi : qutPegawaiList) {
+                    if (pegawaiPemberi.getNip()
+                            .equals(memorandum.getNipPenandatangan())) {
+                        if (memorandum.getMemorandumPejabat() != null)
+                            isSuratPejabat = true;
+                        else
+                            isSuratPejabat = false;
 
-                    memorandumTargetWrappers
-                            .add(new MemorandumTargetWrapper(memorandum.getKdMemorandum(),
-                                    df.format(new Date(memorandum.getTanggalPembuatanMilis())),
-                                    memorandum.getTanggalPembuatanMilis(),
-                                    isSuratPejabat,
-                                    pegawaiPemberi.getNip(),
-                                    pegawaiPemberi.getNama(),
-                                    pegawaiPemberi.getJabatan(),
-                                    memorandum.getStatusBaca(),
-                                    "memorandum",
-                                    2));
+                        memorandumTargetWrappers
+                                .add(new MemorandumTargetWrapper(memorandum.getKdMemorandum(),
+                                        df.format(new Date(memorandum.getTanggalPembuatanMilis())),
+                                        memorandum.getTanggalPembuatanMilis(),
+                                        isSuratPejabat,
+                                        pegawaiPemberi.getNip(),
+                                        pegawaiPemberi.getNama(),
+                                        pegawaiPemberi.getJabatan(),
+                                        memorandum.getStatusBaca(),
+                                        "memorandum",
+                                        2));
 
-                    break;
+                        break;
+
+                    }
 
                 }
-
             }
 
         }
         //get surat perintah berdasarkan tembusan
         for (TembusanMemorandum tembusanMemorandum
                 : tembusanMemorandumList) {
-            for (CustomPegawaiCredential pegawaiPemberi : qutPegawaiList) {
-                if (pegawaiPemberi.getNip()
-                        .equals(tembusanMemorandum.getMemorandum().getNipPenandatangan())) {
-                    if (tembusanMemorandum.getMemorandum().getMemorandumPejabat() != null)
-                        isSuratPejabat = true;
-                    else
-                        isSuratPejabat = false;
+            if (tembusanMemorandum.getMemorandum().getStatusPenyebaran() == 1) {
+                for (CustomPegawaiCredential pegawaiPemberi : qutPegawaiList) {
+                    if (pegawaiPemberi.getNip()
+                            .equals(tembusanMemorandum.getMemorandum().getNipPenandatangan())) {
+                        if (tembusanMemorandum.getMemorandum().getMemorandumPejabat() != null)
+                            isSuratPejabat = true;
+                        else
+                            isSuratPejabat = false;
 
-                    memorandumTargetWrappers
-                            .add(new MemorandumTargetWrapper(tembusanMemorandum.getMemorandum().getKdMemorandum(),
-                                    df.format(new Date(tembusanMemorandum.getMemorandum().getTanggalPembuatanMilis())),
-                                    tembusanMemorandum.getMemorandum().getTanggalPembuatanMilis(),
-                                    isSuratPejabat,
-                                    pegawaiPemberi.getNip(),
-                                    pegawaiPemberi.getNama(),
-                                    pegawaiPemberi.getJabatan(),
-                                    tembusanMemorandum.getStatusBaca(),
-                                    "memorandum",
-                                    2));
+                        memorandumTargetWrappers
+                                .add(new MemorandumTargetWrapper(tembusanMemorandum.getMemorandum().getKdMemorandum(),
+                                        df.format(new Date(tembusanMemorandum.getMemorandum().getTanggalPembuatanMilis())),
+                                        tembusanMemorandum.getMemorandum().getTanggalPembuatanMilis(),
+                                        isSuratPejabat,
+                                        pegawaiPemberi.getNip(),
+                                        pegawaiPemberi.getNama(),
+                                        pegawaiPemberi.getJabatan(),
+                                        tembusanMemorandum.getStatusBaca(),
+                                        "memorandum",
+                                        2));
 
-                    break;
+                        break;
+
+                    }
 
                 }
 
@@ -315,30 +316,33 @@ public class MemorandumController {
         //get surat perintah berdasarkan target
         for (Memorandum memorandum
                 : memorandumTargetList) {
-            for (CustomPegawaiCredential pegawaiPemberi : qutPegawaiList) {
-                if (pegawaiPemberi.getNip()
-                        .equals(memorandum.getNipPenandatangan())) {
-                    if (memorandum.getMemorandumPejabat() != null)
-                        isSuratPejabat = true;
-                    else
-                        isSuratPejabat = false;
+            if (memorandum.getStatusPenyebaran() == 1) {
+                for (CustomPegawaiCredential pegawaiPemberi : qutPegawaiList) {
+                    if (pegawaiPemberi.getNip()
+                            .equals(memorandum.getNipPenandatangan())) {
+                        if (memorandum.getMemorandumPejabat() != null)
+                            isSuratPejabat = true;
+                        else
+                            isSuratPejabat = false;
 
-                    if (memorandum.getStatusBaca() == 0) {
-                        memorandumTargetWrappers
-                                .add(new MemorandumTargetWrapper(
-                                        memorandum.getKdMemorandum(),
-                                        df.format(new Date(memorandum.getTanggalPembuatanMilis())),
-                                        memorandum.getTanggalPembuatanMilis(),
-                                        isSuratPejabat,
-                                        pegawaiPemberi.getNip(),
-                                        pegawaiPemberi.getNama(),
-                                        pegawaiPemberi.getJabatan(),
-                                        memorandum.getStatusBaca(),
-                                        "memorandum",
-                                        2));
+                        if (memorandum.getStatusBaca() == 0) {
+                            memorandumTargetWrappers
+                                    .add(new MemorandumTargetWrapper(
+                                            memorandum.getKdMemorandum(),
+                                            df.format(new Date(memorandum.getTanggalPembuatanMilis())),
+                                            memorandum.getTanggalPembuatanMilis(),
+                                            isSuratPejabat,
+                                            pegawaiPemberi.getNip(),
+                                            pegawaiPemberi.getNama(),
+                                            pegawaiPemberi.getJabatan(),
+                                            memorandum.getStatusBaca(),
+                                            "memorandum",
+                                            2));
+                        }
+
+                        break;
+
                     }
-
-                    break;
 
                 }
 
@@ -348,29 +352,32 @@ public class MemorandumController {
         //get surat perintah berdasarkan tembusan
         for (TembusanMemorandum tembusanMemorandum
                 : tembusanMemorandumList) {
-            for (CustomPegawaiCredential pegawaiPemberi : qutPegawaiList) {
-                if (pegawaiPemberi.getNip()
-                        .equals(tembusanMemorandum.getMemorandum().getNipPenandatangan())) {
-                    if (tembusanMemorandum.getMemorandum().getMemorandumPejabat() != null)
-                        isSuratPejabat = true;
-                    else
-                        isSuratPejabat = false;
+            if (tembusanMemorandum.getMemorandum().getStatusPenyebaran() == 1) {
+                for (CustomPegawaiCredential pegawaiPemberi : qutPegawaiList) {
+                    if (pegawaiPemberi.getNip()
+                            .equals(tembusanMemorandum.getMemorandum().getNipPenandatangan())) {
+                        if (tembusanMemorandum.getMemorandum().getMemorandumPejabat() != null)
+                            isSuratPejabat = true;
+                        else
+                            isSuratPejabat = false;
 
-                    if (tembusanMemorandum.getStatusBaca() == 0) {
-                        memorandumTargetWrappers
-                                .add(new MemorandumTargetWrapper(tembusanMemorandum.getMemorandum().getKdMemorandum(),
-                                        df.format(new Date(tembusanMemorandum.getMemorandum().getTanggalPembuatanMilis())),
-                                        tembusanMemorandum.getMemorandum().getTanggalPembuatanMilis(),
-                                        isSuratPejabat,
-                                        pegawaiPemberi.getNip(),
-                                        pegawaiPemberi.getNama(),
-                                        pegawaiPemberi.getJabatan(),
-                                        tembusanMemorandum.getStatusBaca(),
-                                        "memorandum",
-                                        2));
+                        if (tembusanMemorandum.getStatusBaca() == 0) {
+                            memorandumTargetWrappers
+                                    .add(new MemorandumTargetWrapper(tembusanMemorandum.getMemorandum().getKdMemorandum(),
+                                            df.format(new Date(tembusanMemorandum.getMemorandum().getTanggalPembuatanMilis())),
+                                            tembusanMemorandum.getMemorandum().getTanggalPembuatanMilis(),
+                                            isSuratPejabat,
+                                            pegawaiPemberi.getNip(),
+                                            pegawaiPemberi.getNama(),
+                                            pegawaiPemberi.getJabatan(),
+                                            tembusanMemorandum.getStatusBaca(),
+                                            "memorandum",
+                                            2));
+                        }
+
+                        break;
+
                     }
-
-                    break;
 
                 }
 

@@ -93,6 +93,7 @@ public class SuratPengantarController {
         suratPengantar.setStatusPenilaian(0);
         suratPengantar.setAlasanPenolakan("");
         suratPengantar.setStatusBaca(0);
+        suratPengantar.setStatusPenyebaran(0);
         suratPengantar.setNipPenerima(inputWrapper.getNipPenerimaSuratPengantar());
 
         suratPengantar.setKdUrtug(inputWrapper.getKdUrtug());
@@ -139,7 +140,6 @@ public class SuratPengantarController {
         LOGGER.info("sebar surat pengantar");
 
         suratPengantarService.approveSuratPengantar(kdSuratPengantar);
-        SuratPengantar suratPengantar = suratPengantarService.getByKdSuratPengantar(kdSuratPengantar);
 
         return new ResponseEntity<Object>(null, HttpStatus.OK);
 
@@ -204,23 +204,25 @@ public class SuratPengantarController {
 
         DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
         for (SuratPengantar suratTarget : suratPengantarTargetList) {
-            for (CustomPegawaiCredential pegawaiPemberi : qutPegawaiList) {
-                if (pegawaiPemberi.getKdJabatan()
-                        .equals(suratTarget.getKdJabatanPenerimaSuratPengantar())) {
-                    suratPengantarTargetWrappers
-                            .add(new SuratPerintahTargetWrapper(
-                                    suratTarget.getKdSuratPengantar(),
-                                    "",
-                                    suratTarget.getTanggalPembuatanMilis(),
-                                    false,
-                                    pegawaiPemberi.getNip(),
-                                    pegawaiPemberi.getNama(),
-                                    pegawaiPemberi.getJabatan(),
-                                    suratTarget.getStatusBaca(),
-                                    "Surat Pengantar",
-                                    10
-                            ));
-                    break;
+            if (suratTarget.getStatusPenyebaran() == 1) {
+                for (CustomPegawaiCredential pegawaiPemberi : qutPegawaiList) {
+                    if (pegawaiPemberi.getKdJabatan()
+                            .equals(suratTarget.getKdJabatanPenerimaSuratPengantar())) {
+                        suratPengantarTargetWrappers
+                                .add(new SuratPerintahTargetWrapper(
+                                        suratTarget.getKdSuratPengantar(),
+                                        "",
+                                        suratTarget.getTanggalPembuatanMilis(),
+                                        false,
+                                        pegawaiPemberi.getNip(),
+                                        pegawaiPemberi.getNama(),
+                                        pegawaiPemberi.getJabatan(),
+                                        suratTarget.getStatusBaca(),
+                                        "Surat Pengantar",
+                                        10
+                                ));
+                        break;
+                    }
                 }
             }
         }
@@ -254,25 +256,27 @@ public class SuratPengantarController {
 
         DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
         for (SuratPengantar suratTarget : suratPengantarTargetList) {
-            for (CustomPegawaiCredential pegawaiPemberi : qutPegawaiList) {
-                if (pegawaiPemberi.getKdJabatan()
-                        .equals(suratTarget.getKdJabatanPenerimaSuratPengantar())) {
-                    if (suratTarget.getStatusBaca() == 0) {
-                        suratPengantarTargetWrappers
-                                .add(new SuratPerintahTargetWrapper(
-                                        suratTarget.getKdSuratPengantar(),
-                                        "",
-                                        suratTarget.getTanggalPembuatanMilis(),
-                                        false,
-                                        pegawaiPemberi.getNip(),
-                                        pegawaiPemberi.getNama(),
-                                        pegawaiPemberi.getJabatan(),
-                                        suratTarget.getStatusBaca(),
-                                        "Surat Pengantar",
-                                        10
-                                ));
+            if (suratTarget.getStatusPenyebaran() == 1) {
+                for (CustomPegawaiCredential pegawaiPemberi : qutPegawaiList) {
+                    if (pegawaiPemberi.getKdJabatan()
+                            .equals(suratTarget.getKdJabatanPenerimaSuratPengantar())) {
+                        if (suratTarget.getStatusBaca() == 0) {
+                            suratPengantarTargetWrappers
+                                    .add(new SuratPerintahTargetWrapper(
+                                            suratTarget.getKdSuratPengantar(),
+                                            "",
+                                            suratTarget.getTanggalPembuatanMilis(),
+                                            false,
+                                            pegawaiPemberi.getNip(),
+                                            pegawaiPemberi.getNama(),
+                                            pegawaiPemberi.getJabatan(),
+                                            suratTarget.getStatusBaca(),
+                                            "Surat Pengantar",
+                                            10
+                                    ));
+                        }
+                        break;
                     }
-                    break;
                 }
             }
         }

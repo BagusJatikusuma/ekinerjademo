@@ -101,6 +101,7 @@ public class SuratDinasController {
         suratDinas.setNipPenilai("");
         suratDinas.setStatusPenilaian(0);
         suratDinas.setAlasanPenolakan("");
+        suratDinas.setStatusPenyebaran(0);
 
         suratDinas.setKdUrtug(inputWrapper.getKdUrtug());
         suratDinas.setTahunUrtug(inputWrapper.getTahunUrtug());
@@ -143,7 +144,6 @@ public class SuratDinasController {
         LOGGER.info("sebar surat dinas");
 
         suratDinasService.approveSuratDinas(kdSuratDinas);
-        SuratDinas suratDinas = suratDinasService.getByKdSuratDinas(kdSuratDinas);
 
         return new ResponseEntity<Object>(null, HttpStatus.OK);
 
@@ -223,58 +223,62 @@ public class SuratDinasController {
         boolean isSuratPejabat = false;
         for (SuratDinas suratDinas
                 : suratDinasTargetList) {
-            for (CustomPegawaiCredential pegawaiPemberi : qutPegawaiList) {
-                if (pegawaiPemberi.getNip()
-                        .equals(suratDinas.getNipPenandatangan())) {
+            if (suratDinas.getStatusPenyebaran() == 1) {
+                for (CustomPegawaiCredential pegawaiPemberi : qutPegawaiList) {
+                    if (pegawaiPemberi.getNip()
+                            .equals(suratDinas.getNipPenandatangan())) {
 
-                    if (suratDinas.getSuratDinasPejabat() != null) {
-                        isSuratPejabat = true;
-                    } else {
-                        isSuratPejabat = false;
+                        if (suratDinas.getSuratDinasPejabat() != null) {
+                            isSuratPejabat = true;
+                        } else {
+                            isSuratPejabat = false;
+                        }
+
+                        targetSuratDinasListWrapper
+                                .add(new SuratPerintahTargetWrapper(
+                                        suratDinas.getKdSuratDinas(),
+                                        "",
+                                        suratDinas.getTanggalPembuatanMilis(),
+                                        isSuratPejabat,
+                                        pegawaiPemberi.getNip(),
+                                        pegawaiPemberi.getNama(),
+                                        pegawaiPemberi.getJabatan(),
+                                        suratDinas.getStatusBaca(),
+                                        "Surat Dinas",
+                                        5));
+                        break;
                     }
-
-                    targetSuratDinasListWrapper
-                            .add(new SuratPerintahTargetWrapper(
-                                    suratDinas.getKdSuratDinas(),
-                                    "",
-                                    suratDinas.getTanggalPembuatanMilis(),
-                                    isSuratPejabat,
-                                    pegawaiPemberi.getNip(),
-                                    pegawaiPemberi.getNama(),
-                                    pegawaiPemberi.getJabatan(),
-                                    suratDinas.getStatusBaca(),
-                                    "Surat Dinas",
-                                    5));
-                    break;
                 }
             }
         }
         //get by tembusan
         for (TembusanSuratDinas tembusanSuratDinas
                 : tembusanSuratDinasTargetList) {
-            for (CustomPegawaiCredential pegawaiPemberi : qutPegawaiList) {
-                if (pegawaiPemberi.getKdJabatan()
-                        .equals(tembusanSuratDinas.getSuratDinas().getKdJabatanPenerimaSuratDinas())) {
+            if (tembusanSuratDinas.getSuratDinas().getStatusPenyebaran() == 1) {
+                for (CustomPegawaiCredential pegawaiPemberi : qutPegawaiList) {
+                    if (pegawaiPemberi.getKdJabatan()
+                            .equals(tembusanSuratDinas.getSuratDinas().getKdJabatanPenerimaSuratDinas())) {
 
-                    if (tembusanSuratDinas.getSuratDinas().getSuratDinasPejabat() != null) {
-                        isSuratPejabat = true;
-                    } else {
-                        isSuratPejabat = false;
+                        if (tembusanSuratDinas.getSuratDinas().getSuratDinasPejabat() != null) {
+                            isSuratPejabat = true;
+                        } else {
+                            isSuratPejabat = false;
+                        }
+
+                        targetSuratDinasListWrapper
+                                .add(new SuratPerintahTargetWrapper(
+                                        tembusanSuratDinas.getSuratDinas().getKdSuratDinas(),
+                                        "",
+                                        tembusanSuratDinas.getSuratDinas().getTanggalPembuatanMilis(),
+                                        isSuratPejabat,
+                                        pegawaiPemberi.getNip(),
+                                        pegawaiPemberi.getNama(),
+                                        pegawaiPemberi.getJabatan(),
+                                        tembusanSuratDinas.getStatusBaca(),
+                                        "Surat Dinas",
+                                        5));
+                        break;
                     }
-
-                    targetSuratDinasListWrapper
-                            .add(new SuratPerintahTargetWrapper(
-                                    tembusanSuratDinas.getSuratDinas().getKdSuratDinas(),
-                                    "",
-                                    tembusanSuratDinas.getSuratDinas().getTanggalPembuatanMilis(),
-                                    isSuratPejabat,
-                                    pegawaiPemberi.getNip(),
-                                    pegawaiPemberi.getNama(),
-                                    pegawaiPemberi.getJabatan(),
-                                    tembusanSuratDinas.getStatusBaca(),
-                                    "Surat Dinas",
-                                    5));
-                    break;
                 }
             }
         }
@@ -311,62 +315,66 @@ public class SuratDinasController {
         boolean isSuratPejabat = false;
         for (SuratDinas suratDinas
                 : suratDinasTargetList) {
-            for (CustomPegawaiCredential pegawaiPemberi : qutPegawaiList) {
-                if (pegawaiPemberi.getNip()
-                        .equals(suratDinas.getNipPenandatangan())) {
+            if (suratDinas.getStatusPenyebaran() == 1) {
+                for (CustomPegawaiCredential pegawaiPemberi : qutPegawaiList) {
+                    if (pegawaiPemberi.getNip()
+                            .equals(suratDinas.getNipPenandatangan())) {
 
-                    if (suratDinas.getSuratDinasPejabat() != null) {
-                        isSuratPejabat = true;
-                    } else {
-                        isSuratPejabat = false;
-                    }
+                        if (suratDinas.getSuratDinasPejabat() != null) {
+                            isSuratPejabat = true;
+                        } else {
+                            isSuratPejabat = false;
+                        }
 
-                    if (suratDinas.getStatusBaca() == 0) {
-                        targetSuratDinasListWrapper
-                                .add(new SuratPerintahTargetWrapper(
-                                        suratDinas.getKdSuratDinas(),
-                                        "",
-                                        suratDinas.getTanggalPembuatanMilis(),
-                                        isSuratPejabat,
-                                        pegawaiPemberi.getNip(),
-                                        pegawaiPemberi.getNama(),
-                                        pegawaiPemberi.getJabatan(),
-                                        suratDinas.getStatusBaca(),
-                                        "Surat Dinas",
-                                        5));
+                        if (suratDinas.getStatusBaca() == 0) {
+                            targetSuratDinasListWrapper
+                                    .add(new SuratPerintahTargetWrapper(
+                                            suratDinas.getKdSuratDinas(),
+                                            "",
+                                            suratDinas.getTanggalPembuatanMilis(),
+                                            isSuratPejabat,
+                                            pegawaiPemberi.getNip(),
+                                            pegawaiPemberi.getNama(),
+                                            pegawaiPemberi.getJabatan(),
+                                            suratDinas.getStatusBaca(),
+                                            "Surat Dinas",
+                                            5));
+                        }
+                        break;
                     }
-                    break;
                 }
             }
         }
         //get by tembusan
         for (TembusanSuratDinas tembusanSuratDinas
                 : tembusanSuratDinasTargetList) {
-            for (CustomPegawaiCredential pegawaiPemberi : qutPegawaiList) {
-                if (pegawaiPemberi.getKdJabatan()
-                        .equals(tembusanSuratDinas.getSuratDinas().getKdJabatanPenerimaSuratDinas())) {
+            if (tembusanSuratDinas.getSuratDinas().getStatusPenyebaran() == 1) {
+                for (CustomPegawaiCredential pegawaiPemberi : qutPegawaiList) {
+                    if (pegawaiPemberi.getKdJabatan()
+                            .equals(tembusanSuratDinas.getSuratDinas().getKdJabatanPenerimaSuratDinas())) {
 
-                    if (tembusanSuratDinas.getSuratDinas().getSuratDinasPejabat() != null) {
-                        isSuratPejabat = true;
-                    } else {
-                        isSuratPejabat = false;
-                    }
+                        if (tembusanSuratDinas.getSuratDinas().getSuratDinasPejabat() != null) {
+                            isSuratPejabat = true;
+                        } else {
+                            isSuratPejabat = false;
+                        }
 
-                    if (tembusanSuratDinas.getStatusBaca() == 0) {
-                        targetSuratDinasListWrapper
-                                .add(new SuratPerintahTargetWrapper(
-                                        tembusanSuratDinas.getSuratDinas().getKdSuratDinas(),
-                                        "",
-                                        tembusanSuratDinas.getSuratDinas().getTanggalPembuatanMilis(),
-                                        isSuratPejabat,
-                                        pegawaiPemberi.getNip(),
-                                        pegawaiPemberi.getNama(),
-                                        pegawaiPemberi.getJabatan(),
-                                        tembusanSuratDinas.getStatusBaca(),
-                                        "Surat Dinas",
-                                        5));
+                        if (tembusanSuratDinas.getStatusBaca() == 0) {
+                            targetSuratDinasListWrapper
+                                    .add(new SuratPerintahTargetWrapper(
+                                            tembusanSuratDinas.getSuratDinas().getKdSuratDinas(),
+                                            "",
+                                            tembusanSuratDinas.getSuratDinas().getTanggalPembuatanMilis(),
+                                            isSuratPejabat,
+                                            pegawaiPemberi.getNip(),
+                                            pegawaiPemberi.getNama(),
+                                            pegawaiPemberi.getJabatan(),
+                                            tembusanSuratDinas.getStatusBaca(),
+                                            "Surat Dinas",
+                                            5));
+                        }
+                        break;
                     }
-                    break;
                 }
             }
         }

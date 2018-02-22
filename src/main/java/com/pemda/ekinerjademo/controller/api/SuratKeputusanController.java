@@ -85,6 +85,7 @@ public class SuratKeputusanController {
         suratKeputusan.setStatusPenilaian(0);
         suratKeputusan.setAlasanPenolakan("");
         suratKeputusan.setStatusBaca(0);
+        suratKeputusan.setStatusPenyebaran(0);
 
         suratKeputusan.setKdUrtug(inputWrapper.getKdUrtug());
         suratKeputusan.setTahunUrtug(inputWrapper.getTahunUrtug());
@@ -108,7 +109,6 @@ public class SuratKeputusanController {
         LOGGER.info("sebar surat keputusan");
 
         suratKeputusanService.approveSuratKeputusan(kdSuratKeputusan);
-        SuratKeputusan suratKeputusan = suratKeputusanService.getByKdSuratKeputusan(kdSuratKeputusan);
 
         return new ResponseEntity<Object>(null, HttpStatus.OK);
 

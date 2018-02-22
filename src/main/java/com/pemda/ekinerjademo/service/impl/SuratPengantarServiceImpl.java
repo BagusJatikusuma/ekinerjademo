@@ -71,13 +71,18 @@ public class SuratPengantarServiceImpl implements SuratPengantarService {
     @Override
     public void approveSuratPengantar(String kdSuratPengantar) {
         SuratPengantar suratPengantarLast = suratPengantarDao.findOne(kdSuratPengantar);
+        suratPengantarLast.setStatusPenyebaran(1);
+        suratPengantarLast.setApprovalPenandatangan(1);
+
         String penilaianTree = suratPengantarLast.getPathPenilaian();
 
-        List<SuratPengantar> suratPengantarList
-                = suratPengantarDao.findByLastTree(penilaianTree.substring(0, penilaianTree.indexOf(".")));
-        for (SuratPengantar suratPengantar
-                : suratPengantarList) {
-            suratPengantar.setApprovalPenandatangan(1);
+        if (penilaianTree.contains(".")) {
+            List<SuratPengantar> suratPengantarList
+                    = suratPengantarDao.findByLastTree(penilaianTree.substring(0, penilaianTree.indexOf(".")));
+            for (SuratPengantar suratPengantar
+                    : suratPengantarList) {
+                suratPengantar.setApprovalPenandatangan(1);
+            }
         }
     }
 

@@ -108,6 +108,7 @@ public class SuratKeteranganController {
         suratKeterangan.setStatusPenilaian(0);
         suratKeterangan.setAlasanPenolakan(null);
         suratKeterangan.setStatusBaca(0);
+        suratKeterangan.setStatusPenyebaran(0);
         suratKeterangan.setNipPegawaiKeterangan(
                 ekinerjaXMLBuilder.convertListSuratPerintahIntoXml(
                         inputWrapper.getNipPegawaiKeterangan(),
@@ -143,7 +144,6 @@ public class SuratKeteranganController {
         LOGGER.info("approve surat keterangan");
 
         suratKeteranganService.approveSuratKeterangan(kdSuratKeterangan);
-        SuratKeterangan suratKeterangan = suratKeteranganService.getByKdSuratKeterangan(kdSuratKeterangan);
 
         return new ResponseEntity<Object>(null, HttpStatus.OK);
 
@@ -200,25 +200,27 @@ public class SuratKeteranganController {
 
         for (TargetSuratKeterangan targetSuratKeterangan
                 : targetSuratKeteranganList) {
-            for (CustomPegawaiCredential pegawaiPemberi : qutPegawaiList) {
-                if (pegawaiPemberi.getNip()
-                        .equals(targetSuratKeterangan.getSuratKeterangan().getNipPenandatangan())) {
-                    suratTargetKeteranganList
-                            .add(new SuratPerintahTargetWrapper(
-                                    targetSuratKeterangan.getSuratKeterangan().getKdSuratKeterangan(),
-                                    DateUtilities.createLocalDate(
-                                            new Date(targetSuratKeterangan.getSuratKeterangan().getTanggalPembuatanSuratMilis()), "dd MMMM yyyy", indoLocale),
-                                    targetSuratKeterangan.getSuratKeterangan().getTanggalPembuatanSuratMilis(),
-                                    false,
-                                    pegawaiPemberi.getNip(),
-                                    pegawaiPemberi.getNama(),
-                                    pegawaiPemberi.getJabatan(),
-                                    targetSuratKeterangan.getStatusBaca(),
-                                    "Surat Keterangan",
-                                    8));
+            if (targetSuratKeterangan.getSuratKeterangan().getStatusPenyebaran() == 1) {
+                for (CustomPegawaiCredential pegawaiPemberi : qutPegawaiList) {
+                    if (pegawaiPemberi.getNip()
+                            .equals(targetSuratKeterangan.getSuratKeterangan().getNipPenandatangan())) {
+                        suratTargetKeteranganList
+                                .add(new SuratPerintahTargetWrapper(
+                                        targetSuratKeterangan.getSuratKeterangan().getKdSuratKeterangan(),
+                                        DateUtilities.createLocalDate(
+                                                new Date(targetSuratKeterangan.getSuratKeterangan().getTanggalPembuatanSuratMilis()), "dd MMMM yyyy", indoLocale),
+                                        targetSuratKeterangan.getSuratKeterangan().getTanggalPembuatanSuratMilis(),
+                                        false,
+                                        pegawaiPemberi.getNip(),
+                                        pegawaiPemberi.getNama(),
+                                        pegawaiPemberi.getJabatan(),
+                                        targetSuratKeterangan.getStatusBaca(),
+                                        "Surat Keterangan",
+                                        8));
 
-                    break;
+                        break;
 
+                    }
                 }
             }
         }
@@ -250,27 +252,29 @@ public class SuratKeteranganController {
 
         for (TargetSuratKeterangan targetSuratKeterangan
                 : targetSuratKeteranganList) {
-            for (CustomPegawaiCredential pegawaiPemberi : qutPegawaiList) {
-                if (pegawaiPemberi.getNip()
-                        .equals(targetSuratKeterangan.getSuratKeterangan().getNipPenandatangan())) {
-                    if (targetSuratKeterangan.getStatusBaca() == 0 ) {
-                        suratTargetKeteranganList
-                                .add(new SuratPerintahTargetWrapper(
-                                        targetSuratKeterangan.getSuratKeterangan().getKdSuratKeterangan(),
-                                        DateUtilities.createLocalDate(
-                                                new Date(targetSuratKeterangan.getSuratKeterangan().getTanggalPembuatanSuratMilis()), "dd MMMM yyyy", indoLocale),
-                                        targetSuratKeterangan.getSuratKeterangan().getTanggalPembuatanSuratMilis(),
-                                        false,
-                                        pegawaiPemberi.getNip(),
-                                        pegawaiPemberi.getNama(),
-                                        pegawaiPemberi.getJabatan(),
-                                        targetSuratKeterangan.getStatusBaca(),
-                                        "Surat Keterangan",
-                                        8));
+            if (targetSuratKeterangan.getSuratKeterangan().getStatusPenyebaran() == 1) {
+                for (CustomPegawaiCredential pegawaiPemberi : qutPegawaiList) {
+                    if (pegawaiPemberi.getNip()
+                            .equals(targetSuratKeterangan.getSuratKeterangan().getNipPenandatangan())) {
+                        if (targetSuratKeterangan.getStatusBaca() == 0) {
+                            suratTargetKeteranganList
+                                    .add(new SuratPerintahTargetWrapper(
+                                            targetSuratKeterangan.getSuratKeterangan().getKdSuratKeterangan(),
+                                            DateUtilities.createLocalDate(
+                                                    new Date(targetSuratKeterangan.getSuratKeterangan().getTanggalPembuatanSuratMilis()), "dd MMMM yyyy", indoLocale),
+                                            targetSuratKeterangan.getSuratKeterangan().getTanggalPembuatanSuratMilis(),
+                                            false,
+                                            pegawaiPemberi.getNip(),
+                                            pegawaiPemberi.getNama(),
+                                            pegawaiPemberi.getJabatan(),
+                                            targetSuratKeterangan.getStatusBaca(),
+                                            "Surat Keterangan",
+                                            8));
+                        }
+
+                        break;
+
                     }
-
-                    break;
-
                 }
             }
         }

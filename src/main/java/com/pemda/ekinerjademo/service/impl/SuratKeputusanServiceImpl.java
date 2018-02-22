@@ -45,13 +45,18 @@ public class SuratKeputusanServiceImpl implements SuratKeputusanService {
     @Override
     public void approveSuratKeputusan(String kdSuratKeputusan) {
         SuratKeputusan suratKeputusanLast = suratKeputusanDao.findOne(kdSuratKeputusan);
+        suratKeputusanLast.setStatusPenyebaran(1);
+        suratKeputusanLast.setApprovalPenandatangan(1);
+
         String penilaianTree = suratKeputusanLast.getPathPenilaian();
 
-        List<SuratKeputusan> suratKeputusanList
-                = suratKeputusanDao.findByLastTree(penilaianTree.substring(0, penilaianTree.indexOf(".")));
-        for (SuratKeputusan suratKeputusan
-                : suratKeputusanList) {
-            suratKeputusan.setApprovalPenandatangan(1);
+        if (penilaianTree.contains(".")) {
+            List<SuratKeputusan> suratKeputusanList
+                    = suratKeputusanDao.findByLastTree(penilaianTree.substring(0, penilaianTree.indexOf(".")));
+            for (SuratKeputusan suratKeputusan
+                    : suratKeputusanList) {
+                suratKeputusan.setApprovalPenandatangan(1);
+            }
         }
     }
 }

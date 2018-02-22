@@ -114,6 +114,7 @@ public class SuratUndanganController {
         suratUndangan.setStatusPenilaian(0);
         suratUndangan.setAlasanPenolakan("");
         suratUndangan.setStatusBaca(0);
+        suratUndangan.setStatusPenyebaran(0);
 
         //save surat undangan
         suratUndanganService.create(suratUndangan);
@@ -206,27 +207,30 @@ public class SuratUndanganController {
         boolean isSuratPejabat = false;
 
         for (SuratUndangan suratUndangan : suratUndanganList) {
-            for (CustomPegawaiCredential pegawaiPemberi : qutPegawaiList) {
-                if (pegawaiPemberi.getNip()
-                        .equals(suratUndangan.getNipPenandatangan())) {
+            if (suratUndangan.getStatusPenyebaran() == 1) {
+                for (CustomPegawaiCredential pegawaiPemberi : qutPegawaiList) {
+                    if (pegawaiPemberi.getNip()
+                            .equals(suratUndangan.getNipPenandatangan())) {
 
-                    if (suratUndangan.getSuratUndanganPejabat() != null)
-                        isSuratPejabat = true;
-                    else
-                        isSuratPejabat = false;
+                        if (suratUndangan.getSuratUndanganPejabat() != null)
+                            isSuratPejabat = true;
+                        else
+                            isSuratPejabat = false;
 
-                    targetSuratUndanganList
-                            .add(new SuratPerintahTargetWrapper(
-                                    suratUndangan.getKdSuratUndangan(),
-                                    df.format(new Date(suratUndangan.getTanggalPembuatanSurat())),
-                                    suratUndangan.getTanggalPembuatanSurat(),
-                                    isSuratPejabat,
-                                    pegawaiPemberi.getNip(),
-                                    pegawaiPemberi.getNama(),
-                                    pegawaiPemberi.getJabatan(),
-                                    suratUndangan.getStatusBaca(),
-                                    "Surat Undangan",
-                                    13));
+                        targetSuratUndanganList
+                                .add(new SuratPerintahTargetWrapper(
+                                        suratUndangan.getKdSuratUndangan(),
+                                        df.format(new Date(suratUndangan.getTanggalPembuatanSurat())),
+                                        suratUndangan.getTanggalPembuatanSurat(),
+                                        isSuratPejabat,
+                                        pegawaiPemberi.getNip(),
+                                        pegawaiPemberi.getNama(),
+                                        pegawaiPemberi.getJabatan(),
+                                        suratUndangan.getStatusBaca(),
+                                        "Surat Undangan",
+                                        13));
+                    }
+
                 }
 
             }
@@ -234,30 +238,34 @@ public class SuratUndanganController {
         }
 
         for (TembusanSuratUndangan tembusanSuratUndangan : tembusanSuratUndanganList) {
-            for (CustomPegawaiCredential pegawaiPemberi : qutPegawaiList) {
-                if (pegawaiPemberi.getNip()
-                        .equals(tembusanSuratUndangan.getSuratUndangan().getNipPenandatangan())) {
-                    if (tembusanSuratUndangan.getSuratUndangan().getSuratUndanganPejabat() != null)
-                        isSuratPejabat = true;
-                    else
-                        isSuratPejabat = false;
+            if (tembusanSuratUndangan.getSuratUndangan().getStatusPenyebaran() == 1) {
+                for (CustomPegawaiCredential pegawaiPemberi : qutPegawaiList) {
+                    if (pegawaiPemberi.getNip()
+                            .equals(tembusanSuratUndangan.getSuratUndangan().getNipPenandatangan())) {
+                        if (tembusanSuratUndangan.getSuratUndangan().getSuratUndanganPejabat() != null)
+                            isSuratPejabat = true;
+                        else
+                            isSuratPejabat = false;
 
-                    targetSuratUndanganList
-                            .add(new SuratPerintahTargetWrapper(
-                                    tembusanSuratUndangan.getSuratUndangan().getKdSuratUndangan(),
-                                    df.format(new Date(tembusanSuratUndangan.getSuratUndangan().getTanggalPembuatanSurat())),
-                                    tembusanSuratUndangan.getSuratUndangan().getTanggalPembuatanSurat(),
-                                    isSuratPejabat,
-                                    pegawaiPemberi.getNip(),
-                                    pegawaiPemberi.getNama(),
-                                    pegawaiPemberi.getJabatan(),
-                                    tembusanSuratUndangan.getStatusBaca(),
-                                    "Surat Undangan",
-                                    13));
+                        targetSuratUndanganList
+                                .add(new SuratPerintahTargetWrapper(
+                                        tembusanSuratUndangan.getSuratUndangan().getKdSuratUndangan(),
+                                        df.format(new Date(tembusanSuratUndangan.getSuratUndangan().getTanggalPembuatanSurat())),
+                                        tembusanSuratUndangan.getSuratUndangan().getTanggalPembuatanSurat(),
+                                        isSuratPejabat,
+                                        pegawaiPemberi.getNip(),
+                                        pegawaiPemberi.getNama(),
+                                        pegawaiPemberi.getJabatan(),
+                                        tembusanSuratUndangan.getStatusBaca(),
+                                        "Surat Undangan",
+                                        13));
+
+                    }
 
                 }
 
             }
+
         }
 
         return new ResponseEntity<Object>(targetSuratUndanganList, HttpStatus.OK);
@@ -293,29 +301,32 @@ public class SuratUndanganController {
         boolean isSuratPejabat = false;
 
         for (SuratUndangan suratUndangan : suratUndanganList) {
-            for (CustomPegawaiCredential pegawaiPemberi : qutPegawaiList) {
-                if (pegawaiPemberi.getNip()
-                        .equals(suratUndangan.getNipPenandatangan())) {
+            if (suratUndangan.getStatusPenyebaran() == 1) {
+                for (CustomPegawaiCredential pegawaiPemberi : qutPegawaiList) {
+                    if (pegawaiPemberi.getNip()
+                            .equals(suratUndangan.getNipPenandatangan())) {
 
-                    if (suratUndangan.getSuratUndanganPejabat() != null)
-                        isSuratPejabat = true;
-                    else
-                        isSuratPejabat = false;
+                        if (suratUndangan.getSuratUndanganPejabat() != null)
+                            isSuratPejabat = true;
+                        else
+                            isSuratPejabat = false;
 
-                    if (suratUndangan.getStatusBaca() == 0) {
-                        targetSuratUndanganList
-                                .add(new SuratPerintahTargetWrapper(
-                                        suratUndangan.getKdSuratUndangan(),
-                                        df.format(new Date(suratUndangan.getTanggalPembuatanSurat())),
-                                        suratUndangan.getTanggalPembuatanSurat(),
-                                        isSuratPejabat,
-                                        pegawaiPemberi.getNip(),
-                                        pegawaiPemberi.getNama(),
-                                        pegawaiPemberi.getJabatan(),
-                                        suratUndangan.getStatusBaca(),
-                                        "Surat Undangan",
-                                        13));
+                        if (suratUndangan.getStatusBaca() == 0) {
+                            targetSuratUndanganList
+                                    .add(new SuratPerintahTargetWrapper(
+                                            suratUndangan.getKdSuratUndangan(),
+                                            df.format(new Date(suratUndangan.getTanggalPembuatanSurat())),
+                                            suratUndangan.getTanggalPembuatanSurat(),
+                                            isSuratPejabat,
+                                            pegawaiPemberi.getNip(),
+                                            pegawaiPemberi.getNama(),
+                                            pegawaiPemberi.getJabatan(),
+                                            suratUndangan.getStatusBaca(),
+                                            "Surat Undangan",
+                                            13));
+                        }
                     }
+
                 }
 
             }
@@ -323,32 +334,36 @@ public class SuratUndanganController {
         }
 
         for (TembusanSuratUndangan tembusanSuratUndangan : tembusanSuratUndanganList) {
-            for (CustomPegawaiCredential pegawaiPemberi : qutPegawaiList) {
-                if (pegawaiPemberi.getNip()
-                        .equals(tembusanSuratUndangan.getSuratUndangan().getNipPenandatangan())) {
-                    if (tembusanSuratUndangan.getSuratUndangan().getSuratUndanganPejabat() != null)
-                        isSuratPejabat = true;
-                    else
-                        isSuratPejabat = false;
+            if (tembusanSuratUndangan.getSuratUndangan().getStatusPenyebaran() == 1) {
+                for (CustomPegawaiCredential pegawaiPemberi : qutPegawaiList) {
+                    if (pegawaiPemberi.getNip()
+                            .equals(tembusanSuratUndangan.getSuratUndangan().getNipPenandatangan())) {
+                        if (tembusanSuratUndangan.getSuratUndangan().getSuratUndanganPejabat() != null)
+                            isSuratPejabat = true;
+                        else
+                            isSuratPejabat = false;
 
-                    if (tembusanSuratUndangan.getStatusBaca() == 0) {
-                        targetSuratUndanganList
-                                .add(new SuratPerintahTargetWrapper(
-                                        tembusanSuratUndangan.getSuratUndangan().getKdSuratUndangan(),
-                                        df.format(new Date(tembusanSuratUndangan.getSuratUndangan().getTanggalPembuatanSurat())),
-                                        tembusanSuratUndangan.getSuratUndangan().getTanggalPembuatanSurat(),
-                                        isSuratPejabat,
-                                        pegawaiPemberi.getNip(),
-                                        pegawaiPemberi.getNama(),
-                                        pegawaiPemberi.getJabatan(),
-                                        tembusanSuratUndangan.getStatusBaca(),
-                                        "Surat Undangan",
-                                        13));
+                        if (tembusanSuratUndangan.getStatusBaca() == 0) {
+                            targetSuratUndanganList
+                                    .add(new SuratPerintahTargetWrapper(
+                                            tembusanSuratUndangan.getSuratUndangan().getKdSuratUndangan(),
+                                            df.format(new Date(tembusanSuratUndangan.getSuratUndangan().getTanggalPembuatanSurat())),
+                                            tembusanSuratUndangan.getSuratUndangan().getTanggalPembuatanSurat(),
+                                            isSuratPejabat,
+                                            pegawaiPemberi.getNip(),
+                                            pegawaiPemberi.getNama(),
+                                            pegawaiPemberi.getJabatan(),
+                                            tembusanSuratUndangan.getStatusBaca(),
+                                            "Surat Undangan",
+                                            13));
+                        }
+
                     }
 
                 }
 
             }
+
         }
 
         return new ResponseEntity<Object>(targetSuratUndanganList, HttpStatus.OK);
@@ -516,7 +531,6 @@ public class SuratUndanganController {
         LOGGER.info("approve surat undangan");
 
         suratUndanganService.approveSuratUndangan(kdSuratUndangan);
-        SuratUndangan suratUndangan = suratUndanganService.getByKdSuratUndangan(kdSuratUndangan);
 
         return new ResponseEntity<Object>(new CustomMessage("surat undangan sudah diapprove"), HttpStatus.OK);
     }

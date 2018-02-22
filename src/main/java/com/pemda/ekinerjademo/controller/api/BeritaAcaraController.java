@@ -82,6 +82,7 @@ public class BeritaAcaraController {
         beritaAcara.setStatusPenilaian(0);
         beritaAcara.setAlasanPenolakan("");
         beritaAcara.setStatusBaca(0);
+        beritaAcara.setStatusPenyebaran(0);
 
         beritaAcara.setKdUrtug(inputWrapper.getKdUrtug());
         beritaAcara.setTahunUrtug(inputWrapper.getTahunUrtug());
@@ -113,7 +114,6 @@ public class BeritaAcaraController {
 
         //proses approve
         beritaAcaraService.approveBeritaAcara(kdBeritaAcara);
-        //proses status penyebaran
 
         return new ResponseEntity<Object>(new CustomMessage("berita acara approved"), HttpStatus.OK);
     }

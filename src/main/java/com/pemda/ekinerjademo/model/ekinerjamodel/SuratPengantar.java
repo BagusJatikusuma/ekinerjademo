@@ -70,6 +70,9 @@ public class SuratPengantar {
     @Column(name = "approval_penandatangan")
     private Integer approvalPenandatangan;
 
+    @Column(name = "status_penyebaran")
+    private Integer statusPenyebaran;
+
     @OneToMany(mappedBy = "suratPengantar")
     private List<SuratPengantarIsi> suratPengantarIsiList;
 
@@ -287,5 +290,13 @@ public class SuratPengantar {
 
     public void setApprovalPenandatangan(Integer approvalPenandatangan) {
         this.approvalPenandatangan = approvalPenandatangan;
+    }
+
+    public Integer getStatusPenyebaran() {
+        return statusPenyebaran;
+    }
+
+    public void setStatusPenyebaran(Integer statusPenyebaran) {
+        this.statusPenyebaran = statusPenyebaran;
     }
 }

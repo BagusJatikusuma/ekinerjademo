@@ -51,13 +51,18 @@ public class SuratKuasaServiceImpl implements SuratKuasaService{
     @Override
     public void approveSuratKuasa(String kdSuratKuasa) {
         SuratKuasa suratKuasaLast = suratKuasaDao.findOne(kdSuratKuasa);
+        suratKuasaLast.setStatusPenyebaran(1);
+        suratKuasaLast.setApprovalPenandatangan(1);
+
         String penilaianTree = suratKuasaLast.getPathPenilaian();
 
-        List<SuratKuasa> suratKuasaList
-                = suratKuasaDao.findByLastTree(penilaianTree.substring(0, penilaianTree.indexOf(".")));
-        for (SuratKuasa suratKuasa
-                : suratKuasaList) {
-            suratKuasa.setApprovalPenandatangan(1);
+        if (penilaianTree.contains(".")) {
+            List<SuratKuasa> suratKuasaList
+                    = suratKuasaDao.findByLastTree(penilaianTree.substring(0, penilaianTree.indexOf(".")));
+            for (SuratKuasa suratKuasa
+                    : suratKuasaList) {
+                suratKuasa.setApprovalPenandatangan(1);
+            }
         }
 
     }

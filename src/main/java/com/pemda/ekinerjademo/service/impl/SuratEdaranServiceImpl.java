@@ -69,13 +69,18 @@ public class SuratEdaranServiceImpl implements SuratEdaranService {
     @Override
     public void approveSuratEdaran(String kdSuratEdaran) {
         SuratEdaran suratEdaranLast = suratEdaranDao.findOne(kdSuratEdaran);
+        suratEdaranLast.setStatusPenyebaran(1);
+        suratEdaranLast.setApprovalPenandatangan(1);
+
         String penilaianTree = suratEdaranLast.getPathPenilaian();
 
-        List<SuratEdaran> suratEdaranList
-                = suratEdaranDao.findByLastTree(penilaianTree.substring(0, penilaianTree.indexOf(".")));
-        for (SuratEdaran suratEdaran
-                : suratEdaranList) {
-            suratEdaran.setApprovalPenandatangan(1);
+        if (penilaianTree.contains(".")) {
+            List<SuratEdaran> suratEdaranList
+                    = suratEdaranDao.findByLastTree(penilaianTree.substring(0, penilaianTree.indexOf(".")));
+            for (SuratEdaran suratEdaran
+                    : suratEdaranList) {
+                suratEdaran.setApprovalPenandatangan(1);
+            }
         }
     }
 }

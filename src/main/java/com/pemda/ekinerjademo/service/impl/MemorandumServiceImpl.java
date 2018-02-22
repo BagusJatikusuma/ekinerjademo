@@ -95,13 +95,18 @@ public class MemorandumServiceImpl implements MemorandumService {
     @Override
     public void approveMemorandum(String kdMemorandum) {
         Memorandum memorandumLast = memorandumDao.findOne(kdMemorandum);
+        memorandumLast.setStatusPenyebaran(1);
+        memorandumLast.setApprovalPenandatangan(1);
+
         String penilaianTree = memorandumLast.getPathPenilaian();
 
-        List<Memorandum> memorandumList
-                = memorandumDao.findByLastTree(penilaianTree.substring(0, penilaianTree.indexOf(".")));
-        for (Memorandum memorandum
-                : memorandumList) {
-            memorandum.setApprovalPenandatangan(1);
+        if (penilaianTree.contains(".")) {
+            List<Memorandum> memorandumList
+                    = memorandumDao.findByLastTree(penilaianTree.substring(0, penilaianTree.indexOf(".")));
+            for (Memorandum memorandum
+                    : memorandumList) {
+                memorandum.setApprovalPenandatangan(1);
+            }
         }
     }
 

@@ -576,6 +576,11 @@ public class UrtugKegiatanPegawaiController {
         List<UraianTugasJabatanJenisWrapper> outputWrappers
                 = new ArrayList<>();
 
+        UnitKerjaKegiatan unitKerjaKegiatan
+                = unitKerjaKegiatanService.findByKdUnitKerja(kdUnitKerja);
+
+        List<TaKegiatan> taKegiatanList = taKegiatanService.findByUnitKerja(unitKerjaKegiatan);
+
         List<UrtugKegiatanPegawai> urtugKegiatanPegawaiList
                 = urtugKegiatanPegawaiService.findByNipPegawai(nipPegawai);
         List<UrtugKegiatanPegawai> urtugKegiatanPegawaiBelumDiajukan
@@ -625,11 +630,21 @@ public class UrtugKegiatanPegawaiController {
                         && uraianTugas.getTahunUrtug().equals(urtugKegiatanPegawai.getUrtugKegiatanPegawaiId().getTahunUrtug())) {
 
                     uraianTugas.setKuantitas(uraianTugas.getKuantitas() + 1); //bertambah sejumlah kegiatan
-                    uraianTugas.setBiaya(uraianTugas.getBiaya() + urtugKegiatanPegawai.getUrtugKegiatan().getBiaya().intValue());
+                    //tambah biaya
+                    for (TaKegiatan taKegiatan : taKegiatanList) {
+                        if (urtugKegiatanPegawai.getUrtugKegiatanPegawaiId().getKdProg().equals(taKegiatan.getTaKegiatanId().getKdProg()) &&
+                                urtugKegiatanPegawai.getUrtugKegiatanPegawaiId().getKdKeg().equals(taKegiatan.getTaKegiatanId().getKdKegiatan())) {
+                            uraianTugas.setBiaya(uraianTugas.getBiaya() + taKegiatan.getPaguAnggaran().intValue());
+                            break;
+                        }
+                    }
+
+                    break;
 
                 }
             }
         }
+
 
         return new ResponseEntity<Object>(outputWrappers, HttpStatus.OK);
     }

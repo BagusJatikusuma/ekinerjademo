@@ -64,6 +64,7 @@ public class PengumumanController {
         pengumuman.setDurasiPengerjaan(inputWrapper.getDurasiPengerjaan());
         pengumuman.setNipPenilai("");
         pengumuman.setStatusBaca(0);
+        pengumuman.setStatusPenyebaran(0);
 
         pengumuman.setKdUrtug(inputWrapper.getKdUrtug());
         pengumuman.setTahunUrtug(inputWrapper.getTahunUrtug());
@@ -104,7 +105,6 @@ public class PengumumanController {
         LOGGER.info("sebar pengumuman");
 
         pengumumanService.approvePengumuman(kdPengumuman);
-        Pengumuman pengumuman = pengumumanService.getByKdPengumuman(kdPengumuman);
 
         return new ResponseEntity<>(new CustomMessage("pengumuman sudah di approve"), HttpStatus.OK);
     }

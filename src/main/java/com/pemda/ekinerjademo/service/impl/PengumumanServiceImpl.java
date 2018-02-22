@@ -45,13 +45,18 @@ public class PengumumanServiceImpl implements PengumumanService {
     @Override
     public void approvePengumuman(String kdPengumuman) {
         Pengumuman pengumumanLast = pengumumanDao.findOne(kdPengumuman);
+        pengumumanLast.setStatusPenyebaran(1);
+        pengumumanLast.setApprovalPenandatangan(1);
+
         String penilaianTree = pengumumanLast.getPathPenilaian();
 
-        List<Pengumuman> pengumumanList
-                = pengumumanDao.findBylastTree(penilaianTree.substring(0, penilaianTree.indexOf(".")));
-        for (Pengumuman pengumuman
-                : pengumumanList) {
-            pengumuman.setApprovalPenandatangan(1);
+        if (penilaianTree.contains(".")) {
+            List<Pengumuman> pengumumanList
+                    = pengumumanDao.findBylastTree(penilaianTree.substring(0, penilaianTree.indexOf(".")));
+            for (Pengumuman pengumuman
+                    : pengumumanList) {
+                pengumuman.setApprovalPenandatangan(1);
+            }
         }
 
     }

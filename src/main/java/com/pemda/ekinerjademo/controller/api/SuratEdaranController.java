@@ -102,6 +102,7 @@ public class SuratEdaranController {
         suratEdaran.setStatusPenilaian(0);
         suratEdaran.setAlasanPenolakan(null);
         suratEdaran.setStatusBaca(0);
+        suratEdaran.setStatusPenyebaran(0);
 
         suratEdaranService.create(suratEdaran);
         for (SuratEdaranSub suratEdaranSub
@@ -142,8 +143,6 @@ public class SuratEdaranController {
         LOGGER.info("sebar surat edaran");
 
         suratEdaranService.approveSuratEdaran(kdSuratEdaran);
-        SuratEdaran suratEdaran = suratEdaranService.getByKdSuratEdaran(kdSuratEdaran);
-
 
         return new ResponseEntity<Object>(null, HttpStatus.OK);
 

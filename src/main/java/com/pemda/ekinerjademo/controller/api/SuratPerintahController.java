@@ -380,8 +380,6 @@ public class SuratPerintahController {
         LOGGER.info("approve surat perintah");
 
         suratPerintahService.approveSuratPerintah(kdSuratPerintah);
-        SuratPerintah suratPerintah = suratPerintahService.getSuratPerintahByKdSuratPerintah(kdSuratPerintah);
-        suratPerintah.setStatusPenyebaran(1);
 
         return new ResponseEntity<Object>(new CustomMessage("surat perintah sudah disetujui"), HttpStatus.OK);
     }
@@ -519,87 +517,93 @@ public class SuratPerintahController {
         //get surat perintah berdasarkan target pegawai
         for (TargetSuratPerintahPegawai suratTarget
                 : daftarSuratPerintahPegawaiTarget) {
-            for (CustomPegawaiCredential pegawaiPemberi : qutPegawaiList) {
-                if (pegawaiPemberi.getNip()
-                        .equals(suratTarget.getSuratPerintah().getNipPenandatangan())) {
+            if (suratTarget.getSuratPerintah().getStatusPenyebaran() == 1) {
+                for (CustomPegawaiCredential pegawaiPemberi : qutPegawaiList) {
+                    if (pegawaiPemberi.getNip()
+                            .equals(suratTarget.getSuratPerintah().getNipPenandatangan())) {
 
-                    if (suratTarget.getSuratPerintah().getSuratPerintahPejabat() != null)
-                        isSuratPejabat = true;
-                    else
-                        isSuratPejabat = false;
+                        if (suratTarget.getSuratPerintah().getSuratPerintahPejabat() != null)
+                            isSuratPejabat = true;
+                        else
+                            isSuratPejabat = false;
 
-                    daftarSuratPerintahTargetWrapper
-                            .add(new SuratPerintahTargetWrapper(
-                                    suratTarget.getSuratPerintah().getKdSuratPerintah(),
-                                    DateUtilities.createLocalDate(new Date(suratTarget.getSuratPerintah().getTanggalPerintahMilis()), "dd MMMM yyyy", indoLocale),
-                                    suratTarget.getSuratPerintah().getTanggalPerintahMilis(),
-                                    isSuratPejabat,
-                                    pegawaiPemberi.getNip(),
-                                    pegawaiPemberi.getNama(),
-                                    pegawaiPemberi.getJabatan(),
-                                    suratTarget.getStatusBaca(),
-                                    "Surat Perintah",
-                                    2)
-                            );
-                    break;
+                        daftarSuratPerintahTargetWrapper
+                                .add(new SuratPerintahTargetWrapper(
+                                        suratTarget.getSuratPerintah().getKdSuratPerintah(),
+                                        DateUtilities.createLocalDate(new Date(suratTarget.getSuratPerintah().getTanggalPerintahMilis()), "dd MMMM yyyy", indoLocale),
+                                        suratTarget.getSuratPerintah().getTanggalPerintahMilis(),
+                                        isSuratPejabat,
+                                        pegawaiPemberi.getNip(),
+                                        pegawaiPemberi.getNama(),
+                                        pegawaiPemberi.getJabatan(),
+                                        suratTarget.getStatusBaca(),
+                                        "Surat Perintah",
+                                        2)
+                                );
+                        break;
+                    }
                 }
             }
         }
         //get surat perintah berdasarkan target pegawai
         for (TargetSuratPerintahPejabat suratTarget
                 : daftarSuratPerintahPejabatTarget) {
-            for (CustomPegawaiCredential pegawaiPemberi : qutPegawaiList) {
-                if (pegawaiPemberi.getNip()
-                        .equals(suratTarget.getSuratPerintah().getNipPenandatangan())) {
+            if (suratTarget.getSuratPerintah().getStatusPenyebaran() == 1) {
+                for (CustomPegawaiCredential pegawaiPemberi : qutPegawaiList) {
+                    if (pegawaiPemberi.getNip()
+                            .equals(suratTarget.getSuratPerintah().getNipPenandatangan())) {
 
-                    if (suratTarget.getSuratPerintah().getSuratPerintahPejabat() != null)
-                        isSuratPejabat = true;
-                    else
-                        isSuratPejabat = false;
+                        if (suratTarget.getSuratPerintah().getSuratPerintahPejabat() != null)
+                            isSuratPejabat = true;
+                        else
+                            isSuratPejabat = false;
 
-                    daftarSuratPerintahTargetWrapper
-                            .add(new SuratPerintahTargetWrapper(
-                                    suratTarget.getSuratPerintah().getKdSuratPerintah(),
-                                    DateUtilities.createLocalDate(new Date(suratTarget.getSuratPerintah().getTanggalPerintahMilis()), "dd MMMM yyyy", indoLocale),
-                                    suratTarget.getSuratPerintah().getTanggalPerintahMilis(),
-                                    isSuratPejabat,
-                                    pegawaiPemberi.getNip(),
-                                    pegawaiPemberi.getNama(),
-                                    pegawaiPemberi.getJabatan(),
-                                    suratTarget.getStatusBaca(),
-                                    "Surat Perintah",
-                                    2)
-                            );
-                    break;
+                        daftarSuratPerintahTargetWrapper
+                                .add(new SuratPerintahTargetWrapper(
+                                        suratTarget.getSuratPerintah().getKdSuratPerintah(),
+                                        DateUtilities.createLocalDate(new Date(suratTarget.getSuratPerintah().getTanggalPerintahMilis()), "dd MMMM yyyy", indoLocale),
+                                        suratTarget.getSuratPerintah().getTanggalPerintahMilis(),
+                                        isSuratPejabat,
+                                        pegawaiPemberi.getNip(),
+                                        pegawaiPemberi.getNama(),
+                                        pegawaiPemberi.getJabatan(),
+                                        suratTarget.getStatusBaca(),
+                                        "Surat Perintah",
+                                        2)
+                                );
+                        break;
+                    }
                 }
             }
         }
         //get surat perintah berdasarkan tembusan
         for (TembusanSuratPerintah suratTarget
                 : daftarSuratPerintahTembusan) {
-            for (CustomPegawaiCredential pegawaiPemberi : qutPegawaiList) {
-                if (pegawaiPemberi.getNip()
-                        .equals(suratTarget.getSuratPerintah().getNipPenandatangan())) {
+            if (suratTarget.getSuratPerintah().getStatusPenyebaran() == 1) {
+                for (CustomPegawaiCredential pegawaiPemberi : qutPegawaiList) {
+                    if (pegawaiPemberi.getNip()
+                            .equals(suratTarget.getSuratPerintah().getNipPenandatangan())) {
 
-                    if (suratTarget.getSuratPerintah().getSuratPerintahPejabat() != null)
-                        isSuratPejabat = true;
-                    else
-                        isSuratPejabat = false;
+                        if (suratTarget.getSuratPerintah().getSuratPerintahPejabat() != null)
+                            isSuratPejabat = true;
+                        else
+                            isSuratPejabat = false;
 
-                    daftarSuratPerintahTargetWrapper
-                            .add(new SuratPerintahTargetWrapper(
-                                    suratTarget.getSuratPerintah().getKdSuratPerintah(),
-                                    DateUtilities.createLocalDate(new Date(suratTarget.getSuratPerintah().getTanggalPerintahMilis()), "dd MMMM yyyy", indoLocale),
-                                    suratTarget.getSuratPerintah().getTanggalPerintahMilis(),
-                                    isSuratPejabat,
-                                    pegawaiPemberi.getNip(),
-                                    pegawaiPemberi.getNama(),
-                                    pegawaiPemberi.getJabatan(),
-                                    suratTarget.getStatusBaca(),
-                                    "Surat Perintah",
-                                    2)
-                            );
-                    break;
+                        daftarSuratPerintahTargetWrapper
+                                .add(new SuratPerintahTargetWrapper(
+                                        suratTarget.getSuratPerintah().getKdSuratPerintah(),
+                                        DateUtilities.createLocalDate(new Date(suratTarget.getSuratPerintah().getTanggalPerintahMilis()), "dd MMMM yyyy", indoLocale),
+                                        suratTarget.getSuratPerintah().getTanggalPerintahMilis(),
+                                        isSuratPejabat,
+                                        pegawaiPemberi.getNip(),
+                                        pegawaiPemberi.getNama(),
+                                        pegawaiPemberi.getJabatan(),
+                                        suratTarget.getStatusBaca(),
+                                        "Surat Perintah",
+                                        2)
+                                );
+                        break;
+                    }
                 }
             }
         }
@@ -640,93 +644,99 @@ public class SuratPerintahController {
         //get surat perintah berdasarkan target pegawai
         for (TargetSuratPerintahPegawai suratTarget
                 : daftarSuratPerintahPegawaiTarget) {
-            for (CustomPegawaiCredential pegawaiPemberi : qutPegawaiList) {
-                if (pegawaiPemberi.getNip()
-                        .equals(suratTarget.getSuratPerintah().getNipPenandatangan())) {
+            if (suratTarget.getSuratPerintah().getStatusPenyebaran() == 1) {
+                for (CustomPegawaiCredential pegawaiPemberi : qutPegawaiList) {
+                    if (pegawaiPemberi.getNip()
+                            .equals(suratTarget.getSuratPerintah().getNipPenandatangan())) {
 
-                    if (suratTarget.getSuratPerintah().getSuratPerintahPejabat() != null)
-                        isSuratPejabat = true;
-                    else
-                        isSuratPejabat = false;
+                        if (suratTarget.getSuratPerintah().getSuratPerintahPejabat() != null)
+                            isSuratPejabat = true;
+                        else
+                            isSuratPejabat = false;
 
-                    if (suratTarget.getStatusBaca() == 0) {
-                        daftarSuratPerintahTargetWrapper
-                                .add(new SuratPerintahTargetWrapper(
-                                        suratTarget.getSuratPerintah().getKdSuratPerintah(),
-                                        DateUtilities.createLocalDate(new Date(suratTarget.getSuratPerintah().getTanggalPerintahMilis()), "dd MMMM yyyy", indoLocale),
-                                        suratTarget.getSuratPerintah().getTanggalPerintahMilis(),
-                                        isSuratPejabat,
-                                        pegawaiPemberi.getNip(),
-                                        pegawaiPemberi.getNama(),
-                                        pegawaiPemberi.getJabatan(),
-                                        suratTarget.getStatusBaca(),
-                                        "Surat Perintah",
-                                        2)
-                                );
+                        if (suratTarget.getStatusBaca() == 0) {
+                            daftarSuratPerintahTargetWrapper
+                                    .add(new SuratPerintahTargetWrapper(
+                                            suratTarget.getSuratPerintah().getKdSuratPerintah(),
+                                            DateUtilities.createLocalDate(new Date(suratTarget.getSuratPerintah().getTanggalPerintahMilis()), "dd MMMM yyyy", indoLocale),
+                                            suratTarget.getSuratPerintah().getTanggalPerintahMilis(),
+                                            isSuratPejabat,
+                                            pegawaiPemberi.getNip(),
+                                            pegawaiPemberi.getNama(),
+                                            pegawaiPemberi.getJabatan(),
+                                            suratTarget.getStatusBaca(),
+                                            "Surat Perintah",
+                                            2)
+                                    );
+                        }
+                        break;
                     }
-                    break;
                 }
             }
         }
         //get surat perintah berdasarkan target pegawai
         for (TargetSuratPerintahPejabat suratTarget
                 : daftarSuratPerintahPejabatTarget) {
-            for (CustomPegawaiCredential pegawaiPemberi : qutPegawaiList) {
-                if (pegawaiPemberi.getNip()
-                        .equals(suratTarget.getSuratPerintah().getNipPenandatangan())) {
+            if (suratTarget.getSuratPerintah().getStatusPenyebaran() == 1) {
+                for (CustomPegawaiCredential pegawaiPemberi : qutPegawaiList) {
+                    if (pegawaiPemberi.getNip()
+                            .equals(suratTarget.getSuratPerintah().getNipPenandatangan())) {
 
-                    if (suratTarget.getSuratPerintah().getSuratPerintahPejabat() != null)
-                        isSuratPejabat = true;
-                    else
-                        isSuratPejabat = false;
+                        if (suratTarget.getSuratPerintah().getSuratPerintahPejabat() != null)
+                            isSuratPejabat = true;
+                        else
+                            isSuratPejabat = false;
 
-                    if (suratTarget.getStatusBaca() == 0) {
-                        daftarSuratPerintahTargetWrapper
-                                .add(new SuratPerintahTargetWrapper(
-                                        suratTarget.getSuratPerintah().getKdSuratPerintah(),
-                                        DateUtilities.createLocalDate(new Date(suratTarget.getSuratPerintah().getTanggalPerintahMilis()), "dd MMMM yyyy", indoLocale),
-                                        suratTarget.getSuratPerintah().getTanggalPerintahMilis(),
-                                        isSuratPejabat,
-                                        pegawaiPemberi.getNip(),
-                                        pegawaiPemberi.getNama(),
-                                        pegawaiPemberi.getJabatan(),
-                                        suratTarget.getStatusBaca(),
-                                        "Surat Perintah",
-                                        2)
-                                );
+                        if (suratTarget.getStatusBaca() == 0) {
+                            daftarSuratPerintahTargetWrapper
+                                    .add(new SuratPerintahTargetWrapper(
+                                            suratTarget.getSuratPerintah().getKdSuratPerintah(),
+                                            DateUtilities.createLocalDate(new Date(suratTarget.getSuratPerintah().getTanggalPerintahMilis()), "dd MMMM yyyy", indoLocale),
+                                            suratTarget.getSuratPerintah().getTanggalPerintahMilis(),
+                                            isSuratPejabat,
+                                            pegawaiPemberi.getNip(),
+                                            pegawaiPemberi.getNama(),
+                                            pegawaiPemberi.getJabatan(),
+                                            suratTarget.getStatusBaca(),
+                                            "Surat Perintah",
+                                            2)
+                                    );
+                        }
+                        break;
                     }
-                    break;
                 }
             }
         }
         //get surat perintah berdasarkan tembusan
         for (TembusanSuratPerintah suratTarget
                 : daftarSuratPerintahTembusan) {
-            for (CustomPegawaiCredential pegawaiPemberi : qutPegawaiList) {
-                if (pegawaiPemberi.getNip()
-                        .equals(suratTarget.getSuratPerintah().getNipPenandatangan())) {
+            if (suratTarget.getSuratPerintah().getStatusPenyebaran() == 1) {
+                for (CustomPegawaiCredential pegawaiPemberi : qutPegawaiList) {
+                    if (pegawaiPemberi.getNip()
+                            .equals(suratTarget.getSuratPerintah().getNipPenandatangan())) {
 
-                    if (suratTarget.getSuratPerintah().getSuratPerintahPejabat() != null)
-                        isSuratPejabat = true;
-                    else
-                        isSuratPejabat = false;
+                        if (suratTarget.getSuratPerintah().getSuratPerintahPejabat() != null)
+                            isSuratPejabat = true;
+                        else
+                            isSuratPejabat = false;
 
-                    if (suratTarget.getStatusBaca() == 0) {
-                        daftarSuratPerintahTargetWrapper
-                                .add(new SuratPerintahTargetWrapper(
-                                        suratTarget.getSuratPerintah().getKdSuratPerintah(),
-                                        DateUtilities.createLocalDate(new Date(suratTarget.getSuratPerintah().getTanggalPerintahMilis()), "dd MMMM yyyy", indoLocale),
-                                        suratTarget.getSuratPerintah().getTanggalPerintahMilis(),
-                                        isSuratPejabat,
-                                        pegawaiPemberi.getNip(),
-                                        pegawaiPemberi.getNama(),
-                                        pegawaiPemberi.getJabatan(),
-                                        suratTarget.getStatusBaca(),
-                                        "Surat Perintah",
-                                        2)
-                                );
+                        if (suratTarget.getStatusBaca() == 0) {
+                            daftarSuratPerintahTargetWrapper
+                                    .add(new SuratPerintahTargetWrapper(
+                                            suratTarget.getSuratPerintah().getKdSuratPerintah(),
+                                            DateUtilities.createLocalDate(new Date(suratTarget.getSuratPerintah().getTanggalPerintahMilis()), "dd MMMM yyyy", indoLocale),
+                                            suratTarget.getSuratPerintah().getTanggalPerintahMilis(),
+                                            isSuratPejabat,
+                                            pegawaiPemberi.getNip(),
+                                            pegawaiPemberi.getNama(),
+                                            pegawaiPemberi.getJabatan(),
+                                            suratTarget.getStatusBaca(),
+                                            "Surat Perintah",
+                                            2)
+                                    );
+                        }
+                        break;
                     }
-                    break;
                 }
             }
         }

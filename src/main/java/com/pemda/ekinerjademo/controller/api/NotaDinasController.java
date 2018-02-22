@@ -90,6 +90,7 @@ public class NotaDinasController {
         notaDinas.setStatusPenilaian(0);
         notaDinas.setAlasanPenolakan("");
         notaDinas.setStatusBaca(0);
+        notaDinas.setStatusPenyebaran(0);
 
         notaDinas.setKdUrtug(inputWrapper.getKdUrtug());
         notaDinas.setTahunUrtug(inputWrapper.getTahunUrtug());
@@ -124,8 +125,6 @@ public class NotaDinasController {
         LOGGER.info("approve nota dinas");
 
         notaDinasService.approveNotaDinas(kdNotaDinas);
-
-        NotaDinas notaDinas = notaDinasService.findBykdNotaDinas(kdNotaDinas);
 
         return new ResponseEntity<Object>(new CustomMessage("nota dinas sudah di approve"), HttpStatus.OK);
     }
@@ -183,44 +182,48 @@ public class NotaDinasController {
 
         for (NotaDinas notaDinas
                 : notaDinasList) {
-            for (CustomPegawaiCredential pegawaiPemberi : qutPegawaiList) {
-                if (pegawaiPemberi.getNip()
-                        .equals(notaDinas.getNipPenandatangan())) {
-                    notaDinasTargetWrappers
-                            .add(new SuratPerintahTargetWrapper(
-                                    notaDinas.getKdNotaDinas(),
-                                    "",
-                                    notaDinas.getTanggalPembuatanMilis(),
-                                    false,
-                                    pegawaiPemberi.getNip(),
-                                    pegawaiPemberi.getNama(),
-                                    pegawaiPemberi.getJabatan(),
-                                    notaDinas.getStatusBaca(),
-                                    "Nota Dinas",
-                                    3));
-                    break;
+            if (notaDinas.getStatusPenyebaran() == 1) {
+                for (CustomPegawaiCredential pegawaiPemberi : qutPegawaiList) {
+                    if (pegawaiPemberi.getNip()
+                            .equals(notaDinas.getNipPenandatangan())) {
+                        notaDinasTargetWrappers
+                                .add(new SuratPerintahTargetWrapper(
+                                        notaDinas.getKdNotaDinas(),
+                                        "",
+                                        notaDinas.getTanggalPembuatanMilis(),
+                                        false,
+                                        pegawaiPemberi.getNip(),
+                                        pegawaiPemberi.getNama(),
+                                        pegawaiPemberi.getJabatan(),
+                                        notaDinas.getStatusBaca(),
+                                        "Nota Dinas",
+                                        3));
+                        break;
+                    }
                 }
             }
         }
 
         for (TembusanNotaDinas suratTarget
                 : tembusanNotaDinasList) {
-            for (CustomPegawaiCredential pegawaiPemberi : qutPegawaiList) {
-                if (pegawaiPemberi.getNip()
-                        .equals(suratTarget.getNotaDinas().getNipPenandatangan())) {
-                    notaDinasTargetWrappers
-                            .add(new SuratPerintahTargetWrapper(
-                                    suratTarget.getNotaDinas().getKdNotaDinas(),
-                                    "",
-                                    suratTarget.getNotaDinas().getTanggalPembuatanMilis(),
-                                    false,
-                                    pegawaiPemberi.getNip(),
-                                    pegawaiPemberi.getNama(),
-                                    pegawaiPemberi.getJabatan(),
-                                    suratTarget.getStatusBaca(),
-                                    "Nota Dinas",
-                                    3));
-                    break;
+            if (suratTarget.getNotaDinas().getStatusPenyebaran() == 1) {
+                for (CustomPegawaiCredential pegawaiPemberi : qutPegawaiList) {
+                    if (pegawaiPemberi.getNip()
+                            .equals(suratTarget.getNotaDinas().getNipPenandatangan())) {
+                        notaDinasTargetWrappers
+                                .add(new SuratPerintahTargetWrapper(
+                                        suratTarget.getNotaDinas().getKdNotaDinas(),
+                                        "",
+                                        suratTarget.getNotaDinas().getTanggalPembuatanMilis(),
+                                        false,
+                                        pegawaiPemberi.getNip(),
+                                        pegawaiPemberi.getNama(),
+                                        pegawaiPemberi.getJabatan(),
+                                        suratTarget.getStatusBaca(),
+                                        "Nota Dinas",
+                                        3));
+                        break;
+                    }
                 }
             }
         }
@@ -254,49 +257,53 @@ public class NotaDinasController {
 
         for (NotaDinas notaDinas
                 : notaDinasList) {
-            for (CustomPegawaiCredential pegawaiPemberi : qutPegawaiList) {
-                if (pegawaiPemberi.getNip()
-                        .equals(notaDinas.getNipPenandatangan())) {
-                    if (notaDinas.getStatusBaca() == 0) {
-                        notaDinasTargetWrappers
-                                .add(new SuratPerintahTargetWrapper(
-                                        notaDinas.getKdNotaDinas(),
-                                        "",
-                                        notaDinas.getTanggalPembuatanMilis(),
-                                        false,
-                                        pegawaiPemberi.getNip(),
-                                        pegawaiPemberi.getNama(),
-                                        pegawaiPemberi.getJabatan(),
-                                        notaDinas.getStatusBaca(),
-                                        "Nota Dinas",
-                                        3));
+            if (notaDinas.getStatusPenyebaran() == 1) {
+                for (CustomPegawaiCredential pegawaiPemberi : qutPegawaiList) {
+                    if (pegawaiPemberi.getNip()
+                            .equals(notaDinas.getNipPenandatangan())) {
+                        if (notaDinas.getStatusBaca() == 0) {
+                            notaDinasTargetWrappers
+                                    .add(new SuratPerintahTargetWrapper(
+                                            notaDinas.getKdNotaDinas(),
+                                            "",
+                                            notaDinas.getTanggalPembuatanMilis(),
+                                            false,
+                                            pegawaiPemberi.getNip(),
+                                            pegawaiPemberi.getNama(),
+                                            pegawaiPemberi.getJabatan(),
+                                            notaDinas.getStatusBaca(),
+                                            "Nota Dinas",
+                                            3));
+                        }
+                        break;
                     }
-                    break;
                 }
             }
         }
 
         for (TembusanNotaDinas suratTarget
                 : tembusanNotaDinasList) {
-            for (CustomPegawaiCredential pegawaiPemberi : qutPegawaiList) {
-                if (pegawaiPemberi.getNip()
-                        .equals(suratTarget.getNotaDinas().getNipPenandatangan())) {
-                    if (suratTarget.getStatusBaca() == 0) {
-                        notaDinasTargetWrappers
-                                .add(new SuratPerintahTargetWrapper(
-                                        suratTarget.getNotaDinas().getKdNotaDinas(),
-                                        "",
-                                        suratTarget.getNotaDinas().getTanggalPembuatanMilis(),
-                                        false,
-                                        pegawaiPemberi.getNip(),
-                                        pegawaiPemberi.getNama(),
-                                        pegawaiPemberi.getJabatan(),
-                                        suratTarget.getStatusBaca(),
-                                        "Nota Dinas",
-                                        3));
-                    }
+            if (suratTarget.getNotaDinas().getStatusPenyebaran() == 1) {
+                for (CustomPegawaiCredential pegawaiPemberi : qutPegawaiList) {
+                    if (pegawaiPemberi.getNip()
+                            .equals(suratTarget.getNotaDinas().getNipPenandatangan())) {
+                        if (suratTarget.getStatusBaca() == 0) {
+                            notaDinasTargetWrappers
+                                    .add(new SuratPerintahTargetWrapper(
+                                            suratTarget.getNotaDinas().getKdNotaDinas(),
+                                            "",
+                                            suratTarget.getNotaDinas().getTanggalPembuatanMilis(),
+                                            false,
+                                            pegawaiPemberi.getNip(),
+                                            pegawaiPemberi.getNama(),
+                                            pegawaiPemberi.getJabatan(),
+                                            suratTarget.getStatusBaca(),
+                                            "Nota Dinas",
+                                            3));
+                        }
 
-                    break;
+                        break;
+                    }
                 }
             }
         }

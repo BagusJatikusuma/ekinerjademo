@@ -73,6 +73,9 @@ public class SuratDinas {
     @Column(name = "approval_penandatangan")
     private Integer approvalPenandatangan;
 
+    @Column(name = "status_penyebaran")
+    private Integer statusPenyebaran;
+
     @OneToOne(mappedBy = "suratDinas", fetch = FetchType.LAZY)
     private SuratDinasNonPejabat suratDinasNonPejabat;
     @OneToOne(mappedBy = "suratDinas", fetch = FetchType.LAZY)
@@ -326,5 +329,13 @@ public class SuratDinas {
 
     public void setApprovalPenandatangan(Integer approvalPenandatangan) {
         this.approvalPenandatangan = approvalPenandatangan;
+    }
+
+    public Integer getStatusPenyebaran() {
+        return statusPenyebaran;
+    }
+
+    public void setStatusPenyebaran(Integer statusPenyebaran) {
+        this.statusPenyebaran = statusPenyebaran;
     }
 }

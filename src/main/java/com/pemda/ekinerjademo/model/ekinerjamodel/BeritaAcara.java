@@ -84,6 +84,9 @@ public class BeritaAcara {
     @Column(name = "tahun_urtug")
     private Integer tahunUrtug;
 
+    @Column(name = "status_penyebaran")
+    private Integer statusPenyebaran;
+
     public String getKdBeritaAcara() {
         return kdBeritaAcara;
     }
@@ -330,5 +333,13 @@ public class BeritaAcara {
 
     public void setTahunUrtug(Integer tahunUrtug) {
         this.tahunUrtug = tahunUrtug;
+    }
+
+    public Integer getStatusPenyebaran() {
+        return statusPenyebaran;
+    }
+
+    public void setStatusPenyebaran(Integer statusPenyebaran) {
+        this.statusPenyebaran = statusPenyebaran;
     }
 }

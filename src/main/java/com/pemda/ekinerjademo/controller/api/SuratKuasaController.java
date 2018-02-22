@@ -64,6 +64,7 @@ public class SuratKuasaController {
         suratKuasa.setStatusPenilaian(0);
         suratKuasa.setAlasanPenolakan("");
         suratKuasa.setStatusBaca(0);
+        suratKuasa.setStatusPenyebaran(0);
 
         suratKuasa.setKdUrtug(inputWrapper.getKdUrtug());
         suratKuasa.setTahunUrtug(inputWrapper.getTahunUrtug());
@@ -208,7 +209,6 @@ public class SuratKuasaController {
         LOGGER.info("approve surat kuasa");
 
         suratKuasaService.approveSuratKuasa(kdSuratKuasa);
-        SuratKuasa suratKuasa = suratKuasaService.getSuratKuasa(kdSuratKuasa);
 
         return new ResponseEntity<Object>(new CustomMessage("surat kuasa approved"), HttpStatus.OK);
     }
@@ -233,21 +233,24 @@ public class SuratKuasaController {
         DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
         for (SuratKuasa suratKuasa
                 : suratKuasaList) {
-            for (CustomPegawaiCredential pegawaiPemberi : qutPegawaiList) {
-                if (pegawaiPemberi.getNip()
-                        .equals(suratKuasa.getNipPemberiKuasa())) {
-                    suratKuasaPenerimaKuasaList
-                            .add(new SuratPerintahTargetWrapper(suratKuasa.getKdSuratKuasa(),
-                                    "",
-                                    suratKuasa.getTanggalPembuatanMilis(),
-                                    false,
-                                    pegawaiPemberi.getNip(),
-                                    pegawaiPemberi.getNama(),
-                                    pegawaiPemberi.getJabatan(),
-                                    suratKuasa.getStatusBaca(),
-                                    "Surat Kuasa",
-                                    9));
-                    break;
+            if (suratKuasa.getStatusPenyebaran() == 1) {
+                for (CustomPegawaiCredential pegawaiPemberi : qutPegawaiList) {
+                    if (pegawaiPemberi.getNip()
+                            .equals(suratKuasa.getNipPemberiKuasa())) {
+                        suratKuasaPenerimaKuasaList
+                                .add(new SuratPerintahTargetWrapper(suratKuasa.getKdSuratKuasa(),
+                                        "",
+                                        suratKuasa.getTanggalPembuatanMilis(),
+                                        false,
+                                        pegawaiPemberi.getNip(),
+                                        pegawaiPemberi.getNama(),
+                                        pegawaiPemberi.getJabatan(),
+                                        suratKuasa.getStatusBaca(),
+                                        "Surat Kuasa",
+                                        9));
+                        break;
+                    }
+
                 }
 
             }
@@ -277,23 +280,26 @@ public class SuratKuasaController {
         DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
         for (SuratKuasa suratKuasa
                 : suratKuasaList) {
-            for (CustomPegawaiCredential pegawaiPemberi : qutPegawaiList) {
-                if (pegawaiPemberi.getNip()
-                        .equals(suratKuasa.getNipPemberiKuasa())) {
-                    if (suratKuasa.getStatusBaca() == 0) {
-                        suratKuasaPenerimaKuasaList
-                                .add(new SuratPerintahTargetWrapper(suratKuasa.getKdSuratKuasa(),
-                                        "",
-                                        suratKuasa.getTanggalPembuatanMilis(),
-                                        false,
-                                        pegawaiPemberi.getNip(),
-                                        pegawaiPemberi.getNama(),
-                                        pegawaiPemberi.getJabatan(),
-                                        suratKuasa.getStatusBaca(),
-                                        "Surat Kuasa",
-                                        9));
+            if (suratKuasa.getStatusPenyebaran() == 1) {
+                for (CustomPegawaiCredential pegawaiPemberi : qutPegawaiList) {
+                    if (pegawaiPemberi.getNip()
+                            .equals(suratKuasa.getNipPemberiKuasa())) {
+                        if (suratKuasa.getStatusBaca() == 0) {
+                            suratKuasaPenerimaKuasaList
+                                    .add(new SuratPerintahTargetWrapper(suratKuasa.getKdSuratKuasa(),
+                                            "",
+                                            suratKuasa.getTanggalPembuatanMilis(),
+                                            false,
+                                            pegawaiPemberi.getNip(),
+                                            pegawaiPemberi.getNama(),
+                                            pegawaiPemberi.getJabatan(),
+                                            suratKuasa.getStatusBaca(),
+                                            "Surat Kuasa",
+                                            9));
+                        }
+                        break;
                     }
-                    break;
+
                 }
 
             }

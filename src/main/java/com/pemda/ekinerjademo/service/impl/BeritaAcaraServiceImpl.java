@@ -52,14 +52,19 @@ public class BeritaAcaraServiceImpl implements BeritaAcaraService{
     @Override
     public void approveBeritaAcara(String kdBeritaAcara) {
         BeritaAcara beritaAcaraLast = beritaAcaraDao.findOne(kdBeritaAcara);
+        beritaAcaraLast.setStatusPenyebaran(1);
+        beritaAcaraLast.setStatusApprovalNipMengetahui(1);
+
         String penilaianTree = beritaAcaraLast.getPathPenilaian();
 
-        List<BeritaAcara> beritaAcaraList
-                = beritaAcaraDao.findByLastTree(penilaianTree.substring(0, penilaianTree.indexOf(".")));
+        if (penilaianTree.contains(".")) {
+            List<BeritaAcara> beritaAcaraList
+                    = beritaAcaraDao.findByLastTree(penilaianTree.substring(0, penilaianTree.indexOf(".")));
 
-        for (BeritaAcara beritaAcara
-                : beritaAcaraList) {
-            beritaAcara.setStatusApprovalNipMengetahui(1);
+            for (BeritaAcara beritaAcara
+                    : beritaAcaraList) {
+                beritaAcara.setStatusApprovalNipMengetahui(1);
+            }
         }
     }
 }
