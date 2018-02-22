@@ -379,11 +379,9 @@ public class SuratPerintahController {
             @PathVariable("kdSuratPerintah") String kdSuratPerintah) {
         LOGGER.info("approve surat perintah");
 
-        SuratPerintah suratPerintah
-                = suratPerintahService.getSuratPerintahByKdSuratPerintah(kdSuratPerintah);
-        suratPerintah.setApprovalPenandatangan(1);
-
-        suratPerintahService.update(suratPerintah);
+        suratPerintahService.approveSuratPerintah(kdSuratPerintah);
+        SuratPerintah suratPerintah = suratPerintahService.getSuratPerintahByKdSuratPerintah(kdSuratPerintah);
+        suratPerintah.setStatusPenyebaran(1);
 
         return new ResponseEntity<Object>(new CustomMessage("surat perintah sudah disetujui"), HttpStatus.OK);
     }

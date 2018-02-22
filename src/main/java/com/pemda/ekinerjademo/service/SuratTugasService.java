@@ -35,4 +35,6 @@ public interface SuratTugasService {
     void openTembusanSuratTugas(TembusanSuratTugasId id);
     void openSuratTugasPenilai(String kdSuratTugas);
 
+    void approveSuratTugas(String kdSuratTugas);
+
 }

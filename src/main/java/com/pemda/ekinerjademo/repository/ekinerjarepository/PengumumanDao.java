@@ -19,7 +19,7 @@ public interface PengumumanDao extends JpaRepository<Pengumuman, String> {
     Pengumuman findByKdPengumuman(String kdPengumuman);
 
     @Query("select pm from Pengumuman pm " +
-            "where pm.pathPenilaian like concat('%',?1)")
-    List<Pengumuman> findBylastTree(String kdPengumuman);
+            "where pm.pathPenilaian like concat(?1,'%')")
+    List<Pengumuman> findBylastTree(String kdPengumumanRoot);
 
 }

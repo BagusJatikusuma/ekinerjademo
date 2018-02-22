@@ -93,4 +93,17 @@ public class SuratUndanganServiceImpl implements SuratUndanganService {
                 = suratUndanganDao.findByKdSuratUndangan(kdSuratUndangan);
         suratUndangan.setStatusPenilaian(1);
     }
+
+    @Override
+    public void approveSuratUndangan(String kdSuratUndangan) {
+        SuratUndangan suratUndanganLast = suratUndanganDao.findOne(kdSuratUndangan);
+        String penilaianTree = suratUndanganLast.getPathPenilaian();
+
+        List<SuratUndangan> suratUndanganList
+                = suratUndanganDao.findByLastTree(penilaianTree.substring(0, penilaianTree.indexOf(".")));
+        for (SuratUndangan suratUndangan
+                : suratUndanganList) {
+            suratUndangan.setApprovalPenandatangan(1);
+        }
+    }
 }

@@ -103,9 +103,10 @@ public class PengumumanController {
     ResponseEntity<?> approvePengumuman(@PathVariable("kdPengumuman") String kdPengumuman) {
         LOGGER.info("sebar pengumuman");
 
+        pengumumanService.approvePengumuman(kdPengumuman);
+        Pengumuman pengumuman = pengumumanService.getByKdPengumuman(kdPengumuman);
 
-
-        return new ResponseEntity<>(new CustomMessage("pengumuman sudah disebar"), HttpStatus.OK);
+        return new ResponseEntity<>(new CustomMessage("pengumuman sudah di approve"), HttpStatus.OK);
     }
 
     @RequestMapping(value = "/get-pengumuman-history-by-pembuat/{nipPembuat}", method = RequestMethod.GET)

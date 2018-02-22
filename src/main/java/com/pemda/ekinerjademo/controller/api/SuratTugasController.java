@@ -195,6 +195,10 @@ public class SuratTugasController {
     ResponseEntity<?> approveSuratTugas(@PathVariable("kdSuratTugas") String kdSuratTugas) {
         LOGGER.info("approve surat tugas");
 
+        suratTugasService.approveSuratTugas(kdSuratTugas);
+        SuratTugas suratTugas = suratTugasService.getByKdSuratTugas(kdSuratTugas);
+        suratTugas.setStatusPenyebaran(1);
+
         return new ResponseEntity<Object>(new CustomMessage("surat tugas approved"), HttpStatus.OK);
     }
 

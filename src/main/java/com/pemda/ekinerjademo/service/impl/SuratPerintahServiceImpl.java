@@ -164,4 +164,17 @@ public class SuratPerintahServiceImpl implements SuratPerintahService {
     public SuratPerintah getSuratPerintahByKdSuratPerintah(String kdSuratperintah) {
         return suratPerintahDao.findByKdSuratPerintah(kdSuratperintah);
     }
+
+    @Override
+    public void approveSuratPerintah(String kdSuratPerintah) {
+        SuratPerintah suratPerintahLast = suratPerintahDao.findOne(kdSuratPerintah);
+        String penilaianTree = suratPerintahLast.getPathPenilaian();
+
+        Set<SuratPerintah> suratPerintahList
+                = suratPerintahDao.findByLastTree(penilaianTree.substring(0, penilaianTree.indexOf(".")));
+        for (SuratPerintah suratPerintah
+                : suratPerintahList) {
+            suratPerintah.setApprovalPenandatangan(1);
+        }
+    }
 }

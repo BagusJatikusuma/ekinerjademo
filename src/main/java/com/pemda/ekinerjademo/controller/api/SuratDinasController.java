@@ -142,7 +142,8 @@ public class SuratDinasController {
     ResponseEntity<?> approveSuratDinas(@PathVariable("kdSuratDinas") String kdSuratDinas) {
         LOGGER.info("sebar surat dinas");
 
-
+        suratDinasService.approveSuratDinas(kdSuratDinas);
+        SuratDinas suratDinas = suratDinasService.getByKdSuratDinas(kdSuratDinas);
 
         return new ResponseEntity<Object>(null, HttpStatus.OK);
 

@@ -47,4 +47,18 @@ public class SuratKuasaServiceImpl implements SuratKuasaService{
 
         suratKuasa.setStatusPenilaian(1);
     }
+
+    @Override
+    public void approveSuratKuasa(String kdSuratKuasa) {
+        SuratKuasa suratKuasaLast = suratKuasaDao.findOne(kdSuratKuasa);
+        String penilaianTree = suratKuasaLast.getPathPenilaian();
+
+        List<SuratKuasa> suratKuasaList
+                = suratKuasaDao.findByLastTree(penilaianTree.substring(0, penilaianTree.indexOf(".")));
+        for (SuratKuasa suratKuasa
+                : suratKuasaList) {
+            suratKuasa.setApprovalPenandatangan(1);
+        }
+
+    }
 }

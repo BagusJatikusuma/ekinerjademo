@@ -21,4 +21,6 @@ public interface SuratPengantarService {
     void createSuratPengantarIsi(SuratPengantarIsi suratPengantarIsi);
 
     void openSuratPengantarPenilai(String kdSuratPengantar);
+
+    void approveSuratPengantar(String kdSuratPengantar);
 }

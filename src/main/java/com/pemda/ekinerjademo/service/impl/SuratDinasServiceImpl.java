@@ -95,8 +95,11 @@ public class SuratDinasServiceImpl implements SuratDinasService {
 
     @Override
     public void approveSuratDinas(String kdSuratDinas) {
+        SuratDinas suratDinasLast = suratDinasDao.findOne(kdSuratDinas);
+        String penilaianTree = suratDinasLast.getPathPenilaian();
+
         List<SuratDinas> suratDinasList
-                = suratDinasDao.findByLastTree(kdSuratDinas);
+                = suratDinasDao.findByLastTree(penilaianTree.substring(0, penilaianTree.indexOf(".")));
         for (SuratDinas suratDinas
                 : suratDinasList) {
             suratDinas.setApprovalPenandatangan(1);

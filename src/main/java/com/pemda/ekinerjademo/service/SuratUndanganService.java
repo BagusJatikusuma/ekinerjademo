@@ -25,4 +25,6 @@ public interface SuratUndanganService {
     void openSuratUndangan(String kdSuratUndangan);
     void openTembusanSuratUndangan(TembusanSuratUndanganId tembusanSuratUndanganId);
     void openSuratUndanganPenilai(String kdSuratUndangan);
+
+    void approveSuratUndangan(String kdSuratUndangan);
 }

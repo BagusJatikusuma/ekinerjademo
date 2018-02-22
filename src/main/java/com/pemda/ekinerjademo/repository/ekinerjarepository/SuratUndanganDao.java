@@ -46,7 +46,7 @@ public interface SuratUndanganDao extends JpaRepository<SuratUndangan, String> {
     SuratUndangan findByKdSuratUndangan(String kdSuratUndangan);
 
     @Query("select su from SuratUndangan su " +
-            "where su.pathPenilaian like concat('%',?1) ")
-    List<SuratUndangan> findByLastTree(String kdSuratUndangan);
+            "where su.pathPenilaian like concat(?1,'%') ")
+    List<SuratUndangan> findByLastTree(String kdSuratUndanganRoot);
 
 }

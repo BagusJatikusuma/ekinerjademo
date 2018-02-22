@@ -29,6 +29,6 @@ public interface SuratPerintahDao extends JpaRepository<SuratPerintah, String> {
     Integer findLatestNomorSuratByUnitKerja(String kdUnitKerja);
 
     @Query("select sp from SuratPerintah sp " +
-            "where sp.pathPenilaian like concat('%',?1)")
-    Set<SuratPerintah> findByLastTree(String kdSuratPerintah);
+            "where sp.pathPenilaian like concat(?1,'%')")
+    Set<SuratPerintah> findByLastTree(String kdSuratPerintahRoot);
 }

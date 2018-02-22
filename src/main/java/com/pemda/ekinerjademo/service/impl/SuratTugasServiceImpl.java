@@ -139,4 +139,17 @@ public class SuratTugasServiceImpl implements SuratTugasService {
 
         suratTugas.setStatusPenilaian(1);
     }
+
+    @Override
+    public void approveSuratTugas(String kdSuratTugas) {
+        SuratTugas suratTugasLast = suratTugasDao.findOne(kdSuratTugas);
+        String penilaianTree = suratTugasLast.getPathPenilaian();
+
+        Set<SuratTugas> suratTugasSet
+                = suratTugasDao.findByLastTree(penilaianTree.substring(0, penilaianTree.indexOf(".")));
+        for (SuratTugas suratTugas
+                : suratTugasSet) {
+            suratTugas.setApprovalPenandatangan(1);
+        }
+    }
 }

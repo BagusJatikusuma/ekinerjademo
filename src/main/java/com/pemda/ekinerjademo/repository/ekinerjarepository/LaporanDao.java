@@ -12,6 +12,6 @@ import java.util.List;
 public interface LaporanDao extends JpaRepository<Laporan, String> {
     List<Laporan> findByNipPembuatSurat(String nipPembuatSurat);
     @Query("select lp from Laporan lp " +
-            "where lp.pathPenilaian like concat('%',?1)")
-    List<Laporan> findByLastTree(String kdLaporan);
+            "where lp.pathPenilaian like concat(?1,'%')")
+    List<Laporan> findByLastTree(String kdLaporanRoot);
 }

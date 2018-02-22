@@ -1,5 +1,6 @@
 package com.pemda.ekinerjademo.controller.api;
 
+import com.pemda.ekinerjademo.model.ekinerjamodel.SuratDinas;
 import com.pemda.ekinerjademo.model.ekinerjamodel.SuratKuasa;
 import com.pemda.ekinerjademo.projection.ekinerjaprojection.CustomPegawaiCredential;
 import com.pemda.ekinerjademo.service.QutPegawaiService;
@@ -205,6 +206,9 @@ public class SuratKuasaController {
     @RequestMapping(value = "/approve-surat-kuasa/{kdSuratKuasa}", method = RequestMethod.PUT)
     ResponseEntity<?> approveSuratKuasa(@PathVariable("kdSuratKuasa") String kdSuratKuasa) {
         LOGGER.info("approve surat kuasa");
+
+        suratKuasaService.approveSuratKuasa(kdSuratKuasa);
+        SuratKuasa suratKuasa = suratKuasaService.getSuratKuasa(kdSuratKuasa);
 
         return new ResponseEntity<Object>(new CustomMessage("surat kuasa approved"), HttpStatus.OK);
     }

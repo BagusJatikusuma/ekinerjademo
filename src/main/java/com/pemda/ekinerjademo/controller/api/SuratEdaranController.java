@@ -141,6 +141,10 @@ public class SuratEdaranController {
     ResponseEntity<?> approveSuratEdaran(@PathVariable("kdSuratEdaran") String kdSuratEdaran) {
         LOGGER.info("sebar surat edaran");
 
+        suratEdaranService.approveSuratEdaran(kdSuratEdaran);
+        SuratEdaran suratEdaran = suratEdaranService.getByKdSuratEdaran(kdSuratEdaran);
+
+
         return new ResponseEntity<Object>(null, HttpStatus.OK);
 
     }

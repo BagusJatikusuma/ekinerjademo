@@ -85,8 +85,11 @@ public class NotaDinasServiceImpl implements NotaDinasService {
 
     @Override
     public void approveNotaDinas(String kdNotaDinas) {
+        NotaDinas notaDinasLast = notaDinasDao.findByKdNotaDinas(kdNotaDinas);
+        String penilaianTree = notaDinasLast.getPathPenilaian();
+
         List<NotaDinas> notaDinasList
-                = notaDinasDao.findByLastTree(kdNotaDinas);
+                = notaDinasDao.findByLastTree(penilaianTree.substring(0, penilaianTree.indexOf(".")));
 
         for (NotaDinas notaDinas
                 : notaDinasList) {

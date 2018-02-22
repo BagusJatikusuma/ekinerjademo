@@ -511,4 +511,13 @@ public class SuratUndanganController {
 
     }
 
+    @RequestMapping(value = "/approve-surat-undangan/{kdSuratUndangan}", method = RequestMethod.GET)
+    ResponseEntity<?> approveSuratUndangan(@PathVariable("kdSuratUndangan") String kdSuratUndangan) {
+        LOGGER.info("approve surat undangan");
+
+        suratUndanganService.approveSuratUndangan(kdSuratUndangan);
+        SuratUndangan suratUndangan = suratUndanganService.getByKdSuratUndangan(kdSuratUndangan);
+
+        return new ResponseEntity<Object>(new CustomMessage("surat undangan sudah diapprove"), HttpStatus.OK);
+    }
 }

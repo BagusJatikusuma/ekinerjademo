@@ -28,8 +28,8 @@ public interface MemorandumDao extends JpaRepository<Memorandum, String>{
     List<Memorandum> findByNipPenerimaMemorandum(String nipPenerima);
 
     @Query("select mm from Memorandum mm " +
-            "where mm.pathPenilaian like concat('%',?1)")
-    List<Memorandum> findByLastTree(String kdMemorandum);
+            "where mm.pathPenilaian like concat(?1,'%')")
+    List<Memorandum> findByLastTree(String kdMemorandumRoot);
     @Query("select distinct m from Memorandum m " +
             "left join fetch m.memorandumNonPejabat " +
             "left join fetch m.memorandumPejabat " +

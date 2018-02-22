@@ -140,7 +140,10 @@ public class SuratKeteranganController {
 
     @RequestMapping(value = "/approve-surat-keterangan/{kdSuratKeterangan}", method = RequestMethod.PUT)
     ResponseEntity<?> approveSuratKeterangan(@PathVariable("kdSuratKeterangan") String kdSuratKeterangan) {
-        LOGGER.info("sebar surat keterangan");
+        LOGGER.info("approve surat keterangan");
+
+        suratKeteranganService.approveSuratKeterangan(kdSuratKeterangan);
+        SuratKeterangan suratKeterangan = suratKeteranganService.getByKdSuratKeterangan(kdSuratKeterangan);
 
         return new ResponseEntity<Object>(null, HttpStatus.OK);
 

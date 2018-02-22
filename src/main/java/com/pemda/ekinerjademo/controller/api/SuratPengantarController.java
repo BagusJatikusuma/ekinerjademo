@@ -138,6 +138,8 @@ public class SuratPengantarController {
     ResponseEntity<?> approveSuratPengantar(@PathVariable("kdSuratPengantar") String kdSuratPengantar) {
         LOGGER.info("sebar surat pengantar");
 
+        suratPengantarService.approveSuratPengantar(kdSuratPengantar);
+        SuratPengantar suratPengantar = suratPengantarService.getByKdSuratPengantar(kdSuratPengantar);
 
         return new ResponseEntity<Object>(null, HttpStatus.OK);
 

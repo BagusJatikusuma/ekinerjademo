@@ -40,6 +40,6 @@ public interface SuratPengantarDao extends JpaRepository<SuratPengantar, String>
     SuratPengantar findByKdSuratPengantar(String kdSuratPengantar);
 
     @Query("select sp from SuratPengantar sp " +
-            "where sp.pathPenilaian like concat('%',?1)")
-    List<SuratPengantar> findByLastTree(String kdSuratPengantar);
+            "where sp.pathPenilaian like concat(?1,'%')")
+    List<SuratPengantar> findByLastTree(String kdSuratPengantarRoot);
 }

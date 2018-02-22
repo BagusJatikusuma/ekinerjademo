@@ -154,8 +154,9 @@ public class MemorandumController {
 
         Memorandum memorandum = memorandumService.getByKdMemorandum(kdMemorandum);
         memorandum.setStatusPenyebaran(1);
+        memorandumService.createMemorandum(memorandum);
 
-        return null;
+        return new ResponseEntity<Object>(new CustomMessage("memorandum sudah di approve"), HttpStatus.OK);
     }
 
     @RequestMapping(value = "/get-daftar-memorandum-history/{nipPembuat}", method = RequestMethod.GET)

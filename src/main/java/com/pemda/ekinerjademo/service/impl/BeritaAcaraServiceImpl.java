@@ -51,8 +51,11 @@ public class BeritaAcaraServiceImpl implements BeritaAcaraService{
 
     @Override
     public void approveBeritaAcara(String kdBeritaAcara) {
+        BeritaAcara beritaAcaraLast = beritaAcaraDao.findOne(kdBeritaAcara);
+        String penilaianTree = beritaAcaraLast.getPathPenilaian();
+
         List<BeritaAcara> beritaAcaraList
-                = beritaAcaraDao.findByLastTree(kdBeritaAcara);
+                = beritaAcaraDao.findByLastTree(penilaianTree.substring(0, penilaianTree.indexOf(".")));
 
         for (BeritaAcara beritaAcara
                 : beritaAcaraList) {

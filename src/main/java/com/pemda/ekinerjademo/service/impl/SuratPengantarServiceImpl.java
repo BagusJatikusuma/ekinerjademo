@@ -1,5 +1,6 @@
 package com.pemda.ekinerjademo.service.impl;
 
+import com.pemda.ekinerjademo.model.ekinerjamodel.SuratDinas;
 import com.pemda.ekinerjademo.model.ekinerjamodel.SuratPengantar;
 import com.pemda.ekinerjademo.model.ekinerjamodel.SuratPengantarIsi;
 import com.pemda.ekinerjademo.repository.ekinerjarepository.SuratPengantarDao;
@@ -65,6 +66,19 @@ public class SuratPengantarServiceImpl implements SuratPengantarService {
         SuratPengantar suratPengantar
                 = suratPengantarDao.findByKdSuratPengantar(kdSuratPengantar);
         suratPengantar.setStatusPenilaian(1);
+    }
+
+    @Override
+    public void approveSuratPengantar(String kdSuratPengantar) {
+        SuratPengantar suratPengantarLast = suratPengantarDao.findOne(kdSuratPengantar);
+        String penilaianTree = suratPengantarLast.getPathPenilaian();
+
+        List<SuratPengantar> suratPengantarList
+                = suratPengantarDao.findByLastTree(penilaianTree.substring(0, penilaianTree.indexOf(".")));
+        for (SuratPengantar suratPengantar
+                : suratPengantarList) {
+            suratPengantar.setApprovalPenandatangan(1);
+        }
     }
 
 }

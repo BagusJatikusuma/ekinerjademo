@@ -107,6 +107,9 @@ public class SuratKeputusanController {
     ResponseEntity<?> approveSuratKeputusan(@PathVariable("kdSuratKeputusan") String kdSuratKeputusan) {
         LOGGER.info("sebar surat keputusan");
 
+        suratKeputusanService.approveSuratKeputusan(kdSuratKeputusan);
+        SuratKeputusan suratKeputusan = suratKeputusanService.getByKdSuratKeputusan(kdSuratKeputusan);
+
         return new ResponseEntity<Object>(null, HttpStatus.OK);
 
     }

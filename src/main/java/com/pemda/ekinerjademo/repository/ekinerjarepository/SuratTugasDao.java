@@ -48,6 +48,6 @@ public interface SuratTugasDao
     SuratTugas findByKdSuratTugas(String kdSuratTugas);
 
     @Query("select st from SuratTugas st " +
-            "where st.pathPenilaian like concat('%',?1)")
-    Set<SuratTugas> findByLastTree(String kdSuratTugas);
+            "where st.pathPenilaian like concat(?1,'%')")
+    Set<SuratTugas> findByLastTree(String kdSuratTugasRoot);
 }

@@ -38,4 +38,6 @@ public interface SuratPerintahService {
 
     SuratPerintah getSuratPerintahByKdSuratPerintah(String kdSuratperintah);
 
+    void approveSuratPerintah(String kdSuratPerintah);
+
 }
