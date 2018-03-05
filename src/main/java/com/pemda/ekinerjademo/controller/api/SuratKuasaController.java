@@ -5,6 +5,7 @@ import com.pemda.ekinerjademo.model.ekinerjamodel.SuratKuasa;
 import com.pemda.ekinerjademo.projection.ekinerjaprojection.CustomPegawaiCredential;
 import com.pemda.ekinerjademo.service.QutPegawaiService;
 import com.pemda.ekinerjademo.service.SuratKuasaService;
+import com.pemda.ekinerjademo.util.BarcodeGenerator;
 import com.pemda.ekinerjademo.wrapper.input.SuratKuasaInputWrapper;
 import com.pemda.ekinerjademo.wrapper.output.*;
 import groovy.transform.Synchronized;
@@ -175,6 +176,15 @@ public class SuratKuasaController {
             }
         }
 
+        String base64BarcodeImage = null;
+        String kdBarcode
+                = suratKuasa.getKdBarcode()+suratKuasa.getNomorUrut()+suratKuasa.getKdUnitKerja()+"9";
+        BarcodeGenerator generator = new BarcodeGenerator();
+
+        base64BarcodeImage
+                = generator.convertBarcodeImageIntoBase64String(
+                        generator.generateBarcode(suratKuasa.getKdBarcode()));
+
         SuratKuasaWrapper suratKuasaWrapper
                 = new SuratKuasaWrapper(
                         suratKuasa.getNomorUrusan(),
@@ -199,7 +209,7 @@ public class SuratKuasaController {
                         suratKuasa.getIsiKuasa(),
                         suratKuasa.getKotaPembuatanSurat(),
                         suratKuasa.getTanggalPembuatanMilis(),
-                null);
+                base64BarcodeImage);
 
         return new ResponseEntity<Object>(suratKuasaWrapper, HttpStatus.OK);
     }

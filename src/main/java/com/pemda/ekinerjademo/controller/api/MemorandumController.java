@@ -8,6 +8,7 @@ import com.pemda.ekinerjademo.repository.bismarepository.TkdUnkDao;
 import com.pemda.ekinerjademo.service.MemorandumService;
 import com.pemda.ekinerjademo.service.QutPegawaiCloneService;
 import com.pemda.ekinerjademo.service.TkdJabatanService;
+import com.pemda.ekinerjademo.util.BarcodeGenerator;
 import com.pemda.ekinerjademo.wrapper.input.MemorandumInputWrapper;
 import com.pemda.ekinerjademo.wrapper.output.*;
 import org.slf4j.Logger;
@@ -465,6 +466,15 @@ public class MemorandumController {
             isSuratPejabat = true;
         }
 
+        String base64BarcodeImage = null;
+//        String kdBarcode
+//                = memorandum.getKdBarcode()+memorandum.getNomorUrut()+memorandum.getKdUnitKerja()+"2";
+        BarcodeGenerator generator = new BarcodeGenerator();
+
+        base64BarcodeImage
+                = generator.convertBarcodeImageIntoBase64String(
+                        generator.generateBarcode(memorandum.getKdBarcode()));
+
         MemorandumWrapper memorandumWrapper
                 = new MemorandumWrapper(
                         memorandum.getKdMemorandum(),
@@ -494,7 +504,7 @@ public class MemorandumController {
                         tkdUnkDao.findOne(penandatangan.getKdUnitKerja()).getUnitKerja(),
                 penandatangan.getGlrDpn(), penandatangan.getGlrBlk(), penandatangan.getPangkat(), penandatangan.getGol(),
                 tembusanMemorandumList, isSuratPejabat,
-                null);
+                base64BarcodeImage);
 
 
         return new ResponseEntity<Object>(memorandumWrapper, HttpStatus.OK);

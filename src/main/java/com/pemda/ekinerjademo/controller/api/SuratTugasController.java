@@ -9,6 +9,7 @@ import com.pemda.ekinerjademo.repository.bismarepository.TkdUnkDao;
 import com.pemda.ekinerjademo.service.QutPegawaiService;
 import com.pemda.ekinerjademo.service.SuratTugasService;
 import com.pemda.ekinerjademo.service.TkdJabatanService;
+import com.pemda.ekinerjademo.util.BarcodeGenerator;
 import com.pemda.ekinerjademo.util.EkinerjaXMLBuilder;
 import com.pemda.ekinerjademo.util.EkinerjaXMLParser;
 import com.pemda.ekinerjademo.wrapper.input.SuratTugasInputWrapper;
@@ -580,6 +581,15 @@ public class SuratTugasController {
 
             unitKerjaPenandatangan = tkdUnk.getUnitKerja();
         }
+
+        String base64BarcodeImage = null;
+        String kdBarcode
+                = suratTugas.getKdBarcode()+suratTugas.getNomorSurat1()+suratTugas.getKdUnitKerja()+"12";
+        BarcodeGenerator generator = new BarcodeGenerator();
+
+        base64BarcodeImage
+                = generator.convertBarcodeImageIntoBase64String(
+                generator.generateBarcode(suratTugas.getKdBarcode()));
 
         SuratTugasWrapper suratTugasWrapper
                 = new SuratTugasWrapper(suratTugas.getKdSuratTugas(),

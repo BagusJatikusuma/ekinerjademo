@@ -8,6 +8,7 @@ import com.pemda.ekinerjademo.repository.bismarepository.TkdUnkDao;
 import com.pemda.ekinerjademo.service.QutPegawaiService;
 import com.pemda.ekinerjademo.service.SuratDinasService;
 import com.pemda.ekinerjademo.service.TkdJabatanService;
+import com.pemda.ekinerjademo.util.BarcodeGenerator;
 import com.pemda.ekinerjademo.wrapper.input.SuratDinasInputWrapper;
 import com.pemda.ekinerjademo.wrapper.output.*;
 import org.slf4j.Logger;
@@ -392,6 +393,15 @@ public class SuratDinasController {
         SuratDinasWrapper suratDinasWrapper
                 = new SuratDinasWrapper();
 
+        String base64BarcodeImage = null;
+        String kdBarcode
+                = suratDinas.getKdBarcode()+suratDinas.getNomorUrut()+suratDinas.getKdUnitKerja()+"5";
+        BarcodeGenerator generator = new BarcodeGenerator();
+
+        base64BarcodeImage
+                = generator.convertBarcodeImageIntoBase64String(
+                        generator.generateBarcode(suratDinas.getKdBarcode()));
+
         suratDinasWrapper.setNomorUrusan(suratDinas.getNomorUrusan());
         suratDinasWrapper.setNomorUrut(suratDinas.getNomorUrut());
         suratDinasWrapper.setNomorPasanganUrut(suratDinas.getNomorPasanganUrut());
@@ -466,6 +476,7 @@ public class SuratDinasController {
         if (suratDinas.getSuratDinasPejabat() != null) isSuratPejabat = true;
 
         suratDinasWrapper.setSuratPejabat(isSuratPejabat);
+        suratDinasWrapper.setBarcodeImage(base64BarcodeImage);
 
         return new ResponseEntity<Object>(suratDinasWrapper, HttpStatus.OK);
 

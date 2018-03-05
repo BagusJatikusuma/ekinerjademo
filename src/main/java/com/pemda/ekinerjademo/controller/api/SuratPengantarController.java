@@ -9,6 +9,7 @@ import com.pemda.ekinerjademo.repository.bismarepository.TkdUnkDao;
 import com.pemda.ekinerjademo.service.QutPegawaiService;
 import com.pemda.ekinerjademo.service.SuratPengantarService;
 import com.pemda.ekinerjademo.service.TkdJabatanService;
+import com.pemda.ekinerjademo.util.BarcodeGenerator;
 import com.pemda.ekinerjademo.wrapper.input.SuratPengantarInputWrapper;
 import com.pemda.ekinerjademo.wrapper.input.SuratPengantarIsiInputWrapper;
 import com.pemda.ekinerjademo.wrapper.output.*;
@@ -333,6 +334,15 @@ public class SuratPengantarController {
                             isi.getKeterangan()));
         }
 
+        String base64BarcodeImage = null;
+        String kdBarcode
+                = suratPengantar.getKdBarcode()+suratPengantar.getNomorUrut()+suratPengantar.getKdUnitKerja()+"10";
+        BarcodeGenerator generator = new BarcodeGenerator();
+
+        base64BarcodeImage
+                = generator.convertBarcodeImageIntoBase64String(
+                        generator.generateBarcode(suratPengantar.getKdBarcode()));
+
         SuratPengantarWrapper suratPengantarWrapper
                 = new SuratPengantarWrapper(
                         suratPengantar.getNomorUrusan(),
@@ -353,7 +363,7 @@ public class SuratPengantarController {
                         pemberiSurat.getGlrBlk(),
                 pemberiSurat.getPangkat(), pemberiSurat.getGol(), suratPengantar.getNomorTeleponPemberi(),
                         suratPengantarIsiWrapperList,
-                null);
+                base64BarcodeImage);
 
         return new ResponseEntity<Object>(suratPengantarWrapper, HttpStatus.OK);
 

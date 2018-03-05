@@ -8,6 +8,7 @@ import com.pemda.ekinerjademo.projection.ekinerjaprojection.CustomPegawaiCredent
 import com.pemda.ekinerjademo.repository.bismarepository.TkdUnkDao;
 import com.pemda.ekinerjademo.service.QutPegawaiService;
 import com.pemda.ekinerjademo.service.SuratKeteranganService;
+import com.pemda.ekinerjademo.util.BarcodeGenerator;
 import com.pemda.ekinerjademo.util.DateUtilities;
 import com.pemda.ekinerjademo.util.EkinerjaXMLBuilder;
 import com.pemda.ekinerjademo.util.EkinerjaXMLParser;
@@ -340,6 +341,15 @@ public class SuratKeteranganController {
             }
         }
 
+        String base64BarcodeImage = null;
+        String kdBarcode
+                = suratKeterangan.getKdBarcode()+suratKeterangan.getNomorUrut()+suratKeterangan.getKdUnitKerja()+"8";
+        BarcodeGenerator generator = new BarcodeGenerator();
+
+        base64BarcodeImage
+                = generator.convertBarcodeImageIntoBase64String(
+                            generator.generateBarcode(suratKeterangan.getKdBarcode()));
+
         SuratKeteranganWrapper suratKeteranganWrapper
                 = new SuratKeteranganWrapper(
                         suratKeterangan.getKdSuratKeterangan(),
@@ -359,7 +369,7 @@ public class SuratKeteranganController {
                         suratKeterangan.getTanggalPembuatanSuratMilis(),
                         pegawaiKeteranganList,
                         targetPegawaiKeteranganList,
-                null);
+                base64BarcodeImage);
 
         return new ResponseEntity<Object>(suratKeteranganWrapper, HttpStatus.OK);
 

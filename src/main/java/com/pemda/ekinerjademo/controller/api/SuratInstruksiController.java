@@ -7,6 +7,7 @@ import com.pemda.ekinerjademo.model.ekinerjamodel.*;
 import com.pemda.ekinerjademo.projection.ekinerjaprojection.CustomPegawaiCredential;
 import com.pemda.ekinerjademo.repository.bismarepository.TkdUnkDao;
 import com.pemda.ekinerjademo.service.*;
+import com.pemda.ekinerjademo.util.BarcodeGenerator;
 import com.pemda.ekinerjademo.util.DateUtilities;
 import com.pemda.ekinerjademo.util.EkinerjaXMLBuilder;
 import com.pemda.ekinerjademo.util.EkinerjaXMLParser;
@@ -144,6 +145,10 @@ public class SuratInstruksiController {
 
         LOGGER.info("length is "+suratInstruksiList.size());
 
+        QutPegawai pembuat = qutPegawaiService.getQutPegawai(nipPegawai);
+        List<QutPegawai> qutPegawaiList
+                = qutPegawaiService.getQutPegawaiByUnitKerja(pembuat.getKdUnitKerja());
+
         Locale indoLocale = new Locale("id", "ID");
         boolean isSuratPejabat;
         for (SuratInstruksi suratInstruksi
@@ -152,13 +157,21 @@ public class SuratInstruksiController {
             if (suratInstruksi.getSuratInstruksiPejabat() == null) {
                 isSuratPejabat = false;
             }
+
             suratInstruksiWrapperList
                     .add(new SuratInstruksiWrapper(
                             suratInstruksi.getKdInstruksi(),
                             suratInstruksi.getJudulInstruksi(),
                             DateUtilities.createLocalDate(new Date(suratInstruksi.getCreateddateMilis()), "dd MMMM yyyy", indoLocale),
+                            suratInstruksi.getCreateddateMilis(),
                             isSuratPejabat,
-                            suratInstruksi.getStatusBaca()));
+                            suratInstruksi.getStatusBaca(),
+                            null,
+                            null,
+                            suratInstruksi.getStatusBaca(),
+                            null,
+                            null
+                    ));
         }
 
         return new ResponseEntity<Object>(suratInstruksiWrapperList, HttpStatus.OK);
@@ -245,6 +258,14 @@ public class SuratInstruksiController {
 
         }
 
+        String base64BarcodeImage = null;
+        String kdBarcode
+                = suratInstruksi.getKdBarcode()+suratInstruksi.getNomor()+penandatanganSurat.getKdUnitKerja()+"16";
+        BarcodeGenerator generator = new BarcodeGenerator();
+
+        base64BarcodeImage
+                = generator.convertBarcodeImageIntoBase64String(generator.generateBarcode(suratInstruksi.getKdBarcode()));
+
         dokumenSuratInstruksiWrapper.setKdInstruksi(suratInstruksi.getKdInstruksi());
         dokumenSuratInstruksiWrapper.setJudulInstruksi(suratInstruksi.getJudulInstruksi());
         dokumenSuratInstruksiWrapper.setNomor(suratInstruksi.getNomor());
@@ -266,6 +287,7 @@ public class SuratInstruksiController {
         dokumenSuratInstruksiWrapper.setGelarBelakangPenandantangan(penandatanganSurat.getGlrBlk());
         dokumenSuratInstruksiWrapper.setPangkatPenandatangan(penandatanganSurat.getPangkat());
         dokumenSuratInstruksiWrapper.setGolonganPenandatangan(penandatanganSurat.getGol());
+        dokumenSuratInstruksiWrapper.setBarcodeImage(base64BarcodeImage);
 
         if (suratInstruksi.getSuratInstruksiPejabat() != null) {
             tkdJabatan

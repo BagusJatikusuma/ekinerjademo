@@ -7,6 +7,7 @@ import com.pemda.ekinerjademo.repository.bismarepository.TkdUnkDao;
 import com.pemda.ekinerjademo.service.QutPegawaiCloneService;
 import com.pemda.ekinerjademo.service.SuratKuasaService;
 import com.pemda.ekinerjademo.service.TelaahanStafService;
+import com.pemda.ekinerjademo.util.BarcodeGenerator;
 import com.pemda.ekinerjademo.wrapper.input.SuratKuasaInputWrapper;
 import com.pemda.ekinerjademo.wrapper.input.TelaahanStafInputWrapper;
 import com.pemda.ekinerjademo.wrapper.output.CustomMessage;
@@ -156,6 +157,15 @@ public class TelaahanStafController {
             }
         }
 
+        String base64BarcodeImage = null;
+        String kdBarcode
+                = telaahanStaf.getKdBarcode()+telaahanStaf.getKdTelaahanStaf()+telaahanStaf.getKdUnitKerja()+"14";
+        BarcodeGenerator generator = new BarcodeGenerator();
+
+        base64BarcodeImage
+                = generator.convertBarcodeImageIntoBase64String(
+                generator.generateBarcode(telaahanStaf.getKdBarcode()));
+
         TelaahanStaffWrapper telaahanStaffWrapper
                 = new TelaahanStaffWrapper(
                         telaahanStaf.getKdTelaahanStaf(),
@@ -170,7 +180,7 @@ public class TelaahanStafController {
                         telaahanStaf.getTanggalPembuatanMilis(),
                         pembuatSurat,
                         tkdUnkDao.findOne(pembuatSurat.getKdUnitKerja()).getUnitKerja(),
-                        null);
+                        base64BarcodeImage);
 
         return new ResponseEntity<Object>(telaahanStaffWrapper, HttpStatus.OK);
     }

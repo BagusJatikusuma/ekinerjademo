@@ -10,6 +10,7 @@ import com.pemda.ekinerjademo.repository.bismarepository.TkdUnkDao;
 import com.pemda.ekinerjademo.service.NotaDinasService;
 import com.pemda.ekinerjademo.service.QutPegawaiCloneService;
 import com.pemda.ekinerjademo.service.TkdJabatanService;
+import com.pemda.ekinerjademo.util.BarcodeGenerator;
 import com.pemda.ekinerjademo.wrapper.input.NotaDinasInputWrapper;
 import com.pemda.ekinerjademo.wrapper.output.*;
 import org.slf4j.Logger;
@@ -380,6 +381,15 @@ public class NotaDinasController {
         pemberiNotaDinas.setUnitKerja(tkdUnkDao.findOne(pemberiNotaDinas.getKdUnitKerja()).getUnitKerja());
         penandatangan.setUnitKerja(tkdUnkDao.findOne(penandatangan.getKdUnitKerja()).getUnitKerja());
 
+        String base64BarcodeImage = null;
+        String kdBarcode
+                = notaDinas.getKdBarcode()+notaDinas.getNomorUrut()+notaDinas.getKdUnitKerja()+"3";
+        BarcodeGenerator generator = new BarcodeGenerator();
+
+        base64BarcodeImage
+                = generator.convertBarcodeImageIntoBase64String(
+                        generator.generateBarcode(notaDinas.getKdBarcode()));
+
         NotaDinasWrapper notaDinasWrapper
                 = new NotaDinasWrapper(
                         notaDinas.getKdNotaDinas(),
@@ -396,7 +406,7 @@ public class NotaDinasController {
                         notaDinas.getIsiNotaDinas(),
                         penandatangan,
                         tembusanNotaDinasList,
-                        null);
+                        base64BarcodeImage);
 
         return new ResponseEntity<Object>(notaDinasWrapper, HttpStatus.OK);
     }

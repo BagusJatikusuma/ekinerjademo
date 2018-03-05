@@ -5,6 +5,7 @@ import com.pemda.ekinerjademo.projection.ekinerjaprojection.CustomPegawaiCredent
 import com.pemda.ekinerjademo.repository.bismarepository.TkdUnkDao;
 import com.pemda.ekinerjademo.service.QutPegawaiService;
 import com.pemda.ekinerjademo.service.SuratEdaranService;
+import com.pemda.ekinerjademo.util.BarcodeGenerator;
 import com.pemda.ekinerjademo.wrapper.input.SuratEdaranInputWrapper;
 import com.pemda.ekinerjademo.wrapper.input.SuratEdaranSubabInputWrapper;
 import com.pemda.ekinerjademo.wrapper.output.CustomMessage;
@@ -236,6 +237,15 @@ public class SuratEdaranController {
         if (suratEdaran.getSuratEdaranPejabat() != null)
             isSuratPejabat = true;
 
+        String base64BarcodeImage = null;
+        String kdBarcode
+                = suratEdaran.getKdBarcode()+suratEdaran.getNomorUrut()+suratEdaran.getKdUnitKerja()+"6";
+        BarcodeGenerator generator = new BarcodeGenerator();
+
+        base64BarcodeImage
+                = generator.convertBarcodeImageIntoBase64String(
+                        generator.generateBarcode(suratEdaran.getKdBarcode()));
+
         suratEdaranWrapper.setKdSuratEdaran(suratEdaran.getKdSuratEdaran());
         suratEdaranWrapper.setNomorTahun(suratEdaran.getNomorTahun());
         suratEdaranWrapper.setNomorUrut(suratEdaran.getNomorUrut());
@@ -268,7 +278,7 @@ public class SuratEdaranController {
         suratEdaranWrapper.setPangkatPenandatangan(penandatangan.getPangkat());
         suratEdaranWrapper.setGolonganPenandatangan(penandatangan.getGol());
         suratEdaranWrapper.setSuratPejabat(isSuratPejabat);
-        suratEdaranWrapper.setBarcodeImage(null);
+        suratEdaranWrapper.setBarcodeImage(base64BarcodeImage);
 
         return new ResponseEntity<Object>(suratEdaranWrapper, HttpStatus.OK);
 

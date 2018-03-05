@@ -6,6 +6,7 @@ import com.pemda.ekinerjademo.projection.ekinerjaprojection.CustomPegawaiCredent
 import com.pemda.ekinerjademo.repository.bismarepository.TkdUnkDao;
 import com.pemda.ekinerjademo.service.BeritaAcaraService;
 import com.pemda.ekinerjademo.service.QutPegawaiService;
+import com.pemda.ekinerjademo.util.BarcodeGenerator;
 import com.pemda.ekinerjademo.util.EkinerjaXMLBuilder;
 import com.pemda.ekinerjademo.util.EkinerjaXMLParser;
 import com.pemda.ekinerjademo.wrapper.input.BeritaAcaraInputWrapper;
@@ -202,6 +203,15 @@ public class BeritaAcaraController {
             }
         }
 
+        String base64BarcodeImage = null;
+//        String kdBarcode
+//                = beritaAcara.getKdBarcode()+beritaAcara.getNomorUrut()+beritaAcara.getKdUnitKerja()+"0";
+        BarcodeGenerator generator = new BarcodeGenerator();
+
+        base64BarcodeImage
+                = generator.convertBarcodeImageIntoBase64String(
+                        generator.generateBarcode(beritaAcara.getKdBarcode()));
+
         BeritaAcaraWrapper beritaAcaraWrapper
                 = new BeritaAcaraWrapper(
                         beritaAcara.getKdBeritaAcara(),
@@ -242,7 +252,7 @@ public class BeritaAcaraController {
                         pihakMengetahui.getGlrBlk(),
                         beritaAcara.getKotaPembuatanSurat(),
                         beritaAcara.getTanggalPembuatanMilis(),
-                        null);
+                        base64BarcodeImage);
 
         return new ResponseEntity<Object>(beritaAcaraWrapper, HttpStatus.OK);
     }

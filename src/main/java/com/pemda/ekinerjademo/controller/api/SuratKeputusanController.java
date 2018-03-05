@@ -5,6 +5,7 @@ import com.pemda.ekinerjademo.projection.ekinerjaprojection.CustomPegawaiCredent
 import com.pemda.ekinerjademo.repository.bismarepository.TkdUnkDao;
 import com.pemda.ekinerjademo.service.QutPegawaiService;
 import com.pemda.ekinerjademo.service.SuratKeputusanService;
+import com.pemda.ekinerjademo.util.BarcodeGenerator;
 import com.pemda.ekinerjademo.util.EkinerjaXMLBuilder;
 import com.pemda.ekinerjademo.util.EkinerjaXMLParser;
 import com.pemda.ekinerjademo.wrapper.input.SuratKeputusanInputWrapper;
@@ -187,6 +188,15 @@ public class SuratKeputusanController {
             }
         }
 
+        String base64BarcodeImage = null;
+        String kdBarcode
+                = suratKeputusan.getKdBarcode()+suratKeputusan.getNomorUrut()+suratKeputusan.getKdUnitKerja()+"7";
+        BarcodeGenerator generator = new BarcodeGenerator();
+
+        base64BarcodeImage
+                = generator.convertBarcodeImageIntoBase64String(
+                        generator.generateBarcode(suratKeputusan.getKdBarcode()));
+
         SuratKeputusanWrapper suratKeputusanWrapper
                 = new SuratKeputusanWrapper(
                         suratKeputusan.getKdSuratKeputusan(),
@@ -207,7 +217,7 @@ public class SuratKeputusanController {
                         ekinerjaXMLParser.convertXmlSuratPerintahIntoListofString(suratKeputusan.getMenetapkan(), "menetapkan"),
                         suratKeputusan.getTanggalPembuatanMilis(),
                         suratKeputusan.getKotaPembuatanSurat(),
-                        null);
+                        base64BarcodeImage);
 
 
         return new ResponseEntity<Object>(suratKeputusanWrapper, HttpStatus.OK);

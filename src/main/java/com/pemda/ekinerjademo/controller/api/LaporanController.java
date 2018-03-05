@@ -5,6 +5,7 @@ import com.pemda.ekinerjademo.projection.ekinerjaprojection.CustomPegawaiCredent
 import com.pemda.ekinerjademo.repository.bismarepository.TkdUnkDao;
 import com.pemda.ekinerjademo.service.LaporanService;
 import com.pemda.ekinerjademo.service.QutPegawaiService;
+import com.pemda.ekinerjademo.util.BarcodeGenerator;
 import com.pemda.ekinerjademo.wrapper.input.LaporanInputWrapper;
 import com.pemda.ekinerjademo.wrapper.output.CustomMessage;
 import com.pemda.ekinerjademo.wrapper.output.LaporanWrapper;
@@ -163,6 +164,15 @@ public class LaporanController {
         }
 
 
+        String base64BarcodeImage = null;
+//        String kdBarcode
+//                = laporan.getKdBarcode()+laporan.getKdLaporan()+laporan.getKdUnitKerja()+"1";
+        BarcodeGenerator generator = new BarcodeGenerator();
+
+        base64BarcodeImage
+                = generator.convertBarcodeImageIntoBase64String(
+                        generator.generateBarcode(laporan.getKdBarcode()));
+
         LaporanWrapper laporanWrapper
                 = new LaporanWrapper(
                 laporan.getKdLaporan(),
@@ -191,7 +201,7 @@ public class LaporanController {
                 pembuat.getJabatan(),
                 tkdUnkDao.findOne(pembuat.getKdUnitKerja()).getUnitKerja(),
                 pembuat.getGlrDpn(), pembuat.getGlrBlk(), pembuat.getPangkat(), pembuat.getGol(),
-                null);
+                base64BarcodeImage);
         return new ResponseEntity<Object>(laporanWrapper,HttpStatus.OK);
     }
 

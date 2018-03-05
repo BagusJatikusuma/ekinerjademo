@@ -5,6 +5,7 @@ import com.pemda.ekinerjademo.projection.ekinerjaprojection.CustomPegawaiCredent
 import com.pemda.ekinerjademo.repository.bismarepository.TkdUnkDao;
 import com.pemda.ekinerjademo.service.PengumumanService;
 import com.pemda.ekinerjademo.service.QutPegawaiCloneService;
+import com.pemda.ekinerjademo.util.BarcodeGenerator;
 import com.pemda.ekinerjademo.util.DateUtilities;
 import com.pemda.ekinerjademo.wrapper.input.PengumumanInputWrapper;
 import com.pemda.ekinerjademo.wrapper.output.CustomMessage;
@@ -158,6 +159,15 @@ public class PengumumanController {
             }
         }
 
+        String base64BarcodeImage = null;
+        String kdBarcode
+                = pengumuman.getKdBarcode()+pengumuman.getNomorUrut()+pengumuman.getKdUnitKerja()+"4";
+        BarcodeGenerator generator = new BarcodeGenerator();
+
+        base64BarcodeImage
+                = generator.convertBarcodeImageIntoBase64String(
+                        generator.generateBarcode(pengumuman.getKdBarcode()));
+
         PengumumanWrapper pengumumanWrapper
                 = new PengumumanWrapper(
                         pengumuman.getNomorUrusan(),
@@ -175,7 +185,7 @@ public class PengumumanController {
                 penandatangan.getPangkat(), penandatangan.getGol(),
                 pengumuman.getKotaPembuatanSurat(),
                         pengumuman.getTanggalPembuatanMilis(),
-                null);
+                base64BarcodeImage);
 
         return new ResponseEntity<Object>(pengumumanWrapper, HttpStatus.OK);
 

@@ -7,6 +7,7 @@ import com.pemda.ekinerjademo.model.ekinerjamodel.*;
 import com.pemda.ekinerjademo.projection.ekinerjaprojection.CustomPegawaiCredential;
 import com.pemda.ekinerjademo.repository.bismarepository.TkdUnkDao;
 import com.pemda.ekinerjademo.service.*;
+import com.pemda.ekinerjademo.util.BarcodeGenerator;
 import com.pemda.ekinerjademo.util.DateUtilities;
 import com.pemda.ekinerjademo.util.EkinerjaXMLBuilder;
 import com.pemda.ekinerjademo.util.EkinerjaXMLParser;
@@ -884,6 +885,15 @@ public class SuratPerintahController {
             unitKerjaPenandatangan = tkdUnk.getUnitKerja();
         }
 
+        String base64BarcodeImage = null;
+        String kdBarcode
+                = suratPerintah.getKdBarcode()+suratPerintah.getNomorSurat1()+suratPerintah.getKdUnitKerja()+"11";
+        BarcodeGenerator generator = new BarcodeGenerator();
+
+        base64BarcodeImage
+                = generator.convertBarcodeImageIntoBase64String(
+                generator.generateBarcode(suratPerintah.getKdBarcode()));
+
         SuratPerintahNonPejabatDokumenWrapper suratPerintahWrapper
                 = new SuratPerintahNonPejabatDokumenWrapper(
                         suratPerintah.getKdSuratPerintah(),
@@ -913,7 +923,7 @@ public class SuratPerintahController {
                         penandatanganSurat.getGlrBlk(),
                         penandatanganSurat.getPangkat(),
                         penandatanganSurat.getGol(),
-                null);
+                base64BarcodeImage);
 
         return new ResponseEntity<Object>(suratPerintahWrapper, HttpStatus.OK);
     }

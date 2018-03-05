@@ -8,6 +8,7 @@ import com.pemda.ekinerjademo.repository.bismarepository.TkdUnkDao;
 import com.pemda.ekinerjademo.service.QutPegawaiService;
 import com.pemda.ekinerjademo.service.SuratUndanganService;
 import com.pemda.ekinerjademo.service.TkdJabatanService;
+import com.pemda.ekinerjademo.util.BarcodeGenerator;
 import com.pemda.ekinerjademo.wrapper.input.SuratUndanganInputWrapper;
 import com.pemda.ekinerjademo.wrapper.output.*;
 import org.slf4j.Logger;
@@ -430,6 +431,15 @@ public class SuratUndanganController {
         if (suratUndangan.getSuratUndanganPejabat() != null)
             isSuratPejabat = true;
 
+        String base64BarcodeImage = null;
+        String kdBarcode
+                = suratUndangan.getKdBarcode()+suratUndangan.getNomorUrut()+suratUndangan.getKdUnitKerja()+"13";
+        BarcodeGenerator generator = new BarcodeGenerator();
+
+        base64BarcodeImage
+                = generator.convertBarcodeImageIntoBase64String(
+                generator.generateBarcode(suratUndangan.getKdBarcode()));
+
         SuratUndanganWrapper suratUndanganWrapper = new SuratUndanganWrapper();
 
         suratUndanganWrapper.setKdSuratUndangan(suratUndangan.getKdSuratUndangan());
@@ -473,7 +483,7 @@ public class SuratUndanganController {
         suratUndanganWrapper.setGelarBelakangPenandatangan(penandatangan.getGlrBlk());
         suratUndanganWrapper.setPangkatPenandatangan(penandatangan.getPangkat());
         suratUndanganWrapper.setGolonganPenandatangan(penandatangan.getGol());
-        suratUndanganWrapper.setBarcodeImage(null);
+        suratUndanganWrapper.setBarcodeImage(base64BarcodeImage);
 
         suratUndanganWrapper.setTembusanSuratUndanganList(tembusanSuratUndanganList);
         suratUndanganWrapper.setSuratPejabat(isSuratPejabat);
