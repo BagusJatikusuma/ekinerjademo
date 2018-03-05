@@ -1471,6 +1471,9 @@ public class AkunPegawaiController {
         //filter data yang belum di read saja
         for (LaporanBawahanWrapper laporanBawahanWrapper
                 : laporanBawahanWrapperList) {
+            if (laporanBawahanWrapper == null)
+                LOGGER.error("laporan is null");
+
             if (laporanBawahanWrapper.getStatusPenilaian() == null) {
                 LOGGER.error(
                         "status penilaian "+
@@ -1479,6 +1482,12 @@ public class AkunPegawaiController {
                         laporanBawahanWrapper.getKdJenisSurat()+
                         " is null");
             } else if (laporanBawahanWrapper.getStatusPenilaian() == 0) {
+                LOGGER.error(
+                        "status penilaian "+
+                        laporanBawahanWrapper.getKdSurat()+
+                        " in "+
+                        laporanBawahanWrapper.getKdJenisSurat()+
+                        " is not null");
                 laporanBawahanNotifList.add(laporanBawahanWrapper);
             }
         }
