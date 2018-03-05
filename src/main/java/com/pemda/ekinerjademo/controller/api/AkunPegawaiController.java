@@ -1471,7 +1471,14 @@ public class AkunPegawaiController {
         //filter data yang belum di read saja
         for (LaporanBawahanWrapper laporanBawahanWrapper
                 : laporanBawahanWrapperList) {
-            if (laporanBawahanWrapper.getStatusPenilaian() == 0) {
+            if (laporanBawahanWrapper.getStatusPenilaian() == null) {
+                LOGGER.error(
+                        "status penilaian "+
+                        laporanBawahanWrapper.getKdSurat()+
+                        " in "+
+                        laporanBawahanWrapper.getKdJenisSurat()+
+                        " is null");
+            } else if (laporanBawahanWrapper.getStatusPenilaian() == 0) {
                 laporanBawahanNotifList.add(laporanBawahanWrapper);
             }
         }

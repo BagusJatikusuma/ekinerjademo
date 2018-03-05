@@ -120,7 +120,7 @@ public class NotaDinasController {
         return new ResponseEntity<Object>(new CustomMessage("nota dinas created"), HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/approve-nota-dinas/{kdNotaDinas}", method = RequestMethod.GET)
+    @RequestMapping(value = "/approve-nota-dinas/{kdNotaDinas}", method = RequestMethod.PUT)
     ResponseEntity<?> approveNotaDinas(@PathVariable("kdNotaDinas") String kdNotaDinas) {
         LOGGER.info("approve nota dinas");
 

@@ -33,12 +33,33 @@ public class SuratPengantarWrapper {
 
     private String nomorTeleponPemberi;
     private List<SuratPengantarIsiWrapper> suratPengantarIsiWrapperList;
-    private byte[] barcodeImage;
+    private String barcodeImage;
 
     public SuratPengantarWrapper() {
     }
 
-    public SuratPengantarWrapper(String nomorUrusan, Integer nomorUrut, String nomorPasanganUrut, String nomorUnit, Integer nomorTahun, Long tanggalPembuatanMilis, Long tanggalDiterimaSuratPengantar, String kdJabatanPenerimaSuratPengantar, String jabatanPenerimaSuratPengantar, CustomPegawaiCredential penerimaSuratPengantar, String nipPemberiSuratPengantar, String namaPemberiSuratPengantar, String jabatanPemberiSuratPengantar, String unitKerjaPemberiSuratPengantar, String gelarDepanPemberiSuratPengantar, String gelarBelakangPemberiSuratPengantar, String pangkatPemberiSuratPengantar, String golonganPemberiSuratPengantar, String nomorTeleponPemberi, List<SuratPengantarIsiWrapper> suratPengantarIsiWrapperList, byte[] barcodeImage) {
+    public SuratPengantarWrapper(
+            String nomorUrusan,
+            Integer nomorUrut,
+            String nomorPasanganUrut,
+            String nomorUnit,
+            Integer nomorTahun,
+            Long tanggalPembuatanMilis,
+            Long tanggalDiterimaSuratPengantar,
+            String kdJabatanPenerimaSuratPengantar,
+            String jabatanPenerimaSuratPengantar,
+            CustomPegawaiCredential penerimaSuratPengantar,
+            String nipPemberiSuratPengantar,
+            String namaPemberiSuratPengantar,
+            String jabatanPemberiSuratPengantar,
+            String unitKerjaPemberiSuratPengantar,
+            String gelarDepanPemberiSuratPengantar,
+            String gelarBelakangPemberiSuratPengantar,
+            String pangkatPemberiSuratPengantar,
+            String golonganPemberiSuratPengantar,
+            String nomorTeleponPemberi,
+            List<SuratPengantarIsiWrapper> suratPengantarIsiWrapperList,
+            String barcodeImage) {
         this.nomorUrusan = nomorUrusan;
         this.nomorUrut = nomorUrut;
         this.nomorPasanganUrut = nomorPasanganUrut;
@@ -222,11 +243,11 @@ public class SuratPengantarWrapper {
         this.suratPengantarIsiWrapperList = suratPengantarIsiWrapperList;
     }
 
-    public byte[] getBarcodeImage() {
+    public String getBarcodeImage() {
         return barcodeImage;
     }
 
-    public void setBarcodeImage(byte[] barcodeImage) {
+    public void setBarcodeImage(String barcodeImage) {
         this.barcodeImage = barcodeImage;
     }
 }

@@ -48,7 +48,7 @@ public class SuratTugasWrapper {
     private Set<JabatanWrapper> targetSuratTugasPejabatSet;
 
     private Set<JabatanWrapper> tembusanSuratTugasSet;
-    private byte[] barcodeImage;
+    private String barcodeImage;
 
     public SuratTugasWrapper() {
     }
@@ -269,11 +269,11 @@ public class SuratTugasWrapper {
         this.tembusanSuratTugasSet = tembusanSuratTugasSet;
     }
 
-    public byte[] getBarcodeImage() {
+    public String getBarcodeImage() {
         return barcodeImage;
     }
 
-    public void setBarcodeImage(byte[] barcodeImage) {
+    public void setBarcodeImage(String barcodeImage) {
         this.barcodeImage = barcodeImage;
     }
 

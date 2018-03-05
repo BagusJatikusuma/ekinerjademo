@@ -17,13 +17,13 @@ public class TelaahanStaffWrapper {
     private Long tanggalPembuatanMilis;
     private CustomPegawaiCredential nipPembuatSurat;
     private String unitKerjaPembuatSurat;
-    private byte[] barcodeImage;
+    private String barcodeImage;
 
 
     public TelaahanStaffWrapper() {
     }
 
-    public TelaahanStaffWrapper(String kdTelaahanStaf, String tentang, String persoalan, String praanggapan, String faktaYangMemppengaruhi, String analisis, String simpulan, String saran, CustomPegawaiCredential nipPenandatangan, Long tanggalPembuatanMilis, CustomPegawaiCredential nipPembuatSurat, String unitKerjaPembuatSurat, byte[] barcodeImage) {
+    public TelaahanStaffWrapper(String kdTelaahanStaf, String tentang, String persoalan, String praanggapan, String faktaYangMemppengaruhi, String analisis, String simpulan, String saran, CustomPegawaiCredential nipPenandatangan, Long tanggalPembuatanMilis, CustomPegawaiCredential nipPembuatSurat, String unitKerjaPembuatSurat, String barcodeImage) {
         this.kdTelaahanStaf = kdTelaahanStaf;
         this.tentang = tentang;
         this.persoalan = persoalan;
@@ -135,11 +135,11 @@ public class TelaahanStaffWrapper {
         this.unitKerjaPembuatSurat = unitKerjaPembuatSurat;
     }
 
-    public byte[] getBarcodeImage() {
+    public String getBarcodeImage() {
         return barcodeImage;
     }
 
-    public void setBarcodeImage(byte[] barcodeImage) {
+    public void setBarcodeImage(String barcodeImage) {
         this.barcodeImage = barcodeImage;
     }
 }

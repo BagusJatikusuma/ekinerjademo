@@ -25,12 +25,12 @@ public class SuratKeputusanWrapper {
 
     private Long tanggalPembuatanMilis;
     private String kotaPembuatanSurat;
-    private byte[] barcodeImage;
+    private String barcodeImage;
 
     public SuratKeputusanWrapper() {
     }
 
-    public SuratKeputusanWrapper(String kdSuratKeputusan, Integer nomorUrut, Integer nomorTahun, String nipPenandatangan, String namaPenandatangan, String jabatanPenandatangan, String unitKerjaPenandatangan, String gelarDepanPenandatangan, String gelarBelakangPenandatangan, String pangkatPenandatangan, String golonganPenandatangan, String selaku, String tentang, List<String> menimbang, List<String> mengingat, List<String> menetapkan, Long tanggalPembuatanMilis, String kotaPembuatanSurat, byte[] barcodeImage) {
+    public SuratKeputusanWrapper(String kdSuratKeputusan, Integer nomorUrut, Integer nomorTahun, String nipPenandatangan, String namaPenandatangan, String jabatanPenandatangan, String unitKerjaPenandatangan, String gelarDepanPenandatangan, String gelarBelakangPenandatangan, String pangkatPenandatangan, String golonganPenandatangan, String selaku, String tentang, List<String> menimbang, List<String> mengingat, List<String> menetapkan, Long tanggalPembuatanMilis, String kotaPembuatanSurat, String barcodeImage) {
         this.kdSuratKeputusan = kdSuratKeputusan;
         this.nomorUrut = nomorUrut;
         this.nomorTahun = nomorTahun;
@@ -196,11 +196,11 @@ public class SuratKeputusanWrapper {
         this.kotaPembuatanSurat = kotaPembuatanSurat;
     }
 
-    public byte[] getBarcodeImage() {
+    public String getBarcodeImage() {
         return barcodeImage;
     }
 
-    public void setBarcodeImage(byte[] barcodeImage) {
+    public void setBarcodeImage(String barcodeImage) {
         this.barcodeImage = barcodeImage;
     }
 }

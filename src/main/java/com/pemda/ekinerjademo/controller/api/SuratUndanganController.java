@@ -526,7 +526,7 @@ public class SuratUndanganController {
 
     }
 
-    @RequestMapping(value = "/approve-surat-undangan/{kdSuratUndangan}", method = RequestMethod.GET)
+    @RequestMapping(value = "/approve-surat-undangan/{kdSuratUndangan}", method = RequestMethod.PUT)
     ResponseEntity<?> approveSuratUndangan(@PathVariable("kdSuratUndangan") String kdSuratUndangan) {
         LOGGER.info("approve surat undangan");
 

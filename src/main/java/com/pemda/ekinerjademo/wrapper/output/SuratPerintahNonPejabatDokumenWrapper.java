@@ -62,12 +62,40 @@ public class SuratPerintahNonPejabatDokumenWrapper {
 
     private String golonganPenandatangan;
 
-    private byte[] barcodeImage;
+    private String barcodeImage;
 
     public SuratPerintahNonPejabatDokumenWrapper() {
     }
 
-    public SuratPerintahNonPejabatDokumenWrapper(String kdSuratPerintah, String nipPenandatangan, String nmPenandatangan, String nomorSurat, String nomorSurat1, String nomorSurat2, Integer nomorTahun, List<String> menimbangList, List<String> dasarList, List<String> untukList, String tempat, String tanggalDibuat, Long tanggalDibuatMilis, String nmJabatanPenandatangan, String ttdPath, List<CustomPegawaiCredential> daftarTargetPegawai, List<JabatanWrapper> daftarTargetPejabat, List<JabatanWrapper> daftarTembusan, boolean isSuratPejabat, String kdUnitKerjaPenandatangan, String unitKerjaPenandatangan, String kdJabatanPenandatangan, String jabatanPenandatangan, String gelarDepanPenandatangan, String gelarBelakangPenandantangan, String pangkatPenandatangan, String golonganPenandatangan, byte[] barcodeImage) {
+    public SuratPerintahNonPejabatDokumenWrapper(
+            String kdSuratPerintah,
+            String nipPenandatangan,
+            String nmPenandatangan,
+            String nomorSurat,
+            String nomorSurat1,
+            String nomorSurat2,
+            Integer nomorTahun,
+            List<String> menimbangList,
+            List<String> dasarList,
+            List<String> untukList,
+            String tempat,
+            String tanggalDibuat,
+            Long tanggalDibuatMilis,
+            String nmJabatanPenandatangan,
+            String ttdPath,
+            List<CustomPegawaiCredential> daftarTargetPegawai,
+            List<JabatanWrapper> daftarTargetPejabat,
+            List<JabatanWrapper> daftarTembusan,
+            boolean isSuratPejabat,
+            String kdUnitKerjaPenandatangan,
+            String unitKerjaPenandatangan,
+            String kdJabatanPenandatangan,
+            String jabatanPenandatangan,
+            String gelarDepanPenandatangan,
+            String gelarBelakangPenandantangan,
+            String pangkatPenandatangan,
+            String golonganPenandatangan,
+            String barcodeImage) {
         this.kdSuratPerintah = kdSuratPerintah;
         this.nipPenandatangan = nipPenandatangan;
         this.nmPenandatangan = nmPenandatangan;
@@ -314,11 +342,11 @@ public class SuratPerintahNonPejabatDokumenWrapper {
         this.golonganPenandatangan = golonganPenandatangan;
     }
 
-    public byte[] getBarcodeImage() {
+    public String getBarcodeImage() {
         return barcodeImage;
     }
 
-    public void setBarcodeImage(byte[] barcodeImage) {
+    public void setBarcodeImage(String barcodeImage) {
         this.barcodeImage = barcodeImage;
     }
 }

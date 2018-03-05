@@ -15,6 +15,7 @@ public class LaporanBawahanWrapper {
     private boolean isPenandatangan;
     private String namaFileTemplateLain;
     private String extensiFile;
+    private String barcodeImage;
 
     public LaporanBawahanWrapper(String kdSurat, String jenisSurat, String nipBawahan, String namaBawahan, Integer statusPenilaian, Integer kdJenisSurat, Integer suratPejabat, Long tanggalDibuatMilis, boolean isPenandatangan) {
         this.kdSurat = kdSurat;
@@ -26,6 +27,33 @@ public class LaporanBawahanWrapper {
         this.suratPejabat = suratPejabat;
         this.tanggalDibuatMilis = tanggalDibuatMilis;
         this.isPenandatangan = isPenandatangan;
+    }
+
+    public LaporanBawahanWrapper(
+            String kdSurat,
+            String jenisSurat,
+            String nipBawahan,
+            String namaBawahan,
+            Integer statusPenilaian,
+            Integer kdJenisSurat,
+            Integer suratPejabat,
+            Long tanggalDibuatMilis,
+            boolean isPenandatangan,
+            String namaFileTemplateLain,
+            String extensiFile,
+            String barcodeImage) {
+        this.kdSurat = kdSurat;
+        this.jenisSurat = jenisSurat;
+        this.nipBawahan = nipBawahan;
+        this.namaBawahan = namaBawahan;
+        StatusPenilaian = statusPenilaian;
+        this.kdJenisSurat = kdJenisSurat;
+        this.suratPejabat = suratPejabat;
+        this.tanggalDibuatMilis = tanggalDibuatMilis;
+        this.isPenandatangan = isPenandatangan;
+        this.namaFileTemplateLain = namaFileTemplateLain;
+        this.extensiFile = extensiFile;
+        this.barcodeImage = barcodeImage;
     }
 
     public LaporanBawahanWrapper() {
@@ -208,5 +236,13 @@ public class LaporanBawahanWrapper {
 
     public void setPenandatangan(boolean penandatangan) {
         isPenandatangan = penandatangan;
+    }
+
+    public String getBarcodeImage() {
+        return barcodeImage;
+    }
+
+    public void setBarcodeImage(String barcodeImage) {
+        this.barcodeImage = barcodeImage;
     }
 }

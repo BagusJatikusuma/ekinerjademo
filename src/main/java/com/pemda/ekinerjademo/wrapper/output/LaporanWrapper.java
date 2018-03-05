@@ -37,7 +37,7 @@ public class LaporanWrapper {
     private String gelarBelakangPembuatSurat;
     private String pangkatPembuatSurat;
     private String golonganPembuatSurat;
-    private byte[] barcodeImage;
+    private String barcodeImage;
 
 
     public LaporanWrapper(){
@@ -72,7 +72,7 @@ public class LaporanWrapper {
                           String gelarBelakangPembuatSurat,
                           String pangkatPembuatSurat,
                           String golonganPembuatSurat,
-                          byte[] barcodeImage) {
+                          String barcodeImage) {
         this.kdLaporan = kdLaporan;
         this.tentang = tentang;
         this.umum = umum;
@@ -337,11 +337,11 @@ public class LaporanWrapper {
         this.golonganPembuatSurat = golonganPembuatSurat;
     }
 
-    public byte[] getBarcodeImage() {
+    public String getBarcodeImage() {
         return barcodeImage;
     }
 
-    public void setBarcodeImage(byte[] barcodeImage) {
+    public void setBarcodeImage(String barcodeImage) {
         this.barcodeImage = barcodeImage;
     }
 }

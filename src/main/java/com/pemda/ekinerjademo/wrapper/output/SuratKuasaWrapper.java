@@ -33,12 +33,39 @@ public class SuratKuasaWrapper {
     private String isiKuasa;
     private String kotaPembuatanSurat;
     private Long tanggalPembuatanMilis;
-    private byte[] barcodeImage;
+    private String barcodeImage;
 
     public SuratKuasaWrapper() {
     }
 
-    public SuratKuasaWrapper(String nomorUrusan, Integer nomorUrut, String nomorPasanganUrut, String nomorUnit, Integer nomorTahun, String nipPemberiKuasa, String namaPemberiKuasa, String jabatanPemberiKuasa, String pangkatPemberiKuasa, String golonganPemberiKuasa, String unitKerjaPemberiKuasa, String gelarDepanPemberiKuasa, String gelarBelakangPemberiKuasa, String alamatRumahPemberiKuasa, String nipPenerimaKuasa, String namaPenerimaKuasa, String jabatanPenerimaKuasa, String pangkatPenerimaKuasa, String golonganPenerimaKuasa, String unitKerjaPenerimaKuasa, String gelarDepanPenerimaKuasa, String gelarBelakangPenerimaKuasa, String alamatRumahPenerimaKuasa, String isiKuasa, String kotaPembuatanSurat, Long tanggalPembuatanMilis, byte[] barcodeImage) {
+    public SuratKuasaWrapper(
+            String nomorUrusan,
+            Integer nomorUrut,
+            String nomorPasanganUrut,
+            String nomorUnit,
+            Integer nomorTahun,
+            String nipPemberiKuasa,
+            String namaPemberiKuasa,
+            String jabatanPemberiKuasa,
+            String pangkatPemberiKuasa,
+            String golonganPemberiKuasa,
+            String unitKerjaPemberiKuasa,
+            String gelarDepanPemberiKuasa,
+            String gelarBelakangPemberiKuasa,
+            String alamatRumahPemberiKuasa,
+            String nipPenerimaKuasa,
+            String namaPenerimaKuasa,
+            String jabatanPenerimaKuasa,
+            String pangkatPenerimaKuasa,
+            String golonganPenerimaKuasa,
+            String unitKerjaPenerimaKuasa,
+            String gelarDepanPenerimaKuasa,
+            String gelarBelakangPenerimaKuasa,
+            String alamatRumahPenerimaKuasa,
+            String isiKuasa,
+            String kotaPembuatanSurat,
+            Long tanggalPembuatanMilis,
+            String barcodeImage) {
         this.nomorUrusan = nomorUrusan;
         this.nomorUrut = nomorUrut;
         this.nomorPasanganUrut = nomorPasanganUrut;
@@ -276,11 +303,11 @@ public class SuratKuasaWrapper {
         this.tanggalPembuatanMilis = tanggalPembuatanMilis;
     }
 
-    public byte[] getBarcodeImage() {
+    public String getBarcodeImage() {
         return barcodeImage;
     }
 
-    public void setBarcodeImage(byte[] barcodeImage) {
+    public void setBarcodeImage(String barcodeImage) {
         this.barcodeImage = barcodeImage;
     }
 }

@@ -24,12 +24,30 @@ public class PengumumanWrapper {
 
     private String kotaPembuatanSurat;
     private Long tanggalPembuatanMilis;
-    private byte[] barcodeImage;
+    private String barcodeImage;
 
     public PengumumanWrapper() {
     }
 
-    public PengumumanWrapper(String nomorUrusan, Integer nomorUrut, String nomorPasanganUrut, String nomorUnit, Integer nomorTahun, String tentang, String isiPengumuman, String nipPenandatangan, String namaPenandatangan, String jabatanPenandatangan, String unitKerjaPenandatangan, String gelarDepanPenandatangan, String gelarBelakangPenandatangan, String pangkatPenandatangan, String golonganPenandatangan, String kotaPembuatanSurat, Long tanggalPembuatanMilis, byte[] barcodeImage) {
+    public PengumumanWrapper(
+            String nomorUrusan,
+            Integer nomorUrut,
+            String nomorPasanganUrut,
+            String nomorUnit,
+            Integer nomorTahun,
+            String tentang,
+            String isiPengumuman,
+            String nipPenandatangan,
+            String namaPenandatangan,
+            String jabatanPenandatangan,
+            String unitKerjaPenandatangan,
+            String gelarDepanPenandatangan,
+            String gelarBelakangPenandatangan,
+            String pangkatPenandatangan,
+            String golonganPenandatangan,
+            String kotaPembuatanSurat,
+            Long tanggalPembuatanMilis,
+            String barcodeImage) {
         this.nomorUrusan = nomorUrusan;
         this.nomorUrut = nomorUrut;
         this.nomorPasanganUrut = nomorPasanganUrut;
@@ -186,11 +204,11 @@ public class PengumumanWrapper {
         this.tanggalPembuatanMilis = tanggalPembuatanMilis;
     }
 
-    public byte[] getBarcodeImage() {
+    public String getBarcodeImage() {
         return barcodeImage;
     }
 
-    public void setBarcodeImage(byte[] barcodeImage) {
+    public void setBarcodeImage(String barcodeImage) {
         this.barcodeImage = barcodeImage;
     }
 }

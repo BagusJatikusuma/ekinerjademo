@@ -50,7 +50,7 @@ public class BeritaAcaraWrapper {
 
     private String kotaPembuatanSurat;
     private Long tanggalPembuatanMilis;
-    private byte[] barcodeImage;
+    private String barcodeImage;
 
     public BeritaAcaraWrapper(){
     }
@@ -92,7 +92,7 @@ public class BeritaAcaraWrapper {
                               String gelarBelakangPihakMengetahui,
                               String kotaPembuatanSurat,
                               Long tanggalPembuatanMilis,
-                              byte[] barcodeImage) {
+                              String barcodeImage) {
         this.kdBeritaAcara = kdBeritaAcara;
         this.nomorUrusan = nomorUrusan;
         this.nomorUrut = nomorUrut;
@@ -429,11 +429,11 @@ public class BeritaAcaraWrapper {
         this.tanggalPembuatanMilis = tanggalPembuatanMilis;
     }
 
-    public byte[] getBarcodeImage() {
+    public String getBarcodeImage() {
         return barcodeImage;
     }
 
-    public void setBarcodeImage(byte[] barcodeImage) {
+    public void setBarcodeImage(String barcodeImage) {
         this.barcodeImage = barcodeImage;
     }
 }

@@ -50,12 +50,12 @@ public class SuratUndanganWrapper {
     private List<JabatanWrapper> tembusanSuratUndanganList;
 
     private boolean isSuratPejabat;
-    private byte[] barcodeImage;
+    private String barcodeImage;
 
     public SuratUndanganWrapper() {
     }
 
-    public SuratUndanganWrapper(String kdSuratUndangan, String nomorUrusan, Integer nomorUrut, String nomorPasanganUrut, String nomorUnit, Integer nomorTahun, String kdJabatanPenerimaSuratUndangan, String jabatanPenerimaSuratUndangan, Long tanggalPembuatanSurat, String kotaPembuatanSurat, String sifat, String lampiran, String hal, String nipPenerimaSuratUndangan, String namaPenerimaSuratUndangan, String unitKerjaPenerimaSuratUndangan, String gelarDepanPenerimaSuratUndangan, String gelarBelakangPenerimaSuratUndangan, String pangkatPenerimaSuratUndangan, String golonganPenerimaSuratUndangan, String bagianPembukaSuratUndangan, String bagianIsiHariSuratUndangan, Long bagianIsiTanggalSuratUndangan, String bagianIsiWaktuSuratUndangan, String bagianIsiTempatSuratUndangan, String bagianIsiAcaraSuratUndangan, String bagianPenutupSuratUndangan, String nipPenandatangan, String namaPenandatangan, String unitKerjaPenandatangan, String jabatanPenandatangan, String gelarDepanPenandatangan, String gelarBelakangPenandatangan, String pangkatPenandatangan, String golonganPenandatangan, List<JabatanWrapper> tembusanSuratUndanganList, boolean isSuratPejabat, byte[] barcodeImage) {
+    public SuratUndanganWrapper(String kdSuratUndangan, String nomorUrusan, Integer nomorUrut, String nomorPasanganUrut, String nomorUnit, Integer nomorTahun, String kdJabatanPenerimaSuratUndangan, String jabatanPenerimaSuratUndangan, Long tanggalPembuatanSurat, String kotaPembuatanSurat, String sifat, String lampiran, String hal, String nipPenerimaSuratUndangan, String namaPenerimaSuratUndangan, String unitKerjaPenerimaSuratUndangan, String gelarDepanPenerimaSuratUndangan, String gelarBelakangPenerimaSuratUndangan, String pangkatPenerimaSuratUndangan, String golonganPenerimaSuratUndangan, String bagianPembukaSuratUndangan, String bagianIsiHariSuratUndangan, Long bagianIsiTanggalSuratUndangan, String bagianIsiWaktuSuratUndangan, String bagianIsiTempatSuratUndangan, String bagianIsiAcaraSuratUndangan, String bagianPenutupSuratUndangan, String nipPenandatangan, String namaPenandatangan, String unitKerjaPenandatangan, String jabatanPenandatangan, String gelarDepanPenandatangan, String gelarBelakangPenandatangan, String pangkatPenandatangan, String golonganPenandatangan, List<JabatanWrapper> tembusanSuratUndanganList, boolean isSuratPejabat, String barcodeImage) {
         this.kdSuratUndangan = kdSuratUndangan;
         this.nomorUrusan = nomorUrusan;
         this.nomorUrut = nomorUrut;
@@ -392,11 +392,11 @@ public class SuratUndanganWrapper {
         isSuratPejabat = suratPejabat;
     }
 
-    public byte[] getBarcodeImage() {
+    public String getBarcodeImage() {
         return barcodeImage;
     }
 
-    public void setBarcodeImage(byte[] barcodeImage) {
+    public void setBarcodeImage(String barcodeImage) {
         this.barcodeImage = barcodeImage;
     }
 }

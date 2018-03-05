@@ -26,7 +26,7 @@ public class NotaDinasWrapper {
     private CustomPegawaiCredential penandatangan;
 
     private List<JabatanWrapper> tembusanNotaDinasList;
-    private byte[] barcodeImage;
+    private String barcodeImage;
 
     public NotaDinasWrapper() {
     }
@@ -45,7 +45,7 @@ public class NotaDinasWrapper {
                             String isiNotaDinas,
                             CustomPegawaiCredential penandatangan,
                             List<JabatanWrapper> tembusanNotaDinasList,
-                            byte[] barcodeImage) {
+                            String barcodeImage) {
         this.kdNotaDinas = kdNotaDinas;
         this.nomorUrusan = nomorUrusan;
         this.nomorUrut = nomorUrut;
@@ -175,11 +175,11 @@ public class NotaDinasWrapper {
         this.tembusanNotaDinasList = tembusanNotaDinasList;
     }
 
-    public byte[] getBarcodeImage() {
+    public String getBarcodeImage() {
         return barcodeImage;
     }
 
-    public void setBarcodeImage(byte[] barcodeImage) {
+    public void setBarcodeImage(String barcodeImage) {
         this.barcodeImage = barcodeImage;
     }
 }

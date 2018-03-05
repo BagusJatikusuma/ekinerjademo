@@ -55,7 +55,7 @@ public class MemorandumWrapper {
     private String golonganPenandatangan;
     private List<JabatanWrapper> tembusanMemorandumList;
     private boolean isSuratPejabat;
-    private byte[] barcodeImage;
+    private String barcodeImage;
 
     public MemorandumWrapper() {
     }
@@ -103,7 +103,7 @@ public class MemorandumWrapper {
                              String golonganPenandatangan,
                              List<JabatanWrapper> tembusanMemorandumList,
                              boolean isSuratPejabat,
-                             byte[] barcodeImage) {
+                             String barcodeImage) {
         this.kdMemorandum = kdMemorandum;
         this.nomorUrusan = nomorUrusan;
         this.nomorUrut = nomorUrut;
@@ -494,11 +494,11 @@ public class MemorandumWrapper {
         isSuratPejabat = suratPejabat;
     }
 
-    public byte[] getBarcodeImage() {
+    public String getBarcodeImage() {
         return barcodeImage;
     }
 
-    public void setBarcodeImage(byte[] barcodeImage) {
+    public void setBarcodeImage(String barcodeImage) {
         this.barcodeImage = barcodeImage;
     }
 }

@@ -14,7 +14,7 @@ public class SuratInstruksiWrapper {
     private String namaPengirim;
     private Integer statusBaca;
     private String path;
-    private byte[] barcodeImage;
+    private String barcodeImage;
 
     public SuratInstruksiWrapper() {
     }
@@ -102,7 +102,7 @@ public class SuratInstruksiWrapper {
         this.path = path;
     }
 
-    public SuratInstruksiWrapper(String kdInstruksi, String judulInstruksi, String tanggalDibuat, Long tanggalDibuatMilis, boolean suratPejabat, Integer statusbaca, String nipPengirim, String namaPengirim, Integer statusBaca, String path, byte[] barcodeImage) {
+    public SuratInstruksiWrapper(String kdInstruksi, String judulInstruksi, String tanggalDibuat, Long tanggalDibuatMilis, boolean suratPejabat, Integer statusbaca, String nipPengirim, String namaPengirim, Integer statusBaca, String path, String barcodeImage) {
         this.kdInstruksi = kdInstruksi;
         this.judulInstruksi = judulInstruksi;
         this.tanggalDibuat = tanggalDibuat;
@@ -196,11 +196,11 @@ public class SuratInstruksiWrapper {
         this.path = path;
     }
 
-    public byte[] getBarcodeImage() {
+    public String getBarcodeImage() {
         return barcodeImage;
     }
 
-    public void setBarcodeImage(byte[] barcodeImage) {
+    public void setBarcodeImage(String barcodeImage) {
         this.barcodeImage = barcodeImage;
     }
 }

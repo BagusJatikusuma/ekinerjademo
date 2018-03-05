@@ -28,12 +28,33 @@ public class SuratEdaranWrapper {
     private String golonganPenandatangan;
 
     private boolean isSuratPejabat;
-    private byte[] barcodeImage;
+    private String barcodeImage;
 
     public SuratEdaranWrapper() {
     }
 
-    public SuratEdaranWrapper(String kdSuratEdaran, Integer nomorUrut, Integer nomorTahun, String tentang, String latarBelakang, String maksudDanTujuan, String ruangLingkup, String dasar, List<SuratEdaranSubWrapper> subLain, Long tanggalPembuatanMilis, String kotaPembuatanSurat, String nipPenandatangan, String namaPenandatangan, String jabatanPenandatangan, String unitKerjaPenandatangan, String gelarDepanPenandatangan, String gelarBelakangPenandatangan, String pangkatPenandatangan, String golonganPenandatangan, boolean isSuratPejabat, byte[] barcodeImage) {
+    public SuratEdaranWrapper(
+            String kdSuratEdaran,
+            Integer nomorUrut,
+            Integer nomorTahun,
+            String tentang,
+            String latarBelakang,
+            String maksudDanTujuan,
+            String ruangLingkup,
+            String dasar,
+            List<SuratEdaranSubWrapper> subLain,
+            Long tanggalPembuatanMilis,
+            String kotaPembuatanSurat,
+            String nipPenandatangan,
+            String namaPenandatangan,
+            String jabatanPenandatangan,
+            String unitKerjaPenandatangan,
+            String gelarDepanPenandatangan,
+            String gelarBelakangPenandatangan,
+            String pangkatPenandatangan,
+            String golonganPenandatangan,
+            boolean isSuratPejabat,
+            String barcodeImage) {
         this.kdSuratEdaran = kdSuratEdaran;
         this.nomorUrut = nomorUrut;
         this.nomorTahun = nomorTahun;
@@ -217,11 +238,11 @@ public class SuratEdaranWrapper {
         isSuratPejabat = suratPejabat;
     }
 
-    public byte[] getBarcodeImage() {
+    public String getBarcodeImage() {
         return barcodeImage;
     }
 
-    public void setBarcodeImage(byte[] barcodeImage) {
+    public void setBarcodeImage(String barcodeImage) {
         this.barcodeImage = barcodeImage;
     }
 }

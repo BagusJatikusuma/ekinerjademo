@@ -30,12 +30,12 @@ public class DokumenSuratInstruksiWrapper {
     private String gelarBelakangPenandantangan;
     private String pangkatPenandatangan;
     private String golonganPenandatangan;
-    private byte[] barcodeImage;
+    private String barcodeImage;
 
     public DokumenSuratInstruksiWrapper() {
     }
 
-    public DokumenSuratInstruksiWrapper(String kdInstruksi, String judulInstruksi, String nomor, Integer tahun, String tentang, String kdJabatanPenandatangan, String jabatanPenandaTangan, String alasan, List<String> daftarIsiInstruksi, String dikeluarkanDi, String tanggalDibuat, String nipPenandatangan, String namaPenandatangan, List<QutPegawaiWrapper> targetPegawaiList, List<JabatanWrapper> targetJabatanList, boolean suratPejabat, String jabatanSuratPejabat, String unitKerja, String gelarDepanPenandatangan, String gelarBelakangPenandantangan, String pangkatPenandatangan, String golonganPenandatangan, byte[] barcodeImage) {
+    public DokumenSuratInstruksiWrapper(String kdInstruksi, String judulInstruksi, String nomor, Integer tahun, String tentang, String kdJabatanPenandatangan, String jabatanPenandaTangan, String alasan, List<String> daftarIsiInstruksi, String dikeluarkanDi, String tanggalDibuat, String nipPenandatangan, String namaPenandatangan, List<QutPegawaiWrapper> targetPegawaiList, List<JabatanWrapper> targetJabatanList, boolean suratPejabat, String jabatanSuratPejabat, String unitKerja, String gelarDepanPenandatangan, String gelarBelakangPenandantangan, String pangkatPenandatangan, String golonganPenandatangan, String barcodeImage) {
         this.kdInstruksi = kdInstruksi;
         this.judulInstruksi = judulInstruksi;
         this.nomor = nomor;
@@ -237,11 +237,11 @@ public class DokumenSuratInstruksiWrapper {
         this.golonganPenandatangan = golonganPenandatangan;
     }
 
-    public byte[] getBarcodeImage() {
+    public String getBarcodeImage() {
         return barcodeImage;
     }
 
-    public void setBarcodeImage(byte[] barcodeImage) {
+    public void setBarcodeImage(String barcodeImage) {
         this.barcodeImage = barcodeImage;
     }
 }
