@@ -1,15 +1,15 @@
 package com.pemda.ekinerjademo.service.impl;
 
-import com.pemda.ekinerjademo.model.ekinerjamodel.SuratKeterangan;
-import com.pemda.ekinerjademo.model.ekinerjamodel.TargetSuratKeterangan;
-import com.pemda.ekinerjademo.model.ekinerjamodel.TargetSuratKeteranganId;
+import com.pemda.ekinerjademo.model.ekinerjamodel.*;
 import com.pemda.ekinerjademo.repository.ekinerjarepository.SuratKeteranganDao;
 import com.pemda.ekinerjademo.repository.ekinerjarepository.TargetSuratKeteranganDao;
+import com.pemda.ekinerjademo.service.NomorUrutSuratUnitKerjaService;
 import com.pemda.ekinerjademo.service.SuratKeteranganService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.Year;
 import java.util.List;
 
 /**
@@ -20,6 +20,8 @@ import java.util.List;
 public class SuratKeteranganServiceImpl implements SuratKeteranganService {
     @Autowired private SuratKeteranganDao suratKeteranganDao;
     @Autowired private TargetSuratKeteranganDao targetSuratKeteranganDao;
+    @Autowired
+    private NomorUrutSuratUnitKerjaService nomorUrutSuratUnitKerjaService;
 
     @Override
     public List<SuratKeterangan> getByKdUnitKerja(String kdUnitKerja) {
@@ -83,6 +85,34 @@ public class SuratKeteranganServiceImpl implements SuratKeteranganService {
         SuratKeterangan suratKeteranganLast = suratKeteranganDao.findOne(kdSuratKeterangan);
         suratKeteranganLast.setStatusPenyebaran(1);
         suratKeteranganLast.setApprovalPenandatangan(1);
+
+        NomorUrutSuratUnitKerja nomorUrutSurat
+                = nomorUrutSuratUnitKerjaService
+                .getNomorSuratByUnitKerjaAndTahun(
+                        suratKeteranganLast.getKdUnitKerja(),
+                        Year.now().getValue());
+
+        if (nomorUrutSurat == null) {
+            nomorUrutSurat
+                    = new NomorUrutSuratUnitKerja();
+            nomorUrutSurat
+                    .setNomorUrutSuratUnitKerjaId(
+                            new NomorUrutSuratUnitKerjaId(suratKeteranganLast.getKdUnitKerja(), Year.now().getValue()));
+            nomorUrutSurat.setNomorUrutSurat(1);
+
+            nomorUrutSuratUnitKerjaService.createNomorUrutSurat(nomorUrutSurat);
+        } else {
+            nomorUrutSurat.setNomorUrutSurat(nomorUrutSurat.getNomorUrutSurat() + 1);
+
+            nomorUrutSuratUnitKerjaService.updateNomorUrutSurat(nomorUrutSurat);
+        }
+        suratKeteranganLast.setNomorUrut(nomorUrutSurat.getNomorUrutSurat());
+        String kdBarcode
+                = suratKeteranganLast.getKdSuratKeterangan()
+                + suratKeteranganLast.getNomorUrut()
+                + suratKeteranganLast.getKdUnitKerja()
+                + "8";
+        suratKeteranganLast.setKdBarcode(kdBarcode);
 
         String penilaianTree = suratKeteranganLast.getPathPenilaian();
 

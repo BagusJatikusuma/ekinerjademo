@@ -158,13 +158,14 @@ public class TelaahanStafController {
         }
 
         String base64BarcodeImage = null;
-        String kdBarcode
-                = telaahanStaf.getKdBarcode()+telaahanStaf.getKdTelaahanStaf()+telaahanStaf.getKdUnitKerja()+"14";
-        BarcodeGenerator generator = new BarcodeGenerator();
 
-        base64BarcodeImage
-                = generator.convertBarcodeImageIntoBase64String(
-                generator.generateBarcode(telaahanStaf.getKdBarcode()));
+        if (telaahanStaf.getKdBarcode() != null) {
+            BarcodeGenerator generator = new BarcodeGenerator();
+
+            base64BarcodeImage
+                    = generator.convertBarcodeImageIntoBase64String(
+                    generator.generateBarcode(telaahanStaf.getKdBarcode()));
+        }
 
         TelaahanStaffWrapper telaahanStaffWrapper
                 = new TelaahanStaffWrapper(

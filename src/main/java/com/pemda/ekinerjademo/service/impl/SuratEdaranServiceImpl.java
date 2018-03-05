@@ -1,18 +1,17 @@
 package com.pemda.ekinerjademo.service.impl;
 
-import com.pemda.ekinerjademo.model.ekinerjamodel.SuratEdaran;
-import com.pemda.ekinerjademo.model.ekinerjamodel.SuratEdaranNonPejabat;
-import com.pemda.ekinerjademo.model.ekinerjamodel.SuratEdaranPejabat;
-import com.pemda.ekinerjademo.model.ekinerjamodel.SuratEdaranSub;
+import com.pemda.ekinerjademo.model.ekinerjamodel.*;
 import com.pemda.ekinerjademo.repository.ekinerjarepository.SuratEdaranDao;
 import com.pemda.ekinerjademo.repository.ekinerjarepository.SuratEdaranNonPejabatDao;
 import com.pemda.ekinerjademo.repository.ekinerjarepository.SuratEdaranPejabatDao;
 import com.pemda.ekinerjademo.repository.ekinerjarepository.SuratEdaranSubDao;
+import com.pemda.ekinerjademo.service.NomorUrutSuratUnitKerjaService;
 import com.pemda.ekinerjademo.service.SuratEdaranService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.Year;
 import java.util.List;
 
 /**
@@ -25,6 +24,8 @@ public class SuratEdaranServiceImpl implements SuratEdaranService {
     @Autowired private SuratEdaranNonPejabatDao suratEdaranNonPejabatDao;
     @Autowired private SuratEdaranPejabatDao suratEdaranPejabatDao;
     @Autowired private SuratEdaranSubDao suratEdaranSubDao;
+    @Autowired
+    private NomorUrutSuratUnitKerjaService nomorUrutSuratUnitKerjaService;
 
     @Override
     public List<SuratEdaran> getByKdUnitKerja(String kdUnitKerja) {
@@ -71,6 +72,34 @@ public class SuratEdaranServiceImpl implements SuratEdaranService {
         SuratEdaran suratEdaranLast = suratEdaranDao.findOne(kdSuratEdaran);
         suratEdaranLast.setStatusPenyebaran(1);
         suratEdaranLast.setApprovalPenandatangan(1);
+
+        NomorUrutSuratUnitKerja nomorUrutSurat
+                = nomorUrutSuratUnitKerjaService
+                .getNomorSuratByUnitKerjaAndTahun(
+                        suratEdaranLast.getKdUnitKerja(),
+                        Year.now().getValue());
+
+        if (nomorUrutSurat == null) {
+            nomorUrutSurat
+                    = new NomorUrutSuratUnitKerja();
+            nomorUrutSurat
+                    .setNomorUrutSuratUnitKerjaId(
+                            new NomorUrutSuratUnitKerjaId(suratEdaranLast.getKdUnitKerja(), Year.now().getValue()));
+            nomorUrutSurat.setNomorUrutSurat(1);
+
+            nomorUrutSuratUnitKerjaService.createNomorUrutSurat(nomorUrutSurat);
+        } else {
+            nomorUrutSurat.setNomorUrutSurat(nomorUrutSurat.getNomorUrutSurat() + 1);
+
+            nomorUrutSuratUnitKerjaService.updateNomorUrutSurat(nomorUrutSurat);
+        }
+        suratEdaranLast.setNomorUrut(nomorUrutSurat.getNomorUrutSurat());
+        String kdBarcode
+                = suratEdaranLast.getKdSuratEdaran()
+                + suratEdaranLast.getNomorUrut()
+                + suratEdaranLast.getKdUnitKerja()
+                + "6";
+        suratEdaranLast.setKdBarcode(kdBarcode);
 
         String penilaianTree = suratEdaranLast.getPathPenilaian();
 

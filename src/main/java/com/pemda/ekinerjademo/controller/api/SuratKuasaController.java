@@ -177,14 +177,13 @@ public class SuratKuasaController {
         }
 
         String base64BarcodeImage = null;
-        String kdBarcode
-                = suratKuasa.getKdBarcode()+suratKuasa.getNomorUrut()+suratKuasa.getKdUnitKerja()+"9";
-        BarcodeGenerator generator = new BarcodeGenerator();
+        if (suratKuasa.getKdBarcode() != null) {
+            BarcodeGenerator generator = new BarcodeGenerator();
 
-        base64BarcodeImage
-                = generator.convertBarcodeImageIntoBase64String(
-                        generator.generateBarcode(suratKuasa.getKdBarcode()));
-
+            base64BarcodeImage
+                    = generator.convertBarcodeImageIntoBase64String(
+                    generator.generateBarcode(suratKuasa.getKdBarcode()));
+        }
         SuratKuasaWrapper suratKuasaWrapper
                 = new SuratKuasaWrapper(
                         suratKuasa.getNomorUrusan(),

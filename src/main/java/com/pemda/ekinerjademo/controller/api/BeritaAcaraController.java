@@ -206,12 +206,14 @@ public class BeritaAcaraController {
         String base64BarcodeImage = null;
 //        String kdBarcode
 //                = beritaAcara.getKdBarcode()+beritaAcara.getNomorUrut()+beritaAcara.getKdUnitKerja()+"0";
-        BarcodeGenerator generator = new BarcodeGenerator();
 
-        base64BarcodeImage
-                = generator.convertBarcodeImageIntoBase64String(
-                        generator.generateBarcode(beritaAcara.getKdBarcode()));
+        if (beritaAcara.getKdBarcode() != null) {
+            BarcodeGenerator generator = new BarcodeGenerator();
 
+            base64BarcodeImage
+                    = generator.convertBarcodeImageIntoBase64String(
+                    generator.generateBarcode(beritaAcara.getKdBarcode()));
+        }
         BeritaAcaraWrapper beritaAcaraWrapper
                 = new BeritaAcaraWrapper(
                         beritaAcara.getKdBeritaAcara(),

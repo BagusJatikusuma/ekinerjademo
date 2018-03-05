@@ -259,13 +259,12 @@ public class SuratInstruksiController {
         }
 
         String base64BarcodeImage = null;
-        String kdBarcode
-                = suratInstruksi.getKdBarcode()+suratInstruksi.getNomor()+penandatanganSurat.getKdUnitKerja()+"16";
-        BarcodeGenerator generator = new BarcodeGenerator();
+        if (suratInstruksi.getKdBarcode() != null) {
+            BarcodeGenerator generator = new BarcodeGenerator();
 
-        base64BarcodeImage
-                = generator.convertBarcodeImageIntoBase64String(generator.generateBarcode(suratInstruksi.getKdBarcode()));
-
+            base64BarcodeImage
+                    = generator.convertBarcodeImageIntoBase64String(generator.generateBarcode(suratInstruksi.getKdBarcode()));
+        }
         dokumenSuratInstruksiWrapper.setKdInstruksi(suratInstruksi.getKdInstruksi());
         dokumenSuratInstruksiWrapper.setJudulInstruksi(suratInstruksi.getJudulInstruksi());
         dokumenSuratInstruksiWrapper.setNomor(suratInstruksi.getNomor());

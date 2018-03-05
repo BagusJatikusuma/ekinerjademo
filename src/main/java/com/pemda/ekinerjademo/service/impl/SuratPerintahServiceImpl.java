@@ -2,11 +2,13 @@ package com.pemda.ekinerjademo.service.impl;
 
 import com.pemda.ekinerjademo.model.ekinerjamodel.*;
 import com.pemda.ekinerjademo.repository.ekinerjarepository.*;
+import com.pemda.ekinerjademo.service.NomorUrutSuratUnitKerjaService;
 import com.pemda.ekinerjademo.service.SuratPerintahService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.Year;
 import java.util.List;
 import java.util.Set;
 
@@ -30,6 +32,8 @@ public class SuratPerintahServiceImpl implements SuratPerintahService {
     private SuratPerintahNonPejabatDao suratPerintahNonPejabatDao;
     @Autowired
     private TembusanSuratPerintahDao tembusanSuratPerintahDao;
+    @Autowired
+    private NomorUrutSuratUnitKerjaService nomorUrutSuratUnitKerjaService;
 
     @Override
     public Set<SuratPerintah> getByKdUnitKerja(String kdUnitKerja) {
@@ -170,6 +174,34 @@ public class SuratPerintahServiceImpl implements SuratPerintahService {
         SuratPerintah suratPerintahLast = suratPerintahDao.findOne(kdSuratPerintah);
         suratPerintahLast.setStatusPenyebaran(1);
         suratPerintahLast.setApprovalPenandatangan(1);
+
+        NomorUrutSuratUnitKerja nomorUrutSurat
+                = nomorUrutSuratUnitKerjaService
+                .getNomorSuratByUnitKerjaAndTahun(
+                        suratPerintahLast.getKdUnitKerja(),
+                        Year.now().getValue());
+
+        if (nomorUrutSurat == null) {
+            nomorUrutSurat
+                    = new NomorUrutSuratUnitKerja();
+            nomorUrutSurat
+                    .setNomorUrutSuratUnitKerjaId(
+                            new NomorUrutSuratUnitKerjaId(suratPerintahLast.getKdUnitKerja(), Year.now().getValue()));
+            nomorUrutSurat.setNomorUrutSurat(1);
+
+            nomorUrutSuratUnitKerjaService.createNomorUrutSurat(nomorUrutSurat);
+        } else {
+            nomorUrutSurat.setNomorUrutSurat(nomorUrutSurat.getNomorUrutSurat() + 1);
+
+            nomorUrutSuratUnitKerjaService.updateNomorUrutSurat(nomorUrutSurat);
+        }
+        suratPerintahLast.setNomorSurat1(nomorUrutSurat.getNomorUrutSurat());
+        String kdBarcode
+                = suratPerintahLast.getKdSuratPerintah()
+                + suratPerintahLast.getNomorSurat1()
+                + suratPerintahLast.getKdUnitKerja()
+                + "11";
+        suratPerintahLast.setKdBarcode(kdBarcode);
 
         String penilaianTree = suratPerintahLast.getPathPenilaian();
 

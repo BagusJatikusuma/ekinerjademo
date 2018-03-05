@@ -583,13 +583,14 @@ public class SuratTugasController {
         }
 
         String base64BarcodeImage = null;
-        String kdBarcode
-                = suratTugas.getKdBarcode()+suratTugas.getNomorSurat1()+suratTugas.getKdUnitKerja()+"12";
-        BarcodeGenerator generator = new BarcodeGenerator();
 
-        base64BarcodeImage
-                = generator.convertBarcodeImageIntoBase64String(
-                generator.generateBarcode(suratTugas.getKdBarcode()));
+        if (suratTugas.getKdBarcode() != null) {
+            BarcodeGenerator generator = new BarcodeGenerator();
+
+            base64BarcodeImage
+                    = generator.convertBarcodeImageIntoBase64String(
+                    generator.generateBarcode(suratTugas.getKdBarcode()));
+        }
 
         SuratTugasWrapper suratTugasWrapper
                 = new SuratTugasWrapper(suratTugas.getKdSuratTugas(),

@@ -160,13 +160,14 @@ public class PengumumanController {
         }
 
         String base64BarcodeImage = null;
-        String kdBarcode
-                = pengumuman.getKdBarcode()+pengumuman.getNomorUrut()+pengumuman.getKdUnitKerja()+"4";
-        BarcodeGenerator generator = new BarcodeGenerator();
 
-        base64BarcodeImage
-                = generator.convertBarcodeImageIntoBase64String(
-                        generator.generateBarcode(pengumuman.getKdBarcode()));
+        if (pengumuman.getKdBarcode() != null) {
+            BarcodeGenerator generator = new BarcodeGenerator();
+
+            base64BarcodeImage
+                    = generator.convertBarcodeImageIntoBase64String(
+                    generator.generateBarcode(pengumuman.getKdBarcode()));
+        }
 
         PengumumanWrapper pengumumanWrapper
                 = new PengumumanWrapper(

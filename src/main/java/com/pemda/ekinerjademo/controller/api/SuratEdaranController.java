@@ -238,13 +238,14 @@ public class SuratEdaranController {
             isSuratPejabat = true;
 
         String base64BarcodeImage = null;
-        String kdBarcode
-                = suratEdaran.getKdBarcode()+suratEdaran.getNomorUrut()+suratEdaran.getKdUnitKerja()+"6";
-        BarcodeGenerator generator = new BarcodeGenerator();
 
-        base64BarcodeImage
-                = generator.convertBarcodeImageIntoBase64String(
+        if (suratEdaran.getKdBarcode() != null) {
+            BarcodeGenerator generator = new BarcodeGenerator();
+
+            base64BarcodeImage
+                    = generator.convertBarcodeImageIntoBase64String(
                         generator.generateBarcode(suratEdaran.getKdBarcode()));
+        }
 
         suratEdaranWrapper.setKdSuratEdaran(suratEdaran.getKdSuratEdaran());
         suratEdaranWrapper.setNomorTahun(suratEdaran.getNomorTahun());

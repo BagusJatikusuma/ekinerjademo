@@ -394,13 +394,14 @@ public class SuratDinasController {
                 = new SuratDinasWrapper();
 
         String base64BarcodeImage = null;
-        String kdBarcode
-                = suratDinas.getKdBarcode()+suratDinas.getNomorUrut()+suratDinas.getKdUnitKerja()+"5";
-        BarcodeGenerator generator = new BarcodeGenerator();
 
-        base64BarcodeImage
-                = generator.convertBarcodeImageIntoBase64String(
-                        generator.generateBarcode(suratDinas.getKdBarcode()));
+        if (suratDinas.getKdBarcode() != null) {
+            BarcodeGenerator generator = new BarcodeGenerator();
+
+            base64BarcodeImage
+                    = generator.convertBarcodeImageIntoBase64String(
+                    generator.generateBarcode(suratDinas.getKdBarcode()));
+        }
 
         suratDinasWrapper.setNomorUrusan(suratDinas.getNomorUrusan());
         suratDinasWrapper.setNomorUrut(suratDinas.getNomorUrut());

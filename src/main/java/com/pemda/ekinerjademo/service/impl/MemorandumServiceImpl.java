@@ -6,10 +6,12 @@ import com.pemda.ekinerjademo.repository.ekinerjarepository.MemorandumNonPejabat
 import com.pemda.ekinerjademo.repository.ekinerjarepository.MemorandumPejabatDao;
 import com.pemda.ekinerjademo.repository.ekinerjarepository.TembusanMemorandumDao;
 import com.pemda.ekinerjademo.service.MemorandumService;
+import com.pemda.ekinerjademo.service.NomorUrutSuratUnitKerjaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.Year;
 import java.util.List;
 
 /**
@@ -22,6 +24,8 @@ public class MemorandumServiceImpl implements MemorandumService {
     @Autowired private MemorandumNonPejabatDao memorandumNonPejabatDao;
     @Autowired private MemorandumPejabatDao memorandumPejabatDao;
     @Autowired private TembusanMemorandumDao tembusanMemorandumDao;
+    @Autowired
+    private NomorUrutSuratUnitKerjaService nomorUrutSuratUnitKerjaService;
 
     @Override
     public List<Memorandum> getByNipPembuat(String nipPembuat) {
@@ -97,6 +101,34 @@ public class MemorandumServiceImpl implements MemorandumService {
         Memorandum memorandumLast = memorandumDao.findOne(kdMemorandum);
         memorandumLast.setStatusPenyebaran(1);
         memorandumLast.setApprovalPenandatangan(1);
+
+        NomorUrutSuratUnitKerja nomorUrutSurat
+                = nomorUrutSuratUnitKerjaService
+                .getNomorSuratByUnitKerjaAndTahun(
+                        memorandumLast.getKdUnitKerja(),
+                        Year.now().getValue());
+
+        if (nomorUrutSurat == null) {
+            nomorUrutSurat
+                    = new NomorUrutSuratUnitKerja();
+            nomorUrutSurat
+                    .setNomorUrutSuratUnitKerjaId(
+                            new NomorUrutSuratUnitKerjaId(memorandumLast.getKdUnitKerja(), Year.now().getValue()));
+            nomorUrutSurat.setNomorUrutSurat(1);
+
+            nomorUrutSuratUnitKerjaService.createNomorUrutSurat(nomorUrutSurat);
+        } else {
+            nomorUrutSurat.setNomorUrutSurat(nomorUrutSurat.getNomorUrutSurat() + 1);
+
+            nomorUrutSuratUnitKerjaService.updateNomorUrutSurat(nomorUrutSurat);
+        }
+        memorandumLast.setNomorUrut(nomorUrutSurat.getNomorUrutSurat());
+        String kdBarcode
+                = memorandumLast.getKdMemorandum()
+                + memorandumLast.getNomorUrut()
+                + memorandumLast.getKdUnitKerja()
+                + "2";
+        memorandumLast.setKdBarcode(kdBarcode);
 
         String penilaianTree = memorandumLast.getPathPenilaian();
 

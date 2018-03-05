@@ -3,6 +3,7 @@ package com.pemda.ekinerjademo.service.impl;
 import com.pemda.ekinerjademo.controller.api.SuratInstruksiController;
 import com.pemda.ekinerjademo.model.ekinerjamodel.*;
 import com.pemda.ekinerjademo.repository.ekinerjarepository.*;
+import com.pemda.ekinerjademo.service.NomorUrutSuratUnitKerjaService;
 import com.pemda.ekinerjademo.service.SuratInstruksiService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.Year;
 import java.util.List;
 
 /**
@@ -25,6 +27,7 @@ public class SuratInstruksiServiceImpl implements SuratInstruksiService {
     @Autowired private InstruksiPegawaiDao instruksiPegawaiDao;
     @Autowired private SuratInstruksiPejabatDao suratInstruksiPejabatDao;
     @Autowired private SuratInstruksinonPejabatDao suratInstruksinonPejabatDao;
+    @Autowired private NomorUrutSuratUnitKerjaService nomorUrutSuratUnitKerjaService;
 
     @Override
     public void createSuratInstruksi(SuratInstruksi suratInstruksi) {

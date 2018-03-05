@@ -469,11 +469,13 @@ public class MemorandumController {
         String base64BarcodeImage = null;
 //        String kdBarcode
 //                = memorandum.getKdBarcode()+memorandum.getNomorUrut()+memorandum.getKdUnitKerja()+"2";
-        BarcodeGenerator generator = new BarcodeGenerator();
+        if (memorandum.getKdBarcode() != null) {
+            BarcodeGenerator generator = new BarcodeGenerator();
 
-        base64BarcodeImage
-                = generator.convertBarcodeImageIntoBase64String(
+            base64BarcodeImage
+                    = generator.convertBarcodeImageIntoBase64String(
                         generator.generateBarcode(memorandum.getKdBarcode()));
+        }
 
         MemorandumWrapper memorandumWrapper
                 = new MemorandumWrapper(

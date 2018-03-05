@@ -1,15 +1,15 @@
 package com.pemda.ekinerjademo.service.impl;
 
-import com.pemda.ekinerjademo.model.ekinerjamodel.NotaDinas;
-import com.pemda.ekinerjademo.model.ekinerjamodel.TembusanNotaDinas;
-import com.pemda.ekinerjademo.model.ekinerjamodel.TembusanNotaDinasId;
+import com.pemda.ekinerjademo.model.ekinerjamodel.*;
 import com.pemda.ekinerjademo.repository.ekinerjarepository.NotaDinasDao;
 import com.pemda.ekinerjademo.repository.ekinerjarepository.TembusanNotaDinasDao;
+import com.pemda.ekinerjademo.service.NomorUrutSuratUnitKerjaService;
 import com.pemda.ekinerjademo.service.NotaDinasService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.Year;
 import java.util.List;
 
 /**
@@ -20,6 +20,8 @@ import java.util.List;
 public class NotaDinasServiceImpl implements NotaDinasService {
     @Autowired private NotaDinasDao notaDinasDao;
     @Autowired private TembusanNotaDinasDao tembusanNotaDinasDao;
+    @Autowired
+    private NomorUrutSuratUnitKerjaService nomorUrutSuratUnitKerjaService;
 
     @Override
     public List<NotaDinas> getByKdUnitKerja(String kdUnitKerja) {
@@ -88,6 +90,34 @@ public class NotaDinasServiceImpl implements NotaDinasService {
         NotaDinas notaDinasLast = notaDinasDao.findByKdNotaDinas(kdNotaDinas);
         notaDinasLast.setStatusPenyebaran(1);
         notaDinasLast.setApprovalPenandatangan(1);
+
+        NomorUrutSuratUnitKerja nomorUrutSurat
+                = nomorUrutSuratUnitKerjaService
+                    .getNomorSuratByUnitKerjaAndTahun(
+                            notaDinasLast.getKdUnitKerja(),
+                            Year.now().getValue());
+
+        if (nomorUrutSurat == null) {
+            nomorUrutSurat
+                    = new NomorUrutSuratUnitKerja();
+            nomorUrutSurat
+                    .setNomorUrutSuratUnitKerjaId(
+                            new NomorUrutSuratUnitKerjaId(notaDinasLast.getKdUnitKerja(), Year.now().getValue()));
+            nomorUrutSurat.setNomorUrutSurat(1);
+
+            nomorUrutSuratUnitKerjaService.createNomorUrutSurat(nomorUrutSurat);
+        } else {
+            nomorUrutSurat.setNomorUrutSurat(nomorUrutSurat.getNomorUrutSurat() + 1);
+
+            nomorUrutSuratUnitKerjaService.updateNomorUrutSurat(nomorUrutSurat);
+        }
+        notaDinasLast.setNomorUrut(nomorUrutSurat.getNomorUrutSurat());
+        String kdBarcode
+                = notaDinasLast.getKdNotaDinas()
+                + notaDinasLast.getNomorUrut()
+                + notaDinasLast.getKdUnitKerja()
+                + "3";
+        notaDinasLast.setKdBarcode(kdBarcode);
 
         String penilaianTree = notaDinasLast.getPathPenilaian();
 

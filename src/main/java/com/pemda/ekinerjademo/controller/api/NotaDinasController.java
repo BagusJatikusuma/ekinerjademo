@@ -382,14 +382,14 @@ public class NotaDinasController {
         penandatangan.setUnitKerja(tkdUnkDao.findOne(penandatangan.getKdUnitKerja()).getUnitKerja());
 
         String base64BarcodeImage = null;
-        String kdBarcode
-                = notaDinas.getKdBarcode()+notaDinas.getNomorUrut()+notaDinas.getKdUnitKerja()+"3";
-        BarcodeGenerator generator = new BarcodeGenerator();
 
-        base64BarcodeImage
-                = generator.convertBarcodeImageIntoBase64String(
-                        generator.generateBarcode(notaDinas.getKdBarcode()));
+        if (notaDinas.getKdBarcode() != null) {
+            BarcodeGenerator generator = new BarcodeGenerator();
 
+            base64BarcodeImage
+                    = generator.convertBarcodeImageIntoBase64String(
+                    generator.generateBarcode(notaDinas.getKdBarcode()));
+        }
         NotaDinasWrapper notaDinasWrapper
                 = new NotaDinasWrapper(
                         notaDinas.getKdNotaDinas(),

@@ -195,6 +195,12 @@ public class TestServiceController {
         return new ResponseEntity<Object>(taKegiatanWrapperList, HttpStatus.OK);
     }
 
+    @RequestMapping(value = "/get-kegiatan-by-program-simda", method = RequestMethod.POST)
+    @Transactional("simdaTransactionManager")
+    ResponseEntity<?> getKegiatanByProgram() {
+        return null;
+    }
+
     @RequestMapping(value = "/program-simda-unit-kerja/{kdUnitKerja}", method = RequestMethod.GET)
     @Transactional("simdaTransactionManager")
     ResponseEntity<?> getProgramSimdaUnitKerja(

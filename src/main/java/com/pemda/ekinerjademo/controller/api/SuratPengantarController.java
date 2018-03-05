@@ -335,14 +335,13 @@ public class SuratPengantarController {
         }
 
         String base64BarcodeImage = null;
-        String kdBarcode
-                = suratPengantar.getKdBarcode()+suratPengantar.getNomorUrut()+suratPengantar.getKdUnitKerja()+"10";
-        BarcodeGenerator generator = new BarcodeGenerator();
+        if (suratPengantar.getKdBarcode() != null) {
+            BarcodeGenerator generator = new BarcodeGenerator();
 
-        base64BarcodeImage
-                = generator.convertBarcodeImageIntoBase64String(
-                        generator.generateBarcode(suratPengantar.getKdBarcode()));
-
+            base64BarcodeImage
+                    = generator.convertBarcodeImageIntoBase64String(
+                    generator.generateBarcode(suratPengantar.getKdBarcode()));
+        }
         SuratPengantarWrapper suratPengantarWrapper
                 = new SuratPengantarWrapper(
                         suratPengantar.getNomorUrusan(),

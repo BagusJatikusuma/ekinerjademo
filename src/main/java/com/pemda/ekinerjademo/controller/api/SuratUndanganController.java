@@ -432,13 +432,14 @@ public class SuratUndanganController {
             isSuratPejabat = true;
 
         String base64BarcodeImage = null;
-        String kdBarcode
-                = suratUndangan.getKdBarcode()+suratUndangan.getNomorUrut()+suratUndangan.getKdUnitKerja()+"13";
-        BarcodeGenerator generator = new BarcodeGenerator();
 
-        base64BarcodeImage
-                = generator.convertBarcodeImageIntoBase64String(
-                generator.generateBarcode(suratUndangan.getKdBarcode()));
+        if (suratUndangan.getKdBarcode() != null) {
+            BarcodeGenerator generator = new BarcodeGenerator();
+
+            base64BarcodeImage
+                    = generator.convertBarcodeImageIntoBase64String(
+                            generator.generateBarcode(suratUndangan.getKdBarcode()));
+        }
 
         SuratUndanganWrapper suratUndanganWrapper = new SuratUndanganWrapper();
 

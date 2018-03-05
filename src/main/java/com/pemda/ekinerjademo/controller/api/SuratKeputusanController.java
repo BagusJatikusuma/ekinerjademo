@@ -189,14 +189,13 @@ public class SuratKeputusanController {
         }
 
         String base64BarcodeImage = null;
-        String kdBarcode
-                = suratKeputusan.getKdBarcode()+suratKeputusan.getNomorUrut()+suratKeputusan.getKdUnitKerja()+"7";
-        BarcodeGenerator generator = new BarcodeGenerator();
+        if (suratKeputusan.getKdBarcode() != null) {
+            BarcodeGenerator generator = new BarcodeGenerator();
 
-        base64BarcodeImage
-                = generator.convertBarcodeImageIntoBase64String(
-                        generator.generateBarcode(suratKeputusan.getKdBarcode()));
-
+            base64BarcodeImage
+                    = generator.convertBarcodeImageIntoBase64String(
+                    generator.generateBarcode(suratKeputusan.getKdBarcode()));
+        }
         SuratKeputusanWrapper suratKeputusanWrapper
                 = new SuratKeputusanWrapper(
                         suratKeputusan.getKdSuratKeputusan(),

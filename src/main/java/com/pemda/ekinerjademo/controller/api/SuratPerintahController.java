@@ -886,13 +886,14 @@ public class SuratPerintahController {
         }
 
         String base64BarcodeImage = null;
-        String kdBarcode
-                = suratPerintah.getKdBarcode()+suratPerintah.getNomorSurat1()+suratPerintah.getKdUnitKerja()+"11";
-        BarcodeGenerator generator = new BarcodeGenerator();
 
-        base64BarcodeImage
-                = generator.convertBarcodeImageIntoBase64String(
-                generator.generateBarcode(suratPerintah.getKdBarcode()));
+        if (suratPerintah.getKdBarcode() != null) {
+            BarcodeGenerator generator = new BarcodeGenerator();
+
+            base64BarcodeImage
+                    = generator.convertBarcodeImageIntoBase64String(
+                            generator.generateBarcode(suratPerintah.getKdBarcode()));
+        }
 
         SuratPerintahNonPejabatDokumenWrapper suratPerintahWrapper
                 = new SuratPerintahNonPejabatDokumenWrapper(
