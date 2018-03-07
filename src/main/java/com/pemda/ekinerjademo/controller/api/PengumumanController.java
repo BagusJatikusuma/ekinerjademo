@@ -66,13 +66,13 @@ public class PengumumanController {
         pengumuman.setNipPenilai("");
         pengumuman.setStatusBaca(0);
         pengumuman.setStatusPenyebaran(0);
+        pengumuman.setStatusPenilaian(0);
 
         pengumuman.setKdUrtug(inputWrapper.getKdUrtug());
         pengumuman.setTahunUrtug(inputWrapper.getTahunUrtug());
 
         if (inputWrapper.getKdPengumumanBawahan() == null) {
             pengumuman.setPathPenilaian(kdPengumuman);
-            pengumuman.setStatusPenilaian(0);
             pengumuman.setKdNaskahPenugasan(inputWrapper.getKdNaskahPenugasan());
             pengumuman.setJenisNaskahPenugasan(inputWrapper.getJenisNaskahPenugasan());
         } else {
