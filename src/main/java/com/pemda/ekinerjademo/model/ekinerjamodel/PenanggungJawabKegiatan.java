@@ -1,6 +1,7 @@
 package com.pemda.ekinerjademo.model.ekinerjamodel;
 
 import javax.persistence.*;
+import java.util.List;
 
 /**
  * Created by bagus on 07/02/18.
@@ -29,6 +30,9 @@ public class PenanggungJawabKegiatan {
             updatable = false,
             referencedColumnName = "kd_status")
     private StatusPenanggungJawabKegiatan statusPenanggungJawabKegiatan;
+
+    @OneToMany(mappedBy = "penanggungJawabKegiatan")
+    private List<UrtugKegiatan> urtugKegiatanList;
 
     public PenanggungJawabKegiatanId getPenanggungJawabKegiatanId() {
         return penanggungJawabKegiatanId;
@@ -60,5 +64,13 @@ public class PenanggungJawabKegiatan {
 
     public void setStatusPenanggungJawabKegiatan(StatusPenanggungJawabKegiatan statusPenanggungJawabKegiatan) {
         this.statusPenanggungJawabKegiatan = statusPenanggungJawabKegiatan;
+    }
+
+    public List<UrtugKegiatan> getUrtugKegiatanList() {
+        return urtugKegiatanList;
+    }
+
+    public void setUrtugKegiatanList(List<UrtugKegiatan> urtugKegiatanList) {
+        this.urtugKegiatanList = urtugKegiatanList;
     }
 }

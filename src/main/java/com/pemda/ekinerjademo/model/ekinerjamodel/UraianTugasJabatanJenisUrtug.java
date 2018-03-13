@@ -1,6 +1,7 @@
 package com.pemda.ekinerjademo.model.ekinerjamodel;
 
 import javax.persistence.*;
+import java.util.List;
 
 /**
  * Created by bagus on 10/10/17.
@@ -48,6 +49,9 @@ public class UraianTugasJabatanJenisUrtug {
             updatable = false,
             referencedColumnName = "kd_jenis_urtug")
     private JenisUrtug jenisUrtug;
+
+    @OneToMany(mappedBy = "uraianTugasJabatanJenisUrtug")
+    private List<UrtugKegiatan> urtugKegiatanList;
 
     public UraianTugasJabatanJenisUrtugId getUraianTugasJabatanJenisUrtugId() {
         return uraianTugasJabatanJenisUrtugId;
@@ -132,5 +136,13 @@ public class UraianTugasJabatanJenisUrtug {
 
     public void setBiaya(Integer biaya) {
         this.biaya = biaya;
+    }
+
+    public List<UrtugKegiatan> getUrtugKegiatanList() {
+        return urtugKegiatanList;
+    }
+
+    public void setUrtugKegiatanList(List<UrtugKegiatan> urtugKegiatanList) {
+        this.urtugKegiatanList = urtugKegiatanList;
     }
 }

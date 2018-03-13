@@ -45,6 +45,12 @@ public class UrtugKegiatanId implements Serializable {
     @Column(name = "kd_keg")
     private Integer kdKeg;
 
+    @Column(name = "nip_pegawai")
+    private String nipPegawai;
+
+    @Column(name = "kd_status_penanggung_jawab")
+    private String kdStatusPenanggungJawab;
+
     public UrtugKegiatanId() {
     }
     public UrtugKegiatanId(
@@ -72,6 +78,23 @@ public class UrtugKegiatanId implements Serializable {
         this.kdProg = kdProg;
         this.idProg = idProg;
         this.kdKeg = kdKeg;
+    }
+
+    public UrtugKegiatanId(String kdUrtug, String kdJabatan, String kdJenisUrtug, Integer tahunUrtug, Integer kdUrusan, Integer kdBidang, Integer kdUnit, Integer kdSub, Integer tahun, Integer kdProg, Integer idProg, Integer kdKeg, String nipPegawai, String kdStatusPenanggungJawab) {
+        this.kdUrtug = kdUrtug;
+        this.kdJabatan = kdJabatan;
+        this.kdJenisUrtug = kdJenisUrtug;
+        this.tahunUrtug = tahunUrtug;
+        this.kdUrusan = kdUrusan;
+        this.kdBidang = kdBidang;
+        this.kdUnit = kdUnit;
+        this.kdSub = kdSub;
+        this.tahun = tahun;
+        this.kdProg = kdProg;
+        this.idProg = idProg;
+        this.kdKeg = kdKeg;
+        this.nipPegawai = nipPegawai;
+        this.kdStatusPenanggungJawab = kdStatusPenanggungJawab;
     }
 
     public String getKdUrtug() {
@@ -188,7 +211,9 @@ public class UrtugKegiatanId implements Serializable {
         if (!tahun.equals(that.tahun)) return false;
         if (!kdProg.equals(that.kdProg)) return false;
         if (!idProg.equals(that.idProg)) return false;
-        return kdKeg.equals(that.kdKeg);
+        if (!kdKeg.equals(that.kdKeg)) return false;
+        if (!nipPegawai.equals(that.nipPegawai)) return false;
+        return kdStatusPenanggungJawab.equals(that.kdStatusPenanggungJawab);
     }
 
     @Override
@@ -205,6 +230,24 @@ public class UrtugKegiatanId implements Serializable {
         result = 31 * result + kdProg.hashCode();
         result = 31 * result + idProg.hashCode();
         result = 31 * result + kdKeg.hashCode();
+        result = 31 * result + nipPegawai.hashCode();
+        result = 31 * result + kdStatusPenanggungJawab.hashCode();
         return result;
+    }
+
+    public String getNipPegawai() {
+        return nipPegawai;
+    }
+
+    public void setNipPegawai(String nipPegawai) {
+        this.nipPegawai = nipPegawai;
+    }
+
+    public String getKdStatusPenanggungJawab() {
+        return kdStatusPenanggungJawab;
+    }
+
+    public void setKdStatusPenanggungJawab(String kdStatusPenanggungJawab) {
+        this.kdStatusPenanggungJawab = kdStatusPenanggungJawab;
     }
 }

@@ -1,5 +1,6 @@
 package com.pemda.ekinerjademo.service;
 
+import com.pemda.ekinerjademo.model.ekinerjamodel.UnitKerjaKegiatan;
 import com.pemda.ekinerjademo.model.ekinerjamodel.UrtugKegiatan;
 import com.pemda.ekinerjademo.model.ekinerjamodel.UrtugKegiatanId;
 
@@ -18,4 +19,7 @@ public interface UrtugKegiatanService {
     void save(UrtugKegiatan urtugKegiatan);
     void update(UrtugKegiatan urtugKegiatan);
     void delete(UrtugKegiatanId urtugKegiatanId);
+    //================================================================================================================//
+
+    List<UrtugKegiatan> findByPegawaiAndUnitKerja(String nipPegawai, UnitKerjaKegiatan unitKerjaKegiatan);
 }

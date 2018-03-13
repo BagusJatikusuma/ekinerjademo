@@ -1,5 +1,6 @@
 package com.pemda.ekinerjademo.controller.api;
 
+import com.pemda.ekinerjademo.model.ekinerjamodel.PenanggungJawabKegiatan;
 import com.pemda.ekinerjademo.model.ekinerjamodel.UnitKerjaKegiatan;
 import com.pemda.ekinerjademo.model.ekinerjamodel.UrtugKegiatan;
 import com.pemda.ekinerjademo.model.ekinerjamodel.UrtugKegiatanId;
@@ -10,11 +11,13 @@ import com.pemda.ekinerjademo.model.simdamodel.TaProgramId;
 import com.pemda.ekinerjademo.repository.ekinerjarepository.UnitKerjaKegiatanDao;
 import com.pemda.ekinerjademo.repository.simdarepository.TaKegiatanDao;
 import com.pemda.ekinerjademo.repository.simdarepository.TaProgramDao;
+import com.pemda.ekinerjademo.service.PenanggungJawabKegiatanService;
 import com.pemda.ekinerjademo.service.TaKegiatanService;
 import com.pemda.ekinerjademo.service.UnitKerjaKegiatanService;
 import com.pemda.ekinerjademo.service.UrtugKegiatanService;
 import com.pemda.ekinerjademo.wrapper.input.*;
 import com.pemda.ekinerjademo.wrapper.output.CustomMessage;
+import com.pemda.ekinerjademo.wrapper.output.UraianTugasJabatanJenisWrapper;
 import com.pemda.ekinerjademo.wrapper.output.UrtugKegiatanWrapper;
 import com.pemda.ekinerjademo.wrapper.output.UrtugProgramWrapper;
 import org.slf4j.Logger;
@@ -47,12 +50,105 @@ public class UrtugKegiatanController {
     private TaKegiatanService taKegiatanService;
     @Autowired
     private UnitKerjaKegiatanService unitKerjaKegiatanService;
+    @Autowired
+    private PenanggungJawabKegiatanService penanggungJawabKegiatanService;
 
     @Autowired
     public UrtugKegiatanController(UrtugKegiatanService urtugKegiatanService) {
         this.urtugKegiatanService = urtugKegiatanService;
     }
 
+
+    /**
+     *
+     * memasangkan uraian tugas DPA dengan kegiatan yang sudah dipasang dengan penanggung jawabnya
+     * create urtug kegiatan with master kegiatan
+     *
+     * @param inputWrapper
+     * @return custom Message object
+     */
+    @RequestMapping(value = "/create-urtug-kegiatan-revisi", method = RequestMethod.POST)
+    ResponseEntity<?> createUrtugKegiatanRevisi(@RequestBody KegiatanUrtugPenanggungJawabInputWrapper inputWrapper) {
+        LOGGER.info("create urtug kegiatan penanggung jawab");
+
+        for (KegiatanWrapper kegiatanWrapper
+                : inputWrapper.getKegiatanList()) {
+            List<PenanggungJawabKegiatan> penanggungJawabKegiatanList
+                    = penanggungJawabKegiatanService.getByKegiatan(kegiatanWrapper.getKdUrusan(),
+                                                                    kegiatanWrapper.getKdBidang(),
+                                                                    kegiatanWrapper.getKdUnit(),
+                                                                    kegiatanWrapper.getKdSub(),
+                                                                    kegiatanWrapper.getTahun(),
+                                                                    kegiatanWrapper.getKdProg(),
+                                                                    kegiatanWrapper.getIdProg(),
+                                                                    kegiatanWrapper.getKdKeg());
+            for (PenanggungJawabKegiatan penanggungJawabKegiatan
+                    : penanggungJawabKegiatanList) {
+                UrtugKegiatan urtugKegiatan = new UrtugKegiatan();
+                UrtugKegiatanId id
+                        = new UrtugKegiatanId(inputWrapper.getKdUrtug(),
+                                                inputWrapper.getKdJabatan(),
+                                                inputWrapper.getKdJenisUrtug(),
+                                                inputWrapper.getTahunUrtug(),
+                                                penanggungJawabKegiatan.getPenanggungJawabKegiatanId().getKdUrusan(),
+                                                penanggungJawabKegiatan.getPenanggungJawabKegiatanId().getKdBidang(),
+                                                penanggungJawabKegiatan.getPenanggungJawabKegiatanId().getKdUnit(),
+                                                penanggungJawabKegiatan.getPenanggungJawabKegiatanId().getKdSub(),
+                                                penanggungJawabKegiatan.getPenanggungJawabKegiatanId().getTahun(),
+                                                penanggungJawabKegiatan.getPenanggungJawabKegiatanId().getKdProg(),
+                                                penanggungJawabKegiatan.getPenanggungJawabKegiatanId().getIdProg(),
+                                                penanggungJawabKegiatan.getPenanggungJawabKegiatanId().getKdKeg(),
+                                                penanggungJawabKegiatan.getPenanggungJawabKegiatanId().getNipPegawai(),
+                                                penanggungJawabKegiatan.getPenanggungJawabKegiatanId().getKdStatusPenanggungJawab());
+
+                urtugKegiatan.setUrtugKegiatanId(id);
+
+                urtugKegiatanService.save(urtugKegiatan);
+            }
+        }
+
+        return new ResponseEntity<Object>(new CustomMessage("pemasangan uraian tugas dengan daftar kegiatan berhasil"), HttpStatus.OK);
+    }
+
+
+    /**
+     *
+     * ambil daftar bahan ajuan kontrak kerja, jika sudah pernah diajukan tidak akan diambil lagi
+     * diambil berdasarkan nip pegawai dan unit kerja saat melakukan request
+     *
+     * @param nipPegawai
+     * @param kdUnitKerja
+     * @return list bahan ajuan kontrak kerja DPA
+     */
+    @RequestMapping(value = "/get-urtug-dpa-ajuan-by-pegawai/{nipPegawai}/{kdUnitKerja}", method = RequestMethod.GET)
+    ResponseEntity<?> getUrtugDpaAjuangByPegawai(@PathVariable("nipPegawai") String nipPegawai,
+                                                 @PathVariable("kdUnitKerja") String kdUnitKerja) {
+        LOGGER.info("get urtug dpa ajuan by pegawai "+nipPegawai+" in "+kdUnitKerja);
+
+        List<UraianTugasJabatanJenisWrapper> outputWrappers
+                = new ArrayList<>();
+
+        UnitKerjaKegiatan unitKerjaKegiatan
+                = unitKerjaKegiatanService.findByKdUnitKerja(kdUnitKerja);
+
+        List<TaKegiatan> taKegiatanList = taKegiatanService.findByUnitKerja(unitKerjaKegiatan);
+
+        List<UrtugKegiatan> urtugKegiatans
+                = urtugKegiatanService.findByPegawaiAndUnitKerja(nipPegawai, unitKerjaKegiatan);
+        List<UrtugKegiatan> urtugKegiatansBelumDiajukanList
+                = new ArrayList<>();
+
+        for (UrtugKegiatan urtugKegiatan
+                : urtugKegiatans) {
+            if (urtugKegiatan.getPenanggungJawabKegiatan().getStatusApproval() == 0) {
+                urtugKegiatansBelumDiajukanList.add(urtugKegiatan);
+            }
+        }
+
+        return new ResponseEntity<Object>(null, HttpStatus.OK);
+    }
+
+//====================================================================================================================//
     ResponseEntity<?> getUrtugKegiatan() {
         return null;
     }

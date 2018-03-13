@@ -39,4 +39,15 @@ public interface UrtugKegiatanDao extends JpaRepository<UrtugKegiatan, Long> {
             "and uk.urtugKegiatanId.kdProg = ?10 " +
             "and uk.urtugKegiatanId.idProg = ?11")
     List<UrtugKegiatan> findByProgramAndUrtug(String kdUrtug, String kdJabatan, String kdJenisUrtug, Integer tahunUrtug, Integer kdUrusan, Integer kdBidang, Integer kdUnit, Integer kdSub, Integer tahun, Integer kdProg, Integer idProg);
+
+    @Query("select uk from UrtugKegiatan uk "+
+            "left join fetch uk.uraianTugasJabatanJenisUrtug utjj " +
+            "left join fetch utjj.uraianTugasJabatan utj " +
+            "left join fetch utjj.jenisUrtug " +
+            "left join fetch utj.uraianTugas " +
+            "where uk.urtugKegiatanId.nipPegawai = ?1 " +
+            "and uk.urtugKegiatanId.kdUrusan = ?2 " +
+            "and uk.urtugKegiatanId.kdBidang = ?3 " +
+            "and uk.urtugKegiatanId.kdUnit = ?4 ")
+    List<UrtugKegiatan> findByPegawawiAndUnitKerja(String nipPegawai, Integer kdUrusan, Integer kdBidang, Integer kdUnit);
 }

@@ -2,6 +2,8 @@ package com.pemda.ekinerjademo.service.impl;
 
 import com.pemda.ekinerjademo.model.ekinerjamodel.PenanggungJawabKegiatan;
 import com.pemda.ekinerjademo.model.ekinerjamodel.PenanggungJawabKegiatanId;
+import com.pemda.ekinerjademo.model.ekinerjamodel.UnitKerjaKegiatan;
+import com.pemda.ekinerjademo.projection.ekinerjaprojection.KegiatanPenanggungJawabProjection;
 import com.pemda.ekinerjademo.repository.ekinerjarepository.PenanggungJawabKegiatanDao;
 import com.pemda.ekinerjademo.service.PenanggungJawabKegiatanService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,4 +55,15 @@ public class PenanggungJawabKegiatanServiceImpl implements PenanggungJawabKegiat
     public void delete(PenanggungJawabKegiatanId id) {
         penanggungJawabKegiatanDao.delete(id);
     }
+
+    @Override
+    public List<KegiatanPenanggungJawabProjection> getKegiatanByUnitKerja(UnitKerjaKegiatan unitKerjaKegiatan) {
+        return penanggungJawabKegiatanDao
+                    .findKegiatanUnitKerjaOnly(
+                            unitKerjaKegiatan.getKdUrusan(),
+                            unitKerjaKegiatan.getKdBidang(),
+                            unitKerjaKegiatan.getKdUnit());
+    }
+
+
 }

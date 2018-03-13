@@ -2,6 +2,8 @@ package com.pemda.ekinerjademo.service;
 
 import com.pemda.ekinerjademo.model.ekinerjamodel.PenanggungJawabKegiatan;
 import com.pemda.ekinerjademo.model.ekinerjamodel.PenanggungJawabKegiatanId;
+import com.pemda.ekinerjademo.model.ekinerjamodel.UnitKerjaKegiatan;
+import com.pemda.ekinerjademo.projection.ekinerjaprojection.KegiatanPenanggungJawabProjection;
 
 import java.util.List;
 
@@ -13,4 +15,6 @@ public interface PenanggungJawabKegiatanService {
     List<PenanggungJawabKegiatan> getByUnitKerja(Integer kdUrusan, Integer kdBidang, Integer kdUnit);
     List<PenanggungJawabKegiatan> getByKegiatan(Integer kdUrusan, Integer kdBidang, Integer kdUnit, Integer kdSub, Integer tahun, Integer kdProg, Integer idProg, Integer kdKeg);
     void delete(PenanggungJawabKegiatanId id);
+
+    List<KegiatanPenanggungJawabProjection> getKegiatanByUnitKerja(UnitKerjaKegiatan unitKerjaKegiatan);
 }

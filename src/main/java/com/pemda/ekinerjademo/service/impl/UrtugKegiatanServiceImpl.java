@@ -1,5 +1,6 @@
 package com.pemda.ekinerjademo.service.impl;
 
+import com.pemda.ekinerjademo.model.ekinerjamodel.UnitKerjaKegiatan;
 import com.pemda.ekinerjademo.model.ekinerjamodel.UrtugKegiatan;
 import com.pemda.ekinerjademo.model.ekinerjamodel.UrtugKegiatanId;
 import com.pemda.ekinerjademo.repository.ekinerjarepository.UrtugKegiatanDao;
@@ -35,18 +36,17 @@ public class UrtugKegiatanServiceImpl implements UrtugKegiatanService {
     }
 
     @Override
-    public List<UrtugKegiatan> findByProgramAndUrtug(
-            String kdUrtug,
-            String kdJabatan,
-            String kdJenisUrtug,
-            Integer tahunUrtug,
-            Integer kdUrusan,
-            Integer kdBidang,
-            Integer kdUnit,
-            Integer kdSub,
-            Integer tahun,
-            Integer kdProg,
-            Integer idProg) {
+    public List<UrtugKegiatan> findByProgramAndUrtug(String kdUrtug,
+                                                    String kdJabatan,
+                                                    String kdJenisUrtug,
+                                                    Integer tahunUrtug,
+                                                    Integer kdUrusan,
+                                                    Integer kdBidang,
+                                                    Integer kdUnit,
+                                                    Integer kdSub,
+                                                    Integer tahun,
+                                                    Integer kdProg,
+                                                    Integer idProg) {
         return urtugKegiatanDao
                 .findByProgramAndUrtug(kdUrtug, kdJabatan, kdJenisUrtug, tahunUrtug, kdUrusan, kdBidang, kdUnit, kdSub, tahun, kdProg, idProg);
     }
@@ -69,5 +69,14 @@ public class UrtugKegiatanServiceImpl implements UrtugKegiatanService {
     @Override
     public void delete(UrtugKegiatanId urtugKegiatanId) {
         urtugKegiatanDao.deleteByUrtugKegiatanId(urtugKegiatanId);
+    }
+
+    @Override
+    public List<UrtugKegiatan> findByPegawaiAndUnitKerja(String nipPegawai, UnitKerjaKegiatan unitKerjaKegiatan) {
+
+        return urtugKegiatanDao.findByPegawawiAndUnitKerja(nipPegawai,
+                                                            unitKerjaKegiatan.getKdUrusan(),
+                                                            unitKerjaKegiatan.getKdBidang(),
+                                                            unitKerjaKegiatan.getKdUnit());
     }
 }

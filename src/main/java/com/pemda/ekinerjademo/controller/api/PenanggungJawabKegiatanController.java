@@ -5,6 +5,7 @@ import com.pemda.ekinerjademo.model.bismamodel.TkdUnk;
 import com.pemda.ekinerjademo.model.ekinerjamodel.*;
 import com.pemda.ekinerjademo.model.simdamodel.TaKegiatan;
 import com.pemda.ekinerjademo.projection.ekinerjaprojection.CustomPegawaiCredential;
+import com.pemda.ekinerjademo.projection.ekinerjaprojection.KegiatanPenanggungJawabProjection;
 import com.pemda.ekinerjademo.repository.bismarepository.TkdUnkDao;
 import com.pemda.ekinerjademo.repository.simdarepository.TaProgramDao;
 import com.pemda.ekinerjademo.service.*;
@@ -260,6 +261,66 @@ public class PenanggungJawabKegiatanController {
                             inputWrapper.getKdStatusPenanggungJawab()));
 
         return new ResponseEntity<Object>(new CustomMessage("penanggung jawab berhasil dihapus"), HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/get-organisasi-barjas-unit-kerja/{kdUnitKerja}", method = RequestMethod.GET)
+    ResponseEntity<?> getPenanggungJawabKegiatanByUnitKerja(@PathVariable("kdUnitKerja") String kdUnitKerja) {
+        LOGGER.info("get penanggung jawab kegiatan by unit kerja "+kdUnitKerja);
+
+        UnitKerjaKegiatan unitKerjaKegiatan
+                = unitKerjaKegiatanService.findByKdUnitKerja(kdUnitKerja);
+
+        List<KegiatanPenanggungJawabProjection> kegiatanList
+                = penanggungJawabKegiatanService.getKegiatanByUnitKerja(unitKerjaKegiatan);
+        List<TaKegiatan> taKegiatanList
+                = taKegiatanService.findByUnitKerja(unitKerjaKegiatan);
+
+        List<TaKegiatanWrapper> kegiatanWrappers
+                = new ArrayList<>();
+
+        for (KegiatanPenanggungJawabProjection kegiatan
+                : kegiatanList) {
+            for (TaKegiatan taKegiatan
+                    : taKegiatanList) {
+                if (compareKegiatan(kegiatan, taKegiatan)) {
+                    kegiatanWrappers
+                            .add(new TaKegiatanWrapper(kegiatan.getKdUrusan(),
+                                    kegiatan.getKdBidang(),
+                                    kegiatan.getKdUnit(),
+                                    kegiatan.getKdSub(),
+                                    kegiatan.getTahun(),
+                                    kegiatan.getKdProg(),
+                                    kegiatan.getIdProg(),
+                                    kegiatan.getKdKeg(),
+                                    taKegiatan.getKetKegiatan(),
+                                    taKegiatan.getLokasi(),
+                                    taKegiatan.getKelompokSasaran(),
+                                    taKegiatan.getStatusKegiatan(),
+                                    taKegiatan.getPaguAnggaran(),
+                                    taKegiatan.getWaktuPelaksanaan(),
+                                    taKegiatan.getKdSumber()));
+
+                    break;
+                }
+            }
+        }
+
+        return new ResponseEntity<Object>(kegiatanWrappers, HttpStatus.OK);
+    }
+
+    private boolean compareKegiatan(KegiatanPenanggungJawabProjection kegiatan, TaKegiatan taKegiatan) {
+        if (kegiatan.getKdUrusan().equals(taKegiatan.getTaKegiatanId().getKdUrusan())
+                && kegiatan.getKdBidang().equals(taKegiatan.getTaKegiatanId().getKdBIdang())
+                && kegiatan.getKdUnit().equals(taKegiatan.getTaKegiatanId().getKdUnit())
+                && kegiatan.getKdSub().equals(taKegiatan.getTaKegiatanId().getKdSub())
+                && kegiatan.getTahun().equals(taKegiatan.getTaKegiatanId().getTahun())
+                && kegiatan.getKdProg().equals(taKegiatan.getTaKegiatanId().getKdProg())
+                && kegiatan.getIdProg().equals(taKegiatan.getTaKegiatanId().getIdProg())
+                && kegiatan.getKdKeg().equals(taKegiatan.getTaKegiatanId().getKdKegiatan())) {
+            return true;
+        }
+
+        return false;
     }
 
 }

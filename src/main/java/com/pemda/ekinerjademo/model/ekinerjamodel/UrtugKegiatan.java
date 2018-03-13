@@ -37,6 +37,61 @@ public class UrtugKegiatan {
     })
     private UraianTugasJabatanJenisUrtug uraianTugasJabatanJenisUrtug;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumns({
+            @JoinColumn(
+                    name = "kd_urusan",
+                    insertable = false,
+                    updatable = false,
+                    referencedColumnName = "kd_urusan"),
+            @JoinColumn(
+                    name = "kd_bidang",
+                    insertable = false,
+                    updatable = false,
+                    referencedColumnName = "kd_bidang"),
+            @JoinColumn(
+                    name = "kd_unit",
+                    insertable = false,
+                    updatable = false,
+                    referencedColumnName = "kd_unit"),
+            @JoinColumn(
+                    name = "kd_sub",
+                    insertable = false,
+                    updatable = false,
+                    referencedColumnName = "kd_sub"),
+            @JoinColumn(
+                    name = "tahun",
+                    insertable = false,
+                    updatable = false,
+                    referencedColumnName = "tahun"),
+            @JoinColumn(
+                    name = "kd_prog",
+                    insertable = false,
+                    updatable = false,
+                    referencedColumnName = "kd_prog"),
+            @JoinColumn(
+                    name = "id_prog",
+                    insertable = false,
+                    updatable = false,
+                    referencedColumnName = "id_prog"),
+            @JoinColumn(
+                    name = "kd_keg",
+                    insertable = false,
+                    updatable = false,
+                    referencedColumnName = "kd_keg"),
+            @JoinColumn(
+                    name = "nip_pegawai",
+                    insertable = false,
+                    updatable = false,
+                    referencedColumnName = "nip_pegawai"),
+            @JoinColumn(
+                    name = "kd_status_penanggung_jawab",
+                    insertable = false,
+                    updatable = false,
+                    referencedColumnName = "kd_status_penanggung_jawab")
+    })
+    private PenanggungJawabKegiatan penanggungJawabKegiatan;
+
     @Column(name = "kuantitas")
     private Integer kuantitas;
 
@@ -119,4 +174,11 @@ public class UrtugKegiatan {
         this.alasan = alasan;
     }
 
+    public PenanggungJawabKegiatan getPenanggungJawabKegiatan() {
+        return penanggungJawabKegiatan;
+    }
+
+    public void setPenanggungJawabKegiatan(PenanggungJawabKegiatan penanggungJawabKegiatan) {
+        this.penanggungJawabKegiatan = penanggungJawabKegiatan;
+    }
 }

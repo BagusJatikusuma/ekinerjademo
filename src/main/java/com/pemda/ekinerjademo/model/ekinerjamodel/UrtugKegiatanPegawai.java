@@ -75,25 +75,36 @@ public class UrtugKegiatanPegawai {
                     name = "kd_keg",
                     insertable = false,
                     updatable = false,
-                    referencedColumnName = "kd_keg")
+                    referencedColumnName = "kd_keg"),
+            @JoinColumn(
+                    name = "nip_pegawai",
+                    insertable = false,
+                    updatable = false,
+                    referencedColumnName = "nip_pegawai"),
+            @JoinColumn(
+                    name = "kd_status_penanggung_jawab",
+                    insertable = false,
+                    updatable = false,
+                    referencedColumnName = "kd_status_penanggung_jawab")
+
     })
     private UrtugKegiatan urtugKegiatan;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(
-            name = "nip_pegawai",
-            insertable = false,
-            updatable = false,
-            referencedColumnName = "nip_pegawai")
-    private AkunPegawai akunPegawai;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(
-            name = "kd_status_penanggung_jawab",
-            insertable = false,
-            updatable = false,
-            referencedColumnName = "kd_status")
-    private StatusPenanggungJawabKegiatan statusPenanggungJawabKegiatan;
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(
+//            name = "nip_pegawai",
+//            insertable = false,
+//            updatable = false,
+//            referencedColumnName = "nip_pegawai")
+//    private AkunPegawai akunPegawai;
+//
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(
+//            name = "kd_status_penanggung_jawab",
+//            insertable = false,
+//            updatable = false,
+//            referencedColumnName = "kd_status")
+//    private StatusPenanggungJawabKegiatan statusPenanggungJawabKegiatan;
 
     public UrtugKegiatanPegawaiId getUrtugKegiatanPegawaiId() {
         return urtugKegiatanPegawaiId;
@@ -112,19 +123,19 @@ public class UrtugKegiatanPegawai {
     }
 
     public AkunPegawai getAkunPegawai() {
-        return akunPegawai;
+        return getUrtugKegiatan().getPenanggungJawabKegiatan().getAkunPegawai();
     }
 
     public void setAkunPegawai(AkunPegawai akunPegawai) {
-        this.akunPegawai = akunPegawai;
+        this.getUrtugKegiatan().getPenanggungJawabKegiatan().setAkunPegawai(akunPegawai);
     }
 
     public StatusPenanggungJawabKegiatan getStatusPenanggungJawabKegiatan() {
-        return statusPenanggungJawabKegiatan;
+        return getUrtugKegiatan().getPenanggungJawabKegiatan().getStatusPenanggungJawabKegiatan();
     }
 
     public void setStatusPenanggungJawabKegiatan(StatusPenanggungJawabKegiatan statusPenanggungJawabKegiatan) {
-        this.statusPenanggungJawabKegiatan = statusPenanggungJawabKegiatan;
+        this.getUrtugKegiatan().getPenanggungJawabKegiatan().setStatusPenanggungJawabKegiatan(statusPenanggungJawabKegiatan);
     }
 
     public Integer getStatusApproval() {
