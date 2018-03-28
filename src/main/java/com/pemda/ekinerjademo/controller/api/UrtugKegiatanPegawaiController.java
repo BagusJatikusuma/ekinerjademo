@@ -107,6 +107,7 @@ public class UrtugKegiatanPegawaiController {
         return new ResponseEntity<Object>(urtugKegiatanPegawaiWrappers, HttpStatus.OK);
     }
 
+
     @RequestMapping(value = "/get-urtug-program-pegawai-by-urtug-jabatan", method = RequestMethod.POST)
     ResponseEntity<?> getUrtugProgramPegawaiByUrtugJabatan(
             @RequestBody UrtugJabatanJenisUnitKerjaInputWrapper urtugJabatanInputWrapper) {

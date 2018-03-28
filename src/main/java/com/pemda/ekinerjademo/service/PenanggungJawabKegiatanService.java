@@ -17,4 +17,5 @@ public interface PenanggungJawabKegiatanService {
     void delete(PenanggungJawabKegiatanId id);
 
     List<KegiatanPenanggungJawabProjection> getKegiatanByUnitKerja(UnitKerjaKegiatan unitKerjaKegiatan);
+    List<PenanggungJawabKegiatan> getByPegawai(Integer kdUrusan, Integer kdBidang, Integer kdUnit, Integer kdSub, Integer tahun, Integer kdProg, Integer idProg, Integer kdKeg, String nipPegawai);
 }

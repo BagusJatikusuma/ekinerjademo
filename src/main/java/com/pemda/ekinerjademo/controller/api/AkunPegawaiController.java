@@ -195,7 +195,9 @@ public class AkunPegawaiController {
                     .add(new JabatanWrapper(
                             tkdJabatan.getKdJabatan(),
                             tkdJabatan.getJabatan(),
-                            tkdJabatan.getEselon()));
+                            tkdJabatan.getEselon(),
+                            tkdJabatan.getKdUnitKerja().getKdUnK(),
+                            tkdJabatan.getKdUnitKerja().getUnitKerja()));
         }
 
         return new ResponseEntity<Object>(jabatanWrapperList, HttpStatus.OK);

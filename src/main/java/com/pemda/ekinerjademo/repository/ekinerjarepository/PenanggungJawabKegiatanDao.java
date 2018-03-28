@@ -45,6 +45,20 @@ public interface PenanggungJawabKegiatanDao
                                                  Integer idProg,
                                                  Integer kdKeg);
 
+    @Query("select pjk from PenanggungJawabKegiatan pjk " +
+            "where pjk.penanggungJawabKegiatanId.kdUrusan = ?1 " +
+            "and pjk.penanggungJawabKegiatanId.kdBidang = ?2 " +
+            "and pjk.penanggungJawabKegiatanId.kdUnit = ?3 " +
+            "and pjk.penanggungJawabKegiatanId.kdSub = ?4 " +
+            "and pjk.penanggungJawabKegiatanId.tahun = ?5 " +
+            "and pjk.penanggungJawabKegiatanId.nipPegawai = ?6")
+    List<PenanggungJawabKegiatan> findByPegawai(Integer kdUrusan,
+                                                Integer kdBidang,
+                                                Integer kdUnit,
+                                                Integer kdSub,
+                                                Integer tahun,
+                                                String nipPegawai);
+
     @Query("select distinct " +
             "new com.pemda.ekinerjademo.projection.ekinerjaprojection.KegiatanPenanggungJawabProjection(pjk.penanggungJawabKegiatanId.kdUrusan, " +
             "pjk.penanggungJawabKegiatanId.kdBidang, " +

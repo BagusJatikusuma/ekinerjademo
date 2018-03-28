@@ -79,4 +79,9 @@ public class UrtugKegiatanServiceImpl implements UrtugKegiatanService {
                                                             unitKerjaKegiatan.getKdBidang(),
                                                             unitKerjaKegiatan.getKdUnit());
     }
+
+    @Override
+    public List<UrtugKegiatan> findByPegawaiApproval(String nipPegawai, Integer tahunUrtug) {
+        return urtugKegiatanDao.findByPegawaiApproval(nipPegawai, tahunUrtug);
+    }
 }

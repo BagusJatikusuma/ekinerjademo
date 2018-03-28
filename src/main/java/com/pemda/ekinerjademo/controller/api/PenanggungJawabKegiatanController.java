@@ -40,6 +40,13 @@ public class PenanggungJawabKegiatanController {
 
     @Autowired private TkdUnkDao tkdUnkDao;
 
+    /**
+     *
+     * service yang digunakan untuk memasangkan kegiatan dengan penanggung jawabnya
+     *
+     * @param inputWrapper
+     * @return custom message
+     */
     @RequestMapping(value = "/create-penanggung-jawab-kegiatan", method = RequestMethod.POST)
     ResponseEntity<?> createPenanggungJawabKegiatan(@RequestBody PenanggungJawabKegiatanInputWrapper inputWrapper) {
         LOGGER.info("create penanggung jawab kegiatan");
@@ -67,6 +74,13 @@ public class PenanggungJawabKegiatanController {
         return new ResponseEntity<Object>(new CustomMessage("penanggung jawab berhasil dipasang"), HttpStatus.OK);
     }
 
+    /**
+     *
+     * service yang digunakan untuk mengambil data daftar penanggung jawab dari suat kegiatan
+     *
+     * @param inputWrapper
+     * @return daftar penanggung jawab
+     */
     @RequestMapping(value = "/get-penanggung-jawab-kegiatan-by-kegiatan", method = RequestMethod.POST)
     ResponseEntity<?> getPenanggungJawabKegiatanByKegiatan(@RequestBody KegiatanWrapper inputWrapper) {
         LOGGER.info("get penanggung jawab kegiatan by kegiatan");
@@ -126,7 +140,13 @@ public class PenanggungJawabKegiatanController {
         return new ResponseEntity<Object>(penanggungJawabWrappers,HttpStatus.OK);
     }
 
-    //get calon penanggung jawab kegiatan
+    /**
+     *
+     * service yang digunakan untuk mengambil data daftar pegawai calon penanggung jawab
+     *
+     * @param inputWrapper
+     * @return daftar pegawai
+     */
     @RequestMapping(value = "/get-pegawai-penanggung-jawab-kegiatan", method = RequestMethod.POST)
     ResponseEntity<?> getPegawaiPenanggungJawabKegiatan(@RequestBody KegiatanWrapper inputWrapper) {
         LOGGER.info("get pegawai penanggung jawab kegiatan");
@@ -188,7 +208,13 @@ public class PenanggungJawabKegiatanController {
         return new ResponseEntity<Object>(qutPegawaiWrappers, HttpStatus.OK);
     }
 
-    //get status penanggung jawab kegiatan yang tersedia
+    /**
+     *
+     * service yang digunakan untuk mengambil daftar status penanggung jawab yang masih tersedia/belum diisi
+     *
+     * @param inputWrapper
+     * @return daftar status penanggung jawab
+     */
     @RequestMapping(value = "/get-status-penanggung-jawab-kegiatan-revisi", method = RequestMethod.POST)
     ResponseEntity<?> getStatusPenanggungJawabKegiatanRevisi(@RequestBody KegiatanWrapper inputWrapper) {
         LOGGER.info("get status penanggung jawab kegiatan revisi");
@@ -243,6 +269,13 @@ public class PenanggungJawabKegiatanController {
 
     }
 
+    /**
+     *
+     * service yang digunakan untuk menghapus data penanggung jawab dalam suatu kegiatan
+     *
+     * @param inputWrapper
+     * @return custom message
+     */
     @RequestMapping(value = "/delete-penanggung-jawab-kegiatan", method = RequestMethod.POST)
     ResponseEntity<?> deletePenanggungJawabKegiatan(@RequestBody PenanggungJawabKegiatanInputWrapper inputWrapper) {
         LOGGER.info("delete penanggung jawab kegiatan");
@@ -263,6 +296,17 @@ public class PenanggungJawabKegiatanController {
         return new ResponseEntity<Object>(new CustomMessage("penanggung jawab berhasil dihapus"), HttpStatus.OK);
     }
 
+    /**
+     *
+     * service yang digunakan untuk mengambil data kegiatan dari simda berdasarkan unit kerja
+     * digunakan oleh admin unit kerja
+     *
+     * constraint :
+     * kd Unit Kerja
+     *
+     * @param kdUnitKerja
+     * @return daftar kegiatan
+     */
     @RequestMapping(value = "/get-organisasi-barjas-unit-kerja/{kdUnitKerja}", method = RequestMethod.GET)
     ResponseEntity<?> getPenanggungJawabKegiatanByUnitKerja(@PathVariable("kdUnitKerja") String kdUnitKerja) {
         LOGGER.info("get penanggung jawab kegiatan by unit kerja "+kdUnitKerja);
@@ -308,6 +352,65 @@ public class PenanggungJawabKegiatanController {
         return new ResponseEntity<Object>(kegiatanWrappers, HttpStatus.OK);
     }
 
+    /**
+     *
+     * service yang digunakan melakukan proses approval terhadap calon ajuan kontrak kerja dari pegawai
+     * digunakan oleh pegawai yang akan membuat kontrak kerja
+     *
+     * @param inputWrappers, merupakan daftar dpa yang disetujui oleh pegawai.
+     * @return custom message
+     */
+    @RequestMapping(value = "/approve-penanggung-jawab-kegiatan", method = RequestMethod.PUT)
+    ResponseEntity<?> approvePenanggungJawabKegiatan(@RequestBody List<PenanggungJawabKegiatanInputWrapper> inputWrappers) {
+        LOGGER.info("approve penanggung jawab kegiatan");
+
+        List<PenanggungJawabKegiatan> penanggungJawabKegiatanList
+                = penanggungJawabKegiatanService.getByPegawai(inputWrappers.get(0).getKdUrusan(),
+                                                                inputWrappers.get(0).getKdBidang(),
+                                                                inputWrappers.get(0).getKdUnit(),
+                                                                inputWrappers.get(0).getKdSub(),
+                                                                inputWrappers.get(0).getTahun(),
+                                                                inputWrappers.get(0).getKdProg(),
+                                                                inputWrappers.get(0).getIdProg(),
+                                                                inputWrappers.get(0).getKdKeg(),
+                                                                inputWrappers.get(0).getNipPegawai());
+
+        boolean isMatch;
+        for (PenanggungJawabKegiatan penanggungJawabKegiatan
+                : penanggungJawabKegiatanList) {
+            isMatch = false;
+
+            for (PenanggungJawabKegiatanInputWrapper obj
+                    : inputWrappers) {
+                if (penanggungJawabKegiatan.getPenanggungJawabKegiatanId().getKdProg().equals(obj.getKdProg())
+                        && penanggungJawabKegiatan.getPenanggungJawabKegiatanId().getIdProg().equals(obj.getIdProg())
+                        && penanggungJawabKegiatan.getPenanggungJawabKegiatanId().getKdKeg().equals(obj.getKdKeg())) {
+
+                    penanggungJawabKegiatan.setStatusApproval(1);
+
+                    isMatch = true;
+                    break;
+                }
+            }
+
+            if (!isMatch) {
+                penanggungJawabKegiatan.setStatusApproval(2);
+            }
+
+            penanggungJawabKegiatanService.create(penanggungJawabKegiatan);
+        }
+
+        return new ResponseEntity<Object>(new CustomMessage("dpa sudah disetujui"), HttpStatus.OK);
+    }
+
+    /**
+     *
+     * service yang digunakan untuk membandingkan kegiatan pada simda dengan kegiatan pada ekinerja
+     *
+     * @param kegiatan
+     * @param taKegiatan
+     * @return boolean false atau true
+     */
     private boolean compareKegiatan(KegiatanPenanggungJawabProjection kegiatan, TaKegiatan taKegiatan) {
         if (kegiatan.getKdUrusan().equals(taKegiatan.getTaKegiatanId().getKdUrusan())
                 && kegiatan.getKdBidang().equals(taKegiatan.getTaKegiatanId().getKdBIdang())

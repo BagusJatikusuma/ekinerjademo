@@ -16,10 +16,7 @@ import com.pemda.ekinerjademo.service.TaKegiatanService;
 import com.pemda.ekinerjademo.service.UnitKerjaKegiatanService;
 import com.pemda.ekinerjademo.service.UrtugKegiatanService;
 import com.pemda.ekinerjademo.wrapper.input.*;
-import com.pemda.ekinerjademo.wrapper.output.CustomMessage;
-import com.pemda.ekinerjademo.wrapper.output.UraianTugasJabatanJenisWrapper;
-import com.pemda.ekinerjademo.wrapper.output.UrtugKegiatanWrapper;
-import com.pemda.ekinerjademo.wrapper.output.UrtugProgramWrapper;
+import com.pemda.ekinerjademo.wrapper.output.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +24,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.Year;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -116,6 +114,10 @@ public class UrtugKegiatanController {
      * ambil daftar bahan ajuan kontrak kerja, jika sudah pernah diajukan tidak akan diambil lagi
      * diambil berdasarkan nip pegawai dan unit kerja saat melakukan request
      *
+     * service ini hanya untuk mendapatkan urtug dpa saja
+     *
+     * digunakan oleh pegawai yang akan membuat kontrak kerja
+     *
      * @param nipPegawai
      * @param kdUnitKerja
      * @return list bahan ajuan kontrak kerja DPA
@@ -145,7 +147,115 @@ public class UrtugKegiatanController {
             }
         }
 
-        return new ResponseEntity<Object>(null, HttpStatus.OK);
+        for (UrtugKegiatan urtugKegiatan : urtugKegiatansBelumDiajukanList) {
+            boolean found = false;
+            for (UraianTugasJabatanJenisWrapper uraianTugasJabatanOutputWrapper : outputWrappers) {
+                if (urtugKegiatan.getUrtugKegiatanId().getKdUrtug()
+                        .equals(uraianTugasJabatanOutputWrapper.getKdUrtug())) {
+                    //tambah jumlah kuantitas kegiatan pada wrapper
+                    uraianTugasJabatanOutputWrapper.setKuantitas(uraianTugasJabatanOutputWrapper.getKuantitas()+1);
+
+                    for (TaKegiatan taKegiatan : taKegiatanList) {
+                        if (urtugKegiatan.getUrtugKegiatanId().getKdProg().equals(taKegiatan.getTaKegiatanId().getKdProg()) &&
+                                urtugKegiatan.getUrtugKegiatanId().getKdKeg().equals(taKegiatan.getTaKegiatanId().getKdKegiatan())) {
+                            uraianTugasJabatanOutputWrapper.setBiaya(uraianTugasJabatanOutputWrapper.getBiaya() + taKegiatan.getPaguAnggaran().intValue());
+
+                            break;
+                        }
+                    }
+
+                    found =true;
+                    break;
+                }
+
+            }
+
+            if (!found) {
+                //ambil biaya dari kegiatan
+                for (TaKegiatan taKegiatan : taKegiatanList) {
+                    if (urtugKegiatan.getUrtugKegiatanId().getKdProg().equals(taKegiatan.getTaKegiatanId().getKdProg()) &&
+                            urtugKegiatan.getUrtugKegiatanId().getKdKeg().equals(taKegiatan.getTaKegiatanId().getKdKegiatan())) {
+
+                        outputWrappers
+                                .add(new UraianTugasJabatanJenisWrapper(
+                                        urtugKegiatan.getUraianTugasJabatanJenisUrtug().getUraianTugasJabatan().getUraianTugas().getDeskripsi(),
+                                        urtugKegiatan.getUrtugKegiatanId().getKdUrtug(),
+                                        urtugKegiatan.getUrtugKegiatanId().getKdJabatan(),
+                                        urtugKegiatan.getUrtugKegiatanId().getKdJenisUrtug(),
+                                        urtugKegiatan.getUrtugKegiatanId().getTahunUrtug(),
+                                        1,
+                                        "kegiatan",
+                                        urtugKegiatan.getUraianTugasJabatanJenisUrtug().getKualitas(),
+                                        urtugKegiatan.getUraianTugasJabatanJenisUrtug().getWaktu(),
+                                        taKegiatan.getPaguAnggaran().intValue()));
+
+                        break;
+                    }
+
+                }
+
+            }
+
+        }
+
+        return new ResponseEntity<Object>(outputWrappers, HttpStatus.OK);
+    }
+
+    /**
+     *
+     * service yang digunakan untuk mendapatkan data urtug beserta dpanya yang telah di approve oleh pegawai yang dibebani
+     * digunakan oleh pegawai untuk melihat kontrak kerjanya
+     *
+     * @param nipPegawai
+     * @return daftar urtug dan kegiatan dpanya
+     */
+    @RequestMapping(value = "/get-urtug-dpa-pegawai-approval/{nipPegawai}/{kdUnitKerja}", method = RequestMethod.GET)
+    ResponseEntity<?> getUrtugDpaPegawaiAproval(@PathVariable("nipPegawai") String nipPegawai,
+                                                @PathVariable("kdUnitKerja") String kdUnitKerja) {
+        LOGGER.info("get urtug dpa pegawai approval");
+
+        List<UrtugKegiatanPegawaiWrapper> urtugKegiatanPegawaiWrappers
+                = new ArrayList<>();
+
+        List<UrtugKegiatan> urtugKegiatanPegawaiApprovalList
+                = urtugKegiatanService.findByPegawaiApproval(nipPegawai, Year.now().getValue());
+
+        UnitKerjaKegiatan unitKerjaKegiatan
+                = unitKerjaKegiatanService.findByKdUnitKerja(kdUnitKerja);
+
+        List<TaKegiatan> taKegiatanList = taKegiatanService.findByUnitKerja(unitKerjaKegiatan);
+
+        for (UrtugKegiatan urtugKegiatan : urtugKegiatanPegawaiApprovalList) {
+            for (TaKegiatan taKegiatan : taKegiatanList) {
+                if (urtugKegiatan.getUrtugKegiatanId().getKdProg().equals(taKegiatan.getTaKegiatanId().getKdProg()) &&
+                        urtugKegiatan.getUrtugKegiatanId().getKdKeg().equals(taKegiatan.getTaKegiatanId().getKdKegiatan())) {
+                    urtugKegiatanPegawaiWrappers
+                            .add(new UrtugKegiatanPegawaiWrapper(
+                                    urtugKegiatan.getUrtugKegiatanId().getKdUrtug(),
+                                    urtugKegiatan.getUraianTugasJabatanJenisUrtug().getUraianTugasJabatan().getUraianTugas().getDeskripsi(),
+                                    urtugKegiatan.getUrtugKegiatanId().getKdJabatan(),
+                                    urtugKegiatan.getUrtugKegiatanId().getKdJenisUrtug(),
+                                    urtugKegiatan.getUrtugKegiatanId().getTahunUrtug(),
+                                    urtugKegiatan.getUrtugKegiatanId().getKdUrusan(),
+                                    urtugKegiatan.getUrtugKegiatanId().getKdBidang(),
+                                    urtugKegiatan.getUrtugKegiatanId().getKdUnit(),
+                                    urtugKegiatan.getUrtugKegiatanId().getKdSub(),
+                                    urtugKegiatan.getUrtugKegiatanId().getTahun(),
+                                    urtugKegiatan.getUrtugKegiatanId().getKdProg(),
+                                    urtugKegiatan.getUrtugKegiatanId().getIdProg(),
+                                    urtugKegiatan.getUrtugKegiatanId().getKdKeg(),
+                                    taKegiatan.getKetKegiatan(),
+                                    taKegiatan.getPaguAnggaran(),
+                                    urtugKegiatan.getUrtugKegiatanId().getNipPegawai(),
+                                    urtugKegiatan.getUrtugKegiatanId().getKdStatusPenanggungJawab(),
+                                    urtugKegiatan.getPenanggungJawabKegiatan().getStatusPenanggungJawabKegiatan().getStatus()));
+
+                    break;
+                }
+            }
+        }
+
+        return new ResponseEntity<>(urtugKegiatanPegawaiWrappers, HttpStatus.OK);
     }
 
 //====================================================================================================================//

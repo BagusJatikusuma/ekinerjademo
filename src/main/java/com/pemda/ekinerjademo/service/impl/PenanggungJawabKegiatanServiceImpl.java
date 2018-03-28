@@ -65,5 +65,23 @@ public class PenanggungJawabKegiatanServiceImpl implements PenanggungJawabKegiat
                             unitKerjaKegiatan.getKdUnit());
     }
 
+    @Override
+    public List<PenanggungJawabKegiatan> getByPegawai(Integer kdUrusan,
+                                                      Integer kdBidang,
+                                                      Integer kdUnit,
+                                                      Integer kdSub,
+                                                      Integer tahun,
+                                                      Integer kdProg,
+                                                      Integer idProg,
+                                                      Integer kdKeg,
+                                                      String nipPegawai) {
+        return penanggungJawabKegiatanDao.findByPegawai(kdUrusan,
+                                                        kdBidang,
+                                                        kdUnit,
+                                                        kdSub,
+                                                        tahun,
+                                                        nipPegawai);
+    }
+
 
 }
