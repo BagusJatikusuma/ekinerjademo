@@ -43,6 +43,7 @@ public class PenanggungJawabKegiatanController {
     /**
      *
      * service yang digunakan untuk memasangkan kegiatan dengan penanggung jawabnya
+     * dilakukan oleh admin unit kerja
      *
      * @param inputWrapper
      * @return custom message
@@ -299,7 +300,6 @@ public class PenanggungJawabKegiatanController {
     /**
      *
      * service yang digunakan untuk mengambil data kegiatan dari simda berdasarkan unit kerja
-     * digunakan oleh admin unit kerja
      *
      * constraint :
      * kd Unit Kerja
@@ -393,7 +393,8 @@ public class PenanggungJawabKegiatanController {
                 }
             }
 
-            if (!isMatch) {
+            //set status ditolak untuk setiap data yang belum di approve
+            if (!isMatch && penanggungJawabKegiatan.getStatusApproval() == 0) {
                 penanggungJawabKegiatan.setStatusApproval(2);
             }
 
