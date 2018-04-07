@@ -84,4 +84,9 @@ public class UrtugKegiatanServiceImpl implements UrtugKegiatanService {
     public List<UrtugKegiatan> findByPegawaiApproval(String nipPegawai, Integer tahunUrtug) {
         return urtugKegiatanDao.findByPegawaiApproval(nipPegawai, tahunUrtug);
     }
+
+    @Override
+    public List<UrtugKegiatan> findByUraianTugasJabatanAndNip(String kdUrtug, String kdJabatan, String kdJenisUrtug, Integer tahunUrtug, String nipPegawai) {
+        return urtugKegiatanDao.findByUrtugJabatanJenisAndNipPegawai(kdUrtug, kdJabatan, kdJenisUrtug, tahunUrtug, nipPegawai);
+    }
 }

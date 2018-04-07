@@ -12,6 +12,7 @@ public class SuratPerintahHistoryWrapper {
     private Integer kdJenisSurat;
     private Long tanggalDibuatMilis;
     private Integer statusPenilaian;
+    private Integer statusApprovalPenandatangan;
 
     public SuratPerintahHistoryWrapper() {
     }
@@ -64,6 +65,18 @@ public class SuratPerintahHistoryWrapper {
         this.kdJenisSurat = kdJenisSurat;
         this.tanggalDibuatMilis = tanggalDibuatMilis;
         this.statusPenilaian = statusPenilaian;
+    }
+
+    public SuratPerintahHistoryWrapper(String kdSurat, String createdDate, boolean isSuratPejabat, Integer statusBaca, String jenisSurat, Integer kdJenisSurat, Long tanggalDibuatMilis, Integer statusPenilaian, Integer statusApprovalPenandatangan) {
+        this.kdSurat = kdSurat;
+        this.createdDate = createdDate;
+        this.isSuratPejabat = isSuratPejabat;
+        this.statusBaca = statusBaca;
+        this.jenisSurat = jenisSurat;
+        this.kdJenisSurat = kdJenisSurat;
+        this.tanggalDibuatMilis = tanggalDibuatMilis;
+        this.statusPenilaian = statusPenilaian;
+        this.statusApprovalPenandatangan = statusApprovalPenandatangan;
     }
 
     public String getKdSurat() {
@@ -129,5 +142,13 @@ public class SuratPerintahHistoryWrapper {
 
     public void setStatusPenilaian(Integer statusPenilaian) {
         this.statusPenilaian = statusPenilaian;
+    }
+
+    public Integer getStatusApprovalPenandatangan() {
+        return statusApprovalPenandatangan;
+    }
+
+    public void setStatusApprovalPenandatangan(Integer statusApprovalPenandatangan) {
+        this.statusApprovalPenandatangan = statusApprovalPenandatangan;
     }
 }

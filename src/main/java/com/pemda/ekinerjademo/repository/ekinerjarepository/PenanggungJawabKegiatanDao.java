@@ -21,6 +21,12 @@ public interface PenanggungJawabKegiatanDao
 
     @Query("select pjk from PenanggungJawabKegiatan pjk " +
             "left join fetch pjk.statusPenanggungJawabKegiatan " +
+            "where pjk.penanggungJawabKegiatanId.nipPegawai = ?1 " +
+            "and pjk.statusApproval = 0 ")
+    List<PenanggungJawabKegiatan> findByPegawaiPending(String nipPegawai);
+
+    @Query("select pjk from PenanggungJawabKegiatan pjk " +
+            "left join fetch pjk.statusPenanggungJawabKegiatan " +
             "where pjk.penanggungJawabKegiatanId.kdUrusan = ?1 " +
             "and pjk.penanggungJawabKegiatanId.kdBidang = ?2 " +
             "and pjk.penanggungJawabKegiatanId.kdUnit = ?3")

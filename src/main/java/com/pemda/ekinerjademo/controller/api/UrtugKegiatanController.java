@@ -100,6 +100,10 @@ public class UrtugKegiatanController {
                                                 penanggungJawabKegiatan.getPenanggungJawabKegiatanId().getKdStatusPenanggungJawab());
 
                 urtugKegiatan.setUrtugKegiatanId(id);
+                urtugKegiatan.setKuantitas(kegiatanWrapper.getKuantitas());
+                urtugKegiatan.setSatuanKuantitas(kegiatanWrapper.getSatuanKuantitas());
+                urtugKegiatan.setKualitas(kegiatanWrapper.getKualitas());
+                urtugKegiatan.setWaktu(kegiatanWrapper.getWaktu());
 
                 urtugKegiatanService.save(urtugKegiatan);
             }
@@ -258,14 +262,17 @@ public class UrtugKegiatanController {
         return new ResponseEntity<>(urtugKegiatanPegawaiWrappers, HttpStatus.OK);
     }
 
-//====================================================================================================================//
-    ResponseEntity<?> getUrtugKegiatan() {
-        return null;
-    }
+    /**
+     *
+     * service yang digunakan untuk mengambil daftar kegiatan berdasarkan urtug dpa
+     * digunakan oleh pegawai pada proses pengajuan kontrak kerja
+     *
+     * @return daftar kegiatan
+     */
+    @RequestMapping(value = "/get-kegiatan-by-urtug", method = RequestMethod.POST)
+    ResponseEntity<?> getKegiatanByUrtug(@RequestBody UrtugJabatanJenisIdInputWrapper urtugJabatanWrapper) {
+        LOGGER.info("get kegiatan by urtug");
 
-    @RequestMapping(value = "/get-urtug-kegiatan-by-jabatan", method = RequestMethod.POST)
-    ResponseEntity<?> getUrtugKegiatanByUrtugJabatan(
-            @RequestBody UrtugJabatanJenisIdInputWrapper urtugJabatanWrapper) {
         List<UrtugKegiatanWrapper> urtugKegiatanWrapperList = new ArrayList<>();
 
         UnitKerjaKegiatan unitKerjaKegiatan
@@ -275,37 +282,160 @@ public class UrtugKegiatanController {
 
         List<UrtugKegiatan> urtugKegiatanList
                 = urtugKegiatanService.findAllByUraianTugasJabatan(
-                        urtugJabatanWrapper.getKdUrtug(),
-                        urtugJabatanWrapper.getKdJabatan(),
-                        urtugJabatanWrapper.getKdJenisUrtug(),
-                        urtugJabatanWrapper.getTahunUrtug());
+                                        urtugJabatanWrapper.getKdUrtug(),
+                                        urtugJabatanWrapper.getKdJabatan(),
+                                        urtugJabatanWrapper.getKdJenisUrtug(),
+                                        urtugJabatanWrapper.getTahunUrtug());
 
+        boolean exist;
         for (UrtugKegiatan urtugKegiatan : urtugKegiatanList) {
             for (TaKegiatan taKegiatan : taKegiatanList) {
                 if (urtugKegiatan.getUrtugKegiatanId().getKdProg().equals(taKegiatan.getTaKegiatanId().getKdProg()) &&
                         urtugKegiatan.getUrtugKegiatanId().getKdKeg().equals(taKegiatan.getTaKegiatanId().getKdKegiatan())) {
-                    urtugKegiatanWrapperList
-                            .add(new UrtugKegiatanWrapper(
-                                    urtugKegiatan.getUrtugKegiatanId().getKdUrtug(),
-                                    urtugKegiatan.getUrtugKegiatanId().getKdJabatan(),
-                                    urtugKegiatan.getUrtugKegiatanId().getKdJenisUrtug(),
-                                    urtugKegiatan.getUrtugKegiatanId().getTahunUrtug(),
-                                    urtugKegiatan.getUrtugKegiatanId().getKdUrusan(),
-                                    urtugKegiatan.getUrtugKegiatanId().getKdBidang(),
-                                    urtugKegiatan.getUrtugKegiatanId().getKdUnit(),
-                                    urtugKegiatan.getUrtugKegiatanId().getKdSub(),
-                                    urtugKegiatan.getUrtugKegiatanId().getTahun(),
-                                    urtugKegiatan.getUrtugKegiatanId().getKdProg(),
-                                    urtugKegiatan.getUrtugKegiatanId().getIdProg(),
-                                    urtugKegiatan.getUrtugKegiatanId().getKdKeg(),
-                                    taKegiatan.getKetKegiatan(),
-                                    taKegiatan.getPaguAnggaran()));
+
+                    //check if kegiatan already exist in wrapper list
+                    exist = false;
+                    for (UrtugKegiatanWrapper urtugKegiatanWrapper
+                            : urtugKegiatanWrapperList) {
+                        if (urtugKegiatan.getUrtugKegiatanId().getKdProg().equals(urtugKegiatanWrapper.getKdProg()) &&
+                                urtugKegiatan.getUrtugKegiatanId().getKdKeg().equals(urtugKegiatanWrapper.getKdKeg())) {
+                            exist = true;
+                            break;
+                        }
+
+                    }
+
+
+                    if (!exist) {
+                        urtugKegiatanWrapperList
+                                .add(new UrtugKegiatanWrapper(
+                                        urtugKegiatan.getUrtugKegiatanId().getKdUrtug(),
+                                        urtugKegiatan.getUrtugKegiatanId().getKdJabatan(),
+                                        urtugKegiatan.getUrtugKegiatanId().getKdJenisUrtug(),
+                                        urtugKegiatan.getUrtugKegiatanId().getTahunUrtug(),
+                                        urtugKegiatan.getUrtugKegiatanId().getKdUrusan(),
+                                        urtugKegiatan.getUrtugKegiatanId().getKdBidang(),
+                                        urtugKegiatan.getUrtugKegiatanId().getKdUnit(),
+                                        urtugKegiatan.getUrtugKegiatanId().getKdSub(),
+                                        urtugKegiatan.getUrtugKegiatanId().getTahun(),
+                                        urtugKegiatan.getUrtugKegiatanId().getKdProg(),
+                                        urtugKegiatan.getUrtugKegiatanId().getIdProg(),
+                                        urtugKegiatan.getUrtugKegiatanId().getKdKeg(),
+                                        taKegiatan.getKetKegiatan(),
+                                        taKegiatan.getPaguAnggaran()));
+                    }
                 }
             }
         }
 
         return new ResponseEntity<Object>(urtugKegiatanWrapperList, HttpStatus.OK);
     }
+
+    /**
+     *
+     * service yang digunakan untuk mengapprove/memilih urtug dpa yang akan dijadikan kontrak kerja
+     * digunakan oleh pegawai
+     *
+     * @param urtugJabatanWrapperList
+     * @return notif uraian tugas sudah diapprove
+     */
+    @RequestMapping(value = "/approve-urtug-kegiatan", method = RequestMethod.PUT)
+    ResponseEntity<?> approveUrtugKegiatan(@RequestBody List<UrtugKegiatanApprovalInputWrapper> urtugJabatanWrapperList) {
+        LOGGER.info("approve urtug kegiatan");
+
+        List<UrtugKegiatan> urtugKegiatanYangDiterimaList = new ArrayList<>();
+
+        for (UrtugKegiatanApprovalInputWrapper inputWrapper
+                : urtugJabatanWrapperList) {
+                urtugKegiatanYangDiterimaList
+                        .addAll(urtugKegiatanService.findByUraianTugasJabatanAndNip(inputWrapper.getKdUrtug(),
+                                                                                    inputWrapper.getKdJabatan(),
+                                                                                    inputWrapper.getKdJenisUrtug(),
+                                                                                    inputWrapper.getTahunUrtug(),
+                                                                                    inputWrapper.getNipPegawai()));
+        }
+
+        List<PenanggungJawabKegiatan> penanggungJawabKegiatanPendingList
+                = penanggungJawabKegiatanService.getByKegiatanPendingPegawai(urtugJabatanWrapperList.get(0).getNipPegawai());
+
+
+        boolean isMatch;
+        for (PenanggungJawabKegiatan penanggungJawabKegiatan
+                : penanggungJawabKegiatanPendingList) {
+            isMatch = false;
+
+            for (UrtugKegiatan urtugKegiatanYangDiterima
+                    : urtugKegiatanYangDiterimaList) {
+                if (penanggungJawabKegiatan.getPenanggungJawabKegiatanId().getKdProg().equals(urtugKegiatanYangDiterima.getUrtugKegiatanId().getKdProg())
+                        && penanggungJawabKegiatan.getPenanggungJawabKegiatanId().getIdProg().equals(urtugKegiatanYangDiterima.getUrtugKegiatanId().getIdProg())
+                        && penanggungJawabKegiatan.getPenanggungJawabKegiatanId().getKdKeg().equals(urtugKegiatanYangDiterima.getUrtugKegiatanId().getKdKeg())) {
+
+                    penanggungJawabKegiatan.setStatusApproval(1);
+
+                    isMatch = true;
+                    break;
+                }
+            }
+
+            if (!isMatch) {
+                penanggungJawabKegiatan.setStatusApproval(2);
+            }
+
+            penanggungJawabKegiatanService.create(penanggungJawabKegiatan);
+
+        }
+
+        return new ResponseEntity<>(new CustomMessage("uraian tugas dpa sudah diapprove"), HttpStatus.OK);
+    }
+
+//====================================================================================================================//
+    ResponseEntity<?> getUrtugKegiatan() {
+        return null;
+    }
+
+//    @RequestMapping(value = "/get-urtug-kegiatan-by-jabatan", method = RequestMethod.POST)
+//    ResponseEntity<?> getUrtugKegiatanByUrtugJabatan(
+//            @RequestBody UrtugJabatanJenisIdInputWrapper urtugJabatanWrapper) {
+//        List<UrtugKegiatanWrapper> urtugKegiatanWrapperList = new ArrayList<>();
+//
+//        UnitKerjaKegiatan unitKerjaKegiatan
+//                = unitKerjaKegiatanService.findByKdUnitKerja(urtugJabatanWrapper.getKdUnitKerja());
+//
+//        List<TaKegiatan> taKegiatanList = taKegiatanService.findByUnitKerja(unitKerjaKegiatan);
+//
+//        List<UrtugKegiatan> urtugKegiatanList
+//                = urtugKegiatanService.findAllByUraianTugasJabatan(
+//                        urtugJabatanWrapper.getKdUrtug(),
+//                        urtugJabatanWrapper.getKdJabatan(),
+//                        urtugJabatanWrapper.getKdJenisUrtug(),
+//                        urtugJabatanWrapper.getTahunUrtug());
+//
+//        for (UrtugKegiatan urtugKegiatan : urtugKegiatanList) {
+//            for (TaKegiatan taKegiatan : taKegiatanList) {
+//                if (urtugKegiatan.getUrtugKegiatanId().getKdProg().equals(taKegiatan.getTaKegiatanId().getKdProg()) &&
+//                        urtugKegiatan.getUrtugKegiatanId().getKdKeg().equals(taKegiatan.getTaKegiatanId().getKdKegiatan())) {
+//                    urtugKegiatanWrapperList
+//                            .add(new UrtugKegiatanWrapper(
+//                                    urtugKegiatan.getUrtugKegiatanId().getKdUrtug(),
+//                                    urtugKegiatan.getUrtugKegiatanId().getKdJabatan(),
+//                                    urtugKegiatan.getUrtugKegiatanId().getKdJenisUrtug(),
+//                                    urtugKegiatan.getUrtugKegiatanId().getTahunUrtug(),
+//                                    urtugKegiatan.getUrtugKegiatanId().getKdUrusan(),
+//                                    urtugKegiatan.getUrtugKegiatanId().getKdBidang(),
+//                                    urtugKegiatan.getUrtugKegiatanId().getKdUnit(),
+//                                    urtugKegiatan.getUrtugKegiatanId().getKdSub(),
+//                                    urtugKegiatan.getUrtugKegiatanId().getTahun(),
+//                                    urtugKegiatan.getUrtugKegiatanId().getKdProg(),
+//                                    urtugKegiatan.getUrtugKegiatanId().getIdProg(),
+//                                    urtugKegiatan.getUrtugKegiatanId().getKdKeg(),
+//                                    taKegiatan.getKetKegiatan(),
+//                                    taKegiatan.getPaguAnggaran()));
+//                }
+//            }
+//        }
+//
+//        return new ResponseEntity<Object>(urtugKegiatanWrapperList, HttpStatus.OK);
+//    }
 
     @RequestMapping(value = "/get-urtug-program-by-jabatan", method = RequestMethod.POST)
     ResponseEntity<?> getUrtugProgramByUrtugJabatan(

@@ -19,6 +19,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -77,7 +78,7 @@ public class PenanggungJawabKegiatanController {
 
     /**
      *
-     * service yang digunakan untuk mengambil data daftar penanggung jawab dari suat kegiatan
+     * service yang digunakan untuk mengambil data daftar penanggung jawab berdasarkan suatu kegiatan
      *
      * @param inputWrapper
      * @return daftar penanggung jawab
@@ -412,7 +413,8 @@ public class PenanggungJawabKegiatanController {
      * @param taKegiatan
      * @return boolean false atau true
      */
-    private boolean compareKegiatan(KegiatanPenanggungJawabProjection kegiatan, TaKegiatan taKegiatan) {
+    private boolean compareKegiatan(@NotNull KegiatanPenanggungJawabProjection kegiatan,
+                                    @NotNull TaKegiatan taKegiatan) {
         if (kegiatan.getKdUrusan().equals(taKegiatan.getTaKegiatanId().getKdUrusan())
                 && kegiatan.getKdBidang().equals(taKegiatan.getTaKegiatanId().getKdBIdang())
                 && kegiatan.getKdUnit().equals(taKegiatan.getTaKegiatanId().getKdUnit())
