@@ -212,19 +212,20 @@ public class UrtugKegiatanController {
      * service yang digunakan untuk mendapatkan data urtug beserta dpanya yang telah di approve oleh pegawai yang dibebani
      * digunakan oleh pegawai untuk melihat kontrak kerjanya
      *
-     * @param nipPegawai
+     * @param nipPegawai, kdUnitKerja, kdJabatan bawahan yang ingin dilihat
      * @return daftar urtug dan kegiatan dpanya
      */
-    @RequestMapping(value = "/get-urtug-dpa-pegawai-approval/{nipPegawai}/{kdUnitKerja}", method = RequestMethod.GET)
+    @RequestMapping(value = "/get-urtug-dpa-pegawai-approval/{nipPegawai}/{kdUnitKerja}/{kdJabatan}", method = RequestMethod.GET)
     ResponseEntity<?> getUrtugDpaPegawaiAproval(@PathVariable("nipPegawai") String nipPegawai,
-                                                @PathVariable("kdUnitKerja") String kdUnitKerja) {
+                                                @PathVariable("kdUnitKerja") String kdUnitKerja,
+                                                @PathVariable("kdJabatan") String kdJabatan) {
         LOGGER.info("get urtug dpa pegawai approval");
 
         List<UrtugKegiatanPegawaiWrapper> urtugKegiatanPegawaiWrappers
                 = new ArrayList<>();
 
         List<UrtugKegiatan> urtugKegiatanPegawaiApprovalList
-                = urtugKegiatanService.findByPegawaiApproval(nipPegawai, Year.now().getValue());
+                = urtugKegiatanService.findByPegawaiApproval(nipPegawai, Year.now().getValue(), kdJabatan);
 
         UnitKerjaKegiatan unitKerjaKegiatan
                 = unitKerjaKegiatanService.findByKdUnitKerja(kdUnitKerja);
@@ -401,23 +402,40 @@ public class UrtugKegiatanController {
     ResponseEntity<?> deleteUrtugKegiatan(@RequestBody UrtugKegiatanInputWrapper urtugKegiatanInputWrapper) {
         LOGGER.info("delete urtug kegiatan");
 
-        urtugKegiatanService.delete(
-                new UrtugKegiatanId(
-                        urtugKegiatanInputWrapper.getKdUrtug(),
-                        urtugKegiatanInputWrapper.getKdJabatan(),
-                        urtugKegiatanInputWrapper.getKdJenisUrtug(),
-                        urtugKegiatanInputWrapper.getTahunUrtug(),
-                        urtugKegiatanInputWrapper.getKdUrusan(),
-                        urtugKegiatanInputWrapper.getKdBidang(),
-                        urtugKegiatanInputWrapper.getKdUnit(),
-                        urtugKegiatanInputWrapper.getKdSub(),
-                        urtugKegiatanInputWrapper.getTahun(),
-                        urtugKegiatanInputWrapper.getKdProg(),
-                        urtugKegiatanInputWrapper.getIdProg(),
-                        urtugKegiatanInputWrapper.getKdKeg(),
-                        urtugKegiatanInputWrapper.getNipPegawai(),
-                        urtugKegiatanInputWrapper.getKdStatusPenanggungJawab()
-                ));
+        List<UrtugKegiatan> urtugKegiatans
+                = urtugKegiatanService.findByKegiatanAndUrtug(urtugKegiatanInputWrapper.getKdUrtug(),
+                                                                urtugKegiatanInputWrapper.getKdJabatan(),
+                                                                urtugKegiatanInputWrapper.getKdJenisUrtug(),
+                                                                urtugKegiatanInputWrapper.getTahunUrtug(),
+                                                                urtugKegiatanInputWrapper.getKdUrusan(),
+                                                                urtugKegiatanInputWrapper.getKdBidang(),
+                                                                urtugKegiatanInputWrapper.getKdUnit(),
+                                                                urtugKegiatanInputWrapper.getKdSub(),
+                                                                urtugKegiatanInputWrapper.getTahun(),
+                                                                urtugKegiatanInputWrapper.getKdProg(),
+                                                                urtugKegiatanInputWrapper.getIdProg(),
+                                                                urtugKegiatanInputWrapper.getKdKeg());
+
+        for (UrtugKegiatan urtugKegiatan
+                : urtugKegiatans) {
+            urtugKegiatanService.delete(
+                    new UrtugKegiatanId(
+                            urtugKegiatan.getUrtugKegiatanId().getKdUrtug(),
+                            urtugKegiatan.getUrtugKegiatanId().getKdJabatan(),
+                            urtugKegiatan.getUrtugKegiatanId().getKdJenisUrtug(),
+                            urtugKegiatan.getUrtugKegiatanId().getTahunUrtug(),
+                            urtugKegiatan.getUrtugKegiatanId().getKdUrusan(),
+                            urtugKegiatan.getUrtugKegiatanId().getKdBidang(),
+                            urtugKegiatan.getUrtugKegiatanId().getKdUnit(),
+                            urtugKegiatan.getUrtugKegiatanId().getKdSub(),
+                            urtugKegiatan.getUrtugKegiatanId().getTahun(),
+                            urtugKegiatan.getUrtugKegiatanId().getKdProg(),
+                            urtugKegiatan.getUrtugKegiatanId().getIdProg(),
+                            urtugKegiatan.getUrtugKegiatanId().getKdKeg(),
+                            urtugKegiatan.getUrtugKegiatanId().getNipPegawai(),
+                            urtugKegiatan.getUrtugKegiatanId().getKdStatusPenanggungJawab()
+                    ));
+        }
 
         return new ResponseEntity<Object>(new CustomMessage("urtug kegiatan deleted"), HttpStatus.OK);
     }

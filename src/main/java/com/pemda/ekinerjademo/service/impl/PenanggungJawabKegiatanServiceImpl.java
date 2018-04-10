@@ -71,6 +71,11 @@ public class PenanggungJawabKegiatanServiceImpl implements PenanggungJawabKegiat
     }
 
     @Override
+    public List<PenanggungJawabKegiatan> getKegiatanUnitKerja(UnitKerjaKegiatan unitKerjaKegiatan) {
+        return penanggungJawabKegiatanDao.findByUnitKerja(unitKerjaKegiatan.getKdUrusan(), unitKerjaKegiatan.getKdBidang(), unitKerjaKegiatan.getKdUnit());
+    }
+
+    @Override
     public List<PenanggungJawabKegiatan> getByKegiatanPendingPegawai(String nipPegawai) {
         return penanggungJawabKegiatanDao.findByPegawaiPending(nipPegawai);
     }

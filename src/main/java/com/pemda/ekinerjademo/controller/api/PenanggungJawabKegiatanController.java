@@ -7,6 +7,8 @@ import com.pemda.ekinerjademo.model.simdamodel.TaKegiatan;
 import com.pemda.ekinerjademo.projection.ekinerjaprojection.CustomPegawaiCredential;
 import com.pemda.ekinerjademo.projection.ekinerjaprojection.KegiatanPenanggungJawabProjection;
 import com.pemda.ekinerjademo.repository.bismarepository.TkdUnkDao;
+import com.pemda.ekinerjademo.repository.ekinerjarepository.UnitKerjaKegiatanDao;
+import com.pemda.ekinerjademo.repository.simdarepository.TaKegiatanDao;
 import com.pemda.ekinerjademo.repository.simdarepository.TaProgramDao;
 import com.pemda.ekinerjademo.service.*;
 import com.pemda.ekinerjademo.wrapper.input.KegiatanWrapper;
@@ -38,8 +40,13 @@ public class PenanggungJawabKegiatanController {
     @Autowired private UnitKerjaKegiatanService unitKerjaKegiatanService;
     @Autowired private TaKegiatanService taKegiatanService;
     @Autowired private TaProgramDao taProgramDao;
+    @Autowired private UrtugKegiatanService urtugKegiatanService;
 
     @Autowired private TkdUnkDao tkdUnkDao;
+    @Autowired
+    private TaKegiatanDao taKegiatanDao;
+    @Autowired
+    private UnitKerjaKegiatanDao unitKerjaKegiatanDao;
 
     /**
      *
@@ -363,9 +370,13 @@ public class PenanggungJawabKegiatanController {
      * @param nipPegawai, kdUnitKerja
      * @return daftar kegiatan
      */
-    @RequestMapping(value = "/get-organisasi-barjas-pegawai/{nipPegawai}/{kdUnitKerja}", method = RequestMethod.GET)
+    @RequestMapping(value = "/get-organisasi-barjas-pegawai/{nipPegawai}/{kdUnitKerja}/{kdUrtug}/{kdJabatan}/{kdJenisUrtug}/{tahunUrtug}", method = RequestMethod.GET)
     ResponseEntity<?> getPenanggungJawabKegiatanByPegawai(@PathVariable("nipPegawai") String nipPegawai,
-                                                          @PathVariable("kdUnitKerja") String kdUnitKerja) {
+                                                          @PathVariable("kdUnitKerja") String kdUnitKerja,
+                                                          @PathVariable("kdUrtug") String kdUrtug,
+                                                          @PathVariable("kdJabatan") String kdJabatan,
+                                                          @PathVariable("kdJenisUrtug") String kdJenisUrtug,
+                                                          @PathVariable("tahunUrtug") Integer tahunUrtug) {
         LOGGER.info("get penanggung jawab kegiatan by pegawai");
 
         UnitKerjaKegiatan unitKerjaKegiatan
@@ -373,6 +384,7 @@ public class PenanggungJawabKegiatanController {
 
         List<KegiatanPenanggungJawabProjection> kegiatanList
                 = penanggungJawabKegiatanService.getKegiatanProjectionByPegawai(nipPegawai);
+
         List<TaKegiatan> taKegiatanList
                 = taKegiatanService.findByUnitKerja(unitKerjaKegiatan);
 
@@ -463,6 +475,104 @@ public class PenanggungJawabKegiatanController {
 
     /**
      *
+     *
+     *
+     * @return
+     */
+    @RequestMapping(value = "/get-daftar-kegiatan-penanggung-jawab/{kdUnitKerja}", method = RequestMethod.GET)
+    ResponseEntity<?> getDaftarKegiatanPenanggungJawab(@PathVariable("kdUnitKerja") String kdUnitKerja) {
+        LOGGER.info("get daftar kegiatan penanggung jawab");
+
+        UnitKerjaKegiatan unitKerjaKegiatan = unitKerjaKegiatanDao.findByKdUnitKerja(kdUnitKerja);
+
+        LOGGER.info(
+                "kdUrusan : "+unitKerjaKegiatan.getKdUrusan()+
+                        ", kdBidang : "+unitKerjaKegiatan.getKdBidang()+
+                        ", kdUnit : "+unitKerjaKegiatan.getKdUnit());
+
+        List<KegiatanPenanggungJawabWrapper> taKegiatanWrapperList
+                = new ArrayList<>();
+        List<TaKegiatan> taKegiatanList
+                = taKegiatanDao.findAllByKdUnitKerja(unitKerjaKegiatan.getKdUrusan(),
+                                                    unitKerjaKegiatan.getKdBidang(),
+                                                    unitKerjaKegiatan.getKdUnit());
+        List<PenanggungJawabKegiatan> kegiatanPenanggungJawabProjectionList
+                = penanggungJawabKegiatanService.getKegiatanUnitKerja(unitKerjaKegiatan);
+
+        boolean bendaharaExist = false,
+                ppbjExist = false,
+                penggunaAnggaranExist = false,
+                pelaksanaAdministrasiExist = false,
+                pphpExist = false,
+                ppkExist = false,
+                pptkExist = false,
+                timTeknisExist = false;
+
+        for (TaKegiatan taKegiatan : taKegiatanList) {
+            if (!taKegiatan.getKetKegiatan().equals("Non Kegiatan")) {
+                bendaharaExist = false;
+                ppbjExist = false;
+                penggunaAnggaranExist = false;
+                pelaksanaAdministrasiExist = false;
+                pphpExist = false;
+                ppkExist = false;
+                pptkExist = false;
+                timTeknisExist = false;
+
+                //perlu improvisasi algoritma ini
+                for (PenanggungJawabKegiatan kegiatanProjection
+                        : kegiatanPenanggungJawabProjectionList) {
+                    if (compareKegiatan(kegiatanProjection, taKegiatan)) {
+                        switch (kegiatanProjection.getStatusPenanggungJawabKegiatan().getKdStatus()) {
+                            case "1513324189794" : bendaharaExist = true; break;
+                            case "1513484156490" : ppbjExist = true; break;
+                            case "1513485761316" : penggunaAnggaranExist = true; break;
+                            case "1516936818788" : pelaksanaAdministrasiExist = true; break;
+                            case "1523326110773" : pphpExist = true; break;
+                            case "ST001" : ppkExist = true; break;
+                            case "ST002" : pptkExist = true; break;
+                            case "ST003" : timTeknisExist = true; break;
+                            default: LOGGER.error("kode status penanggung jawab not found");
+                        }
+
+                    }
+                }
+
+                taKegiatanWrapperList
+                        .add(new KegiatanPenanggungJawabWrapper(
+                                taKegiatan.getTaKegiatanId().getKdUrusan(),
+                                taKegiatan.getTaKegiatanId().getKdBIdang(),
+                                taKegiatan.getTaKegiatanId().getKdUnit(),
+                                taKegiatan.getTaKegiatanId().getKdSub(),
+                                taKegiatan.getTaKegiatanId().getTahun(),
+                                taKegiatan.getTaKegiatanId().getKdProg(),
+                                taKegiatan.getTaKegiatanId().getIdProg(),
+                                taKegiatan.getTaKegiatanId().getKdKegiatan(),
+                                taKegiatan.getKetKegiatan(),
+                                taKegiatan.getLokasi(),
+                                taKegiatan.getKelompokSasaran(),
+                                taKegiatan.getStatusKegiatan(),
+                                taKegiatan.getPaguAnggaran(),
+                                taKegiatan.getWaktuPelaksanaan(),
+                                taKegiatan.getKdSumber(),
+                                bendaharaExist,
+                                ppbjExist,
+                                penggunaAnggaranExist,
+                                pelaksanaAdministrasiExist,
+                                pphpExist,
+                                ppkExist,
+                                pptkExist,
+                                timTeknisExist));
+
+            }
+
+        }
+
+        return new ResponseEntity<>(taKegiatanWrapperList, HttpStatus.OK);
+    }
+
+    /**
+     *
      * service yang digunakan untuk membandingkan kegiatan pada simda dengan kegiatan pada ekinerja
      *
      * @param kegiatan
@@ -481,6 +591,29 @@ public class PenanggungJawabKegiatanController {
                 && kegiatan.getKdKeg().equals(taKegiatan.getTaKegiatanId().getKdKegiatan())) {
             return true;
         }
+
+        return false;
+    }
+
+    private boolean compareKegiatan(@NotNull PenanggungJawabKegiatan kegiatan,
+                                    @NotNull TaKegiatan taKegiatan) {
+        if (kegiatan.getPenanggungJawabKegiatanId().getKdUrusan().equals(taKegiatan.getTaKegiatanId().getKdUrusan())
+                && kegiatan.getPenanggungJawabKegiatanId().getKdBidang().equals(taKegiatan.getTaKegiatanId().getKdBIdang())
+                && kegiatan.getPenanggungJawabKegiatanId().getKdUnit().equals(taKegiatan.getTaKegiatanId().getKdUnit())
+                && kegiatan.getPenanggungJawabKegiatanId().getKdSub().equals(taKegiatan.getTaKegiatanId().getKdSub())
+                && kegiatan.getPenanggungJawabKegiatanId().getTahun().equals(taKegiatan.getTaKegiatanId().getTahun())
+                && kegiatan.getPenanggungJawabKegiatanId().getKdProg().equals(taKegiatan.getTaKegiatanId().getKdProg())
+                && kegiatan.getPenanggungJawabKegiatanId().getIdProg().equals(taKegiatan.getTaKegiatanId().getIdProg())
+                && kegiatan.getPenanggungJawabKegiatanId().getKdKeg().equals(taKegiatan.getTaKegiatanId().getKdKegiatan())) {
+            return true;
+        }
+
+        return false;
+    }
+
+
+
+    private boolean checkPenanggungJawabKegiatan() {
 
         return false;
     }

@@ -52,6 +52,12 @@ public class UrtugKegiatanServiceImpl implements UrtugKegiatanService {
     }
 
     @Override
+    public List<UrtugKegiatan> findByKegiatanAndUrtug(String kdUrtug, String kdJabatan, String kdJenisUrtug, Integer tahunUrtug, Integer kdUrusan, Integer kdBidang, Integer kdUnit, Integer kdSub, Integer tahun, Integer kdProg, Integer idProg, Integer kdKeg) {
+        return urtugKegiatanDao
+                .findByKegiatanAndUrtug(kdUrtug, kdJabatan, kdJenisUrtug, tahunUrtug, kdUrusan, kdBidang, kdUnit, kdSub, tahun, kdProg, idProg, kdKeg);
+    }
+
+    @Override
     public UrtugKegiatan find(UrtugKegiatanId urtugKegiatanId) {
         return urtugKegiatanDao.findByUrtugKegiatanId(urtugKegiatanId);
     }
@@ -82,8 +88,8 @@ public class UrtugKegiatanServiceImpl implements UrtugKegiatanService {
     }
 
     @Override
-    public List<UrtugKegiatan> findByPegawaiApproval(String nipPegawai, Integer tahunUrtug) {
-        return urtugKegiatanDao.findByPegawaiApproval(nipPegawai, tahunUrtug);
+    public List<UrtugKegiatan> findByPegawaiApproval(String nipPegawai, Integer tahunUrtug, String kdJabatan) {
+        return urtugKegiatanDao.findByPegawaiJabatanApproval(nipPegawai, tahunUrtug, kdJabatan);
     }
 
     @Override

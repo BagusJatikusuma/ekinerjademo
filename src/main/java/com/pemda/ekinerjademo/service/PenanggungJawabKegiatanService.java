@@ -18,6 +18,7 @@ public interface PenanggungJawabKegiatanService {
 
     List<KegiatanPenanggungJawabProjection> getKegiatanByUnitKerja(UnitKerjaKegiatan unitKerjaKegiatan);
     List<KegiatanPenanggungJawabProjection> getKegiatanProjectionByPegawai(String nipPegawai);
+    List<PenanggungJawabKegiatan> getKegiatanUnitKerja(UnitKerjaKegiatan unitKerjaKegiatan);
     List<PenanggungJawabKegiatan> getByKegiatanPendingPegawai(String nipPegawai);
     List<PenanggungJawabKegiatan> getByPegawai(Integer kdUrusan, Integer kdBidang, Integer kdUnit, Integer kdSub, Integer tahun, Integer kdProg, Integer idProg, Integer kdKeg, String nipPegawai);
 }

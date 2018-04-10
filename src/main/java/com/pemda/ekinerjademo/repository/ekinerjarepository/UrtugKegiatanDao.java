@@ -35,6 +35,19 @@ public interface UrtugKegiatanDao extends JpaRepository<UrtugKegiatan, Long> {
     List<UrtugKegiatan> findByPegawaiApproval(String nipPegawai, Integer tahunUrtug);
 
     @Query("select uk from UrtugKegiatan uk " +
+            "left join fetch uk.penanggungJawabKegiatan pjk " +
+            "left join fetch pjk.statusPenanggungJawabKegiatan " +
+            "left join fetch uk.uraianTugasJabatanJenisUrtug utjj " +
+            "left join fetch utjj.uraianTugasJabatan utj " +
+            "left join fetch utjj.jenisUrtug " +
+            "left join fetch utj.uraianTugas " +
+            "where uk.urtugKegiatanId.nipPegawai = ?1 " +
+            "and uk.urtugKegiatanId.kdJabatan = ?3 " +
+            "and uk.urtugKegiatanId.tahunUrtug = ?2 " +
+            "and pjk.statusApproval = 1")
+    List<UrtugKegiatan> findByPegawaiJabatanApproval(String nipPegawai, Integer tahunUrtug, String kdJabatan);
+
+    @Query("select uk from UrtugKegiatan uk " +
             "left join fetch uk.uraianTugasJabatanJenisUrtug utjj " +
             "left join fetch utjj.uraianTugasJabatan utj " +
             "left join fetch utjj.jenisUrtug " +
@@ -51,6 +64,27 @@ public interface UrtugKegiatanDao extends JpaRepository<UrtugKegiatan, Long> {
             "and uk.urtugKegiatanId.kdProg = ?10 " +
             "and uk.urtugKegiatanId.idProg = ?11")
     List<UrtugKegiatan> findByProgramAndUrtug(String kdUrtug, String kdJabatan, String kdJenisUrtug, Integer tahunUrtug, Integer kdUrusan, Integer kdBidang, Integer kdUnit, Integer kdSub, Integer tahun, Integer kdProg, Integer idProg);
+
+    @Query("select uk from UrtugKegiatan uk " +
+            "left join fetch uk.penanggungJawabKegiatan pjk " +
+            "left join fetch pjk.statusPenanggungJawabKegiatan " +
+            "left join fetch uk.uraianTugasJabatanJenisUrtug utjj " +
+            "left join fetch utjj.uraianTugasJabatan utj " +
+            "left join fetch utjj.jenisUrtug " +
+            "left join fetch utj.uraianTugas " +
+            "where uk.urtugKegiatanId.kdUrtug = ?1 " +
+            "and uk.urtugKegiatanId.kdJabatan = ?2 " +
+            "and uk.urtugKegiatanId.kdJenisUrtug = ?3 " +
+            "and uk.urtugKegiatanId.tahunUrtug = ?4 " +
+            "and uk.urtugKegiatanId.kdUrusan = ?5 " +
+            "and uk.urtugKegiatanId.kdBidang = ?6 " +
+            "and uk.urtugKegiatanId.kdUnit = ?7 " +
+            "and uk.urtugKegiatanId.kdSub = ?8 " +
+            "and uk.urtugKegiatanId.tahun = ?9 " +
+            "and uk.urtugKegiatanId.kdProg = ?10 " +
+            "and uk.urtugKegiatanId.idProg = ?11 " +
+            "and uk.urtugKegiatanId.kdKeg = ?12")
+    List<UrtugKegiatan> findByKegiatanAndUrtug(String kdUrtug, String kdJabatan, String kdJenisUrtug, Integer tahunUrtug, Integer kdUrusan, Integer kdBidang, Integer kdUnit, Integer kdSub, Integer tahun, Integer kdProg, Integer idProg, Integer kdKeg);
 
     @Query("select uk from UrtugKegiatan uk "+
             "left join fetch uk.uraianTugasJabatanJenisUrtug utjj " +
