@@ -19,6 +19,8 @@ public class UrtugKegiatanInputWrapper {
     private Integer kdProg;
     private Integer idProg;
     private Integer kdKeg;
+    private String nipPegawai;
+    private String kdStatusPenanggungJawab;
     private Integer kuantitas;
     private String  satuanKuantitas;
     private Integer kualitas;
@@ -159,5 +161,21 @@ public class UrtugKegiatanInputWrapper {
 
     public void setKdUnitKerja(String kdUnitKerja) {
         this.kdUnitKerja = kdUnitKerja;
+    }
+
+    public String getNipPegawai() {
+        return nipPegawai;
+    }
+
+    public void setNipPegawai(String nipPegawai) {
+        this.nipPegawai = nipPegawai;
+    }
+
+    public String getKdStatusPenanggungJawab() {
+        return kdStatusPenanggungJawab;
+    }
+
+    public void setKdStatusPenanggungJawab(String kdStatusPenanggungJawab) {
+        this.kdStatusPenanggungJawab = kdStatusPenanggungJawab;
     }
 }

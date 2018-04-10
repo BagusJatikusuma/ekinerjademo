@@ -60,8 +60,9 @@ public interface UrtugKegiatanDao extends JpaRepository<UrtugKegiatan, Long> {
             "where uk.urtugKegiatanId.nipPegawai = ?1 " +
             "and uk.urtugKegiatanId.kdUrusan = ?2 " +
             "and uk.urtugKegiatanId.kdBidang = ?3 " +
-            "and uk.urtugKegiatanId.kdUnit = ?4 ")
-    List<UrtugKegiatan> findByPegawawiAndUnitKerja(String nipPegawai, Integer kdUrusan, Integer kdBidang, Integer kdUnit);
+            "and uk.urtugKegiatanId.kdUnit = ?4 " +
+            "and uk.urtugKegiatanId.kdJabatan = ?5")
+    List<UrtugKegiatan> findByPegawawiAndUnitKerja(String nipPegawai, Integer kdUrusan, Integer kdBidang, Integer kdUnit, String kdJabatan);
 
     @Query("select uk from UrtugKegiatan uk " +
             "left join fetch uk.penanggungJawabKegiatan pjk " +

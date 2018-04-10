@@ -64,6 +64,18 @@ public interface PenanggungJawabKegiatanDao
                                                 Integer kdSub,
                                                 Integer tahun,
                                                 String nipPegawai);
+    @Query("select distinct " +
+            "new com.pemda.ekinerjademo.projection.ekinerjaprojection.KegiatanPenanggungJawabProjection(pjk.penanggungJawabKegiatanId.kdUrusan, " +
+            "pjk.penanggungJawabKegiatanId.kdBidang, " +
+            "pjk.penanggungJawabKegiatanId.kdUnit, " +
+            "pjk.penanggungJawabKegiatanId.kdSub, " +
+            "pjk.penanggungJawabKegiatanId.tahun, " +
+            "pjk.penanggungJawabKegiatanId.kdProg, " +
+            "pjk.penanggungJawabKegiatanId.idProg, " +
+            "pjk.penanggungJawabKegiatanId.kdKeg) " +
+            "from PenanggungJawabKegiatan pjk " +
+            "where pjk.penanggungJawabKegiatanId.nipPegawai = ?1")
+    List<KegiatanPenanggungJawabProjection> findProjectionByPegawaiOnly(String nipPegawai);
 
     @Query("select distinct " +
             "new com.pemda.ekinerjademo.projection.ekinerjaprojection.KegiatanPenanggungJawabProjection(pjk.penanggungJawabKegiatanId.kdUrusan, " +

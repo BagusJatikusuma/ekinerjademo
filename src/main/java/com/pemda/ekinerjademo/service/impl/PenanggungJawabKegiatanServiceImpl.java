@@ -66,6 +66,11 @@ public class PenanggungJawabKegiatanServiceImpl implements PenanggungJawabKegiat
     }
 
     @Override
+    public List<KegiatanPenanggungJawabProjection> getKegiatanProjectionByPegawai(String nipPegawai) {
+        return penanggungJawabKegiatanDao.findProjectionByPegawaiOnly(nipPegawai);
+    }
+
+    @Override
     public List<PenanggungJawabKegiatan> getByKegiatanPendingPegawai(String nipPegawai) {
         return penanggungJawabKegiatanDao.findByPegawaiPending(nipPegawai);
     }

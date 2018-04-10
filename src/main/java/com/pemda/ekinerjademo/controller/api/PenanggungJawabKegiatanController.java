@@ -355,6 +355,62 @@ public class PenanggungJawabKegiatanController {
 
     /**
      *
+     * service yang digunakan untuk mengambil data kegiatan dari simda berdasarkan nip
+     *
+     * constraint :
+     * kd Unit Kerja
+     *
+     * @param nipPegawai, kdUnitKerja
+     * @return daftar kegiatan
+     */
+    @RequestMapping(value = "/get-organisasi-barjas-pegawai/{nipPegawai}/{kdUnitKerja}", method = RequestMethod.GET)
+    ResponseEntity<?> getPenanggungJawabKegiatanByPegawai(@PathVariable("nipPegawai") String nipPegawai,
+                                                          @PathVariable("kdUnitKerja") String kdUnitKerja) {
+        LOGGER.info("get penanggung jawab kegiatan by pegawai");
+
+        UnitKerjaKegiatan unitKerjaKegiatan
+                = unitKerjaKegiatanService.findByKdUnitKerja(kdUnitKerja);
+
+        List<KegiatanPenanggungJawabProjection> kegiatanList
+                = penanggungJawabKegiatanService.getKegiatanProjectionByPegawai(nipPegawai);
+        List<TaKegiatan> taKegiatanList
+                = taKegiatanService.findByUnitKerja(unitKerjaKegiatan);
+
+        List<TaKegiatanWrapper> kegiatanWrappers
+                = new ArrayList<>();
+
+        for (KegiatanPenanggungJawabProjection kegiatan
+                : kegiatanList) {
+            for (TaKegiatan taKegiatan
+                    : taKegiatanList) {
+                if (compareKegiatan(kegiatan, taKegiatan)) {
+                    kegiatanWrappers
+                            .add(new TaKegiatanWrapper(kegiatan.getKdUrusan(),
+                                    kegiatan.getKdBidang(),
+                                    kegiatan.getKdUnit(),
+                                    kegiatan.getKdSub(),
+                                    kegiatan.getTahun(),
+                                    kegiatan.getKdProg(),
+                                    kegiatan.getIdProg(),
+                                    kegiatan.getKdKeg(),
+                                    taKegiatan.getKetKegiatan(),
+                                    taKegiatan.getLokasi(),
+                                    taKegiatan.getKelompokSasaran(),
+                                    taKegiatan.getStatusKegiatan(),
+                                    taKegiatan.getPaguAnggaran(),
+                                    taKegiatan.getWaktuPelaksanaan(),
+                                    taKegiatan.getKdSumber()));
+
+                    break;
+                }
+            }
+        }
+
+        return new ResponseEntity<>(kegiatanWrappers, HttpStatus.OK);
+    }
+
+    /**
+     *
      * service yang digunakan melakukan proses approval terhadap calon ajuan kontrak kerja dari pegawai
      * digunakan oleh pegawai yang akan membuat kontrak kerja
      *

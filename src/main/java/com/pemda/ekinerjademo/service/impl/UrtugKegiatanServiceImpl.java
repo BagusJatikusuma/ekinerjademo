@@ -72,12 +72,13 @@ public class UrtugKegiatanServiceImpl implements UrtugKegiatanService {
     }
 
     @Override
-    public List<UrtugKegiatan> findByPegawaiAndUnitKerja(String nipPegawai, UnitKerjaKegiatan unitKerjaKegiatan) {
+    public List<UrtugKegiatan> findByPegawaiAndUnitKerja(String nipPegawai, UnitKerjaKegiatan unitKerjaKegiatan, String kdJabatan) {
 
         return urtugKegiatanDao.findByPegawawiAndUnitKerja(nipPegawai,
                                                             unitKerjaKegiatan.getKdUrusan(),
                                                             unitKerjaKegiatan.getKdBidang(),
-                                                            unitKerjaKegiatan.getKdUnit());
+                                                            unitKerjaKegiatan.getKdUnit(),
+                                                            kdJabatan);
     }
 
     @Override

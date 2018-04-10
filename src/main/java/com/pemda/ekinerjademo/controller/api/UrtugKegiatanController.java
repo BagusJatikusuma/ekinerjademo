@@ -115,7 +115,7 @@ public class UrtugKegiatanController {
 
     /**
      *
-     * ambil daftar bahan ajuan kontrak kerja, jika sudah pernah diajukan tidak akan diambil lagi
+     * ambil daftar bahan   ajuan kontrak kerja, jika sudah pernah diajukan tidak akan diambil lagi
      * diambil berdasarkan nip pegawai dan unit kerja saat melakukan request
      *
      * service ini hanya untuk mendapatkan urtug dpa saja
@@ -126,9 +126,11 @@ public class UrtugKegiatanController {
      * @param kdUnitKerja
      * @return list bahan ajuan kontrak kerja DPA
      */
-    @RequestMapping(value = "/get-urtug-dpa-ajuan-by-pegawai/{nipPegawai}/{kdUnitKerja}", method = RequestMethod.GET)
+    //sebagai parameter tambahkan juga kdjabatan, agar urtug pada jabatan lain tidak ikut terbawa
+    @RequestMapping(value = "/get-urtug-dpa-ajuan-by-pegawai/{nipPegawai}/{kdUnitKerja}/{kdJabatan}", method = RequestMethod.GET)
     ResponseEntity<?> getUrtugDpaAjuangByPegawai(@PathVariable("nipPegawai") String nipPegawai,
-                                                 @PathVariable("kdUnitKerja") String kdUnitKerja) {
+                                                 @PathVariable("kdUnitKerja") String kdUnitKerja,
+                                                 @PathVariable("kdJabatan") String kdJabatan) {
         LOGGER.info("get urtug dpa ajuan by pegawai "+nipPegawai+" in "+kdUnitKerja);
 
         List<UraianTugasJabatanJenisWrapper> outputWrappers
@@ -140,7 +142,7 @@ public class UrtugKegiatanController {
         List<TaKegiatan> taKegiatanList = taKegiatanService.findByUnitKerja(unitKerjaKegiatan);
 
         List<UrtugKegiatan> urtugKegiatans
-                = urtugKegiatanService.findByPegawaiAndUnitKerja(nipPegawai, unitKerjaKegiatan);
+                = urtugKegiatanService.findByPegawaiAndUnitKerja(nipPegawai, unitKerjaKegiatan, kdJabatan);
         List<UrtugKegiatan> urtugKegiatansBelumDiajukanList
                 = new ArrayList<>();
 
@@ -386,6 +388,38 @@ public class UrtugKegiatanController {
         }
 
         return new ResponseEntity<>(new CustomMessage("uraian tugas dpa sudah diapprove"), HttpStatus.OK);
+    }
+
+    /**
+     *
+     * servie yang digunakan untuk menghapus data urtug kegiatan
+     * digunakan oleh admin unit kerja
+     *
+     * @return notifikasi proses
+     */
+    @RequestMapping(value = "/delete-urtug-kegiatan", method = RequestMethod.POST)
+    ResponseEntity<?> deleteUrtugKegiatan(@RequestBody UrtugKegiatanInputWrapper urtugKegiatanInputWrapper) {
+        LOGGER.info("delete urtug kegiatan");
+
+        urtugKegiatanService.delete(
+                new UrtugKegiatanId(
+                        urtugKegiatanInputWrapper.getKdUrtug(),
+                        urtugKegiatanInputWrapper.getKdJabatan(),
+                        urtugKegiatanInputWrapper.getKdJenisUrtug(),
+                        urtugKegiatanInputWrapper.getTahunUrtug(),
+                        urtugKegiatanInputWrapper.getKdUrusan(),
+                        urtugKegiatanInputWrapper.getKdBidang(),
+                        urtugKegiatanInputWrapper.getKdUnit(),
+                        urtugKegiatanInputWrapper.getKdSub(),
+                        urtugKegiatanInputWrapper.getTahun(),
+                        urtugKegiatanInputWrapper.getKdProg(),
+                        urtugKegiatanInputWrapper.getIdProg(),
+                        urtugKegiatanInputWrapper.getKdKeg(),
+                        urtugKegiatanInputWrapper.getNipPegawai(),
+                        urtugKegiatanInputWrapper.getKdStatusPenanggungJawab()
+                ));
+
+        return new ResponseEntity<Object>(new CustomMessage("urtug kegiatan deleted"), HttpStatus.OK);
     }
 
 //====================================================================================================================//
@@ -739,29 +773,6 @@ public class UrtugKegiatanController {
         urtugKegiatanService.update(urtugKegiatan);
 
         return new ResponseEntity<Object>(new CustomMessage("urtug kegiatan updated"), HttpStatus.OK);
-    }
-
-    @RequestMapping(value = "/delete-urtug-kegiatan", method = RequestMethod.POST)
-    ResponseEntity<?> deleteUrtugKegiatan(@RequestBody UrtugKegiatanInputWrapper urtugKegiatanInputWrapper) {
-        LOGGER.info("delete urtug kegiatan");
-
-        urtugKegiatanService.delete(
-                new UrtugKegiatanId(
-                        urtugKegiatanInputWrapper.getKdUrtug(),
-                        urtugKegiatanInputWrapper.getKdJabatan(),
-                        urtugKegiatanInputWrapper.getKdJenisUrtug(),
-                        urtugKegiatanInputWrapper.getTahunUrtug(),
-                        urtugKegiatanInputWrapper.getKdUrusan(),
-                        urtugKegiatanInputWrapper.getKdBidang(),
-                        urtugKegiatanInputWrapper.getKdUnit(),
-                        urtugKegiatanInputWrapper.getKdSub(),
-                        urtugKegiatanInputWrapper.getTahun(),
-                        urtugKegiatanInputWrapper.getKdProg(),
-                        urtugKegiatanInputWrapper.getIdProg(),
-                        urtugKegiatanInputWrapper.getKdKeg()
-                ));
-
-        return new ResponseEntity<Object>(new CustomMessage("urtug kegiatan deleted"), HttpStatus.OK);
     }
 
     @RequestMapping(value = "/delete-urtug-program", method = RequestMethod.POST)
