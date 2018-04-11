@@ -115,4 +115,6 @@ public interface UrtugKegiatanDao extends JpaRepository<UrtugKegiatan, Long> {
                                                              String kdJenisUrtug,
                                                              Integer tahunUrtug,
                                                              String nipPegawai);
+
+    List<UrtugKegiatan> findByUrtugKegiatanId_KdJabatan(String kdJabatan);
 }

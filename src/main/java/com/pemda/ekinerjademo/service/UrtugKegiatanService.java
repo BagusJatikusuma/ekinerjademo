@@ -25,4 +25,5 @@ public interface UrtugKegiatanService {
     List<UrtugKegiatan> findByPegawaiAndUnitKerja(String nipPegawai, UnitKerjaKegiatan unitKerjaKegiatan, String kdJabatane);
     List<UrtugKegiatan> findByPegawaiApproval(String nipPegawai, Integer tahunUrtug, String kdJabatan);
     List<UrtugKegiatan> findByUraianTugasJabatanAndNip(String kdUrtug, String kdJabatan, String kdJenisUrtug, Integer tahunUrtug, String nipPegawai);
+    List<UrtugKegiatan> findByJabatan(String kdJabatan);
 }

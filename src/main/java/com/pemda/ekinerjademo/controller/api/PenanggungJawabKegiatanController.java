@@ -374,7 +374,7 @@ public class PenanggungJawabKegiatanController {
     ResponseEntity<?> getPenanggungJawabKegiatanByJabatan(@PathVariable("kdJabatan") String kdJabatan) {
         LOGGER.info("get penanggung jawab kegiatan by pegawai");
 
-        String kdUnitKerja = kdJabatan.substring(0,2);
+        String kdUnitKerja = kdJabatan.substring(0,3);
 
         LOGGER.warn("result kdunitkerja "+kdUnitKerja+" from kdJabatan "+kdJabatan);
 
@@ -389,45 +389,76 @@ public class PenanggungJawabKegiatanController {
 
         List<TaKegiatan> taKegiatanList
                 = taKegiatanService.findByUnitKerja(unitKerjaKegiatan);
+        List<UrtugKegiatan> urtugKegiatanList
+                = urtugKegiatanService.findByJabatan(kdJabatan);
 
         List<TaKegiatanWrapper> kegiatanWrappers
                 = new ArrayList<>();
 
+        boolean found;
         for (KegiatanPenanggungJawabProjection kegiatan
                 : kegiatanList) {
-            for (TaKegiatan taKegiatan
-                    : taKegiatanList) {
-                if (compareKegiatan(kegiatan, taKegiatan)) {
-                    kegiatanWrappers
-                            .add(new TaKegiatanWrapper(kegiatan.getKdUrusan(),
-                                    kegiatan.getKdBidang(),
-                                    kegiatan.getKdUnit(),
-                                    kegiatan.getKdSub(),
-                                    kegiatan.getTahun(),
-                                    kegiatan.getKdProg(),
-                                    kegiatan.getIdProg(),
-                                    kegiatan.getKdKeg(),
-                                    taKegiatan.getKetKegiatan(),
-                                    taKegiatan.getLokasi(),
-                                    taKegiatan.getKelompokSasaran(),
-                                    taKegiatan.getStatusKegiatan(),
-                                    taKegiatan.getPaguAnggaran(),
-                                    taKegiatan.getWaktuPelaksanaan(),
-                                    taKegiatan.getKdSumber()));
+            found = false;
 
+            for (UrtugKegiatan urtugKegiatan
+                    : urtugKegiatanList) {
+                if (kegiatan.getKdProg().equals(urtugKegiatan.getUrtugKegiatanId().getKdProg())
+                        && kegiatan.getIdProg().equals(urtugKegiatan.getUrtugKegiatanId().getIdProg())
+                        && kegiatan.getKdKeg().equals(urtugKegiatan.getUrtugKegiatanId().getKdKeg())) {
+                    found = true;
                     break;
                 }
+
             }
+
+            // jika kegiatan pernah dipasang dengan salah satu urtug dalam suatu jabatan
+            // jangan diberikan lagi
+            if (!found) {
+                for (TaKegiatan taKegiatan
+                        : taKegiatanList) {
+                    if (compareKegiatan(kegiatan, taKegiatan)) {
+                        kegiatanWrappers
+                                .add(new TaKegiatanWrapper(kegiatan.getKdUrusan(),
+                                        kegiatan.getKdBidang(),
+                                        kegiatan.getKdUnit(),
+                                        kegiatan.getKdSub(),
+                                        kegiatan.getTahun(),
+                                        kegiatan.getKdProg(),
+                                        kegiatan.getIdProg(),
+                                        kegiatan.getKdKeg(),
+                                        taKegiatan.getKetKegiatan(),
+                                        taKegiatan.getLokasi(),
+                                        taKegiatan.getKelompokSasaran(),
+                                        taKegiatan.getStatusKegiatan(),
+                                        taKegiatan.getPaguAnggaran(),
+                                        taKegiatan.getWaktuPelaksanaan(),
+                                        taKegiatan.getKdSumber()));
+
+                        break;
+                    }
+                }
+            }
+
         }
 
         return new ResponseEntity<>(kegiatanWrappers, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/get-organisasi-barjas-jabatan/{kdUrtug}/{kdJabatan}/{kdJenisUrtug}/{tahunUrtug}", method = RequestMethod.GET)
+    /**
+     *
+     *
+     *
+     * constraint :
+     * kd Unit Kerja
+     *
+     * @param kdJabatan
+     * @return daftar kegiatan
+     */
+    @RequestMapping(value = "/get-organisasi-barjas-jabatan-urtug/{kdUrtug}/{kdJabatan}/{kdJenisUrtug}/{tahunUrtug}", method = RequestMethod.GET)
     ResponseEntity<?> getPenanggungJawabKegiatanByJabatanUrtug(@PathVariable("kdUrtug") String kdUrtug,
-                                                          @PathVariable("kdJabatan") String kdJabatan,
-                                                          @PathVariable("kdJenisUrtug") String kdJenisUrtug,
-                                                          @PathVariable("tahunUrtug") Integer tahunUrtug) {
+                                                                  @PathVariable("kdJabatan") String kdJabatan,
+                                                                  @PathVariable("kdJenisUrtug") String kdJenisUrtug,
+                                                                  @PathVariable("tahunUrtug") Integer tahunUrtug) {
         LOGGER.info("get penanggung jawab kegiatan by pegawai");
 
         return new ResponseEntity<>(null, HttpStatus.OK);

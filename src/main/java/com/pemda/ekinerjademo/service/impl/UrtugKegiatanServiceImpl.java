@@ -96,4 +96,9 @@ public class UrtugKegiatanServiceImpl implements UrtugKegiatanService {
     public List<UrtugKegiatan> findByUraianTugasJabatanAndNip(String kdUrtug, String kdJabatan, String kdJenisUrtug, Integer tahunUrtug, String nipPegawai) {
         return urtugKegiatanDao.findByUrtugJabatanJenisAndNipPegawai(kdUrtug, kdJabatan, kdJenisUrtug, tahunUrtug, nipPegawai);
     }
+
+    @Override
+    public List<UrtugKegiatan> findByJabatan(String kdJabatan) {
+        return urtugKegiatanDao.findByUrtugKegiatanId_KdJabatan(kdJabatan);
+    }
 }
