@@ -30,7 +30,7 @@ public class TkdJabatan {
     @Column(name = "tnjJabatanLm")
     private Long tnjJabatanLm;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "kdUnitKerja")
     private TkdUnk kdUnitKerja;
 

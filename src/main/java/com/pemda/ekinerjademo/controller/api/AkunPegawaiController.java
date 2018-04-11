@@ -184,6 +184,7 @@ public class AkunPegawaiController {
     }
 
     @RequestMapping(value = "/get-all-jabatan", method = RequestMethod.GET)
+    @Transactional("bismaTransactionManager")
     ResponseEntity<?> getAllJabatan() {
         LOGGER.info("get all jabatan");
 

@@ -367,23 +367,25 @@ public class PenanggungJawabKegiatanController {
      * constraint :
      * kd Unit Kerja
      *
-     * @param nipPegawai, kdUnitKerja
+     * @param kdJabatan
      * @return daftar kegiatan
      */
-    @RequestMapping(value = "/get-organisasi-barjas-pegawai/{nipPegawai}/{kdUnitKerja}/{kdUrtug}/{kdJabatan}/{kdJenisUrtug}/{tahunUrtug}", method = RequestMethod.GET)
-    ResponseEntity<?> getPenanggungJawabKegiatanByPegawai(@PathVariable("nipPegawai") String nipPegawai,
-                                                          @PathVariable("kdUnitKerja") String kdUnitKerja,
-                                                          @PathVariable("kdUrtug") String kdUrtug,
-                                                          @PathVariable("kdJabatan") String kdJabatan,
-                                                          @PathVariable("kdJenisUrtug") String kdJenisUrtug,
-                                                          @PathVariable("tahunUrtug") Integer tahunUrtug) {
+    @RequestMapping(value = "/get-organisasi-barjas-jabatan/{kdJabatan}", method = RequestMethod.GET)
+    ResponseEntity<?> getPenanggungJawabKegiatanByJabatan(@PathVariable("kdJabatan") String kdJabatan) {
         LOGGER.info("get penanggung jawab kegiatan by pegawai");
+
+        String kdUnitKerja = kdJabatan.substring(0,2);
+
+        LOGGER.warn("result kdunitkerja "+kdUnitKerja+" from kdJabatan "+kdJabatan);
 
         UnitKerjaKegiatan unitKerjaKegiatan
                 = unitKerjaKegiatanService.findByKdUnitKerja(kdUnitKerja);
 
+        List<QutPegawaiClone> qutPegawaiCloneList
+                = qutPegawaiService.getQutPegawaiByKdJabatan(kdJabatan);
+
         List<KegiatanPenanggungJawabProjection> kegiatanList
-                = penanggungJawabKegiatanService.getKegiatanProjectionByPegawai(nipPegawai);
+                = penanggungJawabKegiatanService.getKegiatanProjectionByPegawai(qutPegawaiCloneList.get(0).getNip());
 
         List<TaKegiatan> taKegiatanList
                 = taKegiatanService.findByUnitKerja(unitKerjaKegiatan);
@@ -419,6 +421,16 @@ public class PenanggungJawabKegiatanController {
         }
 
         return new ResponseEntity<>(kegiatanWrappers, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/get-organisasi-barjas-jabatan/{kdUrtug}/{kdJabatan}/{kdJenisUrtug}/{tahunUrtug}", method = RequestMethod.GET)
+    ResponseEntity<?> getPenanggungJawabKegiatanByJabatanUrtug(@PathVariable("kdUrtug") String kdUrtug,
+                                                          @PathVariable("kdJabatan") String kdJabatan,
+                                                          @PathVariable("kdJenisUrtug") String kdJenisUrtug,
+                                                          @PathVariable("tahunUrtug") Integer tahunUrtug) {
+        LOGGER.info("get penanggung jawab kegiatan by pegawai");
+
+        return new ResponseEntity<>(null, HttpStatus.OK);
     }
 
     /**
