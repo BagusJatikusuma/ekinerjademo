@@ -2,10 +2,7 @@ package com.pemda.ekinerjademo.controller.api;
 
 import com.pemda.ekinerjademo.model.bismamodel.QutPegawai;
 import com.pemda.ekinerjademo.model.bismamodel.TkdUnk;
-import com.pemda.ekinerjademo.model.ekinerjamodel.PejabatPenilaiDinilai;
-import com.pemda.ekinerjademo.model.ekinerjamodel.UraianTugasJabatanJenisUrtug;
-import com.pemda.ekinerjademo.model.ekinerjamodel.UraianTugasPegawaiTahunan;
-import com.pemda.ekinerjademo.model.ekinerjamodel.UraianTugasPegawaiTahunanId;
+import com.pemda.ekinerjademo.model.ekinerjamodel.*;
 import com.pemda.ekinerjademo.repository.bismarepository.TkdUnkDao;
 import com.pemda.ekinerjademo.service.*;
 import com.pemda.ekinerjademo.wrapper.input.UraianTugasPegawaiTahunanInputWrapper;
@@ -19,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.Year;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -352,7 +350,10 @@ public class UraianTugasPegawaiTahunanController {
         }
 
         //insert urtug ke setiap elemen tugas
+        boolean penanganan;
         for (AjuanUraianTugasNonDpaPegawaiWrapper ajuanUraianTugasNonDpaPegawaiWrapper : ajuanUraianTugasNonDpaPegawaiWrapperList){
+            penanganan = false;
+
             List<UraianTugasPegawaiTahunanWrapper> uraianTugasWrapperList = new ArrayList<>();
             List<UraianTugasPegawaiTahunanWrapper> uraianTugasTidakDipilihWrapperList = new ArrayList<>();
 
@@ -372,6 +373,8 @@ public class UraianTugasPegawaiTahunanController {
 //                                found = true; //revisi
                                 if (uraianTugasPegawaiTahunan.getStatusApproval() == 0) {
                                     found = true;
+                                    penanganan = false;
+
                                     uraianTugasWrapperList.add(
                                             new UraianTugasPegawaiTahunanWrapper(
                                                     uraianTugasPegawaiTahunan.getUraianTugasJabatanJenisUrtug().getUraianTugasJabatan().getUraianTugas().getDeskripsi(),
@@ -424,10 +427,211 @@ public class UraianTugasPegawaiTahunanController {
 
             ajuanUraianTugasNonDpaPegawaiWrapper.setUraianTugasDiajukan(uraianTugasWrapperList);
             ajuanUraianTugasNonDpaPegawaiWrapper.setUraianTugasTidakDipilih(uraianTugasTidakDipilihWrapperList);
+            if (!uraianTugasWrapperList.isEmpty()) {
+                ajuanUraianTugasNonDpaPegawaiWrapper.setStatusPenangangan(false);
+            } else {
+                ajuanUraianTugasNonDpaPegawaiWrapper.setStatusPenangangan(true);
+            }
+
         }
 
         return new ResponseEntity<Object>(ajuanUraianTugasNonDpaPegawaiWrapperList, HttpStatus.OK);
 
+    }
+
+    /**
+     *
+     * service yang digunakan untuk mengambil kontrak kerja yang diajukan oleh bawahan
+     *
+     * digunakan oleh pegawai penilai untuk melihat kontrak ajuan bawahan
+     *
+     * @param nipPenilai
+     * @return
+     */
+    @RequestMapping(value = "/get-kontrak-ajuan-bawahan-notif/{kdUnitKerja}/{nipPenilai}", method = RequestMethod.GET)
+    ResponseEntity<?> getKontrakAjuanBawahanNotif(
+            @PathVariable("kdUnitKerja") String kdUnitKerja,
+            @PathVariable("nipPenilai") String nipPenilai) {
+        LOGGER.info("get kontrak ajuan bawahan");
+
+        List<UraianTugasPegawaiTahunan> uraianTugasPegawaiTahunanList
+                = urtugPegawaiTahunanService.getByUnitKerja(kdUnitKerja);
+        List<PegawaiCredential> pegawaiCredentialList
+                = new ArrayList<>();
+        List<AjuanUraianTugasNonDpaPegawaiWrapper> ajuanUraianTugasNonDpaPegawaiWrapperList
+                = new ArrayList<>();
+        List<QutPegawai> qutPegawaiList
+                = qutPegawaiService.getQutPegawaiByUnitKerja(kdUnitKerja);
+        List<PejabatPenilaiDinilai> nipPegawaiBawahanPenilaiList
+                = pejabatPenilaiDinilaiService.findPegawaiDinilai(nipPenilai);
+        List<QutPegawai> pegawaiBawahanPenilaiList
+                = new ArrayList<>();
+        List<UraianTugasJabatanJenisUrtug> uraianTugasJabatanJenisUrtugList
+                = uraianTugasJabatanJenisUrtugService.getUrtugNonDpaByUnitKerja(kdUnitKerja);
+        List<TkdUnk> tkdUnkList
+                = tkdUnkDao.findAll();
+
+
+        //filter pegawai bawahan penilai
+        for (PejabatPenilaiDinilai pejabatPenilaiDinilai :
+                nipPegawaiBawahanPenilaiList) {
+            LOGGER.info(pejabatPenilaiDinilai.getPejabatPenilaiDinilaiId().getKdJabatanDinilai());
+
+            for (QutPegawai qutPegawai
+                    : qutPegawaiList) {
+                if (pejabatPenilaiDinilai.getPejabatPenilaiDinilaiId().getKdJabatanDinilai()
+                        .equals(qutPegawai.getKdJabatan())) {
+                    pegawaiBawahanPenilaiList
+                            .add(qutPegawai);
+                }
+            }
+        }
+
+        //looping pegawai yang ada pada uraian tugas tahunan
+        for (UraianTugasPegawaiTahunan uraianTugasPegawaiTahunan : uraianTugasPegawaiTahunanList){
+            Boolean constraint = false;
+
+            for (PegawaiCredential pegawaiCredential : pegawaiCredentialList) {
+                if (pegawaiCredential.getNipPegawai()
+                        .equals(uraianTugasPegawaiTahunan
+                                .getUraianTugasPegawaiTahunanId()
+                                .getNipPegawai())){
+                    constraint = true;
+                    break;
+                }
+            }
+
+            if (!constraint){
+                pegawaiCredentialList.add(new PegawaiCredential(
+                        uraianTugasPegawaiTahunan.getUraianTugasPegawaiTahunanId().getNipPegawai()
+                        ,null,null,null,null,null,null));
+            }
+        }
+
+        //insert data pegawai credential kedalam ajuan uraian tugas non dpa list
+        for (PegawaiCredential pegawaiCredential : pegawaiCredentialList){
+            for (QutPegawai qutPegawai : pegawaiBawahanPenilaiList){
+                if (qutPegawai.getNip().equals(pegawaiCredential.getNipPegawai())){
+                    AjuanUraianTugasNonDpaPegawaiWrapper ajuanUraianTugasNonDpaPegawaiWrapper = new AjuanUraianTugasNonDpaPegawaiWrapper();
+                    ajuanUraianTugasNonDpaPegawaiWrapper.setNipPegawai(qutPegawai.getNip());
+                    ajuanUraianTugasNonDpaPegawaiWrapper.setNamaPegawai(qutPegawai.getNama());
+                    ajuanUraianTugasNonDpaPegawaiWrapper.setKdJabatan(qutPegawai.getKdJabatan());
+                    ajuanUraianTugasNonDpaPegawaiWrapper.setJabatan(qutPegawai.getJabatan());
+                    ajuanUraianTugasNonDpaPegawaiWrapper.setEselon(qutPegawai.getEselon());
+                    ajuanUraianTugasNonDpaPegawaiWrapper.setKdUnitKerja(qutPegawai.getKdUnitKerja());
+
+                    ajuanUraianTugasNonDpaPegawaiWrapperList.add(ajuanUraianTugasNonDpaPegawaiWrapper);
+                }
+            }
+        }
+
+        for (AjuanUraianTugasNonDpaPegawaiWrapper qutPegawaiWrapper
+                : ajuanUraianTugasNonDpaPegawaiWrapperList) {
+            for (TkdUnk tkdUnk
+                    : tkdUnkList) {
+                if (tkdUnk.getKdUnK().equals(qutPegawaiWrapper.getKdUnitKerja())) {
+                    qutPegawaiWrapper.setUnitKerja(tkdUnk.getUnitKerja());
+                    break;
+                }
+            }
+        }
+
+        //insert urtug ke setiap elemen tugas
+        boolean penanganan;
+        for (AjuanUraianTugasNonDpaPegawaiWrapper ajuanUraianTugasNonDpaPegawaiWrapper : ajuanUraianTugasNonDpaPegawaiWrapperList){
+            penanganan = true;
+
+            List<UraianTugasPegawaiTahunanWrapper> uraianTugasWrapperList = new ArrayList<>();
+            List<UraianTugasPegawaiTahunanWrapper> uraianTugasTidakDipilihWrapperList = new ArrayList<>();
+
+            for (UraianTugasJabatanJenisUrtug uraianTugasJabatanJenisUrtug : uraianTugasJabatanJenisUrtugList) {
+                if (ajuanUraianTugasNonDpaPegawaiWrapper.getKdJabatan()
+                        .equals(uraianTugasJabatanJenisUrtug.getUraianTugasJabatanJenisUrtugId().getKdJabatan())) {
+                    LOGGER.info("urtug jenis :"+uraianTugasJabatanJenisUrtug.getUraianTugasJabatanJenisUrtugId().getKdUrtug());
+
+                    boolean found = false;
+                    for (UraianTugasPegawaiTahunan uraianTugasPegawaiTahunan : uraianTugasPegawaiTahunanList) {
+                        if (ajuanUraianTugasNonDpaPegawaiWrapper.getNipPegawai()
+                                .equals(uraianTugasPegawaiTahunan.getUraianTugasPegawaiTahunanId().getNipPegawai())) {
+                            LOGGER.info(uraianTugasPegawaiTahunan.getUraianTugasPegawaiTahunanId().getKdUrtug());
+
+                            if (uraianTugasJabatanJenisUrtug.getUraianTugasJabatanJenisUrtugId().getKdUrtug()
+                                    .equals(uraianTugasPegawaiTahunan.getUraianTugasPegawaiTahunanId().getKdUrtug())) {
+//                                found = true; //revisi
+                                if (uraianTugasPegawaiTahunan.getStatusApproval() == 0) {
+                                    found = true;
+                                    penanganan = false;
+
+                                    uraianTugasWrapperList.add(
+                                            new UraianTugasPegawaiTahunanWrapper(
+                                                    uraianTugasPegawaiTahunan.getUraianTugasJabatanJenisUrtug().getUraianTugasJabatan().getUraianTugas().getDeskripsi(),
+                                                    uraianTugasPegawaiTahunan.getUraianTugasPegawaiTahunanId().getKdUrtug(),
+                                                    uraianTugasPegawaiTahunan.getUraianTugasPegawaiTahunanId().getKdJabatan(),
+                                                    uraianTugasPegawaiTahunan.getUraianTugasPegawaiTahunanId().getKdJenisUrtug(),
+                                                    uraianTugasPegawaiTahunan.getUraianTugasPegawaiTahunanId().getTahunUrtug(),
+                                                    uraianTugasPegawaiTahunan.getUraianTugasPegawaiTahunanId().getNipPegawai(),
+                                                    uraianTugasPegawaiTahunan.getKuantitas(),
+                                                    uraianTugasPegawaiTahunan.getSatuanKuantitas(),
+                                                    uraianTugasPegawaiTahunan.getKualitas(),
+                                                    uraianTugasPegawaiTahunan.getWaktu(),
+                                                    uraianTugasPegawaiTahunan.getBiaya(),
+                                                    uraianTugasPegawaiTahunan.getAlasan(),
+                                                    uraianTugasPegawaiTahunan.getStatusApproval()
+                                            ));
+                                } //baris else merupakan revisi
+                                else if (uraianTugasPegawaiTahunan.getStatusApproval() == 2
+                                        || uraianTugasPegawaiTahunan.getStatusApproval() == 1) {
+                                    found = true;
+                                }
+
+                                break;
+                            }
+
+                        }
+                    }
+
+                    if (!found) {
+                        uraianTugasTidakDipilihWrapperList.add(
+                                new UraianTugasPegawaiTahunanWrapper(
+                                        uraianTugasJabatanJenisUrtug.getUraianTugasJabatan().getUraianTugas().getDeskripsi(),
+                                        uraianTugasJabatanJenisUrtug.getUraianTugasJabatanJenisUrtugId().getKdUrtug(),
+                                        uraianTugasJabatanJenisUrtug.getUraianTugasJabatanJenisUrtugId().getKdJabatan(),
+                                        uraianTugasJabatanJenisUrtug.getUraianTugasJabatanJenisUrtugId().getKdJenisUrtug(),
+                                        uraianTugasJabatanJenisUrtug.getUraianTugasJabatanJenisUrtugId().getTahunUrtug(),
+                                        "",
+                                        uraianTugasJabatanJenisUrtug.getKuantitas(),
+                                        uraianTugasJabatanJenisUrtug.getSatuanKuantitas(),
+                                        uraianTugasJabatanJenisUrtug.getKualitas(),
+                                        uraianTugasJabatanJenisUrtug.getWaktu(),
+                                        uraianTugasJabatanJenisUrtug.getBiaya(),
+                                        "",
+                                        0
+                                ));
+                    }
+
+                }
+            }
+
+
+            ajuanUraianTugasNonDpaPegawaiWrapper.setUraianTugasDiajukan(uraianTugasWrapperList);
+            ajuanUraianTugasNonDpaPegawaiWrapper.setUraianTugasTidakDipilih(uraianTugasTidakDipilihWrapperList);
+            if (!uraianTugasWrapperList.isEmpty()) {
+                ajuanUraianTugasNonDpaPegawaiWrapper.setStatusPenangangan(false);
+            } else {
+                ajuanUraianTugasNonDpaPegawaiWrapper.setStatusPenangangan(true);
+            }
+        }
+
+        //hapus ajuan kontrak kerja pegawai yang sudah ditangani
+        List<AjuanUraianTugasNonDpaPegawaiWrapper> toRemove = new ArrayList<>();
+        for(AjuanUraianTugasNonDpaPegawaiWrapper obj: ajuanUraianTugasNonDpaPegawaiWrapperList){
+            if(obj.isStatusPenangangan()){
+                toRemove.add(obj);
+            }
+        }
+        ajuanUraianTugasNonDpaPegawaiWrapperList.removeAll(toRemove);
+
+        return new ResponseEntity<>(ajuanUraianTugasNonDpaPegawaiWrapperList, HttpStatus.OK);
     }
 
 }

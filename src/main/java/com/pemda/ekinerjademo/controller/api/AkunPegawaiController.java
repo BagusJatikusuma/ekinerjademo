@@ -1853,6 +1853,40 @@ public class AkunPegawaiController {
     }
 
 
+    /**
+     *
+     * service yang digunakan untuk mengambil kontrak kerja yang diajukan oleh bawahan
+     *
+     * digunakan oleh pegawai penilai untuk melihat kontrak ajuan bawahan
+     *
+     * @param nipPenilai
+     * @return
+     */
+    @RequestMapping(value = "/get-kontrak-ajuan-bawahan/{nipPenilai}", method = RequestMethod.GET)
+    ResponseEntity<?> getKontrakAjuanBawahan(@PathVariable("nipPenilai") String nipPenilai) {
+        LOGGER.info("get kontrak ajuan bawahan");
+
+        List<QutPegawaiClone> pegawaiBawahanList = new ArrayList<>();
+        List<PejabatPenilaiDinilai> kdJabatanPegawaiBawahanList
+                = pejabatPenilaiDinilaiService.findPegawaiDinilai(nipPenilai);
+
+        //ambil data pegawai bawahan terlebih dahulu
+        for (PejabatPenilaiDinilai jabatan : kdJabatanPegawaiBawahanList) {
+            List<QutPegawaiClone> pegawaiBawahanJabatanList
+                    = qutPegawaiService.getQutPegawaiByKdJabatan(jabatan.getPejabatPenilaiDinilaiId().getKdJabatanDinilai());
+            for (QutPegawaiClone pegawaiBawahan : pegawaiBawahanJabatanList) {
+                pegawaiBawahanList.add(pegawaiBawahan);
+            }
+        }
+
+        for (QutPegawaiClone pegawaiBawahan : pegawaiBawahanList) {
+
+        }
+
+        return new ResponseEntity<>(null, HttpStatus.OK);
+    }
+
+
     //sampai disini
 
 //    @Resource(name = "BasicAuthenticationProvider")

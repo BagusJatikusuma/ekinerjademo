@@ -39,6 +39,14 @@ public class LembarDisposisiController {
     @Autowired private SuratDisposisiService suratDisposisiService;
     @Autowired private QutPegawaiCloneService qutPegawaiService;
 
+
+    /**
+     *
+     * service yang digunakan untuk membuat lembar disposisi
+     *
+     * @param inputWrapper
+     * @return custom notifikasi
+     */
     @RequestMapping(value = "/create-lembar-disposisi", method = RequestMethod.POST)
     @Synchronized
     ResponseEntity<?> createLembarDisposisi(
@@ -102,6 +110,14 @@ public class LembarDisposisiController {
         return new ResponseEntity<Object>(new CustomMessage("lembar disposisi created"), HttpStatus.OK);
     }
 
+    /**
+     *
+     * service yang digunakan untuk membuat lembar disposisi dengan file
+     *
+     * @param inputWrapper
+     * @param fileSuratDisposisi
+     * @return
+     */
     @RequestMapping(value = "/create-lembar-disposisi-ekstensi", method = RequestMethod.POST, consumes = {"multipart/form-data"})
     ResponseEntity<?> createLembarDisposisiEkstensi(
             @RequestPart("metadata") LembarDisposisiInputWrapper inputWrapper,
@@ -329,6 +345,8 @@ public class LembarDisposisiController {
 
         return new ResponseEntity<Object>(lembarDisposisiWrappers, HttpStatus.OK);
     }
+
+
 
     @RequestMapping(value = "/get-dokumen-lembar-disposisi/{kdLembarDisposisi}", method = RequestMethod.GET)
     ResponseEntity<?> getDokumenLembarDisposisi(@PathVariable("kdLembarDisposisi") String kdLembarDisposisi) {

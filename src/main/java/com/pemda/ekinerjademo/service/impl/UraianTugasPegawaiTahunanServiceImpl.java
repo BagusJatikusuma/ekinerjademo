@@ -150,4 +150,9 @@ public class UraianTugasPegawaiTahunanServiceImpl implements UraianTugasPegawaiT
 //        return urtugPegawaiTahunanDao
 //                .findByUnitKerja(kdUnitKerja);
     }
+
+    @Override
+    public List<UraianTugasPegawaiTahunan> getUraianTugasPegawaiYangDiAjukan(String nipPegawai) {
+        return urtugPegawaiTahunanDao.findUraianTugasPegawaiYangDiAjukan(nipPegawai);
+    }
 }

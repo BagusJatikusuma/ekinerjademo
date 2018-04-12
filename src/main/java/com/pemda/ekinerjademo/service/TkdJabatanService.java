@@ -11,4 +11,5 @@ public interface TkdJabatanService {
     TkdJabatan getTkdJabatan(String kdJabatan);
     List<TkdJabatan> getAll();
     List<TkdJabatan> getJabatanByUnitKerja(String kdUnitKerja);
+    TkdJabatan getCamatUnitKerja(String kdUnitKerja);
 }

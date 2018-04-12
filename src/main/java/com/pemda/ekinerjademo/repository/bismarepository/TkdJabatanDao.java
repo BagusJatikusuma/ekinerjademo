@@ -24,4 +24,9 @@ public interface TkdJabatanDao extends JpaRepository<TkdJabatan, Long> {
             "left join fetch tj.kdUnitKerja " +
             "where tj.kdJabatan = ?1")
     TkdJabatan findByKdJabatan(String KdJabatan);
+
+    @Query("select tj from TkdJabatan tj " +
+            "left join fetch tj.kdUnitKerja unk " +
+            "where unk.kdUnK = ?1 and tj.jabatan like concat('camat ','%') ")
+    TkdJabatan findCamatUnitkerja(String kdUnitKerja);
 }

@@ -16,6 +16,7 @@ public class AjuanUraianTugasNonDpaPegawaiWrapper {
     private String eselon;
     private List<UraianTugasPegawaiTahunanWrapper> uraianTugasDiajukan;
     private List<UraianTugasPegawaiTahunanWrapper> uraianTugasTidakDipilih;
+    private boolean statusPenangangan;
 
     public List<UraianTugasPegawaiTahunanWrapper> getUraianTugasDiajukan() {
         return uraianTugasDiajukan;
@@ -89,4 +90,11 @@ public class AjuanUraianTugasNonDpaPegawaiWrapper {
         this.unitKerja = unitKerja;
     }
 
+    public boolean isStatusPenangangan() {
+        return statusPenangangan;
+    }
+
+    public void setStatusPenangangan(boolean statusPenangangan) {
+        this.statusPenangangan = statusPenangangan;
+    }
 }

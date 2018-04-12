@@ -19,4 +19,5 @@ public interface UraianTugasPegawaiTahunanService {
             Integer statusApproval);
     List<UraianTugasPegawaiTahunan> getByNipPegawai(String nipPegawai);
     List<UraianTugasPegawaiTahunan> getByUnitKerja(String kdUnitKerja);
+    List<UraianTugasPegawaiTahunan> getUraianTugasPegawaiYangDiAjukan(String nipPegawai);
 }

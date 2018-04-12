@@ -41,6 +41,7 @@ public class PenanggungJawabKegiatanController {
     @Autowired private TaKegiatanService taKegiatanService;
     @Autowired private TaProgramDao taProgramDao;
     @Autowired private UrtugKegiatanService urtugKegiatanService;
+    @Autowired private TkdJabatanService tkdJabatanService;
 
     @Autowired private TkdUnkDao tkdUnkDao;
     @Autowired
@@ -446,26 +447,6 @@ public class PenanggungJawabKegiatanController {
 
     /**
      *
-     *
-     *
-     * constraint :
-     * kd Unit Kerja
-     *
-     * @param kdJabatan
-     * @return daftar kegiatan
-     */
-    @RequestMapping(value = "/get-organisasi-barjas-jabatan-urtug/{kdUrtug}/{kdJabatan}/{kdJenisUrtug}/{tahunUrtug}", method = RequestMethod.GET)
-    ResponseEntity<?> getPenanggungJawabKegiatanByJabatanUrtug(@PathVariable("kdUrtug") String kdUrtug,
-                                                                  @PathVariable("kdJabatan") String kdJabatan,
-                                                                  @PathVariable("kdJenisUrtug") String kdJenisUrtug,
-                                                                  @PathVariable("tahunUrtug") Integer tahunUrtug) {
-        LOGGER.info("get penanggung jawab kegiatan by pegawai");
-
-        return new ResponseEntity<>(null, HttpStatus.OK);
-    }
-
-    /**
-     *
      * service yang digunakan melakukan proses approval terhadap calon ajuan kontrak kerja dari pegawai
      * digunakan oleh pegawai yang akan membuat kontrak kerja
      *
@@ -616,6 +597,56 @@ public class PenanggungJawabKegiatanController {
 
     /**
      *
+     * method ini digunakan untuk mengenerate pengguna anggaran pada setiap kegiatan dalam suatu unit kerja
+     * yang diperbolehkan menjadi pengguna anggaran hanyalah kepala dinas/kepala unit kerja
+     *
+     * @param kdUnitKerja
+     */
+    private void generatePenggunaAnggaranKegiatan(String kdUnitKerja, List<TaKegiatanWrapper> kegiatanWrappers) {
+        LOGGER.info("generate pengguna anggaran kegiatan unit kerja "+kdUnitKerja);
+
+        String kdJabatanKepalaUnitKerja;
+
+        //cek jika kdunitkerja merupakan unit kerja kecamatan
+        if (kdUnitKerja.substring(0,2).equals("71")) {
+            kdJabatanKepalaUnitKerja = generateKdJabatanKepalaCamat(kdUnitKerja);
+        } else {
+            kdJabatanKepalaUnitKerja = kdUnitKerja.concat("0000A");
+        }
+
+        List<QutPegawaiClone> kepalaUnitKerja = qutPegawaiService.getQutPegawaiByKdJabatan(kdJabatanKepalaUnitKerja);
+
+        for (TaKegiatanWrapper inputWrapper : kegiatanWrappers) {
+            PenanggungJawabKegiatanId id
+                    = new PenanggungJawabKegiatanId(
+                        inputWrapper.getKdUrusan(),
+                        inputWrapper.getKdBIdang(),
+                        inputWrapper.getKdUnit(),
+                        inputWrapper.getKdSub(),
+                        inputWrapper.getTahun(),
+                        inputWrapper.getKdProg(),
+                        inputWrapper.getIdProg(),
+                        inputWrapper.getKdKegiatan(),
+                        kepalaUnitKerja.get(0).getNip(),
+                        "1513485761316");
+
+            PenanggungJawabKegiatan penanggungJawabKegiatan
+                    = new PenanggungJawabKegiatan();
+            penanggungJawabKegiatan.setPenanggungJawabKegiatanId(id);
+            penanggungJawabKegiatan.setStatusApproval(0);
+
+            penanggungJawabKegiatanService.create(penanggungJawabKegiatan);
+
+        }
+
+    }
+
+    private String generateKdJabatanKepalaCamat(String kdUnitKerjaKecamatan) {
+        return tkdJabatanService.getCamatUnitKerja(kdUnitKerjaKecamatan).getJabatan();
+    }
+
+    /**
+     *
      * service yang digunakan untuk membandingkan kegiatan pada simda dengan kegiatan pada ekinerja
      *
      * @param kegiatan
@@ -654,12 +685,6 @@ public class PenanggungJawabKegiatanController {
         return false;
     }
 
-
-
-    private boolean checkPenanggungJawabKegiatan() {
-
-        return false;
-    }
 
 }
 
