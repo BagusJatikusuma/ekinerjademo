@@ -2,6 +2,7 @@ package com.pemda.ekinerjademo.controller.api;
 
 import com.pemda.ekinerjademo.model.bismamodel.QutPegawai;
 import com.pemda.ekinerjademo.model.ekinerjamodel.*;
+import com.pemda.ekinerjademo.repository.bismarepository.TkdUnkDao;
 import com.pemda.ekinerjademo.service.*;
 import com.pemda.ekinerjademo.util.exception.AuthenticationCredentialsNotFoundExcecption;
 import com.pemda.ekinerjademo.util.exception.BadCredentialsException;
@@ -35,6 +36,8 @@ public class AuthenticationController {
     private AkunPegawaiService akunPegawaiService;
     @Autowired
     private LoginPegawaiService loginPegawaiService;
+
+    @Autowired private TkdUnkDao tkdUnkDao;
 
     /**
      * this method used for receive pegawai authentication request
@@ -98,7 +101,7 @@ public class AuthenticationController {
                         akunPegawaiAuthenticated.getRole(),
                         "IniTokenDUmmy",
                         qutPegawai.getJabatan(),
-                        qutPegawai.getUnitKerja(),
+                        tkdUnkDao.findOne(qutPegawai.getKdUnitKerja()).getUnitKerja(),
                         qutPegawai.getKdUnitKerja(),
                         qutPegawai.getKdJabatan(),
                         qutPegawai.getPangkat(),
