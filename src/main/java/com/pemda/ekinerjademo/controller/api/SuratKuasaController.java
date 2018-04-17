@@ -318,4 +318,76 @@ public class SuratKuasaController {
         return new ResponseEntity<Object>(suratKuasaPenerimaKuasaList, HttpStatus.OK);
     }
 
+    /**
+     *
+     *
+     *
+     * @param kdSuratKuasa
+     * @return
+     */
+    public SuratKuasaWrapper getSuratKuasaWrapper(String kdSuratKuasa) {
+        SuratKuasa suratKuasa = suratKuasaService.getSuratKuasa(kdSuratKuasa);
+
+        CustomPegawaiCredential
+                pemberiKuasa = null,
+                penerimaKuasa = null;
+
+        List<CustomPegawaiCredential> qutPegawaiList
+                = qutPegawaiService.getCustomPegawaiCredentials();
+
+        // get pemberi kuasa
+        for (CustomPegawaiCredential qutPegawai : qutPegawaiList) {
+            if (qutPegawai.getNip()
+                    .equals(suratKuasa.getNipPemberiKuasa())) {
+                pemberiKuasa = qutPegawai;
+                break;
+            }
+        }
+        // get pemberi kuasa
+        for (CustomPegawaiCredential qutPegawai : qutPegawaiList) {
+            if (qutPegawai.getNip()
+                    .equals(suratKuasa.getNipPenerimaKuasa())) {
+                penerimaKuasa = qutPegawai;
+                break;
+            }
+        }
+
+        String base64BarcodeImage = null;
+        if (suratKuasa.getKdBarcode() != null) {
+            BarcodeGenerator generator = new BarcodeGenerator();
+
+            base64BarcodeImage
+                    = generator.convertBarcodeImageIntoBase64String(
+                    generator.generateBarcode(suratKuasa.getKdBarcode()));
+        }
+        SuratKuasaWrapper suratKuasaWrapper
+                = new SuratKuasaWrapper(
+                suratKuasa.getNomorUrusan(),
+                suratKuasa.getNomorUrut(),
+                suratKuasa.getNomorPasanganUrut(),
+                suratKuasa.getNomorUnit(),
+                suratKuasa.getNomorTahun(),
+                pemberiKuasa.getNip(),
+                pemberiKuasa.getNama(),
+                pemberiKuasa.getJabatan(),
+                pemberiKuasa.getPangkat(), pemberiKuasa.getGol(), pemberiKuasa.getUnitKerja(),
+                pemberiKuasa.getGlrDpn(),
+                pemberiKuasa.getGlrBlk(),
+                pemberiKuasa.getAlRumah(),
+                penerimaKuasa.getNip(),
+                penerimaKuasa.getNama(),
+                penerimaKuasa.getJabatan(),
+                penerimaKuasa.getPangkat(), penerimaKuasa.getGol(), penerimaKuasa.getUnitKerja(),
+                penerimaKuasa.getGlrDpn(),
+                penerimaKuasa.getGlrBlk(),
+                penerimaKuasa.getAlRumah(),
+                suratKuasa.getIsiKuasa(),
+                suratKuasa.getKotaPembuatanSurat(),
+                suratKuasa.getTanggalPembuatanMilis(),
+                base64BarcodeImage);
+
+        return suratKuasaWrapper;
+
+    }
+
 }

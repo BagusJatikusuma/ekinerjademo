@@ -555,4 +555,129 @@ public class MemorandumController {
         return new ResponseEntity<Object>(new CustomMessage("laporan opened by penilai"), HttpStatus.OK);
     }
 
+    /**
+     *
+     *
+     *
+     * @return
+     */
+    public MemorandumWrapper getMemorandumWrapper(String kdMemorandum) {
+        List<JabatanWrapper> tembusanMemorandumList = new ArrayList<>();
+        Memorandum memorandum = memorandumService.getByKdMemorandum(kdMemorandum);
+
+        List<TkdJabatan> tkdJabatanList = tkdJabatanService.getAll();
+        for (TembusanMemorandum tembusanMemorandum
+                : memorandum.getTembusanMemorandumList()) {
+            for (TkdJabatan tkdJabatan : tkdJabatanList){
+                if (tkdJabatan.getKdJabatan()
+                        .equals(tembusanMemorandum.getTembusanMemorandumId().getKdJabatan())) {
+                    JabatanWrapper jabatanWrapper = new JabatanWrapper();
+
+                    jabatanWrapper.setKdJabatan(tkdJabatan.getKdJabatan());
+                    jabatanWrapper.setJabatan(tkdJabatan.getJabatan());
+                    jabatanWrapper.setEselon(tkdJabatan.getEselon());
+
+                    tembusanMemorandumList.add(jabatanWrapper);
+
+                    break;
+
+                }
+
+            }
+
+        }
+
+        CustomPegawaiCredential
+                penerima = null,
+                pemberi = null,
+                pembuat = null,
+                penandatangan = null;
+
+        List<CustomPegawaiCredential> qutPegawaiList
+                = qutPegawaiService.getCustomPegawaiCredentials();
+
+        // get penerima
+        for (CustomPegawaiCredential qutPegawai : qutPegawaiList) {
+            if (qutPegawai.getNip()
+                    .equals(memorandum.getNipPenerimaMemorandum())) {
+                penerima = qutPegawai;
+                break;
+            }
+        }
+        // get pemberi
+        for (CustomPegawaiCredential qutPegawai : qutPegawaiList) {
+            if (qutPegawai.getNip()
+                    .equals(memorandum.getNipPemberiMemorandum())) {
+                pemberi = qutPegawai;
+                break;
+            }
+        }
+        // get pembuat
+        for (CustomPegawaiCredential qutPegawai : qutPegawaiList) {
+            if (qutPegawai.getNip()
+                    .equals(memorandum.getNipPembuatSurat())) {
+                pembuat = qutPegawai;
+                break;
+            }
+        }
+        // get penandatangan
+        for (CustomPegawaiCredential qutPegawai : qutPegawaiList) {
+            if (qutPegawai.getNip()
+                    .equals(memorandum.getNipPenandatangan())) {
+                penandatangan = qutPegawai;
+                break;
+            }
+        }
+
+        boolean isSuratPejabat = false;
+
+        if (memorandum.getMemorandumPejabat() != null) {
+            isSuratPejabat = true;
+        }
+
+        String base64BarcodeImage = null;
+//        String kdBarcode
+//                = memorandum.getKdBarcode()+memorandum.getNomorUrut()+memorandum.getKdUnitKerja()+"2";
+        if (memorandum.getKdBarcode() != null) {
+            BarcodeGenerator generator = new BarcodeGenerator();
+
+            base64BarcodeImage
+                    = generator.convertBarcodeImageIntoBase64String(
+                    generator.generateBarcode(memorandum.getKdBarcode()));
+        }
+
+        MemorandumWrapper memorandumWrapper
+                = new MemorandumWrapper(
+                memorandum.getKdMemorandum(),
+                memorandum.getNomorUrusan(),
+                memorandum.getNomorUrut(),
+                memorandum.getNomorPasanganUrut(),
+                memorandum.getNomorUnit(),
+                memorandum.getNomorTahun(),
+                penerima.getNip(),
+                penerima.getNama(),
+                penerima.getJabatan(),
+                tkdUnkDao.findOne(penerima.getKdUnitKerja()).getUnitKerja(),
+                penerima.getGlrDpn(), penerima.getGlrBlk(), penerima.getPangkat(), penerima.getGol(), pemberi.getNip(),
+                pemberi.getNama(),
+                pemberi.getJabatan(),
+                tkdUnkDao.findOne(pemberi.getKdUnitKerja()).getUnitKerja(),
+                pemberi.getGlrDpn(), pemberi.getGlrBlk(), pemberi.getPangkat(), pemberi.getGol(), memorandum.getHal(),
+                memorandum.getTanggalPembuatanMilis(),
+                memorandum.getIsiMemorandum(),
+                pembuat.getNip(),
+                pembuat.getNama(),
+                pembuat.getJabatan(),
+                tkdUnkDao.findOne(pembuat.getKdUnitKerja()).getUnitKerja(),
+                pembuat.getGlrDpn(), pembuat.getGlrBlk(), pembuat.getPangkat(), pembuat.getGol(), penandatangan.getNip(),
+                penandatangan.getNama(),
+                penandatangan.getJabatan(),
+                tkdUnkDao.findOne(penandatangan.getKdUnitKerja()).getUnitKerja(),
+                penandatangan.getGlrDpn(), penandatangan.getGlrBlk(), penandatangan.getPangkat(), penandatangan.getGol(),
+                tembusanMemorandumList, isSuratPejabat,
+                base64BarcodeImage);
+
+        return memorandumWrapper;
+    }
+
 }

@@ -259,4 +259,106 @@ public class BeritaAcaraController {
         return new ResponseEntity<Object>(beritaAcaraWrapper, HttpStatus.OK);
     }
 
+    /**
+     *
+     * digunakan oleh lembardisposisicontroller
+     *
+     * @param kdBeritaAcara
+     * @return
+     */
+    public BeritaAcaraWrapper getBeritaAcaraWrapper(String kdBeritaAcara) {
+        BeritaAcara beritaAcara = beritaAcaraService.getBeritaAcara(kdBeritaAcara);
+
+        EkinerjaXMLParser ekinerjaXMLParser = new EkinerjaXMLParser();
+
+        //get all pegawai
+        CustomPegawaiCredential
+                pihakKesatu = null,
+                pihakKedua = null,
+                pihakMengetahui = null;
+
+        List<CustomPegawaiCredential> qutPegawaiList
+                = qutPegawaiService.getCustomPegawaiCredentials();
+
+        // get pihak kesatu
+        for (CustomPegawaiCredential qutPegawai : qutPegawaiList) {
+            if (qutPegawai.getNip()
+                    .equals(beritaAcara.getNipPihakKesatu())) {
+                pihakKesatu = qutPegawai;
+                break;
+            }
+        }
+        // get pihak kedua
+        for (CustomPegawaiCredential qutPegawai : qutPegawaiList) {
+            if (qutPegawai.getNip()
+                    .equals(beritaAcara.getNipPihakKedua())) {
+                pihakKedua = qutPegawai;
+                break;
+            }
+        }
+        // get pihak mengetahui
+        for (CustomPegawaiCredential qutPegawai : qutPegawaiList) {
+            if (qutPegawai.getNip()
+                    .equals(beritaAcara.getNipMengetahui())) {
+                pihakMengetahui = qutPegawai;
+                break;
+            }
+        }
+
+        String base64BarcodeImage = null;
+//        String kdBarcode
+//                = beritaAcara.getKdBarcode()+beritaAcara.getNomorUrut()+beritaAcara.getKdUnitKerja()+"0";
+
+        if (beritaAcara.getKdBarcode() != null) {
+            BarcodeGenerator generator = new BarcodeGenerator();
+
+            base64BarcodeImage
+                    = generator.convertBarcodeImageIntoBase64String(
+                    generator.generateBarcode(beritaAcara.getKdBarcode()));
+        }
+        BeritaAcaraWrapper beritaAcaraWrapper
+                = new BeritaAcaraWrapper(
+                beritaAcara.getKdBeritaAcara(),
+                beritaAcara.getNomorUrusan(),
+                beritaAcara.getNomorUrut(),
+                beritaAcara.getNomorPasanganUrut(),
+                beritaAcara.getNomorUnit(),
+                beritaAcara.getNomorTahun(),
+                pihakKesatu.getNip(),
+                pihakKesatu.getNama(),
+                pihakKesatu.getJabatan(),
+                tkdUnkDao.findOne(pihakKesatu.getKdUnitKerja()).getUnitKerja(),
+                pihakKesatu.getPangkat(),
+                pihakKesatu.getGol(),
+                beritaAcara.getPeranPihakKesatu(),
+                pihakKesatu.getGlrDpn(),
+                pihakKesatu.getGlrBlk(),
+                beritaAcara.getStatusApprovalPihakKesatu(),
+                pihakKedua.getNip(),
+                pihakKedua.getNama(),
+                pihakKedua.getJabatan(),
+                tkdUnkDao.findOne(pihakKedua.getKdUnitKerja()).getUnitKerja(),
+                pihakKedua.getPangkat(),
+                pihakKedua.getGol(),
+                beritaAcara.getPeranPihakKedua(),
+                pihakKedua.getGlrDpn(),
+                pihakKedua.getGlrBlk(),
+                beritaAcara.getStatusApprovalPihakKedua(),
+                ekinerjaXMLParser
+                        .convertXmlSuratPerintahIntoListofString(beritaAcara.getIsiBeritaAcara(), "isi"),
+                beritaAcara.getDasarBeritaAcara(),
+                pihakMengetahui.getNip(),
+                pihakMengetahui.getNama(),
+                pihakMengetahui.getJabatan(),
+                tkdUnkDao.findOne(pihakMengetahui.getKdUnitKerja()).getUnitKerja(),
+                pihakMengetahui.getPangkat(),
+                pihakMengetahui.getGlrDpn(),
+                pihakMengetahui.getGlrBlk(),
+                beritaAcara.getKotaPembuatanSurat(),
+                beritaAcara.getTanggalPembuatanMilis(),
+                base64BarcodeImage);
+
+        return beritaAcaraWrapper;
+    }
+
 }

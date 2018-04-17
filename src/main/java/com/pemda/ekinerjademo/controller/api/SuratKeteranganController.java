@@ -400,5 +400,99 @@ public class SuratKeteranganController {
         return new ResponseEntity<Object>(new CustomMessage("surat keterangan opened by penilai"), HttpStatus.OK);
 
     }
+
+    /**
+     *
+     *
+     *
+     * @param kdSuratKeterangan
+     * @return
+     */
+    public SuratKeteranganWrapper getSuratKeteranganWrapper(String kdSuratKeterangan) {
+        SuratKeterangan suratKeterangan = suratKeteranganService.getByKdSuratKeterangan(kdSuratKeterangan);
+
+        EkinerjaXMLParser ekinerjaXMLParser = new EkinerjaXMLParser();
+
+        CustomPegawaiCredential penandatangan = null;
+
+        List<CustomPegawaiCredential> qutPegawaiList
+                = qutPegawaiService.getCustomPegawaiCredentials();
+
+        List<String> nipPegawaiKeteranganList
+                = ekinerjaXMLParser.convertXmlSuratPerintahIntoListofString(
+                suratKeterangan.getNipPegawaiKeterangan(), "nip");
+
+        List<CustomPegawaiCredential> pegawaiKeteranganList
+                = new ArrayList<>();
+        List<CustomPegawaiCredential> targetPegawaiKeteranganList
+                = new ArrayList<>();
+
+        for (CustomPegawaiCredential customPegawaiCredential : qutPegawaiList) {
+            if (customPegawaiCredential.getNip()
+                    .equals(suratKeterangan.getNipPenandatangan())) {
+                penandatangan = customPegawaiCredential;
+                break;
+            }
+        }
+
+        for (String nip : nipPegawaiKeteranganList) {
+            for (CustomPegawaiCredential customPegawaiCredential : qutPegawaiList) {
+                if (customPegawaiCredential.getNip()
+                        .equals(nip)) {
+                    customPegawaiCredential
+                            .setUnitKerja(tkdUnkDao.findOne(customPegawaiCredential.getKdUnitKerja()).getUnitKerja());
+                    pegawaiKeteranganList.add(customPegawaiCredential);
+                    break;
+                }
+            }
+        }
+
+        for (TargetSuratKeterangan targetSuratKeterangan
+                : suratKeterangan.getTargetSuratKeteranganList()) {
+            for (CustomPegawaiCredential customPegawaiCredential
+                    : qutPegawaiList) {
+                if (customPegawaiCredential.getNip()
+                        .equals(targetSuratKeterangan.getTargetSuratKeteranganId().getNipPegawai())) {
+                    customPegawaiCredential
+                            .setUnitKerja(tkdUnkDao.findOne(customPegawaiCredential.getKdUnitKerja()).getUnitKerja());
+
+                    pegawaiKeteranganList.add(customPegawaiCredential);
+                    break;
+                }
+            }
+        }
+
+        String base64BarcodeImage = null;
+        if (suratKeterangan.getKdBarcode() != null) {
+            BarcodeGenerator generator = new BarcodeGenerator();
+
+            base64BarcodeImage
+                    = generator.convertBarcodeImageIntoBase64String(
+                    generator.generateBarcode(suratKeterangan.getKdBarcode()));
+        }
+        SuratKeteranganWrapper suratKeteranganWrapper
+                = new SuratKeteranganWrapper(
+                suratKeterangan.getKdSuratKeterangan(),
+                suratKeterangan.getNomorUrusan(),
+                suratKeterangan.getNomorUrut(),
+                suratKeterangan.getNomorPasanganUrut(),
+                suratKeterangan.getNomorUnit(),
+                suratKeterangan.getNomorTahun(),
+                penandatangan.getNip(),
+                penandatangan.getNama(),
+                penandatangan.getJabatan(),
+                tkdUnkDao.findOne(penandatangan.getKdUnitKerja()).getUnitKerja(),
+                penandatangan.getPangkat(), penandatangan.getGol(), penandatangan.getGlrDpn(),
+                penandatangan.getGlrBlk(),
+                suratKeterangan.getIsiSuratKeterangan(),
+                suratKeterangan.getKotaPembuatanSurat(),
+                suratKeterangan.getTanggalPembuatanSuratMilis(),
+                pegawaiKeteranganList,
+                targetPegawaiKeteranganList,
+                base64BarcodeImage);
+
+        return suratKeteranganWrapper;
+
+    }
     
 }

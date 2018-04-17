@@ -396,4 +396,82 @@ public class SuratPengantarController {
 
     }
 
+    public SuratPengantarWrapper getSuratPengantarWrapper(String kdSuratPengantar) {
+        SuratPengantar suratPengantar
+                = suratPengantarService.getByKdSuratPengantar(kdSuratPengantar);
+
+        CustomPegawaiCredential pemberiSurat  = null,
+                penerimaSurat = null;
+
+        List<CustomPegawaiCredential> qutPegawaiList
+                = qutPegawaiService.getCustomPegawaiCredentials();
+
+        for (CustomPegawaiCredential pegawai : qutPegawaiList) {
+            if (suratPengantar.getNipPemberiSuratPengantar()
+                    .equals(pegawai.getNip())) {
+                pemberiSurat = pegawai;
+
+                break;
+            }
+        }
+
+        for (CustomPegawaiCredential pegawai : qutPegawaiList) {
+            if (suratPengantar.getKdJabatanPenerimaSuratPengantar()
+                    .equals(pegawai.getKdJabatan())) {
+                pegawai.setUnitKerja(tkdUnkDao.findOne(pegawai.getKdUnitKerja()).getUnitKerja());
+
+                penerimaSurat = pegawai;
+
+                break;
+            }
+        }
+
+        TkdJabatan jabatan
+                = tkdJabatanService.getTkdJabatan(suratPengantar.getKdJabatanPenerimaSuratPengantar());
+
+        List<SuratPengantarIsiWrapper> suratPengantarIsiWrapperList
+                = new ArrayList<>();
+
+        for (SuratPengantarIsi isi
+                : suratPengantar.getSuratPengantarIsiList()) {
+            suratPengantarIsiWrapperList
+                    .add(new SuratPengantarIsiWrapper(
+                            isi.getNaskahDinasYangDikirim(),
+                            isi.getBanyakNaskah(),
+                            isi.getKeterangan()));
+        }
+
+        String base64BarcodeImage = null;
+        if (suratPengantar.getKdBarcode() != null) {
+            BarcodeGenerator generator = new BarcodeGenerator();
+
+            base64BarcodeImage
+                    = generator.convertBarcodeImageIntoBase64String(
+                    generator.generateBarcode(suratPengantar.getKdBarcode()));
+        }
+        SuratPengantarWrapper suratPengantarWrapper
+                = new SuratPengantarWrapper(
+                suratPengantar.getNomorUrusan(),
+                suratPengantar.getNomorUrut(),
+                suratPengantar.getNomorPasanganUrut(),
+                suratPengantar.getNomorUnit(),
+                suratPengantar.getNomorTahun(),
+                suratPengantar.getTanggalPembuatanMilis(),
+                suratPengantar.getTanggalDiterimaSuratPengantar(),
+                jabatan.getKdJabatan(),
+                jabatan.getJabatan(),
+                penerimaSurat,
+                pemberiSurat.getNip(),
+                pemberiSurat.getNama(),
+                pemberiSurat.getJabatan(),
+                tkdUnkDao.findOne(pemberiSurat.getKdUnitKerja()).getUnitKerja(),
+                pemberiSurat.getGlrDpn(),
+                pemberiSurat.getGlrBlk(),
+                pemberiSurat.getPangkat(), pemberiSurat.getGol(), suratPengantar.getNomorTeleponPemberi(),
+                suratPengantarIsiWrapperList,
+                base64BarcodeImage);
+
+        return suratPengantarWrapper;
+    }
+
 }

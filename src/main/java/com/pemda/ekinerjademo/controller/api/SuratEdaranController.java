@@ -308,4 +308,85 @@ public class SuratEdaranController {
 
     }
 
+    /**
+     *
+     *
+     *
+     * @param kdSuratEdaran
+     * @return
+     */
+    public SuratEdaranWrapper getSuratEdaranWrapper(String kdSuratEdaran) {
+        SuratEdaran suratEdaran = suratEdaranService.getByKdSuratEdaran(kdSuratEdaran);
+
+        SuratEdaranWrapper suratEdaranWrapper
+                = new SuratEdaranWrapper();
+        List<SuratEdaranSubWrapper> suratEdaranSubWrappers
+                = new ArrayList<>();
+
+        List<CustomPegawaiCredential> qutPegawaiList
+                = qutPegawaiService.getCustomPegawaiCredentials();
+
+        CustomPegawaiCredential penandatangan = null;
+
+        for (CustomPegawaiCredential pegawai : qutPegawaiList) {
+            if (suratEdaran.getNipPenandatangan()
+                    .equals(pegawai.getNip())) {
+                penandatangan = pegawai;
+
+                break;
+            }
+        }
+
+        boolean isSuratPejabat = false;
+
+        if (suratEdaran.getSuratEdaranPejabat() != null)
+            isSuratPejabat = true;
+
+        String base64BarcodeImage = null;
+
+        if (suratEdaran.getKdBarcode() != null) {
+            BarcodeGenerator generator = new BarcodeGenerator();
+
+            base64BarcodeImage
+                    = generator.convertBarcodeImageIntoBase64String(
+                    generator.generateBarcode(suratEdaran.getKdBarcode()));
+        }
+
+        suratEdaranWrapper.setKdSuratEdaran(suratEdaran.getKdSuratEdaran());
+        suratEdaranWrapper.setNomorTahun(suratEdaran.getNomorTahun());
+        suratEdaranWrapper.setNomorUrut(suratEdaran.getNomorUrut());
+
+        suratEdaranWrapper.setTentang(suratEdaran.getTentang());
+        suratEdaranWrapper.setLatarBelakang(suratEdaran.getLatarBelakang());
+        suratEdaranWrapper.setMaksudDanTujuan(suratEdaran.getMaksudDanTujuan());
+        suratEdaranWrapper.setRuangLingkup(suratEdaran.getRuangLingkup());
+        suratEdaranWrapper.setDasar(suratEdaran.getDasar());
+
+        for (SuratEdaranSub suratEdaranSub
+                : suratEdaran.getSuratEdaranSubList()) {
+            suratEdaranSubWrappers
+                    .add(new SuratEdaranSubWrapper(
+                            suratEdaranSub.getSuratEdaranSubId().getKdSuratEdaran(),
+                            suratEdaranSub.getNamaSub(),
+                            suratEdaranSub.getIsiSub()));
+        }
+        suratEdaranWrapper.setSubLain(suratEdaranSubWrappers);
+
+        suratEdaranWrapper.setTanggalPembuatanMilis(suratEdaran.getTanggalPembuatanMilis());
+        suratEdaranWrapper.setKotaPembuatanSurat(suratEdaran.getKotaPembuatanSurat());
+
+        suratEdaranWrapper.setNipPenandatangan(penandatangan.getNip());
+        suratEdaranWrapper.setNamaPenandatangan(penandatangan.getNama());
+        suratEdaranWrapper.setJabatanPenandatangan(penandatangan.getJabatan());
+        suratEdaranWrapper.setUnitKerjaPenandatangan(tkdUnkDao.findOne(penandatangan.getKdUnitKerja()).getUnitKerja());
+        suratEdaranWrapper.setGelarDepanPenandatangan(penandatangan.getGlrDpn());
+        suratEdaranWrapper.setGelarBelakangPenandatangan(penandatangan.getGlrBlk());
+        suratEdaranWrapper.setPangkatPenandatangan(penandatangan.getPangkat());
+        suratEdaranWrapper.setGolonganPenandatangan(penandatangan.getGol());
+        suratEdaranWrapper.setSuratPejabat(isSuratPejabat);
+        suratEdaranWrapper.setBarcodeImage(base64BarcodeImage);
+
+        return suratEdaranWrapper;
+    }
+
 }

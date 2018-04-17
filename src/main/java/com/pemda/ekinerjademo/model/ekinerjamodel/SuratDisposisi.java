@@ -30,6 +30,8 @@ public class SuratDisposisi {
     private String kdSuratPenugasan;
     @Column(name = "no_surat_disposisi")
     private String noSuratDisposisi;
+    @Column(name = "path_file_upload")
+    private String pathFileUpload;
 
     public SuratDisposisi() {
     }
@@ -107,5 +109,13 @@ public class SuratDisposisi {
 
     public void setNoSuratDisposisi(String noSuratDisposisi) {
         this.noSuratDisposisi = noSuratDisposisi;
+    }
+
+    public String getPathFileUpload() {
+        return pathFileUpload;
+    }
+
+    public void setPathFileUpload(String pathFileUpload) {
+        this.pathFileUpload = pathFileUpload;
     }
 }

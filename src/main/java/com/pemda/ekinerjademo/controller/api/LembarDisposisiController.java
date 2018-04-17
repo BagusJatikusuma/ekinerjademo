@@ -8,10 +8,7 @@ import com.pemda.ekinerjademo.service.*;
 import com.pemda.ekinerjademo.util.DateUtilities;
 import com.pemda.ekinerjademo.util.FileUploader;
 import com.pemda.ekinerjademo.wrapper.input.LembarDisposisiInputWrapper;
-import com.pemda.ekinerjademo.wrapper.output.CustomMessage;
-import com.pemda.ekinerjademo.wrapper.output.DokumenLembarDisposisiWrapper;
-import com.pemda.ekinerjademo.wrapper.output.LembarDisposisiWrapper;
-import com.pemda.ekinerjademo.wrapper.output.QutPegawaiWrapper;
+import com.pemda.ekinerjademo.wrapper.output.*;
 import groovy.transform.Synchronized;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -39,6 +36,42 @@ public class LembarDisposisiController {
     @Autowired private SuratDisposisiService suratDisposisiService;
     @Autowired private QutPegawaiCloneService qutPegawaiService;
 
+    //service yang digunakan untuk mengambil surat disposisi
+    @Autowired private BeritaAcaraService beritaAcaraService;
+    @Autowired private SuratPerintahService suratPerintahService;
+    @Autowired private LaporanService laporanService;
+    @Autowired private MemorandumService memorandumService;
+    @Autowired private NotaDinasService notaDinasService;
+    @Autowired private PengumumanService pengumumanService;
+    @Autowired private SuratDinasService suratDinasService;
+    @Autowired private SuratEdaranService suratEdaranService;
+    @Autowired private SuratKeputusanService suratKeputusanService;
+    @Autowired private SuratKeteranganService suratKeteranganService;
+    @Autowired private SuratKuasaService suratKuasaService;
+    @Autowired private SuratPengantarService suratPengantarService;
+    @Autowired private SuratTugasService suratTugasService;
+    @Autowired private SuratUndanganService suratUndanganService;
+    @Autowired private TelaahanStafService telaahanStafService;
+    @Autowired private TemplateLainService templateLainService;
+    @Autowired private LoginPegawaiService loginPegawaiService;
+    @Autowired private SuratInstruksiService suratInstruksiService;
+
+    @Autowired private BeritaAcaraController beritaAcaraController;
+    @Autowired private SuratPerintahController suratPerintahController;
+    @Autowired private LaporanController laporanController;
+    @Autowired private MemorandumController memorandumController;
+    @Autowired private NotaDinasController notaDinasController;
+    @Autowired private PengumumanController pengumumanController;
+    @Autowired private SuratDinasController suratDinasController;
+    @Autowired private SuratEdaranController suratEdaranController;
+    @Autowired private SuratKeputusanController suratKeputusanController;
+    @Autowired private SuratKeteranganController suratKeteranganController;
+    @Autowired private SuratKuasaController suratKuasaController;
+    @Autowired private SuratPengantarController suratPengantarController;
+    @Autowired private SuratTugasController suratTugasController;
+    @Autowired private SuratUndanganController suratUndanganController;
+    @Autowired private TelaahanStafController telaahanStafController;
+    @Autowired private SuratInstruksiController suratInstruksiController;
 
     /**
      *
@@ -413,6 +446,102 @@ public class LembarDisposisiController {
         lembarDisposisiService.openLembarDisposisiTarget(new TargetLembarDisposisiId(kdLembarDisposisi, nipPegawai));
 
         return new ResponseEntity<Object>(new CustomMessage("lembar disposisi opened"), HttpStatus.OK);
+    }
+
+    /**
+     *
+     * Service yang digunakan untuk melihat surat yang didisposisikan
+     *
+     * @param kdLembarDisposisi
+     * @return
+     */
+    @RequestMapping(value = "/get-surat-disposisi/{kdLembarDisposisi}", method = RequestMethod.GET)
+    ResponseEntity<?> getSuratDisposisi(@PathVariable("kdLembarDisposisi") String kdLembarDisposisi) {
+        LOGGER.info("get surat disposisi");
+
+        SuratDisposisi suratDisposisi =
+                lembarDisposisiService.findByKdLembarDisposisi(kdLembarDisposisi).getNoSuratDisposisi();
+
+        SuratDisposisiWrapper suratDisposisiWrapper = new SuratDisposisiWrapper();
+
+        switch (suratDisposisi.getJenisSuratPenugasan()) {
+            case 0 :
+                suratDisposisiWrapper.setJenisSurat(suratDisposisi.getJenisSuratPenugasan());
+                suratDisposisiWrapper.setSuratDisposisi(beritaAcaraController.getBeritaAcaraWrapper(suratDisposisi.getKdSuratPenugasan()));
+
+                break;
+            case 1 :
+                suratDisposisiWrapper.setJenisSurat(suratDisposisi.getJenisSuratPenugasan());
+                suratDisposisiWrapper.setSuratDisposisi(laporanController.getLaporanWrapper(suratDisposisi.getKdSuratPenugasan()));
+
+                break;
+            case 2 :
+                suratDisposisiWrapper.setJenisSurat(suratDisposisi.getJenisSuratPenugasan());
+                suratDisposisiWrapper.setSuratDisposisi(memorandumController.getMemorandumWrapper(suratDisposisi.getKdSuratPenugasan()));
+
+                break;
+            case 3 :
+                suratDisposisiWrapper.setJenisSurat(suratDisposisi.getJenisSuratPenugasan());
+                suratDisposisiWrapper.setSuratDisposisi(notaDinasController.getNotaDinasWrapper(suratDisposisi.getKdSuratPenugasan()));
+
+                break;
+            case 4 :
+                suratDisposisiWrapper.setJenisSurat(suratDisposisi.getJenisSuratPenugasan());
+                break;
+            case 5 :
+                suratDisposisiWrapper.setJenisSurat(suratDisposisi.getJenisSuratPenugasan());
+                suratDisposisiWrapper.setSuratDisposisi(suratDinasController.getSuratDinasWrapper(suratDisposisi.getKdSuratPenugasan()));
+
+                break;
+            case 6 :
+                suratDisposisiWrapper.setJenisSurat(suratDisposisi.getJenisSuratPenugasan());
+                suratDisposisiWrapper.setSuratDisposisi(suratEdaranController.getSuratEdaranWrapper(suratDisposisi.getKdSuratPenugasan()));
+
+                break;
+            case 7 :
+                suratDisposisiWrapper.setJenisSurat(suratDisposisi.getJenisSuratPenugasan());
+                break;
+            case 8 :
+                suratDisposisiWrapper.setJenisSurat(suratDisposisi.getJenisSuratPenugasan());
+                suratDisposisiWrapper.setSuratDisposisi(suratKeteranganController.getSuratKeteranganWrapper(suratDisposisi.getKdSuratPenugasan()));
+
+                break;
+            case 9 :
+                suratDisposisiWrapper.setJenisSurat(suratDisposisi.getJenisSuratPenugasan());
+                suratDisposisiWrapper.setSuratDisposisi(suratKuasaController.getSuratKuasaWrapper(suratDisposisi.getKdSuratPenugasan()));
+
+                break;
+            case 10 :
+                suratDisposisiWrapper.setJenisSurat(suratDisposisi.getJenisSuratPenugasan());
+                suratDisposisiWrapper.setSuratDisposisi(suratPengantarController.getSuratPengantarWrapper(suratDisposisi.getKdSuratPenugasan()));
+
+                break;
+            case 11 :
+                suratDisposisiWrapper.setJenisSurat(suratDisposisi.getJenisSuratPenugasan());
+                suratDisposisiWrapper.setSuratDisposisi(suratPerintahController.getSuratPerintahWrapper(suratDisposisi.getKdSuratPenugasan()));
+
+                break;
+            case 12 :
+                suratDisposisiWrapper.setJenisSurat(suratDisposisi.getJenisSuratPenugasan());
+                suratDisposisiWrapper.setSuratDisposisi(suratTugasController.getSuratTugasWrapper(suratDisposisi.getKdSuratPenugasan()));
+
+                break;
+            case 13 :
+                suratDisposisiWrapper.setJenisSurat(suratDisposisi.getJenisSuratPenugasan());
+                suratDisposisiWrapper.setSuratDisposisi(suratUndanganController.getSuratUndanganWrapper(suratDisposisi.getKdSuratPenugasan()));
+
+                break;
+            case 14 :
+                suratDisposisiWrapper.setJenisSurat(suratDisposisi.getJenisSuratPenugasan());
+                suratDisposisiWrapper.setSuratDisposisi(telaahanStafController.getTelaahanStaffWrapper(suratDisposisi.getKdSuratPenugasan()));
+
+                break;
+            case 15 :
+                suratDisposisiWrapper.setJenisSurat(suratDisposisi.getJenisSuratPenugasan());
+                break;
+        }
+
+        return new ResponseEntity<>(suratDisposisiWrapper, HttpStatus.OK);
     }
 
 }

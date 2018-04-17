@@ -545,4 +545,129 @@ public class SuratUndanganController {
 
         return new ResponseEntity<Object>(new CustomMessage("surat undangan sudah diapprove"), HttpStatus.OK);
     }
+
+    /**
+     *
+     *
+     *
+     * @param kdSuratUndangan
+     * @return
+     */
+    public SuratUndanganWrapper getSuratUndanganWrapper(String kdSuratUndangan) {
+        SuratUndangan suratUndangan
+                = suratUndanganService.getByKdSuratUndangan(kdSuratUndangan);
+
+        List<JabatanWrapper> tembusanSuratUndanganList
+                = new ArrayList<>();
+        CustomPegawaiCredential
+                penerima = null,
+                penandatangan = null;
+
+        List<CustomPegawaiCredential> qutPegawaiList
+                = qutPegawaiService.getCustomPegawaiCredentials();
+
+        //get penerima
+        for (CustomPegawaiCredential qutPegawai : qutPegawaiList) {
+            if (qutPegawai.getNip()
+                    .equals(suratUndangan.getNipPenerimaSuratUndangan())) {
+                penerima = qutPegawai;
+                break;
+            }
+        }
+        //get penandatangan
+        for (CustomPegawaiCredential qutPegawai : qutPegawaiList) {
+            if (qutPegawai.getNip()
+                    .equals(suratUndangan.getNipPenandatangan())) {
+                penandatangan = qutPegawai;
+                break;
+            }
+        }
+
+        List<TkdJabatan> tkdJabatanList = tkdJabatanService.getAll();
+        for (TembusanSuratUndangan target
+                : suratUndangan.getTembusanSuratUndanganList()) {
+            for (TkdJabatan tkdJabatan : tkdJabatanList){
+                if (tkdJabatan.getKdJabatan()
+                        .equals(target.getTembusanSuratUndanganId().getKdJabatan())) {
+                    JabatanWrapper jabatanWrapper = new JabatanWrapper();
+
+                    jabatanWrapper.setKdJabatan(tkdJabatan.getKdJabatan());
+                    jabatanWrapper.setJabatan(tkdJabatan.getJabatan());
+                    jabatanWrapper.setEselon(tkdJabatan.getEselon());
+
+                    tembusanSuratUndanganList.add(jabatanWrapper);
+
+                    break;
+
+                }
+
+            }
+
+        }
+
+        boolean isSuratPejabat = false;
+
+        if (suratUndangan.getSuratUndanganPejabat() != null)
+            isSuratPejabat = true;
+
+        String base64BarcodeImage = null;
+
+        if (suratUndangan.getKdBarcode() != null) {
+            BarcodeGenerator generator = new BarcodeGenerator();
+
+            base64BarcodeImage
+                    = generator.convertBarcodeImageIntoBase64String(
+                    generator.generateBarcode(suratUndangan.getKdBarcode()));
+        }
+
+        SuratUndanganWrapper suratUndanganWrapper = new SuratUndanganWrapper();
+
+        suratUndanganWrapper.setKdSuratUndangan(suratUndangan.getKdSuratUndangan());
+
+        suratUndanganWrapper.setNomorUrusan(suratUndangan.getNomorUrusan());
+        suratUndanganWrapper.setNomorUrut(suratUndangan.getNomorUrut());
+        suratUndanganWrapper.setNomorPasanganUrut(suratUndangan.getNomorPasanganUrut());
+        suratUndanganWrapper.setNomorUnit(suratUndangan.getNomorUnit());
+        suratUndanganWrapper.setNomorTahun(suratUndangan.getNomorTahun());
+
+        suratUndanganWrapper.setKdJabatanPenerimaSuratUndangan(penerima.getKdJabatan());
+        suratUndanganWrapper.setJabatanPenerimaSuratUndangan(penerima.getJabatan());
+        suratUndanganWrapper.setTanggalPembuatanSurat(suratUndangan.getTanggalPembuatanSurat());
+        suratUndanganWrapper.setKotaPembuatanSurat(suratUndangan.getKotaPembuatanSurat());
+        suratUndanganWrapper.setSifat(suratUndangan.getSifat());
+        suratUndanganWrapper.setHal(suratUndangan.getHal());
+        suratUndanganWrapper.setLampiran(suratUndangan.getLampiran());
+
+        suratUndanganWrapper.setNipPenerimaSuratUndangan(penerima.getNip());
+        suratUndanganWrapper.setNamaPenerimaSuratUndangan(penerima.getNama());
+        suratUndanganWrapper
+                .setUnitKerjaPenerimaSuratUndangan(tkdUnkDao.findOne(penerima.getKdUnitKerja()).getUnitKerja());
+        suratUndanganWrapper.setGelarDepanPenerimaSuratUndangan(penerima.getGlrDpn());
+        suratUndanganWrapper.setGelarBelakangPenerimaSuratUndangan(penerima.getGlrBlk());
+        suratUndanganWrapper.setPangkatPenerimaSuratUndangan(penerima.getPangkat());
+        suratUndanganWrapper.setGolonganPenerimaSuratUndangan(penerima.getGol());
+
+        suratUndanganWrapper.setBagianPembukaSuratUndangan(suratUndangan.getBagianPembukaSuratUndangan());
+        suratUndanganWrapper.setBagianIsiHariSuratUndangan(suratUndangan.getBagianIsiHariSuratUndangan());
+        suratUndanganWrapper.setBagianIsiTanggalSuratUndangan(suratUndangan.getBagianIsiTanggalSuratUndangan());
+        suratUndanganWrapper.setBagianIsiWaktuSuratUndangan(suratUndangan.getBagianIsiWaktuSuratUndangan());
+        suratUndanganWrapper.setBagianIsiTempatSuratUndangan(suratUndangan.getBagianIsiTempatSuratUndangan());
+        suratUndanganWrapper.setBagianIsiAcaraSuratUndangan(suratUndangan.getBagianIsiAcaraSuratUndangan());
+        suratUndanganWrapper.setBagianPenutupSuratUndangan(suratUndangan.getBagianPenutupSuratUndangan());
+
+        suratUndanganWrapper.setNipPenandatangan(penandatangan.getNip());
+        suratUndanganWrapper.setNamaPenandatangan(penandatangan.getNama());
+        suratUndanganWrapper.setUnitKerjaPenandatangan(tkdUnkDao.findOne(penandatangan.getKdUnitKerja()).getUnitKerja());
+        suratUndanganWrapper.setJabatanPenandatangan(penandatangan.getJabatan());
+        suratUndanganWrapper.setGelarDepanPenandatangan(penandatangan.getGlrDpn());
+        suratUndanganWrapper.setGelarBelakangPenandatangan(penandatangan.getGlrBlk());
+        suratUndanganWrapper.setPangkatPenandatangan(penandatangan.getPangkat());
+        suratUndanganWrapper.setGolonganPenandatangan(penandatangan.getGol());
+        suratUndanganWrapper.setBarcodeImage(base64BarcodeImage);
+
+        suratUndanganWrapper.setTembusanSuratUndanganList(tembusanSuratUndanganList);
+        suratUndanganWrapper.setSuratPejabat(isSuratPejabat);
+
+        return suratUndanganWrapper;
+    }
 }

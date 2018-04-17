@@ -520,4 +520,136 @@ public class SuratInstruksiController {
         return new ResponseEntity<Object>(new CustomMessage("surat instruksi opened"), HttpStatus.OK);
     }
 
+    /**
+     *
+     *
+     *
+     * @param kdSuratInstruksi
+     * @return
+     */
+    public DokumenSuratInstruksiWrapper getSuratInstruksiWrapper(String kdSuratInstruksi) {
+        EkinerjaXMLParser ekinerjaXMLParser = new EkinerjaXMLParser();
+
+        SuratInstruksi suratInstruksi
+                = suratInstruksiService.getDokumenSuratInstruksi(kdSuratInstruksi);
+        List<CustomPegawaiCredential> qutPegawaiList
+                = qutPegawaiService.getCustomPegawaiCredentials();
+        List<TkdJabatan> tkdJabatanList
+                = tkdJabatanService.getAll();
+
+        List<String> daftarIsiInstruksi
+                = ekinerjaXMLParser.convertXmlSuratPerintahIntoListofString(
+                suratInstruksi.getIsiInstruksi(), "instruksi");
+//        List<String> targetNamaPegawai = new ArrayList<>();
+        List<QutPegawaiWrapper> targetPegawai = new ArrayList<>();
+        List<JabatanWrapper> targetJabatan = new ArrayList<>();
+
+        TkdJabatan tkdJabatan = null;
+        CustomPegawaiCredential penandatanganSurat = null;
+
+        DokumenSuratInstruksiWrapper dokumenSuratInstruksiWrapper
+                = new DokumenSuratInstruksiWrapper();
+
+        for (CustomPegawaiCredential customPegawaiCredential
+                : qutPegawaiList) {
+            if (customPegawaiCredential.getNip()
+                    .equals(suratInstruksi.getNipPembuat())) {
+                penandatanganSurat = customPegawaiCredential;
+                break;
+            }
+        }
+
+        for (InstruksiPegawai instruksiPegawai
+                :suratInstruksi.getInstruksiPegawaiSet()) {
+            for (CustomPegawaiCredential pegawai : qutPegawaiList) {
+                if (pegawai.getNip()
+                        .equals(instruksiPegawai.getInstruksiPegawaiId().getNipPegawai())) {
+//                    targetNamaPegawai.add(pegawai.getNama());
+                    targetPegawai
+                            .add(new QutPegawaiWrapper(
+                                    pegawai.getNip(),
+                                    pegawai.getNama(),
+                                    pegawai.getKdJabatan(),
+                                    pegawai.getJabatan(),
+                                    pegawai.getKdUnitKerja(),
+                                    pegawai.getUnitKerja(),
+                                    pegawai.getPangkat(),
+                                    pegawai.getGol(),
+                                    "",
+                                    pegawai.getGlrDpn(),
+                                    pegawai.getGlrBlk()));
+                    break;
+                }
+
+            }
+
+        }
+
+        for (InstruksiPejabat instruksiPejabat
+                :suratInstruksi.getInstruksiPejabatSet()) {
+            for (TkdJabatan jabatan : tkdJabatanList) {
+                if (jabatan.getKdJabatan()
+                        .equals(instruksiPejabat.getInstruksiPejabatId().getKdJabatan())) {
+                    JabatanWrapper jabatanWrapper = new JabatanWrapper();
+
+                    jabatanWrapper.setKdJabatan(tkdJabatan.getKdJabatan());
+                    jabatanWrapper.setJabatan(tkdJabatan.getJabatan());
+                    jabatanWrapper.setEselon(tkdJabatan.getEselon());
+
+                    targetJabatan.add(jabatanWrapper);
+                    break;
+                }
+
+            }
+
+        }
+
+        String base64BarcodeImage = null;
+        if (suratInstruksi.getKdBarcode() != null) {
+            BarcodeGenerator generator = new BarcodeGenerator();
+
+            base64BarcodeImage
+                    = generator.convertBarcodeImageIntoBase64String(generator.generateBarcode(suratInstruksi.getKdBarcode()));
+        }
+        dokumenSuratInstruksiWrapper.setKdInstruksi(suratInstruksi.getKdInstruksi());
+        dokumenSuratInstruksiWrapper.setJudulInstruksi(suratInstruksi.getJudulInstruksi());
+        dokumenSuratInstruksiWrapper.setNomor(suratInstruksi.getNomor());
+        dokumenSuratInstruksiWrapper.setTahun(suratInstruksi.getTahun());
+        dokumenSuratInstruksiWrapper.setTentang(suratInstruksi.getTentang());
+        dokumenSuratInstruksiWrapper.setKdJabatanPenandatangan(penandatanganSurat.getKdJabatan());
+        dokumenSuratInstruksiWrapper.setJabatanPenandaTangan(penandatanganSurat.getJabatan());
+        dokumenSuratInstruksiWrapper.setNamaPenandatangan(penandatanganSurat.getNama());
+        dokumenSuratInstruksiWrapper.setNipPenandatangan(penandatanganSurat.getNip());
+        dokumenSuratInstruksiWrapper.setAlasan(suratInstruksi.getAlasan());
+        dokumenSuratInstruksiWrapper.setDaftarIsiInstruksi(daftarIsiInstruksi);
+        Locale indoLocale = new Locale("id", "ID");
+        dokumenSuratInstruksiWrapper
+                .setTanggalDibuat(DateUtilities.createLocalDate(new Date(suratInstruksi.getCreateddateMilis()), "dd MMMM yyyy", indoLocale));
+        dokumenSuratInstruksiWrapper.setDikeluarkanDi(suratInstruksi.getDikeluarkanDi());
+        dokumenSuratInstruksiWrapper.setTargetPegawaiList(targetPegawai);
+        dokumenSuratInstruksiWrapper.setTargetJabatanList(targetJabatan);
+        dokumenSuratInstruksiWrapper.setGelarDepanPenandatangan(penandatanganSurat.getGlrDpn());
+        dokumenSuratInstruksiWrapper.setGelarBelakangPenandantangan(penandatanganSurat.getGlrBlk());
+        dokumenSuratInstruksiWrapper.setPangkatPenandatangan(penandatanganSurat.getPangkat());
+        dokumenSuratInstruksiWrapper.setGolonganPenandatangan(penandatanganSurat.getGol());
+        dokumenSuratInstruksiWrapper.setBarcodeImage(base64BarcodeImage);
+
+        if (suratInstruksi.getSuratInstruksiPejabat() != null) {
+            tkdJabatan
+                    = tkdJabatanService.getTkdJabatan(suratInstruksi.getSuratInstruksiPejabat().getKdJabatan());
+            dokumenSuratInstruksiWrapper.setSuratPejabat(true);
+            dokumenSuratInstruksiWrapper.setJabatanSuratPejabat(tkdJabatan.getJabatan());
+            dokumenSuratInstruksiWrapper.setUnitKerja(null);
+        } else {
+            dokumenSuratInstruksiWrapper.setSuratPejabat(false);
+            dokumenSuratInstruksiWrapper.setJabatanSuratPejabat(null);
+
+            TkdUnk tkdUnk = tkdUnkDao.findOne(penandatanganSurat.getKdUnitKerja());
+
+            dokumenSuratInstruksiWrapper.setUnitKerja(tkdUnk.getUnitKerja());
+        }
+
+        return dokumenSuratInstruksiWrapper;
+    }
+
 }

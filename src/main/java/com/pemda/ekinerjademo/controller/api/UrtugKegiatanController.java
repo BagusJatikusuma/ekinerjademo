@@ -393,7 +393,7 @@ public class UrtugKegiatanController {
 
     /**
      *
-     * servie yang digunakan untuk menghapus data urtug kegiatan
+     * service yang digunakan untuk menghapus data urtug kegiatan
      * digunakan oleh admin unit kerja
      *
      * @return notifikasi proses

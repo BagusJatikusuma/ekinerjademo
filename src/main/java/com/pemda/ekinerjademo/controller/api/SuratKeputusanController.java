@@ -246,4 +246,56 @@ public class SuratKeputusanController {
         return new ResponseEntity<Object>(new CustomMessage("surat keputusan opened by penilai"), HttpStatus.OK);
 
     }
+
+    public SuratKeputusanWrapper getSuratKeputusanWrapper(String kdSuratKeputusan) {
+        SuratKeputusan suratKeputusan = suratKeputusanService.getByKdSuratKeputusan(kdSuratKeputusan);
+
+        EkinerjaXMLParser ekinerjaXMLParser = new EkinerjaXMLParser();
+
+        CustomPegawaiCredential penandatangan = null;
+
+        List<CustomPegawaiCredential> qutPegawaiList
+                = qutPegawaiService.getCustomPegawaiCredentials();
+
+        for (CustomPegawaiCredential customPegawaiCredential : qutPegawaiList) {
+            if (customPegawaiCredential.getNip()
+                    .equals(suratKeputusan.getNipPenandatangan())) {
+                penandatangan = customPegawaiCredential;
+                break;
+            }
+        }
+
+        String base64BarcodeImage = null;
+        if (suratKeputusan.getKdBarcode() != null) {
+            BarcodeGenerator generator = new BarcodeGenerator();
+
+            base64BarcodeImage
+                    = generator.convertBarcodeImageIntoBase64String(
+                    generator.generateBarcode(suratKeputusan.getKdBarcode()));
+        }
+        SuratKeputusanWrapper suratKeputusanWrapper
+                = new SuratKeputusanWrapper(
+                suratKeputusan.getKdSuratKeputusan(),
+                suratKeputusan.getNomorUrut(),
+                suratKeputusan.getNomorTahun(),
+                penandatangan.getNip(),
+                penandatangan.getNama(),
+                penandatangan.getJabatan(),
+                tkdUnkDao.findOne(penandatangan.getKdUnitKerja()).getUnitKerja(),
+                penandatangan.getGlrDpn(),
+                penandatangan.getGlrBlk(),
+                penandatangan.getPangkat(),
+                penandatangan.getGol(),
+                suratKeputusan.getSelaku(),
+                suratKeputusan.getTentang(),
+                ekinerjaXMLParser.convertXmlSuratPerintahIntoListofString(suratKeputusan.getMenimbang(), "menimbang"),
+                ekinerjaXMLParser.convertXmlSuratPerintahIntoListofString(suratKeputusan.getMengingat(), "mengingat"),
+                ekinerjaXMLParser.convertXmlSuratPerintahIntoListofString(suratKeputusan.getMenetapkan(), "menetapkan"),
+                suratKeputusan.getTanggalPembuatanMilis(),
+                suratKeputusan.getKotaPembuatanSurat(),
+                base64BarcodeImage);
+
+        return suratKeputusanWrapper;
+
+    }
 }

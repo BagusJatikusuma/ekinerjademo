@@ -204,4 +204,71 @@ public class LaporanController {
         return new ResponseEntity<Object>(laporanWrapper,HttpStatus.OK);
     }
 
+    public LaporanWrapper getLaporanWrapper(String kdLaporan) {
+        Laporan laporan = laporanService.getLaporan(kdLaporan);
+
+        CustomPegawaiCredential penandatangan = null, pembuat = null;
+
+        List<CustomPegawaiCredential> qutPegawaiList
+                = qutPegawaiService.getCustomPegawaiCredentials();
+
+        // get penandatangan
+        for (CustomPegawaiCredential qutPegawai : qutPegawaiList) {
+            if (qutPegawai.getNip()
+                    .equals(laporan.getNipPenandatangan())) {
+                penandatangan = qutPegawai;
+                break;
+            }
+        }
+        // get pembuat
+        for (CustomPegawaiCredential qutPegawai : qutPegawaiList) {
+            if (qutPegawai.getNip()
+                    .equals(laporan.getNipPembuatSurat())) {
+                pembuat = qutPegawai;
+                break;
+            }
+        }
+
+
+        String base64BarcodeImage = null;
+        if (laporan.getKdBarcode() != null) {
+            BarcodeGenerator generator = new BarcodeGenerator();
+
+            base64BarcodeImage
+                    = generator.convertBarcodeImageIntoBase64String(
+                    generator.generateBarcode(laporan.getKdBarcode()));
+        }
+        LaporanWrapper laporanWrapper
+                = new LaporanWrapper(
+                laporan.getKdLaporan(),
+                laporan.getTentang(),
+                laporan.getUmum(),
+                laporan.getMaksudDanTujuan(),
+                laporan.getRuangLingkup(),
+                laporan.getDasar(),
+                laporan.getKegiatanYangDilaksanakan(),
+                laporan.getHasilYangDicapai(),
+                laporan.getSimpulanDanSaran(),
+                laporan.getPenutup(),
+                penandatangan.getNip(),
+                penandatangan.getNama(),
+                penandatangan.getJabatan(),
+                tkdUnkDao.findOne(penandatangan.getKdUnitKerja()).getUnitKerja(),
+                penandatangan.getGlrDpn(),
+                penandatangan.getGlrBlk(),
+                penandatangan.getPangkat(),
+                penandatangan.getGol(),
+                laporan.getStatusBaca(),
+                laporan.getKotaPembuatanSurat(),
+                laporan.getTanggalPembuatanMilis(),
+                pembuat.getNip(),
+                pembuat.getNama(),
+                pembuat.getJabatan(),
+                tkdUnkDao.findOne(pembuat.getKdUnitKerja()).getUnitKerja(),
+                pembuat.getGlrDpn(), pembuat.getGlrBlk(), pembuat.getPangkat(), pembuat.getGol(),
+                base64BarcodeImage);
+
+        return laporanWrapper;
+    }
+
 }

@@ -386,7 +386,13 @@ public class PenanggungJawabKegiatanController {
                 = qutPegawaiService.getQutPegawaiByKdJabatan(kdJabatan);
 
         List<KegiatanPenanggungJawabProjection> kegiatanList
-                = penanggungJawabKegiatanService.getKegiatanProjectionByPegawai(qutPegawaiCloneList.get(0).getNip());
+                = new ArrayList<>();
+
+        for (QutPegawaiClone qutPegawaiClone : qutPegawaiCloneList) {
+            kegiatanList.addAll(penanggungJawabKegiatanService.getKegiatanProjectionByPegawai(qutPegawaiClone.getNip()));
+        }
+//        kegiatanList
+//                = penanggungJawabKegiatanService.getKegiatanProjectionByPegawai(qutPegawaiCloneList.get(0).getNip());
 
         List<TaKegiatan> taKegiatanList
                 = taKegiatanService.findByUnitKerja(unitKerjaKegiatan);

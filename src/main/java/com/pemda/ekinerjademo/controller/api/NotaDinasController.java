@@ -455,4 +455,107 @@ public class NotaDinasController {
                 new CustomMessage("nota dinas opened"), HttpStatus.OK);
     }
 
+    /**
+     *
+     *
+     *
+     * @param kdNotaDinas
+     * @return
+     */
+    public NotaDinasWrapper getNotaDinasWrapper(String kdNotaDinas) {
+        NotaDinas notaDinas = notaDinasService.findBykdNotaDinas(kdNotaDinas);
+
+
+        List<JabatanWrapper> tembusanNotaDinasList
+                = new ArrayList<>();
+        CustomPegawaiCredential penandatangan = null,
+                pemberiNotaDinas = null;
+
+        List<CustomPegawaiCredential> qutPegawaiList
+                = qutPegawaiService.getCustomPegawaiCredentials();
+
+        for (CustomPegawaiCredential qutPegawai : qutPegawaiList) {
+            if (qutPegawai.getNip()
+                    .equals(notaDinas.getNipPenandatangan())) {
+                penandatangan = qutPegawai;
+                break;
+            }
+        }
+
+        for (CustomPegawaiCredential qutPegawai : qutPegawaiList) {
+            if (qutPegawai.getNip()
+                    .equals(notaDinas.getNipPemberiNotaDinas())) {
+                pemberiNotaDinas = qutPegawai;
+                break;
+            }
+        }
+
+        List<TkdJabatan> tkdJabatanList = tkdJabatanService.getAll();
+
+        TkdJabatan jabatanPenerimaNotaDinas = new TkdJabatan();
+        for (TkdJabatan tkdJabatan : tkdJabatanList){
+            if (tkdJabatan.getKdJabatan()
+                    .equals(notaDinas.getKdJabatanPenerimaNotaDinas())) {
+                jabatanPenerimaNotaDinas = tkdJabatan;
+
+                break;
+
+            }
+
+        }
+
+        for (TembusanNotaDinas target
+                : notaDinas.getTembusanNotaDinasList()) {
+            for (TkdJabatan tkdJabatan : tkdJabatanList){
+                if (tkdJabatan.getKdJabatan()
+                        .equals(target.getTembusanNotaDinasId().getKdJabatan())) {
+                    JabatanWrapper jabatanWrapper = new JabatanWrapper();
+
+                    jabatanWrapper.setKdJabatan(tkdJabatan.getKdJabatan());
+                    jabatanWrapper.setJabatan(tkdJabatan.getJabatan());
+                    jabatanWrapper.setEselon(tkdJabatan.getEselon());
+
+                    tembusanNotaDinasList.add(jabatanWrapper);
+
+                    break;
+
+                }
+
+            }
+
+        }
+
+        pemberiNotaDinas.setUnitKerja(tkdUnkDao.findOne(pemberiNotaDinas.getKdUnitKerja()).getUnitKerja());
+        penandatangan.setUnitKerja(tkdUnkDao.findOne(penandatangan.getKdUnitKerja()).getUnitKerja());
+
+        String base64BarcodeImage = null;
+
+        if (notaDinas.getKdBarcode() != null) {
+            BarcodeGenerator generator = new BarcodeGenerator();
+
+            base64BarcodeImage
+                    = generator.convertBarcodeImageIntoBase64String(
+                    generator.generateBarcode(notaDinas.getKdBarcode()));
+        }
+        NotaDinasWrapper notaDinasWrapper
+                = new NotaDinasWrapper(
+                notaDinas.getKdNotaDinas(),
+                notaDinas.getNomorUrusan(),
+                notaDinas.getNomorUrut(),
+                notaDinas.getNomorPasanganUrut(),
+                notaDinas.getNomorUnit(),
+                notaDinas.getNomorTahun(),
+                jabatanPenerimaNotaDinas.getKdJabatan(),
+                jabatanPenerimaNotaDinas.getJabatan(),
+                pemberiNotaDinas,
+                notaDinas.getHal(),
+                notaDinas.getTanggalPembuatanMilis(),
+                notaDinas.getIsiNotaDinas(),
+                penandatangan,
+                tembusanNotaDinasList,
+                base64BarcodeImage);
+
+        return notaDinasWrapper;
+    }
+
 }

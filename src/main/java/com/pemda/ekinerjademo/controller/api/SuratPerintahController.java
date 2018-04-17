@@ -955,4 +955,186 @@ public class SuratPerintahController {
 
     }
 
+    /**
+     *
+     *
+     *
+     * @return
+     */
+    public SuratPerintahNonPejabatDokumenWrapper getSuratPerintahWrapper(String kdSuratPerintah) {
+        SuratPerintah suratPerintah = null;
+        EkinerjaXMLParser ekinerjaXMLParser = new EkinerjaXMLParser();
+
+        suratPerintah
+                = suratPerintahService.getSuratPerintahByKdSuratPerintah(kdSuratPerintah);
+
+        LOGGER.info(suratPerintah.getMenimbang());
+        LOGGER.info(suratPerintah.getDasar());
+        LOGGER.info(suratPerintah.getUntuk());
+
+        String nomorSurat
+                = String.valueOf(suratPerintah.getNomorSurat1()) +"-"+
+                suratPerintah.getNomorSurat2() +"-"+
+                suratPerintah.getNomorSurat3() +"-"+
+                String.valueOf(suratPerintah.getNomorTahun());
+        List<String> menimbangList
+                = ekinerjaXMLParser.convertXmlSuratPerintahIntoListofString(
+                suratPerintah.getMenimbang(), "menimbang");
+        List<String> dasarList
+                = ekinerjaXMLParser.convertXmlSuratPerintahIntoListofString(
+                suratPerintah.getDasar(), "dasar");
+        List<String> untukList
+                = ekinerjaXMLParser.convertXmlSuratPerintahIntoListofString(
+                suratPerintah.getUntuk(), "untuk");
+
+        //get all pegawai
+        CustomPegawaiCredential penandatanganSurat = null;
+        List<CustomPegawaiCredential> qutPegawaiList
+                = qutPegawaiService.getCustomPegawaiCredentials();
+        List<CustomPegawaiCredential> daftarTargetPegawaiSuratPerintah
+                = new ArrayList<>();
+        List<TkdJabatan> daftarTargetPejabatSuratPerintah
+                = new ArrayList<>();
+        List<TkdJabatan> daftarTembusanSuratperintah
+                = new ArrayList<>();
+
+        List<JabatanWrapper> daftarTargetPejabatSuratPerintahString
+                = new ArrayList<>();
+        List<JabatanWrapper> daftarTembusanSuratperintahString
+                = new ArrayList<>();
+
+        //get pembuat surat credential
+        for (CustomPegawaiCredential qutPegawai : qutPegawaiList) {
+            if (qutPegawai.getNip()
+                    .equals(suratPerintah.getNipPenandatangan())) {
+                penandatanganSurat = qutPegawai;
+                break;
+            }
+        }
+        for (TargetSuratPerintahPegawai target
+                :suratPerintah.getTargetSuratPerintahPegawaiList()) {
+            for (CustomPegawaiCredential customPegawaiCredential : qutPegawaiList) {
+                if (customPegawaiCredential.getNip()
+                        .equals(target.getTargetSuratPerintahPegawaiId().getNipPegawai())) {
+                    daftarTargetPegawaiSuratPerintah.add(customPegawaiCredential);
+                    break;
+                }
+            }
+        }
+        //get pejabat unit kerja name
+        List<TkdJabatan> tkdJabatanList = tkdJabatanService.getAll();
+
+        for (TargetSuratPerintahPejabat target
+                : suratPerintah.getTargetSuratPerintahPejabatSet()) {
+            for (TkdJabatan tkdJabatan : tkdJabatanList){
+                if (tkdJabatan.getKdJabatan()
+                        .equals(target.getTargetSuratPerintahPejabatId().getKdJabatan())) {
+                    daftarTargetPejabatSuratPerintah.add(tkdJabatan);
+                    JabatanWrapper jabatanWrapper = new JabatanWrapper();
+
+                    jabatanWrapper.setKdJabatan(tkdJabatan.getKdJabatan());
+                    jabatanWrapper.setJabatan(tkdJabatan.getJabatan());
+                    jabatanWrapper.setEselon(tkdJabatan.getEselon());
+
+                    daftarTargetPejabatSuratPerintahString.add(jabatanWrapper);
+
+                    break;
+
+                }
+
+            }
+
+        }
+
+        for (TembusanSuratPerintah tembusan
+                :suratPerintah.getTembusanSuratPerintahList()) {
+            LOGGER.info(tembusan.getTembusanSuratPerintahId().getKdJabatan());
+            for (TkdJabatan tkdJabatan : tkdJabatanList){
+                if (tkdJabatan.getKdJabatan()
+                        .equals(tembusan.getTembusanSuratPerintahId().getKdJabatan())) {
+                    LOGGER.info("found");
+                    daftarTembusanSuratperintah.add(tkdJabatan);
+
+                    JabatanWrapper jabatanWrapper = new JabatanWrapper();
+
+                    jabatanWrapper.setKdJabatan(tkdJabatan.getKdJabatan());
+                    jabatanWrapper.setJabatan(tkdJabatan.getJabatan());
+                    jabatanWrapper.setEselon(tkdJabatan.getEselon());
+
+                    daftarTembusanSuratperintahString.add(jabatanWrapper);
+
+                    break;
+                }
+
+            }
+
+        }
+
+        Locale indoLocale = new Locale("id", "ID");
+        String tanggalSuratDibuat
+                = DateUtilities.createLocalDate(
+                new Date(suratPerintah.getTanggalPerintahMilis()), "dd MMMM yyyy", indoLocale);
+
+        boolean isSuratPejabat = false;
+        String kdUnitKerjaPenandatangan = null;
+        String unitKerjaPenandatangan = null;
+        String kdJabatanPenandatangan = null;
+        String jabatanPenandatangan = null;
+
+        if (suratPerintah.getSuratPerintahPejabat() != null) {
+            isSuratPejabat = true;
+            kdJabatanPenandatangan = penandatanganSurat.getKdJabatan();
+            jabatanPenandatangan = penandatanganSurat.getJabatan();
+        } else {
+            kdUnitKerjaPenandatangan = penandatanganSurat.getKdUnitKerja();
+
+            TkdUnk tkdUnk = tkdUnkDao.findOne(kdUnitKerjaPenandatangan);
+
+            unitKerjaPenandatangan = tkdUnk.getUnitKerja();
+        }
+
+        String base64BarcodeImage = null;
+
+        if (suratPerintah.getKdBarcode() != null) {
+            BarcodeGenerator generator = new BarcodeGenerator();
+
+            base64BarcodeImage
+                    = generator.convertBarcodeImageIntoBase64String(
+                    generator.generateBarcode(suratPerintah.getKdBarcode()));
+        }
+
+        SuratPerintahNonPejabatDokumenWrapper suratPerintahWrapper
+                = new SuratPerintahNonPejabatDokumenWrapper(
+                suratPerintah.getKdSuratPerintah(),
+                penandatanganSurat.getNip(),
+                penandatanganSurat.getNama(),
+                nomorSurat,
+                suratPerintah.getNomorSurat2(),
+                suratPerintah.getNomorSurat3(),
+                suratPerintah.getNomorTahun(),
+                menimbangList,
+                dasarList,
+                untukList,
+                suratPerintah.getTempat(),
+                tanggalSuratDibuat,
+                suratPerintah.getTanggalPerintahMilis(),
+                penandatanganSurat.getJabatan(),
+                "",
+                daftarTargetPegawaiSuratPerintah,
+                daftarTargetPejabatSuratPerintahString,
+                daftarTembusanSuratperintahString,
+                isSuratPejabat,
+                kdUnitKerjaPenandatangan,
+                unitKerjaPenandatangan,
+                kdJabatanPenandatangan,
+                jabatanPenandatangan,
+                penandatanganSurat.getGlrDpn(),
+                penandatanganSurat.getGlrBlk(),
+                penandatanganSurat.getPangkat(),
+                penandatanganSurat.getGol(),
+                base64BarcodeImage);
+
+        return suratPerintahWrapper;
+    }
+
 }

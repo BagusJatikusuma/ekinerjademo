@@ -530,4 +530,106 @@ public class SuratDinasController {
 
     }
 
+    /**
+     *
+     *
+     *
+     * @param kdSuratDinas
+     * @return
+     */
+    public SuratDinasWrapper getSuratDinasWrapper(String kdSuratDinas) {
+        SuratDinas suratDinas
+                = suratDinasService.getByKdSuratDinas(kdSuratDinas);
+        SuratDinasWrapper suratDinasWrapper
+                = new SuratDinasWrapper();
+
+        String base64BarcodeImage = null;
+
+        if (suratDinas.getKdBarcode() != null) {
+            BarcodeGenerator generator = new BarcodeGenerator();
+
+            base64BarcodeImage
+                    = generator.convertBarcodeImageIntoBase64String(
+                    generator.generateBarcode(suratDinas.getKdBarcode()));
+        }
+
+        suratDinasWrapper.setNomorUrusan(suratDinas.getNomorUrusan());
+        suratDinasWrapper.setNomorUrut(suratDinas.getNomorUrut());
+        suratDinasWrapper.setNomorPasanganUrut(suratDinas.getNomorPasanganUrut());
+        suratDinasWrapper.setNomorUnit(suratDinas.getNomorUnit());
+        suratDinasWrapper.setNomorTahun(suratDinas.getNomorTahun());
+
+        suratDinasWrapper.setSifat(suratDinas.getSifat());
+        suratDinasWrapper.setHal(suratDinas.getHal());
+        suratDinasWrapper.setLampiran(suratDinas.getLampiran());
+
+        List<TkdJabatan> tkdJabatanList
+                = tkdJabatanService.getAll();
+        TkdJabatan jabatanPenerima = new TkdJabatan();
+        List<JabatanWrapper> tembusanJabatanWrapperList
+                = new ArrayList<>();
+
+        for (TkdJabatan tkdJabatan
+                : tkdJabatanList) {
+            if (tkdJabatan.getKdJabatan()
+                    .equals(suratDinas.getKdJabatanPenerimaSuratDinas())) {
+                jabatanPenerima = tkdJabatan;
+                break;
+            }
+        }
+        for (TembusanSuratDinas tembusanSuratDinas
+                : suratDinas.getTembusanSuratDinasList()) {
+            for (TkdJabatan tkdJabatan
+                    : tkdJabatanList) {
+                if (tkdJabatan.getKdJabatan()
+                        .equals(tembusanSuratDinas.getTembusanSuratDinasId().getKdJabatan())) {
+                    tembusanJabatanWrapperList
+                            .add(new JabatanWrapper(
+                                    tkdJabatan.getKdJabatan(),
+                                    tkdJabatan.getJabatan(),
+                                    tkdJabatan.getEselon()));
+                    break;
+                }
+            }
+        }
+
+        suratDinasWrapper.setKdJabatanPenerimaSuratDinas(jabatanPenerima.getKdJabatan());
+        suratDinasWrapper.setJabatanPenerimaSuratDinas(jabatanPenerima.getJabatan());
+        suratDinasWrapper.setTanggalPembuatanMilis(suratDinas.getTanggalPembuatanMilis());
+        suratDinasWrapper.setKotaPembuatanSurat(suratDinas.getKotaPembuatanSurat());
+        suratDinasWrapper.setIsiSuratDinas(suratDinas.getIsiSuratDinas());
+
+        suratDinasWrapper.setTembusanSuratDinasWrapper(tembusanJabatanWrapperList);
+
+        List<CustomPegawaiCredential> qutPegawaiList
+                = qutPegawaiService.getCustomPegawaiCredentials();
+
+        CustomPegawaiCredential penandatangan = null;
+
+        for (CustomPegawaiCredential pegawai : qutPegawaiList) {
+            if (suratDinas.getNipPenandatangan()
+                    .equals(pegawai.getNip())) {
+                penandatangan = pegawai;
+
+                break;
+            }
+        }
+        suratDinasWrapper.setNipPenandatangan(penandatangan.getNip());
+        suratDinasWrapper.setNamaPenandatangan(penandatangan.getNama());
+        suratDinasWrapper.setJabatanPenandatangan(penandatangan.getJabatan());
+        suratDinasWrapper.setUnitKerjaPenandatangan(tkdUnkDao.findOne(penandatangan.getKdUnitKerja()).getUnitKerja());
+        suratDinasWrapper.setPangkatPenandatangan(penandatangan.getPangkat());
+        suratDinasWrapper.setGelarDepanPenandatangan(penandatangan.getGlrDpn());
+        suratDinasWrapper.setGelarBelakangPenandatangan(penandatangan.getGlrBlk());
+        suratDinasWrapper.setBarcodeImage(null);
+        boolean isSuratPejabat = false;
+
+        if (suratDinas.getSuratDinasPejabat() != null) isSuratPejabat = true;
+
+        suratDinasWrapper.setSuratPejabat(isSuratPejabat);
+        suratDinasWrapper.setBarcodeImage(base64BarcodeImage);
+
+        return suratDinasWrapper;
+    }
+
 }

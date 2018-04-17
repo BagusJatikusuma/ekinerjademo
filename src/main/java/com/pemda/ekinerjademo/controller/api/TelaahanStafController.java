@@ -199,4 +199,72 @@ public class TelaahanStafController {
 
         return new ResponseEntity<Object>(new CustomMessage("telaahan staff opened"), HttpStatus.OK);
     }
+
+    /**
+     *
+     *
+     *
+     * @param kdTelaahanStaff
+     * @return
+     */
+    public TelaahanStaffWrapper getTelaahanStaffWrapper(String kdTelaahanStaff) {
+        TelaahanStaf telaahanStaf = telaahanStafService.getTelaahanStaf(kdTelaahanStaff);
+
+        List<CustomPegawaiCredential> qutPegawaiList
+                = qutPegawaiService.getCustomPegawaiCredentials();
+
+        CustomPegawaiCredential penandatangan = null,
+                pembuatSurat  = null;
+
+        for (CustomPegawaiCredential pegawai : qutPegawaiList) {
+            if (telaahanStaf.getNipPenandatangan()
+                    .equals(pegawai.getNip())) {
+                pegawai.setUnitKerja(tkdUnkDao.findOne(pegawai.getKdUnitKerja()).getUnitKerja());
+
+                penandatangan = pegawai;
+
+                break;
+            }
+        }
+
+        for (CustomPegawaiCredential pegawai : qutPegawaiList) {
+            if (telaahanStaf.getNipPembuatSurat()
+                    .equals(pegawai.getNip())) {
+                pegawai.setUnitKerja(tkdUnkDao.findOne(pegawai.getKdUnitKerja()).getUnitKerja());
+
+                pembuatSurat = pegawai;
+
+                break;
+            }
+        }
+
+        String base64BarcodeImage = null;
+
+        if (telaahanStaf.getKdBarcode() != null) {
+            BarcodeGenerator generator = new BarcodeGenerator();
+
+            base64BarcodeImage
+                    = generator.convertBarcodeImageIntoBase64String(
+                    generator.generateBarcode(telaahanStaf.getKdBarcode()));
+        }
+
+        TelaahanStaffWrapper telaahanStaffWrapper
+                = new TelaahanStaffWrapper(
+                telaahanStaf.getKdTelaahanStaf(),
+                telaahanStaf.getTentang(),
+                telaahanStaf.getPersoalan(),
+                telaahanStaf.getPraanggapan(),
+                telaahanStaf.getFaktaYangMempengaruhi(),
+                telaahanStaf.getAnalisis(),
+                telaahanStaf.getSimpulan(),
+                telaahanStaf.getSaran(),
+                penandatangan,
+                telaahanStaf.getTanggalPembuatanMilis(),
+                pembuatSurat,
+                tkdUnkDao.findOne(pembuatSurat.getKdUnitKerja()).getUnitKerja(),
+                base64BarcodeImage);
+
+        return telaahanStaffWrapper;
+    }
+
 }
