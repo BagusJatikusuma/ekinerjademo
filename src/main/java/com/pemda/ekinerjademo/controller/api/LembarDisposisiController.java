@@ -14,11 +14,16 @@ import org.apache.commons.io.FilenameUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -89,16 +94,26 @@ public class LembarDisposisiController {
 
         String kdLembarDisposisi = String.valueOf(new Date().getTime());
 
-        SuratDisposisi suratDisposisi = new SuratDisposisi();
-        suratDisposisi.setNoSurat(inputWrapper.getNoSuratDisposisi());
-        suratDisposisi.setTanggalSuratMilis(inputWrapper.getTanggalSuratDisposisiMilis());
-        suratDisposisi.setDari(inputWrapper.getDariSuratDisposisi());
-        suratDisposisi.setRingkasanIsi(inputWrapper.getRingkasanIsiSuratDisposisi());
-        suratDisposisi.setLampiran(inputWrapper.getLampiran());
-        suratDisposisi.setPathFile(kdLembarDisposisi+"."+ FilenameUtils.getExtension(inputWrapper.getNamaFileSuratLain()));
-
         if (inputWrapper.getKdLembarDisposisiParent() == null ||
                 inputWrapper.getKdLembarDisposisiParent().equals("")) {
+
+            SuratDisposisi suratDisposisi = new SuratDisposisi();
+            suratDisposisi.setNoSurat(inputWrapper.getNoSuratDisposisi());
+            suratDisposisi.setTanggalSuratMilis(inputWrapper.getTanggalSuratDisposisiMilis());
+            suratDisposisi.setDari(inputWrapper.getDariSuratDisposisi());
+            suratDisposisi.setRingkasanIsi(inputWrapper.getRingkasanIsiSuratDisposisi());
+            suratDisposisi.setLampiran(inputWrapper.getLampiran());
+
+            //jika surat disposisi merupakan file upload
+            if (inputWrapper.getJenisSuratPenugasan() == null) {
+                suratDisposisi.setPathFile(kdLembarDisposisi + "." + FilenameUtils.getExtension(inputWrapper.getNamaFileSuratLain()));
+            }
+            //jika surat disposisi merupakan data surat yang ada pada sistem
+            else {
+                suratDisposisi.setJenisSuratPenugasan(inputWrapper.getJenisSuratPenugasan());
+                suratDisposisi.setKdSuratPenugasan(inputWrapper.getKdSuratPenugasan());
+            }
+
             suratDisposisiService.create(suratDisposisi);
         }
 
@@ -461,7 +476,9 @@ public class LembarDisposisiController {
      * @param kdLembarDisposisi
      * @return
      */
-    @RequestMapping(value = "/get-surat-disposisi/{kdLembarDisposisi}", method = RequestMethod.GET)
+    @RequestMapping(
+            value = "/get-surat-disposisi/{kdLembarDisposisi}",
+            method = RequestMethod.GET)
     ResponseEntity<?> getSuratDisposisi(@PathVariable("kdLembarDisposisi") String kdLembarDisposisi) {
         LOGGER.info("get surat disposisi");
 
@@ -469,6 +486,18 @@ public class LembarDisposisiController {
                 lembarDisposisiService.findByKdLembarDisposisi(kdLembarDisposisi).getNoSuratDisposisi();
 
         SuratDisposisiWrapper suratDisposisiWrapper = new SuratDisposisiWrapper();
+
+        if (suratDisposisi.getPathFile() != null) {
+            byte[] fileSuratDisposisi = getSuratDisposisiFile(suratDisposisi);
+
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+            String filename = suratDisposisi.getPathFile();
+            headers.setContentDispositionFormData(filename, filename);
+            headers.setCacheControl("must-revalidate, post-check=0, pre-check=0");
+
+            return new ResponseEntity<>(fileSuratDisposisi, headers, HttpStatus.OK);
+        }
 
         switch (suratDisposisi.getJenisSuratPenugasan()) {
             case 0 :
@@ -550,7 +579,8 @@ public class LembarDisposisiController {
         return new ResponseEntity<>(suratDisposisiWrapper, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/create-surat-lain-file",
+    @RequestMapping(
+            value = "/create-surat-lain-file",
             method = RequestMethod.POST)
     ResponseEntity<?> createSuratLainFile(@RequestParam("file") MultipartFile fileTemplateLain) {
         LOGGER.info("create surat lain");
@@ -560,5 +590,19 @@ public class LembarDisposisiController {
 
         return new ResponseEntity<Object>(
                 new CustomMessage("surat lain created"), HttpStatus.CREATED);
+    }
+
+    private byte[] getSuratDisposisiFile(SuratDisposisi suratDisposisi) {
+        byte[] file = null;
+
+        File filePath = new File("/home/pemkab/project/documents/surat_disposisi/"+suratDisposisi.getPathFile());
+
+        try {
+            file = Files.readAllBytes(filePath.toPath());
+        } catch (IOException e) {
+            LOGGER.info("failed retreive file");
+        }
+
+        return file;
     }
 }
