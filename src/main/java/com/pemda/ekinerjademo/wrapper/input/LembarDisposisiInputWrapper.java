@@ -25,6 +25,7 @@ public class LembarDisposisiInputWrapper {
 
     private String kdUrtug;
     private Integer tahunUrtug;
+    private String namaFileSuratLain;
 
     public String getNipPembuat() {
         return nipPembuat;
@@ -152,5 +153,13 @@ public class LembarDisposisiInputWrapper {
 
     public void setTahunUrtug(Integer tahunUrtug) {
         this.tahunUrtug = tahunUrtug;
+    }
+
+    public String getNamaFileSuratLain() {
+        return namaFileSuratLain;
+    }
+
+    public void setNamaFileSuratLain(String namaFileSuratLain) {
+        this.namaFileSuratLain = namaFileSuratLain;
     }
 }

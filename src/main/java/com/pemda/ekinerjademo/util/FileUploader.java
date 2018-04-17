@@ -50,4 +50,22 @@ public class FileUploader {
         }
     }
 
+    public void uploadFileSuratLainDisposisi(MultipartFile fileSuratLainDisposisi, String fileName) {
+        byte[] bytes = null;
+
+        try {
+            bytes = fileSuratLainDisposisi.getBytes();
+
+            Path path
+                    = Paths.get("/home/pemkab/project/documents/surat_disposisi/"
+                    +fileName+"."
+                    + FilenameUtils.getExtension(fileSuratLainDisposisi.getOriginalFilename()));
+
+            Files.write(path, bytes);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 }
