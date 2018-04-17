@@ -25,6 +25,7 @@ public class LembarDisposisiInputWrapper {
 
     private String kdUrtug;
     private Integer tahunUrtug;
+    private String namaFileSuratLain;
 
     private Integer jenisSuratPenugasan;
     private String kdSuratPenugasan;
@@ -171,5 +172,13 @@ public class LembarDisposisiInputWrapper {
 
     public void setKdSuratPenugasan(String kdSuratPenugasan) {
         this.kdSuratPenugasan = kdSuratPenugasan;
+    }
+
+    public String getNamaFileSuratLain() {
+        return namaFileSuratLain;
+    }
+
+    public void setNamaFileSuratLain(String namaFileSuratLain) {
+        this.namaFileSuratLain = namaFileSuratLain;
     }
 }

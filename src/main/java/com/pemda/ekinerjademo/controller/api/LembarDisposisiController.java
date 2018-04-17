@@ -10,6 +10,7 @@ import com.pemda.ekinerjademo.util.FileUploader;
 import com.pemda.ekinerjademo.wrapper.input.LembarDisposisiInputWrapper;
 import com.pemda.ekinerjademo.wrapper.output.*;
 import groovy.transform.Synchronized;
+import org.apache.commons.io.FilenameUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -94,6 +95,7 @@ public class LembarDisposisiController {
         suratDisposisi.setDari(inputWrapper.getDariSuratDisposisi());
         suratDisposisi.setRingkasanIsi(inputWrapper.getRingkasanIsiSuratDisposisi());
         suratDisposisi.setLampiran(inputWrapper.getLampiran());
+        suratDisposisi.setPathFile(kdLembarDisposisi+"."+ FilenameUtils.getExtension(inputWrapper.getNamaFileSuratLain()));
 
         if (inputWrapper.getKdLembarDisposisiParent() == null ||
                 inputWrapper.getKdLembarDisposisiParent().equals("")) {
@@ -139,6 +141,10 @@ public class LembarDisposisiController {
             targetLembarDisposisiList.add(targetLembarDisposisi);
         }
         lembarDisposisiService.createTargetLembarDisposisi(targetLembarDisposisiList);
+
+        if (inputWrapper.getKdLembarDisposisiParent() == null){
+            return new ResponseEntity<Object>(new CustomMessage(kdLembarDisposisi), HttpStatus.OK);
+        }
 
         return new ResponseEntity<Object>(new CustomMessage("lembar disposisi created"), HttpStatus.OK);
     }
@@ -544,4 +550,15 @@ public class LembarDisposisiController {
         return new ResponseEntity<>(suratDisposisiWrapper, HttpStatus.OK);
     }
 
+    @RequestMapping(value = "/create-surat-lain-file",
+            method = RequestMethod.POST)
+    ResponseEntity<?> createSuratLainFile(@RequestParam("file") MultipartFile fileTemplateLain) {
+        LOGGER.info("create surat lain");
+
+        FileUploader uploader = new FileUploader();
+        uploader.uploadFileSuratLainDisposisi(fileTemplateLain, FilenameUtils.removeExtension(fileTemplateLain.getOriginalFilename()));
+
+        return new ResponseEntity<Object>(
+                new CustomMessage("surat lain created"), HttpStatus.CREATED);
+    }
 }
