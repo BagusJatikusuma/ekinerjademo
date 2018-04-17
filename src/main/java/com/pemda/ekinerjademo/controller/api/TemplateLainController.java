@@ -127,7 +127,8 @@ public class TemplateLainController {
                 new CustomMessage(kdTemplateLain), HttpStatus.CREATED);
     }
 
-    @RequestMapping(value = "/create-template-lain-file",
+    @RequestMapping(
+            value = "/create-template-lain-file",
             method = RequestMethod.POST)
     ResponseEntity<?> createTemplateLainFile(@RequestParam("file") MultipartFile fileTemplateLain) {
         LOGGER.info("create template lain");

@@ -26,6 +26,9 @@ public class LembarDisposisiInputWrapper {
     private String kdUrtug;
     private Integer tahunUrtug;
 
+    private Integer jenisSuratPenugasan;
+    private String kdSuratPenugasan;
+
     public String getNipPembuat() {
         return nipPembuat;
     }
@@ -152,5 +155,21 @@ public class LembarDisposisiInputWrapper {
 
     public void setTahunUrtug(Integer tahunUrtug) {
         this.tahunUrtug = tahunUrtug;
+    }
+
+    public Integer getJenisSuratPenugasan() {
+        return jenisSuratPenugasan;
+    }
+
+    public void setJenisSuratPenugasan(Integer jenisSuratPenugasan) {
+        this.jenisSuratPenugasan = jenisSuratPenugasan;
+    }
+
+    public String getKdSuratPenugasan() {
+        return kdSuratPenugasan;
+    }
+
+    public void setKdSuratPenugasan(String kdSuratPenugasan) {
+        this.kdSuratPenugasan = kdSuratPenugasan;
     }
 }
