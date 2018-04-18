@@ -112,6 +112,7 @@ public class PejabatPenilaiDinilaiController {
         LOGGER.info("get pegawai bawahan");
 
         List<QutPegawaiClone> pegawaiBawahanList = new ArrayList<>();
+        List<QutPegawaiWrapper> pegawaiBawahanWrapper = new ArrayList<>();
         List<PejabatPenilaiDinilai> kdJabatanPegawaiBawahanList
                 = pejabatPenilaiDinilaiService.findPegawaiDinilai(nipPenilai);
 
@@ -124,7 +125,23 @@ public class PejabatPenilaiDinilaiController {
             }
         }
 
-        return new ResponseEntity<>(pegawaiBawahanList, HttpStatus.OK);
+        for (QutPegawaiClone pegawaiBawahan : pegawaiBawahanList){
+            pegawaiBawahanWrapper.add(new QutPegawaiWrapper(
+                    pegawaiBawahan.getNip(),
+                    pegawaiBawahan.getNama(),
+                    pegawaiBawahan.getKdJabatan(),
+                    pegawaiBawahan.getJabatan(),
+                    pegawaiBawahan.getKdUnitKerja(),
+                    pegawaiBawahan.getUnitKerja(),
+                    pegawaiBawahan.getPangkat(),
+                    pegawaiBawahan.getGol(),
+                    null,
+                    pegawaiBawahan.getGlrDpn(),
+                    pegawaiBawahan.getGlrBlk()
+                    ));
+        }
+
+        return new ResponseEntity<>(pegawaiBawahanWrapper, HttpStatus.OK);
     }
 
 }
