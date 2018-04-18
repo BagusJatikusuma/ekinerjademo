@@ -27,6 +27,7 @@ public interface UraianTugasPegawaiTahunanDao extends JpaRepository<UraianTugasP
             "where utpt.uraianTugasPegawaiTahunanId.kdJabatan like concat(?1,'%')")
     List<UraianTugasPegawaiTahunan> findByUnitKerja(String kdUnitKerja);
 
+    //salah, uraian tugas yang diajukan memiliki status approval bernilai 0 sedangkan yang ditolak bernilai 3
     @Query("select utpt from UraianTugasPegawaiTahunan utpt " +
             "left join fetch utpt.uraianTugasJabatanJenisUrtug utjj " +
             "left join fetch utjj.uraianTugasJabatan utj " +

@@ -33,6 +33,8 @@ public class AuthenticationController {
     @Autowired
     private QutPegawaiCloneService qutPegawaiService;
     @Autowired
+    private UraianTugasPegawaiTahunanService uraianTugasPegawaiTahunanService;
+    @Autowired
     private AkunPegawaiService akunPegawaiService;
     @Autowired
     private LoginPegawaiService loginPegawaiService;
@@ -44,6 +46,7 @@ public class AuthenticationController {
      * @param akunPegawai in JSON Format
      * @return Role JSON Format
      */
+    // tambah status sudah pernah mengajukan kontrak kerja atau belum
     @RequestMapping(value = "/authentication", method = RequestMethod.POST)
     @Transactional
     @Synchronized
@@ -94,6 +97,14 @@ public class AuthenticationController {
                     HttpStatus.UNAUTHORIZED);
         }
 
+        List<UraianTugasPegawaiTahunan> kontrakKerja
+                = uraianTugasPegawaiTahunanService.getByNipPegawai(akunPegawaiAuthenticated.getNipPegawai());
+
+        boolean sudahMembuatKontrakKerja = false;
+
+        if (!kontrakKerja.isEmpty())
+            sudahMembuatKontrakKerja = true;
+
         PegawaiCredential pegawaiCredential =
                 new PegawaiCredential(
                         akunPegawaiAuthenticated.getNipPegawai(),
@@ -107,7 +118,8 @@ public class AuthenticationController {
                         qutPegawai.getPangkat(),
                         qutPegawai.getGol(),
                         qutPegawai.getEselon(),
-                        kdLoginPegawai
+                        kdLoginPegawai,
+                        sudahMembuatKontrakKerja
                 );
 
         return new ResponseEntity<Object>(pegawaiCredential, HttpStatus.OK);

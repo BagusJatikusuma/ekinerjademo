@@ -18,6 +18,7 @@ public class PegawaiCredential {
     private String golongan;
     private String eselon;
     private Long loginId;
+    private boolean sudahMembuatKontrak;
 
     public PegawaiCredential() {}
     public PegawaiCredential(
@@ -118,6 +119,22 @@ public class PegawaiCredential {
         this.loginId = loginId;
     }
 
+    public PegawaiCredential(String nipPegawai, String namaPegawai, Role role, String token, String jabatan, String unit, String kdUnitKerja, String kdJabatan, String pangkat, String golongan, String eselon, Long loginId, boolean sudahMembuatKontrak) {
+        this.nipPegawai = nipPegawai;
+        this.namaPegawai = namaPegawai;
+        this.role = role;
+        this.token = token;
+        this.jabatan = jabatan;
+        this.unit = unit;
+        this.kdUnitKerja = kdUnitKerja;
+        this.kdJabatan = kdJabatan;
+        this.pangkat = pangkat;
+        this.golongan = golongan;
+        this.eselon = eselon;
+        this.loginId = loginId;
+        this.sudahMembuatKontrak = sudahMembuatKontrak;
+    }
+
     public String getNipPegawai() {
         return nipPegawai;
     }
@@ -212,5 +229,13 @@ public class PegawaiCredential {
 
     public void setLoginId(Long loginId) {
         this.loginId = loginId;
+    }
+
+    public boolean isSudahMembuatKontrak() {
+        return sudahMembuatKontrak;
+    }
+
+    public void setSudahMembuatKontrak(boolean sudahMembuatKontrak) {
+        this.sudahMembuatKontrak = sudahMembuatKontrak;
     }
 }
