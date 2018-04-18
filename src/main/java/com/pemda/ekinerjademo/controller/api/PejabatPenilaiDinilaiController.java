@@ -3,6 +3,7 @@ package com.pemda.ekinerjademo.controller.api;
 import com.pemda.ekinerjademo.model.bismamodel.QutPegawai;
 import com.pemda.ekinerjademo.model.ekinerjamodel.PejabatPenilaiDinilai;
 import com.pemda.ekinerjademo.model.ekinerjamodel.PejabatPenilaiDinilaiId;
+import com.pemda.ekinerjademo.model.ekinerjamodel.QutPegawaiClone;
 import com.pemda.ekinerjademo.service.PejabatPenilaiDinilaiService;
 import com.pemda.ekinerjademo.service.QutPegawaiCloneService;
 import com.pemda.ekinerjademo.service.QutPegawaiService;
@@ -16,6 +17,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -103,6 +105,26 @@ public class PejabatPenilaiDinilaiController {
                 qutPegawai.getGol());
 
         return new ResponseEntity<Object>(qutPegawaiWrapper, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/get-pegawai-bawahan/{nipPenilai}", method = RequestMethod.GET)
+    ResponseEntity<?> getPegawaiBawahan(@PathVariable("nipPenilai") String nipPenilai) {
+        LOGGER.info("get pegawai bawahan");
+
+        List<QutPegawaiClone> pegawaiBawahanList = new ArrayList<>();
+        List<PejabatPenilaiDinilai> kdJabatanPegawaiBawahanList
+                = pejabatPenilaiDinilaiService.findPegawaiDinilai(nipPenilai);
+
+        //ambil data pegawai bawahan terlebih dahulu
+        for (PejabatPenilaiDinilai jabatan : kdJabatanPegawaiBawahanList) {
+            List<QutPegawaiClone> pegawaiBawahanJabatanList
+                    = qutPegawaiService.getQutPegawaiByKdJabatan(jabatan.getPejabatPenilaiDinilaiId().getKdJabatanDinilai());
+            for (QutPegawaiClone pegawaiBawahan : pegawaiBawahanJabatanList) {
+                pegawaiBawahanList.add(pegawaiBawahan);
+            }
+        }
+
+        return new ResponseEntity<>(pegawaiBawahanList, HttpStatus.OK);
     }
 
 }
