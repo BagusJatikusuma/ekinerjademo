@@ -157,7 +157,7 @@ public class LembarDisposisiController {
         }
         lembarDisposisiService.createTargetLembarDisposisi(targetLembarDisposisiList);
 
-        if (inputWrapper.getKdLembarDisposisiParent() == null){
+        if (inputWrapper.getKdLembarDisposisiParent() == null || inputWrapper.getJenisSuratPenugasan() == null){
             return new ResponseEntity<Object>(new CustomMessage(kdLembarDisposisi), HttpStatus.OK);
         }
 
