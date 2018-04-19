@@ -400,6 +400,54 @@ public class LembarDisposisiController {
         return new ResponseEntity<Object>(lembarDisposisiWrappers, HttpStatus.OK);
     }
 
+    /**
+     *
+     * service yang digunakan untuk mengambil daftar lembar disposisi atasannya
+     *
+     * @param kdLembarDisposisiLeave
+     * @return daftar lembar disposisi atasan
+     */
+    @RequestMapping(
+            value = "/get-lembar-disposisi-tree-by-leave/{kdLembarDisposisiLeave}",
+            method = RequestMethod.GET)
+    ResponseEntity<?> getLembarDisposisiTreeByLeave(
+            @PathVariable("kdLembarDisposisiLeave") String kdLembarDisposisiLeave) {
+        LOGGER.info("get lembar disposisi tree by leave");
+
+        List<LembarDisposisi> lembarDisposisiTree
+                = lembarDisposisiService.findTreeByLeave(kdLembarDisposisiLeave);
+        List<LembarDisposisiWrapper> lembarDisposisiWrappers
+                = new ArrayList<>();
+
+        Locale indoLocale = new Locale("id", "ID");
+
+        for (LembarDisposisi lembarDisposisi
+                : lembarDisposisiTree) {
+//            LOGGER.info(lembarDisposisi.getPath());
+            QutPegawai pegawaiPengirim
+                    = qutPegawaiService.getQutPegawai(lembarDisposisi.getNipPembuat());
+
+            lembarDisposisiWrappers
+                    .add(new LembarDisposisiWrapper(
+                            lembarDisposisi.getKdLembarDisposisi(),
+                            lembarDisposisi.getPath(),
+                            DateUtilities.createLocalDate(new Date(lembarDisposisi.getTanggalPenerimaanMilis()), "dd MMMM yyyy", indoLocale),
+                            lembarDisposisi.getTanggalPenerimaanMilis(),
+                            lembarDisposisi.getTktKeamanan(),
+                            DateUtilities.createLocalDate(new Date(lembarDisposisi.getTglPenyelesaianMilis()), "dd MMMM yyyy", indoLocale),
+                            lembarDisposisi.getTglPenyelesaianMilis(),
+                            lembarDisposisi.getStatusBaca(),
+                            DateUtilities.createLocalDate(new Date(lembarDisposisi.getTanggalPengirimanMilis()), "dd MMMM yyyy", indoLocale),
+                            lembarDisposisi.getTanggalPengirimanMilis(),
+                            lembarDisposisi.getNipPembuat(),
+                            pegawaiPengirim.getNama(),
+                            lembarDisposisi.getNoSuratDisposisi().getRingkasanIsi()
+                    ));
+        }
+
+        return new ResponseEntity<>(lembarDisposisiWrappers, HttpStatus.OK);
+    }
+
 
 
     @RequestMapping(value = "/get-dokumen-lembar-disposisi/{kdLembarDisposisi}", method = RequestMethod.GET)
@@ -600,7 +648,8 @@ public class LembarDisposisiController {
         try {
             file = Files.readAllBytes(filePath.toPath());
         } catch (IOException e) {
-            LOGGER.info("failed retreive file");
+            e.printStackTrace();
+            LOGGER.info("failed retreive file. error : "+e.getMessage());
         }
 
         return file;

@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -83,6 +84,26 @@ public class LembarDisposisiServiceImpl implements LembarDisposisiService {
     @Override
     public LembarDisposisi getDokumenLembarDisposisi(String kdLembarDisposisi) {
         return lembarDisposisiDao.findDokumenLembarDisposisi(kdLembarDisposisi);
+    }
+
+    @Override
+    public List<LembarDisposisi> findTreeByLeave(String kdLembarDisposisiLeave) {
+        LembarDisposisi lembarDisposisiLeave
+                = lembarDisposisiDao.findOne(kdLembarDisposisiLeave);
+        List<LembarDisposisi> lembarDisposisiTree
+                = new ArrayList<>();
+
+        lembarDisposisiTree.add(lembarDisposisiLeave);
+
+        String kdPathCurr = lembarDisposisiLeave.getPath();
+        while (kdPathCurr.contains(".")) {
+            kdPathCurr
+                    = kdPathCurr.substring(0,kdPathCurr.lastIndexOf("."));
+
+            lembarDisposisiTree.add(lembarDisposisiDao.findByPath(kdPathCurr).get(0));
+        }
+
+        return lembarDisposisiTree;
     }
 
 

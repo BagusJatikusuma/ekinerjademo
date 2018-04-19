@@ -24,4 +24,6 @@ public interface LembarDisposisiService {
     List<TargetLembarDisposisi> findByTargetDisposisi(String nipTarget);
     List<TargetLembarDisposisi> findByTargetDisposisiRev(String nipTarget);
     LembarDisposisi getDokumenLembarDisposisi(String kdLembarDisposisi);
+
+    List<LembarDisposisi> findTreeByLeave(String kdLembarDisposisiLeave);
 }

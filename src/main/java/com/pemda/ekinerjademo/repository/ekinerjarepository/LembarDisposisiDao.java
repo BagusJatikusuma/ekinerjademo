@@ -19,4 +19,5 @@ public interface LembarDisposisiDao extends JpaRepository<LembarDisposisi, Strin
             "left join fetch l.targetLembarDisposisiSet " +
             "where l.kdLembarDisposisi = ?1")
     LembarDisposisi findDokumenLembarDisposisi(String kdLembarDisposisi);
+    List<LembarDisposisi> findByPath(String path);
 }
