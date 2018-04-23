@@ -44,6 +44,8 @@ public class LembarDisposisi {
     private String kdUrtug;
     @Column(name = "tahun_urtug")
     private Integer tahunUrtug;
+    @Column(name = "status_aktif")
+    private Integer statusAktif;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(
@@ -224,5 +226,13 @@ public class LembarDisposisi {
 
     public void setTargetLembarDisposisiSet(Set<TargetLembarDisposisi> targetLembarDisposisiSet) {
         this.targetLembarDisposisiSet = targetLembarDisposisiSet;
+    }
+
+    public Integer getStatusAktif() {
+        return statusAktif;
+    }
+
+    public void setStatusAktif(Integer statusAktif) {
+        this.statusAktif = statusAktif;
     }
 }

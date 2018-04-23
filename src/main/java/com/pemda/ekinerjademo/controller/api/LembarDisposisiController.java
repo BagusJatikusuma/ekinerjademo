@@ -125,6 +125,21 @@ public class LembarDisposisiController {
         } else {
             LembarDisposisi lembarDisposisiParent
                     = lembarDisposisiService.findByKdLembarDisposisi(inputWrapper.getKdLembarDisposisiParent());
+            //ubah status baca parent menjadi sudah dilanjutkan
+            lembarDisposisiParent.setStatusBaca(2);
+            //ubah status baca target menjadi sudah dilanjutkan
+            for (TargetLembarDisposisi targetLembarDisposisi
+                    : lembarDisposisiParent.getTargetLembarDisposisiSet()) {
+                if (targetLembarDisposisi.getTargetLembarDisposisiId().getNipPegawai()
+                        .equals(inputWrapper.getNipPembuat())) {
+                    targetLembarDisposisi.setStatusBaca(2);
+                    lembarDisposisiService.createTargetLembarDisposisi(targetLembarDisposisi);
+
+                    break;
+                }
+
+            }
+
             lembarDisposisi.setPath(lembarDisposisiParent.getPath()+"."+kdLembarDisposisi);
         }
 
@@ -136,6 +151,7 @@ public class LembarDisposisiController {
         lembarDisposisi.setNoSuratDisposisi(new SuratDisposisi(inputWrapper.getNoSuratDisposisi()));
         lembarDisposisi.setIsiDisposisi(inputWrapper.getIsiDisposisi());
         lembarDisposisi.setStatusBaca(0);
+        lembarDisposisi.setStatusAktif(1);
         lembarDisposisi.setTanggalPengirimanMilis(new Date().getTime());
         lembarDisposisi.setDurasiPengerjaan(inputWrapper.getDurasiPengerjaan());
 
@@ -234,6 +250,7 @@ public class LembarDisposisiController {
             TargetLembarDisposisi targetLembarDisposisi = new TargetLembarDisposisi();
             targetLembarDisposisi.setTargetLembarDisposisiId(new TargetLembarDisposisiId(kdLembarDisposisi, kdTarget));
             targetLembarDisposisi.setApproveStatus(0);
+            targetLembarDisposisi.setStatusBaca(0);
 
             targetLembarDisposisiList.add(targetLembarDisposisi);
         }
@@ -638,6 +655,52 @@ public class LembarDisposisiController {
 
         return new ResponseEntity<Object>(
                 new CustomMessage("surat lain created"), HttpStatus.CREATED);
+    }
+
+    /**
+     *
+     * service yang digunakan untuk membatalkan lembar disposisi yang pernah dibuat
+     *
+     * @param kdLembarDisposisi
+     * @return
+     */
+    @RequestMapping(value = "/cancel-lembar-disposisi/{kdLembarDisposisi}", method = RequestMethod.PUT)
+    ResponseEntity<?> batalkanLembarDisposisi(@PathVariable("kdLembarDisposisi") String kdLembarDisposisi) {
+        LOGGER.info("cancel lembar disposisi");
+
+        List<LembarDisposisi> lembarDisposisiList
+                = lembarDisposisiService.findTree(kdLembarDisposisi);
+        //batalkan lembar disposisi beserta turunannya
+        for (LembarDisposisi lembarDisposisi : lembarDisposisiList) {
+            lembarDisposisi.setStatusAktif(0);
+
+            lembarDisposisiService.create(lembarDisposisi);
+        }
+
+        return new ResponseEntity<>(new CustomMessage("lembar disposisi berhasil dibatalkan"), HttpStatus.OK);
+    }
+
+    /**
+     *
+     * service yang digunakan untuk mengaktifkan lembar disposisi yang pernah dibuat
+     *
+     * @param kdLembarDisposisi
+     * @return
+     */
+    @RequestMapping(value = "/enable-lembar-disposisi/{kdLembarDisposisi}", method = RequestMethod.PUT)
+    ResponseEntity<?> aktifkanLembarDisposisi(@PathVariable("kdLembarDisposisi") String kdLembarDisposisi) {
+        LOGGER.info("cancel lembar disposisi");
+
+        List<LembarDisposisi> lembarDisposisiList
+                = lembarDisposisiService.findTree(kdLembarDisposisi);
+        //aktifkan lembar disposisi beserta turunannya
+        for (LembarDisposisi lembarDisposisi : lembarDisposisiList) {
+            lembarDisposisi.setStatusAktif(1);
+
+            lembarDisposisiService.create(lembarDisposisi);
+        }
+
+        return new ResponseEntity<>(new CustomMessage("lembar disposisi berhasil diaktifkan"), HttpStatus.OK);
     }
 
     private byte[] getSuratDisposisiFile(SuratDisposisi suratDisposisi) {

@@ -56,7 +56,9 @@ public class SuratKeteranganController {
         //build target surat keterangan
         List<TargetSuratKeterangan> targetSuratKeteranganList = new ArrayList<>();
 
-        for (String nipTargetSuratKeterangan : inputWrapper.getTargetSuratKeteranganList()) {
+        for (String nipTargetSuratKeterangan
+//                : inputWrapper.getTargetSuratKeteranganList()
+                : inputWrapper.getNipPegawaiKeterangan()) {
             TargetSuratKeteranganId targetSuratKeteranganId
                     = new TargetSuratKeteranganId(kdSuratKeterangan, nipTargetSuratKeterangan);
 
