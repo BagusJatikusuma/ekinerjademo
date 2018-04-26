@@ -16,12 +16,12 @@ public interface TargetLembarDisposisiDao extends JpaRepository<TargetLembarDisp
     @Query("select t from TargetLembarDisposisi t " +
             "left join fetch t.lembarDisposisi ld " +
             "left join fetch ld.targetLembarDisposisiSet " +
-            "where t.targetLembarDisposisiId.nipPegawai = ?1")
+            "where t.targetLembarDisposisiId.nipPegawai = ?1 and ld.statusAktif = 1")
     List<TargetLembarDisposisi> findByTargetLembarDisposisiId_NipPegawai(String nipPegawai);
 
     @Query("select t from TargetLembarDisposisi t " +
             "left join fetch t.lembarDisposisi ld " +
             "left join fetch ld.noSuratDisposisi " +
-            "where t.targetLembarDisposisiId.nipPegawai = ?1")
+            "where t.targetLembarDisposisiId.nipPegawai = ?1 and ld.statusAktif = 1")
     List<TargetLembarDisposisi> findByTargetDisposisi(String nipPegawai);
 }

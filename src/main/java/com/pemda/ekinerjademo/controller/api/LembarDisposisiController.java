@@ -235,6 +235,7 @@ public class LembarDisposisiController {
         lembarDisposisi.setNoSuratDisposisi(new SuratDisposisi(kdLembarDisposisi));
         lembarDisposisi.setIsiDisposisi(inputWrapper.getIsiDisposisi());
         lembarDisposisi.setStatusBaca(0);
+        lembarDisposisi.setStatusAktif(1);
         lembarDisposisi.setTanggalPengirimanMilis(new Date().getTime());
         lembarDisposisi.setDurasiPengerjaan(inputWrapper.getDurasiPengerjaan());
 

@@ -48,6 +48,11 @@ public class TkdJabatanServiceImpl implements TkdJabatanService {
     }
 
     @Override
+    public List<TkdJabatan> getJabatanByEselonAndUnitKerja(String eselon, String kdUnitKerja) {
+        return tkdJabatanDao.findByEselonAndKdUnitKerja(eselon, kdUnitKerja);
+    }
+
+    @Override
     public TkdJabatan getCamatUnitKerja(String kdUnitKerja) {
         return tkdJabatanDao.findCamatUnitkerja(kdUnitKerja);
     }

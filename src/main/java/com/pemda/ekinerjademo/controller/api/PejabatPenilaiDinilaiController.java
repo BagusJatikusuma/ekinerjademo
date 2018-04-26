@@ -167,6 +167,9 @@ public class PejabatPenilaiDinilaiController {
                                         @PathVariable("eselonPenilai") String eselonPenilai) {
         LOGGER.info("get pegawai bawahan");
 
+        QutPegawai penilai
+                = qutPegawaiService.getQutPegawai(nipPenilai);
+
         List<PejabatPenilaiDinilai> kdJabatanPegawaiBawahanList
                 = pejabatPenilaiDinilaiService.findPegawaiDinilai(nipPenilai);
 
@@ -209,6 +212,16 @@ public class PejabatPenilaiDinilaiController {
             tkdJabatanList
                     .add(tkdJabatanService
                             .getTkdJabatan(jabatan.getPejabatPenilaiDinilaiId().getKdJabatanDinilai()));
+        }
+
+        //tambahan khusus untuk sekretaris dinas dan sekretaris kecamatan
+        //untuk unit kerja dinas
+        if (penilai.getKdUnitKerja().substring(0,1).equals("3") && penilai.getEselon().equals("III.a")) {
+            tkdJabatanList.addAll(tkdJabatanService.getJabatanByEselonAndUnitKerja("III.b",penilai.getKdUnitKerja()));
+        }
+        //untuk kecamatan
+        else if (penilai.getKdUnitKerja().substring(0,1).equals("7") && penilai.getEselon().equals("III.b")) {
+
         }
 
         for (TkdJabatan tkdJabatan : tkdJabatanList) {
