@@ -1,14 +1,17 @@
 package com.pemda.ekinerjademo.controller.api;
 
 import com.pemda.ekinerjademo.model.bismamodel.QutPegawai;
+import com.pemda.ekinerjademo.model.bismamodel.TkdJabatan;
 import com.pemda.ekinerjademo.model.ekinerjamodel.PejabatPenilaiDinilai;
 import com.pemda.ekinerjademo.model.ekinerjamodel.PejabatPenilaiDinilaiId;
 import com.pemda.ekinerjademo.model.ekinerjamodel.QutPegawaiClone;
 import com.pemda.ekinerjademo.service.PejabatPenilaiDinilaiService;
 import com.pemda.ekinerjademo.service.QutPegawaiCloneService;
 import com.pemda.ekinerjademo.service.QutPegawaiService;
+import com.pemda.ekinerjademo.service.TkdJabatanService;
 import com.pemda.ekinerjademo.wrapper.input.PejabatanPenilaiDinilaiInputWrapper;
 import com.pemda.ekinerjademo.wrapper.output.CustomMessage;
+import com.pemda.ekinerjademo.wrapper.output.JabatanWrapper;
 import com.pemda.ekinerjademo.wrapper.output.QutPegawaiWrapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,13 +34,16 @@ public class PejabatPenilaiDinilaiController {
 
     private PejabatPenilaiDinilaiService pejabatPenilaiDinilaiService;
     private QutPegawaiCloneService qutPegawaiService;
+    private TkdJabatanService tkdJabatanService;
 
     @Autowired
     public PejabatPenilaiDinilaiController(
             PejabatPenilaiDinilaiService pejabatPenilaiDinilaiService,
-            QutPegawaiCloneService qutPegawaiService) {
+            QutPegawaiCloneService qutPegawaiService,
+            TkdJabatanService tkdJabatanService) {
         this.pejabatPenilaiDinilaiService = pejabatPenilaiDinilaiService;
         this.qutPegawaiService = qutPegawaiService;
+        this.tkdJabatanService = tkdJabatanService;
     }
 
     @RequestMapping(value = "/choose-pejabat-penilai", method = RequestMethod.POST)
@@ -142,6 +148,80 @@ public class PejabatPenilaiDinilaiController {
         }
 
         return new ResponseEntity<>(pegawaiBawahanWrapper, HttpStatus.OK);
+    }
+
+    /**
+     *
+     * service yang digunakan untuk mengambil data pegawai bawahan berdasarkan penilai
+     * jika eselon penilai merupakan IV.a data yang dikembalikan list pegawai bawahan
+     * jika bukan data yang dikembalikan list jabatan bawahan
+     *
+     * @param nipPenilai
+     * @param eselonPenilai
+     * @return
+     */
+    @RequestMapping(
+            value = "/get-pegawai-bawahan-eselon/{nipPenilai}/{eselonPenilai}",
+            method = RequestMethod.GET)
+    ResponseEntity<?> getPegawaiBawahan(@PathVariable("nipPenilai") String nipPenilai,
+                                        @PathVariable("eselonPenilai") String eselonPenilai) {
+        LOGGER.info("get pegawai bawahan");
+
+        List<PejabatPenilaiDinilai> kdJabatanPegawaiBawahanList
+                = pejabatPenilaiDinilaiService.findPegawaiDinilai(nipPenilai);
+
+        if (eselonPenilai.equals("IV.a") || eselonPenilai.contains("IV")) {
+            List<QutPegawaiClone> pegawaiBawahanList = new ArrayList<>();
+            List<QutPegawaiWrapper> pegawaiBawahanWrapper = new ArrayList<>();
+
+            //ambil data pegawai bawahan terlebih dahulu
+            for (PejabatPenilaiDinilai jabatan : kdJabatanPegawaiBawahanList) {
+                List<QutPegawaiClone> pegawaiBawahanJabatanList
+                        = qutPegawaiService.getQutPegawaiByKdJabatan(jabatan.getPejabatPenilaiDinilaiId().getKdJabatanDinilai());
+                for (QutPegawaiClone pegawaiBawahan : pegawaiBawahanJabatanList) {
+                    pegawaiBawahanList.add(pegawaiBawahan);
+                }
+            }
+
+            for (QutPegawaiClone pegawaiBawahan : pegawaiBawahanList){
+                pegawaiBawahanWrapper.add(new QutPegawaiWrapper(
+                        pegawaiBawahan.getNip(),
+                        pegawaiBawahan.getNama(),
+                        pegawaiBawahan.getKdJabatan(),
+                        pegawaiBawahan.getJabatan(),
+                        pegawaiBawahan.getKdUnitKerja(),
+                        pegawaiBawahan.getUnitKerja(),
+                        pegawaiBawahan.getPangkat(),
+                        pegawaiBawahan.getGol(),
+                        null,
+                        pegawaiBawahan.getGlrDpn(),
+                        pegawaiBawahan.getGlrBlk()
+                ));
+            }
+
+            return new ResponseEntity<>(pegawaiBawahanWrapper, HttpStatus.OK);
+        }
+
+        List<JabatanWrapper> jabatanWrapperList = new ArrayList<>();
+        List<TkdJabatan> tkdJabatanList = new ArrayList<>();
+
+        for (PejabatPenilaiDinilai jabatan : kdJabatanPegawaiBawahanList) {
+            tkdJabatanList
+                    .add(tkdJabatanService
+                            .getTkdJabatan(jabatan.getPejabatPenilaiDinilaiId().getKdJabatanDinilai()));
+        }
+
+        for (TkdJabatan tkdJabatan : tkdJabatanList) {
+            jabatanWrapperList
+                    .add(new JabatanWrapper(
+                            tkdJabatan.getKdJabatan(),
+                            tkdJabatan.getJabatan(),
+                            tkdJabatan.getEselon(),
+                            tkdJabatan.getKdUnitKerja().getKdUnK(),
+                            tkdJabatan.getKdUnitKerja().getUnitKerja()));
+        }
+
+        return new ResponseEntity<>(jabatanWrapperList, HttpStatus.OK);
     }
 
 }
