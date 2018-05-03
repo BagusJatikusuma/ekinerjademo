@@ -20,6 +20,7 @@ public class LembarDisposisiInputWrapper {
     private String ringkasanIsiSuratDisposisi;
     private String lampiran;
     private List<String> daftarTargetLembarDisposisi;
+    private boolean isTargetJabatan;
     private String isiDisposisi;
     private Integer durasiPengerjaan;
 
@@ -180,5 +181,13 @@ public class LembarDisposisiInputWrapper {
 
     public void setNamaFileSuratLain(String namaFileSuratLain) {
         this.namaFileSuratLain = namaFileSuratLain;
+    }
+
+    public boolean isTargetJabatan() {
+        return isTargetJabatan;
+    }
+
+    public void setTargetJabatan(boolean targetJabatan) {
+        isTargetJabatan = targetJabatan;
     }
 }

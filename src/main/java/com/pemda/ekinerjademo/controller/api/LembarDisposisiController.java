@@ -165,7 +165,17 @@ public class LembarDisposisiController {
         List<TargetLembarDisposisi> targetLembarDisposisiList = new ArrayList<>();
         for (String kdTarget : inputWrapper.getDaftarTargetLembarDisposisi()) {
             TargetLembarDisposisi targetLembarDisposisi = new TargetLembarDisposisi();
-            targetLembarDisposisi.setTargetLembarDisposisiId(new TargetLembarDisposisiId(kdLembarDisposisi, kdTarget));
+
+            if (inputWrapper.isTargetJabatan()) {
+                targetLembarDisposisi
+                        .setTargetLembarDisposisiId(
+                                new TargetLembarDisposisiId(
+                                        kdLembarDisposisi,
+                                        qutPegawaiService.getQutPegawaiByKdJabatan(kdTarget).get(0).getNip()));
+            }
+            else {
+                targetLembarDisposisi.setTargetLembarDisposisiId(new TargetLembarDisposisiId(kdLembarDisposisi, kdTarget));
+            }
             targetLembarDisposisi.setApproveStatus(0);
             targetLembarDisposisi.setStatusBaca(0);
 
@@ -284,7 +294,13 @@ public class LembarDisposisiController {
                             lembarDisposisi.getTglPenyelesaianMilis(),
                             lembarDisposisi.getStatusBaca(),
                             DateUtilities.createLocalDate(new Date(lembarDisposisi.getTanggalPengirimanMilis()), "dd MMMM yyyy", indoLocale),
-                            lembarDisposisi.getTanggalPengirimanMilis()
+                            lembarDisposisi.getTanggalPengirimanMilis(),
+                            null,
+                            null,
+                            null,
+                            null,
+                            null,
+                            lembarDisposisi.getStatusAktif()
                     ));
         }
 
@@ -557,12 +573,18 @@ public class LembarDisposisiController {
             byte[] fileSuratDisposisi = getSuratDisposisiFile(suratDisposisi);
 
             HttpHeaders headers = new HttpHeaders();
-            headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+
+//            headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+            headers.setContentType(MediaType.parseMediaType("application/pdf"));
+
             String filename = suratDisposisi.getPathFile();
-            headers.setContentDispositionFormData(filename, filename);
+
+            headers.add("content-disposition", "inline;filename=" + filename);
+//            headers.setContentDispositionFormData(filename, filename);
+
             headers.setCacheControl("must-revalidate, post-check=0, pre-check=0");
 
-            return new ResponseEntity<>(fileSuratDisposisi, headers, HttpStatus.OK);
+            return new ResponseEntity<byte[]>(fileSuratDisposisi, headers, HttpStatus.OK);
         }
 
         switch (suratDisposisi.getJenisSuratPenugasan()) {

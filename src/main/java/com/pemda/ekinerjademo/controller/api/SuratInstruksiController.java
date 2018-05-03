@@ -54,6 +54,8 @@ public class SuratInstruksiController {
             @RequestBody SuratInstruksiInputWrapper inputWrapper) {
         LOGGER.info("create surat instruksi");
 
+        QutPegawai qutPegawai = qutPegawaiService.getQutPegawai(inputWrapper.getNipPembuat());
+
         EkinerjaXMLBuilder ekinerjaXMLBuilder = new EkinerjaXMLBuilder();
         String isiInstruksiInXml;
 
@@ -86,6 +88,30 @@ public class SuratInstruksiController {
         } else {
             SuratInstruksi suratInstruksiParent
                     = suratInstruksiService.getSuratInstruksi(inputWrapper.getKdSuratInstruksiParent());
+            suratInstruksiParent.setStatusBaca(2);
+
+            suratInstruksiService.createSuratInstruksi(suratInstruksiParent);
+
+            //untuk saat ini khusus surat instruksi non pejabat
+            for (InstruksiPegawai instruksiPegawai : suratInstruksiParent.getInstruksiPegawaiSet()) {
+                if (instruksiPegawai.getInstruksiPegawaiId().getNipPegawai()
+                        .equals(inputWrapper.getNipPembuat())) {
+                    instruksiPegawai.setStatusBaca(2);
+                    suratInstruksiService.createInstruksiPegawai(instruksiPegawai);
+
+                    break;
+                }
+            }
+
+            for (InstruksiPejabat instruksiPejabat : suratInstruksiParent.getInstruksiPejabatSet()) {
+                if (instruksiPejabat.getInstruksiPejabatId().getKdJabatan().equals(qutPegawai.getKdJabatan())) {
+                    instruksiPejabat.setStatusBaca(2);
+                    suratInstruksiService.createInstruksiPejabat(instruksiPejabat);
+
+                    break;
+                }
+            }
+
             suratInstruksi.setPath(suratInstruksiParent.getPath()+"."+kdSuratInstruksi);
         }
 
