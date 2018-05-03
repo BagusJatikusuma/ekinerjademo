@@ -20,4 +20,9 @@ public interface TembusanSuratPerintahDao
     List<TembusanSuratPerintah> findByTembusanSuratPerintahId_KdJabatan(String kdJabatan);
 
     List<TembusanSuratPerintah> findByTembusanSuratPerintahId_KdSuratPerintah(String kdSuratPerintah);
+
+    @Query("select t from TembusanSuratPerintah t " +
+            "left join fetch t.suratPerintah " +
+            "where t.kdUnitKerjaTarget = ?1")
+    List<TembusanSuratPerintah> findByUnitKerjaTarget(String kdUnitKerjaTarget);
 }

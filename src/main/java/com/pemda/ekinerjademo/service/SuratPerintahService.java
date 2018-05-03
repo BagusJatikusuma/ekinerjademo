@@ -17,6 +17,10 @@ public interface SuratPerintahService {
     List<TargetSuratPerintahPejabat> getTargetSuratPerintahPejabat(String kdJabatanTarget);
     List<TembusanSuratPerintah> getTembusanSuratPerintah(String kdJabatanTembusan);
 
+    List<TargetSuratPerintahPegawai> getTargetSuratPerintahPegawaiByUnitkerja(String kdUnitKerjaTarget);
+    List<TargetSuratPerintahPejabat> getTargetSuratPerintahPejabatByUnitkerja(String kdUnitKerjaTarget);
+    List<TembusanSuratPerintah> getTembusanSuratPerintahByUnitkerja(String kdUnitKerjaTarget);
+
     Integer getLatestNomorSuratByUnitKerja(String kdUnitKerja);
 
     void creteSurat(SuratPerintah suratPerintah);
@@ -33,6 +37,8 @@ public interface SuratPerintahService {
     void openSuratPerintahPegawai(TargetSuratPerintahPegawaiId targetSuratPerintahPegawaiId);
     void openSuratTembusan(TembusanSuratPerintahId tembusanSuratPerintahId);
     void openSuratPeintahByPenilai(String kdSuratPerintah);
+
+    List<SuratPerintah> getDraftSuratApproval(String kdUnitKerja);
 
     void update(SuratPerintah suratPerintah);
 

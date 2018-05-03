@@ -10,6 +10,9 @@ import javax.persistence.*;
 public class TargetSuratPerintahPejabat {
     @EmbeddedId
     private TargetSuratPerintahPejabatId targetSuratPerintahPejabatId;
+
+    @Column(name = "kd_unit_kerja_target")
+    private String kdUnitKerjaTarget;
     @Column(name = "approve_Status")
     private Integer approveStatus;
     @Column(name = "status_diterima")
@@ -63,5 +66,13 @@ public class TargetSuratPerintahPejabat {
 
     public void setStatusBaca(Integer statusBaca) {
         this.statusBaca = statusBaca;
+    }
+
+    public String getKdUnitKerjaTarget() {
+        return kdUnitKerjaTarget;
+    }
+
+    public void setKdUnitKerjaTarget(String kdUnitKerjaTarget) {
+        this.kdUnitKerjaTarget = kdUnitKerjaTarget;
     }
 }

@@ -11,6 +11,9 @@ public class TargetSuratPerintahPegawai {
     @EmbeddedId
     private TargetSuratPerintahPegawaiId targetSuratPerintahPegawaiId;
 
+    @Column(name = "kd_unit_kerja_target")
+    private String kdUnitKerjaTarget;
+
     @Column(name = "approve_status")
     private Integer approveStatus;
 
@@ -66,5 +69,13 @@ public class TargetSuratPerintahPegawai {
 
     public void setStatusBaca(Integer statusBaca) {
         this.statusBaca = statusBaca;
+    }
+
+    public String getKdUnitKerjaTarget() {
+        return kdUnitKerjaTarget;
+    }
+
+    public void setKdUnitKerjaTarget(String kdUnitKerjaTarget) {
+        this.kdUnitKerjaTarget = kdUnitKerjaTarget;
     }
 }

@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -23,6 +24,16 @@ public interface SuratPerintahDao extends JpaRepository<SuratPerintah, String> {
             "left join fetch s.tembusanSuratPerintahList " +
             "where s.kdSuratPerintah = ?1")
     SuratPerintah findByKdSuratPerintah(String kdSuratperintah);
+
+    @Query("select s from SuratPerintah s " +
+            "left join fetch s.targetSuratPerintahPegawaiList " +
+            "left join fetch s.targetSuratPerintahPejabatSet " +
+            "left join fetch s.suratPerintahPejabat " +
+            "left join fetch s.suratPerintahNonPejabat " +
+            "left join fetch s.tembusanSuratPerintahList " +
+            "where s.kdUnitKerja = ?1 " +
+            "and s.approvalPenandatangan = 1")
+    List<SuratPerintah> findDraftApproval(String kdUnitKerja);
 
     @Query("select max(s.nomorSurat1) from SuratPerintah s " +
             "where s.kdUnitKerja = ?1")

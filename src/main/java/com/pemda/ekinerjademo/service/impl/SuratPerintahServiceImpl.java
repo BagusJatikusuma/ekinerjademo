@@ -66,6 +66,21 @@ public class SuratPerintahServiceImpl implements SuratPerintahService {
     }
 
     @Override
+    public List<TargetSuratPerintahPegawai> getTargetSuratPerintahPegawaiByUnitkerja(String kdUnitKerjaTarget) {
+        return targetSuratPerintahPegawaiDao.findByUnitKerjaTarget(kdUnitKerjaTarget);
+    }
+
+    @Override
+    public List<TargetSuratPerintahPejabat> getTargetSuratPerintahPejabatByUnitkerja(String kdUnitKerjaTarget) {
+        return targetSuratPerintahPejabatDao.findByUnitKerjaTarget(kdUnitKerjaTarget);
+    }
+
+    @Override
+    public List<TembusanSuratPerintah> getTembusanSuratPerintahByUnitkerja(String kdUnitKerjaTarget) {
+        return tembusanSuratPerintahDao.findByUnitKerjaTarget(kdUnitKerjaTarget);
+    }
+
+    @Override
     public Integer getLatestNomorSuratByUnitKerja(String kdUnitKerja) {
         return suratPerintahDao.findLatestNomorSuratByUnitKerja(kdUnitKerja);
     }
@@ -157,6 +172,11 @@ public class SuratPerintahServiceImpl implements SuratPerintahService {
         SuratPerintah suratPerintah = suratPerintahDao.findOne(kdSuratPerintah);
 
         suratPerintah.setStatusPenilaian(1);
+    }
+
+    @Override
+    public List<SuratPerintah> getDraftSuratApproval(String kdUnitKerja) {
+        return suratPerintahDao.findDraftApproval(kdUnitKerja);
     }
 
     @Override

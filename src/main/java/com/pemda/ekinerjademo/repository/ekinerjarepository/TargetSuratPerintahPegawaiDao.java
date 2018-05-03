@@ -20,4 +20,9 @@ public interface TargetSuratPerintahPegawaiDao
     List<TargetSuratPerintahPegawai> findByTargetSuratPerintahPegawaiId_NipPegawai(String nipPegawai);
 
     List<TargetSuratPerintahPegawai> findByTargetSuratPerintahPegawaiId_KdSuratPerintah(String kdSuratperintah);
+
+    @Query("select t from TargetSuratPerintahPegawai t " +
+            "left join fetch t.suratPerintah " +
+            "where t.kdUnitKerjaTarget = ?1")
+    List<TargetSuratPerintahPegawai> findByUnitKerjaTarget(String kdUnitKerjaTarget);
 }
