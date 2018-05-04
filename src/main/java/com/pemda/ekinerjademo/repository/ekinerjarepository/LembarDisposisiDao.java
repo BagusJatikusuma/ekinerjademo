@@ -20,4 +20,10 @@ public interface LembarDisposisiDao extends JpaRepository<LembarDisposisi, Strin
             "where l.kdLembarDisposisi = ?1")
     LembarDisposisi findDokumenLembarDisposisi(String kdLembarDisposisi);
     List<LembarDisposisi> findByPath(String path);
+
+    @Query("select l from LembarDisposisi l " +
+            "where l.kdUnitKerja = ?1 " +
+            "and l.approvalPenandatangan = 1 " +
+            "and l.statusPenyebaran = 0")
+    List<LembarDisposisi> findDraftLembarDisposisiApproval(String kdUnitKerja);
 }

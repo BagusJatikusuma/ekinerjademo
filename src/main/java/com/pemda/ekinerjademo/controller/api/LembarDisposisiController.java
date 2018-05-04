@@ -1,12 +1,13 @@
 package com.pemda.ekinerjademo.controller.api;
 
 import com.pemda.ekinerjademo.model.bismamodel.QutPegawai;
+import com.pemda.ekinerjademo.model.bismamodel.TkdJabatan;
 import com.pemda.ekinerjademo.model.ekinerjamodel.*;
 import com.pemda.ekinerjademo.projection.ekinerjaprojection.CustomPegawaiCredential;
-import com.pemda.ekinerjademo.repository.ekinerjarepository.SuratDisposisiDao;
 import com.pemda.ekinerjademo.service.*;
 import com.pemda.ekinerjademo.util.DateUtilities;
 import com.pemda.ekinerjademo.util.FileUploader;
+import com.pemda.ekinerjademo.wrapper.input.DraftLembarDisposisiAdminSuratInputWrapper;
 import com.pemda.ekinerjademo.wrapper.input.LembarDisposisiInputWrapper;
 import com.pemda.ekinerjademo.wrapper.output.*;
 import groovy.transform.Synchronized;
@@ -41,6 +42,7 @@ public class LembarDisposisiController {
     @Autowired private LembarDisposisiService lembarDisposisiService;
     @Autowired private SuratDisposisiService suratDisposisiService;
     @Autowired private QutPegawaiCloneService qutPegawaiService;
+    @Autowired private TkdJabatanService tkdJabatanService;
 
     //service yang digunakan untuk mengambil surat disposisi
     @Autowired private BeritaAcaraService beritaAcaraService;
@@ -483,7 +485,6 @@ public class LembarDisposisiController {
     }
 
 
-
     @RequestMapping(value = "/get-dokumen-lembar-disposisi/{kdLembarDisposisi}", method = RequestMethod.GET)
     ResponseEntity<?> getDokumenLembarDisposisi(@PathVariable("kdLembarDisposisi") String kdLembarDisposisi) {
         LOGGER.info("get dokumen lembar disposisi ");
@@ -492,23 +493,58 @@ public class LembarDisposisiController {
                 = lembarDisposisiService.findByKdLembarDisposisi(kdLembarDisposisi);
         List<CustomPegawaiCredential> qutPegawaiList
                 = qutPegawaiService.getCustomPegawaiCredentials();
-        List<QutPegawaiWrapper> targetPegawai = new ArrayList<>();
+        List<TkdJabatan> jabatanList
+                = tkdJabatanService.getJabatanByUnitKerja(lembarDisposisi.getKdUnitKerja());
 
-        for (TargetLembarDisposisi targetLembarDisposisi
-                : lembarDisposisi.getTargetLembarDisposisiSet()) {
-            for (CustomPegawaiCredential pegawai : qutPegawaiList) {
-                if (pegawai.getNip()
-                        .equals(targetLembarDisposisi.getTargetLembarDisposisiId().getNipPegawai())) {
-                    targetPegawai
-                            .add(new QutPegawaiWrapper(
-                                    pegawai.getNip(),
-                                    pegawai.getNama(), pegawai.getKdJabatan(),
-                                    pegawai.getJabatan(),
-                                    pegawai.getKdUnitKerja(),
-                                    pegawai.getUnitKerja(),
-                                    pegawai.getPangkat(),
-                                    pegawai.getGol()));
-                    break;
+        List<QutPegawaiWrapper> targetPegawai = new ArrayList<>();
+        List<JabatanWrapper> targetPejabat = new ArrayList<>();
+
+        QutPegawai pembuatLembarDisposisi
+                = qutPegawaiService.getQutPegawai(lembarDisposisi.getNipPembuat());
+
+        boolean isTargetPejabat = false;
+        if (pembuatLembarDisposisi.getEselon().equals("IV.a") ||
+                pembuatLembarDisposisi.getEselon().contains("IV")) {
+
+            for (TargetLembarDisposisi targetLembarDisposisi
+                    : lembarDisposisi.getTargetLembarDisposisiSet()) {
+                for (CustomPegawaiCredential pegawai : qutPegawaiList) {
+                    if (pegawai.getNip()
+                            .equals(targetLembarDisposisi.getTargetLembarDisposisiId().getNipPegawai())) {
+                        targetPegawai
+                                .add(new QutPegawaiWrapper(
+                                        pegawai.getNip(),
+                                        pegawai.getNama(), pegawai.getKdJabatan(),
+                                        pegawai.getJabatan(),
+                                        pegawai.getKdUnitKerja(),
+                                        pegawai.getUnitKerja(),
+                                        pegawai.getPangkat(),
+                                        pegawai.getGol()));
+                        break;
+                    }
+
+                }
+
+            }
+
+        }
+        else {
+            isTargetPejabat = true;
+
+            for (TargetLembarDisposisi targetLembarDisposisi
+                    : lembarDisposisi.getTargetLembarDisposisiSet()) {
+                for (TkdJabatan jabatan : jabatanList) {
+                    if (jabatan.getKdJabatan()
+                            .equals(targetLembarDisposisi.getTargetLembarDisposisiId().getNipPegawai())) {
+                        targetPejabat
+                            .add(new JabatanWrapper(
+                                    jabatan.getKdJabatan(),
+                                    jabatan.getJabatan(),
+                                    jabatan.getEselon(),
+                                    jabatan.getKdUnitKerja().getKdUnK(),
+                                    jabatan.getKdUnitKerja().getUnitKerja()));
+                    }
+
                 }
 
             }
@@ -533,7 +569,10 @@ public class LembarDisposisiController {
                         lembarDisposisi.getNoSuratDisposisi().getDari(),
                         lembarDisposisi.getNoSuratDisposisi().getRingkasanIsi(),
                         lembarDisposisi.getNoSuratDisposisi().getLampiran(),
-                        targetPegawai
+                        targetPegawai,
+                        targetPejabat,
+                        isTargetPejabat,
+                        null
                         );
 
         return new ResponseEntity<Object>(dokumenLembarDisposisiWrapper, HttpStatus.OK);
@@ -724,6 +763,68 @@ public class LembarDisposisiController {
         }
 
         return new ResponseEntity<>(new CustomMessage("lembar disposisi berhasil diaktifkan"), HttpStatus.OK);
+    }
+
+    /**
+     *
+     * Service yang digunakan oleh admin persuratan untuk mendapatkan  data
+     * lembar disposisi yang telah ditandatangani oleh kadin atau sekdin
+     *
+     * @return daftar lembar disposisi
+     */
+    @RequestMapping(value = "/get-draft-lembar-disposisi-approval/{kdUnitKerja}", method = RequestMethod.GET)
+    ResponseEntity<?> getDrafttLembarDisposisiApproval(
+            @PathVariable("kdUnitKerja") String kdUnitKerja) {
+        LOGGER.info("get draft lembar disposisi approval");
+
+        List<LembarDisposisi> draftLembarDisposisiApprovalList
+                = lembarDisposisiService.getDraftlembarDisposisiApproval(kdUnitKerja);
+
+        List<LembarDisposisiWrapper> lembarDisposisiWrappers
+                = new ArrayList<>();
+
+        Locale indoLocale = new Locale("id", "ID");
+        for (LembarDisposisi lembarDisposisi
+                : draftLembarDisposisiApprovalList) {
+//            LOGGER.info(lembarDisposisi.getPath());
+            lembarDisposisiWrappers
+                    .add(new LembarDisposisiWrapper(
+                            lembarDisposisi.getKdLembarDisposisi(),
+                            lembarDisposisi.getPath(),
+                            DateUtilities.createLocalDate(new Date(lembarDisposisi.getTanggalPenerimaanMilis()), "dd MMMM yyyy", indoLocale),
+                            lembarDisposisi.getTanggalPenerimaanMilis(),
+                            lembarDisposisi.getTktKeamanan(),
+                            DateUtilities.createLocalDate(new Date(lembarDisposisi.getTglPenyelesaianMilis()), "dd MMMM yyyy", indoLocale),
+                            lembarDisposisi.getTglPenyelesaianMilis(),
+                            lembarDisposisi.getStatusBaca(),
+                            DateUtilities.createLocalDate(new Date(lembarDisposisi.getTanggalPengirimanMilis()), "dd MMMM yyyy", indoLocale),
+                            lembarDisposisi.getTanggalPengirimanMilis(),
+                            null,
+                            null,
+                            null,
+                            null,
+                            null,
+                            lembarDisposisi.getStatusAktif(),
+                            lembarDisposisi.getStatusPenyebaran()
+                    ));
+        }
+
+
+        return new ResponseEntity<>(lembarDisposisiWrappers, HttpStatus.OK);
+    }
+
+    /**
+     *
+     * Service yang digunakan oleh admin persuratan untuk membuat draft lembar disposisi pertama kali
+     *
+     * @return
+     */
+    @RequestMapping(value = "/create-draft-lembar-disposisi", method = RequestMethod.POST)
+    ResponseEntity<?> createDraftLembarDisposisi(
+            @RequestBody DraftLembarDisposisiAdminSuratInputWrapper inputWrapper) {
+        LOGGER.info("create draft lembar disposisi");
+
+        return new ResponseEntity<>(null, HttpStatus.OK);
     }
 
     private byte[] getSuratDisposisiFile(SuratDisposisi suratDisposisi) {

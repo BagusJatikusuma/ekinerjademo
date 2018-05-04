@@ -22,6 +22,8 @@ public class DokumenLembarDisposisiWrapper {
     private String ringkasanIsi;
     private String lampiran;
     private List<QutPegawaiWrapper> targetPegawaiLembarDisposisi;
+    private List<JabatanWrapper> targeJabatanLembarDisposisiList;
+    private boolean isTargetjabatan;
     private byte[] barcodeImage;
 
     public DokumenLembarDisposisiWrapper() {
@@ -82,6 +84,27 @@ public class DokumenLembarDisposisiWrapper {
         this.targetPegawaiLembarDisposisi = targetPegawaiLembarDisposisi;
     }
 
+    public DokumenLembarDisposisiWrapper(String kdLembarDisposisi, String path, String tanggalPenerimaan, Long tanggalPenerimaanMilis, Integer tktKeamanan, String tglPenyelesaian, Long tglPenyelesaianMilis, Long tangglPengirimanMilis, String noSuratDisposisi, String isiDisposisi, String tanggalSuratDisposisi, Long tanggalSuratDisposisiMilis, String dari, String ringkasanIsi, String lampiran, List<QutPegawaiWrapper> targetPegawaiLembarDisposisi, List<JabatanWrapper> targeJabatanLembarDisposisiList, boolean isTargetjabatan, byte[] barcodeImage) {
+        this.kdLembarDisposisi = kdLembarDisposisi;
+        this.path = path;
+        this.tanggalPenerimaan = tanggalPenerimaan;
+        this.tanggalPenerimaanMilis = tanggalPenerimaanMilis;
+        this.tktKeamanan = tktKeamanan;
+        this.tglPenyelesaian = tglPenyelesaian;
+        this.tglPenyelesaianMilis = tglPenyelesaianMilis;
+        this.tangglPengirimanMilis = tangglPengirimanMilis;
+        this.noSuratDisposisi = noSuratDisposisi;
+        this.isiDisposisi = isiDisposisi;
+        this.tanggalSuratDisposisi = tanggalSuratDisposisi;
+        this.tanggalSuratDisposisiMilis = tanggalSuratDisposisiMilis;
+        this.dari = dari;
+        this.ringkasanIsi = ringkasanIsi;
+        this.lampiran = lampiran;
+        this.targetPegawaiLembarDisposisi = targetPegawaiLembarDisposisi;
+        this.targeJabatanLembarDisposisiList = targeJabatanLembarDisposisiList;
+        this.isTargetjabatan = isTargetjabatan;
+        this.barcodeImage = barcodeImage;
+    }
 
     public String getKdLembarDisposisi() {
         return kdLembarDisposisi;
@@ -217,5 +240,21 @@ public class DokumenLembarDisposisiWrapper {
 
     public void setBarcodeImage(byte[] barcodeImage) {
         this.barcodeImage = barcodeImage;
+    }
+
+    public List<JabatanWrapper> getTargeJabatanLembarDisposisiList() {
+        return targeJabatanLembarDisposisiList;
+    }
+
+    public void setTargeJabatanLembarDisposisiList(List<JabatanWrapper> targeJabatanLembarDisposisiList) {
+        this.targeJabatanLembarDisposisiList = targeJabatanLembarDisposisiList;
+    }
+
+    public boolean isTargetjabatan() {
+        return isTargetjabatan;
+    }
+
+    public void setTargetjabatan(boolean targetjabatan) {
+        isTargetjabatan = targetjabatan;
     }
 }

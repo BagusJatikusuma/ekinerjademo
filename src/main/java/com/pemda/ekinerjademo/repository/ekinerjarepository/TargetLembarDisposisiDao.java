@@ -24,4 +24,6 @@ public interface TargetLembarDisposisiDao extends JpaRepository<TargetLembarDisp
             "left join fetch ld.noSuratDisposisi " +
             "where t.targetLembarDisposisiId.nipPegawai = ?1 and ld.statusAktif = 1")
     List<TargetLembarDisposisi> findByTargetDisposisi(String nipPegawai);
+
+
 }

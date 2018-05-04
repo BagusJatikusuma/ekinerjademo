@@ -20,6 +20,7 @@ public class LembarDisposisiWrapper {
     private String jenisSurat;
     private Integer kdJenisSurat;
     private Integer statusAktif;
+    private Integer statusPenyebaran;
 
     public LembarDisposisiWrapper() {
     }
@@ -151,6 +152,26 @@ public class LembarDisposisiWrapper {
         this.statusAktif = statusAktif;
     }
 
+    public LembarDisposisiWrapper(String kdLembarDisposisi, String path, String tanggalPenerimaan, Long tanggalPenerimaanMilis, Integer tktKeamanan, String tglPenyelesaian, Long tglPenyelesaianMilis, Integer statusBaca, String tglPengiriman, Long tglPengirimanMilis, String nipPengirim, String namaPengirim, String ringkasanIsi, String jenisSurat, Integer kdJenisSurat, Integer statusAktif, Integer statusPenyebaran) {
+        this.kdLembarDisposisi = kdLembarDisposisi;
+        this.path = path;
+        this.tanggalPenerimaan = tanggalPenerimaan;
+        this.tanggalPenerimaanMilis = tanggalPenerimaanMilis;
+        this.tktKeamanan = tktKeamanan;
+        this.tglPenyelesaian = tglPenyelesaian;
+        this.tglPenyelesaianMilis = tglPenyelesaianMilis;
+        this.statusBaca = statusBaca;
+        this.tglPengiriman = tglPengiriman;
+        this.tglPengirimanMilis = tglPengirimanMilis;
+        this.nipPengirim = nipPengirim;
+        this.namaPengirim = namaPengirim;
+        this.ringkasanIsi = ringkasanIsi;
+        this.jenisSurat = jenisSurat;
+        this.kdJenisSurat = kdJenisSurat;
+        this.statusAktif = statusAktif;
+        this.statusPenyebaran = statusPenyebaran;
+    }
+
     public String getKdLembarDisposisi() {
         return kdLembarDisposisi;
     }
@@ -277,5 +298,13 @@ public class LembarDisposisiWrapper {
 
     public void setStatusAktif(Integer statusAktif) {
         this.statusAktif = statusAktif;
+    }
+
+    public Integer getStatusPenyebaran() {
+        return statusPenyebaran;
+    }
+
+    public void setStatusPenyebaran(Integer statusPenyebaran) {
+        this.statusPenyebaran = statusPenyebaran;
     }
 }

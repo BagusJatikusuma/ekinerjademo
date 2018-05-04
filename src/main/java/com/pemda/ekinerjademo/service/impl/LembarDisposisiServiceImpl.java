@@ -92,6 +92,11 @@ public class LembarDisposisiServiceImpl implements LembarDisposisiService {
     }
 
     @Override
+    public List<LembarDisposisi> getDraftlembarDisposisiApproval(String kdUnitKerja) {
+        return lembarDisposisiDao.findDraftLembarDisposisiApproval(kdUnitKerja);
+    }
+
+    @Override
     public List<LembarDisposisi> findTreeByLeave(String kdLembarDisposisiLeave) {
         LembarDisposisi lembarDisposisiLeave
                 = lembarDisposisiDao.findOne(kdLembarDisposisiLeave);

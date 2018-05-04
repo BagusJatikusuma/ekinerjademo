@@ -26,5 +26,7 @@ public interface LembarDisposisiService {
     List<TargetLembarDisposisi> findByTargetDisposisiRev(String nipTarget);
     LembarDisposisi getDokumenLembarDisposisi(String kdLembarDisposisi);
 
+    List<LembarDisposisi> getDraftlembarDisposisiApproval(String kdUnitKerja);
+
     List<LembarDisposisi> findTreeByLeave(String kdLembarDisposisiLeave);
 }
