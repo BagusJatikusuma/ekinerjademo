@@ -22,11 +22,15 @@ public interface LembarDisposisiService {
     List<LembarDisposisi> findByUnitKerja(String kdUnitKerja);
     List<LembarDisposisi> findByNipPegawai(String nipPegawai);
     List<LembarDisposisi> findTree(String kdLembarDisposisi);
+
     List<TargetLembarDisposisi> findByTargetDisposisi(String nipTarget);
     List<TargetLembarDisposisi> findByTargetDisposisiRev(String nipTarget);
+
     LembarDisposisi getDokumenLembarDisposisi(String kdLembarDisposisi);
 
     List<LembarDisposisi> getDraftlembarDisposisiApproval(String kdUnitKerja);
 
     List<LembarDisposisi> findTreeByLeave(String kdLembarDisposisiLeave);
+
+    List<LembarDisposisi> getDraftLembarDisposisiByLevel(String kdUnitKerja, Integer draftLevel);
 }

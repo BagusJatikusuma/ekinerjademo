@@ -26,4 +26,9 @@ public interface LembarDisposisiDao extends JpaRepository<LembarDisposisi, Strin
             "and l.approvalPenandatangan = 1 " +
             "and l.statusPenyebaran = 0")
     List<LembarDisposisi> findDraftLembarDisposisiApproval(String kdUnitKerja);
+
+    @Query("select l from LembarDisposisi l " +
+            "left join fetch l.noSuratDisposisi " +
+            "where l.kdUnitKerja = ?1 and l.levelDraft = ?2")
+    List<LembarDisposisi> findDraftByLevel(String kdUnitKerja, Integer draftLevel);
 }

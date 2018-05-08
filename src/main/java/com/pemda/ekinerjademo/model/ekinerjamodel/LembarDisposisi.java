@@ -46,6 +46,10 @@ public class LembarDisposisi {
     private Integer tahunUrtug;
     @Column(name = "status_aktif")
     private Integer statusAktif;
+    @Column(name = "level_draft")
+    private Integer levelDraft;
+    @Column(name = "status_approval_sekretaris")
+    private Integer statusApprovalSekretaris;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(
@@ -234,5 +238,21 @@ public class LembarDisposisi {
 
     public void setStatusAktif(Integer statusAktif) {
         this.statusAktif = statusAktif;
+    }
+
+    public Integer getLevelDraft() {
+        return levelDraft;
+    }
+
+    public void setLevelDraft(Integer levelDraft) {
+        this.levelDraft = levelDraft;
+    }
+
+    public Integer getStatusApprovalSekretaris() {
+        return statusApprovalSekretaris;
+    }
+
+    public void setStatusApprovalSekretaris(Integer statusApprovalSekretaris) {
+        this.statusApprovalSekretaris = statusApprovalSekretaris;
     }
 }

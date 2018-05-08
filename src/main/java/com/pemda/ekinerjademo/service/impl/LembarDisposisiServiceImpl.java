@@ -116,5 +116,10 @@ public class LembarDisposisiServiceImpl implements LembarDisposisiService {
         return lembarDisposisiTree;
     }
 
+    @Override
+    public List<LembarDisposisi> getDraftLembarDisposisiByLevel(String kdUnitKerja, Integer draftLevel) {
+        return lembarDisposisiDao.findDraftByLevel(kdUnitKerja, draftLevel);
+    }
+
 
 }

@@ -9,6 +9,7 @@ import com.pemda.ekinerjademo.util.DateUtilities;
 import com.pemda.ekinerjademo.util.FileUploader;
 import com.pemda.ekinerjademo.wrapper.input.DraftLembarDisposisiAdminSuratInputWrapper;
 import com.pemda.ekinerjademo.wrapper.input.LembarDisposisiInputWrapper;
+import com.pemda.ekinerjademo.wrapper.input.StatusApproveDraftlembarDisposisiInputWrapper;
 import com.pemda.ekinerjademo.wrapper.output.*;
 import groovy.transform.Synchronized;
 import org.apache.commons.io.FilenameUtils;
@@ -824,7 +825,138 @@ public class LembarDisposisiController {
             @RequestBody DraftLembarDisposisiAdminSuratInputWrapper inputWrapper) {
         LOGGER.info("create draft lembar disposisi");
 
-        return new ResponseEntity<>(null, HttpStatus.OK);
+        String kdLembarDisposisi = String.valueOf(new Date().getTime());
+
+        SuratDisposisi suratDisposisi = new SuratDisposisi();
+        suratDisposisi.setNoSurat(inputWrapper.getNoSuratDisposisi());
+        suratDisposisi.setTanggalSuratMilis(inputWrapper.getTanggalSuratDisposisiMilis());
+        suratDisposisi.setDari(inputWrapper.getDariSuratDisposisi());
+        suratDisposisi.setRingkasanIsi(inputWrapper.getRingkasanIsiSuratDisposisi());
+        suratDisposisi.setLampiran(inputWrapper.getLampiran());
+
+        //jika surat disposisi merupakan file upload
+        if (inputWrapper.getJenisSuratPenugasan() == null) {
+            suratDisposisi.setPathFile(kdLembarDisposisi + "." + FilenameUtils.getExtension(inputWrapper.getNamaFileSuratLain()));
+        }
+        //jika surat disposisi merupakan data surat yang ada pada sistem
+        else {
+            suratDisposisi.setJenisSuratPenugasan(inputWrapper.getJenisSuratPenugasan());
+            suratDisposisi.setKdSuratPenugasan(inputWrapper.getKdSuratPenugasan());
+        }
+
+        suratDisposisiService.create(suratDisposisi);
+
+        LembarDisposisi lembarDisposisi = new LembarDisposisi();
+        lembarDisposisi.setKdLembarDisposisi(kdLembarDisposisi);
+
+        lembarDisposisi.setPath(kdLembarDisposisi);
+
+        lembarDisposisi.setNipPembuat(inputWrapper.getNipPembuat());
+        lembarDisposisi.setKdUnitKerja(inputWrapper.getKdUnitKerja());
+        lembarDisposisi.setTanggalPenerimaanMilis(inputWrapper.getTanggalSuratDisposisiDiterimaMilis());
+        lembarDisposisi.setNoSuratDisposisi(new SuratDisposisi(inputWrapper.getNoSuratDisposisi()));
+        lembarDisposisi.setStatusBaca(0);
+        lembarDisposisi.setStatusAktif(1);
+        lembarDisposisi.setTanggalPengirimanMilis(new Date().getTime());
+        lembarDisposisi.setDurasiPengerjaan(inputWrapper.getDurasiPengerjaan());
+        lembarDisposisi.setLevelDraft(1);
+        lembarDisposisi.setStatusApprovalSekretaris(0);
+
+        //
+        lembarDisposisi.setTglPenyelesaianMilis(new Long(0));
+        lembarDisposisi.setTktKeamanan(0);
+
+        lembarDisposisi.setKdLembarDisposisiParent(null);
+
+
+        lembarDisposisiService.create(lembarDisposisi);
+
+
+        return new ResponseEntity<>(new CustomMessage("draft lembar disposisi berhasil dibuat"), HttpStatus.OK);
+    }
+
+    /**
+     *
+     * Service yang digunakan oleh sekretaris untuk mengapprove draft lembar disposisi dari admin persuratan
+     *
+     * @return
+     */
+    @RequestMapping(value = "/approve-draft-lembar-disposisi", method = RequestMethod.PUT)
+    ResponseEntity<?> approveDraftLembarDisposisi(
+            @RequestBody StatusApproveDraftlembarDisposisiInputWrapper inputWrapper) {
+        LOGGER.info("approve draft lembar disposisi");
+
+        LembarDisposisi draftLembarDisposisi
+                = lembarDisposisiService.findByKdLembarDisposisi(inputWrapper.getKdDraftLembarDisposisi());
+
+        if (inputWrapper.isApproved()) {
+            draftLembarDisposisi.setLevelDraft(2);
+            draftLembarDisposisi.setStatusApprovalSekretaris(1);
+        } else {
+            draftLembarDisposisi.setStatusApprovalSekretaris(2);
+        }
+
+        lembarDisposisiService.create(draftLembarDisposisi);
+
+        return new ResponseEntity<>(new CustomMessage("draft lembar disposisi checked"), HttpStatus.OK);
+    }
+
+    /**
+     *
+     * digunakan oleh kadin dan sekdin untuk menerima draft lembar disposisi
+     *
+     * eselon kepala dinas II.b, ciri dinas adalah kode unit kerja diawali 3
+     * eselon sekretaris dinas III.a
+     * eselon camat III.a, ciri kecamatan adalah kode unit kerja diawali 7
+     * eselon sekretaris kecamatan III.b
+     *
+     * @param kdUnitKerja
+     * @return
+     */
+    @RequestMapping(value = "/get-draft-lembar-disposisi/{kdUnitKerja}/{nipTarget}", method = RequestMethod.GET)
+    ResponseEntity<?> getDraftLembarDisposisi(
+            @PathVariable("kdUnitKerja") String kdUnitKerja,
+            @PathVariable("nipTarget") String nipTarget) {
+        LOGGER.info("get draft lembar disposisi");
+
+        List<DraftlembarDisposisiWrapper> draftlembarDisposisiWrappers
+                = new ArrayList<>();
+
+        QutPegawai pegawaiTarget
+                = qutPegawaiService.getQutPegawai(nipTarget);
+
+        if (kdUnitKerja.substring(0,1).equals("3")) {
+            switch (pegawaiTarget.getEselon()) {
+                case "II.b" :
+                    LOGGER.info("Kadin come here");
+                    draftlembarDisposisiWrappers = getDraftlembarDisposisi(kdUnitKerja, 2);
+
+                    break;
+                case "III.a" :
+                    LOGGER.info("Sekdin come here");
+                    draftlembarDisposisiWrappers = getDraftlembarDisposisi(kdUnitKerja, 1);
+                    LOGGER.info("size is "+draftlembarDisposisiWrappers.size());
+                    break;
+            }
+
+        }
+        else if (kdUnitKerja.substring(0,1).equals("7")) {
+            switch (pegawaiTarget.getEselon()) {
+                case "III.a" :
+                    LOGGER.info("camat come here");
+                    draftlembarDisposisiWrappers = getDraftlembarDisposisi(kdUnitKerja, 2);
+
+                    break;
+                case "III.b" :
+                    LOGGER.info("Sekcam come here");
+                    draftlembarDisposisiWrappers = getDraftlembarDisposisi(kdUnitKerja, 1);
+
+                    break;
+            }
+
+        }
+
+        return new ResponseEntity<>(draftlembarDisposisiWrappers, HttpStatus.OK);
     }
 
     private byte[] getSuratDisposisiFile(SuratDisposisi suratDisposisi) {
@@ -840,5 +972,25 @@ public class LembarDisposisiController {
         }
 
         return file;
+    }
+
+    private List<DraftlembarDisposisiWrapper> getDraftlembarDisposisi(String kdUnitKerja, Integer draftLevel) {
+        LOGGER.info("kd unit kerja : "+kdUnitKerja+" ; level draft : "+draftLevel);
+
+        List<DraftlembarDisposisiWrapper> draftlembarDisposisiWrappers = new ArrayList<>();
+
+        List<LembarDisposisi> draftLembarDisposisiList
+                = lembarDisposisiService.getDraftLembarDisposisiByLevel(kdUnitKerja, draftLevel);
+        LOGGER.info("size from database "+draftLembarDisposisiList.size());
+
+        for (LembarDisposisi lembarDisposisi : draftLembarDisposisiList) {
+            draftlembarDisposisiWrappers
+                    .add(new DraftlembarDisposisiWrapper(
+                            lembarDisposisi.getKdLembarDisposisi(),
+                            lembarDisposisi.getNoSuratDisposisi().getDari(),
+                            lembarDisposisi.getTanggalPenerimaanMilis()));
+        }
+
+        return draftlembarDisposisiWrappers;
     }
 }
