@@ -4,6 +4,8 @@ import com.pemda.ekinerjademo.model.ekinerjamodel.*;
 import com.pemda.ekinerjademo.repository.ekinerjarepository.LembarDisposisiDao;
 import com.pemda.ekinerjademo.repository.ekinerjarepository.TargetLembarDisposisiDao;
 import com.pemda.ekinerjademo.service.LembarDisposisiService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,11 +19,15 @@ import java.util.List;
 @Service("LembarDisposisiService")
 @Transactional("ekinerjaTransactionManager")
 public class LembarDisposisiServiceImpl implements LembarDisposisiService {
+    public static final Logger LOGGER = LoggerFactory.getLogger(LembarDisposisiServiceImpl.class);
+
     @Autowired private LembarDisposisiDao lembarDisposisiDao;
     @Autowired private TargetLembarDisposisiDao targetLembarDisposisiDao;
 
     @Override
     public void create(LembarDisposisi lembarDisposisi) {
+        LOGGER.info("create lembar disposisi");
+
         lembarDisposisiDao.save(lembarDisposisi);
     }
 
@@ -118,6 +124,7 @@ public class LembarDisposisiServiceImpl implements LembarDisposisiService {
 
     @Override
     public List<LembarDisposisi> getDraftLembarDisposisiByLevel(String kdUnitKerja, Integer draftLevel) {
+        LOGGER.info("log in service impl kdUnitKerja : "+kdUnitKerja+"; draftLevel : "+draftLevel);
         return lembarDisposisiDao.findDraftByLevel(kdUnitKerja, draftLevel);
     }
 

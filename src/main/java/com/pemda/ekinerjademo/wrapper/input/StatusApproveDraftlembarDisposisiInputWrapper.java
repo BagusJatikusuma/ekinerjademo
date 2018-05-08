@@ -2,7 +2,7 @@ package com.pemda.ekinerjademo.wrapper.input;
 
 public class StatusApproveDraftlembarDisposisiInputWrapper {
     private String kdDraftLembarDisposisi;
-    private boolean isApproved;
+    private boolean approved;
 
     public String getKdDraftLembarDisposisi() {
         return kdDraftLembarDisposisi;
@@ -13,10 +13,10 @@ public class StatusApproveDraftlembarDisposisiInputWrapper {
     }
 
     public boolean isApproved() {
-        return isApproved;
+        return approved;
     }
 
     public void setApproved(boolean approved) {
-        isApproved = approved;
+        this.approved = approved;
     }
 }

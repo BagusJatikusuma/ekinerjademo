@@ -4,6 +4,8 @@ public class DraftlembarDisposisiWrapper {
     private String kdLembarDisposisi;
     private String dariSuratDisposisi;
     private Long tanggalPenerimaanSuratDisposisi;
+    private boolean approvedBySekdin;
+    private boolean signedByKadin;
 
     public DraftlembarDisposisiWrapper() {
     }
@@ -12,6 +14,14 @@ public class DraftlembarDisposisiWrapper {
         this.kdLembarDisposisi = kdLembarDisposisi;
         this.dariSuratDisposisi = dariSuratDisposisi;
         this.tanggalPenerimaanSuratDisposisi = tanggalPenerimaanSuratDisposisi;
+    }
+
+    public DraftlembarDisposisiWrapper(String kdLembarDisposisi, String dariSuratDisposisi, Long tanggalPenerimaanSuratDisposisi, boolean approvedBySekdin, boolean signedByKadin) {
+        this.kdLembarDisposisi = kdLembarDisposisi;
+        this.dariSuratDisposisi = dariSuratDisposisi;
+        this.tanggalPenerimaanSuratDisposisi = tanggalPenerimaanSuratDisposisi;
+        this.approvedBySekdin = approvedBySekdin;
+        this.signedByKadin = signedByKadin;
     }
 
     public String getKdLembarDisposisi() {
@@ -36,5 +46,21 @@ public class DraftlembarDisposisiWrapper {
 
     public void setTanggalPenerimaanSuratDisposisi(Long tanggalPenerimaanSuratDisposisi) {
         this.tanggalPenerimaanSuratDisposisi = tanggalPenerimaanSuratDisposisi;
+    }
+
+    public boolean isApprovedBySekdin() {
+        return approvedBySekdin;
+    }
+
+    public void setApprovedBySekdin(boolean approvedBySekdin) {
+        this.approvedBySekdin = approvedBySekdin;
+    }
+
+    public boolean isSignedByKadin() {
+        return signedByKadin;
+    }
+
+    public void setSignedByKadin(boolean signedByKadin) {
+        this.signedByKadin = signedByKadin;
     }
 }

@@ -877,6 +877,60 @@ public class LembarDisposisiController {
 
     /**
      *
+     * digunakan oleh kepala dinas untuk melihat history lembar disposisi yang ditandatanganinya
+     *
+     * @return
+     */
+    @RequestMapping(value = "/get-lembar-disposisi-signed-history/{nipPenandatangan}", method = RequestMethod.GET)
+    ResponseEntity<?> getLembarDisposisiSignedHistory(@PathVariable("nipPenandatangan") String nipPenandatangan) {
+        LOGGER.info("get lembar disposisi signed history");
+
+        return new ResponseEntity<>(null, HttpStatus.OK);
+    }
+
+    /**
+     *
+     * digunakan oleh admin persuratan untuk melihat draft lembar disposisiyang pernah dibuat
+     *
+     * @param nipPembuat
+     * @return
+     */
+    @RequestMapping(value = "/get-draft-lembar-disposisi-history/{nipPembuat}", method = RequestMethod.GET)
+    ResponseEntity<?> getDraftLembarDisposisiHistory(@PathVariable("nipPembuat") String nipPembuat) {
+        LOGGER.info("get draft lembar disposisi history");
+
+        List<LembarDisposisi> lembarDisposisiList
+                = lembarDisposisiService.findByNipPegawai(nipPembuat);
+        List<DraftlembarDisposisiWrapper> draftlembarDisposisiWrappers
+                = new ArrayList<>();
+
+        boolean approvedBySekdin, signedBykadin;
+
+        for (LembarDisposisi lembarDisposisi
+                : lembarDisposisiList) {
+            approvedBySekdin = false; signedBykadin = false;
+
+            if (lembarDisposisi.getStatusApprovalSekretaris() == 1) {
+                approvedBySekdin = true;
+            }
+
+            if (lembarDisposisi.getApprovalPenandatangan() == 1) {
+                signedBykadin = true;
+            }
+
+            draftlembarDisposisiWrappers
+                    .add(new DraftlembarDisposisiWrapper(lembarDisposisi.getKdLembarDisposisi(),
+                            lembarDisposisi.getNoSuratDisposisi().getDari(),
+                            lembarDisposisi.getTanggalPenerimaanMilis(),
+                            approvedBySekdin,
+                            signedBykadin));
+        }
+
+        return new ResponseEntity<>(draftlembarDisposisiWrappers, HttpStatus.OK);
+    }
+
+    /**
+     *
      * Service yang digunakan oleh sekretaris untuk mengapprove draft lembar disposisi dari admin persuratan
      *
      * @return
@@ -889,10 +943,17 @@ public class LembarDisposisiController {
         LembarDisposisi draftLembarDisposisi
                 = lembarDisposisiService.findByKdLembarDisposisi(inputWrapper.getKdDraftLembarDisposisi());
 
+        if (draftLembarDisposisi == null)
+            return new ResponseEntity<>(new CustomMessage("draft not found"), HttpStatus.NOT_FOUND);
+
         if (inputWrapper.isApproved()) {
+            LOGGER.info("approved");
+
             draftLembarDisposisi.setLevelDraft(2);
             draftLembarDisposisi.setStatusApprovalSekretaris(1);
         } else {
+            LOGGER.info("not approved");
+
             draftLembarDisposisi.setStatusApprovalSekretaris(2);
         }
 
@@ -935,6 +996,7 @@ public class LembarDisposisiController {
                 case "III.a" :
                     LOGGER.info("Sekdin come here");
                     draftlembarDisposisiWrappers = getDraftlembarDisposisi(kdUnitKerja, 1);
+
                     LOGGER.info("size is "+draftlembarDisposisiWrappers.size());
                     break;
             }
@@ -981,6 +1043,7 @@ public class LembarDisposisiController {
 
         List<LembarDisposisi> draftLembarDisposisiList
                 = lembarDisposisiService.getDraftLembarDisposisiByLevel(kdUnitKerja, draftLevel);
+
         LOGGER.info("size from database "+draftLembarDisposisiList.size());
 
         for (LembarDisposisi lembarDisposisi : draftLembarDisposisiList) {
