@@ -25,5 +25,13 @@ public interface TargetLembarDisposisiDao extends JpaRepository<TargetLembarDisp
             "where t.targetLembarDisposisiId.nipPegawai = ?1 and ld.statusAktif = 1")
     List<TargetLembarDisposisi> findByTargetDisposisi(String nipPegawai);
 
+    @Query("select t from TargetLembarDisposisi t " +
+            "left join fetch t.lembarDisposisi ld " +
+            "left join fetch ld.noSuratDisposisi " +
+            "where ld.kdUnitKerja = ?1 " +
+            "and ld.approvalPenandatangan = 1 " +
+            "and ld.statusAktif = 1")
+    List<TargetLembarDisposisi> findByApprovalkadin(String kdUnitKerja);
+
 
 }

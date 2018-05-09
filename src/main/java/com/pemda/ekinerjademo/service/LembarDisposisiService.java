@@ -33,4 +33,6 @@ public interface LembarDisposisiService {
     List<LembarDisposisi> findTreeByLeave(String kdLembarDisposisiLeave);
 
     List<LembarDisposisi> getDraftLembarDisposisiByLevel(String kdUnitKerja, Integer draftLevel);
+
+    List<TargetLembarDisposisi> getByApprovalKadinForTarget(String kdUnitKerja);
 }

@@ -21,6 +21,7 @@ public class LembarDisposisiWrapper {
     private Integer kdJenisSurat;
     private Integer statusAktif;
     private Integer statusPenyebaran;
+    private String namaPenerima;
 
     public LembarDisposisiWrapper() {
     }
@@ -172,6 +173,27 @@ public class LembarDisposisiWrapper {
         this.statusPenyebaran = statusPenyebaran;
     }
 
+    public LembarDisposisiWrapper(String kdLembarDisposisi, String path, String tanggalPenerimaan, Long tanggalPenerimaanMilis, Integer tktKeamanan, String tglPenyelesaian, Long tglPenyelesaianMilis, Integer statusBaca, String tglPengiriman, Long tglPengirimanMilis, String nipPengirim, String namaPengirim, String ringkasanIsi, String jenisSurat, Integer kdJenisSurat, Integer statusAktif, Integer statusPenyebaran, String namaPenerima) {
+        this.kdLembarDisposisi = kdLembarDisposisi;
+        this.path = path;
+        this.tanggalPenerimaan = tanggalPenerimaan;
+        this.tanggalPenerimaanMilis = tanggalPenerimaanMilis;
+        this.tktKeamanan = tktKeamanan;
+        this.tglPenyelesaian = tglPenyelesaian;
+        this.tglPenyelesaianMilis = tglPenyelesaianMilis;
+        this.statusBaca = statusBaca;
+        this.tglPengiriman = tglPengiriman;
+        this.tglPengirimanMilis = tglPengirimanMilis;
+        this.nipPengirim = nipPengirim;
+        this.namaPengirim = namaPengirim;
+        this.ringkasanIsi = ringkasanIsi;
+        this.jenisSurat = jenisSurat;
+        this.kdJenisSurat = kdJenisSurat;
+        this.statusAktif = statusAktif;
+        this.statusPenyebaran = statusPenyebaran;
+        this.namaPenerima = namaPenerima;
+    }
+
     public String getKdLembarDisposisi() {
         return kdLembarDisposisi;
     }
@@ -306,5 +328,13 @@ public class LembarDisposisiWrapper {
 
     public void setStatusPenyebaran(Integer statusPenyebaran) {
         this.statusPenyebaran = statusPenyebaran;
+    }
+
+    public String getNamaPenerima() {
+        return namaPenerima;
+    }
+
+    public void setNamaPenerima(String namaPenerima) {
+        this.namaPenerima = namaPenerima;
     }
 }

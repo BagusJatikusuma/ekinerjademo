@@ -128,5 +128,10 @@ public class LembarDisposisiServiceImpl implements LembarDisposisiService {
         return lembarDisposisiDao.findDraftByLevel(kdUnitKerja, draftLevel);
     }
 
+    @Override
+    public List<TargetLembarDisposisi> getByApprovalKadinForTarget(String kdUnitKerja) {
+        return targetLembarDisposisiDao.findByApprovalkadin(kdUnitKerja);
+    }
+
 
 }
