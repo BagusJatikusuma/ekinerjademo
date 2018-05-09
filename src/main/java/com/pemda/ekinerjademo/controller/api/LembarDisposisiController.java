@@ -947,16 +947,17 @@ public class LembarDisposisiController {
         lembarDisposisi.setDurasiPengerjaan(inputWrapper.getDurasiPengerjaan());
         lembarDisposisi.setLevelDraft(1);
         lembarDisposisi.setStatusApprovalSekretaris(0);
-
         //
         lembarDisposisi.setTglPenyelesaianMilis(new Long(0));
         lembarDisposisi.setTktKeamanan(0);
 
         lembarDisposisi.setKdLembarDisposisiParent(null);
 
-
         lembarDisposisiService.create(lembarDisposisi);
 
+        if (inputWrapper.getJenisSuratPenugasan() == null){
+            return new ResponseEntity<Object>(new CustomMessage(kdLembarDisposisi), HttpStatus.OK);
+        }
 
         return new ResponseEntity<>(new CustomMessage("draft lembar disposisi berhasil dibuat"), HttpStatus.OK);
     }
