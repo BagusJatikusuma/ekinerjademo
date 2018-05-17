@@ -550,6 +550,80 @@ public class SuratUndanganController {
      *
      *
      *
+     * @return
+     */
+    @RequestMapping(value = "/sebar-surat-undangan/{kdSuratUndangan}", method = RequestMethod.PUT)
+    ResponseEntity<?> sebarSuratUndangan(
+            @PathVariable("kdSuratUndangan") String kdSuratUndangan) {
+        LOGGER.info("sebar surat undangan");
+
+        SuratUndangan suratUndangan
+                = suratUndanganService.getByKdSuratUndangan(kdSuratUndangan);
+        suratUndangan.setStatusPenyebaran(1);
+
+        suratUndanganService.create(suratUndangan);
+
+        return new ResponseEntity<>(new CustomMessage("surat undangan telah disebar"), HttpStatus.OK);
+    }
+
+    /**
+     *
+     *
+     *
+     * @param kdUnitKerja
+     * @return
+     */
+    @RequestMapping(value = "/get-draft-surat-undangan-approval/{kdUnitKerja}", method = RequestMethod.GET)
+    ResponseEntity<?> getDraftSuratUndanganApproval(
+            @PathVariable("kdUnitKerja") String kdUnitKerja) {
+        LOGGER.info("get draft surat undangan approval");
+
+        List<SuratUndangan> suratUndanganApprovalList
+                = suratUndanganService.getSuratUndanganApproval(kdUnitKerja);
+
+        List<CustomPegawaiCredential> qutPegawaiList
+                = qutPegawaiService.getCustomPegawaiCredentials();
+
+        List<DraftSuratApprovalWrapper> draftSuratApprovalWrappers
+                = new ArrayList<>();
+
+        boolean isSuratPejabat = false;
+        for (SuratUndangan suratUndangan : suratUndanganApprovalList) {
+            isSuratPejabat = false;
+
+            for (CustomPegawaiCredential pegawaiPemberi : qutPegawaiList) {
+                if (pegawaiPemberi.getNip()
+                        .equals(suratUndangan.getNipPenandatangan())) {
+                    if (suratUndangan.getSuratUndanganPejabat() != null) {
+                        isSuratPejabat = true;
+                    }
+
+                    draftSuratApprovalWrappers
+                            .add(new DraftSuratApprovalWrapper(
+                                    suratUndangan.getKdSuratUndangan(),
+                                    null,
+                                    suratUndangan.getTanggalPembuatanSurat(),
+                                    isSuratPejabat,
+                                    pegawaiPemberi.getNip(),
+                                    pegawaiPemberi.getNama(),
+                                    pegawaiPemberi.getJabatan(),
+                                    suratUndangan.getStatusPenyebaran()
+                            ));
+                    break;
+
+                }
+
+            }
+
+        }
+
+        return new ResponseEntity<>(draftSuratApprovalWrappers, HttpStatus.OK);
+    }
+
+    /**
+     *
+     *
+     *
      * @param kdSuratUndangan
      * @return
      */

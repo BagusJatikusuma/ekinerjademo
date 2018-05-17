@@ -1,5 +1,7 @@
 package com.pemda.ekinerjademo.wrapper.output;
 
+import java.util.List;
+
 /**
  * Created by bagus on 27/11/17.
  */
@@ -21,7 +23,7 @@ public class LembarDisposisiWrapper {
     private Integer kdJenisSurat;
     private Integer statusAktif;
     private Integer statusPenyebaran;
-    private String namaPenerima;
+    private List<String> namaPenerima;
 
     public LembarDisposisiWrapper() {
     }
@@ -173,7 +175,7 @@ public class LembarDisposisiWrapper {
         this.statusPenyebaran = statusPenyebaran;
     }
 
-    public LembarDisposisiWrapper(String kdLembarDisposisi, String path, String tanggalPenerimaan, Long tanggalPenerimaanMilis, Integer tktKeamanan, String tglPenyelesaian, Long tglPenyelesaianMilis, Integer statusBaca, String tglPengiriman, Long tglPengirimanMilis, String nipPengirim, String namaPengirim, String ringkasanIsi, String jenisSurat, Integer kdJenisSurat, Integer statusAktif, Integer statusPenyebaran, String namaPenerima) {
+    public LembarDisposisiWrapper(String kdLembarDisposisi, String path, String tanggalPenerimaan, Long tanggalPenerimaanMilis, Integer tktKeamanan, String tglPenyelesaian, Long tglPenyelesaianMilis, Integer statusBaca, String tglPengiriman, Long tglPengirimanMilis, String nipPengirim, String namaPengirim, String ringkasanIsi, String jenisSurat, Integer kdJenisSurat, Integer statusAktif, Integer statusPenyebaran, List<String> namaPenerima) {
         this.kdLembarDisposisi = kdLembarDisposisi;
         this.path = path;
         this.tanggalPenerimaan = tanggalPenerimaan;
@@ -330,11 +332,11 @@ public class LembarDisposisiWrapper {
         this.statusPenyebaran = statusPenyebaran;
     }
 
-    public String getNamaPenerima() {
+    public List<String> getNamaPenerima() {
         return namaPenerima;
     }
 
-    public void setNamaPenerima(String namaPenerima) {
+    public void setNamaPenerima(List<String> namaPenerima) {
         this.namaPenerima = namaPenerima;
     }
 }

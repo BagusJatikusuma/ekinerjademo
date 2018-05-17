@@ -53,6 +53,11 @@ public class SuratUndanganServiceImpl implements SuratUndanganService {
     }
 
     @Override
+    public List<SuratUndangan> getSuratUndanganApproval(String kdUnitKerja) {
+        return suratUndanganDao.findSuratUndanganApproval(kdUnitKerja);
+    }
+
+    @Override
     public SuratUndangan getByKdSuratUndangan(String kdSuratUndangan) {
         return suratUndanganDao.findByKdSuratUndangan(kdSuratUndangan);
     }
@@ -101,7 +106,7 @@ public class SuratUndanganServiceImpl implements SuratUndanganService {
     @Override
     public void approveSuratUndangan(String kdSuratUndangan) {
         SuratUndangan suratUndanganLast = suratUndanganDao.findOne(kdSuratUndangan);
-        suratUndanganLast.setStatusPenyebaran(1);
+//        suratUndanganLast.setStatusPenyebaran(1);
         suratUndanganLast.setApprovalPenandatangan(1);
 
         NomorUrutSuratUnitKerja nomorUrutSurat

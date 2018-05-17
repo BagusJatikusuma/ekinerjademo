@@ -603,6 +603,44 @@ public class PenanggungJawabKegiatanController {
 
     /**
      *
+     *
+     *
+     * @param kdunitKerja
+     * @return
+     */
+    @RequestMapping(value = "/get-sk-barjas/{kdUnitKerja}", method = RequestMethod.GET)
+    ResponseEntity<?> getSKBarjas(
+            @PathVariable("kdUnitKerja") String kdUnitKerja) {
+        LOGGER.info("get sk barjas");
+
+        UnitKerjaKegiatan unitKerjaKegiatan = unitKerjaKegiatanDao.findByKdUnitKerja(kdUnitKerja);
+
+        LOGGER.info(
+                "kdUrusan : "+unitKerjaKegiatan.getKdUrusan()+
+                        ", kdBidang : "+unitKerjaKegiatan.getKdBidang()+
+                        ", kdUnit : "+unitKerjaKegiatan.getKdUnit());
+        List<TaKegiatan> taKegiatanList
+                = taKegiatanDao.findAllByKdUnitKerja(
+                        unitKerjaKegiatan.getKdUrusan(),
+                        unitKerjaKegiatan.getKdBidang(),
+                        unitKerjaKegiatan.getKdUnit());
+
+        PejabatBarjasPPUKWrapper pejabatBarjasPPUKWrapper = new PejabatBarjasPPUKWrapper();
+        List<PejabatBarjasPPKWrapper> pejabatBarjasPPKWrappers = new ArrayList<>();
+        List<PejabatBarjasPPTKWrapper> pejabatBarjasPPTKWrappers = new ArrayList<>();
+
+        //ambil pejabat PPUK
+        //ambil daftar pejabat PPK
+        //ambil pejabat PPTK beserta kegiatannya
+        //pasang PPUK dengan PPK
+        //pasang PPK dengan PPTK
+
+        return new ResponseEntity<>(null, HttpStatus.OK);
+
+    }
+
+    /**
+     *
      * method ini digunakan untuk mengenerate pengguna anggaran pada setiap kegiatan dalam suatu unit kerja
      * yang diperbolehkan menjadi pengguna anggaran hanyalah kepala dinas/kepala unit kerja
      *

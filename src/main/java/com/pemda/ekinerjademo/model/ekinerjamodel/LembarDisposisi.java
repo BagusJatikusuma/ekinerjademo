@@ -50,6 +50,8 @@ public class LembarDisposisi {
     private Integer levelDraft;
     @Column(name = "status_approval_sekretaris")
     private Integer statusApprovalSekretaris;
+    @Column(name = "nip_kepala")
+    private String nipKepala;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(
@@ -254,5 +256,13 @@ public class LembarDisposisi {
 
     public void setStatusApprovalSekretaris(Integer statusApprovalSekretaris) {
         this.statusApprovalSekretaris = statusApprovalSekretaris;
+    }
+
+    public String getNipKepala() {
+        return nipKepala;
+    }
+
+    public void setNipKepala(String nipKepala) {
+        this.nipKepala = nipKepala;
     }
 }

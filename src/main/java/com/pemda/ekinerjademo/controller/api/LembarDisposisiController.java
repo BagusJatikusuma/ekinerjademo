@@ -26,6 +26,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.lang.annotation.Target;
 import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Date;
@@ -176,6 +177,7 @@ public class LembarDisposisiController {
                                 new TargetLembarDisposisiId(
                                         kdLembarDisposisi,
                                         qutPegawaiService.getQutPegawaiByKdJabatan(kdTarget).get(0).getNip()));
+                targetLembarDisposisi.setKdJabatan(kdTarget);
             }
             else {
                 targetLembarDisposisi.setTargetLembarDisposisiId(new TargetLembarDisposisiId(kdLembarDisposisi, kdTarget));
@@ -335,8 +337,35 @@ public class LembarDisposisiController {
         if (pegawaiTarget.getKdUnitKerja().substring(0,1)
                 .equals("3")) {
             if (pegawaiTarget.getEselon().contains("III.a")) {
-                targetLembarDisposisiList
+                LOGGER.info("sekdin get all lembar disposisi from kadin");
+                List<String> targetAlreadyExistList = new ArrayList<>();
+                List<TargetLembarDisposisi> targetLembarDisposisisTemproraryList
+                        = new ArrayList<>();
+
+                targetLembarDisposisisTemproraryList
                         = lembarDisposisiService.getByApprovalKadinForTarget(pegawaiTarget.getKdUnitKerja());
+
+                boolean isExist;
+                for (TargetLembarDisposisi target : targetLembarDisposisisTemproraryList) {
+                    isExist = false;
+                    for (String kdLembarDisposisi : targetAlreadyExistList) {
+                        if (target.getLembarDisposisi().getKdLembarDisposisi()
+                                .equals(kdLembarDisposisi)) {
+                            isExist = true;
+                            break;
+                        }
+                    }
+
+                    if (!isExist) {
+                        targetAlreadyExistList.add(target.getLembarDisposisi().getKdLembarDisposisi());
+
+                        targetLembarDisposisiList.add(target);
+                    }
+
+                }
+
+                LOGGER.info("lembar disposisi for sekdin is "+targetLembarDisposisiList.size());
+
                 isPegawaiTargetSekretaris = true;
             }
             else {
@@ -347,8 +376,13 @@ public class LembarDisposisiController {
         else if (pegawaiTarget.getKdUnitKerja().substring(0,1)
                     .equals("7")) {
             if (pegawaiTarget.getEselon().contains("III.b")) {
+                LOGGER.info("sekcam get all lembar disposisi from camat");
+
                 targetLembarDisposisiList
                         = lembarDisposisiService.getByApprovalKadinForTarget(pegawaiTarget.getKdUnitKerja());
+
+                LOGGER.info("lembar disposisi for sekcam is "+targetLembarDisposisiList.size());
+
                 isPegawaiTargetSekretaris = true;
             }
             else {
@@ -365,13 +399,16 @@ public class LembarDisposisiController {
                 : targetLembarDisposisiList) {
 //            LOGGER.info(lembarDisposisi.getPath());
             QutPegawai pegawaiPengirim = null, pegawaiPenerima = null;
+            List<String> pegawaiPenerimaNames = new ArrayList<>();
 
             pegawaiPengirim
                     = qutPegawaiService.getQutPegawai(targetLembarDisposisi.getLembarDisposisi().getNipPembuat());
 
-            if (isPegawaiTargetSekretaris)
+            if (isPegawaiTargetSekretaris) {
                 pegawaiPenerima
                         = qutPegawaiService.getQutPegawai(targetLembarDisposisi.getTargetLembarDisposisiId().getNipPegawai());
+
+            }
 
             lembarDisposisiWrappers
                     .add(new LembarDisposisiWrapper(
@@ -392,7 +429,7 @@ public class LembarDisposisiController {
                             1,
                             null,
                             null,
-                            (pegawaiPenerima != null) ? pegawaiPenerima.getNama() : null
+                            (pegawaiPenerima != null) ? null : null
                     ));
         }
 
@@ -582,7 +619,7 @@ public class LembarDisposisiController {
                     : lembarDisposisi.getTargetLembarDisposisiSet()) {
                 for (TkdJabatan jabatan : jabatanList) {
                     if (jabatan.getKdJabatan()
-                            .equals(targetLembarDisposisi.getTargetLembarDisposisiId().getNipPegawai())) {
+                            .equals(targetLembarDisposisi.getKdJabatan())) {
                         targetPejabat
                             .add(new JabatanWrapper(
                                     jabatan.getKdJabatan(),
@@ -877,6 +914,9 @@ public class LembarDisposisiController {
         draftlembarDisposisi.setTktKeamanan(inputWrapper.getTktKeamanan());
         draftlembarDisposisi.setTglPenyelesaianMilis(inputWrapper.getTglPenyelesaianMilis());
         draftlembarDisposisi.setIsiDisposisi(inputWrapper.getIsiDisposisi());
+        draftlembarDisposisi.setApprovalPenandatangan(1);
+        //untuk sekarang diisi nilai satu
+        draftlembarDisposisi.setNipKepala("1");
 
         lembarDisposisiService.create(draftlembarDisposisi);
 
@@ -892,6 +932,7 @@ public class LembarDisposisiController {
 
             targetLembarDisposisi.setApproveStatus(0);
             targetLembarDisposisi.setStatusBaca(0);
+            targetLembarDisposisi.setKdJabatan(kdTarget);
 
             targetLembarDisposisiList.add(targetLembarDisposisi);
         }

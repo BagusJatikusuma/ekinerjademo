@@ -30,7 +30,8 @@ public interface TargetLembarDisposisiDao extends JpaRepository<TargetLembarDisp
             "left join fetch ld.noSuratDisposisi " +
             "where ld.kdUnitKerja = ?1 " +
             "and ld.approvalPenandatangan = 1 " +
-            "and ld.statusAktif = 1")
+            "and ld.statusAktif = 1 " +
+            "and ld.nipKepala is not null")
     List<TargetLembarDisposisi> findByApprovalkadin(String kdUnitKerja);
 
 

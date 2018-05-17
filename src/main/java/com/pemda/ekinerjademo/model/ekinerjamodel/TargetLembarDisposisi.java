@@ -14,6 +14,8 @@ public class TargetLembarDisposisi {
     private Integer approveStatus;
     @Column(name = "status_baca")
     private Integer statusBaca;
+    @Column(name = "kd_jabatan")
+    private String kdJabatan;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(
@@ -53,5 +55,13 @@ public class TargetLembarDisposisi {
 
     public void setStatusBaca(Integer statusBaca) {
         this.statusBaca = statusBaca;
+    }
+
+    public String getKdJabatan() {
+        return kdJabatan;
+    }
+
+    public void setKdJabatan(String kdJabatan) {
+        this.kdJabatan = kdJabatan;
     }
 }
