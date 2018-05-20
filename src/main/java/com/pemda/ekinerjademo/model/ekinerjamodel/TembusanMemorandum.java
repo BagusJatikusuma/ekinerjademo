@@ -11,6 +11,9 @@ public class TembusanMemorandum {
     @EmbeddedId
     private TembusanMemorandumId tembusanMemorandumId;
 
+    @Column(name = "kd_unit_kerja")
+    private String kdUnitKerja;
+
     @Column(name = "status_diterima")
     private Integer statusDiterima;
 
@@ -55,5 +58,13 @@ public class TembusanMemorandum {
 
     public void setMemorandum(Memorandum memorandum) {
         this.memorandum = memorandum;
+    }
+
+    public String getKdUnitKerja() {
+        return kdUnitKerja;
+    }
+
+    public void setKdUnitKerja(String kdUnitKerja) {
+        this.kdUnitKerja = kdUnitKerja;
     }
 }

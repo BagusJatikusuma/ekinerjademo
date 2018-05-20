@@ -18,4 +18,9 @@ public interface TembusanSuratUndanganDao
             "left join fetch tsu.suratUndangan " +
             "where tsu.tembusanSuratUndanganId.kdJabatan = ?1")
     List<TembusanSuratUndangan> findByTembusanSuratUndanganId_KdJabatan(String kdJabatan);
+
+    @Query("select tsu from TembusanSuratUndangan tsu " +
+            "left join fetch tsu.suratUndangan " +
+            "where tsu.kdUnitKerja = ?1")
+    List<TembusanSuratUndangan> findByUnitKerja(String kdUnitKerja);
 }

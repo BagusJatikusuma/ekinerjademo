@@ -18,4 +18,9 @@ public interface TembusanMemorandumDao extends JpaRepository<TembusanMemorandum,
             "where tm.tembusanMemorandumId.kdJabatan = ?1")
     List<TembusanMemorandum> findByTembusanMemorandumId_KdJabatan(String kdJabatan);
 
+    @Query("select tm from TembusanMemorandum tm " +
+            "left join fetch tm.memorandum " +
+            "where tm.kdUnitKerja = ?1")
+    List<TembusanMemorandum> findByUnitKerja(String kdUnitKerja);
+
 }

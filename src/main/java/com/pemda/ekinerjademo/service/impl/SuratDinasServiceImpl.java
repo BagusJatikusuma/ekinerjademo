@@ -33,6 +33,11 @@ public class SuratDinasServiceImpl implements SuratDinasService {
     }
 
     @Override
+    public List<SuratDinas> getByKdUnitKerjaTarget(String kdUnitKerjaTarget) {
+        return suratDinasDao.findByKdUnitKerjaTarget(kdUnitKerjaTarget);
+    }
+
+    @Override
     public List<SuratDinas> getByNipPembuat(String nipPembuat) {
         return suratDinasDao.findByNipPembuatSurat(nipPembuat);
     }
@@ -50,6 +55,11 @@ public class SuratDinasServiceImpl implements SuratDinasService {
     @Override
     public List<TembusanSuratDinas> getTembusanSuratDinas(String kdJabatan) {
         return tembusanSuratDinasDao.findByTembusanSuratDinasId_KdJabatan(kdJabatan);
+    }
+
+    @Override
+    public List<TembusanSuratDinas> getTembusanSuratDinasUnitKerja(String kdUnitKerja) {
+        return tembusanSuratDinasDao.findByUnitKerja(kdUnitKerja);
     }
 
     @Override

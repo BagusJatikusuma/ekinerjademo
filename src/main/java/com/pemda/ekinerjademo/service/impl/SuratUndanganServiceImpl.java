@@ -43,6 +43,11 @@ public class SuratUndanganServiceImpl implements SuratUndanganService {
     }
 
     @Override
+    public List<SuratUndangan> getbykdUnitKerjaTarget(String kdUnitKerjaTarget) {
+        return suratUndanganDao.findByKdUnitKerjaTarget(kdUnitKerjaTarget);
+    }
+
+    @Override
     public List<SuratUndangan> getByNipPenerima(String nipPenerima) {
         return suratUndanganDao.findByNipPenerimaSuratUndangan(nipPenerima);
     }
@@ -50,6 +55,11 @@ public class SuratUndanganServiceImpl implements SuratUndanganService {
     @Override
     public List<TembusanSuratUndangan> getTembusanSuratUndangan(String kdJabatan) {
         return tembusanSuratUndanganDao.findByTembusanSuratUndanganId_KdJabatan(kdJabatan);
+    }
+
+    @Override
+    public List<TembusanSuratUndangan> getTembusanSuratUndanganUnitKerja(String kdUnitKerja) {
+        return tembusanSuratUndanganDao.findByUnitKerja(kdUnitKerja);
     }
 
     @Override

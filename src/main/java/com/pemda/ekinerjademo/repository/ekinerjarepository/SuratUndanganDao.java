@@ -22,6 +22,12 @@ public interface SuratUndanganDao extends JpaRepository<SuratUndangan, String> {
             "left join fetch su.suratUndanganNonPejabat " +
             "left join fetch su.suratUndanganPejabat " +
             "left join fetch su.tembusanSuratUndanganList " +
+            "where su.kdUnitKerjaTarget = ?1")
+    List<SuratUndangan> findByKdUnitKerjaTarget(String kdUnitKerjaTarget);
+    @Query("select distinct su from SuratUndangan su " +
+            "left join fetch su.suratUndanganNonPejabat " +
+            "left join fetch su.suratUndanganPejabat " +
+            "left join fetch su.tembusanSuratUndanganList " +
             "where su.nipPembuatSurat = ?1")
     List<SuratUndangan> findByNipPembuatSurat(String nipPembuatSurat);
     @Query("select distinct su from SuratUndangan su " +

@@ -40,6 +40,8 @@ public class Memorandum {
     private String nipPenandatangan;
     @Column(name = "kd_unit_kerja")
     private String kdUnitKerja;
+    @Column(name = "kd_unit_kerja_target")
+    private String kdUnitKerjaTarget;
 
     @Column(name = "kd_naskah_penugasan")
     private String kdNaskahPenugasan;
@@ -316,5 +318,13 @@ public class Memorandum {
 
     public void setTembusanMemorandumList(List<TembusanMemorandum> tembusanMemorandumList) {
         this.tembusanMemorandumList = tembusanMemorandumList;
+    }
+
+    public String getKdUnitKerjaTarget() {
+        return kdUnitKerjaTarget;
+    }
+
+    public void setKdUnitKerjaTarget(String kdUnitKerjaTarget) {
+        this.kdUnitKerjaTarget = kdUnitKerjaTarget;
     }
 }

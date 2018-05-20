@@ -11,9 +11,11 @@ public interface SuratUndanganService {
     List<SuratUndangan> getByKdUnitKerja(String kdUnitKerja);
     List<SuratUndangan> getByNipPembuat(String nipPembuat);
     List<SuratUndangan> getByNomorTahun(Integer nomorTahun);
+    List<SuratUndangan> getbykdUnitKerjaTarget(String kdUnitKerjaTarget);
 
     List<SuratUndangan> getByNipPenerima(String nipPenerima);
     List<TembusanSuratUndangan> getTembusanSuratUndangan(String kdJabatan);
+    List<TembusanSuratUndangan> getTembusanSuratUndanganUnitKerja(String kdUnitKerja);
 
     List<SuratUndangan> getSuratUndanganApproval(String kdUnitKerja);
 

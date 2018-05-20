@@ -11,6 +11,9 @@ public class TembusanSuratUndangan {
     @EmbeddedId
     private TembusanSuratUndanganId tembusanSuratUndanganId;
 
+    @Column(name = "kd_unit_kerja")
+    private String kdUnitKerja;
+
     @Column(name = "status_diterima")
     private Integer statusDiterima;
     @Column(name = "status_baca")
@@ -54,5 +57,13 @@ public class TembusanSuratUndangan {
 
     public void setSuratUndangan(SuratUndangan suratUndangan) {
         this.suratUndangan = suratUndangan;
+    }
+
+    public String getKdUnitKerja() {
+        return kdUnitKerja;
+    }
+
+    public void setKdUnitKerja(String kdUnitKerja) {
+        this.kdUnitKerja = kdUnitKerja;
     }
 }

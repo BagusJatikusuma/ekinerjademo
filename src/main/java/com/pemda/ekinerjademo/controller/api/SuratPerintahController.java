@@ -517,8 +517,6 @@ public class SuratPerintahController {
             LOGGER.info("pegawai is admin surat");
         }
 
-        LOGGER.info("nip pegawai target "+pegawaiTarget.getNip());
-
         List<TargetSuratPerintahPegawai> daftarSuratPerintahPegawaiTarget
                 = suratPerintahService.getTargetSuratPerintahPegawai(nipTarget);
         List<TargetSuratPerintahPejabat> daftarSuratPerintahPejabatTarget
@@ -593,13 +591,11 @@ public class SuratPerintahController {
         //get surat perintah berdasarkan target pegawai
         for (TargetSuratPerintahPegawai suratTarget
                 : daftarSuratPerintahPegawaiTarget) {
-            LOGGER.info("nip pegawai target "+pegawaiTarget.getNip());
 
             if (suratTarget.getSuratPerintah().getStatusPenyebaran() == 1) {
                 for (CustomPegawaiCredential pegawaiPemberi : qutPegawaiList) {
                     if (pegawaiPemberi.getNip()
                             .equals(suratTarget.getSuratPerintah().getNipPenandatangan())) {
-                        LOGGER.info("nip pegawai target 1 "+pegawaiTarget.getNip());
 
                         //cek apakah surat perintah harus langsung ke target atau ke admin persuratan terlebih dahulu
                         //surat masuk ke admin persuratan terlebih dahulu jika pembuat surat dan target surat berbeda unit kerja
@@ -630,28 +626,19 @@ public class SuratPerintahController {
 
                         }
                         else {
-                            LOGGER.info("nip pegawai target 2 "+pegawaiTarget.getNip());
                             LOGGER.info("pegawai is admin surat");
 
                             boolean isTargetValid = false;
                             if (pegawaiPemberi.getKdUnitKerja()
                                     .equals(pegawaiTarget.getKdUnitKerja())) {
 
-                                LOGGER.info("sama unit kerja valid = chek lagi "+suratTarget.getSuratPerintah().getKdSuratPerintah());
-                                LOGGER.info(
-                                        "nip target surat "+suratTarget.getTargetSuratPerintahPegawaiId().getNipPegawai()
-                                        +" nip target request "+pegawaiTarget.getNip());
-
                                 if (suratTarget.getTargetSuratPerintahPegawaiId().getNipPegawai()
                                         .equals(nipTarget)) {
-                                    LOGGER.info("sukses");
                                     if (!isPersuratan) {
                                         LOGGER.info("sama unit kerja valid = chek lagi target valid");
                                         isTargetValid = true;
                                     }
-                                } else {
-                                    LOGGER.info("not success");
-                                    LOGGER.info(suratTarget.getTargetSuratPerintahPegawaiId().getNipPegawai()+ " ; "+pegawaiTarget.getNip());
+
                                 }
 
                             }

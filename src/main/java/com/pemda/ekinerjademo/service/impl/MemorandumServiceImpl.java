@@ -43,6 +43,16 @@ public class MemorandumServiceImpl implements MemorandumService {
     }
 
     @Override
+    public List<TembusanMemorandum> getTembusanMemorandumUnitKerja(String kdUnitKerja) {
+        return tembusanMemorandumDao.findByUnitKerja(kdUnitKerja);
+    }
+
+    @Override
+    public List<Memorandum> getMemorandumByUnitKerjaTarget(String kdUnitKerjaTarget) {
+        return memorandumDao.findByUnitKerjaTarget(kdUnitKerjaTarget);
+    }
+
+    @Override
     public void createMemorandum(Memorandum memorandum) {
         memorandumDao.save(memorandum);
     }

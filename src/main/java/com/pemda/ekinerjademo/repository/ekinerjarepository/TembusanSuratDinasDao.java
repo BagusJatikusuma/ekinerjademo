@@ -18,4 +18,9 @@ public interface TembusanSuratDinasDao
             "left join fetch tsd.suratDinas " +
             "where tsd.tembusanSuratDinasId.kdJabatan = ?1")
     List<TembusanSuratDinas> findByTembusanSuratDinasId_KdJabatan(String kdJabatan);
+
+    @Query("select tsd from TembusanSuratDinas tsd " +
+            "left join fetch tsd.suratDinas " +
+            "where tsd.kdUnitKerja = ?1")
+    List<TembusanSuratDinas> findByUnitKerja(String kdUnitKerja);
 }

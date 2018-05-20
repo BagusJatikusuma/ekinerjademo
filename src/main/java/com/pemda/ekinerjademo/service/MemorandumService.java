@@ -11,6 +11,9 @@ public interface MemorandumService {
     List<Memorandum> getByNipPembuat(String nipPembuat);
     List<Memorandum> getByNipTarget(String nipTarget);
     List<TembusanMemorandum> getTembusanMemorandum(String kdJabatanTembusan);
+    List<TembusanMemorandum> getTembusanMemorandumUnitKerja(String kdUnitKerja);
+
+    List<Memorandum> getMemorandumByUnitKerjaTarget(String kdUnitKerjaTarget);
 
     void createMemorandum(Memorandum memorandum);
     void createMemorandumNonPejabat(MemorandumNonPejabat memorandumNonPejabat);

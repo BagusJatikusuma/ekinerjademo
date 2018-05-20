@@ -9,10 +9,12 @@ import java.util.List;
  */
 public interface SuratDinasService {
     List<SuratDinas> getByKdUnitKerja(String kdUnitKerja);
+    List<SuratDinas> getByKdUnitKerjaTarget(String kdUnitKerjaTarget);
     List<SuratDinas> getByNipPembuat(String nipPembuat);
     List<SuratDinas> getByNomorTahun(Integer nomorTahun);
     List<SuratDinas> getByJabatanPenerima(String kdJabatan);
     List<TembusanSuratDinas> getTembusanSuratDinas(String kdJabatan);
+    List<TembusanSuratDinas> getTembusanSuratDinasUnitKerja(String kdUnitKerja);
 
     SuratDinas getByKdSuratDinas(String kdSuratDinas);
 

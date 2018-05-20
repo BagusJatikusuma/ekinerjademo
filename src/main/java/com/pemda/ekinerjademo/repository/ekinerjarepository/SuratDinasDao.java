@@ -23,6 +23,13 @@ public interface SuratDinasDao extends JpaRepository<SuratDinas, String> {
             "left join fetch sd.suratDinasNonPejabat " +
             "left join fetch sd.suratDinasPejabat " +
             "left join fetch sd.tembusanSuratDinasList " +
+            "where sd.kdUnitKerjaTarget = ?1")
+    List<SuratDinas> findByKdUnitKerjaTarget(String kdUnitKerjaTarget);
+
+    @Query("select distinct sd from SuratDinas sd " +
+            "left join fetch sd.suratDinasNonPejabat " +
+            "left join fetch sd.suratDinasPejabat " +
+            "left join fetch sd.tembusanSuratDinasList " +
             "where sd.nipPembuatSurat = ?1")
     List<SuratDinas> findByNipPembuatSurat(String nipPembuatSurat);
 
