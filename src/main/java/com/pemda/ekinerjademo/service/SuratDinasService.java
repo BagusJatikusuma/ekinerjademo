@@ -13,6 +13,8 @@ public interface SuratDinasService {
     List<SuratDinas> getByNipPembuat(String nipPembuat);
     List<SuratDinas> getByNomorTahun(Integer nomorTahun);
     List<SuratDinas> getByJabatanPenerima(String kdJabatan);
+    List<SuratDinas> getDraftApproval(String kdUnitKerja);
+
     List<TembusanSuratDinas> getTembusanSuratDinas(String kdJabatan);
     List<TembusanSuratDinas> getTembusanSuratDinasUnitKerja(String kdUnitKerja);
 
@@ -28,5 +30,6 @@ public interface SuratDinasService {
     void openSuratDinasPenilai(String kdSuratDinas);
 
     void approveSuratDinas(String kdSuratDinas);
+
 
 }

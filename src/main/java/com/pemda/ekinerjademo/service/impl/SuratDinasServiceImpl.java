@@ -53,6 +53,11 @@ public class SuratDinasServiceImpl implements SuratDinasService {
     }
 
     @Override
+    public List<SuratDinas> getDraftApproval(String kdUnitKerja) {
+        return suratDinasDao.findByApproval(kdUnitKerja);
+    }
+
+    @Override
     public List<TembusanSuratDinas> getTembusanSuratDinas(String kdJabatan) {
         return tembusanSuratDinasDao.findByTembusanSuratDinasId_KdJabatan(kdJabatan);
     }

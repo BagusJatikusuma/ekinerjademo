@@ -144,6 +144,12 @@ public class SuratDinasController {
     ResponseEntity<?> sebarSuratDinas(@PathVariable("kdSuratDinas") String kdSuratDinas) {
         LOGGER.info("sebar surat dinas");
 
+        SuratDinas suratDinas = suratDinasService.getByKdSuratDinas(kdSuratDinas);
+
+        suratDinas.setStatusPenyebaran(1);
+
+        suratDinasService.create(suratDinas);
+
         return new ResponseEntity<Object>(new CustomMessage("surat dinas telah disebar"), HttpStatus.OK);
 
     }
@@ -651,6 +657,52 @@ public class SuratDinasController {
         suratDinasService.create(suratDinas);
         return new ResponseEntity<Object>(new CustomMessage("surat dinas opened by penilai"), HttpStatus.OK);
 
+    }
+
+    @RequestMapping(value = "/get-draft-surat-dinas-approval/{kdUnitKerja}", method = RequestMethod.GET)
+    ResponseEntity<?> getDraftSuratDinasApproval(
+            @PathVariable("kdUnitKerja") String kdUnitKerja) {
+        LOGGER.info("get draft memorandum approval");
+
+        List<SuratDinas> draftSuratDinasApprovalList
+                = suratDinasService.getDraftApproval(kdUnitKerja);
+        List<CustomPegawaiCredential> qutPegawaiList
+                = qutPegawaiService.getCustomPegawaiCredentials();
+
+
+        List<DraftSuratApprovalWrapper> draftSuratApprovalWrappers
+                = new ArrayList<>();
+
+        for (SuratDinas suratDinas : draftSuratDinasApprovalList) {
+            boolean isSuratPejabat = false;
+
+            for (CustomPegawaiCredential pegawaiPemberi : qutPegawaiList) {
+                if (pegawaiPemberi.getNip()
+                        .equals(suratDinas.getNipPenandatangan())) {
+                    if (suratDinas.getSuratDinasPejabat() != null) {
+                        isSuratPejabat = true;
+                    }
+
+                    draftSuratApprovalWrappers
+                            .add(new DraftSuratApprovalWrapper(
+                                    suratDinas.getKdSuratDinas(),
+                                    null,
+                                    suratDinas.getTanggalPembuatanMilis(),
+                                    isSuratPejabat,
+                                    pegawaiPemberi.getNip(),
+                                    pegawaiPemberi.getNama(),
+                                    pegawaiPemberi.getJabatan(),
+                                    suratDinas.getStatusPenyebaran(),
+                                    "surat dinas",
+                                    5
+                            ));
+                    break;
+                }
+            }
+
+        }
+
+        return new ResponseEntity<>(draftSuratApprovalWrappers, HttpStatus.OK);
     }
 
     /**

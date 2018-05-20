@@ -1201,7 +1201,9 @@ public class SuratPerintahController {
                                     pegawaiPemberi.getNip(),
                                     pegawaiPemberi.getNama(),
                                     pegawaiPemberi.getJabatan(),
-                                    suratPerintah.getStatusPenyebaran()
+                                    suratPerintah.getStatusPenyebaran(),
+                                    "surat perintah",
+                                    11
                                     ));
                     break;
                 }

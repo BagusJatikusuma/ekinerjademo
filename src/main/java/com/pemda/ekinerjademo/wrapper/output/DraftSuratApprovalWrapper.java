@@ -13,6 +13,9 @@ public class DraftSuratApprovalWrapper {
 
     private Integer statusPenyebaran;
 
+    private String jenisSurat;
+    private Integer kdJenisSurat;
+
     public DraftSuratApprovalWrapper() {
     }
 
@@ -33,6 +36,19 @@ public class DraftSuratApprovalWrapper {
         this.namaPemberi = namaPemberi;
         this.jabatanPemberi = jabatanPemberi;
         this.statusPenyebaran = statusPenyebaran;
+    }
+
+    public DraftSuratApprovalWrapper(String kdSurat, String createdDate, Long createdDateMilis, boolean isSuratPejabat, String nipPemberi, String namaPemberi, String jabatanPemberi, Integer statusPenyebaran, String jenisSurat, Integer kdJenisSurat) {
+        this.kdSurat = kdSurat;
+        this.createdDate = createdDate;
+        this.createdDateMilis = createdDateMilis;
+        this.isSuratPejabat = isSuratPejabat;
+        this.nipPemberi = nipPemberi;
+        this.namaPemberi = namaPemberi;
+        this.jabatanPemberi = jabatanPemberi;
+        this.statusPenyebaran = statusPenyebaran;
+        this.jenisSurat = jenisSurat;
+        this.kdJenisSurat = kdJenisSurat;
     }
 
     public String getKdSurat() {
@@ -97,5 +113,21 @@ public class DraftSuratApprovalWrapper {
 
     public void setStatusPenyebaran(Integer statusPenyebaran) {
         this.statusPenyebaran = statusPenyebaran;
+    }
+
+    public String getJenisSurat() {
+        return jenisSurat;
+    }
+
+    public void setJenisSurat(String jenisSurat) {
+        this.jenisSurat = jenisSurat;
+    }
+
+    public Integer getKdJenisSurat() {
+        return kdJenisSurat;
+    }
+
+    public void setKdJenisSurat(Integer kdJenisSurat) {
+        this.kdJenisSurat = kdJenisSurat;
     }
 }

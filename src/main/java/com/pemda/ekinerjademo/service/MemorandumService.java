@@ -12,6 +12,7 @@ public interface MemorandumService {
     List<Memorandum> getByNipTarget(String nipTarget);
     List<TembusanMemorandum> getTembusanMemorandum(String kdJabatanTembusan);
     List<TembusanMemorandum> getTembusanMemorandumUnitKerja(String kdUnitKerja);
+    List<Memorandum> getDraftMemorandumApproval(String kdUnitKerja);
 
     List<Memorandum> getMemorandumByUnitKerjaTarget(String kdUnitKerjaTarget);
 

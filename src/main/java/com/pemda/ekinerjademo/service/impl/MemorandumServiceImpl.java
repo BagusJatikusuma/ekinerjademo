@@ -48,6 +48,11 @@ public class MemorandumServiceImpl implements MemorandumService {
     }
 
     @Override
+    public List<Memorandum> getDraftMemorandumApproval(String kdUnitKerja) {
+        return memorandumDao.findByApproval(kdUnitKerja);
+    }
+
+    @Override
     public List<Memorandum> getMemorandumByUnitKerjaTarget(String kdUnitKerjaTarget) {
         return memorandumDao.findByUnitKerjaTarget(kdUnitKerjaTarget);
     }

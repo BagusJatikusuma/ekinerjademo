@@ -672,6 +672,53 @@ public class MemorandumController {
         return new ResponseEntity<Object>(new CustomMessage("laporan opened by penilai"), HttpStatus.OK);
     }
 
+    @RequestMapping(value = "/get-draft-memorandum-approval/{kdUnitKerja}", method = RequestMethod.GET)
+    ResponseEntity<?> getDraftMemorandumApproval(
+            @PathVariable("kdUnitKerja") String kdUnitKerja) {
+        LOGGER.info("get draft memorandum approval");
+
+        List<Memorandum> draftMemorandumApprovalList
+                = memorandumService.getDraftMemorandumApproval(kdUnitKerja);
+        List<CustomPegawaiCredential> qutPegawaiList
+                = qutPegawaiService.getCustomPegawaiCredentials();
+
+
+        List<DraftSuratApprovalWrapper> draftSuratApprovalWrappers
+                = new ArrayList<>();
+
+        for (Memorandum memorandum : draftMemorandumApprovalList) {
+            boolean isSuratPejabat = false;
+
+            for (CustomPegawaiCredential pegawaiPemberi : qutPegawaiList) {
+                if (pegawaiPemberi.getNip()
+                        .equals(memorandum.getNipPenandatangan())) {
+                    if (memorandum.getMemorandumNonPejabat() != null) {
+                        isSuratPejabat = true;
+                    }
+
+                    draftSuratApprovalWrappers
+                            .add(new DraftSuratApprovalWrapper(
+                                    memorandum.getKdMemorandum(),
+                                    null,
+                                    memorandum.getTanggalPembuatanMilis(),
+                                    isSuratPejabat,
+                                    pegawaiPemberi.getNip(),
+                                    pegawaiPemberi.getNama(),
+                                    pegawaiPemberi.getJabatan(),
+                                    memorandum.getStatusPenyebaran(),
+                                    "memorandum",
+                                    2
+                            ));
+                    break;
+                }
+            }
+
+        }
+
+        return new ResponseEntity<>(draftSuratApprovalWrappers, HttpStatus.OK);
+
+    }
+
     /**
      *
      *
