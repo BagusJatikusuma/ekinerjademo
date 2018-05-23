@@ -11,6 +11,7 @@ public interface PengumumanService {
     List<Pengumuman> getByKdUnitKerja(String kdUnitKerja);
     List<Pengumuman> getByPembuat(String nipPembuat);
     List<Pengumuman> getByNomorTahun(Integer nomorTahun);
+    List<Pengumuman> getPengumumanBySekretarisApproval(String kdUnitKerja);
 
     Pengumuman getByKdPengumuman(String kdPengumuman);
 

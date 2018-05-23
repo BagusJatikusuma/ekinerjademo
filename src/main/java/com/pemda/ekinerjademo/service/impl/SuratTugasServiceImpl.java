@@ -48,6 +48,11 @@ public class SuratTugasServiceImpl implements SuratTugasService {
     }
 
     @Override
+    public Set<SuratTugas> getSuratTugasSekretarisApproval(String kdUnitKerja) {
+        return suratTugasDao.findBySekretarisApproval(kdUnitKerja);
+    }
+
+    @Override
     public List<TargetSuratTugasPegawai> getTargetSuratTugasPegawai(String nipTargetSurat) {
         return targetSuratTugasPegawaiDao.findByTargetSuratTugasPegawaiId_NipPegawai(nipTargetSurat);
     }

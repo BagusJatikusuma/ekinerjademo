@@ -33,6 +33,11 @@ public class SuratKuasaServiceImpl implements SuratKuasaService{
     }
 
     @Override
+    public List<SuratKuasa> getSuratKuasaBySekretarisApproval(String kdUnitKerja) {
+        return suratKuasaDao.findBySekretarisApproval(kdUnitKerja);
+    }
+
+    @Override
     public List<SuratKuasa> getByNipPenerimaKuasa(String nipPenerimaKuasa) {
         return suratKuasaDao.findByNipPenerimaKuasa(nipPenerimaKuasa);
     }

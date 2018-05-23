@@ -70,6 +70,9 @@ public class SuratEdaran {
     @Column(name = "status_penyebaran")
     private Integer statusPenyebaran;
 
+    @Column(name = "approval_sekretaris")
+    private Integer approvalSekretaris;
+
     @OneToOne(mappedBy = "suratEdaran", fetch = FetchType.LAZY)
     private SuratEdaranNonPejabat suratEdaranNonPejabat;
     @OneToOne(mappedBy = "suratEdaran", fetch = FetchType.LAZY)
@@ -307,5 +310,13 @@ public class SuratEdaran {
 
     public void setStatusPenyebaran(Integer statusPenyebaran) {
         this.statusPenyebaran = statusPenyebaran;
+    }
+
+    public Integer getApprovalSekretaris() {
+        return approvalSekretaris;
+    }
+
+    public void setApprovalSekretaris(Integer approvalSekretaris) {
+        this.approvalSekretaris = approvalSekretaris;
     }
 }

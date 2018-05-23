@@ -38,6 +38,11 @@ public class BeritaAcaraServiceImpl implements BeritaAcaraService{
     }
 
     @Override
+    public List<BeritaAcara> getBeritaAcaraApprovalSekretaris(String kdUnitKerja) {
+        return beritaAcaraDao.findBySekretarisApproval(kdUnitKerja);
+    }
+
+    @Override
     public void createBeritaAcara(BeritaAcara beritaAcara) {
         beritaAcaraDao.save(beritaAcara);
 

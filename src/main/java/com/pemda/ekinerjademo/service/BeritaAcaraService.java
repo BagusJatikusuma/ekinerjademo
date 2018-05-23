@@ -11,6 +11,7 @@ public interface BeritaAcaraService {
 
     List<BeritaAcara> getByNipPembuatSurat(String nipPembuatSurat);
     List<BeritaAcara> getBeritaAcaraByLastTree(String kdBeritaAcara);
+    List<BeritaAcara> getBeritaAcaraApprovalSekretaris(String kdUnitKerja);
 
     void createBeritaAcara(BeritaAcara beritaAcara);
 

@@ -67,6 +67,9 @@ public class SuratPerintah {
     @Column(name = "tahun_urtug")
     private Integer tahunUrtug;
 
+    @Column(name = "approval_sekretaris")
+    private Integer approvalSekretaris;
+
     @OneToMany(mappedBy = "suratPerintah")
     private Set<TargetSuratPerintahPegawai> targetSuratPerintahPegawaiList;
     @OneToMany(mappedBy = "suratPerintah")
@@ -333,5 +336,13 @@ public class SuratPerintah {
 
     public void setTembusanSuratPerintahList(Set<TembusanSuratPerintah> tembusanSuratPerintahList) {
         this.tembusanSuratPerintahList = tembusanSuratPerintahList;
+    }
+
+    public Integer getApprovalSekretaris() {
+        return approvalSekretaris;
+    }
+
+    public void setApprovalSekretaris(Integer approvalSekretaris) {
+        this.approvalSekretaris = approvalSekretaris;
     }
 }

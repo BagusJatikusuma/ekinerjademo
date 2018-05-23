@@ -58,6 +58,11 @@ public class SuratDinasServiceImpl implements SuratDinasService {
     }
 
     @Override
+    public List<SuratDinas> getSuratDinasSekretarisApproval(String kdUnitKerja) {
+        return suratDinasDao.findBySekretarisApproval(kdUnitKerja);
+    }
+
+    @Override
     public List<TembusanSuratDinas> getTembusanSuratDinas(String kdJabatan) {
         return tembusanSuratDinasDao.findByTembusanSuratDinasId_KdJabatan(kdJabatan);
     }
@@ -115,7 +120,7 @@ public class SuratDinasServiceImpl implements SuratDinasService {
     @Override
     public void approveSuratDinas(String kdSuratDinas) {
         SuratDinas suratDinasLast = suratDinasDao.findOne(kdSuratDinas);
-        suratDinasLast.setStatusPenyebaran(1);
+//        suratDinasLast.setStatusPenyebaran(1);
         suratDinasLast.setApprovalPenandatangan(1);
 
         NomorUrutSuratUnitKerja nomorUrutSurat

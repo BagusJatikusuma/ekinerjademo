@@ -18,6 +18,14 @@ public interface SuratEdaranDao extends JpaRepository<SuratEdaran, String> {
             "left join fetch se.suratEdaranSubList " +
             "where se.kdUnitKerja = ?1")
     List<SuratEdaran> findByKdUnitKerja(String kdUnitKerja);
+
+    @Query("select se from SuratEdaran se " +
+            "left join fetch se.suratEdaranNonPejabat " +
+            "left join fetch se.suratEdaranPejabat " +
+            "left join fetch se.suratEdaranSubList " +
+            "where se.kdUnitKerja = ?1 " +
+            "and se.approvalSekretaris = 1")
+    List<SuratEdaran> findBySekretarisApproval(String kdUnitKerja);
     @Query("select se from SuratEdaran se " +
             "left join fetch se.suratEdaranNonPejabat " +
             "left join fetch se.suratEdaranPejabat " +

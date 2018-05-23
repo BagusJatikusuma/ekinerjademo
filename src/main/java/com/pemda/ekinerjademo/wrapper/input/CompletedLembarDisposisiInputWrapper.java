@@ -6,12 +6,17 @@ public class CompletedLembarDisposisiInputWrapper {
     private String kdDraftLembarDisposisi;
     private Integer tktKeamanan;
     private Long tglPenyelesaianMilis;
-    private List<String> daftarTargetJabatanLembarDisposisi;
+    private List<String> daftarTargetLembarDisposisi;
+    private boolean isTargetJabatan;
+    private String nipPenerus;
     private String isiDisposisi;
     private Integer durasiPengerjaan;
 
     private String kdUrtug;
     private Integer tahunUrtug;
+    private String nipPelengkap;
+
+    private String kdLembarDisposisiParent;
 
     public Integer getTktKeamanan() {
         return tktKeamanan;
@@ -29,12 +34,12 @@ public class CompletedLembarDisposisiInputWrapper {
         this.tglPenyelesaianMilis = tglPenyelesaianMilis;
     }
 
-    public List<String> getDaftarTargetJabatanLembarDisposisi() {
-        return daftarTargetJabatanLembarDisposisi;
+    public List<String> getDaftarTargetLembarDisposisi() {
+        return daftarTargetLembarDisposisi;
     }
 
-    public void setDaftarTargetJabatanLembarDisposisi(List<String> daftarTargetJabatanLembarDisposisi) {
-        this.daftarTargetJabatanLembarDisposisi = daftarTargetJabatanLembarDisposisi;
+    public void setDaftarTargetLembarDisposisi(List<String> daftarTargetLembarDisposisi) {
+        this.daftarTargetLembarDisposisi = daftarTargetLembarDisposisi;
     }
 
     public String getIsiDisposisi() {
@@ -75,5 +80,37 @@ public class CompletedLembarDisposisiInputWrapper {
 
     public void setKdDraftLembarDisposisi(String kdDraftLembarDisposisi) {
         this.kdDraftLembarDisposisi = kdDraftLembarDisposisi;
+    }
+
+    public String getNipPelengkap() {
+        return nipPelengkap;
+    }
+
+    public void setNipPelengkap(String nipPelengkap) {
+        this.nipPelengkap = nipPelengkap;
+    }
+
+    public String getKdLembarDisposisiParent() {
+        return kdLembarDisposisiParent;
+    }
+
+    public void setKdLembarDisposisiParent(String kdLembarDisposisiParent) {
+        this.kdLembarDisposisiParent = kdLembarDisposisiParent;
+    }
+
+    public boolean isTargetJabatan() {
+        return isTargetJabatan;
+    }
+
+    public void setTargetJabatan(boolean targetJabatan) {
+        isTargetJabatan = targetJabatan;
+    }
+
+    public String getNipPenerus() {
+        return nipPenerus;
+    }
+
+    public void setNipPenerus(String nipPenerus) {
+        this.nipPenerus = nipPenerus;
     }
 }

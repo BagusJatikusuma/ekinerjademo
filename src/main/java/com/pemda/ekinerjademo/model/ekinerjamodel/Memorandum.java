@@ -73,6 +73,9 @@ public class Memorandum {
     @Column(name = "tahun_urtug")
     private Integer tahunUrtug;
 
+    @Column(name = "approval_sekretaris")
+    private Integer approvalSekretaris;
+
     @OneToOne(mappedBy = "memorandum", fetch = FetchType.LAZY)
     private MemorandumNonPejabat memorandumNonPejabat;
     @OneToOne(mappedBy = "memorandum", fetch = FetchType.LAZY)
@@ -326,5 +329,13 @@ public class Memorandum {
 
     public void setKdUnitKerjaTarget(String kdUnitKerjaTarget) {
         this.kdUnitKerjaTarget = kdUnitKerjaTarget;
+    }
+
+    public Integer getApprovalSekretaris() {
+        return approvalSekretaris;
+    }
+
+    public void setApprovalSekretaris(Integer approvalSekretaris) {
+        this.approvalSekretaris = approvalSekretaris;
     }
 }

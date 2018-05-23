@@ -12,6 +12,7 @@ public interface SuratPerintahService {
     Set<SuratPerintah> getByKdUnitKerja(String kdUnitKerja);
     Set<SuratPerintah> getByNomorTahun(String nomorTahun);
     Set<SuratPerintah> getByNipPembuat(String nipPembuat);
+    Set<SuratPerintah> getSuratPerintahSekretarisApproval(String kdUnitKerja);
 
     List<TargetSuratPerintahPegawai> getTargetSuratPerintahPegawai(String nipTargetSurat);
     List<TargetSuratPerintahPejabat> getTargetSuratPerintahPejabat(String kdJabatanTarget);

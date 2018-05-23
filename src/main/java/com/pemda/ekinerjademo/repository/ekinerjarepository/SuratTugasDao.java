@@ -21,6 +21,15 @@ public interface SuratTugasDao
             "left join fetch st.tembusanSuratTugasSet " +
             "where st.kdUnitKerja = ?1")
     Set<SuratTugas> findByKdUnitKerja(String kdUnitKerja);
+
+    @Query("select distinct st from SuratTugas st " +
+            "left join fetch st.suratTugasPejabat " +
+            "left join fetch st.suratTugasNonPejabat " +
+            "left join fetch st.targetSuratTugasPegawaiSet " +
+            "left join fetch st.targetSuratTugasPejabatSet " +
+            "left join fetch st.tembusanSuratTugasSet " +
+            "where st.kdUnitKerja = ?1 and st.approvalSekretaris = 1")
+    Set<SuratTugas> findBySekretarisApproval(String kdUnitKerja);
     @Query("select distinct st from SuratTugas st " +
             "left join fetch st.suratTugasPejabat " +
             "left join fetch st.suratTugasNonPejabat " +

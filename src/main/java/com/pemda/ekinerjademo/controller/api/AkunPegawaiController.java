@@ -829,6 +829,52 @@ public class AkunPegawaiController {
         List<PejabatPenilaiDinilai> kdJabatanPegawaiBawahanList
                 = pejabatPenilaiDinilaiService.findPegawaiDinilai(nipPenilai);
 
+        QutPegawai penilai = qutPegawaiService.getQutPegawai(nipPenilai);
+
+        //cek apakah kadin/camat atau sekdin/sekcam
+        boolean isSekretaris = false, isKepala = false;
+        if (penilai.getKdUnitKerja().substring(0,1)
+                .equals("3")) {
+            //eselon kadin II.b, eselon sekdin III.a
+            if (penilai.getEselon().contains("II.b")) {
+                isKepala = true;
+            }
+            else if (penilai.getEselon().contains("III.a")) {
+                isSekretaris = true;
+            }
+        }
+        else if (penilai.getKdUnitKerja().substring(0,1)
+                    .equals("7")) {
+            //eselon camat III.a, eselon sekdcam III.b
+            if (penilai.getEselon().contains("III.a")) {
+                isKepala = true;
+            }
+            else if (penilai.getEselon().contains("III.b")) {
+                isSekretaris = true;
+            }
+        }
+
+        if (isSekretaris) {
+            List<QutPegawai> pegawaiUnitKerja
+                    = qutPegawaiService.getQutPegawaiByUnitKerja(penilai.getKdUnitKerja());
+
+            for (QutPegawai pegawai : pegawaiUnitKerja) {
+                if (penilai.getKdUnitKerja().substring(0,1)
+                        .equals("3")) {
+                    if (pegawai.getEselon().equals("III.b")) {
+                        pegawaiBawahanList.add(qutPegawaiService.convertQutPegawaiIntoQutPegawaiClone(pegawai));
+                    }
+                }
+                else if (penilai.getKdUnitKerja().substring(0,1)
+                        .equals("7")) {
+                    if (pegawai.getEselon().equals("IV.a")) {
+                        pegawaiBawahanList.add(qutPegawaiService.convertQutPegawaiIntoQutPegawaiClone(pegawai));
+                    }
+                }
+
+            }
+        }
+
         //ambil data pegawai bawahan terlebih dahulu
         for (PejabatPenilaiDinilai jabatan : kdJabatanPegawaiBawahanList) {
             List<QutPegawaiClone> pegawaiBawahanJabatanList
@@ -841,29 +887,59 @@ public class AkunPegawaiController {
         //ambil laporan dari seluruh history template untuk setiap pegawai bawahan
         Integer suratPejabat;
         boolean isPenandatangan = false;
+        int statusPenilaian = 0;
         for (QutPegawaiClone pegawaiBawahan : pegawaiBawahanList) {
             //ambil data berita acara yang dilaporkan bawahan
-            List<BeritaAcara> beritaAcaraList
-                    = beritaAcaraService.getByNipPembuatSurat(pegawaiBawahan.getNip());
+            List<BeritaAcara> beritaAcaraList = new ArrayList<>();
+
+            if (isKepala) {
+                beritaAcaraList
+                        = beritaAcaraService.getBeritaAcaraApprovalSekretaris(penilai.getKdUnitKerja());
+            }
+            else {
+                beritaAcaraList
+                        = beritaAcaraService.getByNipPembuatSurat(pegawaiBawahan.getNip());
+            }
+
             for (BeritaAcara beritaAcaraBawahan : beritaAcaraList) {
 
                 if (beritaAcaraBawahan.getNipMengetahui().equals(nipPenilai))
                     isPenandatangan = true;
                 else isPenandatangan = false;
+
+                if (beritaAcaraBawahan.getStatusApprovalNipMengetahui() == 1) {
+                    statusPenilaian = 3;
+                } else {
+                    if (beritaAcaraBawahan.getStatusPenilaian() == 3) {
+                        statusPenilaian = 4;
+                    } else {
+                        statusPenilaian = beritaAcaraBawahan.getStatusPenilaian();
+                    }
+                }
+
                 laporanBawahanWrapperList
                         .add(new LaporanBawahanWrapper(
                                 beritaAcaraBawahan.getKdBeritaAcara(),
                                 "Berita Acara",
                                 pegawaiBawahan.getNip(),
                                 pegawaiBawahan.getNama(),
-                                beritaAcaraBawahan.getStatusPenilaian(),
+                                statusPenilaian,
                                 0,
                                 0,
                                 beritaAcaraBawahan.getTanggalPembuatanMilis(),
                                 isPenandatangan));
             }
-            List<Memorandum> memorandums
-                    = memorandumService.getByNipPembuat(pegawaiBawahan.getNip());
+
+            List<Memorandum> memorandums = new ArrayList<>();
+            if (isKepala) {
+                memorandums
+                        = memorandumService.getMemorandumSekretarisApproval(penilai.getKdUnitKerja());
+            }
+            else {
+                memorandums
+                        = memorandumService.getByNipPembuat(pegawaiBawahan.getNip());
+            }
+
             for (Memorandum memorandum : memorandums) {
                 if (memorandum.getMemorandumPejabat() != null)
                     suratPejabat = 1;
@@ -874,24 +950,52 @@ public class AkunPegawaiController {
                     isPenandatangan = true;
                 else isPenandatangan = false;
 
+                if (memorandum.getApprovalPenandatangan() == 1) {
+                    statusPenilaian = 3;
+                } else {
+                    if (memorandum.getStatusPenilaian() == 3) {
+                        statusPenilaian = 4;
+                    } else {
+                        statusPenilaian = memorandum.getStatusPenilaian();
+                    }
+                }
+
                 laporanBawahanWrapperList
                         .add(new LaporanBawahanWrapper(
                                 memorandum.getKdMemorandum(),
                                 "Memorandum",
                                 pegawaiBawahan.getNip(),
                                 pegawaiBawahan.getNama(),
-                                memorandum.getStatusPenilaian(),
+                                statusPenilaian,
                                 2,
                                 suratPejabat,
                                 memorandum.getTanggalPembuatanMilis(),
                                 isPenandatangan));
             }
-            List<NotaDinas> notaDinasList
-                    = notaDinasService.getByNipPembuat(pegawaiBawahan.getNip());
+
+            List<NotaDinas> notaDinasList = new ArrayList<>();
+            if (isKepala) {
+                notaDinasList
+                        = notaDinasService.getNotaDinasSekretarisApproval(penilai.getKdUnitKerja());
+            }
+            else {
+                notaDinasList
+                        = notaDinasService.getByNipPembuat(pegawaiBawahan.getNip());
+            }
             for (NotaDinas notaDinas : notaDinasList) {
                 if (notaDinas.getNipPenandatangan().equals(nipPenilai))
                     isPenandatangan = true;
                 else isPenandatangan = false;
+
+                if (notaDinas.getApprovalPenandatangan() == 1) {
+                    statusPenilaian = 3;
+                } else {
+                    if (notaDinas.getStatusPenilaian() == 3) {
+                        statusPenilaian = 4;
+                    } else {
+                        statusPenilaian = notaDinas.getStatusPenilaian();
+                    }
+                }
 
                 laporanBawahanWrapperList
                         .add(new LaporanBawahanWrapper(
@@ -899,32 +1003,61 @@ public class AkunPegawaiController {
                                 "Nota Dinas",
                                 pegawaiBawahan.getNip(),
                                 pegawaiBawahan.getNama(),
-                                notaDinas.getStatusPenilaian(),
+                                statusPenilaian,
                                 3,
                                 0,
                                 notaDinas.getTanggalPembuatanMilis(),
                                 isPenandatangan));
             }
-            List<Pengumuman> pengumumanList
-                    = pengumumanService.getByPembuat(pegawaiBawahan.getNip());
+
+            List<Pengumuman> pengumumanList = new ArrayList<>();
+            if (isKepala) {
+                pengumumanList
+                        = pengumumanService.getPengumumanBySekretarisApproval(penilai.getKdUnitKerja());
+            }
+            else {
+                pengumumanList
+                        = pengumumanService.getByPembuat(pegawaiBawahan.getNip());
+            }
+
             for (Pengumuman pengumuman : pengumumanList) {
                 if (pengumuman.getNipPenandatangan().equals(nipPenilai))
                     isPenandatangan = true;
                 else isPenandatangan = false;
+
+                if (pengumuman.getApprovalPenandatangan() == 1) {
+                    statusPenilaian = 3;
+                } else {
+                    if (pengumuman.getStatusPenilaian() == 3) {
+                        statusPenilaian = 4;
+                    } else {
+                        statusPenilaian = pengumuman.getStatusPenilaian();
+                    }
+                }
+
                 laporanBawahanWrapperList
                         .add(new LaporanBawahanWrapper(
                                 pengumuman.getKdPengumuman(),
                                 "Pengumuman",
                                 pegawaiBawahan.getNip(),
                                 pegawaiBawahan.getNama(),
-                                pengumuman.getStatusPenilaian(),
+                                statusPenilaian,
                                 4,
                                 0,
                                 pengumuman.getTanggalPembuatanMilis(),
                                 isPenandatangan));
             }
-            List<SuratDinas> suratDinasList
-                    = suratDinasService.getByNipPembuat(pegawaiBawahan.getNip());
+
+            List<SuratDinas> suratDinasList = new ArrayList<>();
+            if (isKepala) {
+                suratDinasList
+                        = suratDinasService.getSuratDinasSekretarisApproval(penilai.getKdUnitKerja());
+            }
+            else {
+                suratDinasList
+                        = suratDinasService.getByNipPembuat(pegawaiBawahan.getNip());
+            }
+
             for (SuratDinas suratDinas : suratDinasList) {
                 if (suratDinas.getSuratDinasPejabat() != null)
                     suratPejabat = 1;
@@ -935,20 +1068,38 @@ public class AkunPegawaiController {
                     isPenandatangan = true;
                 else isPenandatangan = false;
 
+                if (suratDinas.getApprovalPenandatangan() == 1) {
+                    statusPenilaian = 3;
+                } else {
+                    if (suratDinas.getStatusPenilaian() == 3) {
+                        statusPenilaian = 4;
+                    } else {
+                        statusPenilaian = suratDinas.getStatusPenilaian();
+                    }
+                }
+
                 laporanBawahanWrapperList
                         .add(new LaporanBawahanWrapper(
                                 suratDinas.getKdSuratDinas(),
                                 "Surat Dinas",
                                 pegawaiBawahan.getNip(),
                                 pegawaiBawahan.getNama(),
-                                suratDinas.getStatusPenilaian(),
+                                statusPenilaian,
                                 5,
                                 suratPejabat,
                                 suratDinas.getTanggalPembuatanMilis(),
                                 isPenandatangan));
             }
-            List<SuratEdaran> suratEdaranList
-                    = suratEdaranService.getByNipPembuat(pegawaiBawahan.getNip());
+
+            List<SuratEdaran> suratEdaranList = new ArrayList<>();
+            if (isKepala) {
+                suratEdaranList
+                        = suratEdaranService.getSuratEdaranSekretarisApproval(penilai.getKdUnitKerja());
+            }
+            else {
+                suratEdaranList
+                        = suratEdaranService.getByNipPembuat(pegawaiBawahan.getNip());
+            }
             for (SuratEdaran suratEdaran : suratEdaranList) {
                 if (suratEdaran.getSuratEdaranPejabat() != null)
                     suratPejabat = 1;
@@ -959,25 +1110,53 @@ public class AkunPegawaiController {
                     isPenandatangan = true;
                 else isPenandatangan = false;
 
+                if (suratEdaran.getApprovalPenandatangan() == 1) {
+                    statusPenilaian = 3;
+                } else {
+                    if (suratEdaran.getStatusPenilaian() == 3) {
+                        statusPenilaian = 4;
+                    } else {
+                        statusPenilaian = suratEdaran.getStatusPenilaian();
+                    }
+                }
+
                 laporanBawahanWrapperList
                         .add(new LaporanBawahanWrapper(
                                 suratEdaran.getKdSuratEdaran(),
                                 "Surat Edaran",
                                 pegawaiBawahan.getNip(),
                                 pegawaiBawahan.getNama(),
-                                suratEdaran.getStatusPenilaian(),
+                                statusPenilaian,
                                 6,
                                 suratPejabat,
                                 suratEdaran.getTanggalPembuatanMilis(),
                                 isPenandatangan));
             }
-            List<SuratKeputusan> suratKeputusanList
-                    = suratKeputusanService.getByNipPembuat(pegawaiBawahan.getNip());
+
+            List<SuratKeputusan> suratKeputusanList = new ArrayList<>();
+            if (isKepala) {
+                suratKeputusanList
+                        = suratKeputusanService.getSuratKeputusanSekretarisApproval(penilai.getKdUnitKerja());
+            }
+            else {
+                suratKeputusanList
+                        = suratKeputusanService.getByNipPembuat(pegawaiBawahan.getNip());
+            }
             for (SuratKeputusan suratKeputusan : suratKeputusanList) {
 
                 if (suratKeputusan.getNipPenandatangan().equals(nipPenilai))
                     isPenandatangan = true;
                 else isPenandatangan = false;
+
+                if (suratKeputusan.getApprovalPenandatangan() == 1) {
+                    statusPenilaian = 3;
+                } else {
+                    if (suratKeputusan.getStatusPenilaian() == 3) {
+                        statusPenilaian = 4;
+                    } else {
+                        statusPenilaian = suratKeputusan.getStatusPenilaian();
+                    }
+                }
 
                 laporanBawahanWrapperList
                         .add(new LaporanBawahanWrapper(
@@ -985,19 +1164,37 @@ public class AkunPegawaiController {
                                 "Surat Keputusan",
                                 pegawaiBawahan.getNip(),
                                 pegawaiBawahan.getNama(),
-                                suratKeputusan.getStatusPenilaian(),
+                                statusPenilaian,
                                 7,
                                 0,
                                 suratKeputusan.getTanggalPembuatanMilis(),
                                 isPenandatangan));
             }
-            List<SuratKeterangan> suratKeterangans
-                    = suratKeteranganService.getByNipPembuat(pegawaiBawahan.getNip());
+
+            List<SuratKeterangan> suratKeterangans = new ArrayList<>();
+            if (isKepala) {
+                suratKeterangans
+                        = suratKeteranganService.getSuratKeteranganSekretarisApproval(penilai.getKdUnitKerja());
+            }
+            else {
+                suratKeterangans
+                        = suratKeteranganService.getByNipPembuat(pegawaiBawahan.getNip());
+            }
             for (SuratKeterangan suratKeterangan : suratKeterangans) {
 
                 if (suratKeterangan.getNipPenandatangan().equals(nipPenilai))
                     isPenandatangan = true;
                 else isPenandatangan = false;
+
+                if (suratKeterangan.getApprovalPenandatangan() == 1) {
+                    statusPenilaian = 3;
+                } else {
+                    if (suratKeterangan.getStatusPenilaian() == 3) {
+                        statusPenilaian = 4;
+                    } else {
+                        statusPenilaian = suratKeterangan.getStatusPenilaian();
+                    }
+                }
 
                 laporanBawahanWrapperList
                         .add(new LaporanBawahanWrapper(
@@ -1005,19 +1202,37 @@ public class AkunPegawaiController {
                                 "Surat Keterangan",
                                 pegawaiBawahan.getNip(),
                                 pegawaiBawahan.getNama(),
-                                suratKeterangan.getStatusPenilaian(),
+                                statusPenilaian,
                                 8,
                                 0,
                                 suratKeterangan.getTanggalPembuatanSuratMilis(),
                                 isPenandatangan));
             }
-            List<SuratPengantar> suratPengantarList
-                    = suratPengantarService.getByNipPembuat(pegawaiBawahan.getNip());
+
+            List<SuratPengantar> suratPengantarList = new ArrayList<>();
+            if (isKepala) {
+                suratPengantarList
+                        = suratPengantarService.getSuratPengantarSekretarisApproval(penilai.getKdUnitKerja());
+            }
+            else {
+                suratPengantarList
+                        = suratPengantarService.getByNipPembuat(pegawaiBawahan.getNip());
+            }
             for (SuratPengantar suratPengantar : suratPengantarList) {
 
                 if (suratPengantar.getNipPemberiSuratPengantar().equals(nipPenilai))
                     isPenandatangan = true;
                 else isPenandatangan = false;
+
+                if (suratPengantar.getApprovalPenandatangan() == 1) {
+                    statusPenilaian = 3;
+                } else {
+                    if (suratPengantar.getStatusPenilaian() == 3) {
+                        statusPenilaian = 4;
+                    } else {
+                        statusPenilaian = suratPengantar.getStatusPenilaian();
+                    }
+                }
 
                 laporanBawahanWrapperList
                         .add(new LaporanBawahanWrapper(
@@ -1025,14 +1240,22 @@ public class AkunPegawaiController {
                                 "Surat Pengantar",
                                 pegawaiBawahan.getNip(),
                                 pegawaiBawahan.getNama(),
-                                suratPengantar.getStatusPenilaian(),
+                                statusPenilaian,
                                 10,
                                 0,
                                 suratPengantar.getTanggalPembuatanMilis(),
                                 isPenandatangan));
             }
-            Set<SuratTugas> suratTugases
-                    = suratTugasService.getByNipPembuat(pegawaiBawahan.getNip());
+
+            Set<SuratTugas> suratTugases = new HashSet<>();
+            if (isKepala) {
+                suratTugases
+                        = suratTugasService.getSuratTugasSekretarisApproval(penilai.getKdUnitKerja());
+            }
+            else {
+                suratTugases
+                        = suratTugasService.getByNipPembuat(pegawaiBawahan.getNip());
+            }
             for (SuratTugas suratTugas : suratTugases) {
                 if (suratTugas.getSuratTugasPejabat() != null)
                     suratPejabat = 1;
@@ -1043,20 +1266,37 @@ public class AkunPegawaiController {
                     isPenandatangan = true;
                 else isPenandatangan = false;
 
+                if (suratTugas.getApprovalPenandatangan() == 1) {
+                    statusPenilaian = 3;
+                } else {
+                    if (suratTugas.getStatusPenilaian() == 3) {
+                        statusPenilaian = 4;
+                    } else {
+                        statusPenilaian = suratTugas.getStatusPenilaian();
+                    }
+                }
+
                 laporanBawahanWrapperList
                         .add(new LaporanBawahanWrapper(
                                 suratTugas.getKdSuratTugas(),
                                 "Surat Tugas",
                                 pegawaiBawahan.getNip(),
                                 pegawaiBawahan.getNama(),
-                                suratTugas.getStatusPenilaian(),
+                                statusPenilaian,
                                 12,
                                 suratPejabat,
                                 suratTugas.getTanggalTugasMilis(),
                                 isPenandatangan));
             }
-            List<SuratUndangan> suratUndanganList
-                    = suratUndanganService.getByNipPembuat(pegawaiBawahan.getNip());
+            List<SuratUndangan> suratUndanganList = new ArrayList<>();
+            if (isKepala) {
+                suratUndanganList
+                        = suratUndanganService.getSuratUndanganSekretarisApproval(penilai.getKdUnitKerja());
+            }
+            else {
+                suratUndanganList
+                        = suratUndanganService.getByNipPembuat(pegawaiBawahan.getNip());
+            }
             for (SuratUndangan suratUndangan : suratUndanganList) {
                 if (suratUndangan.getSuratUndanganPejabat() != null)
                     suratPejabat = 1;
@@ -1067,13 +1307,23 @@ public class AkunPegawaiController {
                     isPenandatangan = true;
                 else isPenandatangan = false;
 
+                if (suratUndangan.getApprovalPenandatangan() == 1) {
+                    statusPenilaian = 3;
+                } else {
+                    if (suratUndangan.getStatusPenilaian() == 3) {
+                        statusPenilaian = 4;
+                    } else {
+                        statusPenilaian = suratUndangan.getStatusPenilaian();
+                    }
+                }
+
                 laporanBawahanWrapperList
                         .add(new LaporanBawahanWrapper(
                                 suratUndangan.getKdSuratUndangan(),
                                 "Surat Undangan",
                                 pegawaiBawahan.getNip(),
                                 pegawaiBawahan.getNama(),
-                                suratUndangan.getStatusPenilaian(),
+                                statusPenilaian,
                                 13,
                                 suratPejabat,
                                 suratUndangan.getTanggalPembuatanSurat(),
@@ -1093,13 +1343,23 @@ public class AkunPegawaiController {
                     isPenandatangan = true;
                 else isPenandatangan = false;
 
+                if (suratPerintahBawahan.getApprovalPenandatangan() == 1) {
+                    statusPenilaian = 3;
+                } else {
+                    if (suratPerintahBawahan.getStatusPenilaian() == 3) {
+                        statusPenilaian = 4;
+                    } else {
+                        statusPenilaian = suratPerintahBawahan.getStatusPenilaian();
+                    }
+                }
+
                 laporanBawahanWrapperList
                         .add(new LaporanBawahanWrapper(
                                 suratPerintahBawahan.getKdSuratPerintah(),
                                 "Surat Perintah",
                                 pegawaiBawahan.getNip(),
                                 pegawaiBawahan.getNama(),
-                                suratPerintahBawahan.getStatusPenilaian(),
+                                statusPenilaian,
                                 11,
                                 suratPejabat,
                                 suratPerintahBawahan.getTanggalPerintahMilis(),
@@ -1114,13 +1374,23 @@ public class AkunPegawaiController {
                     isPenandatangan = true;
                 else isPenandatangan = false;
 
+                if (suratKuasaBawahan.getApprovalPenandatangan() == 1) {
+                    statusPenilaian = 3;
+                } else {
+                    if (suratKuasaBawahan.getStatusPenilaian() == 3) {
+                        statusPenilaian = 4;
+                    } else {
+                        statusPenilaian = suratKuasaBawahan.getStatusPenilaian();
+                    }
+                }
+
                 laporanBawahanWrapperList
                         .add(new LaporanBawahanWrapper(
                                 suratKuasaBawahan.getKdSuratKuasa(),
                                 "Surat Kuasa",
                                 pegawaiBawahan.getNip(),
                                 pegawaiBawahan.getNama(),
-                                suratKuasaBawahan.getStatusPenilaian(),
+                                statusPenilaian,
                                 9,
                                 0,
                                 suratKuasaBawahan.getTanggalPembuatanMilis(),
@@ -1130,6 +1400,7 @@ public class AkunPegawaiController {
             List<Laporan> laporanList
                     = laporanService.getByNipPembuatSurat(pegawaiBawahan.getNip());
             for (Laporan laporanBawahan : laporanList) {
+
                 laporanBawahanWrapperList
                         .add(new LaporanBawahanWrapper(
                                 laporanBawahan.getKdLaporan(),

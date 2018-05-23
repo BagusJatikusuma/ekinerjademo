@@ -13,6 +13,7 @@ public interface SuratTugasService {
     Set<SuratTugas> getByKdUnitKerja(String kdUnitKerja);
     Set<SuratTugas> getByNomorTahun(Integer nomorTahun);
     Set<SuratTugas> getByNipPembuat(String nipPembuat);
+    Set<SuratTugas> getSuratTugasSekretarisApproval(String kdUnitKerja);
 
     List<TargetSuratTugasPegawai> getTargetSuratTugasPegawai(String nipTargetSurat);
     List<TargetSuratTugasPejabat> getTargetSuratTugasPejabat(String kdJabatanTarget);

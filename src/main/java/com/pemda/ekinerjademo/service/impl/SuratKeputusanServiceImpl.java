@@ -39,6 +39,11 @@ public class SuratKeputusanServiceImpl implements SuratKeputusanService {
     }
 
     @Override
+    public List<SuratKeputusan> getSuratKeputusanSekretarisApproval(String kdUnitKerja) {
+        return suratKeputusanDao.findBySekretarisApproval(kdUnitKerja);
+    }
+
+    @Override
     public SuratKeputusan getByKdSuratKeputusan(String kdSuratKeputusan) {
         return suratKeputusanDao.findByKdSuratKeputusan(kdSuratKeputusan);
     }

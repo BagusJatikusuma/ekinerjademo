@@ -72,6 +72,9 @@ public class SuratKeputusan {
     @Column(name = "status_penyebaran")
     private Integer statusPenyebaran;
 
+    @Column(name = "approval_sekretaris")
+    private Integer approvalSekretaris;
+
     public String getKdSuratKeputusan() {
         return kdSuratKeputusan;
     }
@@ -278,5 +281,13 @@ public class SuratKeputusan {
 
     public void setStatusPenyebaran(Integer statusPenyebaran) {
         this.statusPenyebaran = statusPenyebaran;
+    }
+
+    public Integer getApprovalSekretaris() {
+        return approvalSekretaris;
+    }
+
+    public void setApprovalSekretaris(Integer approvalSekretaris) {
+        this.approvalSekretaris = approvalSekretaris;
     }
 }

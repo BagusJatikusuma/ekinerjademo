@@ -51,6 +51,11 @@ public class SuratPerintahServiceImpl implements SuratPerintahService {
     }
 
     @Override
+    public Set<SuratPerintah> getSuratPerintahSekretarisApproval(String kdUnitKerja) {
+        return suratPerintahDao.findBySekretarisApproval(kdUnitKerja);
+    }
+
+    @Override
     public List<TargetSuratPerintahPegawai> getTargetSuratPerintahPegawai(String nipTargetSurat) {
         return targetSuratPerintahPegawaiDao.findByTargetSuratPerintahPegawaiId_NipPegawai(nipTargetSurat);
     }

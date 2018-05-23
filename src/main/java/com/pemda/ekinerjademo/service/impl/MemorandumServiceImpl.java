@@ -53,6 +53,11 @@ public class MemorandumServiceImpl implements MemorandumService {
     }
 
     @Override
+    public List<Memorandum> getMemorandumSekretarisApproval(String kdUnitKerja) {
+        return memorandumDao.findBySekretarisApproval(kdUnitKerja);
+    }
+
+    @Override
     public List<Memorandum> getMemorandumByUnitKerjaTarget(String kdUnitKerjaTarget) {
         return memorandumDao.findByUnitKerjaTarget(kdUnitKerjaTarget);
     }
@@ -114,7 +119,7 @@ public class MemorandumServiceImpl implements MemorandumService {
     @Override
     public void approveMemorandum(String kdMemorandum) {
         Memorandum memorandumLast = memorandumDao.findOne(kdMemorandum);
-        memorandumLast.setStatusPenyebaran(1);
+//        memorandumLast.setStatusPenyebaran(1);
         memorandumLast.setApprovalPenandatangan(1);
 
         NomorUrutSuratUnitKerja nomorUrutSurat

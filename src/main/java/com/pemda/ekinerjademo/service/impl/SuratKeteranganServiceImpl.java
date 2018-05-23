@@ -44,6 +44,11 @@ public class SuratKeteranganServiceImpl implements SuratKeteranganService {
     }
 
     @Override
+    public List<SuratKeterangan> getSuratKeteranganSekretarisApproval(String kdUnitKerja) {
+        return suratKeteranganDao.findBySekretarisApproval(kdUnitKerja);
+    }
+
+    @Override
     public SuratKeterangan getByKdSuratKeterangan(String kdSuratKeterangan) {
         return suratKeteranganDao.findByKdSuratKeterangan(kdSuratKeterangan);
     }

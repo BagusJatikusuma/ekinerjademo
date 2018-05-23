@@ -11,6 +11,7 @@ public interface SuratKeputusanService {
     List<SuratKeputusan> getByKdUnitKerja(String kdUnitKerja);
     List<SuratKeputusan> getByNipPembuat(String nipPembuat);
     List<SuratKeputusan> getByNomorTahun(Integer nomorTahun);
+    List<SuratKeputusan> getSuratKeputusanSekretarisApproval(String kdUnitKerja);
 
     SuratKeputusan getByKdSuratKeputusan(String kdSuratKeputusan);
 

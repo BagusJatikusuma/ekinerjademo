@@ -14,6 +14,7 @@ public interface SuratKeteranganService {
     List<SuratKeterangan> getByNipPembuat(String nipPembuat);
     List<SuratKeterangan> getByNomorTahun(Integer nomorTahun);
     List<TargetSuratKeterangan> getTargetSuratKeteranganByNip(String nipTarget);
+    List<SuratKeterangan> getSuratKeteranganSekretarisApproval(String kdUnitKerja);
 
     SuratKeterangan getByKdSuratKeterangan(String kdSuratKeterangan);
 

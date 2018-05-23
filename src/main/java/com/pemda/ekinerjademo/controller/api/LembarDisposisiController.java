@@ -26,7 +26,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
-import java.lang.annotation.Target;
 import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Date;
@@ -401,8 +400,17 @@ public class LembarDisposisiController {
             QutPegawai pegawaiPengirim = null, pegawaiPenerima = null;
             List<String> pegawaiPenerimaNames = new ArrayList<>();
 
-            pegawaiPengirim
-                    = qutPegawaiService.getQutPegawai(targetLembarDisposisi.getLembarDisposisi().getNipPembuat());
+            if (targetLembarDisposisi.getLembarDisposisi().getNipKepala() != null
+                    || !targetLembarDisposisi.getLembarDisposisi().getNipKepala().isEmpty()) {
+
+                pegawaiPengirim
+                        = qutPegawaiService.getQutPegawai(targetLembarDisposisi.getLembarDisposisi().getNipKepala());
+            }
+            else {
+
+                pegawaiPengirim
+                        = qutPegawaiService.getQutPegawai(targetLembarDisposisi.getLembarDisposisi().getNipPembuat());
+            }
 
             if (isPegawaiTargetSekretaris) {
                 pegawaiPenerima
@@ -916,12 +924,12 @@ public class LembarDisposisiController {
         draftlembarDisposisi.setIsiDisposisi(inputWrapper.getIsiDisposisi());
         draftlembarDisposisi.setApprovalPenandatangan(1);
         //untuk sekarang diisi nilai satu
-        draftlembarDisposisi.setNipKepala("1");
+        draftlembarDisposisi.setNipKepala(inputWrapper.getNipPelengkap());
 
         lembarDisposisiService.create(draftlembarDisposisi);
 
         List<TargetLembarDisposisi> targetLembarDisposisiList = new ArrayList<>();
-        for (String kdTarget : inputWrapper.getDaftarTargetJabatanLembarDisposisi()) {
+        for (String kdTarget : inputWrapper.getDaftarTargetLembarDisposisi()) {
             TargetLembarDisposisi targetLembarDisposisi = new TargetLembarDisposisi();
 
             targetLembarDisposisi
@@ -939,6 +947,76 @@ public class LembarDisposisiController {
         lembarDisposisiService.createTargetLembarDisposisi(targetLembarDisposisiList);
 
         return new ResponseEntity<>(new CustomMessage("lembar disposisi berhasil dibuat"), HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/teruskan-disposisi", method = RequestMethod.POST)
+    ResponseEntity<?> teruskanDisposisi(@RequestBody CompletedLembarDisposisiInputWrapper inputWrapper) {
+        LOGGER.info("teruskan disposisi");
+
+        String kdLembarDisposisi = String.valueOf(new Date().getTime());
+
+        LembarDisposisi lembarDisposisi = new LembarDisposisi();
+        lembarDisposisi.setKdLembarDisposisi(kdLembarDisposisi);
+
+        LembarDisposisi lembarDisposisiParent
+                = lembarDisposisiService.findByKdLembarDisposisi(inputWrapper.getKdLembarDisposisiParent());
+        //ubah status baca parent menjadi sudah dilanjutkan
+        lembarDisposisiParent.setStatusBaca(2);
+        //ubah status baca target menjadi sudah dilanjutkan
+        for (TargetLembarDisposisi targetLembarDisposisi
+                : lembarDisposisiParent.getTargetLembarDisposisiSet()) {
+            if (targetLembarDisposisi.getTargetLembarDisposisiId().getNipPegawai()
+                    .equals(inputWrapper.getNipPenerus())) {
+                targetLembarDisposisi.setStatusBaca(2);
+                lembarDisposisiService.createTargetLembarDisposisi(targetLembarDisposisi);
+
+                break;
+            }
+
+        }
+
+        lembarDisposisi.setPath(lembarDisposisiParent.getPath()+"."+kdLembarDisposisi);
+
+        lembarDisposisi.setNipPembuat(inputWrapper.getNipPenerus());
+        lembarDisposisi.setKdUnitKerja(lembarDisposisiParent.getKdUnitKerja());
+        lembarDisposisi.setTanggalPenerimaanMilis(lembarDisposisiParent.getTanggalPenerimaanMilis());
+        lembarDisposisi.setTktKeamanan(inputWrapper.getTktKeamanan());
+        lembarDisposisi.setTglPenyelesaianMilis(inputWrapper.getTglPenyelesaianMilis());
+        lembarDisposisi.setNoSuratDisposisi(new SuratDisposisi(lembarDisposisiParent.getNoSuratDisposisi().getNoSurat()));
+        lembarDisposisi.setIsiDisposisi(inputWrapper.getIsiDisposisi());
+        lembarDisposisi.setStatusBaca(0);
+        lembarDisposisi.setStatusAktif(1);
+        lembarDisposisi.setTanggalPengirimanMilis(new Date().getTime());
+        lembarDisposisi.setDurasiPengerjaan(inputWrapper.getDurasiPengerjaan());
+
+        lembarDisposisi.setKdLembarDisposisiParent(new LembarDisposisi(inputWrapper.getKdLembarDisposisiParent()));
+
+        lembarDisposisiService.create(lembarDisposisi);
+
+        List<TargetLembarDisposisi> targetLembarDisposisiList = new ArrayList<>();
+        for (String kdTarget : inputWrapper.getDaftarTargetLembarDisposisi()) {
+            TargetLembarDisposisi targetLembarDisposisi = new TargetLembarDisposisi();
+
+            if (inputWrapper.isTargetJabatan()) {
+                targetLembarDisposisi
+                        .setTargetLembarDisposisiId(
+                                new TargetLembarDisposisiId(
+                                        kdLembarDisposisi,
+                                        qutPegawaiService.getQutPegawaiByKdJabatan(kdTarget).get(0).getNip()));
+                targetLembarDisposisi.setKdJabatan(kdTarget);
+            }
+            else {
+                targetLembarDisposisi.setTargetLembarDisposisiId(new TargetLembarDisposisiId(kdLembarDisposisi, kdTarget));
+            }
+            targetLembarDisposisi.setApproveStatus(0);
+            targetLembarDisposisi.setStatusBaca(0);
+
+            targetLembarDisposisiList.add(targetLembarDisposisi);
+        }
+        
+        lembarDisposisiService.createTargetLembarDisposisi(targetLembarDisposisiList);
+
+        return new ResponseEntity<>(new CustomMessage("lembar disposisi berhasil diteruskan"), HttpStatus.OK);
     }
 
     /**
@@ -1047,7 +1125,8 @@ public class LembarDisposisiController {
             }
 
             draftlembarDisposisiWrappers
-                    .add(new DraftlembarDisposisiWrapper(lembarDisposisi.getKdLembarDisposisi(),
+                    .add(new DraftlembarDisposisiWrapper(
+                            lembarDisposisi.getKdLembarDisposisi(),
                             lembarDisposisi.getNoSuratDisposisi().getDari(),
                             lembarDisposisi.getTanggalPenerimaanMilis(),
                             approvedBySekdin,

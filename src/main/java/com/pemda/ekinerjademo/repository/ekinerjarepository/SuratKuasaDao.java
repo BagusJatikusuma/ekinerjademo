@@ -16,4 +16,9 @@ public interface SuratKuasaDao extends JpaRepository<SuratKuasa, String> {
     @Query("select sk from SuratKuasa sk " +
             "where sk.pathPenilaian like concat(?1,'%')")
     List<SuratKuasa> findByLastTree(String kdSuratKuasaRoot);
+
+    @Query("select sk from SuratKuasa sk " +
+            "where sk.kdUnitKerja = ?1 " +
+            "and sk.approvalSekretaris = 1")
+    List<SuratKuasa> findBySekretarisApproval(String kdUnitKerja);
 }

@@ -14,4 +14,9 @@ public interface BeritaAcaraDao extends JpaRepository<BeritaAcara, String> {
     @Query("select ba from BeritaAcara ba " +
             "where ba.pathPenilaian like concat(?1,'%')")
     List<BeritaAcara> findByLastTree(String kdBeritaAcaraRoot);
+
+    @Query("select ba from BeritaAcara ba " +
+            "where ba.kdUnitKerja = ?1 " +
+            "and ba.approvalSekretaris = 1")
+    List<BeritaAcara> findBySekretarisApproval(String kdUnitKerja);
 }

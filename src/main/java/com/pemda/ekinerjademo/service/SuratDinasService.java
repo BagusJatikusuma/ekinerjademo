@@ -14,6 +14,7 @@ public interface SuratDinasService {
     List<SuratDinas> getByNomorTahun(Integer nomorTahun);
     List<SuratDinas> getByJabatanPenerima(String kdJabatan);
     List<SuratDinas> getDraftApproval(String kdUnitKerja);
+    List<SuratDinas> getSuratDinasSekretarisApproval(String kdUnitKerja);
 
     List<TembusanSuratDinas> getTembusanSuratDinas(String kdJabatan);
     List<TembusanSuratDinas> getTembusanSuratDinasUnitKerja(String kdUnitKerja);

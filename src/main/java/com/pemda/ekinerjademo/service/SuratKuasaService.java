@@ -10,6 +10,8 @@ import java.util.List;
 public interface SuratKuasaService {
     List<SuratKuasa> getByNipPembuatSurat(String nipPembuatSurat);
 
+    List<SuratKuasa> getSuratKuasaBySekretarisApproval(String kdUnitKerja);
+
     List<SuratKuasa> getByNipPenerimaKuasa(String nipPenerimaKuasa);
 
     void createSuratKuasa(SuratKuasa suratKuasa);

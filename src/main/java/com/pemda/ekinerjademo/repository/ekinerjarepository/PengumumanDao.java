@@ -22,4 +22,9 @@ public interface PengumumanDao extends JpaRepository<Pengumuman, String> {
             "where pm.pathPenilaian like concat(?1,'%')")
     List<Pengumuman> findBylastTree(String kdPengumumanRoot);
 
+    @Query("select pm from Pengumuman pm " +
+            "where pm.kdUnitKerja = ?1 " +
+            "and pm.approvalSekretaris = 1")
+    List<Pengumuman> findBySekretarisApproval(String kdUnitKerja);
+
 }

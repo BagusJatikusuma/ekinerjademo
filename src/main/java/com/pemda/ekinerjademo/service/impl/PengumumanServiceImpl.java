@@ -39,6 +39,11 @@ public class PengumumanServiceImpl implements PengumumanService {
     }
 
     @Override
+    public List<Pengumuman> getPengumumanBySekretarisApproval(String kdUnitKerja) {
+        return pengumumanDao.findBySekretarisApproval(kdUnitKerja);
+    }
+
+    @Override
     public Pengumuman getByKdPengumuman(String kdPengumuman) {
         return pengumumanDao.findByKdPengumuman(kdPengumuman);
     }

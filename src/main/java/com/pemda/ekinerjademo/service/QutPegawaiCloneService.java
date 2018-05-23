@@ -15,6 +15,8 @@ public interface QutPegawaiCloneService {
     List<CustomPegawaiCredential> getCustomPegawaiCredentials();
     List<QutPegawai> getQutPegawaiByUnitKerja(String kdUnitKerja);
     List<QutPegawaiClone> getQutPegawaiByKdJabatan(String kdJabatan);
+    List<QutPegawaiClone> convertQutPegawaiIntoQutPegawaiClone(List<QutPegawai> qutPegawaiList);
+    QutPegawaiClone convertQutPegawaiIntoQutPegawaiClone(QutPegawai qutPegawai);
     void deleteAll();
     void saveQutPegawaiList(List<QutPegawaiClone> qutPegawaiList);
 }

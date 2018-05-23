@@ -16,6 +16,13 @@ public interface NotaDinasDao extends JpaRepository<NotaDinas, String> {
             "left join fetch nd.tembusanNotaDinasList " +
             "where nd.kdUnitKerja = ?1")
     List<NotaDinas> findByKdUnitKerja(String kdUnitKerja);
+
+    @Query("select distinct nd from NotaDinas nd " +
+            "left join fetch nd.tembusanNotaDinasList " +
+            "where nd.kdUnitKerja = ?1 " +
+            "and nd.approvalSekretaris = 1")
+    List<NotaDinas> findBySekretarisApproval(String kdUnitKerja);
+
     @Query("select distinct nd from NotaDinas nd " +
             "left join fetch nd.tembusanNotaDinasList " +
             "where nd.nipPembuatSurat = ?1")

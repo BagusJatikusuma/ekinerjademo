@@ -14,6 +14,7 @@ public interface SuratEdaranService {
     List<SuratEdaran> getByKdUnitKerja(String kdUnitKerja);
     List<SuratEdaran> getByNipPembuat(String nipPembuat);
     List<SuratEdaran> getByNomorTahun(Integer nomorTahun);
+    List<SuratEdaran> getSuratEdaranSekretarisApproval(String kdUnitKerja);
 
     SuratEdaran getByKdSuratEdaran(String kdSuratEdaran);
 

@@ -723,7 +723,9 @@ public class SuratUndanganController {
                                     pegawaiPemberi.getNip(),
                                     pegawaiPemberi.getNama(),
                                     pegawaiPemberi.getJabatan(),
-                                    suratUndangan.getStatusPenyebaran()
+                                    suratUndangan.getStatusPenyebaran(),
+                                    "surat undangan",
+                                    13
                             ));
                     break;
 

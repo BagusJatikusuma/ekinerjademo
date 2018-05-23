@@ -79,6 +79,9 @@ public class SuratDinas {
     @Column(name = "kd_unit_kerja_target")
     private String kdUnitKerjaTarget;
 
+    @Column(name = "approval_sekretaris")
+    private Integer approvalSekretaris;
+
     @OneToOne(mappedBy = "suratDinas", fetch = FetchType.LAZY)
     private SuratDinasNonPejabat suratDinasNonPejabat;
     @OneToOne(mappedBy = "suratDinas", fetch = FetchType.LAZY)
@@ -348,5 +351,13 @@ public class SuratDinas {
 
     public void setKdUnitKerjaTarget(String kdUnitKerjaTarget) {
         this.kdUnitKerjaTarget = kdUnitKerjaTarget;
+    }
+
+    public Integer getApprovalSekretaris() {
+        return approvalSekretaris;
+    }
+
+    public void setApprovalSekretaris(Integer approvalSekretaris) {
+        this.approvalSekretaris = approvalSekretaris;
     }
 }

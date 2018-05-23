@@ -49,6 +49,11 @@ public class NotaDinasServiceImpl implements NotaDinasService {
     }
 
     @Override
+    public List<NotaDinas> getNotaDinasSekretarisApproval(String kdUnitKerja) {
+        return notaDinasDao.findBySekretarisApproval(kdUnitKerja);
+    }
+
+    @Override
     public NotaDinas findBykdNotaDinas(String kdNotaDinas) {
         return notaDinasDao.findByKdNotaDinas(kdNotaDinas);
     }

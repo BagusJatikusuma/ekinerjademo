@@ -35,6 +35,16 @@ public interface SuratPerintahDao extends JpaRepository<SuratPerintah, String> {
             "and s.approvalPenandatangan = 1")
     List<SuratPerintah> findDraftApproval(String kdUnitKerja);
 
+    @Query("select s from SuratPerintah s " +
+            "left join fetch s.targetSuratPerintahPegawaiList " +
+            "left join fetch s.targetSuratPerintahPejabatSet " +
+            "left join fetch s.suratPerintahPejabat " +
+            "left join fetch s.suratPerintahNonPejabat " +
+            "left join fetch s.tembusanSuratPerintahList " +
+            "where s.kdUnitKerja = ?1 " +
+            "and s.approvalSekretaris = 1")
+    Set<SuratPerintah> findBySekretarisApproval(String kdUnitKerja);
+
     @Query("select max(s.nomorSurat1) from SuratPerintah s " +
             "where s.kdUnitKerja = ?1")
     Integer findLatestNomorSuratByUnitKerja(String kdUnitKerja);

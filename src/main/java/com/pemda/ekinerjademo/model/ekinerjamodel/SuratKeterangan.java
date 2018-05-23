@@ -69,6 +69,9 @@ public class SuratKeterangan {
     @Column(name = "status_penyebaran")
     private Integer statusPenyebaran;
 
+    @Column(name = "approval_sekretaris")
+    private Integer approvalSekretaris;
+
     @OneToMany(mappedBy = "suratKeterangan")
     private List<TargetSuratKeterangan> targetSuratKeteranganList;
 
@@ -286,5 +289,13 @@ public class SuratKeterangan {
 
     public void setStatusPenyebaran(Integer statusPenyebaran) {
         this.statusPenyebaran = statusPenyebaran;
+    }
+
+    public Integer getApprovalSekretaris() {
+        return approvalSekretaris;
+    }
+
+    public void setApprovalSekretaris(Integer approvalSekretaris) {
+        this.approvalSekretaris = approvalSekretaris;
     }
 }

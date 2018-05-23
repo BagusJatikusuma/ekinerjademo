@@ -16,6 +16,12 @@ public interface SuratKeteranganDao extends JpaRepository<SuratKeterangan, Strin
             "left join fetch sk.targetSuratKeteranganList " +
             "where sk.kdUnitKerja = ?1")
     List<SuratKeterangan> findByKdUnitKerja(String kdUnitKerja);
+
+    @Query("select distinct sk from SuratKeterangan sk " +
+            "left join fetch sk.targetSuratKeteranganList " +
+            "where sk.kdUnitKerja = ?1 and sk.approvalSekretaris = 1")
+    List<SuratKeterangan> findBySekretarisApproval(String kdUnitKerja);
+
     @Query("select distinct sk from SuratKeterangan sk " +
             "left join fetch sk.targetSuratKeteranganList " +
             "where sk.nipPembuatSurat = ?1")

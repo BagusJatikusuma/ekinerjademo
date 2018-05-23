@@ -74,6 +74,9 @@ public class SuratTugas {
     @Column(name = "tahun_urtug")
     private Integer tahunUrtug;
 
+    @Column(name = "approval_sekretaris")
+    private Integer approvalSekretaris;
+
     @OneToMany(mappedBy = "suratTugas")
     private Set<TargetSuratTugasPegawai> targetSuratTugasPegawaiSet;
     @OneToMany(mappedBy = "suratTugas")
@@ -347,5 +350,13 @@ public class SuratTugas {
 
     public void setSuratTugasNonPejabat(SuratTugasNonPejabat suratTugasNonPejabat) {
         this.suratTugasNonPejabat = suratTugasNonPejabat;
+    }
+
+    public Integer getApprovalSekretaris() {
+        return approvalSekretaris;
+    }
+
+    public void setApprovalSekretaris(Integer approvalSekretaris) {
+        this.approvalSekretaris = approvalSekretaris;
     }
 }

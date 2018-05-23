@@ -14,6 +14,7 @@ public interface SuratPengantarService {
     List<SuratPengantar> getByNomorTahun(Integer nomorTahun);
     List<SuratPengantar> getByJabatanTarget(String kdJabatan);
     List<SuratPengantar> getByPegawaiTarget(String nipTarget);
+    List<SuratPengantar> getSuratPengantarSekretarisApproval(String kdUnitKerja);
 
     SuratPengantar getByKdSuratPengantar(String kdSuratPengantar);
 

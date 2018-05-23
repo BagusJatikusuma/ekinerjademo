@@ -320,6 +320,58 @@ public class QutPegawaiCloneImpl implements QutPegawaiCloneService {
     }
 
     @Override
+    public List<QutPegawaiClone> convertQutPegawaiIntoQutPegawaiClone(List<QutPegawai> qutPegawaiList) {
+        List<QutPegawaiClone> qutPegawaiCloneList
+                = new ArrayList<>();
+
+        for (QutPegawai qutPegawai : qutPegawaiList) {
+            qutPegawaiCloneList.add(convertQutPegawaiIntoQutPegawaiClone(qutPegawai));
+        }
+
+        return qutPegawaiCloneList;
+    }
+
+    @Override
+    public QutPegawaiClone convertQutPegawaiIntoQutPegawaiClone(QutPegawai qutPegawai) {
+        QutPegawaiClone qutPegawaiClone = new QutPegawaiClone();
+
+        qutPegawaiClone.setNip(qutPegawai.getNip());
+        qutPegawaiClone.setNipLm(qutPegawai.getNipLm());
+        qutPegawaiClone.setNama(qutPegawai.getNama());
+        qutPegawaiClone.setGlrDpn(qutPegawai.getGlrDpn());
+        qutPegawaiClone.setGlrBlk(qutPegawai.getGlrBlk());
+        qutPegawaiClone.setTmtLahir(qutPegawai.getTmtLahir());
+        qutPegawaiClone.setTglLahir(qutPegawai.getTglLahir());
+        qutPegawaiClone.setJnsKlm(qutPegawai.getJnsKlm());
+        qutPegawaiClone.setAgama(qutPegawai.getAgama());
+        qutPegawaiClone.setStKwn(qutPegawai.getStKwn());
+        qutPegawaiClone.setJmlAnak(qutPegawai.getJmlAnak());
+        qutPegawaiClone.setAlRumah(qutPegawai.getAlRumah());
+        qutPegawaiClone.setTlpRumah(qutPegawai.getTlpRumah());
+        qutPegawaiClone.setTlpHP(qutPegawai.getTlpHP());
+        qutPegawaiClone.setGolDarah(qutPegawai.getGolDarah());
+        qutPegawaiClone.setTmtCpns(qutPegawai.getTmtCpns());
+        qutPegawaiClone.setTmtPNS(qutPegawai.getTmtPNS());
+        qutPegawaiClone.setKdJnPg(qutPegawai.getKdJnPg());
+        qutPegawaiClone.setJnsKepeg(qutPegawai.getJnsKepeg());
+        qutPegawaiClone.setPjbAngAwl(qutPegawai.getPjbAngAwl());
+        qutPegawaiClone.setGol(qutPegawai.getGol());
+        qutPegawaiClone.setPangkat(qutPegawai.getPangkat());
+        qutPegawaiClone.setTmtGol(qutPegawai.getTmtGol());
+        qutPegawaiClone.setNoSKgol(qutPegawai.getNoSKgol());
+
+        qutPegawaiClone.setKdJabatan(qutPegawai.getKdJabatan());
+        qutPegawaiClone.setJabatan(qutPegawai.getJabatan());
+
+        qutPegawaiClone.setKdUnitKerja(qutPegawai.getKdUnitKerja());
+        qutPegawaiClone.setUnitKerja(qutPegawai.getUnitKerja());
+
+        qutPegawaiClone.setEselon(qutPegawai.getEselon());
+
+        return qutPegawaiClone;
+    }
+
+    @Override
     public void deleteAll() {
         qutPegawaiCloneDao.deleteAll();
     }

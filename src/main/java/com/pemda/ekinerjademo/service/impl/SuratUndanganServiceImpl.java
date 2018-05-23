@@ -48,6 +48,11 @@ public class SuratUndanganServiceImpl implements SuratUndanganService {
     }
 
     @Override
+    public List<SuratUndangan> getSuratUndanganSekretarisApproval(String kdUnitKerja) {
+        return suratUndanganDao.findBySekretarisApproval(kdUnitKerja);
+    }
+
+    @Override
     public List<SuratUndangan> getByNipPenerima(String nipPenerima) {
         return suratUndanganDao.findByNipPenerimaSuratUndangan(nipPenerima);
     }

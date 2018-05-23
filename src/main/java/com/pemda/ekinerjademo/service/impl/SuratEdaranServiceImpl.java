@@ -43,6 +43,11 @@ public class SuratEdaranServiceImpl implements SuratEdaranService {
     }
 
     @Override
+    public List<SuratEdaran> getSuratEdaranSekretarisApproval(String kdUnitKerja) {
+        return suratEdaranDao.findBySekretarisApproval(kdUnitKerja);
+    }
+
+    @Override
     public SuratEdaran getByKdSuratEdaran(String kdSuratEdaran) {
         return suratEdaranDao.findByKdSuratEdaran(kdSuratEdaran);
     }

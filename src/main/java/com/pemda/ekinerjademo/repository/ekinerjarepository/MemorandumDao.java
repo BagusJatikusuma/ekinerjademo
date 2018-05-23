@@ -48,7 +48,15 @@ public interface MemorandumDao extends JpaRepository<Memorandum, String>{
             "left join fetch m.memorandumNonPejabat " +
             "left join fetch m.memorandumPejabat " +
             "left join fetch m.tembusanMemorandumList " +
-            "where m.kdUnitKerjaTarget = ?1 " +
+            "where m.kdUnitKerja = ?1 " +
             "and m.approvalPenandatangan = 1")
     List<Memorandum> findByApproval(String kdUnitKerjaTarget);
+
+    @Query("select distinct m from Memorandum m " +
+            "left join fetch m.memorandumNonPejabat " +
+            "left join fetch m.memorandumPejabat " +
+            "left join fetch m.tembusanMemorandumList " +
+            "where m.kdUnitKerja = ?1 " +
+            "and m.approvalSekretaris = 1")
+    List<Memorandum> findBySekretarisApproval(String kdUnitKerja);
 }
