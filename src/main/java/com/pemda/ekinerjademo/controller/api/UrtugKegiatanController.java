@@ -288,7 +288,8 @@ public class UrtugKegiatanController {
                                         urtugJabatanWrapper.getKdUrtug(),
                                         urtugJabatanWrapper.getKdJabatan(),
                                         urtugJabatanWrapper.getKdJenisUrtug(),
-                                        urtugJabatanWrapper.getTahunUrtug());
+                                        urtugJabatanWrapper.getTahunUrtug(),
+                                        urtugJabatanWrapper.getNipPegawai());
 
         boolean exist;
         for (UrtugKegiatan urtugKegiatan : urtugKegiatanList) {
@@ -510,7 +511,8 @@ public class UrtugKegiatanController {
                     urtugJabatanWrapper.getKdUrtug(),
                     urtugJabatanWrapper.getKdJabatan(),
                     urtugJabatanWrapper.getKdJenisUrtug(),
-                    urtugJabatanWrapper.getTahunUrtug());
+                    urtugJabatanWrapper.getTahunUrtug(),
+                urtugJabatanWrapper.getNipPegawai());
 
         boolean notFound;
         for (UrtugKegiatan urtugKegiatan : urtugKegiatanList) {

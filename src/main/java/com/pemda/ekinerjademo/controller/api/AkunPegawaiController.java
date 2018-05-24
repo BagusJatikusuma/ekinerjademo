@@ -681,7 +681,11 @@ public class AkunPegawaiController {
             if (spj.getKdStatus().equals("ST001") ||
                     spj.getKdStatus().equals("ST002")||
                     spj.getKdStatus().equals("ST004")||
-                    spj.getKdStatus().equals("ST005")) {
+                    spj.getKdStatus().equals("ST005") ||
+                    spj.getKdStatus().equals("1513324189794") ||
+                    spj.getKdStatus().equals("1513484156490") ||
+                    spj.getKdStatus().equals("1513485761316") ||
+                    spj.getKdStatus().equals("1523326110773")) {
                 LOGGER.info("masuk "+spj.getKdStatus());
 
                 for (UrtugKegiatanPegawai urtugKegiatanPegawai : urtugKegiatanPegawaiList) {

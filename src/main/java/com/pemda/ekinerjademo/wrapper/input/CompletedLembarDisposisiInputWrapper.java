@@ -7,7 +7,7 @@ public class CompletedLembarDisposisiInputWrapper {
     private Integer tktKeamanan;
     private Long tglPenyelesaianMilis;
     private List<String> daftarTargetLembarDisposisi;
-    private boolean isTargetJabatan;
+    private boolean targetJabatan;
     private String nipPenerus;
     private String isiDisposisi;
     private Integer durasiPengerjaan;
@@ -99,11 +99,11 @@ public class CompletedLembarDisposisiInputWrapper {
     }
 
     public boolean isTargetJabatan() {
-        return isTargetJabatan;
+        return targetJabatan;
     }
 
     public void setTargetJabatan(boolean targetJabatan) {
-        isTargetJabatan = targetJabatan;
+        this.targetJabatan = targetJabatan;
     }
 
     public String getNipPenerus() {

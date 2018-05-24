@@ -9,6 +9,7 @@ public class UrtugJabatanJenisIdInputWrapper {
     private String kdJenisUrtug;
     private Integer tahunUrtug;
     private String kdUnitKerja;
+    private String nipPegawai;
 
     public String getKdUrtug() {
         return kdUrtug;
@@ -48,5 +49,13 @@ public class UrtugJabatanJenisIdInputWrapper {
 
     public void setKdUnitKerja(String kdUnitKerja) {
         this.kdUnitKerja = kdUnitKerja;
+    }
+
+    public String getNipPegawai() {
+        return nipPegawai;
+    }
+
+    public void setNipPegawai(String nipPegawai) {
+        this.nipPegawai = nipPegawai;
     }
 }
