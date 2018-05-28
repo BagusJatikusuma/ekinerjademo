@@ -37,6 +37,7 @@ import java.util.List;
 public class UrtugKegiatanController {
     public static final Logger LOGGER = LoggerFactory.getLogger(UrtugKegiatanController.class);
 
+    @Autowired
     private UrtugKegiatanService urtugKegiatanService;
     @Autowired
     private UnitKerjaKegiatanDao unitKerjaKegiatanDao;

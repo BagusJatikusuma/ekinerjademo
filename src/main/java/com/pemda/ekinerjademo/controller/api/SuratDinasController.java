@@ -287,7 +287,8 @@ public class SuratDinasController {
                                                 pegawaiPemberi.getJabatan(),
                                                 suratDinas.getStatusBaca(),
                                                 "Surat Dinas",
-                                                5));
+                                                5,
+                                                tkdUnkDao.findOne(pegawaiPemberi.getKdUnitKerja()).getUnitKerja()));
                             }
 
                         }
@@ -326,7 +327,8 @@ public class SuratDinasController {
                                                 pegawaiPemberi.getJabatan(),
                                                 suratDinas.getStatusBaca(),
                                                 "Surat Dinas",
-                                                5));
+                                                5,
+                                                tkdUnkDao.findOne(pegawaiPemberi.getKdUnitKerja()).getUnitKerja()));
                             }
 
                         }
@@ -364,7 +366,8 @@ public class SuratDinasController {
                                                 pegawaiPemberi.getJabatan(),
                                                 tembusanSuratDinas.getStatusBaca(),
                                                 "Surat Dinas",
-                                                5));
+                                                5,
+                                                tkdUnkDao.findOne(pegawaiPemberi.getKdUnitKerja()).getUnitKerja()));
                             }
 
                         }
@@ -402,7 +405,8 @@ public class SuratDinasController {
                                                 pegawaiPemberi.getJabatan(),
                                                 tembusanSuratDinas.getStatusBaca(),
                                                 "Surat Dinas",
-                                                5));;
+                                                5,
+                                                tkdUnkDao.findOne(pegawaiPemberi.getKdUnitKerja()).getUnitKerja()));
                             }
 
                         }

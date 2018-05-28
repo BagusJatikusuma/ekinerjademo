@@ -258,7 +258,8 @@ public class SuratUndanganController {
                                                 pegawaiPemberi.getJabatan(),
                                                 suratUndangan.getStatusBaca(),
                                                 "Surat Undangan",
-                                                13));
+                                                13,
+                                                tkdUnkDao.findOne(pegawaiPemberi.getKdUnitKerja()).getUnitKerja()));
                             }
 
                         }
@@ -295,7 +296,8 @@ public class SuratUndanganController {
                                                 pegawaiPemberi.getJabatan(),
                                                 suratUndangan.getStatusBaca(),
                                                 "Surat Undangan",
-                                                13));
+                                                13,
+                                                tkdUnkDao.findOne(pegawaiPemberi.getKdUnitKerja()).getUnitKerja()));
                             }
 
                         }
@@ -334,7 +336,8 @@ public class SuratUndanganController {
                                                 pegawaiPemberi.getJabatan(),
                                                 tembusanSuratUndangan.getStatusBaca(),
                                                 "Surat Undangan",
-                                                13));
+                                                13,
+                                                tkdUnkDao.findOne(pegawaiPemberi.getKdUnitKerja()).getUnitKerja()));
                             }
 
                         }
@@ -371,7 +374,8 @@ public class SuratUndanganController {
                                                 pegawaiPemberi.getJabatan(),
                                                 tembusanSuratUndangan.getStatusBaca(),
                                                 "Surat Undangan",
-                                                13));
+                                                13,
+                                                tkdUnkDao.findOne(pegawaiPemberi.getKdUnitKerja()).getUnitKerja()));
                             }
 
                         }

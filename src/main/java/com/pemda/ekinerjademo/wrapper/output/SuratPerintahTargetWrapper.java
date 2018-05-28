@@ -14,6 +14,7 @@ public class SuratPerintahTargetWrapper {
     private Integer statusBaca;
     private String jenisSurat;
     private Integer kdJenisSurat;
+    private String unitKerjaPemberi;
 
     public SuratPerintahTargetWrapper() {
     }
@@ -87,6 +88,20 @@ public class SuratPerintahTargetWrapper {
         this.statusBaca = statusBaca;
         this.jenisSurat = jenisSurat;
         this.kdJenisSurat = kdJenisSurat;
+    }
+
+    public SuratPerintahTargetWrapper(String kdSurat, String createdDate, Long createdDateMilis, boolean isSuratPejabat, String nipPemberi, String namaPemberi, String jabatanPemberi, Integer statusBaca, String jenisSurat, Integer kdJenisSurat, String unitKerjaPemberi) {
+        this.kdSurat = kdSurat;
+        this.createdDate = createdDate;
+        this.createdDateMilis = createdDateMilis;
+        this.isSuratPejabat = isSuratPejabat;
+        this.nipPemberi = nipPemberi;
+        this.namaPemberi = namaPemberi;
+        this.jabatanPemberi = jabatanPemberi;
+        this.statusBaca = statusBaca;
+        this.jenisSurat = jenisSurat;
+        this.kdJenisSurat = kdJenisSurat;
+        this.unitKerjaPemberi = unitKerjaPemberi;
     }
 
     public String getKdSurat() {
@@ -167,5 +182,13 @@ public class SuratPerintahTargetWrapper {
 
     public void setKdJenisSurat(Integer kdJenisSurat) {
         this.kdJenisSurat = kdJenisSurat;
+    }
+
+    public String getUnitKerjaPemberi() {
+        return unitKerjaPemberi;
+    }
+
+    public void setUnitKerjaPemberi(String unitKerjaPemberi) {
+        this.unitKerjaPemberi = unitKerjaPemberi;
     }
 }
