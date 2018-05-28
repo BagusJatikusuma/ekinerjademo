@@ -37,6 +37,7 @@ import java.util.List;
 public class UrtugKegiatanController {
     public static final Logger LOGGER = LoggerFactory.getLogger(UrtugKegiatanController.class);
 
+    @Autowired
     private UrtugKegiatanService urtugKegiatanService;
     @Autowired
     private UnitKerjaKegiatanDao unitKerjaKegiatanDao;
@@ -288,7 +289,8 @@ public class UrtugKegiatanController {
                                         urtugJabatanWrapper.getKdUrtug(),
                                         urtugJabatanWrapper.getKdJabatan(),
                                         urtugJabatanWrapper.getKdJenisUrtug(),
-                                        urtugJabatanWrapper.getTahunUrtug());
+                                        urtugJabatanWrapper.getTahunUrtug(),
+                                        urtugJabatanWrapper.getNipPegawai());
 
         boolean exist;
         for (UrtugKegiatan urtugKegiatan : urtugKegiatanList) {
@@ -510,7 +512,8 @@ public class UrtugKegiatanController {
                     urtugJabatanWrapper.getKdUrtug(),
                     urtugJabatanWrapper.getKdJabatan(),
                     urtugJabatanWrapper.getKdJenisUrtug(),
-                    urtugJabatanWrapper.getTahunUrtug());
+                    urtugJabatanWrapper.getTahunUrtug(),
+                urtugJabatanWrapper.getNipPegawai());
 
         boolean notFound;
         for (UrtugKegiatan urtugKegiatan : urtugKegiatanList) {

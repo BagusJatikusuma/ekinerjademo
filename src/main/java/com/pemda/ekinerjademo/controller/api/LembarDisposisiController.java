@@ -400,8 +400,7 @@ public class LembarDisposisiController {
             QutPegawai pegawaiPengirim = null, pegawaiPenerima = null;
             List<String> pegawaiPenerimaNames = new ArrayList<>();
 
-            if (targetLembarDisposisi.getLembarDisposisi().getNipKepala() != null
-                    || !targetLembarDisposisi.getLembarDisposisi().getNipKepala().isEmpty()) {
+            if (targetLembarDisposisi.getLembarDisposisi().getNipKepala() != null) {
 
                 pegawaiPengirim
                         = qutPegawaiService.getQutPegawai(targetLembarDisposisi.getLembarDisposisi().getNipKepala());

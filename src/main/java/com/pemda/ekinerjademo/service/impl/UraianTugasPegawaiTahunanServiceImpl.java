@@ -78,10 +78,11 @@ public class UraianTugasPegawaiTahunanServiceImpl implements UraianTugasPegawaiT
                                 uraianTugasPegawaiTahunanInputWrapper.getTahunUrtug(),
                                 uraianTugasPegawaiTahunanInputWrapper.getNipPegawai()));
 
-        if (uraianTugasPegawaiTahunan.getStatusApproval() != 3) {
-            uraianTugasPegawaiTahunan.setStatusApproval(uraianTugasPegawaiTahunanInputWrapper.getStatusApproval());
-        }
+//        if (uraianTugasPegawaiTahunan.getStatusApproval() != 3) {
+//            uraianTugasPegawaiTahunan.setStatusApproval(uraianTugasPegawaiTahunanInputWrapper.getStatusApproval());
+//        }
 
+        uraianTugasPegawaiTahunan.setStatusApproval(uraianTugasPegawaiTahunanInputWrapper.getStatusApproval());
         uraianTugasPegawaiTahunan.setKuantitas(uraianTugasPegawaiTahunanInputWrapper.getKuantitas());
         uraianTugasPegawaiTahunan.setSatuanKuantitas(uraianTugasPegawaiTahunanInputWrapper.getSatuanKuantitas());
         uraianTugasPegawaiTahunan.setKualitas(uraianTugasPegawaiTahunanInputWrapper.getKualitas());

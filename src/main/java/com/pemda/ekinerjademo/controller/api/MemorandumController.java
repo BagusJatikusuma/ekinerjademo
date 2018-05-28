@@ -264,7 +264,8 @@ public class MemorandumController {
                                     isSuratPejabat = false;
 
                                 memorandumTargetWrappers
-                                        .add(new MemorandumTargetWrapper(memorandum.getKdMemorandum(),
+                                        .add(new MemorandumTargetWrapper(
+                                                memorandum.getKdMemorandum(),
                                                 df.format(new Date(memorandum.getTanggalPembuatanMilis())),
                                                 memorandum.getTanggalPembuatanMilis(),
                                                 isSuratPejabat,
@@ -273,7 +274,8 @@ public class MemorandumController {
                                                 pegawaiPemberi.getJabatan(),
                                                 memorandum.getStatusBaca(),
                                                 "memorandum",
-                                                2));
+                                                2,
+                                                tkdUnkDao.findOne(pegawaiPemberi.getKdUnitKerja()).getUnitKerja()));
                             }
 
                         }
@@ -310,7 +312,8 @@ public class MemorandumController {
                                                 pegawaiPemberi.getJabatan(),
                                                 memorandum.getStatusBaca(),
                                                 "memorandum",
-                                                2));
+                                                2,
+                                                tkdUnkDao.findOne(pegawaiPemberi.getKdUnitKerja()).getUnitKerja()));
                             }
 
                         }
@@ -349,7 +352,8 @@ public class MemorandumController {
                                                 pegawaiPemberi.getJabatan(),
                                                 tembusanMemorandum.getStatusBaca(),
                                                 "memorandum",
-                                                2));
+                                                2,
+                                                tkdUnkDao.findOne(pegawaiPemberi.getKdUnitKerja()).getUnitKerja()));
                             }
 
                         }
@@ -386,7 +390,8 @@ public class MemorandumController {
                                                 pegawaiPemberi.getJabatan(),
                                                 tembusanMemorandum.getStatusBaca(),
                                                 "memorandum",
-                                                2));
+                                                2,
+                                                tkdUnkDao.findOne(pegawaiPemberi.getKdUnitKerja()).getUnitKerja()));
                             }
 
                         }
