@@ -116,6 +116,11 @@ public class MemorandumController {
             memorandumBawahan.setStatusPenilaian(2);
             memorandumService.createMemorandum(memorandumBawahan);
         }
+
+        QutPegawai pegawaiPembuat = qutPegawaiService.getQutPegawai(inputWrapper.getNipPembuatSurat());
+        if (akunPegawaiService.isPegawaiSekretaris(pegawaiPembuat)) {
+            memorandum.setApprovalSekretaris(1);
+        }
         //save memorandum
         memorandumService.createMemorandum(memorandum);
         //save tembusan memorandum

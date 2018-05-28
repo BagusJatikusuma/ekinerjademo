@@ -192,6 +192,11 @@ public class SuratPerintahController {
             suratPerintahService.creteSurat(suratPerintahBawahan);
         }
 
+        QutPegawai pegawaiPembuat = qutPegawaiService.getQutPegawai(inputWrapper.getNipPembuat());
+        if (akunPegawaiService.isPegawaiSekretaris(pegawaiPembuat)) {
+            suratPerintah.setApprovalSekretaris(1);
+        }
+
         suratPerintahService.creteSurat(suratPerintah);
         suratPerintahService.createTargetSuratPegawai(targetSuratPerintahPegawaiList);
         suratPerintahService.createTargetSuratPejabat(targetSuratPerintahPejabatSet);

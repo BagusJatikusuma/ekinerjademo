@@ -6,6 +6,7 @@ import com.pemda.ekinerjademo.model.bismamodel.TkdUnk;
 import com.pemda.ekinerjademo.model.ekinerjamodel.*;
 import com.pemda.ekinerjademo.projection.ekinerjaprojection.CustomPegawaiCredential;
 import com.pemda.ekinerjademo.repository.bismarepository.TkdUnkDao;
+import com.pemda.ekinerjademo.service.AkunPegawaiService;
 import com.pemda.ekinerjademo.service.QutPegawaiService;
 import com.pemda.ekinerjademo.service.SuratTugasService;
 import com.pemda.ekinerjademo.service.TkdJabatanService;
@@ -41,6 +42,7 @@ public class SuratTugasController {
     private TkdJabatanService tkdJabatanService;
     @Autowired
     private TkdUnkDao tkdUnkDao;
+    @Autowired private AkunPegawaiService akunPegawaiService;
 
     @RequestMapping(value = "/create-surat-tugas", method = RequestMethod.POST)
     ResponseEntity<?> createSuratTugas(@RequestBody SuratTugasInputWrapper inputWrapper) {
@@ -156,6 +158,11 @@ public class SuratTugasController {
         suratTugas.setTahunUrtug(inputWrapper.getTahunUrtug());
 
         suratTugas.setKdUnitKerja(inputWrapper.getKdUnitKerja());
+
+        QutPegawai pegawaiPembuat = qutPegawaiService.getQutPegawai(inputWrapper.getNipPembuat());
+        if (akunPegawaiService.isPegawaiSekretaris(pegawaiPembuat)) {
+            suratTugas.setApprovalSekretaris(1);
+        }
 
         suratTugasService.create(suratTugas);
 

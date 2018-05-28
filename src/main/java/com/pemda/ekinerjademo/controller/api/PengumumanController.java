@@ -1,8 +1,10 @@
 package com.pemda.ekinerjademo.controller.api;
 
+import com.pemda.ekinerjademo.model.bismamodel.QutPegawai;
 import com.pemda.ekinerjademo.model.ekinerjamodel.Pengumuman;
 import com.pemda.ekinerjademo.projection.ekinerjaprojection.CustomPegawaiCredential;
 import com.pemda.ekinerjademo.repository.bismarepository.TkdUnkDao;
+import com.pemda.ekinerjademo.service.AkunPegawaiService;
 import com.pemda.ekinerjademo.service.PengumumanService;
 import com.pemda.ekinerjademo.service.QutPegawaiCloneService;
 import com.pemda.ekinerjademo.util.BarcodeGenerator;
@@ -36,6 +38,7 @@ public class PengumumanController {
     @Autowired private PengumumanService pengumumanService;
     @Autowired private QutPegawaiCloneService qutPegawaiService;
     @Autowired private TkdUnkDao tkdUnkDao;
+    @Autowired private AkunPegawaiService akunPegawaiService;
 
     @RequestMapping(value = "/create-pengumuman", method = RequestMethod.POST)
     ResponseEntity<?> createPengumuman(@RequestBody PengumumanInputWrapper inputWrapper) {
@@ -84,6 +87,11 @@ public class PengumumanController {
 
             pengumumanBawahan.setStatusPenilaian(2);
             pengumumanService.create(pengumumanBawahan);
+        }
+
+        QutPegawai pegawaiPembuat = qutPegawaiService.getQutPegawai(inputWrapper.getNipPembuatSurat());
+        if (akunPegawaiService.isPegawaiSekretaris(pegawaiPembuat)) {
+            pengumuman.setApprovalSekretaris(1);
         }
 
         pengumumanService.create(pengumuman);

@@ -1,6 +1,8 @@
 package com.pemda.ekinerjademo.service.impl;
 
+import com.pemda.ekinerjademo.model.bismamodel.QutPegawai;
 import com.pemda.ekinerjademo.model.ekinerjamodel.AkunPegawai;
+import com.pemda.ekinerjademo.model.ekinerjamodel.QutPegawaiClone;
 import com.pemda.ekinerjademo.repository.ekinerjarepository.AkunPegawaiDao;
 import com.pemda.ekinerjademo.service.AkunPegawaiService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +37,90 @@ public class AkunPegawaiServiceImpl implements AkunPegawaiService {
     @Override
     public void save(AkunPegawai akunPegawai) {
         akunPegawaiDao.save(akunPegawai);
+    }
+
+    @Override
+    public boolean isPegawaiSekretaris(QutPegawai qutPegawai) {
+        boolean isSekretaris = false;
+        if (qutPegawai.getKdUnitKerja().substring(0,1)
+                .equals("3")) {
+            //eselon kadin II.b, eselon sekdin III.a
+            if (qutPegawai.getEselon().contains("III.a")) {
+                isSekretaris = true;
+            }
+        }
+        else if (qutPegawai.getKdUnitKerja().substring(0,1)
+                .equals("7")) {
+            //eselon camat III.a, eselon sekdcam III.b
+            if (qutPegawai.getEselon().contains("III.b")) {
+                isSekretaris = true;
+            }
+        }
+
+        return isSekretaris;
+    }
+
+    @Override
+    public boolean isPegawaiSekretaris(QutPegawaiClone qutPegawai) {
+        boolean isSekretaris = false;
+        if (qutPegawai.getKdUnitKerja().substring(0,1)
+                .equals("3")) {
+            //eselon kadin II.b, eselon sekdin III.a
+            if (qutPegawai.getEselon().contains("III.a")) {
+                isSekretaris = true;
+            }
+        }
+        else if (qutPegawai.getKdUnitKerja().substring(0,1)
+                .equals("7")) {
+            //eselon camat III.a, eselon sekdcam III.b
+            if (qutPegawai.getEselon().contains("III.b")) {
+                isSekretaris = true;
+            }
+        }
+
+        return isSekretaris;
+    }
+
+    @Override
+    public boolean isPegawaiKepalaBidang(QutPegawai qutPegawai) {
+        boolean isKabid = false;
+        if (qutPegawai.getKdUnitKerja().substring(0,1)
+                .equals("3")) {
+            //eselon kadin II.b, eselon sekdin III.a
+            if (qutPegawai.getEselon().contains("III.b")) {
+                isKabid = true;
+            }
+        }
+        else if (qutPegawai.getKdUnitKerja().substring(0,1)
+                .equals("7")) {
+            //eselon camat III.a, eselon sekdcam III.b
+            if (qutPegawai.getEselon().contains("IV.a")) {
+                isKabid = true;
+            }
+        }
+
+        return isKabid;
+    }
+
+    @Override
+    public boolean isPegawaiKepalaBidang(QutPegawaiClone qutPegawai) {
+        boolean isKabid = false;
+        if (qutPegawai.getKdUnitKerja().substring(0,1)
+                .equals("3")) {
+            //eselon kadin II.b, eselon sekdin III.a
+            if (qutPegawai.getEselon().contains("III.b")) {
+                isKabid = true;
+            }
+        }
+        else if (qutPegawai.getKdUnitKerja().substring(0,1)
+                .equals("7")) {
+            //eselon camat III.a, eselon sekdcam III.b
+            if (qutPegawai.getEselon().contains("IV.a")) {
+                isKabid = true;
+            }
+        }
+
+        return isKabid;
     }
 
 //    @Override

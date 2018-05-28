@@ -123,6 +123,11 @@ public class SuratUndanganController {
         suratUndangan.setStatusBaca(0);
         suratUndangan.setStatusPenyebaran(0);
 
+        QutPegawai pegawaiPembuat = qutPegawaiService.getQutPegawai(inputWrapper.getNipPembuatSurat());
+        if (akunPegawaiService.isPegawaiSekretaris(pegawaiPembuat)) {
+            suratUndangan.setApprovalSekretaris(1);
+        }
+
         //save surat undangan
         suratUndanganService.create(suratUndangan);
         //save tembusan surat undangan

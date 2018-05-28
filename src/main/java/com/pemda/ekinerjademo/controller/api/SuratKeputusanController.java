@@ -1,8 +1,11 @@
 package com.pemda.ekinerjademo.controller.api;
 
+import com.pemda.ekinerjademo.model.bismamodel.QutPegawai;
+import com.pemda.ekinerjademo.model.ekinerjamodel.AkunPegawai;
 import com.pemda.ekinerjademo.model.ekinerjamodel.SuratKeputusan;
 import com.pemda.ekinerjademo.projection.ekinerjaprojection.CustomPegawaiCredential;
 import com.pemda.ekinerjademo.repository.bismarepository.TkdUnkDao;
+import com.pemda.ekinerjademo.service.AkunPegawaiService;
 import com.pemda.ekinerjademo.service.QutPegawaiService;
 import com.pemda.ekinerjademo.service.SuratKeputusanService;
 import com.pemda.ekinerjademo.util.BarcodeGenerator;
@@ -36,6 +39,7 @@ public class SuratKeputusanController {
     @Autowired private SuratKeputusanService suratKeputusanService;
     @Autowired private QutPegawaiService qutPegawaiService;
     @Autowired private TkdUnkDao tkdUnkDao;
+    @Autowired private AkunPegawaiService akunPegawaiService;
 
     @RequestMapping(value = "/create-surat-keputusan", method = RequestMethod.POST)
     ResponseEntity<?> createSuratKeputusan(@RequestBody SuratKeputusanInputWrapper inputWrapper) {
@@ -90,6 +94,11 @@ public class SuratKeputusanController {
 
         suratKeputusan.setKdUrtug(inputWrapper.getKdUrtug());
         suratKeputusan.setTahunUrtug(inputWrapper.getTahunUrtug());
+
+        QutPegawai pegawaiPembuat = qutPegawaiService.getQutPegawai(inputWrapper.getNipPembuatSurat());
+        if (akunPegawaiService.isPegawaiSekretaris(pegawaiPembuat)) {
+            suratKeputusan.setApprovalSekretaris(1);
+        }
 
         suratKeputusanService.create(suratKeputusan);
 

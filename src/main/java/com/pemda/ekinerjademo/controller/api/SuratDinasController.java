@@ -115,6 +115,11 @@ public class SuratDinasController {
         suratDinas.setKdUrtug(inputWrapper.getKdUrtug());
         suratDinas.setTahunUrtug(inputWrapper.getTahunUrtug());
 
+        QutPegawai pegawaiPembuat = qutPegawaiService.getQutPegawai(inputWrapper.getNipPembuatSurat());
+        if (akunPegawaiService.isPegawaiSekretaris(pegawaiPembuat)) {
+            suratDinas.setApprovalSekretaris(1);
+        }
+
         suratDinasService.create(suratDinas);
         for (TembusanSuratDinas tembusanSuratDinas
                 : tembusanSuratDinasList) {

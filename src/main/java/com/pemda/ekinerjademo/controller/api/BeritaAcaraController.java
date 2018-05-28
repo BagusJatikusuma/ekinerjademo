@@ -1,9 +1,11 @@
 package com.pemda.ekinerjademo.controller.api;
 
+import com.pemda.ekinerjademo.model.bismamodel.QutPegawai;
 import com.pemda.ekinerjademo.model.bismamodel.TkdUnk;
 import com.pemda.ekinerjademo.model.ekinerjamodel.BeritaAcara;
 import com.pemda.ekinerjademo.projection.ekinerjaprojection.CustomPegawaiCredential;
 import com.pemda.ekinerjademo.repository.bismarepository.TkdUnkDao;
+import com.pemda.ekinerjademo.service.AkunPegawaiService;
 import com.pemda.ekinerjademo.service.BeritaAcaraService;
 import com.pemda.ekinerjademo.service.QutPegawaiService;
 import com.pemda.ekinerjademo.util.BarcodeGenerator;
@@ -39,6 +41,7 @@ public class BeritaAcaraController {
     @Autowired private BeritaAcaraService beritaAcaraService;
     @Autowired private QutPegawaiService qutPegawaiService;
     @Autowired private TkdUnkDao tkdUnkDao;
+    @Autowired private AkunPegawaiService akunPegawaiService;
 
     @RequestMapping(value = "/berita-acara/create-berita-acara", method = RequestMethod.POST)
     @Synchronized
@@ -101,6 +104,11 @@ public class BeritaAcaraController {
 
             beritaAcaraBawahan.setStatusPenilaian(2);
             beritaAcaraService.createBeritaAcara(beritaAcaraBawahan);
+        }
+
+        QutPegawai pegawaiPembuat = qutPegawaiService.getQutPegawai(inputWrapper.getNipPembuatSurat());
+        if (akunPegawaiService.isPegawaiSekretaris(pegawaiPembuat)) {
+            beritaAcara.setApprovalSekretaris(1);
         }
 
         beritaAcaraService.createBeritaAcara(beritaAcara);

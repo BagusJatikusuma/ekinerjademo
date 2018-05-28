@@ -1,9 +1,12 @@
 package com.pemda.ekinerjademo.controller.api;
 
+import com.pemda.ekinerjademo.model.bismamodel.QutPegawai;
+import com.pemda.ekinerjademo.model.ekinerjamodel.AkunPegawai;
 import com.pemda.ekinerjademo.model.ekinerjamodel.SuratKuasa;
 import com.pemda.ekinerjademo.model.ekinerjamodel.TelaahanStaf;
 import com.pemda.ekinerjademo.projection.ekinerjaprojection.CustomPegawaiCredential;
 import com.pemda.ekinerjademo.repository.bismarepository.TkdUnkDao;
+import com.pemda.ekinerjademo.service.AkunPegawaiService;
 import com.pemda.ekinerjademo.service.QutPegawaiCloneService;
 import com.pemda.ekinerjademo.service.SuratKuasaService;
 import com.pemda.ekinerjademo.service.TelaahanStafService;
@@ -44,6 +47,7 @@ public class TelaahanStafController {
     private QutPegawaiCloneService qutPegawaiService;
     @Autowired
     private TkdUnkDao tkdUnkDao;
+    @Autowired private AkunPegawaiService akunPegawaiService;
 
     @RequestMapping(value = "/create-telaahan-staf", method = RequestMethod.POST)
     @Synchronized
@@ -88,6 +92,11 @@ public class TelaahanStafController {
 //            telaahanStafBawahan.setStatusPenilaian(2);
 //            telaahanStafService.createTelaahanStaf(telaahanStafBawahan);
 //        }
+
+        QutPegawai pegawaiPembuat = qutPegawaiService.getQutPegawai(inputWrapper.getNipPembuatSurat());
+        if (akunPegawaiService.isPegawaiSekretaris(pegawaiPembuat)) {
+            telaahanStaf.setApprovalSekretaris(1);
+        }
 
         telaahanStafService.createTelaahanStaf(telaahanStaf);
 

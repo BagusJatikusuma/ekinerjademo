@@ -46,6 +46,9 @@ public class TemplateLain {
     @Column(name = "status_baca")
     private Integer statusBaca;
 
+    @Column(name = "approval_sekretaris")
+    private Integer approvalSekretaris;
+
     public String getKdTemplateLain() {
         return kdTemplateLain;
     }
@@ -172,5 +175,13 @@ public class TemplateLain {
 
     public void setStatusBaca(Integer statusBaca) {
         this.statusBaca = statusBaca;
+    }
+
+    public Integer getApprovalSekretaris() {
+        return approvalSekretaris;
+    }
+
+    public void setApprovalSekretaris(Integer approvalSekretaris) {
+        this.approvalSekretaris = approvalSekretaris;
     }
 }

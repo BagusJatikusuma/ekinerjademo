@@ -7,6 +7,7 @@ import com.pemda.ekinerjademo.model.ekinerjamodel.TembusanNotaDinas;
 import com.pemda.ekinerjademo.model.ekinerjamodel.TembusanNotaDinasId;
 import com.pemda.ekinerjademo.projection.ekinerjaprojection.CustomPegawaiCredential;
 import com.pemda.ekinerjademo.repository.bismarepository.TkdUnkDao;
+import com.pemda.ekinerjademo.service.AkunPegawaiService;
 import com.pemda.ekinerjademo.service.NotaDinasService;
 import com.pemda.ekinerjademo.service.QutPegawaiCloneService;
 import com.pemda.ekinerjademo.service.TkdJabatanService;
@@ -42,6 +43,7 @@ public class NotaDinasController {
     private TkdJabatanService tkdJabatanService;
     @Autowired
     private TkdUnkDao tkdUnkDao;
+    @Autowired private AkunPegawaiService akunPegawaiService;
 
     @RequestMapping(value = "/create-nota-dinas", method = RequestMethod.POST)
     ResponseEntity<?> createNotaDinas(@RequestBody NotaDinasInputWrapper inputWrapper) {
@@ -109,6 +111,11 @@ public class NotaDinasController {
 
             notaDinasBawahan.setStatusPenilaian(2);
             notaDinasService.create(notaDinasBawahan);
+        }
+
+        QutPegawai pegawaiPembuat = qutPegawaiService.getQutPegawai(inputWrapper.getNipPembuatSurat());
+        if (akunPegawaiService.isPegawaiSekretaris(pegawaiPembuat)) {
+            notaDinas.setApprovalSekretaris(1);
         }
 
         notaDinasService.create(notaDinas);

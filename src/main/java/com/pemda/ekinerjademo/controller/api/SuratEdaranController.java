@@ -1,8 +1,10 @@
 package com.pemda.ekinerjademo.controller.api;
 
+import com.pemda.ekinerjademo.model.bismamodel.QutPegawai;
 import com.pemda.ekinerjademo.model.ekinerjamodel.*;
 import com.pemda.ekinerjademo.projection.ekinerjaprojection.CustomPegawaiCredential;
 import com.pemda.ekinerjademo.repository.bismarepository.TkdUnkDao;
+import com.pemda.ekinerjademo.service.AkunPegawaiService;
 import com.pemda.ekinerjademo.service.QutPegawaiService;
 import com.pemda.ekinerjademo.service.SuratEdaranService;
 import com.pemda.ekinerjademo.util.BarcodeGenerator;
@@ -37,6 +39,7 @@ public class SuratEdaranController {
     @Autowired private SuratEdaranService suratEdaranService;
     @Autowired private QutPegawaiService qutPegawaiService;
     @Autowired private TkdUnkDao tkdUnkDao;
+    @Autowired private AkunPegawaiService akunPegawaiService;
 
     @RequestMapping(value = "/create-surat-edaran", method = RequestMethod.POST)
     ResponseEntity<?> createSuratEdaran(@RequestBody SuratEdaranInputWrapper inputWrapper) {
@@ -104,6 +107,11 @@ public class SuratEdaranController {
         suratEdaran.setAlasanPenolakan(null);
         suratEdaran.setStatusBaca(0);
         suratEdaran.setStatusPenyebaran(0);
+
+        QutPegawai pegawaiPembuat = qutPegawaiService.getQutPegawai(inputWrapper.getNipPembuatSurat());
+        if (akunPegawaiService.isPegawaiSekretaris(pegawaiPembuat)) {
+            suratEdaran.setApprovalSekretaris(1);
+        }
 
         suratEdaranService.create(suratEdaran);
         for (SuratEdaranSub suratEdaranSub

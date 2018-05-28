@@ -892,9 +892,12 @@ public class AkunPegawaiController {
         Integer suratPejabat;
         boolean isPenandatangan = false;
         int statusPenilaian = 0;
+        boolean dariKabid;
         for (QutPegawaiClone pegawaiBawahan : pegawaiBawahanList) {
             //ambil data berita acara yang dilaporkan bawahan
             List<BeritaAcara> beritaAcaraList = new ArrayList<>();
+
+            dariKabid = akunPegawaiService.isPegawaiKepalaBidang(pegawaiBawahan);
 
             if (isKepala) {
                 beritaAcaraList
@@ -931,7 +934,11 @@ public class AkunPegawaiController {
                                 0,
                                 0,
                                 beritaAcaraBawahan.getTanggalPembuatanMilis(),
-                                isPenandatangan));
+                                isPenandatangan,
+                                null,
+                                null,
+                                null,
+                                dariKabid));
             }
 
             List<Memorandum> memorandums = new ArrayList<>();
@@ -974,7 +981,11 @@ public class AkunPegawaiController {
                                 2,
                                 suratPejabat,
                                 memorandum.getTanggalPembuatanMilis(),
-                                isPenandatangan));
+                                isPenandatangan,
+                                null,
+                                null,
+                                null,
+                                dariKabid));
             }
 
             List<NotaDinas> notaDinasList = new ArrayList<>();
@@ -1011,7 +1022,11 @@ public class AkunPegawaiController {
                                 3,
                                 0,
                                 notaDinas.getTanggalPembuatanMilis(),
-                                isPenandatangan));
+                                isPenandatangan,
+                                null,
+                                null,
+                                null,
+                                dariKabid));
             }
 
             List<Pengumuman> pengumumanList = new ArrayList<>();
@@ -1049,7 +1064,11 @@ public class AkunPegawaiController {
                                 4,
                                 0,
                                 pengumuman.getTanggalPembuatanMilis(),
-                                isPenandatangan));
+                                isPenandatangan,
+                                null,
+                                null,
+                                null,
+                                dariKabid));
             }
 
             List<SuratDinas> suratDinasList = new ArrayList<>();
@@ -1092,7 +1111,11 @@ public class AkunPegawaiController {
                                 5,
                                 suratPejabat,
                                 suratDinas.getTanggalPembuatanMilis(),
-                                isPenandatangan));
+                                isPenandatangan,
+                                null,
+                                null,
+                                null,
+                                dariKabid));
             }
 
             List<SuratEdaran> suratEdaranList = new ArrayList<>();
@@ -1134,7 +1157,11 @@ public class AkunPegawaiController {
                                 6,
                                 suratPejabat,
                                 suratEdaran.getTanggalPembuatanMilis(),
-                                isPenandatangan));
+                                isPenandatangan,
+                                null,
+                                null,
+                                null,
+                                dariKabid));
             }
 
             List<SuratKeputusan> suratKeputusanList = new ArrayList<>();
@@ -1172,7 +1199,11 @@ public class AkunPegawaiController {
                                 7,
                                 0,
                                 suratKeputusan.getTanggalPembuatanMilis(),
-                                isPenandatangan));
+                                isPenandatangan,
+                                null,
+                                null,
+                                null,
+                                dariKabid));
             }
 
             List<SuratKeterangan> suratKeterangans = new ArrayList<>();
@@ -1210,7 +1241,11 @@ public class AkunPegawaiController {
                                 8,
                                 0,
                                 suratKeterangan.getTanggalPembuatanSuratMilis(),
-                                isPenandatangan));
+                                isPenandatangan,
+                                null,
+                                null,
+                                null,
+                                dariKabid));
             }
 
             List<SuratPengantar> suratPengantarList = new ArrayList<>();
@@ -1248,7 +1283,11 @@ public class AkunPegawaiController {
                                 10,
                                 0,
                                 suratPengantar.getTanggalPembuatanMilis(),
-                                isPenandatangan));
+                                isPenandatangan,
+                                null,
+                                null,
+                                null,
+                                dariKabid));
             }
 
             Set<SuratTugas> suratTugases = new HashSet<>();
@@ -1290,7 +1329,11 @@ public class AkunPegawaiController {
                                 12,
                                 suratPejabat,
                                 suratTugas.getTanggalTugasMilis(),
-                                isPenandatangan));
+                                isPenandatangan,
+                                null,
+                                null,
+                                null,
+                                dariKabid));
             }
             List<SuratUndangan> suratUndanganList = new ArrayList<>();
             if (isKepala) {
@@ -1331,7 +1374,11 @@ public class AkunPegawaiController {
                                 13,
                                 suratPejabat,
                                 suratUndangan.getTanggalPembuatanSurat(),
-                                isPenandatangan));
+                                isPenandatangan,
+                                null,
+                                null,
+                                null,
+                                dariKabid));
             }
             //ambil data surat perintah yang dilaporkan bawahan
             Set<SuratPerintah> suratPerintahList
@@ -1367,7 +1414,11 @@ public class AkunPegawaiController {
                                 11,
                                 suratPejabat,
                                 suratPerintahBawahan.getTanggalPerintahMilis(),
-                                isPenandatangan));
+                                isPenandatangan,
+                                null,
+                                null,
+                                null,
+                                dariKabid));
             }
             //ambil data surat kuasa yang dilaporkan bawahan
             List<SuratKuasa> suratKuasaList
@@ -1398,7 +1449,11 @@ public class AkunPegawaiController {
                                 9,
                                 0,
                                 suratKuasaBawahan.getTanggalPembuatanMilis(),
-                                isPenandatangan));
+                                isPenandatangan,
+                                null,
+                                null,
+                                null,
+                                dariKabid));
             }
             //ambil data laporan yang dilaporkan bawahan
             List<Laporan> laporanList
@@ -1414,7 +1469,12 @@ public class AkunPegawaiController {
                                 laporanBawahan.getStatusPenilaian(),
                                 1,
                                 0,
-                                laporanBawahan.getTanggalPembuatanMilis()));
+                                laporanBawahan.getTanggalPembuatanMilis(),
+                                true,
+                                null,
+                                null,
+                                null,
+                                dariKabid));
             }
             //ambil data telaahan staf yang dilaporkan bawahan
             List<TelaahanStaf> telaahanStafList
@@ -1429,7 +1489,12 @@ public class AkunPegawaiController {
                                 telaahanStafBawahan.getStatusPenilaian(),
                                 14,
                                 0,
-                                telaahanStafBawahan.getTanggalPembuatanMilis()));
+                                telaahanStafBawahan.getTanggalPembuatanMilis(),
+                                true,
+                                null,
+                                null,
+                                null,
+                                dariKabid));
             }
 
             List<TemplateLain> templateLainList
@@ -1445,8 +1510,11 @@ public class AkunPegawaiController {
                                 15,
                                 0,
                                 templateLainBawahan.getTanggalPembuatanMilis(),
+                                true,
                                 FilenameUtils.removeExtension(templateLainBawahan.getPathFile()),
-                                FilenameUtils.getExtension(templateLainBawahan.getPathFile())
+                                FilenameUtils.getExtension(templateLainBawahan.getPathFile()),
+                                null,
+                                dariKabid
                         ));
             }
         }

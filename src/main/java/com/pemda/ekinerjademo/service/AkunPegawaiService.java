@@ -1,6 +1,8 @@
 package com.pemda.ekinerjademo.service;
 
+import com.pemda.ekinerjademo.model.bismamodel.QutPegawai;
 import com.pemda.ekinerjademo.model.ekinerjamodel.AkunPegawai;
+import com.pemda.ekinerjademo.model.ekinerjamodel.QutPegawaiClone;
 
 import java.util.List;
 
@@ -12,5 +14,9 @@ public interface AkunPegawaiService {
     AkunPegawai getAkunPegawai(String nipPegawai);
     void setPegawaiRole(String role, String nipPegawai);
     void save(AkunPegawai akunPegawai);
+    boolean isPegawaiSekretaris(QutPegawai qutPegawai);
+    boolean isPegawaiSekretaris(QutPegawaiClone qutPegawai);
+    boolean isPegawaiKepalaBidang(QutPegawai qutPegawai);
+    boolean isPegawaiKepalaBidang(QutPegawaiClone qutPegawai);
 //    PasswordAkunPegawaiProjection getPasswordAkunPegawai(String nipPegawai);
 }

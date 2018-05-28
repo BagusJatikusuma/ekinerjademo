@@ -1,6 +1,10 @@
 package com.pemda.ekinerjademo.controller.api;
 
+import com.pemda.ekinerjademo.model.bismamodel.QutPegawai;
+import com.pemda.ekinerjademo.model.ekinerjamodel.AkunPegawai;
 import com.pemda.ekinerjademo.model.ekinerjamodel.TemplateLain;
+import com.pemda.ekinerjademo.service.AkunPegawaiService;
+import com.pemda.ekinerjademo.service.QutPegawaiService;
 import com.pemda.ekinerjademo.service.TemplateLainService;
 import com.pemda.ekinerjademo.util.FileUploader;
 import com.pemda.ekinerjademo.wrapper.input.TemplateLainInputWrapper;
@@ -30,6 +34,10 @@ public class TemplateLainController {
 
     @Autowired
     private TemplateLainService templateLainService;
+    @Autowired
+    private QutPegawaiService qutPegawaiService;
+    @Autowired
+    private AkunPegawaiService akunPegawaiService;
 
     @RequestMapping(value = "/create-template-lain",
             method = RequestMethod.POST,
@@ -72,6 +80,11 @@ public class TemplateLainController {
 
             templateLainBawahan.setStatusPenilaian(2);
             templateLainService.create(templateLainBawahan);
+        }
+
+        QutPegawai pegawaiPembuat = qutPegawaiService.getQutPegawai(templateLainInputWrapper.getNipPegawai());
+        if (akunPegawaiService.isPegawaiSekretaris(pegawaiPembuat)) {
+            templateLain.setApprovalSekretaris(1);
         }
 
         templateLainService.create(templateLain);

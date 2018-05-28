@@ -1,11 +1,14 @@
 package com.pemda.ekinerjademo.controller.api;
 
+import com.pemda.ekinerjademo.model.bismamodel.QutPegawai;
 import com.pemda.ekinerjademo.model.bismamodel.TkdJabatan;
+import com.pemda.ekinerjademo.model.ekinerjamodel.AkunPegawai;
 import com.pemda.ekinerjademo.model.ekinerjamodel.SuratPengantar;
 import com.pemda.ekinerjademo.model.ekinerjamodel.SuratPengantarIsi;
 import com.pemda.ekinerjademo.model.ekinerjamodel.SuratPengantarIsiId;
 import com.pemda.ekinerjademo.projection.ekinerjaprojection.CustomPegawaiCredential;
 import com.pemda.ekinerjademo.repository.bismarepository.TkdUnkDao;
+import com.pemda.ekinerjademo.service.AkunPegawaiService;
 import com.pemda.ekinerjademo.service.QutPegawaiService;
 import com.pemda.ekinerjademo.service.SuratPengantarService;
 import com.pemda.ekinerjademo.service.TkdJabatanService;
@@ -40,6 +43,7 @@ public class SuratPengantarController {
     @Autowired private QutPegawaiService qutPegawaiService;
     @Autowired private TkdJabatanService tkdJabatanService;
     @Autowired private TkdUnkDao tkdUnkDao;
+    @Autowired private AkunPegawaiService akunPegawaiService;
 
     @RequestMapping(value = "/create-surat-pengantar", method = RequestMethod.POST)
     ResponseEntity<?> createSuratPengantar(@RequestBody SuratPengantarInputWrapper inputWrapper) {
@@ -114,6 +118,11 @@ public class SuratPengantarController {
             suratPengantarBawahan.setStatusPenilaian(2);
             suratPengantarService.create(suratPengantarBawahan);
 
+        }
+
+        QutPegawai pegawaiPembuat = qutPegawaiService.getQutPegawai(inputWrapper.getNipPembuatSurat());
+        if (akunPegawaiService.isPegawaiSekretaris(pegawaiPembuat)) {
+            suratPengantar.setApprovalSekretaris(1);
         }
         //save surat pengantar
         suratPengantarService.create(suratPengantar);

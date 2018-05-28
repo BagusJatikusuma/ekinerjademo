@@ -1,8 +1,10 @@
 package com.pemda.ekinerjademo.controller.api;
 
+import com.pemda.ekinerjademo.model.bismamodel.QutPegawai;
 import com.pemda.ekinerjademo.model.ekinerjamodel.Laporan;
 import com.pemda.ekinerjademo.projection.ekinerjaprojection.CustomPegawaiCredential;
 import com.pemda.ekinerjademo.repository.bismarepository.TkdUnkDao;
+import com.pemda.ekinerjademo.service.AkunPegawaiService;
 import com.pemda.ekinerjademo.service.LaporanService;
 import com.pemda.ekinerjademo.service.QutPegawaiService;
 import com.pemda.ekinerjademo.util.BarcodeGenerator;
@@ -34,6 +36,7 @@ public class LaporanController {
     @Autowired private LaporanService laporanService;
     @Autowired private QutPegawaiService qutPegawaiService;
     @Autowired private TkdUnkDao tkdUnkDao;
+    @Autowired private AkunPegawaiService akunPegawaiService;
 
     @RequestMapping(value = "/create-laporan", method = RequestMethod.POST)
     @Synchronized
@@ -86,6 +89,11 @@ public class LaporanController {
 
             laporanBawahan.setStatusPenilaian(2);
             laporanService.createLaporan(laporanBawahan);
+        }
+
+        QutPegawai pegawaiPembuat = qutPegawaiService.getQutPegawai(inputWrapper.getNipPembuatSurat());
+        if (akunPegawaiService.isPegawaiSekretaris(pegawaiPembuat)) {
+            laporan.setApprovalSekretaris(1);
         }
 
         laporanService.createLaporan(laporan);

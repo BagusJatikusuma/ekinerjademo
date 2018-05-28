@@ -1,8 +1,11 @@
 package com.pemda.ekinerjademo.controller.api;
 
+import com.pemda.ekinerjademo.model.bismamodel.QutPegawai;
+import com.pemda.ekinerjademo.model.ekinerjamodel.AkunPegawai;
 import com.pemda.ekinerjademo.model.ekinerjamodel.SuratDinas;
 import com.pemda.ekinerjademo.model.ekinerjamodel.SuratKuasa;
 import com.pemda.ekinerjademo.projection.ekinerjaprojection.CustomPegawaiCredential;
+import com.pemda.ekinerjademo.service.AkunPegawaiService;
 import com.pemda.ekinerjademo.service.QutPegawaiService;
 import com.pemda.ekinerjademo.service.SuratKuasaService;
 import com.pemda.ekinerjademo.util.BarcodeGenerator;
@@ -34,6 +37,7 @@ public class SuratKuasaController {
 
     @Autowired private SuratKuasaService suratKuasaService;
     @Autowired private QutPegawaiService qutPegawaiService;
+    @Autowired private AkunPegawaiService akunPegawaiService;
 
     @RequestMapping(value = "/create-surat-kuasa", method = RequestMethod.POST)
     @Synchronized
@@ -83,6 +87,11 @@ public class SuratKuasaController {
 
             suratKuasaBawahan.setStatusPenilaian(2);
             suratKuasaService.createSuratKuasa(suratKuasaBawahan);
+        }
+
+        QutPegawai pegawaiPembuat = qutPegawaiService.getQutPegawai(inputWrapper.getNipPembuatSurat());
+        if (akunPegawaiService.isPegawaiSekretaris(pegawaiPembuat)) {
+            suratKuasa.setApprovalSekretaris(1);
         }
 
         suratKuasaService.createSuratKuasa(suratKuasa);

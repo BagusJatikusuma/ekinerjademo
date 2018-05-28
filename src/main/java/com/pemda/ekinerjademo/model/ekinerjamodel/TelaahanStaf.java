@@ -59,6 +59,9 @@ public class TelaahanStaf {
     @Column(name = "tahun_urtug")
     private Integer tahunUrtug;
 
+    @Column(name = "approval_sekretaris")
+    private Integer approvalSekretaris;
+
     public String getKdTelaahanStaf() {
         return kdTelaahanStaf;
     }
@@ -225,5 +228,13 @@ public class TelaahanStaf {
 
     public void setTahunUrtug(Integer tahunUrtug) {
         this.tahunUrtug = tahunUrtug;
+    }
+
+    public Integer getApprovalSekretaris() {
+        return approvalSekretaris;
+    }
+
+    public void setApprovalSekretaris(Integer approvalSekretaris) {
+        this.approvalSekretaris = approvalSekretaris;
     }
 }

@@ -16,6 +16,7 @@ public class LaporanBawahanWrapper {
     private String namaFileTemplateLain;
     private String extensiFile;
     private String barcodeImage;
+    private boolean dariKabid;
 
     public LaporanBawahanWrapper(String kdSurat, String jenisSurat, String nipBawahan, String namaBawahan, Integer statusPenilaian, Integer kdJenisSurat, Integer suratPejabat, Long tanggalDibuatMilis, boolean isPenandatangan) {
         this.kdSurat = kdSurat;
@@ -146,6 +147,22 @@ public class LaporanBawahanWrapper {
         this.extensiFile = extensiFile;
     }
 
+    public LaporanBawahanWrapper(String kdSurat, String jenisSurat, String nipBawahan, String namaBawahan, Integer statusPenilaian, Integer kdJenisSurat, Integer suratPejabat, Long tanggalDibuatMilis, boolean isPenandatangan, String namaFileTemplateLain, String extensiFile, String barcodeImage, boolean dariKabid) {
+        this.kdSurat = kdSurat;
+        this.jenisSurat = jenisSurat;
+        this.nipBawahan = nipBawahan;
+        this.namaBawahan = namaBawahan;
+        StatusPenilaian = statusPenilaian;
+        this.kdJenisSurat = kdJenisSurat;
+        this.suratPejabat = suratPejabat;
+        this.tanggalDibuatMilis = tanggalDibuatMilis;
+        this.isPenandatangan = isPenandatangan;
+        this.namaFileTemplateLain = namaFileTemplateLain;
+        this.extensiFile = extensiFile;
+        this.barcodeImage = barcodeImage;
+        this.dariKabid = dariKabid;
+    }
+
     public String getKdSurat() {
         return kdSurat;
     }
@@ -244,5 +261,13 @@ public class LaporanBawahanWrapper {
 
     public void setBarcodeImage(String barcodeImage) {
         this.barcodeImage = barcodeImage;
+    }
+
+    public boolean isDariKabid() {
+        return dariKabid;
+    }
+
+    public void setDariKabid(boolean dariKabid) {
+        this.dariKabid = dariKabid;
     }
 }

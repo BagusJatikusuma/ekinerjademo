@@ -1,11 +1,13 @@
 package com.pemda.ekinerjademo.controller.api;
 
 import com.pemda.ekinerjademo.model.bismamodel.QutPegawai;
+import com.pemda.ekinerjademo.model.ekinerjamodel.AkunPegawai;
 import com.pemda.ekinerjademo.model.ekinerjamodel.SuratKeterangan;
 import com.pemda.ekinerjademo.model.ekinerjamodel.TargetSuratKeterangan;
 import com.pemda.ekinerjademo.model.ekinerjamodel.TargetSuratKeteranganId;
 import com.pemda.ekinerjademo.projection.ekinerjaprojection.CustomPegawaiCredential;
 import com.pemda.ekinerjademo.repository.bismarepository.TkdUnkDao;
+import com.pemda.ekinerjademo.service.AkunPegawaiService;
 import com.pemda.ekinerjademo.service.QutPegawaiService;
 import com.pemda.ekinerjademo.service.SuratKeteranganService;
 import com.pemda.ekinerjademo.util.BarcodeGenerator;
@@ -44,6 +46,7 @@ public class SuratKeteranganController {
     @Autowired private SuratKeteranganService suratKeteranganService;
     @Autowired private QutPegawaiService qutPegawaiService;
     @Autowired private TkdUnkDao tkdUnkDao;
+    @Autowired private AkunPegawaiService akunPegawaiService;
 
     @RequestMapping(value = "/create-surat-keterangan", method = RequestMethod.POST)
     ResponseEntity<?> createSuratKeterangan(@RequestBody SuratKeteranganInputWrapper inputWrapper) {
@@ -119,6 +122,11 @@ public class SuratKeteranganController {
 
         suratKeterangan.setKdUrtug(inputWrapper.getKdUrtug());
         suratKeterangan.setTahunUrtug(inputWrapper.getTahunUrtug());
+
+        QutPegawai pegawaiPembuat = qutPegawaiService.getQutPegawai(inputWrapper.getNipPembuatSurat());
+        if (akunPegawaiService.isPegawaiSekretaris(pegawaiPembuat)) {
+            suratKeterangan.setApprovalSekretaris(1);
+        }
 
         suratKeteranganService.create(suratKeterangan);
 

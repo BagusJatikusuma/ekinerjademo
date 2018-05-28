@@ -1,5 +1,7 @@
 package com.pemda.ekinerjademo.wrapper.output;
 
+import java.util.List;
+
 public class DraftSuratApprovalWrapper {
     private String kdSurat;
     private String createdDate;
@@ -15,6 +17,7 @@ public class DraftSuratApprovalWrapper {
 
     private String jenisSurat;
     private Integer kdJenisSurat;
+    private List<JabatanWrapper> jabatanTargetList;
 
     public DraftSuratApprovalWrapper() {
     }
@@ -49,6 +52,20 @@ public class DraftSuratApprovalWrapper {
         this.statusPenyebaran = statusPenyebaran;
         this.jenisSurat = jenisSurat;
         this.kdJenisSurat = kdJenisSurat;
+    }
+
+    public DraftSuratApprovalWrapper(String kdSurat, String createdDate, Long createdDateMilis, boolean isSuratPejabat, String nipPemberi, String namaPemberi, String jabatanPemberi, Integer statusPenyebaran, String jenisSurat, Integer kdJenisSurat, List<JabatanWrapper> jabatanTargetList) {
+        this.kdSurat = kdSurat;
+        this.createdDate = createdDate;
+        this.createdDateMilis = createdDateMilis;
+        this.isSuratPejabat = isSuratPejabat;
+        this.nipPemberi = nipPemberi;
+        this.namaPemberi = namaPemberi;
+        this.jabatanPemberi = jabatanPemberi;
+        this.statusPenyebaran = statusPenyebaran;
+        this.jenisSurat = jenisSurat;
+        this.kdJenisSurat = kdJenisSurat;
+        this.jabatanTargetList = jabatanTargetList;
     }
 
     public String getKdSurat() {
@@ -129,5 +146,13 @@ public class DraftSuratApprovalWrapper {
 
     public void setKdJenisSurat(Integer kdJenisSurat) {
         this.kdJenisSurat = kdJenisSurat;
+    }
+
+    public List<JabatanWrapper> getJabatanTargetList() {
+        return jabatanTargetList;
+    }
+
+    public void setJabatanTargetList(List<JabatanWrapper> jabatanTargetList) {
+        this.jabatanTargetList = jabatanTargetList;
     }
 }
