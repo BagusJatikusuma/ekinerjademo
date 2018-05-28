@@ -3,6 +3,7 @@ package com.pemda.ekinerjademo.controller.api;
 import com.pemda.ekinerjademo.model.ekinerjamodel.SuratDinas;
 import com.pemda.ekinerjademo.model.ekinerjamodel.SuratKuasa;
 import com.pemda.ekinerjademo.projection.ekinerjaprojection.CustomPegawaiCredential;
+import com.pemda.ekinerjademo.service.AkunPegawaiService;
 import com.pemda.ekinerjademo.service.QutPegawaiService;
 import com.pemda.ekinerjademo.service.SuratKuasaService;
 import com.pemda.ekinerjademo.util.BarcodeGenerator;
@@ -34,6 +35,7 @@ public class SuratKuasaController {
 
     @Autowired private SuratKuasaService suratKuasaService;
     @Autowired private QutPegawaiService qutPegawaiService;
+    @Autowired private AkunPegawaiService akunPegawaiService;
 
     @RequestMapping(value = "/create-surat-kuasa", method = RequestMethod.POST)
     @Synchronized
@@ -222,16 +224,31 @@ public class SuratKuasaController {
         return new ResponseEntity<Object>(new CustomMessage("surat kuasa approved"), HttpStatus.OK);
     }
 
-    @RequestMapping(
-            value = "/get-surat-kuasa-by-penerima-kuasa/{nipPenerimaKuasa}",
-            method = RequestMethod.GET)
+    @RequestMapping(value = "/get-surat-kuasa-by-penerima-kuasa/{nipPenerimaKuasa}/{isPersuratan}", method = RequestMethod.GET)
     ResponseEntity<?> getSuratKuasaByPenerimaKuasa(
-            @PathVariable("nipPenerimaKuasa") String nipPenerimaKuasa) {
-        LOGGER.info("get surat kuasa by penerima kuasa");
+            @PathVariable("nipPenerimaKuasa") String nipPenerimaKuasa,
+            @PathVariable("isPersuratan") boolean isPersuratan) {
+        LOGGER.info("get surat kuasa by penerima kuasa" + nipPenerimaKuasa);
 
         List<CustomPegawaiCredential> qutPegawaiList
                 = qutPegawaiService.getCustomPegawaiCredentials();
 
+        CustomPegawaiCredential pegawaiTarget = null;
+
+        for (CustomPegawaiCredential pegawai : qutPegawaiList) {
+            if (nipPenerimaKuasa.equals(pegawai.getNip())) {
+                pegawaiTarget = pegawai;
+
+                break;
+            }
+        }
+
+        boolean isPegawaiTargetAdminSurat = false;
+        if (akunPegawaiService.getAkunPegawai(nipPenerimaKuasa).getRole().getId().equals("AD004")) {
+            isPegawaiTargetAdminSurat = true;
+
+            LOGGER.info("pegawai is admin surat");
+        }
 
         List<SuratKuasa> suratKuasaList
                 = suratKuasaService.getByNipPenerimaKuasa(nipPenerimaKuasa);
@@ -240,23 +257,61 @@ public class SuratKuasaController {
                 = new ArrayList<>();
 
         DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+
         for (SuratKuasa suratKuasa
                 : suratKuasaList) {
             if (suratKuasa.getStatusPenyebaran() == 1) {
                 for (CustomPegawaiCredential pegawaiPemberi : qutPegawaiList) {
                     if (pegawaiPemberi.getNip()
                             .equals(suratKuasa.getNipPemberiKuasa())) {
-                        suratKuasaPenerimaKuasaList
-                                .add(new SuratPerintahTargetWrapper(suratKuasa.getKdSuratKuasa(),
-                                        "",
-                                        suratKuasa.getTanggalPembuatanMilis(),
-                                        false,
-                                        pegawaiPemberi.getNip(),
-                                        pegawaiPemberi.getNama(),
-                                        pegawaiPemberi.getJabatan(),
-                                        suratKuasa.getStatusBaca(),
-                                        "Surat Kuasa",
-                                        9));
+
+                        if(!isPegawaiTargetAdminSurat){
+                            if (pegawaiPemberi.getKdUnitKerja().equals(pegawaiTarget.getKdUnitKerja())) {
+
+                                suratKuasaPenerimaKuasaList
+                                        .add(new SuratPerintahTargetWrapper(suratKuasa.getKdSuratKuasa(),
+                                                "",
+                                                suratKuasa.getTanggalPembuatanMilis(),
+                                                false,
+                                                pegawaiPemberi.getNip(),
+                                                pegawaiPemberi.getNama(),
+                                                pegawaiPemberi.getJabatan(),
+                                                suratKuasa.getStatusBaca(),
+                                                "Surat Kuasa",
+                                                9));
+                            }
+                        }
+                        else{
+                            boolean isTargetValid = false;
+                            if (pegawaiPemberi.getKdUnitKerja()
+                                    .equals(pegawaiTarget.getKdUnitKerja())) {
+                                if (suratKuasa.getNipPenerimaKuasa()
+                                        .equals(pegawaiTarget.getNip())) {
+                                    if (!isPersuratan) {
+                                        isTargetValid = true;
+                                    }
+                                }
+
+                            }
+                            else {
+                                if (isPersuratan) isTargetValid = true;
+                            }
+
+                            if (isTargetValid) {
+
+                                suratKuasaPenerimaKuasaList
+                                        .add(new SuratPerintahTargetWrapper(suratKuasa.getKdSuratKuasa(),
+                                                "",
+                                                suratKuasa.getTanggalPembuatanMilis(),
+                                                false,
+                                                pegawaiPemberi.getNip(),
+                                                pegawaiPemberi.getNama(),
+                                                pegawaiPemberi.getJabatan(),
+                                                suratKuasa.getStatusBaca(),
+                                                "Surat Kuasa",
+                                                9));
+                            }
+                        }
                         break;
                     }
 
