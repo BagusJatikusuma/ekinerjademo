@@ -15,6 +15,7 @@ public class SuratPerintahTargetWrapper {
     private String jenisSurat;
     private Integer kdJenisSurat;
     private String unitKerjaPemberi;
+    private boolean sudahDisposisi;
 
     public SuratPerintahTargetWrapper() {
     }
@@ -104,6 +105,35 @@ public class SuratPerintahTargetWrapper {
         this.unitKerjaPemberi = unitKerjaPemberi;
     }
 
+    public SuratPerintahTargetWrapper(String createdDate, Long createdDateMilis, boolean isSuratPejabat, String nipPemberi, String namaPemberi, String jabatanPemberi, Integer statusBaca, String jenisSurat, Integer kdJenisSurat, String unitKerjaPemberi, boolean sudahDisposisi) {
+        this.createdDate = createdDate;
+        this.createdDateMilis = createdDateMilis;
+        this.isSuratPejabat = isSuratPejabat;
+        this.nipPemberi = nipPemberi;
+        this.namaPemberi = namaPemberi;
+        this.jabatanPemberi = jabatanPemberi;
+        this.statusBaca = statusBaca;
+        this.jenisSurat = jenisSurat;
+        this.kdJenisSurat = kdJenisSurat;
+        this.unitKerjaPemberi = unitKerjaPemberi;
+        this.sudahDisposisi = sudahDisposisi;
+    }
+
+    public SuratPerintahTargetWrapper(String kdSurat, String createdDate, Long createdDateMilis, boolean isSuratPejabat, String nipPemberi, String namaPemberi, String jabatanPemberi, Integer statusBaca, String jenisSurat, Integer kdJenisSurat, String unitKerjaPemberi, boolean sudahDisposisi) {
+        this.kdSurat = kdSurat;
+        this.createdDate = createdDate;
+        this.createdDateMilis = createdDateMilis;
+        this.isSuratPejabat = isSuratPejabat;
+        this.nipPemberi = nipPemberi;
+        this.namaPemberi = namaPemberi;
+        this.jabatanPemberi = jabatanPemberi;
+        this.statusBaca = statusBaca;
+        this.jenisSurat = jenisSurat;
+        this.kdJenisSurat = kdJenisSurat;
+        this.unitKerjaPemberi = unitKerjaPemberi;
+        this.sudahDisposisi = sudahDisposisi;
+    }
+
     public String getKdSurat() {
         return kdSurat;
     }
@@ -190,5 +220,13 @@ public class SuratPerintahTargetWrapper {
 
     public void setUnitKerjaPemberi(String unitKerjaPemberi) {
         this.unitKerjaPemberi = unitKerjaPemberi;
+    }
+
+    public boolean isSudahDisposisi() {
+        return sudahDisposisi;
+    }
+
+    public void setSudahDisposisi(boolean sudahDisposisi) {
+        this.sudahDisposisi = sudahDisposisi;
     }
 }

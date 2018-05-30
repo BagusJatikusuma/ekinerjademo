@@ -41,6 +41,11 @@ public class SuratPerintahServiceImpl implements SuratPerintahService {
     }
 
     @Override
+    public Set<SuratPerintah> getByKdUnitKerjaTarget(String kdUnitKerjaTarget) {
+        return null;
+    }
+
+    @Override
     public Set<SuratPerintah> getByNomorTahun(String nomorTahun) {
         return suratPerintahDao.findByNomorTahun(nomorTahun);
     }

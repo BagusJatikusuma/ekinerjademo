@@ -5,10 +5,7 @@ import com.pemda.ekinerjademo.model.bismamodel.TkdJabatan;
 import com.pemda.ekinerjademo.model.ekinerjamodel.*;
 import com.pemda.ekinerjademo.projection.ekinerjaprojection.CustomPegawaiCredential;
 import com.pemda.ekinerjademo.repository.bismarepository.TkdUnkDao;
-import com.pemda.ekinerjademo.service.AkunPegawaiService;
-import com.pemda.ekinerjademo.service.QutPegawaiService;
-import com.pemda.ekinerjademo.service.SuratUndanganService;
-import com.pemda.ekinerjademo.service.TkdJabatanService;
+import com.pemda.ekinerjademo.service.*;
 import com.pemda.ekinerjademo.util.BarcodeGenerator;
 import com.pemda.ekinerjademo.wrapper.input.SuratUndanganInputWrapper;
 import com.pemda.ekinerjademo.wrapper.output.*;
@@ -41,6 +38,8 @@ public class SuratUndanganController {
     @Autowired private TkdUnkDao tkdUnkDao;
     @Autowired
     private AkunPegawaiService akunPegawaiService;
+    @Autowired
+    private SuratDisposisiService suratDisposisiService;
 
     @RequestMapping(value = "/create-surat-undangan", method = RequestMethod.POST)
     ResponseEntity<?> createSuratUndangan(
@@ -264,7 +263,8 @@ public class SuratUndanganController {
                                                 suratUndangan.getStatusBaca(),
                                                 "Surat Undangan",
                                                 13,
-                                                tkdUnkDao.findOne(pegawaiPemberi.getKdUnitKerja()).getUnitKerja()));
+                                                tkdUnkDao.findOne(pegawaiPemberi.getKdUnitKerja()).getUnitKerja(),
+                                                false));
                             }
 
                         }
@@ -302,7 +302,8 @@ public class SuratUndanganController {
                                                 suratUndangan.getStatusBaca(),
                                                 "Surat Undangan",
                                                 13,
-                                                tkdUnkDao.findOne(pegawaiPemberi.getKdUnitKerja()).getUnitKerja()));
+                                                tkdUnkDao.findOne(pegawaiPemberi.getKdUnitKerja()).getUnitKerja(),
+                                                suratDisposisiService.isSuratDisposisiExist(suratUndangan.getKdSuratUndangan(), 13)));
                             }
 
                         }
@@ -322,7 +323,7 @@ public class SuratUndanganController {
                     if (pegawaiPemberi.getNip()
                             .equals(tembusanSuratUndangan.getSuratUndangan().getNipPenandatangan())) {
 
-                        if (isPegawaiTargetAdminSurat) {
+                        if (!isPegawaiTargetAdminSurat) {
                             if (pegawaiPemberi.getKdUnitKerja().equals(pegawaiTarget.getKdUnitKerja())) {
 
                                 if (tembusanSuratUndangan.getSuratUndangan().getSuratUndanganPejabat() != null)
@@ -342,7 +343,8 @@ public class SuratUndanganController {
                                                 tembusanSuratUndangan.getStatusBaca(),
                                                 "Surat Undangan",
                                                 13,
-                                                tkdUnkDao.findOne(pegawaiPemberi.getKdUnitKerja()).getUnitKerja()));
+                                                tkdUnkDao.findOne(pegawaiPemberi.getKdUnitKerja()).getUnitKerja(),
+                                                false));
                             }
 
                         }
@@ -380,7 +382,8 @@ public class SuratUndanganController {
                                                 tembusanSuratUndangan.getStatusBaca(),
                                                 "Surat Undangan",
                                                 13,
-                                                tkdUnkDao.findOne(pegawaiPemberi.getKdUnitKerja()).getUnitKerja()));
+                                                tkdUnkDao.findOne(pegawaiPemberi.getKdUnitKerja()).getUnitKerja(),
+                                                suratDisposisiService.isSuratDisposisiExist(tembusanSuratUndangan.getSuratUndangan().getKdSuratUndangan(),13)));
                             }
 
                         }

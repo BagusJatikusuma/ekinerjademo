@@ -21,4 +21,8 @@ public interface SuratKuasaDao extends JpaRepository<SuratKuasa, String> {
             "where sk.kdUnitKerja = ?1 " +
             "and sk.approvalSekretaris = 1")
     List<SuratKuasa> findBySekretarisApproval(String kdUnitKerja);
+
+    @Query("select sk from SuratKuasa sk " +
+            "where sk.kdUnitKerjaTarget = ?1 ")
+    List<SuratKuasa> findByUnitKerjaTarget(String kdUnitKerjaTarget);
 }

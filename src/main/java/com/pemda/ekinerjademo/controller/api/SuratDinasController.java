@@ -5,10 +5,7 @@ import com.pemda.ekinerjademo.model.bismamodel.TkdJabatan;
 import com.pemda.ekinerjademo.model.ekinerjamodel.*;
 import com.pemda.ekinerjademo.projection.ekinerjaprojection.CustomPegawaiCredential;
 import com.pemda.ekinerjademo.repository.bismarepository.TkdUnkDao;
-import com.pemda.ekinerjademo.service.AkunPegawaiService;
-import com.pemda.ekinerjademo.service.QutPegawaiService;
-import com.pemda.ekinerjademo.service.SuratDinasService;
-import com.pemda.ekinerjademo.service.TkdJabatanService;
+import com.pemda.ekinerjademo.service.*;
 import com.pemda.ekinerjademo.util.BarcodeGenerator;
 import com.pemda.ekinerjademo.wrapper.input.SuratDinasInputWrapper;
 import com.pemda.ekinerjademo.wrapper.output.*;
@@ -41,6 +38,8 @@ public class SuratDinasController {
     @Autowired private TkdUnkDao tkdUnkDao;
     @Autowired
     private AkunPegawaiService akunPegawaiService;
+    @Autowired
+    private SuratDisposisiService suratDisposisiService;
 
     @RequestMapping(value = "/create-surat-dinas", method = RequestMethod.POST)
     ResponseEntity<?> createSuratDinas(@RequestBody SuratDinasInputWrapper inputWrapper) {
@@ -114,6 +113,7 @@ public class SuratDinasController {
 
         suratDinas.setKdUrtug(inputWrapper.getKdUrtug());
         suratDinas.setTahunUrtug(inputWrapper.getTahunUrtug());
+        suratDinas.setApprovalPenandatangan(0);
 
         QutPegawai pegawaiPembuat = qutPegawaiService.getQutPegawai(inputWrapper.getNipPembuatSurat());
         if (akunPegawaiService.isPegawaiSekretaris(pegawaiPembuat)) {
@@ -293,7 +293,8 @@ public class SuratDinasController {
                                                 suratDinas.getStatusBaca(),
                                                 "Surat Dinas",
                                                 5,
-                                                tkdUnkDao.findOne(pegawaiPemberi.getKdUnitKerja()).getUnitKerja()));
+                                                tkdUnkDao.findOne(pegawaiPemberi.getKdUnitKerja()).getUnitKerja(),
+                                                false));
                             }
 
                         }
@@ -333,7 +334,8 @@ public class SuratDinasController {
                                                 suratDinas.getStatusBaca(),
                                                 "Surat Dinas",
                                                 5,
-                                                tkdUnkDao.findOne(pegawaiPemberi.getKdUnitKerja()).getUnitKerja()));
+                                                tkdUnkDao.findOne(pegawaiPemberi.getKdUnitKerja()).getUnitKerja(),
+                                                suratDisposisiService.isSuratDisposisiExist(suratDinas.getKdSuratDinas(),5)));
                             }
 
                         }
@@ -351,7 +353,7 @@ public class SuratDinasController {
                     if (pegawaiPemberi.getKdJabatan()
                             .equals(tembusanSuratDinas.getSuratDinas().getKdJabatanPenerimaSuratDinas())) {
 
-                        if (isPegawaiTargetAdminSurat) {
+                        if (!isPegawaiTargetAdminSurat) {
                             if (pegawaiPemberi.getKdUnitKerja().equals(pegawaiTarget.getKdUnitKerja())) {
 
                                 if (tembusanSuratDinas.getSuratDinas().getSuratDinasPejabat() != null) {
@@ -372,7 +374,8 @@ public class SuratDinasController {
                                                 tembusanSuratDinas.getStatusBaca(),
                                                 "Surat Dinas",
                                                 5,
-                                                tkdUnkDao.findOne(pegawaiPemberi.getKdUnitKerja()).getUnitKerja()));
+                                                tkdUnkDao.findOne(pegawaiPemberi.getKdUnitKerja()).getUnitKerja(),
+                                                false));
                             }
 
                         }
@@ -411,7 +414,9 @@ public class SuratDinasController {
                                                 tembusanSuratDinas.getStatusBaca(),
                                                 "Surat Dinas",
                                                 5,
-                                                tkdUnkDao.findOne(pegawaiPemberi.getKdUnitKerja()).getUnitKerja()));
+                                                tkdUnkDao.findOne(pegawaiPemberi.getKdUnitKerja()).getUnitKerja(),
+                                                suratDisposisiService
+                                                        .isSuratDisposisiExist(tembusanSuratDinas.getSuratDinas().getKdSuratDinas(),5)));
                             }
 
                         }

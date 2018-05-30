@@ -8,4 +8,5 @@ import com.pemda.ekinerjademo.model.ekinerjamodel.SuratDisposisi;
 public interface SuratDisposisiService {
     void create(SuratDisposisi suratDisposisi);
     void delete(String suratDisposisiId);
+    boolean isSuratDisposisiExist(String kdSurat, Integer jenisSurat);
 }

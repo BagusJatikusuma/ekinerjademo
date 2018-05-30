@@ -5,8 +5,10 @@ import com.pemda.ekinerjademo.model.ekinerjamodel.AkunPegawai;
 import com.pemda.ekinerjademo.model.ekinerjamodel.SuratDinas;
 import com.pemda.ekinerjademo.model.ekinerjamodel.SuratKuasa;
 import com.pemda.ekinerjademo.projection.ekinerjaprojection.CustomPegawaiCredential;
+import com.pemda.ekinerjademo.repository.bismarepository.TkdUnkDao;
 import com.pemda.ekinerjademo.service.AkunPegawaiService;
 import com.pemda.ekinerjademo.service.QutPegawaiService;
+import com.pemda.ekinerjademo.service.SuratDisposisiService;
 import com.pemda.ekinerjademo.service.SuratKuasaService;
 import com.pemda.ekinerjademo.util.BarcodeGenerator;
 import com.pemda.ekinerjademo.wrapper.input.SuratKuasaInputWrapper;
@@ -38,6 +40,10 @@ public class SuratKuasaController {
     @Autowired private SuratKuasaService suratKuasaService;
     @Autowired private QutPegawaiService qutPegawaiService;
     @Autowired private AkunPegawaiService akunPegawaiService;
+    @Autowired
+    private SuratDisposisiService suratDisposisiService;
+    @Autowired
+    private TkdUnkDao tkdUnkDao;
 
     @RequestMapping(value = "/create-surat-kuasa", method = RequestMethod.POST)
     @Synchronized
@@ -70,6 +76,8 @@ public class SuratKuasaController {
         suratKuasa.setAlasanPenolakan("");
         suratKuasa.setStatusBaca(0);
         suratKuasa.setStatusPenyebaran(0);
+        suratKuasa.setKdUnitKerjaTarget(
+                qutPegawaiService.getQutPegawai(inputWrapper.getNipPenerimaKuasa()).getKdUnitKerja());
 
         suratKuasa.setKdUrtug(inputWrapper.getKdUrtug());
         suratKuasa.setTahunUrtug(inputWrapper.getTahunUrtug());
@@ -257,8 +265,15 @@ public class SuratKuasaController {
             LOGGER.info("pegawai is admin surat");
         }
 
-        List<SuratKuasa> suratKuasaList
-                = suratKuasaService.getByNipPenerimaKuasa(nipPenerimaKuasa);
+        List<SuratKuasa> suratKuasaList = new ArrayList<>();
+        if (!isPegawaiTargetAdminSurat) {
+            suratKuasaList
+                    = suratKuasaService.getByNipPenerimaKuasa(nipPenerimaKuasa);
+        }
+        else {
+            suratKuasaList
+                    = suratKuasaService.getByUnitKerjaTarget(pegawaiTarget.getKdUnitKerja());
+        }
 
         List<SuratPerintahTargetWrapper> suratKuasaPenerimaKuasaList
                 = new ArrayList<>();
@@ -285,7 +300,9 @@ public class SuratKuasaController {
                                                 pegawaiPemberi.getJabatan(),
                                                 suratKuasa.getStatusBaca(),
                                                 "Surat Kuasa",
-                                                9));
+                                                9,
+                                                tkdUnkDao.findOne(pegawaiPemberi.getKdUnitKerja()).getUnitKerja(),
+                                                false));
                             }
                         }
                         else{
@@ -307,7 +324,8 @@ public class SuratKuasaController {
                             if (isTargetValid) {
 
                                 suratKuasaPenerimaKuasaList
-                                        .add(new SuratPerintahTargetWrapper(suratKuasa.getKdSuratKuasa(),
+                                        .add(new SuratPerintahTargetWrapper(
+                                                suratKuasa.getKdSuratKuasa(),
                                                 "",
                                                 suratKuasa.getTanggalPembuatanMilis(),
                                                 false,
@@ -316,7 +334,9 @@ public class SuratKuasaController {
                                                 pegawaiPemberi.getJabatan(),
                                                 suratKuasa.getStatusBaca(),
                                                 "Surat Kuasa",
-                                                9));
+                                                9,
+                                                tkdUnkDao.findOne(pegawaiPemberi.getKdUnitKerja()).getUnitKerja(),
+                                                suratDisposisiService.isSuratDisposisiExist(suratKuasa.getKdSuratKuasa(),9)));
                             }
                         }
                         break;

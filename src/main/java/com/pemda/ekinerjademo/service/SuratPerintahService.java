@@ -10,6 +10,7 @@ import java.util.Set;
  */
 public interface SuratPerintahService {
     Set<SuratPerintah> getByKdUnitKerja(String kdUnitKerja);
+    Set<SuratPerintah> getByKdUnitKerjaTarget(String kdUnitKerjaTarget);
     Set<SuratPerintah> getByNomorTahun(String nomorTahun);
     Set<SuratPerintah> getByNipPembuat(String nipPembuat);
     Set<SuratPerintah> getSuratPerintahSekretarisApproval(String kdUnitKerja);

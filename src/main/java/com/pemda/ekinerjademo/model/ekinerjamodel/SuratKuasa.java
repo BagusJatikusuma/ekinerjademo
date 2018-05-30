@@ -77,6 +77,9 @@ public class SuratKuasa {
     @Column(name = "approval_sekretaris")
     private Integer approvalSekretaris;
 
+    @Column(name = "kd_unit_kerja_target")
+    private String kdUnitKerjaTarget;
+
     public String getKdSuratKuasa() {
         return kdSuratKuasa;
     }
@@ -291,5 +294,13 @@ public class SuratKuasa {
 
     public void setApprovalSekretaris(Integer approvalSekretaris) {
         this.approvalSekretaris = approvalSekretaris;
+    }
+
+    public String getKdUnitKerjaTarget() {
+        return kdUnitKerjaTarget;
+    }
+
+    public void setKdUnitKerjaTarget(String kdUnitKerjaTarget) {
+        this.kdUnitKerjaTarget = kdUnitKerjaTarget;
     }
 }

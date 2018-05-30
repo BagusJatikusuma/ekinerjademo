@@ -840,20 +840,20 @@ public class AkunPegawaiController {
         if (penilai.getKdUnitKerja().substring(0,1)
                 .equals("3")) {
             //eselon kadin II.b, eselon sekdin III.a
-            if (penilai.getEselon().contains("II.b")) {
+            if (penilai.getEselon().equals("II.b")) {
                 isKepala = true;
             }
-            else if (penilai.getEselon().contains("III.a")) {
+            else if (penilai.getEselon().equals("III.a")) {
                 isSekretaris = true;
             }
         }
         else if (penilai.getKdUnitKerja().substring(0,1)
                     .equals("7")) {
             //eselon camat III.a, eselon sekdcam III.b
-            if (penilai.getEselon().contains("III.a")) {
+            if (penilai.getEselon().equals("III.a")) {
                 isKepala = true;
             }
-            else if (penilai.getEselon().contains("III.b")) {
+            else if (penilai.getEselon().equals("III.b")) {
                 isSekretaris = true;
             }
         }
@@ -880,12 +880,28 @@ public class AkunPegawaiController {
         }
 
         //ambil data pegawai bawahan terlebih dahulu
-        for (PejabatPenilaiDinilai jabatan : kdJabatanPegawaiBawahanList) {
-            List<QutPegawaiClone> pegawaiBawahanJabatanList
-                    = qutPegawaiService.getQutPegawaiByKdJabatan(jabatan.getPejabatPenilaiDinilaiId().getKdJabatanDinilai());
-            for (QutPegawaiClone pegawaiBawahan : pegawaiBawahanJabatanList) {
-                pegawaiBawahanList.add(pegawaiBawahan);
+        //untuk kepala dinas atau camat tidak perlu
+        if (isKepala) {
+            pegawaiBawahanList.add(qutPegawaiService.convertQutPegawaiIntoQutPegawaiClone(penilai));
+        }
+        else {
+            for (PejabatPenilaiDinilai jabatan : kdJabatanPegawaiBawahanList) {
+                List<QutPegawaiClone> pegawaiBawahanJabatanList
+                        = qutPegawaiService.getQutPegawaiByKdJabatan(jabatan.getPejabatPenilaiDinilaiId().getKdJabatanDinilai());
+                for (QutPegawaiClone pegawaiBawahan : pegawaiBawahanJabatanList) {
+                    pegawaiBawahanList.add(pegawaiBawahan);
+                }
             }
+        }
+
+        if (isKepala) {
+            LOGGER.info("penilai is kepala dinas/camat");
+        }
+        else if (isSekretaris) {
+            LOGGER.info("penilai is sekretaris");
+        }
+        else {
+            LOGGER.info("penilai is not kepala dinas/camat or sekretaris");
         }
 
         //ambil laporan dari seluruh history template untuk setiap pegawai bawahan
@@ -893,6 +909,9 @@ public class AkunPegawaiController {
         boolean isPenandatangan = false;
         int statusPenilaian = 0;
         boolean dariKabid;
+
+        QutPegawai pembuatLaporan = new QutPegawai();
+
         for (QutPegawaiClone pegawaiBawahan : pegawaiBawahanList) {
             //ambil data berita acara yang dilaporkan bawahan
             List<BeritaAcara> beritaAcaraList = new ArrayList<>();
@@ -924,12 +943,14 @@ public class AkunPegawaiController {
                     }
                 }
 
+                pembuatLaporan = qutPegawaiService.getQutPegawai(beritaAcaraBawahan.getNipPembuatSurat());
+
                 laporanBawahanWrapperList
                         .add(new LaporanBawahanWrapper(
                                 beritaAcaraBawahan.getKdBeritaAcara(),
                                 "Berita Acara",
-                                pegawaiBawahan.getNip(),
-                                pegawaiBawahan.getNama(),
+                                pembuatLaporan.getNip(),
+                                pembuatLaporan.getNama(),
                                 statusPenilaian,
                                 0,
                                 0,
@@ -971,12 +992,14 @@ public class AkunPegawaiController {
                     }
                 }
 
+                pembuatLaporan = qutPegawaiService.getQutPegawai(memorandum.getNipPembuatSurat());
+
                 laporanBawahanWrapperList
                         .add(new LaporanBawahanWrapper(
                                 memorandum.getKdMemorandum(),
                                 "Memorandum",
-                                pegawaiBawahan.getNip(),
-                                pegawaiBawahan.getNama(),
+                                pembuatLaporan.getNip(),
+                                pembuatLaporan.getNama(),
                                 statusPenilaian,
                                 2,
                                 suratPejabat,
@@ -1012,12 +1035,14 @@ public class AkunPegawaiController {
                     }
                 }
 
+                pembuatLaporan = qutPegawaiService.getQutPegawai(notaDinas.getNipPembuatSurat());
+
                 laporanBawahanWrapperList
                         .add(new LaporanBawahanWrapper(
                                 notaDinas.getKdNotaDinas(),
                                 "Nota Dinas",
-                                pegawaiBawahan.getNip(),
-                                pegawaiBawahan.getNama(),
+                                pembuatLaporan.getNip(),
+                                pembuatLaporan.getNama(),
                                 statusPenilaian,
                                 3,
                                 0,
@@ -1054,12 +1079,14 @@ public class AkunPegawaiController {
                     }
                 }
 
+                pembuatLaporan = qutPegawaiService.getQutPegawai(pengumuman.getNipPembuatSurat());
+
                 laporanBawahanWrapperList
                         .add(new LaporanBawahanWrapper(
                                 pengumuman.getKdPengumuman(),
                                 "Pengumuman",
-                                pegawaiBawahan.getNip(),
-                                pegawaiBawahan.getNama(),
+                                pembuatLaporan.getNip(),
+                                pembuatLaporan.getNama(),
                                 statusPenilaian,
                                 4,
                                 0,
@@ -1072,9 +1099,13 @@ public class AkunPegawaiController {
             }
 
             List<SuratDinas> suratDinasList = new ArrayList<>();
-            if (isKepala) {
+                if (isKepala) {
+                LOGGER.info("get surat dinas kadin");
+
                 suratDinasList
                         = suratDinasService.getSuratDinasSekretarisApproval(penilai.getKdUnitKerja());
+
+                LOGGER.info("size "+suratDinasList.size());
             }
             else {
                 suratDinasList
@@ -1101,12 +1132,14 @@ public class AkunPegawaiController {
                     }
                 }
 
+                pembuatLaporan = qutPegawaiService.getQutPegawai(suratDinas.getNipPembuatSurat());
+
                 laporanBawahanWrapperList
                         .add(new LaporanBawahanWrapper(
                                 suratDinas.getKdSuratDinas(),
                                 "Surat Dinas",
-                                pegawaiBawahan.getNip(),
-                                pegawaiBawahan.getNama(),
+                                pembuatLaporan.getNip(),
+                                pembuatLaporan.getNama(),
                                 statusPenilaian,
                                 5,
                                 suratPejabat,
@@ -1147,12 +1180,14 @@ public class AkunPegawaiController {
                     }
                 }
 
+                pembuatLaporan = qutPegawaiService.getQutPegawai(suratEdaran.getNipPembuatSurat());
+
                 laporanBawahanWrapperList
                         .add(new LaporanBawahanWrapper(
                                 suratEdaran.getKdSuratEdaran(),
                                 "Surat Edaran",
-                                pegawaiBawahan.getNip(),
-                                pegawaiBawahan.getNama(),
+                                pembuatLaporan.getNip(),
+                                pembuatLaporan.getNama(),
                                 statusPenilaian,
                                 6,
                                 suratPejabat,
@@ -1189,12 +1224,14 @@ public class AkunPegawaiController {
                     }
                 }
 
+                pembuatLaporan = qutPegawaiService.getQutPegawai(suratKeputusan.getNipPembuatSurat());
+
                 laporanBawahanWrapperList
                         .add(new LaporanBawahanWrapper(
                                 suratKeputusan.getKdSuratKeputusan(),
                                 "Surat Keputusan",
-                                pegawaiBawahan.getNip(),
-                                pegawaiBawahan.getNama(),
+                                pembuatLaporan.getNip(),
+                                pembuatLaporan.getNama(),
                                 statusPenilaian,
                                 7,
                                 0,
@@ -1231,12 +1268,14 @@ public class AkunPegawaiController {
                     }
                 }
 
+                pembuatLaporan = qutPegawaiService.getQutPegawai(suratKeterangan.getNipPembuatSurat());
+
                 laporanBawahanWrapperList
                         .add(new LaporanBawahanWrapper(
                                 suratKeterangan.getKdSuratKeterangan(),
                                 "Surat Keterangan",
-                                pegawaiBawahan.getNip(),
-                                pegawaiBawahan.getNama(),
+                                pembuatLaporan.getNip(),
+                                pembuatLaporan.getNama(),
                                 statusPenilaian,
                                 8,
                                 0,
@@ -1273,12 +1312,14 @@ public class AkunPegawaiController {
                     }
                 }
 
+                pembuatLaporan = qutPegawaiService.getQutPegawai(suratPengantar.getNipPembuatSurat());
+
                 laporanBawahanWrapperList
                         .add(new LaporanBawahanWrapper(
                                 suratPengantar.getKdSuratPengantar(),
                                 "Surat Pengantar",
-                                pegawaiBawahan.getNip(),
-                                pegawaiBawahan.getNama(),
+                                pembuatLaporan.getNip(),
+                                pembuatLaporan.getNama(),
                                 statusPenilaian,
                                 10,
                                 0,
@@ -1319,12 +1360,14 @@ public class AkunPegawaiController {
                     }
                 }
 
+                pembuatLaporan = qutPegawaiService.getQutPegawai(suratTugas.getNipPembuat());
+
                 laporanBawahanWrapperList
                         .add(new LaporanBawahanWrapper(
                                 suratTugas.getKdSuratTugas(),
                                 "Surat Tugas",
-                                pegawaiBawahan.getNip(),
-                                pegawaiBawahan.getNama(),
+                                pembuatLaporan.getNip(),
+                                pembuatLaporan.getNama(),
                                 statusPenilaian,
                                 12,
                                 suratPejabat,
@@ -1364,12 +1407,14 @@ public class AkunPegawaiController {
                     }
                 }
 
+                pembuatLaporan = qutPegawaiService.getQutPegawai(suratUndangan.getNipPembuatSurat());
+
                 laporanBawahanWrapperList
                         .add(new LaporanBawahanWrapper(
                                 suratUndangan.getKdSuratUndangan(),
                                 "Surat Undangan",
-                                pegawaiBawahan.getNip(),
-                                pegawaiBawahan.getNama(),
+                                pembuatLaporan.getNip(),
+                                pembuatLaporan.getNama(),
                                 statusPenilaian,
                                 13,
                                 suratPejabat,
@@ -1381,8 +1426,16 @@ public class AkunPegawaiController {
                                 dariKabid));
             }
             //ambil data surat perintah yang dilaporkan bawahan
-            Set<SuratPerintah> suratPerintahList
-                    = suratPerintahService.getByNipPembuat(pegawaiBawahan.getNip());
+            Set<SuratPerintah> suratPerintahList = new HashSet<>();
+            if (isKepala) {
+                suratPerintahList
+                        = suratPerintahService.getSuratPerintahSekretarisApproval(penilai.getKdUnitKerja());
+            }
+            else {
+                suratPerintahList
+                        = suratPerintahService.getByNipPembuat(pegawaiBawahan.getNip());
+            }
+
             for (SuratPerintah suratPerintahBawahan : suratPerintahList) {
 
                 if (suratPerintahBawahan.getSuratPerintahPejabat() != null)
@@ -1404,12 +1457,14 @@ public class AkunPegawaiController {
                     }
                 }
 
+                pembuatLaporan = qutPegawaiService.getQutPegawai(suratPerintahBawahan.getNipPembuat());
+
                 laporanBawahanWrapperList
                         .add(new LaporanBawahanWrapper(
                                 suratPerintahBawahan.getKdSuratPerintah(),
                                 "Surat Perintah",
-                                pegawaiBawahan.getNip(),
-                                pegawaiBawahan.getNama(),
+                                pembuatLaporan.getNip(),
+                                pembuatLaporan.getNama(),
                                 statusPenilaian,
                                 11,
                                 suratPejabat,
@@ -1439,12 +1494,14 @@ public class AkunPegawaiController {
                     }
                 }
 
+                pembuatLaporan = qutPegawaiService.getQutPegawai(suratKuasaBawahan.getNipPembuatSurat());
+
                 laporanBawahanWrapperList
                         .add(new LaporanBawahanWrapper(
                                 suratKuasaBawahan.getKdSuratKuasa(),
                                 "Surat Kuasa",
-                                pegawaiBawahan.getNip(),
-                                pegawaiBawahan.getNama(),
+                                pembuatLaporan.getNip(),
+                                pembuatLaporan.getNama(),
                                 statusPenilaian,
                                 9,
                                 0,
@@ -1460,12 +1517,14 @@ public class AkunPegawaiController {
                     = laporanService.getByNipPembuatSurat(pegawaiBawahan.getNip());
             for (Laporan laporanBawahan : laporanList) {
 
+                pembuatLaporan = qutPegawaiService.getQutPegawai(laporanBawahan.getNipPembuatSurat());
+
                 laporanBawahanWrapperList
                         .add(new LaporanBawahanWrapper(
                                 laporanBawahan.getKdLaporan(),
                                 "Laporan Pegawai",
-                                pegawaiBawahan.getNip(),
-                                pegawaiBawahan.getNama(),
+                                pembuatLaporan.getNip(),
+                                pembuatLaporan.getNama(),
                                 laporanBawahan.getStatusPenilaian(),
                                 1,
                                 0,
@@ -1480,12 +1539,15 @@ public class AkunPegawaiController {
             List<TelaahanStaf> telaahanStafList
                     = telaahanStafService.getByNipPembuatSurat(pegawaiBawahan.getNip());
             for (TelaahanStaf telaahanStafBawahan : telaahanStafList) {
+
+                pembuatLaporan = qutPegawaiService.getQutPegawai(telaahanStafBawahan.getNipPembuatSurat());
+
                 laporanBawahanWrapperList
                         .add(new LaporanBawahanWrapper(
                                 telaahanStafBawahan.getKdTelaahanStaf(),
                                 "Telaahan staf",
-                                pegawaiBawahan.getNip(),
-                                pegawaiBawahan.getNama(),
+                                pembuatLaporan.getNip(),
+                                pembuatLaporan.getNama(),
                                 telaahanStafBawahan.getStatusPenilaian(),
                                 14,
                                 0,
@@ -1501,11 +1563,13 @@ public class AkunPegawaiController {
                     = templateLainService.getByPembuat(pegawaiBawahan.getNip());
             for (TemplateLain templateLainBawahan : templateLainList) {
 
+                pembuatLaporan = qutPegawaiService.getQutPegawai(templateLainBawahan.getNipPegawai());
+
                 laporanBawahanWrapperList
                         .add(new LaporanBawahanWrapper(templateLainBawahan.getKdTemplateLain(),
                                 "template lain",
-                                pegawaiBawahan.getNip(),
-                                pegawaiBawahan.getNama(),
+                                pembuatLaporan.getNip(),
+                                pembuatLaporan.getNama(),
                                 templateLainBawahan.getStatusPenilaian(),
                                 15,
                                 0,
@@ -2228,9 +2292,6 @@ public class AkunPegawaiController {
 
         return new ResponseEntity<>(null, HttpStatus.OK);
     }
-
-
-
 
 
 

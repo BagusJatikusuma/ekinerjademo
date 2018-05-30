@@ -38,6 +38,11 @@ public class SuratKuasaServiceImpl implements SuratKuasaService{
     }
 
     @Override
+    public List<SuratKuasa> getByUnitKerjaTarget(String kdUnitKerja) {
+        return suratKuasaDao.findByUnitKerjaTarget(kdUnitKerja);
+    }
+
+    @Override
     public List<SuratKuasa> getByNipPenerimaKuasa(String nipPenerimaKuasa) {
         return suratKuasaDao.findByNipPenerimaKuasa(nipPenerimaKuasa);
     }

@@ -5,10 +5,7 @@ import com.pemda.ekinerjademo.model.bismamodel.TkdJabatan;
 import com.pemda.ekinerjademo.model.ekinerjamodel.*;
 import com.pemda.ekinerjademo.projection.ekinerjaprojection.CustomPegawaiCredential;
 import com.pemda.ekinerjademo.repository.bismarepository.TkdUnkDao;
-import com.pemda.ekinerjademo.service.AkunPegawaiService;
-import com.pemda.ekinerjademo.service.MemorandumService;
-import com.pemda.ekinerjademo.service.QutPegawaiCloneService;
-import com.pemda.ekinerjademo.service.TkdJabatanService;
+import com.pemda.ekinerjademo.service.*;
 import com.pemda.ekinerjademo.util.BarcodeGenerator;
 import com.pemda.ekinerjademo.wrapper.input.MemorandumInputWrapper;
 import com.pemda.ekinerjademo.wrapper.output.*;
@@ -45,6 +42,8 @@ public class MemorandumController {
     private TkdUnkDao tkdUnkDao;
     @Autowired
     private AkunPegawaiService akunPegawaiService;
+    @Autowired
+    protected SuratDisposisiService suratDisposisiService;
 
     @RequestMapping(value = "/create-memorandum/", method = RequestMethod.POST)
     ResponseEntity<?> createMemorandum(@RequestBody MemorandumInputWrapper inputWrapper) {
@@ -280,7 +279,8 @@ public class MemorandumController {
                                                 memorandum.getStatusBaca(),
                                                 "memorandum",
                                                 2,
-                                                tkdUnkDao.findOne(pegawaiPemberi.getKdUnitKerja()).getUnitKerja()));
+                                                tkdUnkDao.findOne(pegawaiPemberi.getKdUnitKerja()).getUnitKerja(),
+                                                false));
                             }
 
                         }
@@ -318,7 +318,8 @@ public class MemorandumController {
                                                 memorandum.getStatusBaca(),
                                                 "memorandum",
                                                 2,
-                                                tkdUnkDao.findOne(pegawaiPemberi.getKdUnitKerja()).getUnitKerja()));
+                                                tkdUnkDao.findOne(pegawaiPemberi.getKdUnitKerja()).getUnitKerja(),
+                                                suratDisposisiService.isSuratDisposisiExist(memorandum.getKdMemorandum(),2)));
                             }
 
                         }
@@ -358,7 +359,8 @@ public class MemorandumController {
                                                 tembusanMemorandum.getStatusBaca(),
                                                 "memorandum",
                                                 2,
-                                                tkdUnkDao.findOne(pegawaiPemberi.getKdUnitKerja()).getUnitKerja()));
+                                                tkdUnkDao.findOne(pegawaiPemberi.getKdUnitKerja()).getUnitKerja(),
+                                                false));
                             }
 
                         }
@@ -396,7 +398,8 @@ public class MemorandumController {
                                                 tembusanMemorandum.getStatusBaca(),
                                                 "memorandum",
                                                 2,
-                                                tkdUnkDao.findOne(pegawaiPemberi.getKdUnitKerja()).getUnitKerja()));
+                                                tkdUnkDao.findOne(pegawaiPemberi.getKdUnitKerja()).getUnitKerja(),
+                                                suratDisposisiService.isSuratDisposisiExist(tembusanMemorandum.getMemorandum().getKdMemorandum(),2)));
                             }
 
                         }

@@ -12,6 +12,8 @@ public interface SuratKuasaService {
 
     List<SuratKuasa> getSuratKuasaBySekretarisApproval(String kdUnitKerja);
 
+    List<SuratKuasa> getByUnitKerjaTarget(String kdUnitKerja);
+
     List<SuratKuasa> getByNipPenerimaKuasa(String nipPenerimaKuasa);
 
     void createSuratKuasa(SuratKuasa suratKuasa);
