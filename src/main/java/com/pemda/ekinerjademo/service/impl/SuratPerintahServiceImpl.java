@@ -202,7 +202,7 @@ public class SuratPerintahServiceImpl implements SuratPerintahService {
     @Override
     public void approveSuratPerintah(String kdSuratPerintah) {
         SuratPerintah suratPerintahLast = suratPerintahDao.findOne(kdSuratPerintah);
-        suratPerintahLast.setStatusPenyebaran(1);
+//        suratPerintahLast.setStatusPenyebaran(1);
         suratPerintahLast.setApprovalPenandatangan(1);
 
         NomorUrutSuratUnitKerja nomorUrutSurat

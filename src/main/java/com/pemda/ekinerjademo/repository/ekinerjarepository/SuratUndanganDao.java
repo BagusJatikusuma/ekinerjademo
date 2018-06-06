@@ -60,7 +60,7 @@ public interface SuratUndanganDao extends JpaRepository<SuratUndangan, String> {
             "left join fetch su.suratUndanganPejabat " +
             "left join fetch su.tembusanSuratUndanganList " +
             "where su.kdUnitKerja = ?1 " +
-            "and su.approvalPenandatangan = 1")
+            "and su.approvalPenandatangan = 1 and su.approvalSekretaris = 1")
     List<SuratUndangan> findSuratUndanganApproval(String kdUnitKerja);
 
     @Query("select su from SuratUndangan su " +

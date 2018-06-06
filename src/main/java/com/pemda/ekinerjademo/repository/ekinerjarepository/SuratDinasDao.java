@@ -32,7 +32,7 @@ public interface SuratDinasDao extends JpaRepository<SuratDinas, String> {
             "left join fetch sd.suratDinasPejabat " +
             "left join fetch sd.tembusanSuratDinasList " +
             "where sd.kdUnitKerja = ?1 " +
-            "and sd.approvalPenandatangan = 1")
+            "and sd.approvalPenandatangan = 1 and sd.approvalSekretaris = 1")
     List<SuratDinas> findByApproval(String kdUnitKerja);
 
     @Query("select distinct sd from SuratDinas sd " +

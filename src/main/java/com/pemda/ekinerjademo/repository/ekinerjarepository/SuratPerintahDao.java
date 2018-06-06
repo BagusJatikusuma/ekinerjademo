@@ -32,7 +32,8 @@ public interface SuratPerintahDao extends JpaRepository<SuratPerintah, String> {
             "left join fetch s.suratPerintahNonPejabat " +
             "left join fetch s.tembusanSuratPerintahList " +
             "where s.kdUnitKerja = ?1 " +
-            "and s.approvalPenandatangan = 1")
+            "and s.approvalPenandatangan = 1 " +
+            "and s.approvalSekretaris = 1")
     List<SuratPerintah> findDraftApproval(String kdUnitKerja);
 
     @Query("select s from SuratPerintah s " +

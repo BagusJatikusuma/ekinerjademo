@@ -605,7 +605,7 @@ public class PenanggungJawabKegiatanController {
      *
      *
      *
-     * @param kdunitKerja
+     * @param kdUnitKerja
      * @return
      */
     @RequestMapping(value = "/get-sk-barjas/{kdUnitKerja}", method = RequestMethod.GET)
@@ -629,13 +629,163 @@ public class PenanggungJawabKegiatanController {
         List<PejabatBarjasPPKWrapper> pejabatBarjasPPKWrappers = new ArrayList<>();
         List<PejabatBarjasPPTKWrapper> pejabatBarjasPPTKWrappers = new ArrayList<>();
 
-        //ambil pejabat PPUK
-        //ambil daftar pejabat PPK
-        //ambil pejabat PPTK beserta kegiatannya
-        //pasang PPUK dengan PPK
-        //pasang PPK dengan PPTK
+        List<PenanggungJawabKegiatan> kegiatanUnitKerjaList
+                = penanggungJawabKegiatanService.getKegiatanUnitKerja(unitKerjaKegiatan);
 
-        return new ResponseEntity<>(null, HttpStatus.OK);
+        //ambil pejabat PPUK
+        for (PenanggungJawabKegiatan kegiatan : kegiatanUnitKerjaList) {
+            if (kegiatan.getPenanggungJawabKegiatanId().getKdStatusPenanggungJawab()
+                    .equals("1513324189794")) {
+                QutPegawai penanggungJawab
+                        = qutPegawaiService.getQutPegawai(kegiatan.getPenanggungJawabKegiatanId().getNipPegawai());
+
+                pejabatBarjasPPUKWrapper.setNip(penanggungJawab.getNip());
+                pejabatBarjasPPUKWrapper.setNama(penanggungJawab.getNama());
+                pejabatBarjasPPUKWrapper.setJabatan(penanggungJawab.getJabatan());
+                pejabatBarjasPPUKWrapper.setJabatanBarjas("Pejabat Penata Usahaan Keuangan (PPUK)");
+
+                break;
+            }
+        }
+        //ambil daftar pejabat PPK
+        List<String> isPejabatAlreadyExist = new ArrayList<>();
+        boolean found = false;
+        for (PenanggungJawabKegiatan kegiatan : kegiatanUnitKerjaList) {
+            if (kegiatan.getPenanggungJawabKegiatanId().getKdStatusPenanggungJawab()
+                    .equals("ST001")) {
+                found = false;
+                for (String obj : isPejabatAlreadyExist) {
+                    if (obj.equals(kegiatan.getPenanggungJawabKegiatanId().getNipPegawai())) {
+                        found = true;
+                        break;
+                    }
+                }
+
+                if (!found) {
+                    QutPegawai penanggungJawab
+                            = qutPegawaiService.getQutPegawai(kegiatan.getPenanggungJawabKegiatanId().getNipPegawai());
+
+                    PejabatBarjasPPKWrapper pejabatBarjasPPKWrapper = new PejabatBarjasPPKWrapper();
+
+                    pejabatBarjasPPKWrapper.setNip(penanggungJawab.getNip());
+                    pejabatBarjasPPKWrapper.setNama(penanggungJawab.getNama());
+                    pejabatBarjasPPKWrapper.setJabatan(penanggungJawab.getJabatan());
+                    pejabatBarjasPPKWrapper.setJabatanBarjas("Pejabat Pembuat Komitmen (PPK)");
+
+                    pejabatBarjasPPKWrappers.add(pejabatBarjasPPKWrapper);
+
+                    isPejabatAlreadyExist.add(penanggungJawab.getNip());
+                }
+
+            }
+        }
+        //ambil pejabat PPTK beserta kegiatannya
+        isPejabatAlreadyExist.clear();
+        for (PenanggungJawabKegiatan kegiatan : kegiatanUnitKerjaList) {
+            if (kegiatan.getPenanggungJawabKegiatanId().getKdStatusPenanggungJawab()
+                    .equals("ST002")) {
+                found = false;
+
+                for (String obj : isPejabatAlreadyExist) {
+                    if (obj.equals(kegiatan.getPenanggungJawabKegiatanId().getNipPegawai())) {
+                        found = true;
+                        break;
+                    }
+                }
+
+                if (!found) {
+                    QutPegawai penanggungJawab
+                            = qutPegawaiService.getQutPegawai(kegiatan.getPenanggungJawabKegiatanId().getNipPegawai());
+
+                    PejabatBarjasPPTKWrapper pejabatBarjasPPTKWrapper = new PejabatBarjasPPTKWrapper();
+
+                    pejabatBarjasPPTKWrapper.setNip(penanggungJawab.getNip());
+                    pejabatBarjasPPTKWrapper.setNama(penanggungJawab.getNama());
+                    pejabatBarjasPPTKWrapper.setJabatan(penanggungJawab.getJabatan());
+                    pejabatBarjasPPTKWrapper.setJabatanBarjas("Pejabat Pelaksana Teknis Kegiatan (PPTK)");
+
+                    List<TaKegiatanWrapper> taKegiatanWrappers = new ArrayList<>();
+                    for (PenanggungJawabKegiatan kegiatanPPTK : kegiatanUnitKerjaList) {
+                        if (kegiatanPPTK.getPenanggungJawabKegiatanId().getNipPegawai()
+                                .equals(penanggungJawab.getNip())) {
+
+                            for (TaKegiatan taKegiatan
+                                    : taKegiatanList) {
+                                if (compareKegiatan(kegiatanPPTK, taKegiatan)) {
+                                    taKegiatanWrappers
+                                            .add(new TaKegiatanWrapper(
+                                                    kegiatanPPTK.getPenanggungJawabKegiatanId().getKdUrusan(),
+                                                    kegiatanPPTK.getPenanggungJawabKegiatanId().getKdBidang(),
+                                                    kegiatanPPTK.getPenanggungJawabKegiatanId().getKdUnit(),
+                                                    kegiatanPPTK.getPenanggungJawabKegiatanId().getKdSub(),
+                                                    kegiatanPPTK.getPenanggungJawabKegiatanId().getTahun(),
+                                                    kegiatanPPTK.getPenanggungJawabKegiatanId().getKdProg(),
+                                                    kegiatanPPTK.getPenanggungJawabKegiatanId().getIdProg(),
+                                                    kegiatanPPTK.getPenanggungJawabKegiatanId().getKdKeg(),
+                                                    taKegiatan.getKetKegiatan(),
+                                                    taKegiatan.getLokasi(),
+                                                    taKegiatan.getKelompokSasaran(),
+                                                    taKegiatan.getStatusKegiatan(),
+                                                    taKegiatan.getPaguAnggaran(),
+                                                    taKegiatan.getWaktuPelaksanaan(),
+                                                    taKegiatan.getKdSumber()));
+
+                                    break;
+                                }
+                            }
+
+                        }
+                    }
+                    pejabatBarjasPPTKWrapper.setKegiatanWrapperList(taKegiatanWrappers);
+
+                    pejabatBarjasPPTKWrappers.add(pejabatBarjasPPTKWrapper);
+
+                    isPejabatAlreadyExist.add(penanggungJawab.getNip());
+                }
+            }
+        }
+        //pasang PPK dengan PPTK
+        for (PejabatBarjasPPKWrapper pejabatPPK : pejabatBarjasPPKWrappers) {
+            List<PejabatBarjasPPTKWrapper> pejabatBarjasPPTKWrappersTemp = new ArrayList<>();
+
+            for (PenanggungJawabKegiatan kegiatan : kegiatanUnitKerjaList) {
+                if (kegiatan.getPenanggungJawabKegiatanId().getNipPegawai()
+                        .equals(pejabatPPK.getNip())) {
+
+                    boolean pptkAlreadyExist;
+                    for (PejabatBarjasPPTKWrapper pejabatPPTK : pejabatBarjasPPTKWrappers) {
+                        pptkAlreadyExist = false;
+
+                        for (PejabatBarjasPPTKWrapper pejabatPPTKTemp : pejabatBarjasPPTKWrappersTemp) {
+                            if (pejabatPPTK.getNip().equals(pejabatPPTKTemp.getNip())) {
+                                pptkAlreadyExist = true;
+                                break;
+                            }
+                        }
+
+                        if (!pptkAlreadyExist) {
+                            for (TaKegiatanWrapper kegiatanPejabatPPTK : pejabatPPTK.getKegiatanWrapperList()) {
+                                if (kegiatan.getPenanggungJawabKegiatanId().getKdProg().equals(kegiatanPejabatPPTK.getKdProg())
+                                        && kegiatan.getPenanggungJawabKegiatanId().getIdProg().equals(kegiatanPejabatPPTK.getIdProg())
+                                        && kegiatan.getPenanggungJawabKegiatanId().getKdKeg().equals(kegiatanPejabatPPTK.getKdKegiatan())) {
+                                    pejabatBarjasPPTKWrappersTemp.add(pejabatPPTK);
+
+                                }
+                            }
+                        }
+
+                    }
+
+                }
+            }
+
+            pejabatPPK.setPejabatBarjasPPTKList(pejabatBarjasPPTKWrappersTemp);
+        }
+
+        //pasang PPUK dengan PPK
+        pejabatBarjasPPUKWrapper.setPejabatBarjasPPKList(pejabatBarjasPPKWrappers);
+
+        return new ResponseEntity<>(pejabatBarjasPPUKWrapper, HttpStatus.OK);
 
     }
 
