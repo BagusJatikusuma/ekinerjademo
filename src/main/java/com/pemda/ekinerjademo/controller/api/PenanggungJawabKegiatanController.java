@@ -86,6 +86,43 @@ public class PenanggungJawabKegiatanController {
 
     /**
      *
+     * service yang digunakan untuk memasangkan kegiatan dengan penanggung jawabnya
+     * dilakukan oleh admin unit kerja
+     *
+     * @param inputWrappers
+     * @return custom message
+     */
+    @RequestMapping(value = "/create-daftar-penanggung-jawab-kegiatan", method = RequestMethod.POST)
+    ResponseEntity<?> createDaftarPenanggungJawabKegiatan(@RequestBody List<PenanggungJawabKegiatanInputWrapper> inputWrappers) {
+        LOGGER.info("create daftar penanggung jawab kegiatan");
+
+        for (PenanggungJawabKegiatanInputWrapper inputWrapper : inputWrappers) {
+            PenanggungJawabKegiatanId id
+                    = new PenanggungJawabKegiatanId(
+                    inputWrapper.getKdUrusan(),
+                    inputWrapper.getKdBidang(),
+                    inputWrapper.getKdUnit(),
+                    inputWrapper.getKdSub(),
+                    inputWrapper.getTahun(),
+                    inputWrapper.getKdProg(),
+                    inputWrapper.getIdProg(),
+                    inputWrapper.getKdKeg(),
+                    inputWrapper.getNipPegawai(),
+                    inputWrapper.getKdStatusPenanggungJawab());
+
+            PenanggungJawabKegiatan penanggungJawabKegiatan
+                    = new PenanggungJawabKegiatan();
+            penanggungJawabKegiatan.setPenanggungJawabKegiatanId(id);
+            penanggungJawabKegiatan.setStatusApproval(0);
+
+            penanggungJawabKegiatanService.create(penanggungJawabKegiatan);
+        }
+
+        return new ResponseEntity<>(new CustomMessage("daftar penanggung jawab berhasil dibuat"), HttpStatus.OK);
+    }
+
+    /**
+     *
      * service yang digunakan untuk mengambil data daftar penanggung jawab berdasarkan suatu kegiatan
      *
      * @param inputWrapper
@@ -641,6 +678,8 @@ public class PenanggungJawabKegiatanController {
 
                 pejabatBarjasPPUKWrapper.setNip(penanggungJawab.getNip());
                 pejabatBarjasPPUKWrapper.setNama(penanggungJawab.getNama());
+                pejabatBarjasPPUKWrapper.setGelarDepan(penanggungJawab.getGlrDpn());
+                pejabatBarjasPPUKWrapper.setGelarBelakang(penanggungJawab.getGlrBlk());
                 pejabatBarjasPPUKWrapper.setJabatan(penanggungJawab.getJabatan());
                 pejabatBarjasPPUKWrapper.setJabatanBarjas("Pejabat Penata Usahaan Keuangan (PPUK)");
 
@@ -669,6 +708,8 @@ public class PenanggungJawabKegiatanController {
 
                     pejabatBarjasPPKWrapper.setNip(penanggungJawab.getNip());
                     pejabatBarjasPPKWrapper.setNama(penanggungJawab.getNama());
+                    pejabatBarjasPPKWrapper.setGelarDepan(penanggungJawab.getGlrDpn());
+                    pejabatBarjasPPKWrapper.setGelarBelakang(penanggungJawab.getGlrBlk());
                     pejabatBarjasPPKWrapper.setJabatan(penanggungJawab.getJabatan());
                     pejabatBarjasPPKWrapper.setJabatanBarjas("Pejabat Pembuat Komitmen (PPK)");
 
@@ -701,6 +742,8 @@ public class PenanggungJawabKegiatanController {
 
                     pejabatBarjasPPTKWrapper.setNip(penanggungJawab.getNip());
                     pejabatBarjasPPTKWrapper.setNama(penanggungJawab.getNama());
+                    pejabatBarjasPPTKWrapper.setGelarDepan(penanggungJawab.getGlrDpn());
+                    pejabatBarjasPPTKWrapper.setGelarBelakang(penanggungJawab.getGlrBlk());
                     pejabatBarjasPPTKWrapper.setJabatan(penanggungJawab.getJabatan());
                     pejabatBarjasPPTKWrapper.setJabatanBarjas("Pejabat Pelaksana Teknis Kegiatan (PPTK)");
 

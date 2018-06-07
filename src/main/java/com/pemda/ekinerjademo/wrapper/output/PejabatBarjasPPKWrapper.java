@@ -5,6 +5,8 @@ import java.util.List;
 public class PejabatBarjasPPKWrapper {
     private String nip;
     private String nama;
+    private String gelarDepan;
+    private String gelarBelakang;
     private String jabatan;
     private String jabatanBarjas;
     private List<PejabatBarjasPPTKWrapper> pejabatBarjasPPTKList;
@@ -47,5 +49,21 @@ public class PejabatBarjasPPKWrapper {
 
     public void setPejabatBarjasPPTKList(List<PejabatBarjasPPTKWrapper> pejabatBarjasPPTKList) {
         this.pejabatBarjasPPTKList = pejabatBarjasPPTKList;
+    }
+
+    public String getGelarDepan() {
+        return gelarDepan;
+    }
+
+    public void setGelarDepan(String gelarDepan) {
+        this.gelarDepan = gelarDepan;
+    }
+
+    public String getGelarBelakang() {
+        return gelarBelakang;
+    }
+
+    public void setGelarBelakang(String gelarBelakang) {
+        this.gelarBelakang = gelarBelakang;
     }
 }
