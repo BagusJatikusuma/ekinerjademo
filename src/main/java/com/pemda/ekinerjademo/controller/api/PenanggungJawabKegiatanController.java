@@ -811,7 +811,30 @@ public class PenanggungJawabKegiatanController {
                                 if (kegiatan.getPenanggungJawabKegiatanId().getKdProg().equals(kegiatanPejabatPPTK.getKdProg())
                                         && kegiatan.getPenanggungJawabKegiatanId().getIdProg().equals(kegiatanPejabatPPTK.getIdProg())
                                         && kegiatan.getPenanggungJawabKegiatanId().getKdKeg().equals(kegiatanPejabatPPTK.getKdKegiatan())) {
+
+                                    List<TaKegiatanWrapper> taKegiatanPPTKWrappersFiltered = new ArrayList<>();
+                                    for (PenanggungJawabKegiatan kegiatanTemp : kegiatanUnitKerjaList) {
+                                        if (kegiatan.getPenanggungJawabKegiatanId().getNipPegawai()
+                                                .equals(pejabatPPK.getNip())) {
+
+                                            for (TaKegiatanWrapper kegiatanPejabatPPTKTemp : pejabatPPTK.getKegiatanWrapperList()) {
+                                                if (kegiatanTemp.getPenanggungJawabKegiatanId().getKdProg().equals(kegiatanPejabatPPTKTemp.getKdProg())
+                                                    && kegiatanTemp.getPenanggungJawabKegiatanId().getIdProg().equals(kegiatanPejabatPPTKTemp.getIdProg())
+                                                    && kegiatanTemp.getPenanggungJawabKegiatanId().getKdKeg().equals(kegiatanPejabatPPTKTemp.getKdKegiatan())) {
+
+                                                    taKegiatanPPTKWrappersFiltered.add(kegiatanPejabatPPTKTemp);
+
+                                                }
+                                            }
+
+                                        }
+                                    }
+
+                                    pejabatPPTK.setKegiatanWrapperList(taKegiatanPPTKWrappersFiltered);
+
                                     pejabatBarjasPPTKWrappersTemp.add(pejabatPPTK);
+
+                                    break;
 
                                 }
                             }
