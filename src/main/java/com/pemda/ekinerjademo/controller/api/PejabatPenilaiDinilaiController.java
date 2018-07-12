@@ -34,6 +34,7 @@ public class PejabatPenilaiDinilaiController {
 
     private PejabatPenilaiDinilaiService pejabatPenilaiDinilaiService;
     private QutPegawaiCloneService qutPegawaiService;
+
     private TkdJabatanService tkdJabatanService;
 
     @Autowired

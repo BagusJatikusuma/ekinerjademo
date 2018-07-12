@@ -45,7 +45,9 @@ public class SuratKeteranganController {
 
     @Autowired private SuratKeteranganService suratKeteranganService;
     @Autowired private QutPegawaiService qutPegawaiService;
+
     @Autowired private TkdUnkDao tkdUnkDao;
+
     @Autowired private AkunPegawaiService akunPegawaiService;
 
     @RequestMapping(value = "/create-surat-keterangan", method = RequestMethod.POST)

@@ -35,7 +35,9 @@ public class SuratDinasController {
     @Autowired private SuratDinasService suratDinasService;
     @Autowired private QutPegawaiService qutPegawaiService;
     @Autowired private TkdJabatanService tkdJabatanService;
+
     @Autowired private TkdUnkDao tkdUnkDao;
+
     @Autowired
     private AkunPegawaiService akunPegawaiService;
     @Autowired

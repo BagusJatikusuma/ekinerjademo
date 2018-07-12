@@ -39,10 +39,13 @@ public class SuratPerintahController {
     private SuratPerintahService suratPerintahService;
     @Autowired
     private QutPegawaiCloneService qutPegawaiService;
+
     @Autowired
     private TkdJabatanService tkdJabatanService;
+
     @Autowired
     private TkdUnkDao tkdUnkDao;
+
     @Autowired
     private NomorUrutSuratUnitKerjaService nomorUrutSuratUnitKerjaService;
     @Autowired

@@ -37,7 +37,9 @@ public class PengumumanController {
 
     @Autowired private PengumumanService pengumumanService;
     @Autowired private QutPegawaiCloneService qutPegawaiService;
+
     @Autowired private TkdUnkDao tkdUnkDao;
+
     @Autowired private AkunPegawaiService akunPegawaiService;
 
     @RequestMapping(value = "/create-pengumuman", method = RequestMethod.POST)

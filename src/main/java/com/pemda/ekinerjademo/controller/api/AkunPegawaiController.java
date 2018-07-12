@@ -40,6 +40,8 @@ public class AkunPegawaiController {
     private TkdJabatanDao tkdJabatanDao;
     private QutPegawaiDao qutPegawaiDao;
     private AkunPegawaiDao akunPegawaiDao;
+    @Autowired private TkdUnkDao tkdUnkDao;
+
     private AkunPegawaiService akunPegawaiService;
     private RoleService roleService;
     private TkdJabatanService tkdJabatanService;
@@ -69,8 +71,6 @@ public class AkunPegawaiController {
     @Autowired private LoginPegawaiService loginPegawaiService;
     @Autowired private LembarDisposisiService lembarDisposisiService;
     @Autowired private SuratInstruksiService suratInstruksiService;
-
-    @Autowired private TkdUnkDao tkdUnkDao;
 
     @Autowired
     public AkunPegawaiController(

@@ -39,10 +39,13 @@ public class NotaDinasController {
     @Autowired private NotaDinasService notaDinasService;
     @Autowired
     private QutPegawaiCloneService qutPegawaiService;
+
     @Autowired
     private TkdJabatanService tkdJabatanService;
+
     @Autowired
     private TkdUnkDao tkdUnkDao;
+
     @Autowired private AkunPegawaiService akunPegawaiService;
 
     @RequestMapping(value = "/create-nota-dinas", method = RequestMethod.POST)

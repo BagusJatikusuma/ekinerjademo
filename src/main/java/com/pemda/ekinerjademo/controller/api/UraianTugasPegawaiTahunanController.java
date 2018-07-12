@@ -32,6 +32,7 @@ public class UraianTugasPegawaiTahunanController {
     @Autowired private QutPegawaiCloneService qutPegawaiService;
     @Autowired private UraianTugasJabatanJenisUrtugService uraianTugasJabatanJenisUrtugService;
     @Autowired private PejabatPenilaiDinilaiService pejabatPenilaiDinilaiService;
+
     @Autowired private TkdUnkDao tkdUnkDao;
 
     @RequestMapping(value = "/get-uraian-tugas-pegawai-tahunan-by-nip/{nipPegawai}", method = RequestMethod.GET)

@@ -38,7 +38,9 @@ public class SuratKeputusanController {
 
     @Autowired private SuratKeputusanService suratKeputusanService;
     @Autowired private QutPegawaiService qutPegawaiService;
+
     @Autowired private TkdUnkDao tkdUnkDao;
+
     @Autowired private AkunPegawaiService akunPegawaiService;
 
     @RequestMapping(value = "/create-surat-keputusan", method = RequestMethod.POST)

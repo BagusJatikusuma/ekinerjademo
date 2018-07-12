@@ -38,7 +38,9 @@ public class SuratEdaranController {
 
     @Autowired private SuratEdaranService suratEdaranService;
     @Autowired private QutPegawaiService qutPegawaiService;
+
     @Autowired private TkdUnkDao tkdUnkDao;
+
     @Autowired private AkunPegawaiService akunPegawaiService;
 
     @RequestMapping(value = "/create-surat-edaran", method = RequestMethod.POST)

@@ -38,6 +38,7 @@ public class SuratInstruksiController {
 
     @Autowired private SuratInstruksiService suratInstruksiService;
     @Autowired private QutPegawaiCloneService qutPegawaiService;
+
     @Autowired private TkdJabatanService tkdJabatanService;
 
     @Autowired private BeritaAcaraService beritaAcaraService;

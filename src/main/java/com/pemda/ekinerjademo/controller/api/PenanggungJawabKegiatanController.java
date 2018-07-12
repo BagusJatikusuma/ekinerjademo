@@ -41,11 +41,14 @@ public class PenanggungJawabKegiatanController {
     @Autowired private TaKegiatanService taKegiatanService;
     @Autowired private TaProgramDao taProgramDao;
     @Autowired private UrtugKegiatanService urtugKegiatanService;
+
     @Autowired private TkdJabatanService tkdJabatanService;
 
     @Autowired private TkdUnkDao tkdUnkDao;
+
     @Autowired
     private TaKegiatanDao taKegiatanDao;
+
     @Autowired
     private UnitKerjaKegiatanDao unitKerjaKegiatanDao;
 

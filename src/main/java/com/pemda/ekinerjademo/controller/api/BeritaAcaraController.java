@@ -40,7 +40,9 @@ public class BeritaAcaraController {
 
     @Autowired private BeritaAcaraService beritaAcaraService;
     @Autowired private QutPegawaiService qutPegawaiService;
+
     @Autowired private TkdUnkDao tkdUnkDao;
+
     @Autowired private AkunPegawaiService akunPegawaiService;
 
     @RequestMapping(value = "/berita-acara/create-berita-acara", method = RequestMethod.POST)

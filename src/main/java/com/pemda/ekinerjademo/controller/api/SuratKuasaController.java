@@ -42,6 +42,7 @@ public class SuratKuasaController {
     @Autowired private AkunPegawaiService akunPegawaiService;
     @Autowired
     private SuratDisposisiService suratDisposisiService;
+
     @Autowired
     private TkdUnkDao tkdUnkDao;
 

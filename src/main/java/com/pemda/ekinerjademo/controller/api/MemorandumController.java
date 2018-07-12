@@ -34,12 +34,16 @@ public class MemorandumController {
 
     @Autowired
     private MemorandumService memorandumService;
+
     @Autowired
     private QutPegawaiCloneService qutPegawaiService;
+
     @Autowired
     private TkdJabatanService tkdJabatanService;
+
     @Autowired
     private TkdUnkDao tkdUnkDao;
+
     @Autowired
     private AkunPegawaiService akunPegawaiService;
     @Autowired

@@ -35,7 +35,9 @@ public class LaporanController {
 
     @Autowired private LaporanService laporanService;
     @Autowired private QutPegawaiService qutPegawaiService;
+
     @Autowired private TkdUnkDao tkdUnkDao;
+
     @Autowired private AkunPegawaiService akunPegawaiService;
 
     @RequestMapping(value = "/create-laporan", method = RequestMethod.POST)

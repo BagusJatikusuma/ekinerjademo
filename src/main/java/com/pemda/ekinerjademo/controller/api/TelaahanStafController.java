@@ -45,8 +45,10 @@ public class TelaahanStafController {
     private TelaahanStafService telaahanStafService;
     @Autowired
     private QutPegawaiCloneService qutPegawaiService;
+
     @Autowired
     private TkdUnkDao tkdUnkDao;
+
     @Autowired private AkunPegawaiService akunPegawaiService;
 
     @RequestMapping(value = "/create-telaahan-staf", method = RequestMethod.POST)

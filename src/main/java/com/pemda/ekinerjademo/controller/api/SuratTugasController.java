@@ -38,10 +38,13 @@ public class SuratTugasController {
     private SuratTugasService suratTugasService;
     @Autowired
     private QutPegawaiService qutPegawaiService;
+
     @Autowired
     private TkdJabatanService tkdJabatanService;
+
     @Autowired
     private TkdUnkDao tkdUnkDao;
+
     @Autowired private AkunPegawaiService akunPegawaiService;
 
     @RequestMapping(value = "/create-surat-tugas", method = RequestMethod.POST)
