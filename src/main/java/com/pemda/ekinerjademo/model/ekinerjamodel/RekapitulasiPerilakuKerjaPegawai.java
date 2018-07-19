@@ -2,6 +2,7 @@ package com.pemda.ekinerjademo.model.ekinerjamodel;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Id;
 import javax.persistence.Table;
 
 /**
@@ -11,6 +12,10 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "rekapitulasi_perilaku_kerja_pegawai")
 public class RekapitulasiPerilakuKerjaPegawai {
+
+    @Id
+    @Column(name = "kd_rekap")
+    private String kdRekap;
 
     @Column(name = "bulan_tahun_rekapitulasi")
     private long bulanTahunRekapulasi;
@@ -199,5 +204,13 @@ public class RekapitulasiPerilakuKerjaPegawai {
 
     public void setNilaiKebalikan(float nilaiKebalikan) {
         this.nilaiKebalikan = nilaiKebalikan;
+    }
+
+    public String getKdRekap() {
+        return kdRekap;
+    }
+
+    public void setKdRekap(String kdRekap) {
+        this.kdRekap = kdRekap;
     }
 }
