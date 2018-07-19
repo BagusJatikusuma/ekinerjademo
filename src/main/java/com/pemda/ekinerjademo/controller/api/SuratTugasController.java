@@ -6,18 +6,18 @@ import com.pemda.ekinerjademo.model.bismamodel.TkdUnk;
 import com.pemda.ekinerjademo.model.ekinerjamodel.*;
 import com.pemda.ekinerjademo.projection.ekinerjaprojection.CustomPegawaiCredential;
 import com.pemda.ekinerjademo.repository.bismarepository.TkdUnkDao;
-import com.pemda.ekinerjademo.service.AkunPegawaiService;
-import com.pemda.ekinerjademo.service.QutPegawaiService;
-import com.pemda.ekinerjademo.service.SuratTugasService;
-import com.pemda.ekinerjademo.service.TkdJabatanService;
+import com.pemda.ekinerjademo.repository.ekinerjarepository.TkdUnkCloneDao;
+import com.pemda.ekinerjademo.service.*;
 import com.pemda.ekinerjademo.util.BarcodeGenerator;
 import com.pemda.ekinerjademo.util.EkinerjaXMLBuilder;
 import com.pemda.ekinerjademo.util.EkinerjaXMLParser;
+import com.pemda.ekinerjademo.util.exception.EkinerjaObjConverter;
 import com.pemda.ekinerjademo.wrapper.input.SuratTugasInputWrapper;
 import com.pemda.ekinerjademo.wrapper.output.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -36,14 +36,19 @@ public class SuratTugasController {
 
     @Autowired
     private SuratTugasService suratTugasService;
-    @Autowired
-    private QutPegawaiService qutPegawaiService;
+
+    //    @Autowired
+//    private QutPegawaiService qutPegawaiService; //test clone
 
     @Autowired
+    private QutPegawaiCloneService qutPegawaiService;
+
+    //    @Autowired private TkdUnkDao tkdUnkDao; //test clone
+    @Autowired private TkdUnkCloneDao tkdUnkDao;
+
+    @Autowired
+    @Qualifier("TkdJabatanCloneService")
     private TkdJabatanService tkdJabatanService;
-
-    @Autowired
-    private TkdUnkDao tkdUnkDao;
 
     @Autowired private AkunPegawaiService akunPegawaiService;
 
@@ -587,7 +592,9 @@ public class SuratTugasController {
         } else {
             kdUnitKerjaPenandatangan = penandatanganSurat.getKdUnitKerja();
 
-            TkdUnk tkdUnk = tkdUnkDao.findOne(kdUnitKerjaPenandatangan);
+//            TkdUnk tkdUnk = tkdUnkDao.findOne(kdUnitKerjaPenandatangan); //test clone
+            TkdUnk tkdUnk
+                    = EkinerjaObjConverter.convertFromUnkClonetoOriginal(tkdUnkDao.findOne(kdUnitKerjaPenandatangan));
 
             unitKerjaPenandatangan = tkdUnk.getUnitKerja();
         }
@@ -782,7 +789,9 @@ public class SuratTugasController {
         } else {
             kdUnitKerjaPenandatangan = penandatanganSurat.getKdUnitKerja();
 
-            TkdUnk tkdUnk = tkdUnkDao.findOne(kdUnitKerjaPenandatangan);
+//            TkdUnk tkdUnk = tkdUnkDao.findOne(kdUnitKerjaPenandatangan);
+            TkdUnk tkdUnk
+                    = EkinerjaObjConverter.convertFromUnkClonetoOriginal(tkdUnkDao.findOne(kdUnitKerjaPenandatangan));
 
             unitKerjaPenandatangan = tkdUnk.getUnitKerja();
         }

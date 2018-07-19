@@ -6,7 +6,7 @@ import javax.persistence.*;
 @Table(name = "tkd_jabatan_clone")
 public class TkdJabatanClone {
     @Id
-    @Column(name = "kdJabatan")
+    @Column(name = "kd_jabatan")
     private String kdJabatan;
 
     @Column(name = "jabatan")
@@ -18,17 +18,17 @@ public class TkdJabatanClone {
     @Column(name = "pada")
     private String pada;
 
-    @Column(name = "unitKerja")
+    @Column(name = "unit_kerja")
     private String unitKerja;
 
-    @Column(name = "tnjJabatan")
+    @Column(name = "tnj_jabatan")
     private Long tnjJabatan;
 
-    @Column(name = "tnjJabatanLm")
+    @Column(name = "tnj_jabatan_lm")
     private Long tnjJabatanLm;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "kdUnitKerja")
+    @JoinColumn(name = "kd_unit_kerja")
     private TkdUnkClone kdUnitKerja;
 
     @Column(name = "ket")

@@ -13,9 +13,11 @@ import com.pemda.ekinerjademo.wrapper.input.LembarDisposisiInputWrapper;
 import com.pemda.ekinerjademo.wrapper.input.StatusApproveDraftlembarDisposisiInputWrapper;
 import com.pemda.ekinerjademo.wrapper.output.*;
 import groovy.transform.Synchronized;
+import org.apache.commons.io.FilenameUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -44,7 +46,9 @@ public class LembarDisposisiController {
     @Autowired private SuratDisposisiService suratDisposisiService;
     @Autowired private QutPegawaiCloneService qutPegawaiService;
 
-    @Autowired private TkdJabatanService tkdJabatanService;
+    @Autowired
+    @Qualifier("TkdJabatanCloneService")
+    private TkdJabatanService tkdJabatanService;
 
     //service yang digunakan untuk mengambil surat disposisi
     @Autowired private BeritaAcaraService beritaAcaraService;

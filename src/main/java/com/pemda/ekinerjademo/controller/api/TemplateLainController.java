@@ -4,6 +4,7 @@ import com.pemda.ekinerjademo.model.bismamodel.QutPegawai;
 import com.pemda.ekinerjademo.model.ekinerjamodel.AkunPegawai;
 import com.pemda.ekinerjademo.model.ekinerjamodel.TemplateLain;
 import com.pemda.ekinerjademo.service.AkunPegawaiService;
+import com.pemda.ekinerjademo.service.QutPegawaiCloneService;
 import com.pemda.ekinerjademo.service.QutPegawaiService;
 import com.pemda.ekinerjademo.service.TemplateLainService;
 import com.pemda.ekinerjademo.util.FileUploader;
@@ -35,7 +36,7 @@ public class TemplateLainController {
     @Autowired
     private TemplateLainService templateLainService;
     @Autowired
-    private QutPegawaiService qutPegawaiService;
+    private QutPegawaiCloneService qutPegawaiService;
     @Autowired
     private AkunPegawaiService akunPegawaiService;
 

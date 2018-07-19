@@ -69,6 +69,9 @@ public class SimdaRepositoryConfig {
                 env.getRequiredProperty("spring.jpa.properties.hibernate.generate_statistics")
         );
 
+        properties.put("spring.datasource.continue-on-error",
+                env.getRequiredProperty("spring.simdaDataSource.continue-on-error"));
+
         em.setJpaPropertyMap(properties);
 
         return em;

@@ -16,6 +16,7 @@ import com.pemda.ekinerjademo.wrapper.output.QutPegawaiWrapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -41,7 +42,7 @@ public class PejabatPenilaiDinilaiController {
     public PejabatPenilaiDinilaiController(
             PejabatPenilaiDinilaiService pejabatPenilaiDinilaiService,
             QutPegawaiCloneService qutPegawaiService,
-            TkdJabatanService tkdJabatanService) {
+            @Qualifier("TkdJabatanCloneService") TkdJabatanService tkdJabatanService) {
         this.pejabatPenilaiDinilaiService = pejabatPenilaiDinilaiService;
         this.qutPegawaiService = qutPegawaiService;
         this.tkdJabatanService = tkdJabatanService;

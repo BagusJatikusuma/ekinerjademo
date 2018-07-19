@@ -4,7 +4,9 @@ import com.pemda.ekinerjademo.model.bismamodel.QutPegawai;
 import com.pemda.ekinerjademo.model.bismamodel.TkdUnk;
 import com.pemda.ekinerjademo.model.ekinerjamodel.*;
 import com.pemda.ekinerjademo.repository.bismarepository.TkdUnkDao;
+import com.pemda.ekinerjademo.repository.ekinerjarepository.TkdUnkCloneDao;
 import com.pemda.ekinerjademo.service.*;
+import com.pemda.ekinerjademo.util.exception.EkinerjaObjConverter;
 import com.pemda.ekinerjademo.wrapper.input.UraianTugasPegawaiTahunanInputWrapper;
 import com.pemda.ekinerjademo.wrapper.output.*;
 import org.slf4j.Logger;
@@ -33,7 +35,8 @@ public class UraianTugasPegawaiTahunanController {
     @Autowired private UraianTugasJabatanJenisUrtugService uraianTugasJabatanJenisUrtugService;
     @Autowired private PejabatPenilaiDinilaiService pejabatPenilaiDinilaiService;
 
-    @Autowired private TkdUnkDao tkdUnkDao;
+//    @Autowired private TkdUnkDao tkdUnkDao;
+    @Autowired private TkdUnkCloneDao tkdUnkDao;
 
     @RequestMapping(value = "/get-uraian-tugas-pegawai-tahunan-by-nip/{nipPegawai}", method = RequestMethod.GET)
     ResponseEntity<?> getUraianTugasPegawaiTahunanByNip(@PathVariable("nipPegawai") String nipPegawai) {
@@ -284,9 +287,10 @@ public class UraianTugasPegawaiTahunanController {
                 = new ArrayList<>();
         List<UraianTugasJabatanJenisUrtug> uraianTugasJabatanJenisUrtugList
                 = uraianTugasJabatanJenisUrtugService.getUrtugNonDpaByUnitKerja(kdUnitKerja);
+//        List<TkdUnk> tkdUnkList
+//                = tkdUnkDao.findAll(); //test clone
         List<TkdUnk> tkdUnkList
-                = tkdUnkDao.findAll();
-
+                = EkinerjaObjConverter.convertFromUnkClonetoOriginal(tkdUnkDao.findAll());
 
         //filter pegawai bawahan penilai
         for (PejabatPenilaiDinilai pejabatPenilaiDinilai :
@@ -525,8 +529,10 @@ public class UraianTugasPegawaiTahunanController {
                 = new ArrayList<>();
         List<UraianTugasJabatanJenisUrtug> uraianTugasJabatanJenisUrtugList
                 = uraianTugasJabatanJenisUrtugService.getUrtugNonDpaByUnitKerja(kdUnitKerja);
+//        List<TkdUnk> tkdUnkList
+//                = tkdUnkDao.findAll(); //test clone
         List<TkdUnk> tkdUnkList
-                = tkdUnkDao.findAll();
+                = EkinerjaObjConverter.convertFromUnkClonetoOriginal(tkdUnkDao.findAll());
 
 
         //filter pegawai bawahan penilai

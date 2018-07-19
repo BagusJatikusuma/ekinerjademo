@@ -9,6 +9,7 @@ import com.pemda.ekinerjademo.service.UrtugKegiatanPegawaiService;
 import com.pemda.ekinerjademo.wrapper.input.UrtugKegiatanPegawaiApprovalInputWrapper;
 import com.pemda.ekinerjademo.wrapper.output.UrtugKegiatanPegawaiByUrtugJabatanWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,6 +26,7 @@ public class UrtugKegiatanPegawaiServiceImpl implements UrtugKegiatanPegawaiServ
     private UrtugKegiatanPegawaiDao urtugKegiatanPegawaiDao;
 
     @Autowired
+    @Qualifier("TkdJabatanCloneService")
     private TkdJabatanService tkdJabatanService;
 
     @Override

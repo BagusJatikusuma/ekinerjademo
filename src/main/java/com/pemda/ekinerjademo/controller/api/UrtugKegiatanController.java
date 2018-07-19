@@ -284,13 +284,23 @@ public class UrtugKegiatanController {
 
         List<TaKegiatan> taKegiatanList = taKegiatanService.findByUnitKerja(unitKerjaKegiatan);
 
-        List<UrtugKegiatan> urtugKegiatanList
-                = urtugKegiatanService.findAllByUraianTugasJabatan(
-                                        urtugJabatanWrapper.getKdUrtug(),
-                                        urtugJabatanWrapper.getKdJabatan(),
-                                        urtugJabatanWrapper.getKdJenisUrtug(),
-                                        urtugJabatanWrapper.getTahunUrtug(),
-                                        urtugJabatanWrapper.getNipPegawai());
+        List<UrtugKegiatan> urtugKegiatanList = new ArrayList<>();
+
+        if (urtugJabatanWrapper.getNipPegawai() != null) {
+            urtugKegiatanList = urtugKegiatanService.findAllByUraianTugasJabatan(
+                                    urtugJabatanWrapper.getKdUrtug(),
+                                    urtugJabatanWrapper.getKdJabatan(),
+                                    urtugJabatanWrapper.getKdJenisUrtug(),
+                                    urtugJabatanWrapper.getTahunUrtug(),
+                                    urtugJabatanWrapper.getNipPegawai());
+        }
+        else {
+            urtugKegiatanList = urtugKegiatanService.findAllByUraianTugasJabatan(
+                    urtugJabatanWrapper.getKdUrtug(),
+                    urtugJabatanWrapper.getKdJabatan(),
+                    urtugJabatanWrapper.getKdJenisUrtug(),
+                    urtugJabatanWrapper.getTahunUrtug());
+        }
 
         boolean exist;
         for (UrtugKegiatan urtugKegiatan : urtugKegiatanList) {

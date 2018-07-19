@@ -69,6 +69,8 @@ public class BismaRepositoryConfig {
         properties.put("hibernate.generate_statistics",
                 env.getRequiredProperty("spring.jpa.properties.hibernate.generate_statistics")
         );
+        properties.put("spring.datasource.continue-on-error",
+                env.getRequiredProperty("spring.bismaDataSource.continue-on-error"));
 
         em.setJpaPropertyMap(properties);
 

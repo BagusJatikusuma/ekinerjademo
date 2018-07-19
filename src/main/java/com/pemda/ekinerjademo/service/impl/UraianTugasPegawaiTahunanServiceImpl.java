@@ -9,6 +9,7 @@ import com.pemda.ekinerjademo.service.TkdJabatanService;
 import com.pemda.ekinerjademo.service.UraianTugasPegawaiTahunanService;
 import com.pemda.ekinerjademo.wrapper.input.UraianTugasPegawaiTahunanInputWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,6 +25,7 @@ import java.util.List;
 public class UraianTugasPegawaiTahunanServiceImpl implements UraianTugasPegawaiTahunanService {
     @Autowired private UraianTugasPegawaiTahunanDao urtugPegawaiTahunanDao;
     @Autowired
+    @Qualifier("TkdJabatanCloneService")
     private TkdJabatanService tkdJabatanService;
 
     @Override

@@ -6,17 +6,20 @@ import com.pemda.ekinerjademo.model.bismamodel.TkdUnk;
 import com.pemda.ekinerjademo.model.ekinerjamodel.*;
 import com.pemda.ekinerjademo.projection.ekinerjaprojection.CustomPegawaiCredential;
 import com.pemda.ekinerjademo.repository.bismarepository.TkdUnkDao;
+import com.pemda.ekinerjademo.repository.ekinerjarepository.TkdUnkCloneDao;
 import com.pemda.ekinerjademo.service.*;
 import com.pemda.ekinerjademo.util.BarcodeGenerator;
 import com.pemda.ekinerjademo.util.DateUtilities;
 import com.pemda.ekinerjademo.util.EkinerjaXMLBuilder;
 import com.pemda.ekinerjademo.util.EkinerjaXMLParser;
+import com.pemda.ekinerjademo.util.exception.EkinerjaObjConverter;
 import com.pemda.ekinerjademo.wrapper.input.SuratPerintahInputWrapper;
 import com.pemda.ekinerjademo.wrapper.output.*;
 import groovy.transform.Synchronized;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -37,14 +40,19 @@ public class SuratPerintahController {
 
     @Autowired
     private SuratPerintahService suratPerintahService;
+
+    //    @Autowired
+//    private QutPegawaiService qutPegawaiService; //test clone
+
     @Autowired
     private QutPegawaiCloneService qutPegawaiService;
 
-    @Autowired
-    private TkdJabatanService tkdJabatanService;
+    //    @Autowired private TkdUnkDao tkdUnkDao; //test clone
+    @Autowired private TkdUnkCloneDao tkdUnkDao;
 
     @Autowired
-    private TkdUnkDao tkdUnkDao;
+    @Qualifier("TkdJabatanCloneService")
+    private TkdJabatanService tkdJabatanService;
 
     @Autowired
     private NomorUrutSuratUnitKerjaService nomorUrutSuratUnitKerjaService;
@@ -1100,8 +1108,11 @@ public class SuratPerintahController {
             jabatanPenandatangan = penandatanganSurat.getJabatan();
         } else {
             kdUnitKerjaPenandatangan = penandatanganSurat.getKdUnitKerja();
+//
+//            TkdUnk tkdUnk = tkdUnkDao.findOne(kdUnitKerjaPenandatangan); //test clone
 
-            TkdUnk tkdUnk = tkdUnkDao.findOne(kdUnitKerjaPenandatangan);
+            TkdUnk tkdUnk
+                    = EkinerjaObjConverter.convertFromUnkClonetoOriginal(tkdUnkDao.findOne(kdUnitKerjaPenandatangan));
 
             unitKerjaPenandatangan = tkdUnk.getUnitKerja();
         }
@@ -1356,7 +1367,10 @@ public class SuratPerintahController {
         } else {
             kdUnitKerjaPenandatangan = penandatanganSurat.getKdUnitKerja();
 
-            TkdUnk tkdUnk = tkdUnkDao.findOne(kdUnitKerjaPenandatangan);
+//            TkdUnk tkdUnk = tkdUnkDao.findOne(kdUnitKerjaPenandatangan); //test clone
+
+            TkdUnk tkdUnk
+                    = EkinerjaObjConverter.convertFromUnkClonetoOriginal(tkdUnkDao.findOne(kdUnitKerjaPenandatangan));
 
             unitKerjaPenandatangan = tkdUnk.getUnitKerja();
         }
