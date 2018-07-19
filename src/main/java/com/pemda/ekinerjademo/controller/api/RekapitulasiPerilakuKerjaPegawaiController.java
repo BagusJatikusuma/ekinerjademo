@@ -48,6 +48,7 @@ public class RekapitulasiPerilakuKerjaPegawaiController {
         rekapitulasiPerilakuKerjaPegawai.setKdUnitKerja(inputWrapper.getKdUnitKerja());
         rekapitulasiPerilakuKerjaPegawai.setNamaJabatan(inputWrapper.getNamaJabatan());
         rekapitulasiPerilakuKerjaPegawai.setNipPegawai(inputWrapper.getNipPegawai());
+        rekapitulasiPerilakuKerjaPegawai.setNamaPegawai(inputWrapper.getNamaPegawai());
 
         rekapitulasiPerilakuKerjaPegawai.setDataHadir(inputWrapper.getDataHadir());
         rekapitulasiPerilakuKerjaPegawai.setNilaiHadir(inputWrapper.getNilaiHadir());

@@ -10,6 +10,7 @@ public class RekapitulasiPerilakuKerjaPegawaiInputWrapper {
     private String kdUnitKerja;
     private String namaJabatan;
     private String nipPegawai;
+    private String namaPegawai;
 
     private int dataHadir;
     private int nilaiHadir;
@@ -174,5 +175,13 @@ public class RekapitulasiPerilakuKerjaPegawaiInputWrapper {
 
     public void setNilaiKebalikan(float nilaiKebalikan) {
         this.nilaiKebalikan = nilaiKebalikan;
+    }
+
+    public String getNamaPegawai() {
+        return namaPegawai;
+    }
+
+    public void setNamaPegawai(String namaPegawai) {
+        this.namaPegawai = namaPegawai;
     }
 }

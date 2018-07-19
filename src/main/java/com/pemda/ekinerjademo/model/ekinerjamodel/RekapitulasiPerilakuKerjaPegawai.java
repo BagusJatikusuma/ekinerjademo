@@ -26,6 +26,8 @@ public class RekapitulasiPerilakuKerjaPegawai {
     private String namaJabatan;
     @Column(name = "nip_pegawai")
     private String nipPegawai;
+    @Column(name = "nama_pegawai")
+    private String namaPegawai;
 
     @Column(name = "data_hadir")
     private int dataHadir;
@@ -62,6 +64,14 @@ public class RekapitulasiPerilakuKerjaPegawai {
     @Column(name = "nilai_kebalikan")
     private float nilaiKebalikan;
 
+    public String getKdRekap() {
+        return kdRekap;
+    }
+
+    public void setKdRekap(String kdRekap) {
+        this.kdRekap = kdRekap;
+    }
+
     public long getBulanTahunRekapulasi() {
         return bulanTahunRekapulasi;
     }
@@ -92,6 +102,14 @@ public class RekapitulasiPerilakuKerjaPegawai {
 
     public void setNipPegawai(String nipPegawai) {
         this.nipPegawai = nipPegawai;
+    }
+
+    public String getNamaPegawai() {
+        return namaPegawai;
+    }
+
+    public void setNamaPegawai(String namaPegawai) {
+        this.namaPegawai = namaPegawai;
     }
 
     public int getDataHadir() {
@@ -204,13 +222,5 @@ public class RekapitulasiPerilakuKerjaPegawai {
 
     public void setNilaiKebalikan(float nilaiKebalikan) {
         this.nilaiKebalikan = nilaiKebalikan;
-    }
-
-    public String getKdRekap() {
-        return kdRekap;
-    }
-
-    public void setKdRekap(String kdRekap) {
-        this.kdRekap = kdRekap;
     }
 }
