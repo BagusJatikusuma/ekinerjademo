@@ -33,7 +33,7 @@ public class RekapitulasiPerilakuKerjaPegawaiController {
         List<RekapitulasiPerilakuKerjaPegawai> rekapitulasiPerilakuKerjaPegawaiList
                 = rekapitulasiPerilakuKerjaPegawaiService.getRekaptulasiPerilakuKerjaPegawai(kdUnitKerja, bulanTahunRekapitulasi);
 
-        return new ResponseEntity<Object>(null, HttpStatus.OK);
+        return new ResponseEntity<Object>(rekapitulasiPerilakuKerjaPegawaiList, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/create-rekapitulasi-perilaku-kerja-pegawai", method = RequestMethod.POST)
