@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 /**
  * Created by bayu on 18/07/18.
  */
@@ -25,5 +27,10 @@ public class RekapitulasiPerilakuKerjaPegawaiImpl implements RekapitulasiPerilak
     @Override
     public void createRekaptulasiPerilakuKerjaPegawai(RekapitulasiPerilakuKerjaPegawai rekapitulasiPerilakuKerjaPegawai) {
         rekapitulasiPerilakuKerjaPegawaiDao.save(rekapitulasiPerilakuKerjaPegawai);
+    }
+
+    @Override
+    public List<RekapitulasiPerilakuKerjaPegawai> getRekaptulasiPerilakuKerjaPegawai(String kdUnitKerja, long bulanTahunRekapitulasi) {
+        return null;
     }
 }
