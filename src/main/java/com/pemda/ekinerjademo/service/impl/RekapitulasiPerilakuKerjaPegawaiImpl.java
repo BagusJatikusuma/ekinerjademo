@@ -31,6 +31,6 @@ public class RekapitulasiPerilakuKerjaPegawaiImpl implements RekapitulasiPerilak
 
     @Override
     public List<RekapitulasiPerilakuKerjaPegawai> getRekaptulasiPerilakuKerjaPegawai(String kdUnitKerja, long bulanTahunRekapitulasi) {
-        return rekapitulasiPerilakuKerjaPegawaiDao.findByBulanTahunRekapulasiAndKdUnitKerja(bulanTahunRekapitulasi, kdUnitKerja);
+        return rekapitulasiPerilakuKerjaPegawaiDao.findByRekapitulasiPerilakuKerjaPegawaiId_BulanTahunRekapulasiAndKdUnitKerja(bulanTahunRekapitulasi, kdUnitKerja);
     }
 }

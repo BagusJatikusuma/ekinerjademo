@@ -1,9 +1,6 @@
 package com.pemda.ekinerjademo.model.ekinerjamodel;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 /**
  * Created by bayu on 18/07/18.
@@ -13,19 +10,13 @@ import javax.persistence.Table;
 @Table(name = "rekapitulasi_perilaku_kerja_pegawai")
 public class RekapitulasiPerilakuKerjaPegawai {
 
-    @Id
-    @Column(name = "kd_rekap")
-    private String kdRekap;
-
-    @Column(name = "bulan_tahun_rekapitulasi")
-    private long bulanTahunRekapulasi;
+    @EmbeddedId
+    private RekapitulasiPerilakuKerjaPegawaiId rekapitulasiPerilakuKerjaPegawaiId;
 
     @Column(name = "kd_unit_kerja")
     private String kdUnitKerja;
     @Column(name = "nama_jabatan")
     private String namaJabatan;
-    @Column(name = "nip_pegawai")
-    private String nipPegawai;
     @Column(name = "nama_pegawai")
     private String namaPegawai;
 
@@ -64,22 +55,6 @@ public class RekapitulasiPerilakuKerjaPegawai {
     @Column(name = "nilai_kebalikan")
     private float nilaiKebalikan;
 
-    public String getKdRekap() {
-        return kdRekap;
-    }
-
-    public void setKdRekap(String kdRekap) {
-        this.kdRekap = kdRekap;
-    }
-
-    public long getBulanTahunRekapulasi() {
-        return bulanTahunRekapulasi;
-    }
-
-    public void setBulanTahunRekapulasi(long bulanTahunRekapulasi) {
-        this.bulanTahunRekapulasi = bulanTahunRekapulasi;
-    }
-
     public String getKdUnitKerja() {
         return kdUnitKerja;
     }
@@ -94,14 +69,6 @@ public class RekapitulasiPerilakuKerjaPegawai {
 
     public void setNamaJabatan(String namaJabatan) {
         this.namaJabatan = namaJabatan;
-    }
-
-    public String getNipPegawai() {
-        return nipPegawai;
-    }
-
-    public void setNipPegawai(String nipPegawai) {
-        this.nipPegawai = nipPegawai;
     }
 
     public String getNamaPegawai() {
@@ -222,5 +189,13 @@ public class RekapitulasiPerilakuKerjaPegawai {
 
     public void setNilaiKebalikan(float nilaiKebalikan) {
         this.nilaiKebalikan = nilaiKebalikan;
+    }
+
+    public RekapitulasiPerilakuKerjaPegawaiId getRekapitulasiPerilakuKerjaPegawaiId() {
+        return rekapitulasiPerilakuKerjaPegawaiId;
+    }
+
+    public void setRekapitulasiPerilakuKerjaPegawaiId(RekapitulasiPerilakuKerjaPegawaiId rekapitulasiPerilakuKerjaPegawaiId) {
+        this.rekapitulasiPerilakuKerjaPegawaiId = rekapitulasiPerilakuKerjaPegawaiId;
     }
 }

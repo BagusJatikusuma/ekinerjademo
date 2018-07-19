@@ -3,6 +3,7 @@ package com.pemda.ekinerjademo.controller.api;
 import com.pemda.ekinerjademo.model.bismamodel.QutPegawai;
 import com.pemda.ekinerjademo.model.ekinerjamodel.QutPegawaiClone;
 import com.pemda.ekinerjademo.model.ekinerjamodel.RekapitulasiPerilakuKerjaPegawai;
+import com.pemda.ekinerjademo.model.ekinerjamodel.RekapitulasiPerilakuKerjaPegawaiId;
 import com.pemda.ekinerjademo.service.QutPegawaiCloneService;
 import com.pemda.ekinerjademo.service.QutPegawaiService;
 import com.pemda.ekinerjademo.service.RekapitulasiPerilakuKerjaPegawaiService;
@@ -49,46 +50,47 @@ public class RekapitulasiPerilakuKerjaPegawaiController {
         for (QutPegawai pegawai : qutPegawaiClones) {
             found = false;
             for (RekapitulasiPerilakuKerjaPegawai rekapPegawaiInDB : rekapitulasiPerilakuKerjaPegawaiTempList) {
-                if (pegawai.getNip().equals(rekapPegawaiInDB.getNipPegawai())) {
+                if (pegawai.getNip().equals(rekapPegawaiInDB.getRekapitulasiPerilakuKerjaPegawaiId().getNipPegawai())) {
                     rekapitulasiPerilakuKerjaPegawaiList.add(rekapPegawaiInDB);
 
                     found = true;
                     break;
                 }
-
-                if (!found) {
-                    RekapitulasiPerilakuKerjaPegawai rekapitulasiPerilakuKerjaPegawai = new RekapitulasiPerilakuKerjaPegawai();
-
-                    rekapitulasiPerilakuKerjaPegawai.setKdUnitKerja(pegawai.getKdUnitKerja());
-                    rekapitulasiPerilakuKerjaPegawai.setNamaJabatan(pegawai.getJabatan());
-                    rekapitulasiPerilakuKerjaPegawai.setNipPegawai(pegawai.getNip());
-                    rekapitulasiPerilakuKerjaPegawai.setNamaPegawai(pegawai.getNama());
-
-                    rekapitulasiPerilakuKerjaPegawai.setDataHadir(0);
-                    rekapitulasiPerilakuKerjaPegawai.setNilaiHadir(0);
-
-                    rekapitulasiPerilakuKerjaPegawai.setDataPerekamanDatangPulang(0);
-                    rekapitulasiPerilakuKerjaPegawai.setNilaiPerekamanDatangPulang(0);
-
-                    rekapitulasiPerilakuKerjaPegawai.setDataHadirApel(0);
-                    rekapitulasiPerilakuKerjaPegawai.setNilaiHadirApel(0);
-
-                    rekapitulasiPerilakuKerjaPegawai.setDataHadirRapat(0);
-                    rekapitulasiPerilakuKerjaPegawai.setNilaiHadirRapat(0);
-
-                    rekapitulasiPerilakuKerjaPegawai.setDataRazia(0);
-                    rekapitulasiPerilakuKerjaPegawai.setNilaiRazia(0);
-
-                    rekapitulasiPerilakuKerjaPegawai.setDataManipulasiData(false);
-                    rekapitulasiPerilakuKerjaPegawai.setNilaiManipulasiData(true);
-
-                    rekapitulasiPerilakuKerjaPegawai.setTotalFaktorPeuranganTpp(0);
-                    rekapitulasiPerilakuKerjaPegawai.setNilaiKebalikan(0);
-
-                    rekapitulasiPerilakuKerjaPegawaiList.add(rekapitulasiPerilakuKerjaPegawai);
-                }
-
             }
+
+            if (!found) {
+                RekapitulasiPerilakuKerjaPegawai rekapitulasiPerilakuKerjaPegawai = new RekapitulasiPerilakuKerjaPegawai();
+
+                rekapitulasiPerilakuKerjaPegawai.setKdUnitKerja(pegawai.getKdUnitKerja());
+                rekapitulasiPerilakuKerjaPegawai.setNamaJabatan(pegawai.getJabatan());
+                rekapitulasiPerilakuKerjaPegawai
+                        .setRekapitulasiPerilakuKerjaPegawaiId(new RekapitulasiPerilakuKerjaPegawaiId(bulanTahunRekapitulasi,pegawai.getNip()));
+                rekapitulasiPerilakuKerjaPegawai.setNamaPegawai(pegawai.getNama());
+
+                rekapitulasiPerilakuKerjaPegawai.setDataHadir(0);
+                rekapitulasiPerilakuKerjaPegawai.setNilaiHadir(0);
+
+                rekapitulasiPerilakuKerjaPegawai.setDataPerekamanDatangPulang(0);
+                rekapitulasiPerilakuKerjaPegawai.setNilaiPerekamanDatangPulang(0);
+
+                rekapitulasiPerilakuKerjaPegawai.setDataHadirApel(0);
+                rekapitulasiPerilakuKerjaPegawai.setNilaiHadirApel(0);
+
+                rekapitulasiPerilakuKerjaPegawai.setDataHadirRapat(0);
+                rekapitulasiPerilakuKerjaPegawai.setNilaiHadirRapat(0);
+
+                rekapitulasiPerilakuKerjaPegawai.setDataRazia(0);
+                rekapitulasiPerilakuKerjaPegawai.setNilaiRazia(0);
+
+                rekapitulasiPerilakuKerjaPegawai.setDataManipulasiData(false);
+                rekapitulasiPerilakuKerjaPegawai.setNilaiManipulasiData(true);
+
+                rekapitulasiPerilakuKerjaPegawai.setTotalFaktorPeuranganTpp(0);
+                rekapitulasiPerilakuKerjaPegawai.setNilaiKebalikan(0);
+
+                rekapitulasiPerilakuKerjaPegawaiList.add(rekapitulasiPerilakuKerjaPegawai);
+            }
+
         }
 
         return new ResponseEntity<Object>(rekapitulasiPerilakuKerjaPegawaiList, HttpStatus.OK);
@@ -99,13 +101,13 @@ public class RekapitulasiPerilakuKerjaPegawaiController {
 
         RekapitulasiPerilakuKerjaPegawai rekapitulasiPerilakuKerjaPegawai = new RekapitulasiPerilakuKerjaPegawai();
 
-        rekapitulasiPerilakuKerjaPegawai.setKdRekap(String.valueOf(new Date().getTime()));
+        RekapitulasiPerilakuKerjaPegawaiId id
+                = new RekapitulasiPerilakuKerjaPegawaiId(inputWrapper.getBulanTahunRekapitulasi(), inputWrapper.getNipPegawai());
 
-        rekapitulasiPerilakuKerjaPegawai.setBulanTahunRekapulasi(inputWrapper.getBulanTahunRekapitulasi());
+        rekapitulasiPerilakuKerjaPegawai.setRekapitulasiPerilakuKerjaPegawaiId(id);
 
         rekapitulasiPerilakuKerjaPegawai.setKdUnitKerja(inputWrapper.getKdUnitKerja());
         rekapitulasiPerilakuKerjaPegawai.setNamaJabatan(inputWrapper.getNamaJabatan());
-        rekapitulasiPerilakuKerjaPegawai.setNipPegawai(inputWrapper.getNipPegawai());
         rekapitulasiPerilakuKerjaPegawai.setNamaPegawai(inputWrapper.getNamaPegawai());
 
         rekapitulasiPerilakuKerjaPegawai.setDataHadir(inputWrapper.getDataHadir());
