@@ -11,6 +11,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
+
 /**
  * Created by bayu on 18/07/18.
  */
@@ -24,8 +26,10 @@ public class RekapitulasiPerilakuKerjaPegawaiController {
     @Autowired
     private RekapitulasiPerilakuKerjaPegawaiService rekapitulasiPerilakuKerjaPegawaiService;
 
-    @RequestMapping(value = "/get-rekapitulasi-perilaku-kerja-pegawai-by-kd-kdUnitKerja/{kdUnitKerja}", method = RequestMethod.GET)
-    ResponseEntity<?> getRekaptulasiPerilakuKerjaPegawaiByKdUnitKerja(@PathVariable("kdUnitKerja") String kdUnitKerja) {
+    @RequestMapping(value = "/get-rekapitulasi-perilaku-kerja-pegawai-by-kd-kdUnitKerja-and-bulanTahun/{kdUnitKerja}/{bulanTahunRekapitulasi}", method = RequestMethod.GET)
+    ResponseEntity<?> getRekaptulasiPerilakuKerjaPegawaiByKdUnitKerja(@PathVariable("kdUnitKerja") String kdUnitKerja, @PathVariable("bulanTahunRekapitulasi") long bulanTahunRekapitulasi) {
+
+        rekapitulasiPerilakuKerjaPegawaiService.getRekaptulasiPerilakuKerjaPegawai(kdUnitKerja, bulanTahunRekapitulasi);
 
         return new ResponseEntity<Object>(null, HttpStatus.OK);
     }
@@ -35,10 +39,12 @@ public class RekapitulasiPerilakuKerjaPegawaiController {
 
         RekapitulasiPerilakuKerjaPegawai rekapitulasiPerilakuKerjaPegawai = new RekapitulasiPerilakuKerjaPegawai();
 
-        rekapitulasiPerilakuKerjaPegawai.setBulanTahunRekapulasi(inputWrapper.getBulanTahunRekapulasi());
+        rekapitulasiPerilakuKerjaPegawai.setKdRekap(String.valueOf(new Date().getTime()));
+
+        rekapitulasiPerilakuKerjaPegawai.setBulanTahunRekapulasi(inputWrapper.getBulanTahunRekapitulasi());
 
         rekapitulasiPerilakuKerjaPegawai.setKdUnitKerja(inputWrapper.getKdUnitKerja());
-        rekapitulasiPerilakuKerjaPegawai.setKdJabatan(inputWrapper.getKdJabatan());
+        rekapitulasiPerilakuKerjaPegawai.setNamaJabatan(inputWrapper.getNamaJabatan());
         rekapitulasiPerilakuKerjaPegawai.setNipPegawai(inputWrapper.getNipPegawai());
 
         rekapitulasiPerilakuKerjaPegawai.setDataHadir(inputWrapper.getDataHadir());

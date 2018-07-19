@@ -6,17 +6,20 @@ import com.pemda.ekinerjademo.model.bismamodel.TkdUnk;
 import com.pemda.ekinerjademo.model.ekinerjamodel.*;
 import com.pemda.ekinerjademo.projection.ekinerjaprojection.CustomPegawaiCredential;
 import com.pemda.ekinerjademo.repository.bismarepository.TkdUnkDao;
+import com.pemda.ekinerjademo.repository.ekinerjarepository.TkdUnkCloneDao;
 import com.pemda.ekinerjademo.service.*;
 import com.pemda.ekinerjademo.util.BarcodeGenerator;
 import com.pemda.ekinerjademo.util.DateUtilities;
 import com.pemda.ekinerjademo.util.EkinerjaXMLBuilder;
 import com.pemda.ekinerjademo.util.EkinerjaXMLParser;
+import com.pemda.ekinerjademo.util.exception.EkinerjaObjConverter;
 import com.pemda.ekinerjademo.wrapper.input.SuratInstruksiInputWrapper;
 import com.pemda.ekinerjademo.wrapper.output.*;
 import groovy.transform.Synchronized;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -39,15 +42,19 @@ public class SuratInstruksiController {
     @Autowired private SuratInstruksiService suratInstruksiService;
     @Autowired private QutPegawaiCloneService qutPegawaiService;
 
-    @Autowired private TkdJabatanService tkdJabatanService;
+    @Autowired
+    @Qualifier("TkdJabatanCloneService")
+    private TkdJabatanService tkdJabatanService;
 
     @Autowired private BeritaAcaraService beritaAcaraService;
     @Autowired private SuratKuasaController suratKuasaController;
     @Autowired private SuratPerintahService suratPerintahService;
 
-    @Autowired
-    private TkdUnkDao tkdUnkDao;
+//    @Autowired
+//    private TkdUnkDao tkdUnkDao; //test clone
 
+    @Autowired
+    private TkdUnkCloneDao tkdUnkDao;
 
     @RequestMapping(value = "/create-surat-instruksi", method = RequestMethod.POST)
     @Synchronized
@@ -324,8 +331,10 @@ public class SuratInstruksiController {
         } else {
             dokumenSuratInstruksiWrapper.setSuratPejabat(false);
             dokumenSuratInstruksiWrapper.setJabatanSuratPejabat(null);
-
-            TkdUnk tkdUnk = tkdUnkDao.findOne(penandatanganSurat.getKdUnitKerja());
+//
+//            TkdUnk tkdUnk = tkdUnkDao.findOne(penandatanganSurat.getKdUnitKerja()); //test clone
+            TkdUnk tkdUnk
+                    = EkinerjaObjConverter.convertFromUnkClonetoOriginal(tkdUnkDao.findOne(penandatanganSurat.getKdUnitKerja()));
 
             dokumenSuratInstruksiWrapper.setUnitKerja(tkdUnk.getUnitKerja());
         }
@@ -671,7 +680,10 @@ public class SuratInstruksiController {
             dokumenSuratInstruksiWrapper.setSuratPejabat(false);
             dokumenSuratInstruksiWrapper.setJabatanSuratPejabat(null);
 
-            TkdUnk tkdUnk = tkdUnkDao.findOne(penandatanganSurat.getKdUnitKerja());
+//            TkdUnk tkdUnk
+//                    = tkdUnkDao.findOne(penandatanganSurat.getKdUnitKerja()); //test clone
+            TkdUnk tkdUnk
+                    = EkinerjaObjConverter.convertFromUnkClonetoOriginal(tkdUnkDao.findOne(penandatanganSurat.getKdUnitKerja()));
 
             dokumenSuratInstruksiWrapper.setUnitKerja(tkdUnk.getUnitKerja());
         }

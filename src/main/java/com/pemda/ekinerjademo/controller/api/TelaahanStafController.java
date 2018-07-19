@@ -6,6 +6,7 @@ import com.pemda.ekinerjademo.model.ekinerjamodel.SuratKuasa;
 import com.pemda.ekinerjademo.model.ekinerjamodel.TelaahanStaf;
 import com.pemda.ekinerjademo.projection.ekinerjaprojection.CustomPegawaiCredential;
 import com.pemda.ekinerjademo.repository.bismarepository.TkdUnkDao;
+import com.pemda.ekinerjademo.repository.ekinerjarepository.TkdUnkCloneDao;
 import com.pemda.ekinerjademo.service.AkunPegawaiService;
 import com.pemda.ekinerjademo.service.QutPegawaiCloneService;
 import com.pemda.ekinerjademo.service.SuratKuasaService;
@@ -43,11 +44,12 @@ public class TelaahanStafController {
 
     @Autowired
     private TelaahanStafService telaahanStafService;
+
     @Autowired
     private QutPegawaiCloneService qutPegawaiService;
 
     @Autowired
-    private TkdUnkDao tkdUnkDao;
+    private TkdUnkCloneDao tkdUnkDao;
 
     @Autowired private AkunPegawaiService akunPegawaiService;
 

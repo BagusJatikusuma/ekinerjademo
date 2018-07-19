@@ -2,6 +2,7 @@ package com.pemda.ekinerjademo.model.ekinerjamodel;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Id;
 import javax.persistence.Table;
 
 /**
@@ -12,13 +13,17 @@ import javax.persistence.Table;
 @Table(name = "rekapitulasi_perilaku_kerja_pegawai")
 public class RekapitulasiPerilakuKerjaPegawai {
 
+    @Id
+    @Column(name = "kd_rekap")
+    private String kdRekap;
+
     @Column(name = "bulan_tahun_rekapitulasi")
     private long bulanTahunRekapulasi;
 
     @Column(name = "kd_unit_kerja")
     private String kdUnitKerja;
-    @Column(name = "kd_jabatan")
-    private String kdJabatan;
+    @Column(name = "nama_jabatan")
+    private String namaJabatan;
     @Column(name = "nip_pegawai")
     private String nipPegawai;
 
@@ -73,12 +78,12 @@ public class RekapitulasiPerilakuKerjaPegawai {
         this.kdUnitKerja = kdUnitKerja;
     }
 
-    public String getKdJabatan() {
-        return kdJabatan;
+    public String getNamaJabatan() {
+        return namaJabatan;
     }
 
-    public void setKdJabatan(String kdJabatan) {
-        this.kdJabatan = kdJabatan;
+    public void setNamaJabatan(String namaJabatan) {
+        this.namaJabatan = namaJabatan;
     }
 
     public String getNipPegawai() {
@@ -199,5 +204,13 @@ public class RekapitulasiPerilakuKerjaPegawai {
 
     public void setNilaiKebalikan(float nilaiKebalikan) {
         this.nilaiKebalikan = nilaiKebalikan;
+    }
+
+    public String getKdRekap() {
+        return kdRekap;
+    }
+
+    public void setKdRekap(String kdRekap) {
+        this.kdRekap = kdRekap;
     }
 }

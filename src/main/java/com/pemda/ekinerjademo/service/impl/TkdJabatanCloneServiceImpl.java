@@ -6,6 +6,8 @@ import com.pemda.ekinerjademo.model.ekinerjamodel.TkdJabatanClone;
 import com.pemda.ekinerjademo.model.ekinerjamodel.TkdUnkClone;
 import com.pemda.ekinerjademo.repository.ekinerjarepository.TkdJabatanCloneDao;
 import com.pemda.ekinerjademo.service.TkdJabatanService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -13,9 +15,10 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
-@Service("TkdJabatanService")
+@Service("TkdJabatanCloneService")
 @Transactional("ekinerjaTransactionManager")
 public class TkdJabatanCloneServiceImpl implements TkdJabatanService {
+    public static final Logger LOGGER = LoggerFactory.getLogger(TkdJabatanCloneServiceImpl.class);
 
     @Autowired private TkdJabatanCloneDao tkdJabatanCloneDao;
 
@@ -61,7 +64,8 @@ public class TkdJabatanCloneServiceImpl implements TkdJabatanService {
         TkdJabatan tkdJabatan = new TkdJabatan();
 
         tkdJabatan.setKdJabatan(obj.getKdJabatan());
-        tkdJabatan.setUnitKerja(obj.getUnitKerja());
+        tkdJabatan.setJabatan(obj.getJabatan());
+        tkdJabatan.setUnitKerja(convertFromUnkClonetoOriginal(obj.getKdUnitKerja()).getUnitKerja());
         tkdJabatan.setEselon(obj.getEselon());
         tkdJabatan.setPada(obj.getPada());
         tkdJabatan.setUnitKerja(obj.getUnitKerja());
@@ -77,8 +81,7 @@ public class TkdJabatanCloneServiceImpl implements TkdJabatanService {
         List<TkdJabatan> tkdJabatans = new ArrayList<>();
 
         for (TkdJabatanClone obj : objList) {
-            TkdJabatan tkdJabatan = convertFromCLonetoOriginal(obj);
-            tkdJabatans.add(tkdJabatan);
+            tkdJabatans.add(convertFromCLonetoOriginal(obj));
         }
 
         return tkdJabatans;

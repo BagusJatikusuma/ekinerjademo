@@ -3,6 +3,7 @@ package com.pemda.ekinerjademo.controller.api;
 import com.pemda.ekinerjademo.model.bismamodel.QutPegawai;
 import com.pemda.ekinerjademo.model.ekinerjamodel.*;
 import com.pemda.ekinerjademo.repository.bismarepository.TkdUnkDao;
+import com.pemda.ekinerjademo.repository.ekinerjarepository.TkdUnkCloneDao;
 import com.pemda.ekinerjademo.service.*;
 import com.pemda.ekinerjademo.util.exception.AuthenticationCredentialsNotFoundExcecption;
 import com.pemda.ekinerjademo.util.exception.BadCredentialsException;
@@ -39,7 +40,8 @@ public class AuthenticationController {
     @Autowired
     private LoginPegawaiService loginPegawaiService;
 
-    @Autowired private TkdUnkDao tkdUnkDao;
+//    @Autowired private TkdUnkDao tkdUnkDao; //test clone
+    @Autowired private TkdUnkCloneDao tkdUnkDao;
 
     /**
      * this method used for receive pegawai authentication request

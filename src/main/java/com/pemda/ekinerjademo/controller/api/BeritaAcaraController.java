@@ -3,8 +3,10 @@ package com.pemda.ekinerjademo.controller.api;
 import com.pemda.ekinerjademo.model.bismamodel.QutPegawai;
 import com.pemda.ekinerjademo.model.bismamodel.TkdUnk;
 import com.pemda.ekinerjademo.model.ekinerjamodel.BeritaAcara;
+import com.pemda.ekinerjademo.model.ekinerjamodel.TkdUnkClone;
 import com.pemda.ekinerjademo.projection.ekinerjaprojection.CustomPegawaiCredential;
 import com.pemda.ekinerjademo.repository.bismarepository.TkdUnkDao;
+import com.pemda.ekinerjademo.repository.ekinerjarepository.TkdUnkCloneDao;
 import com.pemda.ekinerjademo.service.AkunPegawaiService;
 import com.pemda.ekinerjademo.service.BeritaAcaraService;
 import com.pemda.ekinerjademo.service.QutPegawaiService;
@@ -41,7 +43,8 @@ public class BeritaAcaraController {
     @Autowired private BeritaAcaraService beritaAcaraService;
     @Autowired private QutPegawaiService qutPegawaiService;
 
-    @Autowired private TkdUnkDao tkdUnkDao;
+//    @Autowired private TkdUnkDao tkdUnkDao; //test clone
+    @Autowired private TkdUnkCloneDao tkdUnkDao;
 
     @Autowired private AkunPegawaiService akunPegawaiService;
 

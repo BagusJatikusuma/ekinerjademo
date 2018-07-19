@@ -13,13 +13,18 @@ import com.pemda.ekinerjademo.repository.bismarepository.QutPegawaiDao;
 import com.pemda.ekinerjademo.repository.bismarepository.TkdJabatanDao;
 import com.pemda.ekinerjademo.repository.bismarepository.TkdUnkDao;
 import com.pemda.ekinerjademo.repository.ekinerjarepository.AkunPegawaiDao;
+import com.pemda.ekinerjademo.repository.ekinerjarepository.QutPegawaiCloneDao;
+import com.pemda.ekinerjademo.repository.ekinerjarepository.TkdJabatanCloneDao;
+import com.pemda.ekinerjademo.repository.ekinerjarepository.TkdUnkCloneDao;
 import com.pemda.ekinerjademo.service.*;
+import com.pemda.ekinerjademo.util.exception.EkinerjaObjConverter;
 import com.pemda.ekinerjademo.wrapper.input.*;
 import com.pemda.ekinerjademo.wrapper.output.*;
 import org.apache.commons.io.FilenameUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -37,10 +42,16 @@ import java.util.*;
 public class AkunPegawaiController {
     public static final Logger LOGGER = LoggerFactory.getLogger(AkunPegawaiController.class);
 
-    private TkdJabatanDao tkdJabatanDao;
-    private QutPegawaiDao qutPegawaiDao;
+//    private TkdJabatanDao tkdJabatanDao; //test clone
+//    private QutPegawaiDao qutPegawaiDao; //test clone
+
+    private TkdJabatanCloneDao tkdJabatanDao;
+    private QutPegawaiCloneDao qutPegawaiDao;
+
     private AkunPegawaiDao akunPegawaiDao;
-    @Autowired private TkdUnkDao tkdUnkDao;
+
+//    @Autowired private TkdUnkDao tkdUnkDao; //test clone
+    @Autowired private TkdUnkCloneDao tkdUnkDao;
 
     private AkunPegawaiService akunPegawaiService;
     private RoleService roleService;
@@ -74,12 +85,12 @@ public class AkunPegawaiController {
 
     @Autowired
     public AkunPegawaiController(
-            TkdJabatanDao tkdJabatanDao,
-            QutPegawaiDao qutPegawaiDao,
+            TkdJabatanCloneDao tkdJabatanDao,
+            QutPegawaiCloneDao qutPegawaiDao,
             AkunPegawaiDao akunPegawaiDao,
             AkunPegawaiService akunPegawaiService,
             RoleService roleService,
-            TkdJabatanService tkdJabatanService,
+            @Qualifier("TkdJabatanCloneService") TkdJabatanService tkdJabatanService,
             QutPegawaiCloneService qutPegawaiService,
             StatusPenanggungJawabKegiatanService statusPenanggungJawabKegiatanService,
             UrtugKegiatanPegawaiService urtugKegiatanPegawaiService,
@@ -100,7 +111,10 @@ public class AkunPegawaiController {
     @Transactional("bismaTransactionManager")
     ResponseEntity<?> test() {
         //test
-        TkdJabatan tkdJabatan = tkdJabatanDao.findByKdJabatan("1000000A");
+//        TkdJabatan tkdJabatan = tkdJabatanDao.findByKdJabatan("1000000A");
+
+        TkdJabatan tkdJabatan
+                = EkinerjaObjConverter.convertFromCLonetoOriginal(tkdJabatanDao.findByKdJabatan("1000000A"));
         LOGGER.info("get "+tkdJabatan.getJabatan());
 
         return new ResponseEntity<Object>("cek log", HttpStatus.OK);
@@ -116,15 +130,16 @@ public class AkunPegawaiController {
         return new ResponseEntity<Object>("cek log", HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/test-qutpegawai-database", method = RequestMethod.GET)
-    @Transactional("ekinerjaTransactionManager")
-    ResponseEntity<?> testQutPegawaiDatabase() {
-        //test
-        QutPegawai qutPegawai = qutPegawaiDao.findByNip("195405011982032007");
-        LOGGER.info("get "+qutPegawai.getNama()+" - "+qutPegawai.getJabatan()+" - "+qutPegawai.getUnitKerja());
-
-        return new ResponseEntity<Object>("cek log", HttpStatus.OK);
-    }
+//    @RequestMapping(value = "/test-qutpegawai-database", method = RequestMethod.GET)
+//    @Transactional("ekinerjaTransactionManager")
+//    ResponseEntity<?> testQutPegawaiDatabase() {
+//        //test
+//        QutPegawai qutPegawai = qutPegawaiDao.findByNip("195405011982032007");
+//
+//        LOGGER.info("get "+qutPegawai.getNama()+" - "+qutPegawai.getJabatan()+" - "+qutPegawai.getUnitKerja());
+//
+//        return new ResponseEntity<Object>("cek log", HttpStatus.OK);
+//    }
 
     @RequestMapping(value = "/get-pegawai-roles/{nipPegawai}", method = RequestMethod.GET)
     ResponseEntity<?> getRoles(@PathVariable("nipPegawai") String nipPegawai) {
@@ -215,8 +230,10 @@ public class AkunPegawaiController {
                 = qutPegawaiService.getCustomPegawaiCredentials();
         List<AkunPegawai> akunPegawaiList
                 = akunPegawaiService.getAkunPegawaiList();
+//        List<TkdUnk> tkdUnkList
+//                = tkdUnkDao.findAll();//test clone
         List<TkdUnk> tkdUnkList
-                = tkdUnkDao.findAll();
+                = EkinerjaObjConverter.convertFromUnkClonetoOriginal(tkdUnkDao.findAll());
 
 //        for (AkunPegawai akunPegawai : akunPegawaiList) {
 //            for (QutPegawai qutPegawai : qutPegawaiList) {
@@ -289,8 +306,10 @@ public class AkunPegawaiController {
                 = qutPegawaiService.getCustomPegawaiCredentials();
         List<AkunPegawai> akunPegawaiList
                 = akunPegawaiService.getAkunPegawaiList();
+//        List<TkdUnk> tkdUnkList
+//                = tkdUnkDao.findAll(); //test clone
         List<TkdUnk> tkdUnkList
-                = tkdUnkDao.findAll();
+                = EkinerjaObjConverter.convertFromUnkClonetoOriginal(tkdUnkDao.findAll());
 
         LOGGER.info("finish get pegawai from database kepegawaian");
         for (CustomPegawaiCredential qutPegawai : qutPegawaiList) {
@@ -352,8 +371,10 @@ public class AkunPegawaiController {
                 = new ArrayList<>();
         List<QutPegawai> qutPegawaiList
                 = qutPegawaiService.getQutPegawaiByUnitKerja(kdUnitKerja);
+//        List<TkdUnk> tkdUnkList
+//                = tkdUnkDao.findAll(); //test clone
         List<TkdUnk> tkdUnkList
-                = tkdUnkDao.findAll();
+                = EkinerjaObjConverter.convertFromUnkClonetoOriginal(tkdUnkDao.findAll());
 
         LOGGER.info("finish get pegawai from database kepegawaian");
 
@@ -395,8 +416,10 @@ public class AkunPegawaiController {
                 = new ArrayList<>();
         List<QutPegawaiClone> qutPegawaiCloneList
                 = qutPegawaiService.getQutPegawaiByKdJabatan(kdJabatan);
+//        List<TkdUnk> tkdUnkList
+//                = tkdUnkDao.findAll();
         List<TkdUnk> tkdUnkList
-                = tkdUnkDao.findAll();
+                = EkinerjaObjConverter.convertFromUnkClonetoOriginal(tkdUnkDao.findAll());
 
         for (QutPegawaiClone pegawai : qutPegawaiCloneList) {
             qutPegawaiWrappers
@@ -439,8 +462,10 @@ public class AkunPegawaiController {
                 = qutPegawaiService.getQutPegawaiByUnitKerja(kdUnitKerja);
         List<PejabatPenilaiDinilai> pejabatPenilaiDinilaiList
                 = pejabatPenilaiDinilaiService.findPegawaiDinilai(nipPenilai);
+//        List<TkdUnk> tkdUnkList
+//                = tkdUnkDao.findAll(); // test clone
         List<TkdUnk> tkdUnkList
-                = tkdUnkDao.findAll();
+                = EkinerjaObjConverter.convertFromUnkClonetoOriginal(tkdUnkDao.findAll());
 
 //        for (QutPegawai qutPegawai
 //                : qutPegawaiList) {
@@ -524,8 +549,10 @@ public class AkunPegawaiController {
                 = qutPegawaiService.getQutPegawaiByUnitKerja(inputWrapper.getKdUnitKerja());
         List<QutPegawaiClone> qutPegawaiCloneList
                 = qutPegawaiService.getQutPegawaiByKdJabatan(inputWrapper.getKdJabatan());
+//        List<TkdUnk> tkdUnkList
+//                = tkdUnkDao.findAll(); test clone
         List<TkdUnk> tkdUnkList
-                = tkdUnkDao.findAll();
+                = EkinerjaObjConverter.convertFromUnkClonetoOriginal(tkdUnkDao.findAll());
 
         boolean found;
         for (QutPegawaiClone qutPegawai : qutPegawaiCloneList) {
@@ -589,8 +616,10 @@ public class AkunPegawaiController {
                 = new ArrayList<>();
         List<QutPegawaiClone> qutPegawaiList
                 = qutPegawaiService.getQutPegawaiByKdJabatan(inputWrapper.getKdJabatan());
+//        List<TkdUnk> tkdUnkList
+//                = tkdUnkDao.findAll(); //test clone
         List<TkdUnk> tkdUnkList
-                = tkdUnkDao.findAll();
+                = EkinerjaObjConverter.convertFromUnkClonetoOriginal(tkdUnkDao.findAll());
 
         boolean found;
         for (QutPegawaiClone qutPegawai : qutPegawaiList) {
@@ -774,7 +803,9 @@ public class AkunPegawaiController {
                 = qutPegawaiService.getQutPegawai(
                         pejabatPenilaiDinilaiList.get(0).getPejabatPenilaiDinilaiId().getNipPenilai());
 
-        TkdUnk tkdUnk = tkdUnkDao.findOne(qutPegawai.getKdUnitKerja());
+//        TkdUnk tkdUnk = tkdUnkDao.findOne(qutPegawai.getKdUnitKerja()); // test clone
+        TkdUnk tkdUnk
+                = EkinerjaObjConverter.convertFromUnkClonetoOriginal(tkdUnkDao.findOne(qutPegawai.getKdUnitKerja()));
 
         QutPegawaiWrapper pegawaiWrapper
                 = new QutPegawaiWrapper(
@@ -1099,7 +1130,7 @@ public class AkunPegawaiController {
             }
 
             List<SuratDinas> suratDinasList = new ArrayList<>();
-                if (isKepala) {
+            if (isKepala) {
                 LOGGER.info("get surat dinas kadin");
 
                 suratDinasList

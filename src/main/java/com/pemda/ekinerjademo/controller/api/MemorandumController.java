@@ -5,6 +5,7 @@ import com.pemda.ekinerjademo.model.bismamodel.TkdJabatan;
 import com.pemda.ekinerjademo.model.ekinerjamodel.*;
 import com.pemda.ekinerjademo.projection.ekinerjaprojection.CustomPegawaiCredential;
 import com.pemda.ekinerjademo.repository.bismarepository.TkdUnkDao;
+import com.pemda.ekinerjademo.repository.ekinerjarepository.TkdUnkCloneDao;
 import com.pemda.ekinerjademo.service.*;
 import com.pemda.ekinerjademo.util.BarcodeGenerator;
 import com.pemda.ekinerjademo.wrapper.input.MemorandumInputWrapper;
@@ -12,6 +13,7 @@ import com.pemda.ekinerjademo.wrapper.output.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -39,10 +41,14 @@ public class MemorandumController {
     private QutPegawaiCloneService qutPegawaiService;
 
     @Autowired
+    @Qualifier("TkdJabatanCloneService")
     private TkdJabatanService tkdJabatanService;
 
+//    @Autowired
+//    private TkdUnkDao tkdUnkDao; //test clone
+
     @Autowired
-    private TkdUnkDao tkdUnkDao;
+    private TkdUnkCloneDao tkdUnkDao;
 
     @Autowired
     private AkunPegawaiService akunPegawaiService;

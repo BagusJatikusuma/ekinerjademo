@@ -5,10 +5,10 @@ package com.pemda.ekinerjademo.wrapper.input;
  */
 public class RekapitulasiPerilakuKerjaPegawaiInputWrapper {
 
-    private long bulanTahunRekapulasi;
+    private long bulanTahunRekapitulasi;
 
     private String kdUnitKerja;
-    private String kdJabatan;
+    private String namaJabatan;
     private String nipPegawai;
 
     private int dataHadir;
@@ -32,12 +32,12 @@ public class RekapitulasiPerilakuKerjaPegawaiInputWrapper {
     private float totalFaktorPeuranganTpp;
     private float nilaiKebalikan;
 
-    public long getBulanTahunRekapulasi() {
-        return bulanTahunRekapulasi;
+    public long getBulanTahunRekapitulasi() {
+        return bulanTahunRekapitulasi;
     }
 
-    public void setBulanTahunRekapulasi(long bulanTahunRekapulasi) {
-        this.bulanTahunRekapulasi = bulanTahunRekapulasi;
+    public void setBulanTahunRekapitulasi(long bulanTahunRekapitulasi) {
+        this.bulanTahunRekapitulasi = bulanTahunRekapitulasi;
     }
 
     public String getKdUnitKerja() {
@@ -48,12 +48,12 @@ public class RekapitulasiPerilakuKerjaPegawaiInputWrapper {
         this.kdUnitKerja = kdUnitKerja;
     }
 
-    public String getKdJabatan() {
-        return kdJabatan;
+    public String getNamaJabatan() {
+        return namaJabatan;
     }
 
-    public void setKdJabatan(String kdJabatan) {
-        this.kdJabatan = kdJabatan;
+    public void setNamaJabatan(String namaJabatan) {
+        this.namaJabatan = namaJabatan;
     }
 
     public String getNipPegawai() {

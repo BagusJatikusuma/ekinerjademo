@@ -7,16 +7,20 @@ import com.pemda.ekinerjademo.model.simdamodel.TaKegiatan;
 import com.pemda.ekinerjademo.projection.ekinerjaprojection.CustomPegawaiCredential;
 import com.pemda.ekinerjademo.projection.ekinerjaprojection.KegiatanPenanggungJawabProjection;
 import com.pemda.ekinerjademo.repository.bismarepository.TkdUnkDao;
+import com.pemda.ekinerjademo.repository.ekinerjarepository.TkdUnkCloneDao;
 import com.pemda.ekinerjademo.repository.ekinerjarepository.UnitKerjaKegiatanDao;
 import com.pemda.ekinerjademo.repository.simdarepository.TaKegiatanDao;
 import com.pemda.ekinerjademo.repository.simdarepository.TaProgramDao;
 import com.pemda.ekinerjademo.service.*;
+import com.pemda.ekinerjademo.util.DummyKegiatanObject;
+import com.pemda.ekinerjademo.util.exception.EkinerjaObjConverter;
 import com.pemda.ekinerjademo.wrapper.input.KegiatanWrapper;
 import com.pemda.ekinerjademo.wrapper.input.PenanggungJawabKegiatanInputWrapper;
 import com.pemda.ekinerjademo.wrapper.output.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -42,9 +46,10 @@ public class PenanggungJawabKegiatanController {
     @Autowired private TaProgramDao taProgramDao;
     @Autowired private UrtugKegiatanService urtugKegiatanService;
 
-    @Autowired private TkdJabatanService tkdJabatanService;
+    @Autowired @Qualifier("TkdJabatanCloneService") private TkdJabatanService tkdJabatanService;
 
-    @Autowired private TkdUnkDao tkdUnkDao;
+//    @Autowired private TkdUnkDao tkdUnkDao; //test clone
+    @Autowired private TkdUnkCloneDao tkdUnkDao;
 
     @Autowired
     private TaKegiatanDao taKegiatanDao;
@@ -214,8 +219,10 @@ public class PenanggungJawabKegiatanController {
         List<QutPegawaiWrapper> qutPegawaiWrappers = new ArrayList<>();
         List<QutPegawai> qutPegawaiList
                 = qutPegawaiService.getQutPegawaiByUnitKerja(inputWrapper.getKdUnitKerja());
+//        List<TkdUnk> tkdUnkList
+//                = tkdUnkDao.findAll(); //test clone
         List<TkdUnk> tkdUnkList
-                = tkdUnkDao.findAll();
+                = EkinerjaObjConverter.convertFromUnkClonetoOriginal(tkdUnkDao.findAll());
 
         boolean found;
         for (QutPegawai qutPegawai : qutPegawaiList) {
@@ -723,6 +730,7 @@ public class PenanggungJawabKegiatanController {
 
             }
         }
+
         //ambil pejabat PPTK beserta kegiatannya
         isPejabatAlreadyExist.clear();
         for (PenanggungJawabKegiatan kegiatan : kegiatanUnitKerjaList) {
@@ -738,6 +746,7 @@ public class PenanggungJawabKegiatanController {
                 }
 
                 if (!found) {
+                    LOGGER.error("turn : "+kegiatan.getPenanggungJawabKegiatanId().getNipPegawai());
                     QutPegawai penanggungJawab
                             = qutPegawaiService.getQutPegawai(kegiatan.getPenanggungJawabKegiatanId().getNipPegawai());
 
@@ -752,8 +761,15 @@ public class PenanggungJawabKegiatanController {
 
                     List<TaKegiatanWrapper> taKegiatanWrappers = new ArrayList<>();
                     for (PenanggungJawabKegiatan kegiatanPPTK : kegiatanUnitKerjaList) {
+
                         if (kegiatanPPTK.getPenanggungJawabKegiatanId().getNipPegawai()
-                                .equals(penanggungJawab.getNip())) {
+                                .equals(penanggungJawab.getNip())
+                                && kegiatanPPTK.getPenanggungJawabKegiatanId().getKdStatusPenanggungJawab().equals("ST002")) {
+
+                            LOGGER.error(penanggungJawab.getNip()
+                                    +" - "
+                                    +kegiatanPPTK.getPenanggungJawabKegiatanId().getKdProg()
+                                    +" & "+kegiatanPPTK.getPenanggungJawabKegiatanId().getKdKeg());
 
                             for (TaKegiatan taKegiatan
                                     : taKegiatanList) {
@@ -781,7 +797,11 @@ public class PenanggungJawabKegiatanController {
                             }
 
                         }
+
                     }
+
+                    LOGGER.error(pejabatBarjasPPTKWrapper.getNip()+" size keg : "+taKegiatanWrappers.size());
+
                     pejabatBarjasPPTKWrapper.setKegiatanWrapperList(taKegiatanWrappers);
 
                     pejabatBarjasPPTKWrappers.add(pejabatBarjasPPTKWrapper);
@@ -790,6 +810,8 @@ public class PenanggungJawabKegiatanController {
                 }
             }
         }
+        //aman dan sukses
+
         //pasang PPK dengan PPTK
         for (PejabatBarjasPPKWrapper pejabatPPK : pejabatBarjasPPKWrappers) {
             List<PejabatBarjasPPTKWrapper> pejabatBarjasPPTKWrappersTemp = new ArrayList<>();
@@ -797,50 +819,83 @@ public class PenanggungJawabKegiatanController {
             for (PenanggungJawabKegiatan kegiatan : kegiatanUnitKerjaList) {
                 if (kegiatan.getPenanggungJawabKegiatanId().getNipPegawai()
                         .equals(pejabatPPK.getNip())) {
+                    if (kegiatan.getPenanggungJawabKegiatanId().getKdStatusPenanggungJawab()
+                            .equals("ST001")) {//ambil kegiatan dimana menjabat sebagai PPK saja
 
-                    boolean pptkAlreadyExist;
-                    for (PejabatBarjasPPTKWrapper pejabatPPTK : pejabatBarjasPPTKWrappers) {
-                        pptkAlreadyExist = false;
+                        boolean pptkAlreadyExist;
+                        for (PejabatBarjasPPTKWrapper pejabatPPTK : pejabatBarjasPPTKWrappers) {
+                            pptkAlreadyExist = false;
 
-                        for (PejabatBarjasPPTKWrapper pejabatPPTKTemp : pejabatBarjasPPTKWrappersTemp) {
-                            if (pejabatPPTK.getNip().equals(pejabatPPTKTemp.getNip())) {
-                                pptkAlreadyExist = true;
-                                break;
-                            }
-                        }
-
-                        if (!pptkAlreadyExist) {
-                            for (TaKegiatanWrapper kegiatanPejabatPPTK : pejabatPPTK.getKegiatanWrapperList()) {
-                                if (kegiatan.getPenanggungJawabKegiatanId().getKdProg().equals(kegiatanPejabatPPTK.getKdProg())
-                                        && kegiatan.getPenanggungJawabKegiatanId().getIdProg().equals(kegiatanPejabatPPTK.getIdProg())
-                                        && kegiatan.getPenanggungJawabKegiatanId().getKdKeg().equals(kegiatanPejabatPPTK.getKdKegiatan())) {
-
-                                    List<TaKegiatanWrapper> taKegiatanPPTKWrappersFiltered = new ArrayList<>();
-                                    for (PenanggungJawabKegiatan kegiatanTemp : kegiatanUnitKerjaList) {
-                                        if (kegiatan.getPenanggungJawabKegiatanId().getNipPegawai()
-                                                .equals(pejabatPPK.getNip())) {
-
-                                            for (TaKegiatanWrapper kegiatanPejabatPPTKTemp : pejabatPPTK.getKegiatanWrapperList()) {
-                                                if (kegiatanTemp.getPenanggungJawabKegiatanId().getKdProg().equals(kegiatanPejabatPPTKTemp.getKdProg())
-                                                    && kegiatanTemp.getPenanggungJawabKegiatanId().getIdProg().equals(kegiatanPejabatPPTKTemp.getIdProg())
-                                                    && kegiatanTemp.getPenanggungJawabKegiatanId().getKdKeg().equals(kegiatanPejabatPPTKTemp.getKdKegiatan())) {
-
-                                                    taKegiatanPPTKWrappersFiltered.add(kegiatanPejabatPPTKTemp);
-
-                                                }
-                                            }
-
-                                        }
-                                    }
-
-                                    pejabatPPTK.setKegiatanWrapperList(taKegiatanPPTKWrappersFiltered);
-
-                                    pejabatBarjasPPTKWrappersTemp.add(pejabatPPTK);
-
+                            for (PejabatBarjasPPTKWrapper pejabatPPTKTemp : pejabatBarjasPPTKWrappersTemp) {
+                                if (pejabatPPTK.getNip().equals(pejabatPPTKTemp.getNip())) {
+                                    pptkAlreadyExist = true;
                                     break;
-
                                 }
                             }
+
+                            if (pejabatPPTK.getNip().equals(pejabatPPK.getNip()))
+                                pptkAlreadyExist = true;
+
+                            if (!pptkAlreadyExist) {
+                                for (TaKegiatanWrapper kegiatanPejabatPPTK : pejabatPPTK.getKegiatanWrapperList()) {
+                                    if (kegiatan.getPenanggungJawabKegiatanId().getKdProg().equals(kegiatanPejabatPPTK.getKdProg())
+                                            && kegiatan.getPenanggungJawabKegiatanId().getIdProg().equals(kegiatanPejabatPPTK.getIdProg())
+                                            && kegiatan.getPenanggungJawabKegiatanId().getKdKeg().equals(kegiatanPejabatPPTK.getKdKegiatan())) {
+
+                                        List<TaKegiatanWrapper> taKegiatanPPTKWrappersFiltered = new ArrayList<>();
+
+                                        List<DummyKegiatanObject> dummyKegiatanObjectList = new ArrayList<>();
+                                        boolean foundDummy;
+
+                                        for (PenanggungJawabKegiatan kegiatanTemp : kegiatanUnitKerjaList) { //ada yang salah disini
+                                            if (kegiatan.getPenanggungJawabKegiatanId().getNipPegawai()
+                                                    .equals(pejabatPPK.getNip())) {
+                                                foundDummy = false;
+
+                                                LOGGER.error("PPTK : " + pejabatPPTK.getNip());
+
+                                                for (DummyKegiatanObject dObj : dummyKegiatanObjectList) {
+                                                    if (kegiatanTemp.getPenanggungJawabKegiatanId().getKdProg().equals(dObj.getKdProg())
+                                                            && kegiatanTemp.getPenanggungJawabKegiatanId().getIdProg().equals(dObj.getIdProg())
+                                                            && kegiatanTemp.getPenanggungJawabKegiatanId().getKdKeg().equals(dObj.getKdKeg())) {
+                                                        LOGGER.info("");
+                                                        foundDummy = true;
+                                                        break;
+                                                    }
+
+                                                }
+
+                                                if (!foundDummy) {
+                                                    for (TaKegiatanWrapper kegiatanPejabatPPTKTemp : pejabatPPTK.getKegiatanWrapperList()) {
+                                                        if (kegiatanTemp.getPenanggungJawabKegiatanId().getKdProg().equals(kegiatanPejabatPPTKTemp.getKdProg())
+                                                                && kegiatanTemp.getPenanggungJawabKegiatanId().getIdProg().equals(kegiatanPejabatPPTKTemp.getIdProg())
+                                                                && kegiatanTemp.getPenanggungJawabKegiatanId().getKdKeg().equals(kegiatanPejabatPPTKTemp.getKdKegiatan())) {
+
+                                                            taKegiatanPPTKWrappersFiltered.add(kegiatanPejabatPPTKTemp);
+
+                                                        }
+                                                    }
+
+                                                    dummyKegiatanObjectList
+                                                            .add(new DummyKegiatanObject(
+                                                                    kegiatanTemp.getPenanggungJawabKegiatanId().getKdProg(),
+                                                                    kegiatanTemp.getPenanggungJawabKegiatanId().getIdProg(),
+                                                                    kegiatanTemp.getPenanggungJawabKegiatanId().getKdKeg()));
+                                                }
+
+                                            }
+                                        }
+
+                                        pejabatPPTK.setKegiatanWrapperList(taKegiatanPPTKWrappersFiltered);
+
+                                        pejabatBarjasPPTKWrappersTemp.add(pejabatPPTK);
+
+                                        break;
+
+                                    }
+                                }
+                            }
+
                         }
 
                     }
@@ -855,7 +910,6 @@ public class PenanggungJawabKegiatanController {
         pejabatBarjasPPUKWrapper.setPejabatBarjasPPKList(pejabatBarjasPPKWrappers);
 
         return new ResponseEntity<>(pejabatBarjasPPUKWrapper, HttpStatus.OK);
-
     }
 
     /**

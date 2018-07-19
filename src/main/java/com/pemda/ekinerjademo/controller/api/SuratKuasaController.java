@@ -6,10 +6,8 @@ import com.pemda.ekinerjademo.model.ekinerjamodel.SuratDinas;
 import com.pemda.ekinerjademo.model.ekinerjamodel.SuratKuasa;
 import com.pemda.ekinerjademo.projection.ekinerjaprojection.CustomPegawaiCredential;
 import com.pemda.ekinerjademo.repository.bismarepository.TkdUnkDao;
-import com.pemda.ekinerjademo.service.AkunPegawaiService;
-import com.pemda.ekinerjademo.service.QutPegawaiService;
-import com.pemda.ekinerjademo.service.SuratDisposisiService;
-import com.pemda.ekinerjademo.service.SuratKuasaService;
+import com.pemda.ekinerjademo.repository.ekinerjarepository.TkdUnkCloneDao;
+import com.pemda.ekinerjademo.service.*;
 import com.pemda.ekinerjademo.util.BarcodeGenerator;
 import com.pemda.ekinerjademo.wrapper.input.SuratKuasaInputWrapper;
 import com.pemda.ekinerjademo.wrapper.output.*;
@@ -38,13 +36,20 @@ public class SuratKuasaController {
     public static final Logger LOGGER = LoggerFactory.getLogger(SuratKuasaController.class);
 
     @Autowired private SuratKuasaService suratKuasaService;
-    @Autowired private QutPegawaiService qutPegawaiService;
+
+    //    @Autowired
+//    private QutPegawaiService qutPegawaiService; //test clone
+
+    @Autowired
+    private QutPegawaiCloneService qutPegawaiService;
+
+    //    @Autowired private TkdUnkDao tkdUnkDao; //test clone
+    @Autowired private TkdUnkCloneDao tkdUnkDao;
+
     @Autowired private AkunPegawaiService akunPegawaiService;
     @Autowired
     private SuratDisposisiService suratDisposisiService;
 
-    @Autowired
-    private TkdUnkDao tkdUnkDao;
 
     @RequestMapping(value = "/create-surat-kuasa", method = RequestMethod.POST)
     @Synchronized

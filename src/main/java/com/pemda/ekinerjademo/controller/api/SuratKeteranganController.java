@@ -7,7 +7,9 @@ import com.pemda.ekinerjademo.model.ekinerjamodel.TargetSuratKeterangan;
 import com.pemda.ekinerjademo.model.ekinerjamodel.TargetSuratKeteranganId;
 import com.pemda.ekinerjademo.projection.ekinerjaprojection.CustomPegawaiCredential;
 import com.pemda.ekinerjademo.repository.bismarepository.TkdUnkDao;
+import com.pemda.ekinerjademo.repository.ekinerjarepository.TkdUnkCloneDao;
 import com.pemda.ekinerjademo.service.AkunPegawaiService;
+import com.pemda.ekinerjademo.service.QutPegawaiCloneService;
 import com.pemda.ekinerjademo.service.QutPegawaiService;
 import com.pemda.ekinerjademo.service.SuratKeteranganService;
 import com.pemda.ekinerjademo.util.BarcodeGenerator;
@@ -44,9 +46,15 @@ public class SuratKeteranganController {
     public static final Logger LOGGER = LoggerFactory.getLogger(SuratKeteranganController.class);
 
     @Autowired private SuratKeteranganService suratKeteranganService;
-    @Autowired private QutPegawaiService qutPegawaiService;
 
-    @Autowired private TkdUnkDao tkdUnkDao;
+    //    @Autowired
+//    private QutPegawaiService qutPegawaiService; //test clone
+
+    @Autowired
+    private QutPegawaiCloneService qutPegawaiService;
+
+    //    @Autowired private TkdUnkDao tkdUnkDao; //test clone
+    @Autowired private TkdUnkCloneDao tkdUnkDao;
 
     @Autowired private AkunPegawaiService akunPegawaiService;
 

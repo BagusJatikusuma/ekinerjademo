@@ -5,6 +5,7 @@ import com.pemda.ekinerjademo.model.bismamodel.TkdJabatan;
 import com.pemda.ekinerjademo.model.ekinerjamodel.*;
 import com.pemda.ekinerjademo.projection.ekinerjaprojection.CustomPegawaiCredential;
 import com.pemda.ekinerjademo.repository.bismarepository.TkdUnkDao;
+import com.pemda.ekinerjademo.repository.ekinerjarepository.TkdUnkCloneDao;
 import com.pemda.ekinerjademo.service.*;
 import com.pemda.ekinerjademo.util.BarcodeGenerator;
 import com.pemda.ekinerjademo.wrapper.input.SuratUndanganInputWrapper;
@@ -12,6 +13,7 @@ import com.pemda.ekinerjademo.wrapper.output.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -33,11 +35,19 @@ public class SuratUndanganController {
     public static final Logger LOGGER = LoggerFactory.getLogger(SuratUndanganController.class);
 
     @Autowired private SuratUndanganService suratUndanganService;
-    @Autowired private QutPegawaiService qutPegawaiService;
 
-    @Autowired private TkdJabatanService tkdJabatanService;
+    //    @Autowired
+//    private QutPegawaiService qutPegawaiService; //test clone
 
-    @Autowired private TkdUnkDao tkdUnkDao;
+    @Autowired
+    private QutPegawaiCloneService qutPegawaiService;
+
+    //    @Autowired private TkdUnkDao tkdUnkDao; //test clone
+    @Autowired private TkdUnkCloneDao tkdUnkDao;
+
+    @Autowired
+    @Qualifier("TkdJabatanCloneService")
+    private TkdJabatanService tkdJabatanService;
 
     @Autowired
     private AkunPegawaiService akunPegawaiService;

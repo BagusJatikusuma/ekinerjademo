@@ -7,6 +7,7 @@ import com.pemda.ekinerjademo.repository.ekinerjarepository.UraianTugasJabatanJe
 import com.pemda.ekinerjademo.service.TkdJabatanService;
 import com.pemda.ekinerjademo.service.UraianTugasJabatanJenisUrtugService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,6 +23,7 @@ public class UraianTugasJabatanJenisUrtugServiceImpl implements UraianTugasJabat
     @Autowired
     private UraianTugasJabatanJenisUrtugDao uraianTugasJabatanJenisUrtugDao;
     @Autowired
+    @Qualifier("TkdJabatanCloneService")
     private TkdJabatanService tkdJabatanService;
 
     @Override

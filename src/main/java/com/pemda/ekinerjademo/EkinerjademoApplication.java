@@ -1,6 +1,5 @@
 package com.pemda.ekinerjademo;
 
-import com.pemda.ekinerjademo.service.DataSynchronizer;
 import com.pemda.ekinerjademo.service.impl.DataSynchronizerImpl;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -13,9 +12,9 @@ public class EkinerjademoApplication {
 		ApplicationContext ctx =
 				SpringApplication.run(EkinerjademoApplication.class, args);
 
-		DataSynchronizerImpl dataSynchronizer
-				= (DataSynchronizerImpl) ctx.getBean("DataSynchronizer");
-		dataSynchronizer.start();
+//		DataSynchronizerImpl dataSynchronizer
+//				= (DataSynchronizerImpl) ctx.getBean("DataSynchronizer");
+//		dataSynchronizer.start(); //test clone
 
 	}
 }

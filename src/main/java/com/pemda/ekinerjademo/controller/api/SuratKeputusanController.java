@@ -3,9 +3,12 @@ package com.pemda.ekinerjademo.controller.api;
 import com.pemda.ekinerjademo.model.bismamodel.QutPegawai;
 import com.pemda.ekinerjademo.model.ekinerjamodel.AkunPegawai;
 import com.pemda.ekinerjademo.model.ekinerjamodel.SuratKeputusan;
+import com.pemda.ekinerjademo.model.ekinerjamodel.TkdUnkClone;
 import com.pemda.ekinerjademo.projection.ekinerjaprojection.CustomPegawaiCredential;
 import com.pemda.ekinerjademo.repository.bismarepository.TkdUnkDao;
+import com.pemda.ekinerjademo.repository.ekinerjarepository.TkdUnkCloneDao;
 import com.pemda.ekinerjademo.service.AkunPegawaiService;
+import com.pemda.ekinerjademo.service.QutPegawaiCloneService;
 import com.pemda.ekinerjademo.service.QutPegawaiService;
 import com.pemda.ekinerjademo.service.SuratKeputusanService;
 import com.pemda.ekinerjademo.util.BarcodeGenerator;
@@ -18,6 +21,7 @@ import com.pemda.ekinerjademo.wrapper.output.SuratPerintahHistoryWrapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -37,9 +41,14 @@ public class SuratKeputusanController {
     public static final Logger LOGGER = LoggerFactory.getLogger(SuratKeputusanController.class);
 
     @Autowired private SuratKeputusanService suratKeputusanService;
-    @Autowired private QutPegawaiService qutPegawaiService;
+//    @Autowired
+//    private QutPegawaiService qutPegawaiService; //test clone
 
-    @Autowired private TkdUnkDao tkdUnkDao;
+    @Autowired
+    private QutPegawaiCloneService qutPegawaiService;
+
+//    @Autowired private TkdUnkDao tkdUnkDao; //test clone
+    @Autowired private TkdUnkCloneDao tkdUnkDao;
 
     @Autowired private AkunPegawaiService akunPegawaiService;
 
