@@ -62,6 +62,9 @@ public class PenanggungJawabKegiatanController {
      * service yang digunakan untuk memasangkan kegiatan dengan penanggung jawabnya
      * dilakukan oleh admin unit kerja
      *
+     * perubahan aturan pada 17 juli 2019 bahwa tidak ada pengajuan untuk kontrak tahunan
+     * maka setelah pemasangan langsung dianggap setuju
+     *
      * @param inputWrapper
      * @return custom message
      */
@@ -85,7 +88,8 @@ public class PenanggungJawabKegiatanController {
         PenanggungJawabKegiatan penanggungJawabKegiatan
                 = new PenanggungJawabKegiatan();
         penanggungJawabKegiatan.setPenanggungJawabKegiatanId(id);
-        penanggungJawabKegiatan.setStatusApproval(0);
+        /**perubahan setelah aturan baru diimplementasikan**/
+        penanggungJawabKegiatan.setStatusApproval(1);
 
         penanggungJawabKegiatanService.create(penanggungJawabKegiatan);
 
@@ -96,6 +100,9 @@ public class PenanggungJawabKegiatanController {
      *
      * service yang digunakan untuk memasangkan kegiatan dengan penanggung jawabnya
      * dilakukan oleh admin unit kerja
+     *
+     * perubahan aturan pada 17 juli 2019 bahwa tidak ada pengajuan untuk kontrak tahunan
+     * maka setelah pemasangan langsung dianggap setuju
      *
      * @param inputWrappers
      * @return custom message
@@ -121,7 +128,8 @@ public class PenanggungJawabKegiatanController {
             PenanggungJawabKegiatan penanggungJawabKegiatan
                     = new PenanggungJawabKegiatan();
             penanggungJawabKegiatan.setPenanggungJawabKegiatanId(id);
-            penanggungJawabKegiatan.setStatusApproval(0);
+            /** perubahan setelah aturan baru diimplementasikan **/
+            penanggungJawabKegiatan.setStatusApproval(1);
 
             penanggungJawabKegiatanService.create(penanggungJawabKegiatan);
         }

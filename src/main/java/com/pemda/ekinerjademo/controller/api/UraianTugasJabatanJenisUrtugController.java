@@ -1,11 +1,12 @@
 package com.pemda.ekinerjademo.controller.api;
 
-import com.pemda.ekinerjademo.model.ekinerjamodel.UraianTugasJabatanJenisUrtug;
-import com.pemda.ekinerjademo.model.ekinerjamodel.UraianTugasJabatanJenisUrtugId;
-import com.pemda.ekinerjademo.model.ekinerjamodel.UraianTugasPegawaiTahunan;
+import com.pemda.ekinerjademo.model.bismamodel.QutPegawai;
+import com.pemda.ekinerjademo.model.ekinerjamodel.*;
+import com.pemda.ekinerjademo.service.QutPegawaiCloneService;
 import com.pemda.ekinerjademo.service.UraianTugasJabatanJenisUrtugService;
 import com.pemda.ekinerjademo.service.UraianTugasPegawaiTahunanService;
 import com.pemda.ekinerjademo.wrapper.input.UraianTugasJabatanJenisUrtugInputWrapper;
+import com.pemda.ekinerjademo.wrapper.input.UraianTugasPegawaiTahunanInputWrapper;
 import com.pemda.ekinerjademo.wrapper.input.UrtugJabatanIdInputWrapper;
 import com.pemda.ekinerjademo.wrapper.output.CustomMessage;
 import com.pemda.ekinerjademo.wrapper.output.UraianTugasJabatanJenisUrtugWrapper;
@@ -36,6 +37,8 @@ public class UraianTugasJabatanJenisUrtugController {
     private UraianTugasJabatanJenisUrtugService uraianTugasJabatanJenisUrtugService;
     @Autowired
     private UraianTugasPegawaiTahunanService urtugPegawaiTahunanService;
+    @Autowired
+    private QutPegawaiCloneService qutPegawaiService;
 
     @RequestMapping(value = "/get-urtug-jabatan-jenis-by-urtug-jabatan", method = RequestMethod.POST)
     ResponseEntity<?> getByUrtugJabatan(@RequestBody UrtugJabatanIdInputWrapper inputWrapper) {
@@ -95,6 +98,14 @@ public class UraianTugasJabatanJenisUrtugController {
         return new ResponseEntity<Object>(urtugWrapperList, HttpStatus.OK);
     }
 
+    /**
+     *
+     * aturan baru pada tanggal 17 juli 2019 :
+     * 1. kontrak tahunan tidak ada pengajuan. jadi setelah pemasangan uraian tugas non dpa langsung menjadi kontrak
+     *
+     * @param inputWrapper
+     * @return
+     */
     @RequestMapping(value = "/create-urtug-jabatan-jenis", method = RequestMethod.POST)
     ResponseEntity<?> create(@RequestBody UraianTugasJabatanJenisUrtugInputWrapper inputWrapper) {
         LOGGER.info("crete urtug jabatan jenis");
@@ -114,8 +125,32 @@ public class UraianTugasJabatanJenisUrtugController {
         urtugJabatanJenis.setWaktu(inputWrapper.getWaktu());
         urtugJabatanJenis.setBiaya(inputWrapper.getBiaya());
 
-
         uraianTugasJabatanJenisUrtugService.save(urtugJabatanJenis);
+
+        /** logic ini dibuat berdasarkan aturan bahwa kontrak tahunan tidak memerlukan ajuan dari pegawai **/
+        if (inputWrapper.getKdJenisUrtug().equals("KJU002")) {
+            List<QutPegawaiClone> pegawaiListInJabatan
+                    = qutPegawaiService.getQutPegawaiByKdJabatan(inputWrapper.getKdJabatan());
+            for (QutPegawaiClone pegawai : pegawaiListInJabatan) {
+                UraianTugasPegawaiTahunanInputWrapper urtugTahunanPegawai = new UraianTugasPegawaiTahunanInputWrapper();
+
+                urtugTahunanPegawai.setKdUrtug(inputWrapper.getKdUrtug());
+                urtugTahunanPegawai.setKdJabatan(inputWrapper.getKdJabatan());
+                urtugTahunanPegawai.setKdJenisUrtug(inputWrapper.getKdJenisUrtug());
+                urtugTahunanPegawai.setTahunUrtug(Year.now().getValue());
+                urtugTahunanPegawai.setNipPegawai(pegawai.getNip());
+
+                urtugTahunanPegawai.setBiaya(inputWrapper.getBiaya());
+                urtugTahunanPegawai.setKualitas(inputWrapper.getKualitas());
+                urtugTahunanPegawai.setKuantitas(inputWrapper.getKuantitas());
+                urtugTahunanPegawai.setSatuanKuantitas(inputWrapper.getSatuanKuantitas());
+                urtugTahunanPegawai.setWaktu(inputWrapper.getWaktu());
+
+                urtugPegawaiTahunanService.createUraianTugasPegawaiTahunan(urtugTahunanPegawai, 1);
+
+            }
+
+        }
 
         return new ResponseEntity<Object>(new CustomMessage("urtug jabatan jenis created"), HttpStatus.CREATED);
     }
