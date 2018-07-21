@@ -14,6 +14,8 @@ public interface UraianTugasPegawaiBulananService {
     void deleteById(UraianTugasPegawaiBulananId id);
 
     List<UraianTugasPegawaiBulanan> getByNip(String nipPegawai);
+    List<UraianTugasPegawaiBulanan> getByNip(String nipPegawai, Integer bulan);
     List<UraianTugasPegawaiBulanan> getByUnitKerja(String unitKerja);
+    List<UraianTugasPegawaiBulanan> getByUnitKerja(String unitKerja, Integer bulan);
     List<UraianTugasPegawaiBulanan> getAjuanUraianTugaspegawaiBulanan(String nipPegawai);
 }

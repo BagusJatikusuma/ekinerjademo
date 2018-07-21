@@ -78,6 +78,11 @@ public class UraianTugasPegawaiBulanServiceImpl
     }
 
     @Override
+    public List<UraianTugasPegawaiBulanan> getByNip(String nipPegawai, Integer bulan) {
+        return uraianTugasPegawaiBulananDao.findByNipAndBulan(nipPegawai, bulan);
+    }
+
+    @Override
     public List<UraianTugasPegawaiBulanan> getByUnitKerja(String unitKerja) {
         List<UraianTugasPegawaiBulanan> uraianTugasPegawaiBulananFilter
                 = new ArrayList<>();
@@ -99,6 +104,11 @@ public class UraianTugasPegawaiBulanServiceImpl
 
 
         return uraianTugasPegawaiBulananFilter;
+    }
+
+    @Override
+    public List<UraianTugasPegawaiBulanan> getByUnitKerja(String unitKerja, Integer bulan) {
+        return uraianTugasPegawaiBulananDao.findByUnitKerjaAndBulan(unitKerja, bulan);
     }
 
     @Override

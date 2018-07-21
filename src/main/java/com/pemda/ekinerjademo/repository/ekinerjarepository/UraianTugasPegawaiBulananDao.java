@@ -19,12 +19,28 @@ public interface UraianTugasPegawaiBulananDao
            "where utpb.uraianTugasPegawaiBulananId.nipPegawai = ?1")
    List<UraianTugasPegawaiBulanan> findByNip(String nip);
 
+   @Query("select utpb from UraianTugasPegawaiBulanan utpb "+
+           "left join fetch utpb.uraianTugasJabatanJenisUrtug utjj " +
+           "left join fetch utjj.uraianTugasJabatan utj " +
+           "left join fetch utj.uraianTugas " +
+           "where utpb.uraianTugasPegawaiBulananId.nipPegawai = ?1 " +
+           "and utpb.uraianTugasPegawaiBulananId.bulanUrtug = ?2")
+   List<UraianTugasPegawaiBulanan> findByNipAndBulan(String nip, Integer bulan);
+
    @Query("select utpb from UraianTugasPegawaiBulanan utpb " +
            "left join fetch utpb.uraianTugasJabatanJenisUrtug utjj " +
            "left join fetch utjj.uraianTugasJabatan utj " +
            "left join fetch utj.uraianTugas " +
            "where utpb.uraianTugasPegawaiBulananId.kdJabatan like concat(?1,'%')")
    List<UraianTugasPegawaiBulanan> findByUnitKerja(String kdUnitKerja);
+
+   @Query("select utpb from UraianTugasPegawaiBulanan utpb " +
+           "left join fetch utpb.uraianTugasJabatanJenisUrtug utjj " +
+           "left join fetch utjj.uraianTugasJabatan utj " +
+           "left join fetch utj.uraianTugas " +
+           "where utpb.uraianTugasPegawaiBulananId.kdJabatan like concat(?1,'%') " +
+           "and utpb.uraianTugasPegawaiBulananId.bulanUrtug = ?2")
+   List<UraianTugasPegawaiBulanan> findByUnitKerjaAndBulan(String kdUnitKerja, Integer bulan);
 
    @Query("select utpb from UraianTugasPegawaiBulanan utpb " +
            "left join fetch utpb.uraianTugasJabatanJenisUrtug utjj " +
