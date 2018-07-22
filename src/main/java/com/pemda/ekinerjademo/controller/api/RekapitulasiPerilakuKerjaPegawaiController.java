@@ -62,8 +62,8 @@ public class RekapitulasiPerilakuKerjaPegawaiController {
             if (!found) {
                 RekapitulasiPerilakuKerjaPegawai rekapitulasiPerilakuKerjaPegawai = new RekapitulasiPerilakuKerjaPegawai();
 
-                rekapitulasiPerilakuKerjaPegawai.setKdUnitKerja(pegawai.getKdUnitKerja());
                 rekapitulasiPerilakuKerjaPegawai.setNamaUnitKerja(pegawai.getUnitKerja());
+                rekapitulasiPerilakuKerjaPegawai.setKdUnitKerja(pegawai.getKdUnitKerja());
                 rekapitulasiPerilakuKerjaPegawai.setNamaJabatan(pegawai.getJabatan());
                 rekapitulasiPerilakuKerjaPegawai
                         .setRekapitulasiPerilakuKerjaPegawaiId(new RekapitulasiPerilakuKerjaPegawaiId(bulanTahunRekapitulasi,pegawai.getNip()));
