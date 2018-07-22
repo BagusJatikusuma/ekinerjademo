@@ -165,9 +165,9 @@ public class TemplateLainController {
     ResponseEntity<?> approveTemplateLain(@PathVariable("kdLaporan") String kdLaporan){
         LOGGER.info("approve laporan bawahan template lain");
 
+        templateLainService.approve(kdLaporan);
 
-
-        return null;
+        return new ResponseEntity<>(new CustomMessage("laporan sudah diapprove"), HttpStatus.OK);
     }
 
 
