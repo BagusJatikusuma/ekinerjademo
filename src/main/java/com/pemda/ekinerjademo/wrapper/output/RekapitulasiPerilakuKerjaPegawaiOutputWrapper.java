@@ -1,68 +1,52 @@
-package com.pemda.ekinerjademo.model.ekinerjamodel;
-
-import javax.persistence.*;
+package com.pemda.ekinerjademo.wrapper.output;
 
 /**
- * Created by bayu on 18/07/18.
+ * Created by bayu on 22/07/18.
  */
+public class RekapitulasiPerilakuKerjaPegawaiOutputWrapper {
 
-@Entity
-@Table(name = "rekapitulasi_perilaku_kerja_pegawai")
-public class RekapitulasiPerilakuKerjaPegawai {
+    private long bulanTahunRekapulasi;
+    private String nipPegawai;
 
-    @EmbeddedId
-    private RekapitulasiPerilakuKerjaPegawaiId rekapitulasiPerilakuKerjaPegawaiId;
-
-    @Column(name = "kd_unit_kerja")
     private String kdUnitKerja;
-    @Column(name = "nama_jabatan")
     private String namaJabatan;
-    @Column(name = "nama_pegawai")
     private String namaPegawai;
 
-    @Column(name = "data_hadir")
     private int dataHadir;
-    @Column(name = "nilai_hadir")
     private int nilaiHadir;
 
-    @Column(name = "data_perekaman_datang_pulang")
     private int dataPerekamanDatangPulang;
-    @Column(name = "nilai_perekaman_datang_pulang")
     private int nilaiPerekamanDatangPulang;
 
-    @Column(name = "data_hadir_apel")
     private int dataHadirApel;
-    @Column(name = "nilai_hadir_apel")
     private float nilaiHadirApel;
 
-    @Column(name = "data_hadir_rapat")
     private int dataHadirRapat;
-    @Column(name = "nilai_hadir_rapat")
     private int nilaiHadirRapat;
 
-    @Column(name = "data_razia")
     private int dataRazia;
-    @Column(name = "nilai_razia")
     private int nilaiRazia;
 
-    @Column(name = "data_manipulasi_data")
     private boolean dataManipulasiData;
-    @Column(name = "nilai_manipulasi_data")
     private boolean nilaiManipulasiData;
 
-    @Column(name = "total_faktor_pengurangan_tpp")
     private float totalFaktorPeuranganTpp;
-    @Column(name = "nilai_kebalikan")
     private float nilaiKebalikan;
 
-    private String namaUnitKerja;
-
-    public String getNamaUnitKerja() {
-        return namaUnitKerja;
+    public long getBulanTahunRekapulasi() {
+        return bulanTahunRekapulasi;
     }
 
-    public void setNamaUnitKerja(String namaUnitKerja) {
-        this.namaUnitKerja = namaUnitKerja;
+    public void setBulanTahunRekapulasi(long bulanTahunRekapulasi) {
+        this.bulanTahunRekapulasi = bulanTahunRekapulasi;
+    }
+
+    public String getNipPegawai() {
+        return nipPegawai;
+    }
+
+    public void setNipPegawai(String nipPegawai) {
+        this.nipPegawai = nipPegawai;
     }
 
     public String getKdUnitKerja() {
@@ -199,13 +183,5 @@ public class RekapitulasiPerilakuKerjaPegawai {
 
     public void setNilaiKebalikan(float nilaiKebalikan) {
         this.nilaiKebalikan = nilaiKebalikan;
-    }
-
-    public RekapitulasiPerilakuKerjaPegawaiId getRekapitulasiPerilakuKerjaPegawaiId() {
-        return rekapitulasiPerilakuKerjaPegawaiId;
-    }
-
-    public void setRekapitulasiPerilakuKerjaPegawaiId(RekapitulasiPerilakuKerjaPegawaiId rekapitulasiPerilakuKerjaPegawaiId) {
-        this.rekapitulasiPerilakuKerjaPegawaiId = rekapitulasiPerilakuKerjaPegawaiId;
     }
 }

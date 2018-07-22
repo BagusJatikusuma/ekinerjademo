@@ -51,6 +51,7 @@ public class RekapitulasiPerilakuKerjaPegawaiController {
             found = false;
             for (RekapitulasiPerilakuKerjaPegawai rekapPegawaiInDB : rekapitulasiPerilakuKerjaPegawaiTempList) {
                 if (pegawai.getNip().equals(rekapPegawaiInDB.getRekapitulasiPerilakuKerjaPegawaiId().getNipPegawai())) {
+                    rekapPegawaiInDB.setNamaUnitKerja(pegawai.getUnitKerja());
                     rekapitulasiPerilakuKerjaPegawaiList.add(rekapPegawaiInDB);
 
                     found = true;
@@ -62,6 +63,7 @@ public class RekapitulasiPerilakuKerjaPegawaiController {
                 RekapitulasiPerilakuKerjaPegawai rekapitulasiPerilakuKerjaPegawai = new RekapitulasiPerilakuKerjaPegawai();
 
                 rekapitulasiPerilakuKerjaPegawai.setKdUnitKerja(pegawai.getKdUnitKerja());
+                rekapitulasiPerilakuKerjaPegawai.setNamaUnitKerja(pegawai.getUnitKerja());
                 rekapitulasiPerilakuKerjaPegawai.setNamaJabatan(pegawai.getJabatan());
                 rekapitulasiPerilakuKerjaPegawai
                         .setRekapitulasiPerilakuKerjaPegawaiId(new RekapitulasiPerilakuKerjaPegawaiId(bulanTahunRekapitulasi,pegawai.getNip()));
