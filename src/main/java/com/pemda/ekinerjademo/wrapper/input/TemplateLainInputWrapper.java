@@ -16,11 +16,16 @@ public class TemplateLainInputWrapper {
 
     private Integer jenisNaskahPenugasan;
 
+
     private String kdUrtug;
 
     private String kdJabatan;
 
     private Integer tahunUrtug;
+    /** tambahan untuk rekap data urtug **/
+    private String kdJenisUrtug;
+    private Integer bulanUrtug;
+    /** end tambahan untuk rekap data urtug **/
 
     private String namaFile;
 
@@ -122,5 +127,21 @@ public class TemplateLainInputWrapper {
 
     public void setDurasiPengerjaan(Integer durasiPengerjaan) {
         this.durasiPengerjaan = durasiPengerjaan;
+    }
+
+    public String getKdJenisUrtug() {
+        return kdJenisUrtug;
+    }
+
+    public void setKdJenisUrtug(String kdJenisUrtug) {
+        this.kdJenisUrtug = kdJenisUrtug;
+    }
+
+    public Integer getBulanUrtug() {
+        return bulanUrtug;
+    }
+
+    public void setBulanUrtug(Integer bulanUrtug) {
+        this.bulanUrtug = bulanUrtug;
     }
 }

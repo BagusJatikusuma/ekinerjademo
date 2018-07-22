@@ -26,12 +26,18 @@ public class TemplateLain {
     private String kdNaskahPenugasan;
     @Column(name = "jenis_naskah_penugasan")
     private Integer jenisNaskahPenugasan;
+
     @Column(name = "kd_urtug")
     private String kdUrtug;
     @Column(name = "kd_jabatan")
     private String kdJabatan;
     @Column(name = "tahun_urtug")
     private Integer tahunUrtug;
+    @Column(name = "kd_jenis_urtug")
+    private String kdJenisUrtug;
+    @Column(name = "bulan_urtug")
+    private Integer bulanUrtug;
+
     @Column(name = "path_penilaian")
     private String pathPenilaian;
     @Column(name = "status_penilaian")
@@ -48,6 +54,8 @@ public class TemplateLain {
 
     @Column(name = "approval_sekretaris")
     private Integer approvalSekretaris;
+    @Column(name = "approval_penandatangan")
+    private Integer approvalPenandatangan;
 
     public String getKdTemplateLain() {
         return kdTemplateLain;
@@ -183,5 +191,29 @@ public class TemplateLain {
 
     public void setApprovalSekretaris(Integer approvalSekretaris) {
         this.approvalSekretaris = approvalSekretaris;
+    }
+
+    public Integer getApprovalPenandatangan() {
+        return approvalPenandatangan;
+    }
+
+    public void setApprovalPenandatangan(Integer approvalPenandatangan) {
+        this.approvalPenandatangan = approvalPenandatangan;
+    }
+
+    public String getKdJenisUrtug() {
+        return kdJenisUrtug;
+    }
+
+    public void setKdJenisUrtug(String kdJenisUrtug) {
+        this.kdJenisUrtug = kdJenisUrtug;
+    }
+
+    public Integer getBulanUrtug() {
+        return bulanUrtug;
+    }
+
+    public void setBulanUrtug(Integer bulanUrtug) {
+        this.bulanUrtug = bulanUrtug;
     }
 }
