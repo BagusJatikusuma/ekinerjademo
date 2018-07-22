@@ -28,6 +28,11 @@ public class UraianTugasPegawaiBulanServiceImpl
     private TkdJabatanService tkdJabatanService;
 
     @Override
+    public void create(UraianTugasPegawaiBulanan uraianTugasPegawaiBulanan) {
+        uraianTugasPegawaiBulananDao.save(uraianTugasPegawaiBulanan);
+    }
+
+    @Override
     public void create(UraianTugasPegawaiBulananInputWrapper inputWrapper, Integer statusApproval) {
         save(inputWrapper, statusApproval);
     }
@@ -70,6 +75,11 @@ public class UraianTugasPegawaiBulanServiceImpl
     @Override
     public void deleteById(UraianTugasPegawaiBulananId id) {
         uraianTugasPegawaiBulananDao.delete(id);
+    }
+
+    @Override
+    public UraianTugasPegawaiBulanan getById(UraianTugasPegawaiBulananId id) {
+        return uraianTugasPegawaiBulananDao.findOne(id);
     }
 
     @Override

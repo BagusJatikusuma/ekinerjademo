@@ -60,11 +60,16 @@ public class TemplateLainController {
         templateLain.setKeterangan(templateLainInputWrapper.getKeterangan());
         templateLain.setKdNaskahPenugasan(templateLainInputWrapper.getKdNaskahPenugasan());
         templateLain.setJenisNaskahPenugasan(templateLainInputWrapper.getJenisNaskahPenugasan());
+
         templateLain.setKdUrtug(templateLainInputWrapper.getKdUrtug());
         templateLain.setKdJabatan(templateLainInputWrapper.getKdJabatan());
         templateLain.setTahunUrtug(templateLainInputWrapper.getTahunUrtug());
+        templateLain.setKdJenisUrtug(templateLainInputWrapper.getKdJenisUrtug());
+        templateLain.setBulanUrtug(templateLainInputWrapper.getBulanUrtug());
+
         templateLain.setStatusPenilaian(0);
         templateLain.setTanggalPembuatanMilis(new Date().getTime());
+
 
         if (templateLainInputWrapper.getKdTemplateLainBawahan() == null) {
 //            templateLain.setPathFile(kdTemplateLain+"."+fileTemplateLain.getOriginalFilename().split("\\.")[1]);
@@ -156,6 +161,14 @@ public class TemplateLainController {
                 new CustomMessage("template lain created"), HttpStatus.CREATED);
     }
 
+    @RequestMapping(value = "/approve-template-lain/{kdLaporan}", method = RequestMethod.PUT)
+    ResponseEntity<?> approveTemplateLain(@PathVariable("kdLaporan") String kdLaporan){
+        LOGGER.info("approve laporan bawahan template lain");
+
+
+
+        return null;
+    }
 
 
     @RequestMapping(value = "/get-template-lain-by-pembuat/{nipPembuat}", method = RequestMethod.GET)
