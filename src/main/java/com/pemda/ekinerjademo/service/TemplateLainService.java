@@ -13,4 +13,5 @@ public interface TemplateLainService {
 
     TemplateLain getTemplateLain(String kdTemplateLain);
     List<TemplateLain> getByPembuat(String nipPembuat);
+    List<TemplateLain> getBySekretarisApproval(String kdUnitkerja);
 }

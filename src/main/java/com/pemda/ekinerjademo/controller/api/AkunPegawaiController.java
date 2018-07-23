@@ -1591,7 +1591,24 @@ public class AkunPegawaiController {
             }
 
             List<TemplateLain> templateLainList
-                    = templateLainService.getByPembuat(pegawaiBawahan.getNip());
+                    = new ArrayList<>();
+            if (isKepala) {
+                templateLainList
+                        = templateLainService.getBySekretarisApproval(penilai.getKdUnitKerja());
+                if (pegawaiBawahan == null)
+                    LOGGER.error("pegawai bawahan kadis nul");
+                else if (templateLainList == null)
+                    LOGGER.error("laporan sekdis is null");
+                else
+                    LOGGER.error("nip bawahan is null");
+
+                LOGGER.error("bawahan "+pegawaiBawahan.getNip()+" size "+templateLainList.size());
+            }
+            else {
+                templateLainList
+                        = templateLainService.getByPembuat(pegawaiBawahan.getNip());
+                LOGGER.error("bawahan "+pegawaiBawahan.getNip()+" size "+templateLainList.size());
+            }
             for (TemplateLain templateLainBawahan : templateLainList) {
 
                 pembuatLaporan = qutPegawaiService.getQutPegawai(templateLainBawahan.getNipPegawai());
@@ -1609,7 +1626,8 @@ public class AkunPegawaiController {
                                 FilenameUtils.removeExtension(templateLainBawahan.getPathFile()),
                                 FilenameUtils.getExtension(templateLainBawahan.getPathFile()),
                                 null,
-                                dariKabid
+                                dariKabid,
+                                templateLainBawahan.getApprovalPenandatangan()
                         ));
             }
         }

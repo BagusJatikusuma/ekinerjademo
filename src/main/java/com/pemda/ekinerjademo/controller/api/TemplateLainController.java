@@ -118,9 +118,13 @@ public class TemplateLainController {
         }
         templateLain.setKdNaskahPenugasan(templateLainInputWrapper.getKdNaskahPenugasan());
         templateLain.setJenisNaskahPenugasan(templateLainInputWrapper.getJenisNaskahPenugasan());
+
         templateLain.setKdUrtug(templateLainInputWrapper.getKdUrtug());
         templateLain.setKdJabatan(templateLainInputWrapper.getKdJabatan());
         templateLain.setTahunUrtug(templateLainInputWrapper.getTahunUrtug());
+        templateLain.setKdJenisUrtug(templateLainInputWrapper.getKdJenisUrtug());
+        templateLain.setBulanUrtug(templateLainInputWrapper.getBulanUrtug());
+
         templateLain.setStatusPenilaian(0);
         templateLain.setTanggalPembuatanMilis(new Date().getTime());
         templateLain.setStatusBaca(0);
@@ -138,6 +142,11 @@ public class TemplateLainController {
 
             templateLainBawahan.setStatusPenilaian(2);
             templateLainService.create(templateLainBawahan);
+        }
+
+        QutPegawai pegawaiPembuat = qutPegawaiService.getQutPegawai(templateLainInputWrapper.getNipPegawai());
+        if (akunPegawaiService.isPegawaiSekretaris(pegawaiPembuat)) {
+            templateLain.setApprovalSekretaris(1);
         }
 
         templateLainService.create(templateLain);

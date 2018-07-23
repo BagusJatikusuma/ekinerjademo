@@ -5,12 +5,14 @@ import com.pemda.ekinerjademo.repository.ekinerjarepository.TemplateLainDao;
 import com.pemda.ekinerjademo.service.NomorUrutSuratUnitKerjaService;
 import com.pemda.ekinerjademo.service.TemplateLainService;
 import com.pemda.ekinerjademo.service.UraianTugasPegawaiBulananService;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Year;
 import java.util.List;
+import java.util.logging.Logger;
 
 /**
  * Created by bagus on 26/12/17.
@@ -18,6 +20,8 @@ import java.util.List;
 @Service("TemplateLainService")
 @Transactional("ekinerjaTransactionManager")
 public class TemplateLainServiceImpl implements TemplateLainService {
+    public static final org.slf4j.Logger LOGGER = LoggerFactory.getLogger(TemplateLainServiceImpl.class);
+
     @Autowired private TemplateLainDao templateLainDao;
     @Autowired private NomorUrutSuratUnitKerjaService nomorUrutSuratUnitKerjaService;
     @Autowired private UraianTugasPegawaiBulananService uraianTugasPegawaiBulananService;
@@ -32,6 +36,7 @@ public class TemplateLainServiceImpl implements TemplateLainService {
         TemplateLain templateLainLast
                 = templateLainDao.findOne(kdTemplateLain);
         templateLainLast.setApprovalPenandatangan(1);
+
 
         NomorUrutSuratUnitKerja nomorUrutSurat
                 = nomorUrutSuratUnitKerjaService.getNomorSuratByUnitKerjaAndTahun(
@@ -59,13 +64,13 @@ public class TemplateLainServiceImpl implements TemplateLainService {
                         templateLainLast.getKdUnitKerja(),
                         templateLainLast.getBulanUrtug());
 
-
         if (penilaianTree.contains(".")) {
             List<TemplateLain> templateLains
                     = templateLainDao.findByLastTree(penilaianTree.substring(0, penilaianTree.indexOf(".")));
 
             for (TemplateLain templateLain
                     : templateLains) {
+                LOGGER.info(templateLain.getKdTemplateLain() + " in approval");
                 templateLain.setApprovalPenandatangan(1);
                 //algoritma untuk memberikan poin terhadap capaian kinerja pegawai
                 //untuk sekarang hanya untuk yang non dpa
@@ -89,6 +94,22 @@ public class TemplateLainServiceImpl implements TemplateLainService {
 
 
             }
+        } else {
+            for (UraianTugasPegawaiBulanan uraianTugasPegawaiBulanan : uraianTugasPegawaiBulananSKPDList) {
+
+                if (uraianTugasPegawaiBulanan.getUraianTugasPegawaiBulananId()
+                        .equals(new UraianTugasPegawaiBulananId(templateLainLast.getKdUrtug(),
+                                templateLainLast.getKdJabatan(),
+                                templateLainLast.getKdJenisUrtug(),
+                                templateLainLast.getTahunUrtug(),
+                                templateLainLast.getBulanUrtug(),
+                                templateLainLast.getNipPegawai()))) {
+                    uraianTugasPegawaiBulanan.setRealisasiKuantitas(uraianTugasPegawaiBulanan.getRealisasiKuantitas() + 1);
+                    uraianTugasPegawaiBulananService.create(uraianTugasPegawaiBulanan);
+
+                    break;
+                }
+            }
         }
 
     }
@@ -101,6 +122,11 @@ public class TemplateLainServiceImpl implements TemplateLainService {
     @Override
     public List<TemplateLain> getByPembuat(String nipPembuat) {
         return templateLainDao.findByNipPegawai(nipPembuat);
+    }
+
+    @Override
+    public List<TemplateLain> getBySekretarisApproval(String kdUnitkerja) {
+        return templateLainDao.findBySekretarisApproval(kdUnitkerja);
     }
 
 }
