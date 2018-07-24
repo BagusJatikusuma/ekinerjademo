@@ -101,6 +101,7 @@ public class AuthenticationController {
 
         List<UraianTugasPegawaiTahunan> kontrakKerja
                 = uraianTugasPegawaiTahunanService.getByNipPegawai(akunPegawaiAuthenticated.getNipPegawai());
+
         List<UraianTugasPegawaiBulanan> kontrakKerjaBulanan;
 
 

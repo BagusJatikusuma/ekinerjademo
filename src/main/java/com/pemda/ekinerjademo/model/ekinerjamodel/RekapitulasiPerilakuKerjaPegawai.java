@@ -55,16 +55,6 @@ public class RekapitulasiPerilakuKerjaPegawai {
     @Column(name = "nilai_kebalikan")
     private float nilaiKebalikan;
 
-    private String namaUnitKerja;
-
-    public String getNamaUnitKerja() {
-        return namaUnitKerja;
-    }
-
-    public void setNamaUnitKerja(String namaUnitKerja) {
-        this.namaUnitKerja = namaUnitKerja;
-    }
-
     public String getKdUnitKerja() {
         return kdUnitKerja;
     }
