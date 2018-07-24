@@ -2,17 +2,12 @@ package com.pemda.ekinerjademo.controller.api;
 
 import com.pemda.ekinerjademo.model.bismamodel.QutPegawai;
 import com.pemda.ekinerjademo.model.bismamodel.TkdUnk;
-import com.pemda.ekinerjademo.model.ekinerjamodel.PejabatPenilaiDinilai;
-import com.pemda.ekinerjademo.model.ekinerjamodel.UraianTugasJabatanJenisUrtug;
-import com.pemda.ekinerjademo.model.ekinerjamodel.UraianTugasPegawaiBulanan;
-import com.pemda.ekinerjademo.model.ekinerjamodel.UraianTugasPegawaiTahunan;
+import com.pemda.ekinerjademo.model.ekinerjamodel.*;
 import com.pemda.ekinerjademo.repository.ekinerjarepository.TkdUnkCloneDao;
-import com.pemda.ekinerjademo.service.PejabatPenilaiDinilaiService;
-import com.pemda.ekinerjademo.service.QutPegawaiCloneService;
-import com.pemda.ekinerjademo.service.UraianTugasJabatanJenisUrtugService;
-import com.pemda.ekinerjademo.service.UraianTugasPegawaiBulananService;
+import com.pemda.ekinerjademo.service.*;
 import com.pemda.ekinerjademo.util.exception.EkinerjaObjConverter;
 import com.pemda.ekinerjademo.wrapper.input.UraianTugasPegawaiBulananInputWrapper;
+import com.pemda.ekinerjademo.wrapper.input.UrtugBulananIdInputWrapper;
 import com.pemda.ekinerjademo.wrapper.output.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -39,6 +34,7 @@ public class UraianTugasPegawaiBulananController {
 
     //    @Autowired private TkdUnkDao tkdUnkDao;
     @Autowired private TkdUnkCloneDao tkdUnkDao;
+    @Autowired private TemplateLainService templateLainService;
 
     /**
      *
@@ -351,6 +347,48 @@ public class UraianTugasPegawaiBulananController {
      */
     public ResponseEntity<?> getUraianTugasBulananByUnitKerja() {
         return null;
+    }
+
+    /**
+     *
+     *
+     *
+     * @return
+     */
+    @RequestMapping(value = "/get-progress-urtug-bulanan", method = RequestMethod.POST)
+    public ResponseEntity<?> getProgressUrtugBulanan(@RequestBody UrtugBulananIdInputWrapper inputWrapper) {
+        LOGGER.info("get progress urtug bulanan");
+
+        List<TemplateLain> progressByTemplateList
+                = new ArrayList<>();
+        List<TemplateLainWrapper> progressByTemplateLainWrappers
+                = new ArrayList<>();
+
+        //lakukan pencarian berdasarkan jenis urtug
+        switch (inputWrapper.getKdJenisUrtug()) {
+            case "KJU002" :
+                progressByTemplateList
+                        = templateLainService.getByUrtugNonDpa(
+                                new UraianTugasPegawaiBulananId(inputWrapper.getKdUrtug(),
+                                                                inputWrapper.getKdJabatan(),
+                                                                inputWrapper.getKdJenisUrtug(),
+                                                                inputWrapper.getTahunUrtug(),
+                                                                inputWrapper.getBulanUrtug(),
+                                                                inputWrapper.getNipPegawai()));
+                break;
+            case "KJU001" :
+                break;
+        }
+
+        for (TemplateLain obj : progressByTemplateList) {
+            progressByTemplateLainWrappers
+                    .add(new TemplateLainWrapper(obj.getKdTemplateLain(),
+                                                    obj.getKeterangan(),
+                                                    obj.getTanggalPembuatanMilis(),
+                                                    obj.getPathFile()));
+        }
+
+        return new ResponseEntity<>(progressByTemplateLainWrappers, HttpStatus.OK);
     }
 
 }

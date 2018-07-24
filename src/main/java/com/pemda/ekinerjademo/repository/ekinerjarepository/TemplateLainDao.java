@@ -24,4 +24,13 @@ public interface TemplateLainDao extends JpaRepository<TemplateLain, String> {
             "where tl.kdUnitKerja = ?1 " +
             "and tl.approvalSekretaris = 1")
     List<TemplateLain> findBySekretarisApproval(String kdUnitKerja);
+
+    @Query("select tl from TemplateLain tl " +
+            "where tl.kdUrtug = ?1 " +
+            "and tl.kdJabatan = ?2 " +
+            "and tl.tahunUrtug = ?3 " +
+            "and tl.kdJenisUrtug = ?4 " +
+            "and tl.bulanUrtug = ?5 " +
+            "and tl.nipPegawai = ?6")
+    List<TemplateLain> findByUrtugNonDpa(String kdUrtug, String kdJabatan, Integer tahunUrtug, String kdJenisUrtug, Integer bulanUrtug, String nipPembuat);
 }

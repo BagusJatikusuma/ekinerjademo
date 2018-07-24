@@ -1,6 +1,7 @@
 package com.pemda.ekinerjademo.service;
 
 import com.pemda.ekinerjademo.model.ekinerjamodel.TemplateLain;
+import com.pemda.ekinerjademo.model.ekinerjamodel.UraianTugasPegawaiBulananId;
 
 import java.util.List;
 
@@ -14,4 +15,5 @@ public interface TemplateLainService {
     TemplateLain getTemplateLain(String kdTemplateLain);
     List<TemplateLain> getByPembuat(String nipPembuat);
     List<TemplateLain> getBySekretarisApproval(String kdUnitkerja);
+    List<TemplateLain> getByUrtugNonDpa(UraianTugasPegawaiBulananId id);
 }

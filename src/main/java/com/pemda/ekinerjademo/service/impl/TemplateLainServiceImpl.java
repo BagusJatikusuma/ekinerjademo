@@ -129,4 +129,15 @@ public class TemplateLainServiceImpl implements TemplateLainService {
         return templateLainDao.findBySekretarisApproval(kdUnitkerja);
     }
 
+    @Override
+    public List<TemplateLain> getByUrtugNonDpa(UraianTugasPegawaiBulananId id) {
+        return templateLainDao
+                .findByUrtugNonDpa(id.getKdUrtug(),
+                                    id.getKdJabatan(),
+                                    id.getTahunUrtug(),
+                                    id.getKdJenisUrtug(),
+                                    id.getBulanUrtug(),
+                                    id.getNipPegawai());
+    }
+
 }

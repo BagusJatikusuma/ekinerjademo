@@ -17,6 +17,7 @@ public class UraianTugasPegawaiTahunanWrapper {
     private Integer biaya;
     private String alasan;
     private Integer statusApproval;
+    private Integer totalRealisasi;
 
     public UraianTugasPegawaiTahunanWrapper() {
     }
@@ -47,6 +48,23 @@ public class UraianTugasPegawaiTahunanWrapper {
         this.biaya = biaya;
         this.alasan = alasan;
         this.statusApproval = statusApproval;
+    }
+
+    public UraianTugasPegawaiTahunanWrapper(String urtug, String kdUrtug, String kdJabatan, String kdJenisUrtug, Integer tahunUrtug, String nipPegawai, Integer kuantitas, String satuanKuantitas, Integer kualitas, Integer waktu, Integer biaya, String alasan, Integer statusApproval, Integer totalRealisasi) {
+        this.urtug = urtug;
+        this.kdUrtug = kdUrtug;
+        this.kdJabatan = kdJabatan;
+        this.kdJenisUrtug = kdJenisUrtug;
+        this.tahunUrtug = tahunUrtug;
+        this.nipPegawai = nipPegawai;
+        this.kuantitas = kuantitas;
+        this.satuanKuantitas = satuanKuantitas;
+        this.kualitas = kualitas;
+        this.waktu = waktu;
+        this.biaya = biaya;
+        this.alasan = alasan;
+        this.statusApproval = statusApproval;
+        this.totalRealisasi = totalRealisasi;
     }
 
     public String getUrtug() {
@@ -151,5 +169,13 @@ public class UraianTugasPegawaiTahunanWrapper {
 
     public void setStatusApproval(Integer statusApproval) {
         this.statusApproval = statusApproval;
+    }
+
+    public Integer getTotalRealisasi() {
+        return totalRealisasi;
+    }
+
+    public void setTotalRealisasi(Integer totalRealisasi) {
+        this.totalRealisasi = totalRealisasi;
     }
 }

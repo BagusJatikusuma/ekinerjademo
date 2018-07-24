@@ -15,6 +15,7 @@ public class UraianTugasJabatanJenisUrtugWrapper {
     private Integer kualitas;
     private Integer waktu;
     private Integer biaya;
+    private Integer totalRealisasi;
 
     public UraianTugasJabatanJenisUrtugWrapper() {
     }
@@ -41,6 +42,21 @@ public class UraianTugasJabatanJenisUrtugWrapper {
         this.kualitas = kualitas;
         this.waktu = waktu;
         this.biaya = biaya;
+    }
+
+    public UraianTugasJabatanJenisUrtugWrapper(String kdUrtug, String urtug, String kdJabatan, String kdJenisUrtug, String jenisUrtug, Integer tahunUrtug, Integer kuantitas, String satuanKuantitas, Integer kualitas, Integer waktu, Integer biaya, Integer totalRealisasi) {
+        this.kdUrtug = kdUrtug;
+        this.urtug = urtug;
+        this.kdJabatan = kdJabatan;
+        this.kdJenisUrtug = kdJenisUrtug;
+        this.jenisUrtug = jenisUrtug;
+        this.tahunUrtug = tahunUrtug;
+        this.kuantitas = kuantitas;
+        this.satuanKuantitas = satuanKuantitas;
+        this.kualitas = kualitas;
+        this.waktu = waktu;
+        this.biaya = biaya;
+        this.totalRealisasi = totalRealisasi;
     }
 
     public String getKdUrtug() {
@@ -129,5 +145,13 @@ public class UraianTugasJabatanJenisUrtugWrapper {
 
     public void setBiaya(Integer biaya) {
         this.biaya = biaya;
+    }
+
+    public Integer getTotalRealisasi() {
+        return totalRealisasi;
+    }
+
+    public void setTotalRealisasi(Integer totalRealisasi) {
+        this.totalRealisasi = totalRealisasi;
     }
 }

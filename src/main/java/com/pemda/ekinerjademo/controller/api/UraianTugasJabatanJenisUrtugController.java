@@ -4,6 +4,7 @@ import com.pemda.ekinerjademo.model.bismamodel.QutPegawai;
 import com.pemda.ekinerjademo.model.ekinerjamodel.*;
 import com.pemda.ekinerjademo.service.QutPegawaiCloneService;
 import com.pemda.ekinerjademo.service.UraianTugasJabatanJenisUrtugService;
+import com.pemda.ekinerjademo.service.UraianTugasPegawaiBulananService;
 import com.pemda.ekinerjademo.service.UraianTugasPegawaiTahunanService;
 import com.pemda.ekinerjademo.wrapper.input.UraianTugasJabatanJenisUrtugInputWrapper;
 import com.pemda.ekinerjademo.wrapper.input.UraianTugasPegawaiTahunanInputWrapper;
@@ -37,6 +38,8 @@ public class UraianTugasJabatanJenisUrtugController {
     private UraianTugasJabatanJenisUrtugService uraianTugasJabatanJenisUrtugService;
     @Autowired
     private UraianTugasPegawaiTahunanService urtugPegawaiTahunanService;
+    @Autowired
+    private UraianTugasPegawaiBulananService uraianTugasPegawaiBulananService;
     @Autowired
     private QutPegawaiCloneService qutPegawaiService;
 
@@ -188,24 +191,57 @@ public class UraianTugasJabatanJenisUrtugController {
                 = new ArrayList<>();
         List<UraianTugasJabatanJenisUrtug> urtugJabatanJenisList
                 = uraianTugasJabatanJenisUrtugService.getUrtugNonDpaByJabatan(kdJabatan);
+        List<UraianTugasPegawaiBulanan> uraianTugasPegawaiBulananList
+                = uraianTugasPegawaiBulananService.getByNip(nipPegawai);
         List<UraianTugasPegawaiTahunan> urtugPegawaiTahunanList
                 = urtugPegawaiTahunanService.getByNipPegawai(nipPegawai);
 
         for (UraianTugasJabatanJenisUrtug urtugJabatanJenis : urtugJabatanJenisList) {
-            urtugWrapperList
-                    .add(new UraianTugasJabatanJenisUrtugWrapper(
-                            urtugJabatanJenis.getUraianTugasJabatanJenisUrtugId().getKdUrtug(),
-                            urtugJabatanJenis.getUraianTugasJabatan().getUraianTugas().getDeskripsi(),
-                            urtugJabatanJenis.getUraianTugasJabatanJenisUrtugId().getKdJabatan(),
-                            urtugJabatanJenis.getUraianTugasJabatanJenisUrtugId().getKdJenisUrtug(),
-                            urtugJabatanJenis.getJenisUrtug().getJenisUrtug(),
-                            urtugJabatanJenis.getUraianTugasJabatanJenisUrtugId().getTahunUrtug(),
-                            urtugJabatanJenis.getKuantitas(),
-                            urtugJabatanJenis.getSatuanKuantitas(),
-                            urtugJabatanJenis.getKualitas(),
-                            urtugJabatanJenis.getWaktu(),
-                            urtugJabatanJenis.getBiaya()
-                    ));
+            for (UraianTugasPegawaiBulanan uraianTugasPegawaiBulanan : uraianTugasPegawaiBulananList) {
+                if (urtugJabatanJenis.getUraianTugasJabatanJenisUrtugId().getKdUrtug()
+                        .equals(uraianTugasPegawaiBulanan.getUraianTugasPegawaiBulananId().getKdUrtug())
+                        && urtugJabatanJenis.getUraianTugasJabatanJenisUrtugId().getKdJabatan()
+                        .equals(uraianTugasPegawaiBulanan.getUraianTugasPegawaiBulananId().getKdJabatan())
+                        && urtugJabatanJenis.getUraianTugasJabatanJenisUrtugId().getTahunUrtug()
+                        .equals(uraianTugasPegawaiBulanan.getUraianTugasPegawaiBulananId().getTahunUrtug())
+                        && urtugJabatanJenis.getUraianTugasJabatanJenisUrtugId().getKdJenisUrtug()
+                        .equals(uraianTugasPegawaiBulanan.getUraianTugasPegawaiBulananId().getKdJenisUrtug())) {
+
+                    boolean found = false;
+                    for (UraianTugasJabatanJenisUrtugWrapper objWrapper : urtugWrapperList) {
+                        if (objWrapper.getKdUrtug().equals(uraianTugasPegawaiBulanan.getUraianTugasPegawaiBulananId().getKdUrtug())
+                                && objWrapper.getKdJabatan().equals(uraianTugasPegawaiBulanan.getUraianTugasPegawaiBulananId().getKdJabatan())
+                                && objWrapper.getTahunUrtug().equals(uraianTugasPegawaiBulanan.getUraianTugasPegawaiBulananId().getTahunUrtug())
+                                && objWrapper.getKdJenisUrtug().equals(uraianTugasPegawaiBulanan.getUraianTugasPegawaiBulananId().getKdJenisUrtug())) {
+                            found = true;
+
+                            objWrapper.setTotalRealisasi(objWrapper.getTotalRealisasi() + uraianTugasPegawaiBulanan.getRealisasiKuantitas());
+
+                            break;
+                        }
+                    }
+
+                    if (!found) {
+                        urtugWrapperList
+                                .add(new UraianTugasJabatanJenisUrtugWrapper(
+                                        urtugJabatanJenis.getUraianTugasJabatanJenisUrtugId().getKdUrtug(),
+                                        urtugJabatanJenis.getUraianTugasJabatan().getUraianTugas().getDeskripsi(),
+                                        urtugJabatanJenis.getUraianTugasJabatanJenisUrtugId().getKdJabatan(),
+                                        urtugJabatanJenis.getUraianTugasJabatanJenisUrtugId().getKdJenisUrtug(),
+                                        urtugJabatanJenis.getJenisUrtug().getJenisUrtug(),
+                                        urtugJabatanJenis.getUraianTugasJabatanJenisUrtugId().getTahunUrtug(),
+                                        urtugJabatanJenis.getKuantitas(),
+                                        urtugJabatanJenis.getSatuanKuantitas(),
+                                        urtugJabatanJenis.getKualitas(),
+                                        urtugJabatanJenis.getWaktu(),
+                                        urtugJabatanJenis.getBiaya(),
+                                        uraianTugasPegawaiBulanan.getRealisasiKuantitas()
+                                ));
+                    }
+
+                }
+            }
+
         }
 
 //        for (UraianTugasJabatanJenisUrtug urtugJabatanJenis : urtugJabatanJenisList) {
