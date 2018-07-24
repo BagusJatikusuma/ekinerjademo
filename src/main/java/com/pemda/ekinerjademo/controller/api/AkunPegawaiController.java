@@ -388,7 +388,10 @@ public class AkunPegawaiController {
                             qutPegawai.getKdUnitKerja(),
                             qutPegawai.getUnitKerja(),
                             qutPegawai.getPangkat(),
-                            qutPegawai.getGol()));
+                            qutPegawai.getGol(),
+                            "",
+                            qutPegawai.getGlrDpn(),
+                            qutPegawai.getGlrBlk()));
         }
 
         //get correct unit kerja
