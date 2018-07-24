@@ -33,6 +33,8 @@ public class RekapitulasiPerilakuKerjaPegawaiOutputWrapper {
     private float totalFaktorPeuranganTpp;
     private float nilaiKebalikan;
 
+    private boolean sudahDiatur;
+
     public long getBulanTahunRekapulasi() {
         return bulanTahunRekapulasi;
     }
@@ -183,5 +185,13 @@ public class RekapitulasiPerilakuKerjaPegawaiOutputWrapper {
 
     public void setNilaiKebalikan(float nilaiKebalikan) {
         this.nilaiKebalikan = nilaiKebalikan;
+    }
+
+    public boolean isSudahDiatur() {
+        return sudahDiatur;
+    }
+
+    public void setSudahDiatur(boolean sudahDiatur) {
+        this.sudahDiatur = sudahDiatur;
     }
 }

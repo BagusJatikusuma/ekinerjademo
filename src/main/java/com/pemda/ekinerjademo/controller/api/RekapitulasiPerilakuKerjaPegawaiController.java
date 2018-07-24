@@ -9,6 +9,7 @@ import com.pemda.ekinerjademo.service.QutPegawaiService;
 import com.pemda.ekinerjademo.service.RekapitulasiPerilakuKerjaPegawaiService;
 import com.pemda.ekinerjademo.wrapper.input.RekapitulasiPerilakuKerjaPegawaiInputWrapper;
 import com.pemda.ekinerjademo.wrapper.output.CustomMessage;
+import com.pemda.ekinerjademo.wrapper.output.RekapitulasiPerilakuKerjaPegawaiOutputWrapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,13 +47,49 @@ public class RekapitulasiPerilakuKerjaPegawaiController {
                 = rekapitulasiPerilakuKerjaPegawaiService.getRekaptulasiPerilakuKerjaPegawai(kdUnitKerja, bulanTahunRekapitulasi);
         List<RekapitulasiPerilakuKerjaPegawai> rekapitulasiPerilakuKerjaPegawaiList = new ArrayList<>();
 
+        List<RekapitulasiPerilakuKerjaPegawaiOutputWrapper> rekapitulasiPerilakuKerjaPegawaiOutputWrappers = new ArrayList<>();
+
+
         boolean found = false;
         for (QutPegawai pegawai : qutPegawaiClones) {
             found = false;
             for (RekapitulasiPerilakuKerjaPegawai rekapPegawaiInDB : rekapitulasiPerilakuKerjaPegawaiTempList) {
                 if (pegawai.getNip().equals(rekapPegawaiInDB.getRekapitulasiPerilakuKerjaPegawaiId().getNipPegawai())) {
-                    rekapPegawaiInDB.setNamaUnitKerja(pegawai.getUnitKerja());
-                    rekapitulasiPerilakuKerjaPegawaiList.add(rekapPegawaiInDB);
+
+                    RekapitulasiPerilakuKerjaPegawaiOutputWrapper rekapitulasiPerilakuKerjaPegawaiOutputWrapper = new RekapitulasiPerilakuKerjaPegawaiOutputWrapper();
+
+                    rekapitulasiPerilakuKerjaPegawaiOutputWrapper.setBulanTahunRekapulasi(rekapPegawaiInDB.getRekapitulasiPerilakuKerjaPegawaiId().getBulanTahunRekapulasi());
+                    rekapitulasiPerilakuKerjaPegawaiOutputWrapper.setNipPegawai(rekapPegawaiInDB.getRekapitulasiPerilakuKerjaPegawaiId().getNipPegawai());
+
+                    rekapitulasiPerilakuKerjaPegawaiOutputWrapper.setKdUnitKerja(rekapPegawaiInDB.getKdUnitKerja());
+                    rekapitulasiPerilakuKerjaPegawaiOutputWrapper.setNamaJabatan(rekapPegawaiInDB.getNamaJabatan());
+                    rekapitulasiPerilakuKerjaPegawaiOutputWrapper.setNamaPegawai(rekapPegawaiInDB.getNamaPegawai());
+
+                    rekapitulasiPerilakuKerjaPegawaiOutputWrapper.setDataHadir(rekapPegawaiInDB.getDataHadir());
+                    rekapitulasiPerilakuKerjaPegawaiOutputWrapper.setNilaiHadir(rekapPegawaiInDB.getNilaiHadir());
+
+                    rekapitulasiPerilakuKerjaPegawaiOutputWrapper.setDataPerekamanDatangPulang(rekapPegawaiInDB.getDataPerekamanDatangPulang());
+                    rekapitulasiPerilakuKerjaPegawaiOutputWrapper.setNilaiPerekamanDatangPulang(rekapPegawaiInDB.getNilaiPerekamanDatangPulang());
+
+                    rekapitulasiPerilakuKerjaPegawaiOutputWrapper.setDataHadirApel(rekapPegawaiInDB.getDataHadirApel());
+                    rekapitulasiPerilakuKerjaPegawaiOutputWrapper.setNilaiHadirApel(rekapPegawaiInDB.getNilaiHadirApel());
+
+                    rekapitulasiPerilakuKerjaPegawaiOutputWrapper.setDataHadirRapat(rekapPegawaiInDB.getDataHadirRapat());
+                    rekapitulasiPerilakuKerjaPegawaiOutputWrapper.setNilaiHadirRapat(rekapPegawaiInDB.getNilaiHadirRapat());
+
+                    rekapitulasiPerilakuKerjaPegawaiOutputWrapper.setDataRazia(rekapPegawaiInDB.getDataRazia());
+                    rekapitulasiPerilakuKerjaPegawaiOutputWrapper.setNilaiRazia(rekapPegawaiInDB.getNilaiRazia());
+
+                    rekapitulasiPerilakuKerjaPegawaiOutputWrapper.setDataManipulasiData(rekapPegawaiInDB.isDataManipulasiData());
+                    rekapitulasiPerilakuKerjaPegawaiOutputWrapper.setNilaiManipulasiData(rekapPegawaiInDB.isNilaiManipulasiData());
+
+                    rekapitulasiPerilakuKerjaPegawaiOutputWrapper.setTotalFaktorPeuranganTpp(rekapPegawaiInDB.getTotalFaktorPeuranganTpp());
+                    rekapitulasiPerilakuKerjaPegawaiOutputWrapper.setNilaiKebalikan(rekapPegawaiInDB.getNilaiKebalikan());
+
+                    rekapitulasiPerilakuKerjaPegawaiOutputWrapper.setSudahDiatur(true);
+
+                    rekapitulasiPerilakuKerjaPegawaiOutputWrappers.add(rekapitulasiPerilakuKerjaPegawaiOutputWrapper);
+
 
                     found = true;
                     break;
@@ -60,13 +97,13 @@ public class RekapitulasiPerilakuKerjaPegawaiController {
             }
 
             if (!found) {
-                RekapitulasiPerilakuKerjaPegawai rekapitulasiPerilakuKerjaPegawai = new RekapitulasiPerilakuKerjaPegawai();
+                RekapitulasiPerilakuKerjaPegawaiOutputWrapper rekapitulasiPerilakuKerjaPegawai = new RekapitulasiPerilakuKerjaPegawaiOutputWrapper();
 
-                rekapitulasiPerilakuKerjaPegawai.setNamaUnitKerja(pegawai.getUnitKerja());
+                rekapitulasiPerilakuKerjaPegawai.setNipPegawai(pegawai.getKdUnitKerja());
+                rekapitulasiPerilakuKerjaPegawai.setBulanTahunRekapulasi(bulanTahunRekapitulasi);
+
                 rekapitulasiPerilakuKerjaPegawai.setKdUnitKerja(pegawai.getKdUnitKerja());
                 rekapitulasiPerilakuKerjaPegawai.setNamaJabatan(pegawai.getJabatan());
-                rekapitulasiPerilakuKerjaPegawai
-                        .setRekapitulasiPerilakuKerjaPegawaiId(new RekapitulasiPerilakuKerjaPegawaiId(bulanTahunRekapitulasi,pegawai.getNip()));
                 rekapitulasiPerilakuKerjaPegawai.setNamaPegawai(pegawai.getNama());
 
                 rekapitulasiPerilakuKerjaPegawai.setDataHadir(0);
@@ -90,12 +127,14 @@ public class RekapitulasiPerilakuKerjaPegawaiController {
                 rekapitulasiPerilakuKerjaPegawai.setTotalFaktorPeuranganTpp(0);
                 rekapitulasiPerilakuKerjaPegawai.setNilaiKebalikan(0);
 
-                rekapitulasiPerilakuKerjaPegawaiList.add(rekapitulasiPerilakuKerjaPegawai);
+                rekapitulasiPerilakuKerjaPegawai.setSudahDiatur(false);
+
+                rekapitulasiPerilakuKerjaPegawaiOutputWrappers.add(rekapitulasiPerilakuKerjaPegawai);
             }
 
         }
 
-        return new ResponseEntity<Object>(rekapitulasiPerilakuKerjaPegawaiList, HttpStatus.OK);
+        return new ResponseEntity<Object>(rekapitulasiPerilakuKerjaPegawaiOutputWrappers, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/create-rekapitulasi-perilaku-kerja-pegawai", method = RequestMethod.POST)
