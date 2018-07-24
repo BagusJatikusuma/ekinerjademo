@@ -18,6 +18,8 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.*;
 
 /**
@@ -35,6 +37,8 @@ public class AuthenticationController {
     private QutPegawaiCloneService qutPegawaiService;
     @Autowired
     private UraianTugasPegawaiTahunanService uraianTugasPegawaiTahunanService;
+    @Autowired
+    private UraianTugasPegawaiBulananService uraianTugasPegawaiBulananService;
     @Autowired
     private AkunPegawaiService akunPegawaiService;
     @Autowired
@@ -102,12 +106,20 @@ public class AuthenticationController {
         List<UraianTugasPegawaiTahunan> kontrakKerja
                 = uraianTugasPegawaiTahunanService.getByNipPegawai(akunPegawaiAuthenticated.getNipPegawai());
 
-        List<UraianTugasPegawaiBulanan> kontrakKerjaBulanan;
+        Date date = new Date();
+        LocalDate localDate = date.toInstant().atZone(ZoneId.of("Asia/Jakarta")).toLocalDate();
+        int bulan = localDate.getMonthValue();
+        int tahun = localDate.getYear();
 
+        List<UraianTugasPegawaiBulanan> kontrakKerjaBulanan
+                = uraianTugasPegawaiBulananService.getAjuanKontrakBulanByNipPegawai(
+                        akunPegawaiAuthenticated.getNipPegawai(),
+                        bulan-1,
+                        tahun);
 
         boolean sudahMembuatKontrakKerja = false;
 
-        if (!kontrakKerja.isEmpty())
+        if (!kontrakKerjaBulanan.isEmpty())
             sudahMembuatKontrakKerja = true;
 
         PegawaiCredential pegawaiCredential =
