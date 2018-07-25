@@ -22,6 +22,8 @@ public class TemplateLainHistoryWrapper {
 
     private Integer kdJenisSurat;
 
+    private Integer approvalPenandatangan;
+
     public TemplateLainHistoryWrapper() {
     }
     public TemplateLainHistoryWrapper(
@@ -62,6 +64,19 @@ public class TemplateLainHistoryWrapper {
         this.alasanPenolakan = alasanPenolakan;
         this.jenisSurat = jenisSurat;
         this.kdJenisSurat = kdJenisSurat;
+    }
+
+    public TemplateLainHistoryWrapper(String kdTemplateLain, String keterangan, String pathFile, String pathFileExtension, Integer statusPenilaian, Long tanggalPembuatanMilis, String alasanPenolakan, String jenisSurat, Integer kdJenisSurat, Integer approvalPenandatangan) {
+        this.kdTemplateLain = kdTemplateLain;
+        this.keterangan = keterangan;
+        this.pathFile = pathFile;
+        this.pathFileExtension = pathFileExtension;
+        this.statusPenilaian = statusPenilaian;
+        this.tanggalPembuatanMilis = tanggalPembuatanMilis;
+        this.alasanPenolakan = alasanPenolakan;
+        this.jenisSurat = jenisSurat;
+        this.kdJenisSurat = kdJenisSurat;
+        this.approvalPenandatangan = approvalPenandatangan;
     }
 
     public String getKdTemplateLain() {
@@ -134,5 +149,13 @@ public class TemplateLainHistoryWrapper {
 
     public void setPathFileExtension(String pathFileExtension) {
         this.pathFileExtension = pathFileExtension;
+    }
+
+    public Integer getApprovalPenandatangan() {
+        return approvalPenandatangan;
+    }
+
+    public void setApprovalPenandatangan(Integer approvalPenandatangan) {
+        this.approvalPenandatangan = approvalPenandatangan;
     }
 }

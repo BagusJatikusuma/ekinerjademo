@@ -196,7 +196,9 @@ public class UraianTugasJabatanJenisUrtugController {
         List<UraianTugasPegawaiTahunan> urtugPegawaiTahunanList
                 = urtugPegawaiTahunanService.getByNipPegawai(nipPegawai);
 
+        boolean foundInDB;
         for (UraianTugasJabatanJenisUrtug urtugJabatanJenis : urtugJabatanJenisList) {
+            foundInDB = false;
             for (UraianTugasPegawaiBulanan uraianTugasPegawaiBulanan : uraianTugasPegawaiBulananList) {
                 if (urtugJabatanJenis.getUraianTugasJabatanJenisUrtugId().getKdUrtug()
                         .equals(uraianTugasPegawaiBulanan.getUraianTugasPegawaiBulananId().getKdUrtug())
@@ -238,8 +240,26 @@ public class UraianTugasJabatanJenisUrtugController {
                                         uraianTugasPegawaiBulanan.getRealisasiKuantitas()
                                 ));
                     }
-
+                    foundInDB = true;
                 }
+            }
+
+            if (!foundInDB) {
+                urtugWrapperList
+                        .add(new UraianTugasJabatanJenisUrtugWrapper(
+                                urtugJabatanJenis.getUraianTugasJabatanJenisUrtugId().getKdUrtug(),
+                                urtugJabatanJenis.getUraianTugasJabatan().getUraianTugas().getDeskripsi(),
+                                urtugJabatanJenis.getUraianTugasJabatanJenisUrtugId().getKdJabatan(),
+                                urtugJabatanJenis.getUraianTugasJabatanJenisUrtugId().getKdJenisUrtug(),
+                                urtugJabatanJenis.getJenisUrtug().getJenisUrtug(),
+                                urtugJabatanJenis.getUraianTugasJabatanJenisUrtugId().getTahunUrtug(),
+                                urtugJabatanJenis.getKuantitas(),
+                                urtugJabatanJenis.getSatuanKuantitas(),
+                                urtugJabatanJenis.getKualitas(),
+                                urtugJabatanJenis.getWaktu(),
+                                urtugJabatanJenis.getBiaya(),
+                                0
+                        ));
             }
 
         }

@@ -126,6 +126,11 @@ public class UraianTugasPegawaiBulanServiceImpl
         return uraianTugasPegawaiBulananDao.findAjuanUraianTugasPegawai(nipPegawai);
     }
 
+    @Override
+    public List<UraianTugasPegawaiBulanan> getAjuanKontrakBulanByNipPegawai(String nipPegawai, int bulan, int tahun) {
+        return uraianTugasPegawaiBulananDao.findByNipBulanTahun(nipPegawai, bulan, tahun);
+    }
+
     private void save(UraianTugasPegawaiBulananInputWrapper inputWrapper, Integer statusApproval) {
         UraianTugasPegawaiBulanan uraianTugasPegawaiBulanan = new UraianTugasPegawaiBulanan();
 

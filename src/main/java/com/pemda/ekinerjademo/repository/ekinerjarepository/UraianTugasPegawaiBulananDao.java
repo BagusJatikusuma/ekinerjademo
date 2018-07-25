@@ -49,6 +49,15 @@ public interface UraianTugasPegawaiBulananDao
            "where utpb.uraianTugasPegawaiBulananId.nipPegawai = ?1 and utpb.statusApproval = 1 ")
    List<UraianTugasPegawaiBulanan> findAjuanUraianTugasPegawai(String nipPegawai);
 
+   @Query("select utpb from UraianTugasPegawaiBulanan utpb " +
+           "left join fetch utpb.uraianTugasJabatanJenisUrtug utjj " +
+           "left join fetch utjj.uraianTugasJabatan utj " +
+           "left join fetch utj.uraianTugas " +
+           "where utpb.uraianTugasPegawaiBulananId.nipPegawai = ?1 " +
+           "and utpb.uraianTugasPegawaiBulananId.bulanUrtug = ?2 " +
+           "and utpb.uraianTugasPegawaiBulananId.tahunUrtug = ?3 ")
+   List<UraianTugasPegawaiBulanan> findByNipBulanTahun(String nip, int bulan, int tahun);
+
    @Override
    void delete(UraianTugasPegawaiBulananId uraianTugasPegawaiBulananId);
 }

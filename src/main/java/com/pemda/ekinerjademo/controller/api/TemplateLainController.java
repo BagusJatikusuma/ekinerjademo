@@ -200,7 +200,8 @@ public class TemplateLainController {
                             templateLain.getTanggalPembuatanMilis(),
                             templateLain.getAlasanPenolakan(),
                             "template lain",
-                            15));
+                            15,
+                            templateLain.getApprovalPenandatangan()));
         }
 
         return new ResponseEntity<Object>(templateLainHistoryWrapperList, HttpStatus.OK);

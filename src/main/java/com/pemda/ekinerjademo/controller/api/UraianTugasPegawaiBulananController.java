@@ -9,6 +9,7 @@ import com.pemda.ekinerjademo.util.exception.EkinerjaObjConverter;
 import com.pemda.ekinerjademo.wrapper.input.UraianTugasPegawaiBulananInputWrapper;
 import com.pemda.ekinerjademo.wrapper.input.UrtugBulananIdInputWrapper;
 import com.pemda.ekinerjademo.wrapper.output.*;
+import org.apache.commons.io.FilenameUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -361,7 +362,7 @@ public class UraianTugasPegawaiBulananController {
 
         List<TemplateLain> progressByTemplateList
                 = new ArrayList<>();
-        List<TemplateLainWrapper> progressByTemplateLainWrappers
+        List<TemplateLainHistoryWrapper> progressByTemplateLainWrappers
                 = new ArrayList<>();
 
         //lakukan pencarian berdasarkan jenis urtug
@@ -382,10 +383,16 @@ public class UraianTugasPegawaiBulananController {
 
         for (TemplateLain obj : progressByTemplateList) {
             progressByTemplateLainWrappers
-                    .add(new TemplateLainWrapper(obj.getKdTemplateLain(),
-                                                    obj.getKeterangan(),
-                                                    obj.getTanggalPembuatanMilis(),
-                                                    obj.getPathFile()));
+                    .add(new TemplateLainHistoryWrapper(obj.getKdTemplateLain(),
+                            obj.getKeterangan(),
+                            FilenameUtils.removeExtension(obj.getPathFile()),
+                            FilenameUtils.getExtension(obj.getPathFile()),
+                            obj.getStatusPenilaian(),
+                            obj.getTanggalPembuatanMilis(),
+                            obj.getAlasanPenolakan(),
+                            "template lain",
+                            15,
+                            obj.getApprovalPenandatangan()));
         }
 
         return new ResponseEntity<>(progressByTemplateLainWrappers, HttpStatus.OK);
