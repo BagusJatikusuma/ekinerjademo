@@ -137,6 +137,7 @@ public class TemplateLainController {
             TemplateLain templateLainBawahan
                     = templateLainService.getTemplateLain(templateLainInputWrapper.getKdTemplateLainBawahan());
 
+            templateLain.setKeterangan(templateLainBawahan.getKeterangan());
             templateLain.setPathFile(templateLainInputWrapper.getNamaFileLaporanBawahan());
             templateLain.setPathPenilaian(templateLainBawahan.getPathPenilaian()+"."+kdTemplateLain);
 

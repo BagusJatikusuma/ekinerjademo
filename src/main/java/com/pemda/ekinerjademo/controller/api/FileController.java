@@ -79,13 +79,37 @@ public class FileController {
         try {
             file = Files.readAllBytes(filePath.toPath());
         } catch (IOException e) {
-            LOGGER.info("failed retreive file");
+            LOGGER.error("failed retreive file");
         }
 
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
         String filename = namaFile+"."+fileExtension;
-        headers.setContentDispositionFormData(filename, filename);
+
+        HttpHeaders headers = new HttpHeaders();
+        if (fileExtension.equals("pdf")) {
+            headers.setContentType(MediaType.parseMediaType("application/pdf"));
+            headers.add("content-disposition", "inline;filename=" + filename);
+        }
+        else if (fileExtension.equals("png")
+                || fileExtension.equals("jpeg")
+                || fileExtension.equals("jpg")
+                || fileExtension.equals("gif")) {
+            switch (fileExtension) {
+                case "png" :
+                    headers.setContentType(MediaType.IMAGE_PNG);
+                    break;
+                case "gif" :
+                    headers.setContentType(MediaType.IMAGE_GIF);
+                    break;
+                default:
+                    headers.setContentType(MediaType.IMAGE_JPEG);
+                    break;
+            }
+
+            headers.setContentLength(file.length);
+        }
+        else {
+            headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+        }
         headers.setCacheControl("must-revalidate, post-check=0, pre-check=0");
 
         return new ResponseEntity<>(file, headers, HttpStatus.OK);
