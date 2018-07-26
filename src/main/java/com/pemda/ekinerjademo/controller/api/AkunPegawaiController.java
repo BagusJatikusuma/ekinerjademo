@@ -1630,7 +1630,8 @@ public class AkunPegawaiController {
                                 FilenameUtils.getExtension(templateLainBawahan.getPathFile()),
                                 null,
                                 dariKabid,
-                                templateLainBawahan.getApprovalPenandatangan()
+                                templateLainBawahan.getApprovalPenandatangan(),
+                                templateLainBawahan.getKeterangan()
                         ));
             }
         }
@@ -2345,7 +2346,161 @@ public class AkunPegawaiController {
         return new ResponseEntity<>(null, HttpStatus.OK);
     }
 
+    @RequestMapping(value = "/get-laporan-bawahan-bulanan/{nipPenilai}/{bulan}/{tahun}", method = RequestMethod.GET)
+    ResponseEntity<?> getLaporanBawahanBulanan(
+            @PathVariable("nipPenilai") String nipPenilai,
+            @PathVariable("bulan") int bulan,
+            @PathVariable("tahun") int tahun) {
+        LOGGER.info("get laporan bawahan");
 
+        List<LaporanBawahanWrapper> laporanBawahanWrapperList
+                = new ArrayList<>();
+
+        List<QutPegawaiClone> pegawaiBawahanList = new ArrayList<>();
+        List<PejabatPenilaiDinilai> kdJabatanPegawaiBawahanList
+                = pejabatPenilaiDinilaiService.findPegawaiDinilai(nipPenilai);
+
+        QutPegawai penilai = qutPegawaiService.getQutPegawai(nipPenilai);
+
+        //cek apakah kadin/camat atau sekdin/sekcam
+        boolean isSekretaris = false, isKepala = false;
+        if (penilai.getKdUnitKerja().substring(0,1)
+                .equals("3")) {
+            //eselon kadin II.b, eselon sekdin III.a
+            if (penilai.getEselon().equals("II.b")) {
+                isKepala = true;
+            }
+            else if (penilai.getEselon().equals("III.a")) {
+                isSekretaris = true;
+            }
+        }
+        else if (penilai.getKdUnitKerja().substring(0,1)
+                .equals("7")) {
+            //eselon camat III.a, eselon sekdcam III.b
+            if (penilai.getEselon().equals("III.a")) {
+                isKepala = true;
+            }
+            else if (penilai.getEselon().equals("III.b")) {
+                isSekretaris = true;
+            }
+        }
+
+        if (isSekretaris) {
+            List<QutPegawai> pegawaiUnitKerja
+                    = qutPegawaiService.getQutPegawaiByUnitKerja(penilai.getKdUnitKerja());
+
+            for (QutPegawai pegawai : pegawaiUnitKerja) {
+                if (penilai.getKdUnitKerja().substring(0,1)
+                        .equals("3")) {
+                    if (pegawai.getEselon().equals("III.b")) {
+                        pegawaiBawahanList.add(qutPegawaiService.convertQutPegawaiIntoQutPegawaiClone(pegawai));
+                    }
+                }
+                else if (penilai.getKdUnitKerja().substring(0,1)
+                        .equals("7")) {
+                    if (pegawai.getEselon().equals("IV.a")) {
+                        pegawaiBawahanList.add(qutPegawaiService.convertQutPegawaiIntoQutPegawaiClone(pegawai));
+                    }
+                }
+
+            }
+        }
+
+        //ambil data pegawai bawahan terlebih dahulu
+        //untuk kepala dinas atau camat tidak perlu
+        if (isKepala) {
+            pegawaiBawahanList.add(qutPegawaiService.convertQutPegawaiIntoQutPegawaiClone(penilai));
+        }
+        else {
+            for (PejabatPenilaiDinilai jabatan : kdJabatanPegawaiBawahanList) {
+                List<QutPegawaiClone> pegawaiBawahanJabatanList
+                        = qutPegawaiService.getQutPegawaiByKdJabatan(jabatan.getPejabatPenilaiDinilaiId().getKdJabatanDinilai());
+                for (QutPegawaiClone pegawaiBawahan : pegawaiBawahanJabatanList) {
+                    pegawaiBawahanList.add(pegawaiBawahan);
+                }
+            }
+        }
+
+        if (isKepala) {
+            LOGGER.info("penilai is kepala dinas/camat");
+        }
+        else if (isSekretaris) {
+            LOGGER.info("penilai is sekretaris");
+        }
+        else {
+            LOGGER.info("penilai is not kepala dinas/camat or sekretaris");
+        }
+
+        //ambil laporan dari seluruh history template untuk setiap pegawai bawahan
+        Integer suratPejabat;
+        boolean isPenandatangan = false;
+        int statusPenilaian = 0;
+        boolean dariKabid;
+
+        QutPegawai pembuatLaporan = new QutPegawai();
+
+        for (QutPegawaiClone pegawaiBawahan : pegawaiBawahanList) {
+            //ambil data berita acara yang dilaporkan bawahan
+            List<BeritaAcara> beritaAcaraList = new ArrayList<>();
+
+            dariKabid = akunPegawaiService.isPegawaiKepalaBidang(pegawaiBawahan);
+
+            List<TemplateLain> templateLainList
+                    = new ArrayList<>();
+            if (isKepala) {
+                templateLainList
+                        = templateLainService.getBySekretarisApproval(penilai.getKdUnitKerja());
+                if (pegawaiBawahan == null)
+                    LOGGER.error("pegawai bawahan kadis nul");
+                else if (templateLainList == null)
+                    LOGGER.error("laporan sekdis is null");
+                else
+                    LOGGER.error("nip bawahan is null");
+
+                LOGGER.error("bawahan "+pegawaiBawahan.getNip()+" size "+templateLainList.size());
+            }
+            else {
+                templateLainList
+                        = templateLainService.getByPembuat(pegawaiBawahan.getNip());
+                LOGGER.error("bawahan "+pegawaiBawahan.getNip()+" size "+templateLainList.size());
+            }
+
+            Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("Asia/Jakarta"));
+            for (TemplateLain templateLainBawahan : templateLainList) {
+                calendar.setTimeInMillis(templateLainBawahan.getTanggalPembuatanMilis());
+
+                LOGGER.error(templateLainBawahan.getNipPegawai()
+                        +" -month- "+calendar.get(Calendar.MONTH)
+                        +" -year- "+calendar.get(Calendar.YEAR));
+
+                if (calendar.get(Calendar.MONTH) == bulan
+                        && calendar.get(Calendar.YEAR) == tahun) {
+
+                    pembuatLaporan = qutPegawaiService.getQutPegawai(templateLainBawahan.getNipPegawai());
+
+                    laporanBawahanWrapperList
+                            .add(new LaporanBawahanWrapper(templateLainBawahan.getKdTemplateLain(),
+                                    "template lain",
+                                    pembuatLaporan.getNip(),
+                                    pembuatLaporan.getNama(),
+                                    templateLainBawahan.getStatusPenilaian(),
+                                    15,
+                                    0,
+                                    templateLainBawahan.getTanggalPembuatanMilis(),
+                                    true,
+                                    FilenameUtils.removeExtension(templateLainBawahan.getPathFile()),
+                                    FilenameUtils.getExtension(templateLainBawahan.getPathFile()),
+                                    null,
+                                    dariKabid,
+                                    templateLainBawahan.getApprovalPenandatangan(),
+                                    templateLainBawahan.getKeterangan()
+                            ));
+                }
+            }
+        }
+
+        return new ResponseEntity<Object>(laporanBawahanWrapperList, HttpStatus.OK);
+    }
 
     //sampai disini
 

@@ -3,6 +3,7 @@ package com.pemda.ekinerjademo.service.impl;
 import com.pemda.ekinerjademo.model.ekinerjamodel.UnitKerjaKegiatan;
 import com.pemda.ekinerjademo.model.simdamodel.TaKegiatan;
 import com.pemda.ekinerjademo.model.simdamodel.TaKegiatanId;
+import com.pemda.ekinerjademo.repository.simdarepository.TaIndikatorDao;
 import com.pemda.ekinerjademo.repository.simdarepository.TaKegiatanDao;
 import com.pemda.ekinerjademo.service.TaKegiatanService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,7 @@ import java.util.List;
 @Transactional("simdaTransactionManager")
 public class TaKegiatanServiceImpl implements TaKegiatanService {
     @Autowired private TaKegiatanDao taKegiatanDao;
+    @Autowired private TaIndikatorDao taIndikatorDao;
 
     @Override
     public List<TaKegiatan> getAll() {

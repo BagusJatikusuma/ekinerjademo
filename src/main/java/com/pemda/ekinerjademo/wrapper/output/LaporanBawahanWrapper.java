@@ -18,6 +18,7 @@ public class LaporanBawahanWrapper {
     private String barcodeImage;
     private boolean dariKabid;
     private Integer statusApproval;
+    private String keteranganTemplateLain;
 
     public LaporanBawahanWrapper(String kdSurat, String jenisSurat, String nipBawahan, String namaBawahan, Integer statusPenilaian, Integer kdJenisSurat, Integer suratPejabat, Long tanggalDibuatMilis, boolean isPenandatangan) {
         this.kdSurat = kdSurat;
@@ -181,6 +182,24 @@ public class LaporanBawahanWrapper {
         this.statusApproval = statusApproval;
     }
 
+    public LaporanBawahanWrapper(String kdSurat, String jenisSurat, String nipBawahan, String namaBawahan, Integer statusPenilaian, Integer kdJenisSurat, Integer suratPejabat, Long tanggalDibuatMilis, boolean isPenandatangan, String namaFileTemplateLain, String extensiFile, String barcodeImage, boolean dariKabid, Integer statusApproval, String keteranganTemplateLain) {
+        this.kdSurat = kdSurat;
+        this.jenisSurat = jenisSurat;
+        this.nipBawahan = nipBawahan;
+        this.namaBawahan = namaBawahan;
+        StatusPenilaian = statusPenilaian;
+        this.kdJenisSurat = kdJenisSurat;
+        this.suratPejabat = suratPejabat;
+        this.tanggalDibuatMilis = tanggalDibuatMilis;
+        this.isPenandatangan = isPenandatangan;
+        this.namaFileTemplateLain = namaFileTemplateLain;
+        this.extensiFile = extensiFile;
+        this.barcodeImage = barcodeImage;
+        this.dariKabid = dariKabid;
+        this.statusApproval = statusApproval;
+        this.keteranganTemplateLain = keteranganTemplateLain;
+    }
+
     public String getKdSurat() {
         return kdSurat;
     }
@@ -295,5 +314,13 @@ public class LaporanBawahanWrapper {
 
     public void setStatusApproval(Integer statusApproval) {
         this.statusApproval = statusApproval;
+    }
+
+    public String getKeteranganTemplateLain() {
+        return keteranganTemplateLain;
+    }
+
+    public void setKeteranganTemplateLain(String keteranganTemplateLain) {
+        this.keteranganTemplateLain = keteranganTemplateLain;
     }
 }
