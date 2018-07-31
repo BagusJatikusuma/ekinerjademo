@@ -82,6 +82,52 @@ public class AkunPegawaiServiceImpl implements AkunPegawaiService {
     }
 
     @Override
+    public boolean isPegawaiKasie(QutPegawai qutPegawai) {
+        boolean isKasie = false;
+        //untuk kedinasan
+        if (qutPegawai.getKdUnitKerja().substring(0,1)
+                .equals("3")) {
+            //eselon kasie dinas IV.a
+            if (qutPegawai.getEselon().contains("IV.a")) {
+                isKasie = true;
+            }
+        }
+        //untuk kecamatan atau lurah
+        else if (qutPegawai.getKdUnitKerja().substring(0,1)
+                .equals("7")) {
+            //eselon kasie camat atau lurah IV.a
+            if (qutPegawai.getEselon().contains("IV.a")) {
+                isKasie = true;
+            }
+        }
+
+        return isKasie;
+    }
+
+    @Override
+    public boolean isPegawaiKasie(QutPegawaiClone qutPegawai) {
+        boolean isKasie = false;
+        //untuk kedinasan
+        if (qutPegawai.getKdUnitKerja().substring(0,1)
+                .equals("3")) {
+            //eselon kasie dinas IV.a
+            if (qutPegawai.getEselon().contains("IV.a")) {
+                isKasie = true;
+            }
+        }
+        //untuk kecamatan atau lurah
+        else if (qutPegawai.getKdUnitKerja().substring(0,1)
+                .equals("7")) {
+            //eselon kasie camat atau lurah IV.a
+            if (qutPegawai.getEselon().contains("IV.a")) {
+                isKasie = true;
+            }
+        }
+
+        return isKasie;
+    }
+
+    @Override
     public boolean isPegawaiKepalaBidang(QutPegawai qutPegawai) {
         boolean isKabid = false;
         if (qutPegawai.getKdUnitKerja().substring(0,1)

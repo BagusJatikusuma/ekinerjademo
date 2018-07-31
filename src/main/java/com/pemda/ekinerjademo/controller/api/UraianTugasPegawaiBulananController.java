@@ -6,6 +6,7 @@ import com.pemda.ekinerjademo.model.ekinerjamodel.*;
 import com.pemda.ekinerjademo.repository.ekinerjarepository.TkdUnkCloneDao;
 import com.pemda.ekinerjademo.service.*;
 import com.pemda.ekinerjademo.util.exception.EkinerjaObjConverter;
+import com.pemda.ekinerjademo.wrapper.input.AjuanSKPKasieWrapper;
 import com.pemda.ekinerjademo.wrapper.input.UraianTugasPegawaiBulananInputWrapper;
 import com.pemda.ekinerjademo.wrapper.input.UrtugBulananIdInputWrapper;
 import com.pemda.ekinerjademo.wrapper.output.*;
@@ -39,8 +40,35 @@ public class UraianTugasPegawaiBulananController {
 
     /**
      *
+     * service yang digunakan untuk membuat daftar ajuan kontrak bulanan pegawai
+     * dibuat oleh kasie/eselon 4
+     *
+     * @return
+     */
+    @RequestMapping(value = "/create-daftar-urtug-pegawai-bulanan-segitiga", method = RequestMethod.POST)
+    public ResponseEntity<?> createSegitiga(
+            @RequestBody AjuanSKPKasieWrapper ajuanSKPKasieWrapper) {
+        LOGGER.info("create urtug pegawai bulanan");
+
+//        urtugBulananService.create(inputWrapperList, 0);
+        /**
+         * membuat kontrak kerjanya sekaligus menambahkan uraian tugas untuk skp atasannya hingga kadis
+         */
+        QutPegawai pegawai
+                = qutPegawaiService.getQutPegawai(ajuanSKPKasieWrapper.getDaftarUrtugSKPkasie().get(0).getNipPegawai());
+        createUraianTugasRecursive(pegawai, ajuanSKPKasieWrapper.getDaftarUrtugSKPkasie());
+        /**
+         * membuat skp untuk pelaksana dari kasie
+         */
+        urtugBulananService.create(ajuanSKPKasieWrapper.getDaftarUrtugSKPPelaksanakasie(), 1);
+
+        return new ResponseEntity<>(new CustomMessage("ajuan berhasil dibuat"), HttpStatus.OK);
+    }
+
+    /**
      *
      * service yang digunakan untuk membuat daftar ajuan kontrak bulanan pegawai
+     * dibuat oleh kasie/eselon 4
      *
      * @return
      */
@@ -49,7 +77,7 @@ public class UraianTugasPegawaiBulananController {
             @RequestBody List<UraianTugasPegawaiBulananInputWrapper> inputWrapperList) {
         LOGGER.info("create urtug pegawai bulanan");
 
-        urtugBulananService.create(inputWrapperList, 0);
+        urtugBulananService.create(inputWrapperList, 1);
 
         return new ResponseEntity<>(new CustomMessage("ajuan berhasil dibuat"), HttpStatus.OK);
     }
@@ -396,6 +424,36 @@ public class UraianTugasPegawaiBulananController {
         }
 
         return new ResponseEntity<>(progressByTemplateLainWrappers, HttpStatus.OK);
+    }
+
+    /**
+     *
+     *
+     *
+     * @param pegawai
+     * @param daftarUrtugBulanan
+     */
+    private void createUraianTugasRecursive(QutPegawai pegawai,
+                                            List<UraianTugasPegawaiBulananInputWrapper> daftarUrtugBulanan) {
+        PejabatPenilaiDinilai pejabatPenilaiDinilai
+                = pejabatPenilaiDinilaiService.findByKdJabatanDinilai(pegawai.getKdJabatan()).get(0);
+
+        urtugBulananService.create(daftarUrtugBulanan, 1);
+
+        //lakukan recursive hanya jika data penilai berbeda dengan bawahan
+        //karena rule saat ini penilai bagi jabatan tertinggi adalah dirinya sendiri
+        if (!pegawai.getNip()
+                .equals(pejabatPenilaiDinilai.getPejabatPenilaiDinilaiId().getNipPenilai())) {
+            QutPegawai pegawaiPenilai
+                    = qutPegawaiService.getQutPegawai(pejabatPenilaiDinilai.getPejabatPenilaiDinilaiId().getNipPenilai());
+
+            //ubah kembali pembuat uraian tugas inputwrapper menjadi pegawai penilai
+            for (UraianTugasPegawaiBulananInputWrapper urtugBulanan : daftarUrtugBulanan) {
+                urtugBulanan.setNipPegawai(pegawaiPenilai.getNip());
+            }
+
+            createUraianTugasRecursive(pegawaiPenilai, daftarUrtugBulanan);
+        }
     }
 
 }

@@ -1,14 +1,11 @@
 package com.pemda.ekinerjademo.controller.api;
 
 import com.pemda.ekinerjademo.model.bismamodel.QutPegawai;
-import com.pemda.ekinerjademo.model.ekinerjamodel.AkunPegawai;
-import com.pemda.ekinerjademo.model.ekinerjamodel.TemplateLain;
-import com.pemda.ekinerjademo.service.AkunPegawaiService;
-import com.pemda.ekinerjademo.service.QutPegawaiCloneService;
-import com.pemda.ekinerjademo.service.QutPegawaiService;
-import com.pemda.ekinerjademo.service.TemplateLainService;
+import com.pemda.ekinerjademo.model.ekinerjamodel.*;
+import com.pemda.ekinerjademo.service.*;
 import com.pemda.ekinerjademo.util.FileUploader;
 import com.pemda.ekinerjademo.wrapper.input.TemplateLainInputWrapper;
+import com.pemda.ekinerjademo.wrapper.input.UrtugBulananIdInputWrapper;
 import com.pemda.ekinerjademo.wrapper.output.CustomMessage;
 import com.pemda.ekinerjademo.wrapper.output.TemplateLainHistoryWrapper;
 import org.apache.commons.io.FilenameUtils;
@@ -39,6 +36,8 @@ public class TemplateLainController {
     private QutPegawaiCloneService qutPegawaiService;
     @Autowired
     private AkunPegawaiService akunPegawaiService;
+    @Autowired
+    private UraianTugasPegawaiBulananService uraianTugasPegawaiBulananService;
 
     @RequestMapping(value = "/create-template-lain",
             method = RequestMethod.POST,
@@ -99,6 +98,16 @@ public class TemplateLainController {
                 new CustomMessage("template lain created"), HttpStatus.CREATED);
     }
 
+    /**
+     *
+     * rules saat ini :
+     * yang dapat membuat/mengerjakan laporan hanya pelaksana atau kasie
+     * jika yang membuat adalah kasie maka sekaligus dengan proses approval
+     * jika dalam pembuatan laporan hanya kasie tanpa bantuan pelaksana maka pelaksana tidak memperoleh poin realisasi
+     *
+     * @param templateLainInputWrapper
+     * @return
+     */
     @RequestMapping(value = "/create-template-lain-data", method = RequestMethod.POST)
     ResponseEntity<?> createTemplateLainData(@RequestBody TemplateLainInputWrapper templateLainInputWrapper) {
         LOGGER.info("create template lain data");
@@ -129,25 +138,57 @@ public class TemplateLainController {
         templateLain.setTanggalPembuatanMilis(new Date().getTime());
         templateLain.setStatusBaca(0);
 
+        //kondisi ini dapat di akses oleh kasie dan pelaksana yang membuat laporan baru; 31 juli 2018
         if (templateLainInputWrapper.getKdTemplateLainBawahan() == null) {
 //            templateLain.setPathFile(kdTemplateLain+"."+fileTemplateLain.getOriginalFilename().split("\\.")[1]);
             templateLain.setPathFile(kdTemplateLain+"."+ FilenameUtils.getExtension(templateLainInputWrapper.getNamaFile()));
             templateLain.setPathPenilaian(kdTemplateLain);
-        } else {
+        }
+        //kondisi ini hanya dapat di akses oleh kasie yang melanjutkan laporan bawahannya; 31 juli 2018
+        //ubah realisasi pelaksana
+        else {
             TemplateLain templateLainBawahan
                     = templateLainService.getTemplateLain(templateLainInputWrapper.getKdTemplateLainBawahan());
 
             templateLain.setKeterangan(templateLainBawahan.getKeterangan());
             templateLain.setPathFile(templateLainInputWrapper.getNamaFileLaporanBawahan());
             templateLain.setPathPenilaian(templateLainBawahan.getPathPenilaian()+"."+kdTemplateLain);
-
+            //status penilaian 2 diterima;
             templateLainBawahan.setStatusPenilaian(2);
             templateLainService.create(templateLainBawahan);
+
+            //langsung approve untuk bawahan
+            templateLainService.approve(templateLainBawahan.getKdTemplateLain());
         }
 
+//        QutPegawai pegawaiPembuat = qutPegawaiService.getQutPegawai(templateLainInputWrapper.getNipPegawai());
+//        if (akunPegawaiService.isPegawaiSekretaris(pegawaiPembuat)) {
+//            templateLain.setApprovalSekretaris(1);
+//        }
+
+        //jika yang membuat atau melanjutkan adalah kasie maka ubah realisasi dirinya dengan atasan
         QutPegawai pegawaiPembuat = qutPegawaiService.getQutPegawai(templateLainInputWrapper.getNipPegawai());
-        if (akunPegawaiService.isPegawaiSekretaris(pegawaiPembuat)) {
-            templateLain.setApprovalSekretaris(1);
+        if (akunPegawaiService.isPegawaiKasie(pegawaiPembuat)) {
+            templateLain.setStatusPenilaian(2);
+
+            List<UraianTugasPegawaiBulanan> uraianTugasPegawaiBulananSKPDList
+                    = uraianTugasPegawaiBulananService.getByUnitKerja(
+                                                        templateLain.getKdUnitKerja(),
+                                                        templateLain.getBulanUrtug());
+            for (UrtugBulananIdInputWrapper urtugBulananId : templateLainInputWrapper.getDaftarUrtugAtasan()) {
+                for (UraianTugasPegawaiBulanan uraianTugasPegawaiBulanan : uraianTugasPegawaiBulananSKPDList) {
+
+                    if (uraianTugasPegawaiBulanan.getUraianTugasPegawaiBulananId()
+                            .equals(urtugBulananId)) {
+                        uraianTugasPegawaiBulanan.setRealisasiKuantitas(uraianTugasPegawaiBulanan.getRealisasiKuantitas() + 1);
+                        uraianTugasPegawaiBulananService.create(uraianTugasPegawaiBulanan);
+
+                        break;
+
+                    }
+                }
+            }
+
         }
 
         templateLainService.create(templateLain);

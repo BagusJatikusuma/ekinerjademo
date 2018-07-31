@@ -108,7 +108,7 @@ public class PejabatPenilaiDinilaiController {
                 qutPegawai.getKdJabatan(),
                 qutPegawai.getJabatan(),
                 qutPegawai.getKdUnitKerja(),
-                qutPegawai.getUnitKerja(),
+                qutPegawai.getUnitKerja(), //revisi
                 qutPegawai.getPangkat(),
                 qutPegawai.getGol());
 

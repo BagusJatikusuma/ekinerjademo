@@ -16,6 +16,8 @@ public interface AkunPegawaiService {
     void save(AkunPegawai akunPegawai);
     boolean isPegawaiSekretaris(QutPegawai qutPegawai);
     boolean isPegawaiSekretaris(QutPegawaiClone qutPegawai);
+    boolean isPegawaiKasie(QutPegawai qutPegawai);
+    boolean isPegawaiKasie(QutPegawaiClone qutPegawai);
     boolean isPegawaiKepalaBidang(QutPegawai qutPegawai);
     boolean isPegawaiKepalaBidang(QutPegawaiClone qutPegawai);
 //    PasswordAkunPegawaiProjection getPasswordAkunPegawai(String nipPegawai);

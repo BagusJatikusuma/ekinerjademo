@@ -386,7 +386,7 @@ public class AkunPegawaiController {
                             qutPegawai.getKdJabatan(),
                             qutPegawai.getJabatan(),
                             qutPegawai.getKdUnitKerja(),
-                            qutPegawai.getUnitKerja(),
+                            qutPegawai.getUnitKerja(), //revisi
                             qutPegawai.getPangkat(),
                             qutPegawai.getGol(),
                             "",

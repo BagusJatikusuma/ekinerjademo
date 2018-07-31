@@ -1,5 +1,7 @@
 package com.pemda.ekinerjademo.wrapper.input;
 
+import java.util.List;
+
 /**
  * Created by bagus on 26/12/17.
  */
@@ -32,6 +34,8 @@ public class TemplateLainInputWrapper {
     private String kdTemplateLainBawahan;
 
     private String namaFileLaporanBawahan;
+
+    private List<UrtugBulananIdInputWrapper> daftarUrtugAtasan;
 
     public String getKdUnitKerja() {
         return kdUnitKerja;
@@ -143,5 +147,13 @@ public class TemplateLainInputWrapper {
 
     public void setBulanUrtug(Integer bulanUrtug) {
         this.bulanUrtug = bulanUrtug;
+    }
+
+    public List<UrtugBulananIdInputWrapper> getDaftarUrtugAtasan() {
+        return daftarUrtugAtasan;
+    }
+
+    public void setDaftarUrtugAtasan(List<UrtugBulananIdInputWrapper> daftarUrtugAtasan) {
+        this.daftarUrtugAtasan = daftarUrtugAtasan;
     }
 }

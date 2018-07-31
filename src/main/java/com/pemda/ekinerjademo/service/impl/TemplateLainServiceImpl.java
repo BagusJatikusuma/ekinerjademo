@@ -94,7 +94,9 @@ public class TemplateLainServiceImpl implements TemplateLainService {
 
 
             }
-        } else {
+        }
+        //update realisasi urtug hanya untuk satu oran
+        else {
             for (UraianTugasPegawaiBulanan uraianTugasPegawaiBulanan : uraianTugasPegawaiBulananSKPDList) {
 
                 if (uraianTugasPegawaiBulanan.getUraianTugasPegawaiBulananId()
