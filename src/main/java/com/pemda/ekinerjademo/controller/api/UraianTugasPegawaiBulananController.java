@@ -7,6 +7,7 @@ import com.pemda.ekinerjademo.repository.ekinerjarepository.TkdUnkCloneDao;
 import com.pemda.ekinerjademo.service.*;
 import com.pemda.ekinerjademo.util.exception.EkinerjaObjConverter;
 import com.pemda.ekinerjademo.wrapper.input.AjuanSKPKasieWrapper;
+import com.pemda.ekinerjademo.wrapper.input.TargetSKPbulanan;
 import com.pemda.ekinerjademo.wrapper.input.UraianTugasPegawaiBulananInputWrapper;
 import com.pemda.ekinerjademo.wrapper.input.UrtugBulananIdInputWrapper;
 import com.pemda.ekinerjademo.wrapper.output.*;
@@ -82,6 +83,22 @@ public class UraianTugasPegawaiBulananController {
         return new ResponseEntity<>(new CustomMessage("ajuan berhasil dibuat"), HttpStatus.OK);
     }
 
+    @RequestMapping(value = "/update-target-skp-bulanan-pegawai", method = RequestMethod.PUT)
+    public ResponseEntity<?> updateTargetSKPBulananPegawai(@RequestBody TargetSKPbulanan targetSKPbulananBaru) {
+        LOGGER.info("update target skp bulanan pegawai");
+
+        urtugBulananService.updateTargetSKPBulananPegawai(
+                new UraianTugasPegawaiBulananId(targetSKPbulananBaru.getKdUrtug(),
+                        targetSKPbulananBaru.getKdJabatan(),
+                        targetSKPbulananBaru.getKdJenisUrtug(),
+                        targetSKPbulananBaru.getTahunUrtug(),
+                        targetSKPbulananBaru.getBulanUrtug(),
+                        targetSKPbulananBaru.getNipPegawai()),
+                targetSKPbulananBaru.getTargetKuantitasBaru());
+
+        return new ResponseEntity<>(new CustomMessage("target uraian tugas berhasi diubah"), HttpStatus.OK);
+    }
+
     /**
      *
      * service yang digunakan untuk mengapprove ajuan kontrak bawahan
@@ -128,6 +145,8 @@ public class UraianTugasPegawaiBulananController {
     }
 
     /**
+     *
+     * gak pakai parameter tahun??
      *
      * @return
      */

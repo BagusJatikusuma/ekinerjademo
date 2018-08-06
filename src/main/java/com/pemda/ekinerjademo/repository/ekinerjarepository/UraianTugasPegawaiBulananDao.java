@@ -60,4 +60,13 @@ public interface UraianTugasPegawaiBulananDao
 
    @Override
    void delete(UraianTugasPegawaiBulananId uraianTugasPegawaiBulananId);
+
+   @Query("select utpb from UraianTugasPegawaiBulanan utpb " +
+           "left join fetch utpb.uraianTugasJabatanJenisUrtug utjj " +
+           "left join fetch utjj.uraianTugasJabatan utj " +
+           "left join fetch utj.uraianTugas " +
+           "where utpb.uraianTugasPegawaiBulananId.kdJabatan like concat(?1,'%') " +
+           "and utpb.uraianTugasPegawaiBulananId.bulanUrtug = ?2 " +
+           "and utpb.uraianTugasPegawaiBulananId.tahunUrtug = ?3")
+   List<UraianTugasPegawaiBulanan> findByUnitKerjaAndBulanAndTahun(String unitKerja, Integer bulan, Integer tahun);
 }

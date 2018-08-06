@@ -187,7 +187,10 @@ public class TestServiceController {
                                 taKegiatan.getStatusKegiatan(),
                                 taKegiatan.getPaguAnggaran(),
                                 taKegiatan.getWaktuPelaksanaan(),
-                                taKegiatan.getKdSumber()));
+                                taKegiatan.getKdSumber(),
+                                taKegiatan.getTaIndikatorList().get(0).getTolakUkur(),
+                                taKegiatan.getTaIndikatorList().get(0).getTargetAngka(),
+                                taKegiatan.getTaIndikatorList().get(0).getTargetUraian()));
             }
 
         }

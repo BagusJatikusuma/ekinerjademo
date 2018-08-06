@@ -43,6 +43,7 @@ public interface UrtugKegiatanDao extends JpaRepository<UrtugKegiatan, Long> {
     @Query("select uk from UrtugKegiatan uk " +
             "left join fetch uk.penanggungJawabKegiatan pjk " +
             "left join fetch pjk.statusPenanggungJawabKegiatan " +
+            "left join fetch pjk.kegiatanPegawaiBulanans " +
             "left join fetch uk.uraianTugasJabatanJenisUrtug utjj " +
             "left join fetch utjj.uraianTugasJabatan utj " +
             "left join fetch utjj.jenisUrtug " +

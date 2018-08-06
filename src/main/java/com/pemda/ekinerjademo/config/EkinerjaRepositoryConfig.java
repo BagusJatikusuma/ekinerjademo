@@ -106,18 +106,4 @@ public class EkinerjaRepositoryConfig {
         return transactionManager;
     }
 
-    @Bean
-    EmbeddedServletContainerCustomizer containerCustomizer() throws Exception {
-        return (ConfigurableEmbeddedServletContainer container) -> {
-            if (container instanceof TomcatEmbeddedServletContainerFactory) {
-                TomcatEmbeddedServletContainerFactory tomcat = (TomcatEmbeddedServletContainerFactory) container;
-                tomcat.addConnectorCustomizers(
-                        (connector) -> {
-                            connector.setMaxPostSize(1000000000); // 1000 MB
-                        }
-                );
-            }
-        };
-    }
-
 }

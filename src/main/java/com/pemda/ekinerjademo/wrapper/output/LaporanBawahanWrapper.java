@@ -19,6 +19,7 @@ public class LaporanBawahanWrapper {
     private boolean dariKabid;
     private Integer statusApproval;
     private String keteranganTemplateLain;
+    private UraianTugasPegawaiBulananWrapper uraianTugasPegawaiBulananWrapper;
 
     public LaporanBawahanWrapper(String kdSurat, String jenisSurat, String nipBawahan, String namaBawahan, Integer statusPenilaian, Integer kdJenisSurat, Integer suratPejabat, Long tanggalDibuatMilis, boolean isPenandatangan) {
         this.kdSurat = kdSurat;
@@ -200,6 +201,25 @@ public class LaporanBawahanWrapper {
         this.keteranganTemplateLain = keteranganTemplateLain;
     }
 
+    public LaporanBawahanWrapper(String kdSurat, String jenisSurat, String nipBawahan, String namaBawahan, Integer statusPenilaian, Integer kdJenisSurat, Integer suratPejabat, Long tanggalDibuatMilis, boolean isPenandatangan, String namaFileTemplateLain, String extensiFile, String barcodeImage, boolean dariKabid, Integer statusApproval, String keteranganTemplateLain, UraianTugasPegawaiBulananWrapper uraianTugasPegawaiBulananWrapper) {
+        this.kdSurat = kdSurat;
+        this.jenisSurat = jenisSurat;
+        this.nipBawahan = nipBawahan;
+        this.namaBawahan = namaBawahan;
+        StatusPenilaian = statusPenilaian;
+        this.kdJenisSurat = kdJenisSurat;
+        this.suratPejabat = suratPejabat;
+        this.tanggalDibuatMilis = tanggalDibuatMilis;
+        this.isPenandatangan = isPenandatangan;
+        this.namaFileTemplateLain = namaFileTemplateLain;
+        this.extensiFile = extensiFile;
+        this.barcodeImage = barcodeImage;
+        this.dariKabid = dariKabid;
+        this.statusApproval = statusApproval;
+        this.keteranganTemplateLain = keteranganTemplateLain;
+        this.uraianTugasPegawaiBulananWrapper = uraianTugasPegawaiBulananWrapper;
+    }
+
     public String getKdSurat() {
         return kdSurat;
     }
@@ -322,5 +342,13 @@ public class LaporanBawahanWrapper {
 
     public void setKeteranganTemplateLain(String keteranganTemplateLain) {
         this.keteranganTemplateLain = keteranganTemplateLain;
+    }
+
+    public UraianTugasPegawaiBulananWrapper getUraianTugasPegawaiBulananWrapper() {
+        return uraianTugasPegawaiBulananWrapper;
+    }
+
+    public void setUraianTugasPegawaiBulananWrapper(UraianTugasPegawaiBulananWrapper uraianTugasPegawaiBulananWrapper) {
+        this.uraianTugasPegawaiBulananWrapper = uraianTugasPegawaiBulananWrapper;
     }
 }

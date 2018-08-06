@@ -23,6 +23,7 @@ public interface TaKegiatanDao extends JpaRepository<TaKegiatan, Long> {
     List<TaKegiatan> findAllByQuery();
 
     @Query("select taKegiatan from TaKegiatan taKegiatan " +
+            "left join fetch taKegiatan.taIndikatorList " +
             "left join fetch taKegiatan.taProgram taProgram " +
             "left join fetch taProgram.taSubUnit taSubUnit " +
             "left join fetch taSubUnit.refSubUnit refSubUnit " +

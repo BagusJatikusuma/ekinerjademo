@@ -1,9 +1,6 @@
 package com.pemda.ekinerjademo.controller.api;
 
-import com.pemda.ekinerjademo.model.ekinerjamodel.PenanggungJawabKegiatan;
-import com.pemda.ekinerjademo.model.ekinerjamodel.UnitKerjaKegiatan;
-import com.pemda.ekinerjademo.model.ekinerjamodel.UrtugKegiatan;
-import com.pemda.ekinerjademo.model.ekinerjamodel.UrtugKegiatanId;
+import com.pemda.ekinerjademo.model.ekinerjamodel.*;
 import com.pemda.ekinerjademo.model.simdamodel.TaKegiatan;
 import com.pemda.ekinerjademo.model.simdamodel.TaKegiatanId;
 import com.pemda.ekinerjademo.model.simdamodel.TaProgram;
@@ -237,6 +234,12 @@ public class UrtugKegiatanController {
             for (TaKegiatan taKegiatan : taKegiatanList) {
                 if (urtugKegiatan.getUrtugKegiatanId().getKdProg().equals(taKegiatan.getTaKegiatanId().getKdProg()) &&
                         urtugKegiatan.getUrtugKegiatanId().getKdKeg().equals(taKegiatan.getTaKegiatanId().getKdKegiatan())) {
+                    //ambil jumlah realisasi saat ini dari tiap kegiatan tahunan
+                    Integer realisasiKuantitas = 0;
+                    for (KegiatanPegawaiBulanan obj : urtugKegiatan.getPenanggungJawabKegiatan().getKegiatanPegawaiBulanans()) {
+                        realisasiKuantitas += obj.getRealisasiKuantitas();
+                    }
+
                     urtugKegiatanPegawaiWrappers
                             .add(new UrtugKegiatanPegawaiWrapper(
                                     urtugKegiatan.getUrtugKegiatanId().getKdUrtug(),
@@ -256,7 +259,13 @@ public class UrtugKegiatanController {
                                     taKegiatan.getPaguAnggaran(),
                                     urtugKegiatan.getUrtugKegiatanId().getNipPegawai(),
                                     urtugKegiatan.getUrtugKegiatanId().getKdStatusPenanggungJawab(),
-                                    urtugKegiatan.getPenanggungJawabKegiatan().getStatusPenanggungJawabKegiatan().getStatus()));
+                                    urtugKegiatan.getPenanggungJawabKegiatan().getStatusPenanggungJawabKegiatan().getStatus(),
+                                    null,
+                                    null,
+                                    null,
+                                    null,
+                                    null,
+                                    realisasiKuantitas));
 
                     break;
                 }

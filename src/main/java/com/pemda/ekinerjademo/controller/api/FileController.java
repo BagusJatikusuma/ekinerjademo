@@ -106,9 +106,11 @@ public class FileController {
             }
 
             headers.setContentLength(file.length);
+            headers.add("content-disposition", "inline;filename=" + filename);
         }
         else {
             headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+            headers.add("content-disposition", "inline;filename=" + filename);
         }
         headers.setCacheControl("must-revalidate, post-check=0, pre-check=0");
 

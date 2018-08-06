@@ -2,6 +2,7 @@ package com.pemda.ekinerjademo.model.simdamodel;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.List;
 
 /**
  * Created by bagus on 29/09/17.
@@ -64,6 +65,9 @@ public class TaKegiatan {
     private String waktuPelaksanaan;
     @Column(name = "Kd_Sumber")
     private Integer kdSumber;
+
+    @OneToMany(mappedBy = "taKegiatan")
+    private List<TaIndikator> taIndikatorList;
 
     public TaKegiatanId getTaKegiatanId() {
         return taKegiatanId;
@@ -135,5 +139,13 @@ public class TaKegiatan {
 
     public void setKdSumber(Integer kdSumber) {
         this.kdSumber = kdSumber;
+    }
+
+    public List<TaIndikator> getTaIndikatorList() {
+        return taIndikatorList;
+    }
+
+    public void setTaIndikatorList(List<TaIndikator> taIndikatorList) {
+        this.taIndikatorList = taIndikatorList;
     }
 }

@@ -82,6 +82,7 @@ public class AkunPegawaiController {
     @Autowired private LoginPegawaiService loginPegawaiService;
     @Autowired private LembarDisposisiService lembarDisposisiService;
     @Autowired private SuratInstruksiService suratInstruksiService;
+    @Autowired private UraianTugasPegawaiBulananService uraianTugasPegawaiBulananService;
 
     @Autowired
     public AkunPegawaiController(
@@ -2451,7 +2452,7 @@ public class AkunPegawaiController {
                 templateLainList
                         = templateLainService.getBySekretarisApproval(penilai.getKdUnitKerja());
                 if (pegawaiBawahan == null)
-                    LOGGER.error("pegawai bawahan kadis nul");
+                    LOGGER.error("pegawai bawahan kadis null");
                 else if (templateLainList == null)
                     LOGGER.error("laporan sekdis is null");
                 else
@@ -2478,6 +2479,20 @@ public class AkunPegawaiController {
 
                     pembuatLaporan = qutPegawaiService.getQutPegawai(templateLainBawahan.getNipPegawai());
 
+                    UraianTugasPegawaiBulananWrapper wrapper = new UraianTugasPegawaiBulananWrapper();
+                    wrapper.setUrtug(
+                            uraianTugasPegawaiBulananService.getById(
+                                    new UraianTugasPegawaiBulananId(templateLainBawahan.getKdUrtug(),
+                                                                    templateLainBawahan.getKdJabatan(),
+                                                                    templateLainBawahan.getKdJenisUrtug(),
+                                                                    templateLainBawahan.getTahunUrtug(),
+                                                                    templateLainBawahan.getBulanUrtug(),
+                                                                    templateLainBawahan.getNipPegawai()))
+                                    .getUraianTugasJabatanJenisUrtug()
+                                    .getUraianTugasJabatan()
+                                    .getUraianTugas()
+                                    .getDeskripsi());
+
                     laporanBawahanWrapperList
                             .add(new LaporanBawahanWrapper(templateLainBawahan.getKdTemplateLain(),
                                     "template lain",
@@ -2493,7 +2508,8 @@ public class AkunPegawaiController {
                                     null,
                                     dariKabid,
                                     templateLainBawahan.getApprovalPenandatangan(),
-                                    templateLainBawahan.getKeterangan()
+                                    templateLainBawahan.getKeterangan(),
+                                    wrapper
                             ));
                 }
             }

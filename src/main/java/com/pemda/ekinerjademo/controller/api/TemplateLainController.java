@@ -169,17 +169,72 @@ public class TemplateLainController {
         //jika yang membuat atau melanjutkan adalah kasie maka ubah realisasi dirinya dengan atasan
         QutPegawai pegawaiPembuat = qutPegawaiService.getQutPegawai(templateLainInputWrapper.getNipPegawai());
         if (akunPegawaiService.isPegawaiKasie(pegawaiPembuat)) {
+            LOGGER.info("pegawai melanjutkan is kasie");
             templateLain.setStatusPenilaian(2);
 
             List<UraianTugasPegawaiBulanan> uraianTugasPegawaiBulananSKPDList
                     = uraianTugasPegawaiBulananService.getByUnitKerja(
-                                                        templateLain.getKdUnitKerja(),
-                                                        templateLain.getBulanUrtug());
+                    templateLain.getKdUnitKerja(),
+                    templateLain.getBulanUrtug(),
+                    templateLain.getTahunUrtug());
+
+            for (UraianTugasPegawaiBulanan uraianTugasPegawaiBulanan : uraianTugasPegawaiBulananSKPDList) {
+                if (uraianTugasPegawaiBulanan.getUraianTugasPegawaiBulananId().getKdUrtug()
+                        .equals(templateLainInputWrapper.getKdUrtug())
+                        && uraianTugasPegawaiBulanan.getUraianTugasPegawaiBulananId().getKdJabatan()
+                        .equals(templateLainInputWrapper.getKdJabatan())
+                        && uraianTugasPegawaiBulanan.getUraianTugasPegawaiBulananId().getKdJenisUrtug()
+                        .equals(templateLainInputWrapper.getKdJenisUrtug())
+                        && uraianTugasPegawaiBulanan.getUraianTugasPegawaiBulananId().getBulanUrtug()
+                        .equals(templateLainInputWrapper.getBulanUrtug())
+                        && uraianTugasPegawaiBulanan.getUraianTugasPegawaiBulananId().getTahunUrtug()
+                        .equals(templateLainInputWrapper.getTahunUrtug())
+                        && uraianTugasPegawaiBulanan.getUraianTugasPegawaiBulananId().getNipPegawai()
+                        .equals(templateLainInputWrapper.getNipPegawai())) {
+                    LOGGER.info("same urtug kasie");
+                    uraianTugasPegawaiBulanan.setRealisasiKuantitas(uraianTugasPegawaiBulanan.getRealisasiKuantitas() + 1);
+                    uraianTugasPegawaiBulananService.create(uraianTugasPegawaiBulanan);
+
+                    break;
+
+                }
+            }
+
+            LOGGER.info("jumlah uraian tugas unit kerja "
+                    +templateLain.getKdUnitKerja()
+                    +" : "
+                    +uraianTugasPegawaiBulananSKPDList.size());
+
             for (UrtugBulananIdInputWrapper urtugBulananId : templateLainInputWrapper.getDaftarUrtugAtasan()) {
                 for (UraianTugasPegawaiBulanan uraianTugasPegawaiBulanan : uraianTugasPegawaiBulananSKPDList) {
+                    LOGGER.error(
+                            urtugBulananId.getKdUrtug()+";"
+                            +urtugBulananId.getKdJabatan()+";"
+                            +urtugBulananId.getKdJenisUrtug()+";"
+                            +urtugBulananId.getBulanUrtug()+";"
+                            +urtugBulananId.getTahunUrtug()+";"
+                            +urtugBulananId.getNipPegawai()+";");
+                    LOGGER.info(
+                            uraianTugasPegawaiBulanan.getUraianTugasPegawaiBulananId().getKdUrtug()+";"
+                            +uraianTugasPegawaiBulanan.getUraianTugasPegawaiBulananId().getKdJabatan()+";"
+                            +uraianTugasPegawaiBulanan.getUraianTugasPegawaiBulananId().getKdJenisUrtug()+";"
+                            +uraianTugasPegawaiBulanan.getUraianTugasPegawaiBulananId().getBulanUrtug()+";"
+                            +uraianTugasPegawaiBulanan.getUraianTugasPegawaiBulananId().getTahunUrtug()+";"
+                            +uraianTugasPegawaiBulanan.getUraianTugasPegawaiBulananId().getNipPegawai()+";");
 
-                    if (uraianTugasPegawaiBulanan.getUraianTugasPegawaiBulananId()
-                            .equals(urtugBulananId)) {
+                    if (uraianTugasPegawaiBulanan.getUraianTugasPegawaiBulananId().getKdUrtug()
+                            .equals(urtugBulananId.getKdUrtug())
+                            && uraianTugasPegawaiBulanan.getUraianTugasPegawaiBulananId().getKdJabatan()
+                            .equals(urtugBulananId.getKdJabatan())
+                            && uraianTugasPegawaiBulanan.getUraianTugasPegawaiBulananId().getKdJenisUrtug()
+                            .equals(urtugBulananId.getKdJenisUrtug())
+                            && uraianTugasPegawaiBulanan.getUraianTugasPegawaiBulananId().getBulanUrtug()
+                            .equals(urtugBulananId.getBulanUrtug())
+                            && uraianTugasPegawaiBulanan.getUraianTugasPegawaiBulananId().getTahunUrtug()
+                            .equals(urtugBulananId.getTahunUrtug())
+                            && uraianTugasPegawaiBulanan.getUraianTugasPegawaiBulananId().getNipPegawai()
+                            .equals(urtugBulananId.getNipPegawai())) {
+                        LOGGER.info("same success update reailisasi kuantitas");
                         uraianTugasPegawaiBulanan.setRealisasiKuantitas(uraianTugasPegawaiBulanan.getRealisasiKuantitas() + 1);
                         uraianTugasPegawaiBulananService.create(uraianTugasPegawaiBulanan);
 

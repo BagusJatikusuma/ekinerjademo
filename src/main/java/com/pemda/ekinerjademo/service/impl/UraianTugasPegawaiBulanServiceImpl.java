@@ -45,6 +45,14 @@ public class UraianTugasPegawaiBulanServiceImpl
     }
 
     @Override
+    public void updateTargetSKPBulananPegawai(UraianTugasPegawaiBulananId urtugId, Integer targetBaru) {
+        UraianTugasPegawaiBulanan uraianTugasPegawaiBulanan
+                = uraianTugasPegawaiBulananDao.findOne(urtugId);
+
+        uraianTugasPegawaiBulanan.setTargetKuantitas(targetBaru);
+    }
+
+    @Override
     public void approveAjuanKontrakBulanan(UraianTugasPegawaiBulananInputWrapper inputWrapper) {
         UraianTugasPegawaiBulanan uraianTugasPegawaiBulanan
                 = uraianTugasPegawaiBulananDao.findOne(
@@ -119,6 +127,11 @@ public class UraianTugasPegawaiBulanServiceImpl
     @Override
     public List<UraianTugasPegawaiBulanan> getByUnitKerja(String unitKerja, Integer bulan) {
         return uraianTugasPegawaiBulananDao.findByUnitKerjaAndBulan(unitKerja, bulan);
+    }
+
+    @Override
+    public List<UraianTugasPegawaiBulanan> getByUnitKerja(String unitKerja, Integer bulan, Integer tahun) {
+        return uraianTugasPegawaiBulananDao.findByUnitKerjaAndBulanAndTahun(unitKerja, bulan, tahun);
     }
 
     @Override

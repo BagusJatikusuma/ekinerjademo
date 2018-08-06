@@ -5,6 +5,9 @@ import com.pemda.ekinerjademo.model.bismamodel.TkdJabatan;
 import com.pemda.ekinerjademo.model.ekinerjamodel.PejabatPenilaiDinilai;
 import com.pemda.ekinerjademo.model.ekinerjamodel.PejabatPenilaiDinilaiId;
 import com.pemda.ekinerjademo.model.ekinerjamodel.QutPegawaiClone;
+import com.pemda.ekinerjademo.model.ekinerjamodel.TkdUnkClone;
+import com.pemda.ekinerjademo.repository.bismarepository.TkdUnkDao;
+import com.pemda.ekinerjademo.repository.ekinerjarepository.TkdUnkCloneDao;
 import com.pemda.ekinerjademo.service.PejabatPenilaiDinilaiService;
 import com.pemda.ekinerjademo.service.QutPegawaiCloneService;
 import com.pemda.ekinerjademo.service.QutPegawaiService;
@@ -37,6 +40,7 @@ public class PejabatPenilaiDinilaiController {
     private QutPegawaiCloneService qutPegawaiService;
 
     private TkdJabatanService tkdJabatanService;
+    @Autowired private TkdUnkCloneDao tkdUnkDao;
 
     @Autowired
     public PejabatPenilaiDinilaiController(
@@ -108,7 +112,7 @@ public class PejabatPenilaiDinilaiController {
                 qutPegawai.getKdJabatan(),
                 qutPegawai.getJabatan(),
                 qutPegawai.getKdUnitKerja(),
-                qutPegawai.getUnitKerja(), //revisi
+                tkdUnkDao.findOne(qutPegawai.getKdUnitKerja()).getUnitKerja(), //revisi
                 qutPegawai.getPangkat(),
                 qutPegawai.getGol());
 

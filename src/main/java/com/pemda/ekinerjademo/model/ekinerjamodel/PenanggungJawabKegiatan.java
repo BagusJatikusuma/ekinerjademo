@@ -34,6 +34,9 @@ public class PenanggungJawabKegiatan {
     @OneToMany(mappedBy = "penanggungJawabKegiatan")
     private List<UrtugKegiatan> urtugKegiatanList;
 
+    @OneToMany(mappedBy = "penanggungJawabKegiatan")
+    private List<KegiatanPegawaiBulanan> kegiatanPegawaiBulanans;
+
     public PenanggungJawabKegiatanId getPenanggungJawabKegiatanId() {
         return penanggungJawabKegiatanId;
     }
@@ -72,5 +75,13 @@ public class PenanggungJawabKegiatan {
 
     public void setUrtugKegiatanList(List<UrtugKegiatan> urtugKegiatanList) {
         this.urtugKegiatanList = urtugKegiatanList;
+    }
+
+    public List<KegiatanPegawaiBulanan> getKegiatanPegawaiBulanans() {
+        return kegiatanPegawaiBulanans;
+    }
+
+    public void setKegiatanPegawaiBulanans(List<KegiatanPegawaiBulanan> kegiatanPegawaiBulanans) {
+        this.kegiatanPegawaiBulanans = kegiatanPegawaiBulanans;
     }
 }

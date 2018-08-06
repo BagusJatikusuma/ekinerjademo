@@ -21,6 +21,9 @@ public class TaKegiatanWrapper {
     private BigDecimal paguAnggaran;
     private String waktuPelaksanaan;
     private Integer kdSumber;
+    private String tolakUkur;
+    private Double targetAngka;
+    private String targetUraian;
 
     public TaKegiatanWrapper() {
     }
@@ -55,6 +58,27 @@ public class TaKegiatanWrapper {
         this.paguAnggaran = paguAnggaran;
         this.waktuPelaksanaan = waktuPelaksanaan;
         this.kdSumber = kdSumber;
+    }
+
+    public TaKegiatanWrapper(Integer kdUrusan, Integer kdBIdang, Integer kdUnit, Integer kdSub, Integer tahun, Integer kdProg, Integer idProg, Integer kdKegiatan, String ketKegiatan, String lokasi, String kelompokSasaran, String statusKegiatan, BigDecimal paguAnggaran, String waktuPelaksanaan, Integer kdSumber, String tolakUkur, Double targetAngka, String targetUraian) {
+        this.kdUrusan = kdUrusan;
+        this.kdBIdang = kdBIdang;
+        this.kdUnit = kdUnit;
+        this.kdSub = kdSub;
+        this.tahun = tahun;
+        this.kdProg = kdProg;
+        this.idProg = idProg;
+        this.kdKegiatan = kdKegiatan;
+        this.ketKegiatan = ketKegiatan;
+        this.lokasi = lokasi;
+        this.kelompokSasaran = kelompokSasaran;
+        this.statusKegiatan = statusKegiatan;
+        this.paguAnggaran = paguAnggaran;
+        this.waktuPelaksanaan = waktuPelaksanaan;
+        this.kdSumber = kdSumber;
+        this.tolakUkur = tolakUkur;
+        this.targetAngka = targetAngka;
+        this.targetUraian = targetUraian;
     }
 
     public Integer getKdUrusan() {
@@ -175,5 +199,29 @@ public class TaKegiatanWrapper {
 
     public void setKdSumber(Integer kdSumber) {
         this.kdSumber = kdSumber;
+    }
+
+    public String getTolakUkur() {
+        return tolakUkur;
+    }
+
+    public void setTolakUkur(String tolakUkur) {
+        this.tolakUkur = tolakUkur;
+    }
+
+    public Double getTargetAngka() {
+        return targetAngka;
+    }
+
+    public void setTargetAngka(Double targetAngka) {
+        this.targetAngka = targetAngka;
+    }
+
+    public String getTargetUraian() {
+        return targetUraian;
+    }
+
+    public void setTargetUraian(String targetUraian) {
+        this.targetUraian = targetUraian;
     }
 }
