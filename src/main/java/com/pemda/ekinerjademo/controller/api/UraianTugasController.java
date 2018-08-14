@@ -4,6 +4,7 @@ import com.pemda.ekinerjademo.model.bismamodel.QutPegawai;
 import com.pemda.ekinerjademo.model.bismamodel.TkdJabatan;
 import com.pemda.ekinerjademo.model.ekinerjamodel.*;
 
+import com.pemda.ekinerjademo.repository.ekinerjarepository.AnjabUraianTugasDao;
 import com.pemda.ekinerjademo.service.*;
 //import com.pemda.ekinerjademo.service.UraianTugasJabatanService;
 //import com.pemda.ekinerjademo.service.UraianTugasService;
@@ -35,6 +36,8 @@ public class UraianTugasController {
     public static final Logger LOGGER = LoggerFactory.getLogger(UraianTugasController.class);
 
     private UraianTugasService uraianTugasService;
+
+    @Autowired private AnjabUraianTugasDao anjabUraianTugasDao;
 
     @Autowired
     public UraianTugasController(UraianTugasService uraianTugasService) {
@@ -91,6 +94,25 @@ public class UraianTugasController {
             ));
         }
         return new ResponseEntity<Object>(uraianTugasWrappers, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/clone-anjab-uraian-tugas", method = RequestMethod.GET)
+    ResponseEntity<?> cloneAnjabUraianTugas() {
+        LOGGER.info("anjab uraian tugas");
+
+        List<AnjabUraianTugas> anjabUraianTugasList = anjabUraianTugasDao.findAll();
+
+        for (AnjabUraianTugas obj : anjabUraianTugasList) {
+            UraianTugas uraianTugas = new UraianTugas();
+
+            uraianTugas.setKdUrtug(String.valueOf(obj.getId()));
+            uraianTugas.setDeskripsi(obj.getUraianTugas());
+            uraianTugas.setCreatedBy(new AkunPegawai("199401232015072001"));
+
+            uraianTugasService.save(uraianTugas);
+        }
+
+        return new ResponseEntity<>(new CustomMessage("cloning selesai"), HttpStatus.OK);
     }
 
 //    @Autowired

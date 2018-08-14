@@ -11,24 +11,24 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.multipart.MultipartResolver;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 
-@Configuration
+//@Configuration
 public class EkinerjaConfig {
-    private int maxUploadSizeInMb = 100 * 1024 * 1024; // 100 MB
-
-    @Bean
-    public TomcatEmbeddedServletContainerFactory tomcatEmbedded() {
-
-        TomcatEmbeddedServletContainerFactory tomcat = new TomcatEmbeddedServletContainerFactory();
-
-        tomcat.addConnectorCustomizers((TomcatConnectorCustomizer) connector -> {
-            if ((connector.getProtocolHandler() instanceof AbstractHttp11Protocol<?>)) {
-                //if max allow size -1 that means unlimited
-                ((AbstractHttp11Protocol<?>) connector.getProtocolHandler()).setMaxSwallowSize(maxUploadSizeInMb);
-            }
-        });
-
-        return tomcat;
-
-    }
+//    private int maxUploadSizeInMb = 100 * 1024 * 1024; // 100 MB
+//
+//    @Bean
+//    public TomcatEmbeddedServletContainerFactory tomcatEmbedded() {
+//
+//        TomcatEmbeddedServletContainerFactory tomcat = new TomcatEmbeddedServletContainerFactory();
+//
+//        tomcat.addConnectorCustomizers((TomcatConnectorCustomizer) connector -> {
+//            if ((connector.getProtocolHandler() instanceof AbstractHttp11Protocol<?>)) {
+//                //if max allow size -1 that means unlimited
+//                ((AbstractHttp11Protocol<?>) connector.getProtocolHandler()).setMaxSwallowSize(-1);
+//            }
+//        });
+//
+//        return tomcat;
+//
+//    }
 
 }

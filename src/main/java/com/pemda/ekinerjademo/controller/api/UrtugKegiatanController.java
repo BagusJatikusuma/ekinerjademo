@@ -222,6 +222,7 @@ public class UrtugKegiatanController {
         List<UrtugKegiatanPegawaiWrapper> urtugKegiatanPegawaiWrappers
                 = new ArrayList<>();
 
+//        LOGGER.info("parameter query : nip : "+nipPegawai+"; tahun : "+Year.now().getValue()+"; kdJabatan : "+kdJabatan);
         List<UrtugKegiatan> urtugKegiatanPegawaiApprovalList
                 = urtugKegiatanService.findByPegawaiApproval(nipPegawai, Year.now().getValue(), kdJabatan);
 
@@ -230,11 +231,23 @@ public class UrtugKegiatanController {
 
         List<TaKegiatan> taKegiatanList = taKegiatanService.findByUnitKerja(unitKerjaKegiatan);
 
+//        LOGGER.info("urtug kegiatan approval size : "+urtugKegiatanPegawaiApprovalList.size());
+//        LOGGER.info("ta kegiatan size : "+taKegiatanList.size());
         for (UrtugKegiatan urtugKegiatan : urtugKegiatanPegawaiApprovalList) {
             for (TaKegiatan taKegiatan : taKegiatanList) {
+//                LOGGER.error("kd prog urtug kegiatan "
+//                        +urtugKegiatan.getUrtugKegiatanId().getKdProg()
+//                        +"; kd prog taKegiatan "+taKegiatan.getTaKegiatanId().getKdProg());
+//                LOGGER.error("id prog urtug kegiatan "
+//                        +urtugKegiatan.getUrtugKegiatanId().getIdProg()
+//                        +"; id prog taKegiatan "+taKegiatan.getTaKegiatanId().getIdProg());
+//                LOGGER.error("kd keg urtug kegiatan "
+//                        +urtugKegiatan.getUrtugKegiatanId().getKdKeg()
+//                        +"; kd keg taKegiatan "+taKegiatan.getTaKegiatanId().getKdKegiatan());
                 if (urtugKegiatan.getUrtugKegiatanId().getKdProg().equals(taKegiatan.getTaKegiatanId().getKdProg()) &&
                         urtugKegiatan.getUrtugKegiatanId().getKdKeg().equals(taKegiatan.getTaKegiatanId().getKdKegiatan())) {
                     //ambil jumlah realisasi saat ini dari tiap kegiatan tahunan
+//                    LOGGER.info("masuk");
                     Integer realisasiKuantitas = 0;
                     for (KegiatanPegawaiBulanan obj : urtugKegiatan.getPenanggungJawabKegiatan().getKegiatanPegawaiBulanans()) {
                         realisasiKuantitas += obj.getRealisasiKuantitas();

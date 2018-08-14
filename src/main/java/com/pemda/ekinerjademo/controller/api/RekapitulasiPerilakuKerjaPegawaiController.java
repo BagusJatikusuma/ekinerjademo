@@ -49,7 +49,6 @@ public class RekapitulasiPerilakuKerjaPegawaiController {
 
         List<RekapitulasiPerilakuKerjaPegawaiOutputWrapper> rekapitulasiPerilakuKerjaPegawaiOutputWrappers = new ArrayList<>();
 
-
         boolean found = false;
         for (QutPegawai pegawai : qutPegawaiClones) {
             found = false;
@@ -99,7 +98,7 @@ public class RekapitulasiPerilakuKerjaPegawaiController {
             if (!found) {
                 RekapitulasiPerilakuKerjaPegawaiOutputWrapper rekapitulasiPerilakuKerjaPegawai = new RekapitulasiPerilakuKerjaPegawaiOutputWrapper();
 
-                rekapitulasiPerilakuKerjaPegawai.setNipPegawai(pegawai.getKdUnitKerja());
+                rekapitulasiPerilakuKerjaPegawai.setNipPegawai(pegawai.getNip());
                 rekapitulasiPerilakuKerjaPegawai.setBulanTahunRekapulasi(bulanTahunRekapitulasi);
 
                 rekapitulasiPerilakuKerjaPegawai.setKdUnitKerja(pegawai.getKdUnitKerja());

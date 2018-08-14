@@ -1,14 +1,18 @@
 package com.pemda.ekinerjademo.service.impl;
 
+import com.pemda.ekinerjademo.controller.api.UrtugKegiatanController;
 import com.pemda.ekinerjademo.model.ekinerjamodel.UnitKerjaKegiatan;
 import com.pemda.ekinerjademo.model.ekinerjamodel.UrtugKegiatan;
 import com.pemda.ekinerjademo.model.ekinerjamodel.UrtugKegiatanId;
 import com.pemda.ekinerjademo.repository.ekinerjarepository.UrtugKegiatanDao;
 import com.pemda.ekinerjademo.service.UrtugKegiatanService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.Year;
 import java.util.List;
 
 /**
@@ -17,6 +21,8 @@ import java.util.List;
 @Service("UrtugKegiatanService")
 @Transactional("ekinerjaTransactionManager")
 public class UrtugKegiatanServiceImpl implements UrtugKegiatanService {
+    public static final Logger LOGGER = LoggerFactory.getLogger(UrtugKegiatanServiceImpl.class);
+
     @Autowired
     private UrtugKegiatanDao urtugKegiatanDao;
 

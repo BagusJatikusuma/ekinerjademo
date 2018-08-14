@@ -70,7 +70,7 @@ public class KegiatanPegawaiBulananController {
                 if (kegiatanPegawai.getKegiatanPegawaiBulananId().getKdProg().equals(taKegiatan.getTaKegiatanId().getKdProg())
                         && kegiatanPegawai.getKegiatanPegawaiBulananId().getIdProg().equals(taKegiatan.getTaKegiatanId().getIdProg())
                         && kegiatanPegawai.getKegiatanPegawaiBulananId().getKdKeg().equals(taKegiatan.getTaKegiatanId().getKdKegiatan())
-                        && tahun == taKegiatan.getTaKegiatanId().getTahun()) {
+                        && (tahun.intValue() == taKegiatan.getTaKegiatanId().getTahun().intValue())) {
                     outputWrappers
                             .add(new KegiatanBulananPegawaiWrapper(kegiatanPegawai.getKegiatanPegawaiBulananId().getKdUrusan(),
                                     kegiatanPegawai.getKegiatanPegawaiBulananId().getKdBidang(),

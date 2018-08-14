@@ -12,6 +12,13 @@ import java.util.List;
 public interface UraianTugasPegawaiBulananDao
         extends JpaRepository<UraianTugasPegawaiBulanan, UraianTugasPegawaiBulananId>{
 
+   @Query("select utpb from UraianTugasPegawaiBulanan utpb " +
+           "left join fetch utpb.uraianTugasJabatanJenisUrtug utjj " +
+           "left join fetch utjj.uraianTugasJabatan utj " +
+           "left join fetch utj.uraianTugas " +
+           "where utpb.uraianTugasPegawaiBulananId = ?1")
+   UraianTugasPegawaiBulanan findByUraianTugasPegawaiBulananId(UraianTugasPegawaiBulananId id);
+
    @Query("select utpb from UraianTugasPegawaiBulanan utpb "+
            "left join fetch utpb.uraianTugasJabatanJenisUrtug utjj " +
            "left join fetch utjj.uraianTugasJabatan utj " +

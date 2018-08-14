@@ -39,11 +39,14 @@ public class BasicAuthenticationProvider implements AuthenticationProvider {
             if (akunPegawaiAuthenticated != null) {
                 if (!akunPegawaiAuthenticated.getPassword().
                         equals(akunPegawai.getPassword())) {
-                    throw new BadCredentialsException("wrong password");
+//                    throw new BadCredentialsException("wrong password");
+                    throw new BadCredentialsException("nip atau password salah");
                 }
 
             }
-            else throw new BadCredentialsException("user not found");
+            else
+//                throw new BadCredentialsException("user not found");
+                throw new BadCredentialsException("nip atau password salah");
 
         }
         else throw new AuthenticationCredentialsNotFoundExcecption("username or password is empty");

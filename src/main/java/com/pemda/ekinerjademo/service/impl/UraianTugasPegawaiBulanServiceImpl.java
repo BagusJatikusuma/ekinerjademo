@@ -87,7 +87,7 @@ public class UraianTugasPegawaiBulanServiceImpl
 
     @Override
     public UraianTugasPegawaiBulanan getById(UraianTugasPegawaiBulananId id) {
-        return uraianTugasPegawaiBulananDao.findOne(id);
+        return uraianTugasPegawaiBulananDao.findByUraianTugasPegawaiBulananId(id);
     }
 
     @Override
