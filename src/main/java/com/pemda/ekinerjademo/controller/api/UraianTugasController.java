@@ -90,7 +90,9 @@ public class UraianTugasController {
         for (UraianTugas uraianTugas : uraianTugases){
             uraianTugasWrappers.add(new UraianTugasWrapper(
                     uraianTugas.getKdUrtug(),
-                    uraianTugas.getDeskripsi()
+                    uraianTugas.getDeskripsi(),
+                    uraianTugas.getVolume(),
+                    uraianTugas.getSatuanVolume()
             ));
         }
         return new ResponseEntity<Object>(uraianTugasWrappers, HttpStatus.OK);

@@ -6,6 +6,8 @@ package com.pemda.ekinerjademo.wrapper.output;
 public class UraianTugasWrapper {
     private String kdUrtug;
     private String deskripsi;
+    private int volume;
+    private String satuanVolume;
 
     public UraianTugasWrapper() {}
     public UraianTugasWrapper(
@@ -13,6 +15,17 @@ public class UraianTugasWrapper {
             String deskripsi) {
         this.kdUrtug = kdUrtug;
         this.deskripsi = deskripsi;
+    }
+
+    public UraianTugasWrapper(
+            String kdUrtug,
+            String deskripsi,
+            int volume,
+            String satuanVolume) {
+        this.kdUrtug = kdUrtug;
+        this.deskripsi = deskripsi;
+        this.volume = volume;
+        this.satuanVolume = satuanVolume;
     }
 
     public String getKdUrtug() {
@@ -31,4 +44,19 @@ public class UraianTugasWrapper {
         this.deskripsi = deskripsi;
     }
 
+    public int getVolume() {
+        return volume;
+    }
+
+    public void setVolume(int volume) {
+        this.volume = volume;
+    }
+
+    public String getSatuanVolume() {
+        return satuanVolume;
+    }
+
+    public void setSatuanVolume(String satuanVolume) {
+        this.satuanVolume = satuanVolume;
+    }
 }
