@@ -17,10 +17,13 @@ public class UraianTugas {
     private String deskripsi;
 
     @Column(name = "volume")
-    private int volume;
+    private Integer volume;
 
     @Column(name = "satuan_volume")
     private String SatuanVolume;
+
+    @Column(name = "jabatan")
+    private String jabatan;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "created_by")
@@ -79,19 +82,27 @@ public class UraianTugas {
         this.createdBy = createdBy;
     }
 
-    public int getVolume() {
-        return volume;
-    }
-
-    public void setVolume(int volume) {
-        this.volume = volume;
-    }
-
     public String getSatuanVolume() {
         return SatuanVolume;
     }
 
     public void setSatuanVolume(String satuanVolume) {
         SatuanVolume = satuanVolume;
+    }
+
+    public Integer getVolume() {
+        return volume;
+    }
+
+    public void setVolume(Integer volume) {
+        this.volume = volume;
+    }
+
+    public String getJabatan() {
+        return jabatan;
+    }
+
+    public void setJabatan(String jabatan) {
+        this.jabatan = jabatan;
     }
 }

@@ -73,7 +73,10 @@ public class UraianTugasJabatanController {
                 notJabatanUraianTugasWrapperList
                         .add(new UraianTugasWrapper(
                                 uraianTugas.getKdUrtug(),
-                                uraianTugas.getDeskripsi()));
+                                uraianTugas.getDeskripsi(),
+                                uraianTugas.getVolume(),
+                                uraianTugas.getSatuanVolume(),
+                                uraianTugas.getJabatan()));
             }
 
         } else {
@@ -107,7 +110,10 @@ public class UraianTugasJabatanController {
                     notJabatanUraianTugasWrapperList
                             .add(new UraianTugasWrapper(
                                     uraianTugas.getKdUrtug(),
-                                    uraianTugas.getDeskripsi()));
+                                    uraianTugas.getDeskripsi(),
+                                    uraianTugas.getVolume(),
+                                    uraianTugas.getSatuanVolume(),
+                                    uraianTugas.getJabatan()));
                 }
 
             }

@@ -1,9 +1,6 @@
 package com.pemda.ekinerjademo.model.ekinerjamodel;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "anjab_uraian_tugas")
@@ -33,8 +30,13 @@ public class AnjabUraianTugas {
     private String waktuPenyelesaian;
     @Column(name = "volume")
     private Integer volume;
-    @Column(name = "id_anjab_jabatan")
-    private Integer idAnjabJabatan;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_anjab_jabatan",
+            insertable = false,
+            updatable = false,
+            referencedColumnName = "id")
+    private AnjabJabatan anjabJabatan;
 
     public Integer getId() {
         return id;
@@ -132,11 +134,11 @@ public class AnjabUraianTugas {
         this.volume = volume;
     }
 
-    public Integer getIdAnjabJabatan() {
-        return idAnjabJabatan;
+    public AnjabJabatan getAnjabJabatan() {
+        return anjabJabatan;
     }
 
-    public void setIdAnjabJabatan(Integer idAnjabJabatan) {
-        this.idAnjabJabatan = idAnjabJabatan;
+    public void setAnjabJabatan(AnjabJabatan anjabJabatan) {
+        this.anjabJabatan = anjabJabatan;
     }
 }

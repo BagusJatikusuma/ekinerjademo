@@ -11,13 +11,13 @@ public class AnjabJabatan {
 
     @Id
     @Column(name = "id")
-    private int id;
+    private Integer id;
 
     @Column(name = "id_instansi")
-    private int idInstansi;
+    private Integer idInstansi;
 
     @Column(name = "id_jabatan")
-    private int idJabatan;
+    private Integer idJabatan;
 
     @Column(name = "kode_jabatan_bisma")
     private String kodeJabatanBisma;
@@ -32,7 +32,7 @@ public class AnjabJabatan {
     private String eselonJabatan;;
 
     @Column(name = "id_parent")
-    private int idParent;
+    private Integer idParent;
 
     @Column(name = "kode_jabatan")
     private String kodeJabatan;
@@ -53,38 +53,38 @@ public class AnjabJabatan {
     private String ikhtisarJabatan;
 
     @Column(name = "urutan")
-    private int urutan;
+    private Integer urutan;
 
     @Column(name = "progres_pengisian")
     private Double progresPengisian;
 
     @Column(name = "jumlah_abk_bkd")
-    private int jumlahAbkBkd;
+    private Integer jumlahAbkBkd;
 
     @Column(name = "jumlah_pns_bkd")
-    private int jumlahPnsBkd;
+    private Integer jumlahPnsBkd;
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
-    public int getIdInstansi() {
+    public Integer getIdInstansi() {
         return idInstansi;
     }
 
-    public void setIdInstansi(int idInstansi) {
+    public void setIdInstansi(Integer idInstansi) {
         this.idInstansi = idInstansi;
     }
 
-    public int getIdJabatan() {
+    public Integer getIdJabatan() {
         return idJabatan;
     }
 
-    public void setIdJabatan(int idJabatan) {
+    public void setIdJabatan(Integer idJabatan) {
         this.idJabatan = idJabatan;
     }
 
@@ -120,11 +120,11 @@ public class AnjabJabatan {
         this.eselonJabatan = eselonJabatan;
     }
 
-    public int getIdParent() {
+    public Integer getIdParent() {
         return idParent;
     }
 
-    public void setIdParent(int idParent) {
+    public void setIdParent(Integer idParent) {
         this.idParent = idParent;
     }
 
@@ -176,11 +176,11 @@ public class AnjabJabatan {
         this.ikhtisarJabatan = ikhtisarJabatan;
     }
 
-    public int getUrutan() {
+    public Integer getUrutan() {
         return urutan;
     }
 
-    public void setUrutan(int urutan) {
+    public void setUrutan(Integer urutan) {
         this.urutan = urutan;
     }
 
@@ -192,19 +192,19 @@ public class AnjabJabatan {
         this.progresPengisian = progresPengisian;
     }
 
-    public int getJumlahAbkBkd() {
+    public Integer getJumlahAbkBkd() {
         return jumlahAbkBkd;
     }
 
-    public void setJumlahAbkBkd(int jumlahAbkBkd) {
+    public void setJumlahAbkBkd(Integer jumlahAbkBkd) {
         this.jumlahAbkBkd = jumlahAbkBkd;
     }
 
-    public int getJumlahPnsBkd() {
+    public Integer getJumlahPnsBkd() {
         return jumlahPnsBkd;
     }
 
-    public void setJumlahPnsBkd(int jumlahPnsBkd) {
+    public void setJumlahPnsBkd(Integer jumlahPnsBkd) {
         this.jumlahPnsBkd = jumlahPnsBkd;
     }
 }

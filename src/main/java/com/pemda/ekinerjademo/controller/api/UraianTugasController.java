@@ -86,13 +86,15 @@ public class UraianTugasController {
     ResponseEntity<?> getAllUraianTugas(){
         List<UraianTugasWrapper> uraianTugasWrappers = new ArrayList<>();
         List<UraianTugas> uraianTugases= uraianTugasService.getAllUraianTugas();
+        List<AnjabUraianTugas> anjabUraianTugasList = anjabUraianTugasDao.findAll();
 
         for (UraianTugas uraianTugas : uraianTugases){
             uraianTugasWrappers.add(new UraianTugasWrapper(
                     uraianTugas.getKdUrtug(),
                     uraianTugas.getDeskripsi(),
                     uraianTugas.getVolume(),
-                    uraianTugas.getSatuanVolume()
+                    uraianTugas.getSatuanVolume(),
+                    uraianTugas.getJabatan()
             ));
         }
         return new ResponseEntity<Object>(uraianTugasWrappers, HttpStatus.OK);
@@ -110,6 +112,9 @@ public class UraianTugasController {
             uraianTugas.setKdUrtug(String.valueOf(obj.getId()));
             uraianTugas.setDeskripsi(obj.getUraianTugas());
             uraianTugas.setCreatedBy(new AkunPegawai("199401232015072001"));
+            uraianTugas.setVolume(obj.getVolume());
+            uraianTugas.setSatuanVolume(obj.getSatuanHasil());
+            uraianTugas.setJabatan(obj.getAnjabJabatan().getNamaJabatan());
 
             uraianTugasService.save(uraianTugas);
         }
