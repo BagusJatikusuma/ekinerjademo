@@ -17,6 +17,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -38,6 +40,10 @@ public class TemplateLainController {
     private AkunPegawaiService akunPegawaiService;
     @Autowired
     private UraianTugasPegawaiBulananService uraianTugasPegawaiBulananService;
+    @Autowired
+    private KegiatanPegawaiBulananService kegiatanPegawaiBulananService;
+    @Autowired
+    private PenanggungJawabKegiatanService penanggungJawabKegiatanService;
 
     @RequestMapping(value = "/create-template-lain",
             method = RequestMethod.POST,
@@ -112,6 +118,10 @@ public class TemplateLainController {
     ResponseEntity<?> createTemplateLainData(@RequestBody TemplateLainInputWrapper templateLainInputWrapper) {
         LOGGER.info("create template lain data");
 
+        boolean isLaporanDPA = false;
+        if (templateLainInputWrapper.getKdUrtug() == null)
+            isLaporanDPA = true;
+
         String kdTemplateLain = String.valueOf(new Date().getTime());
 
         TemplateLain templateLain = new TemplateLain();
@@ -128,24 +138,40 @@ public class TemplateLainController {
         templateLain.setKdNaskahPenugasan(templateLainInputWrapper.getKdNaskahPenugasan());
         templateLain.setJenisNaskahPenugasan(templateLainInputWrapper.getJenisNaskahPenugasan());
 
-        templateLain.setKdUrtug(templateLainInputWrapper.getKdUrtug());
-        templateLain.setKdJabatan(templateLainInputWrapper.getKdJabatan());
-        templateLain.setTahunUrtug(templateLainInputWrapper.getTahunUrtug());
-        templateLain.setKdJenisUrtug(templateLainInputWrapper.getKdJenisUrtug());
-        templateLain.setBulanUrtug(templateLainInputWrapper.getBulanUrtug());
+        if (!isLaporanDPA) {
+            templateLain.setKdUrtug(templateLainInputWrapper.getKdUrtug());
+            templateLain.setKdJabatan(templateLainInputWrapper.getKdJabatan());
+            templateLain.setTahunUrtug(templateLainInputWrapper.getTahunUrtug());
+            templateLain.setKdJenisUrtug(templateLainInputWrapper.getKdJenisUrtug());
+            templateLain.setBulanUrtug(templateLainInputWrapper.getBulanUrtug());
+        }
+        else {
+            templateLain.setKdUrusan(templateLainInputWrapper.getKdUrusan());
+            templateLain.setKdBidang(templateLainInputWrapper.getKdBidang());
+            templateLain.setKdUnit(templateLainInputWrapper.getKdUnit());
+            templateLain.setKdSub(templateLainInputWrapper.getKdSub());
+            templateLain.setTahun(templateLainInputWrapper.getTahun());
+            templateLain.setKdProg(templateLainInputWrapper.getKdProg());
+            templateLain.setIdProg(templateLainInputWrapper.getIdProg());
+            templateLain.setKdKeg(templateLainInputWrapper.getKdKeg());
+            templateLain.setKdStatusPenanggungJawab(templateLainInputWrapper.getKdStatusPenanggungJawab());
+        }
 
         templateLain.setStatusPenilaian(0);
         templateLain.setTanggalPembuatanMilis(new Date().getTime());
         templateLain.setStatusBaca(0);
 
-        //kondisi ini dapat di akses oleh kasie dan pelaksana yang membuat laporan baru; 31 juli 2018
+        /**kondisi(laporan urtug non dpa) ini dapat di akses oleh kasie dan pelaksana yang membuat laporan baru; 31 juli 2018**/
         if (templateLainInputWrapper.getKdTemplateLainBawahan() == null) {
 //            templateLain.setPathFile(kdTemplateLain+"."+fileTemplateLain.getOriginalFilename().split("\\.")[1]);
             templateLain.setPathFile(kdTemplateLain+"."+ FilenameUtils.getExtension(templateLainInputWrapper.getNamaFile()));
             templateLain.setPathPenilaian(kdTemplateLain);
+            /** khusus untuk laporan dpa**/
+            if (isLaporanDPA) templateLain.setStatusPenilaian(2);
         }
-        //kondisi ini hanya dapat di akses oleh kasie yang melanjutkan laporan bawahannya; 31 juli 2018
-        //ubah realisasi pelaksana
+        /**kondisi ini hanya dapat di akses oleh kasie yang melanjutkan laporan bawahannya; 31 juli 2018
+        ubah realisasi pelaksana**/
+        /** kondisi ini tidak akan bisa diakses pada proses laporan dpa; 16 agustus 2018**/
         else {
             TemplateLain templateLainBawahan
                     = templateLainService.getTemplateLain(templateLainInputWrapper.getKdTemplateLainBawahan());
@@ -166,75 +192,35 @@ public class TemplateLainController {
 //            templateLain.setApprovalSekretaris(1);
 //        }
 
-        //jika yang membuat atau melanjutkan adalah kasie maka ubah realisasi dirinya dengan atasan
-        QutPegawai pegawaiPembuat = qutPegawaiService.getQutPegawai(templateLainInputWrapper.getNipPegawai());
-        if (akunPegawaiService.isPegawaiKasie(pegawaiPembuat)) {
-            LOGGER.info("pegawai melanjutkan is kasie");
-            templateLain.setStatusPenilaian(2);
+        /** proses penambahan realisasi dibedakan berdasarkan jenis tugas yang dikerjakan
+         * seperti urtug non dpa atau dpa**/
+        if (!isLaporanDPA) {
+            /**jika yang membuat atau melanjutkan adalah kasie maka ubah realisasi dirinya dengan atasan**/
+            QutPegawai pegawaiPembuat = qutPegawaiService.getQutPegawai(templateLainInputWrapper.getNipPegawai());
+            if (akunPegawaiService.isPegawaiKasie(pegawaiPembuat)) {
+                LOGGER.info("pegawai melanjutkan is kasie");
+                templateLain.setStatusPenilaian(2);
 
-            List<UraianTugasPegawaiBulanan> uraianTugasPegawaiBulananSKPDList
-                    = uraianTugasPegawaiBulananService.getByUnitKerja(
-                    templateLain.getKdUnitKerja(),
-                    templateLain.getBulanUrtug(),
-                    templateLain.getTahunUrtug());
+                List<UraianTugasPegawaiBulanan> uraianTugasPegawaiBulananSKPDList
+                        = uraianTugasPegawaiBulananService.getByUnitKerja(
+                        templateLain.getKdUnitKerja(),
+                        templateLain.getBulanUrtug(),
+                        templateLain.getTahunUrtug());
 
-            for (UraianTugasPegawaiBulanan uraianTugasPegawaiBulanan : uraianTugasPegawaiBulananSKPDList) {
-                if (uraianTugasPegawaiBulanan.getUraianTugasPegawaiBulananId().getKdUrtug()
-                        .equals(templateLainInputWrapper.getKdUrtug())
-                        && uraianTugasPegawaiBulanan.getUraianTugasPegawaiBulananId().getKdJabatan()
-                        .equals(templateLainInputWrapper.getKdJabatan())
-                        && uraianTugasPegawaiBulanan.getUraianTugasPegawaiBulananId().getKdJenisUrtug()
-                        .equals(templateLainInputWrapper.getKdJenisUrtug())
-                        && uraianTugasPegawaiBulanan.getUraianTugasPegawaiBulananId().getBulanUrtug()
-                        .equals(templateLainInputWrapper.getBulanUrtug())
-                        && uraianTugasPegawaiBulanan.getUraianTugasPegawaiBulananId().getTahunUrtug()
-                        .equals(templateLainInputWrapper.getTahunUrtug())
-                        && uraianTugasPegawaiBulanan.getUraianTugasPegawaiBulananId().getNipPegawai()
-                        .equals(templateLainInputWrapper.getNipPegawai())) {
-                    LOGGER.info("same urtug kasie");
-                    uraianTugasPegawaiBulanan.setRealisasiKuantitas(uraianTugasPegawaiBulanan.getRealisasiKuantitas() + 1);
-                    uraianTugasPegawaiBulananService.create(uraianTugasPegawaiBulanan);
-
-                    break;
-
-                }
-            }
-
-            LOGGER.info("jumlah uraian tugas unit kerja "
-                    +templateLain.getKdUnitKerja()
-                    +" : "
-                    +uraianTugasPegawaiBulananSKPDList.size());
-
-            for (UrtugBulananIdInputWrapper urtugBulananId : templateLainInputWrapper.getDaftarUrtugAtasan()) {
                 for (UraianTugasPegawaiBulanan uraianTugasPegawaiBulanan : uraianTugasPegawaiBulananSKPDList) {
-                    LOGGER.error(
-                            urtugBulananId.getKdUrtug()+";"
-                            +urtugBulananId.getKdJabatan()+";"
-                            +urtugBulananId.getKdJenisUrtug()+";"
-                            +urtugBulananId.getBulanUrtug()+";"
-                            +urtugBulananId.getTahunUrtug()+";"
-                            +urtugBulananId.getNipPegawai()+";");
-                    LOGGER.info(
-                            uraianTugasPegawaiBulanan.getUraianTugasPegawaiBulananId().getKdUrtug()+";"
-                            +uraianTugasPegawaiBulanan.getUraianTugasPegawaiBulananId().getKdJabatan()+";"
-                            +uraianTugasPegawaiBulanan.getUraianTugasPegawaiBulananId().getKdJenisUrtug()+";"
-                            +uraianTugasPegawaiBulanan.getUraianTugasPegawaiBulananId().getBulanUrtug()+";"
-                            +uraianTugasPegawaiBulanan.getUraianTugasPegawaiBulananId().getTahunUrtug()+";"
-                            +uraianTugasPegawaiBulanan.getUraianTugasPegawaiBulananId().getNipPegawai()+";");
-
                     if (uraianTugasPegawaiBulanan.getUraianTugasPegawaiBulananId().getKdUrtug()
-                            .equals(urtugBulananId.getKdUrtug())
+                            .equals(templateLainInputWrapper.getKdUrtug())
                             && uraianTugasPegawaiBulanan.getUraianTugasPegawaiBulananId().getKdJabatan()
-                            .equals(urtugBulananId.getKdJabatan())
+                            .equals(templateLainInputWrapper.getKdJabatan())
                             && uraianTugasPegawaiBulanan.getUraianTugasPegawaiBulananId().getKdJenisUrtug()
-                            .equals(urtugBulananId.getKdJenisUrtug())
+                            .equals(templateLainInputWrapper.getKdJenisUrtug())
                             && uraianTugasPegawaiBulanan.getUraianTugasPegawaiBulananId().getBulanUrtug()
-                            .equals(urtugBulananId.getBulanUrtug())
+                            .equals(templateLainInputWrapper.getBulanUrtug())
                             && uraianTugasPegawaiBulanan.getUraianTugasPegawaiBulananId().getTahunUrtug()
-                            .equals(urtugBulananId.getTahunUrtug())
+                            .equals(templateLainInputWrapper.getTahunUrtug())
                             && uraianTugasPegawaiBulanan.getUraianTugasPegawaiBulananId().getNipPegawai()
-                            .equals(urtugBulananId.getNipPegawai())) {
-                        LOGGER.info("same success update reailisasi kuantitas");
+                            .equals(templateLainInputWrapper.getNipPegawai())) {
+                        LOGGER.info("same urtug kasie");
                         uraianTugasPegawaiBulanan.setRealisasiKuantitas(uraianTugasPegawaiBulanan.getRealisasiKuantitas() + 1);
                         uraianTugasPegawaiBulananService.create(uraianTugasPegawaiBulanan);
 
@@ -242,9 +228,119 @@ public class TemplateLainController {
 
                     }
                 }
-            }
 
+                LOGGER.info("jumlah uraian tugas unit kerja "
+                        + templateLain.getKdUnitKerja()
+                        + " : "
+                        + uraianTugasPegawaiBulananSKPDList.size());
+
+                for (UrtugBulananIdInputWrapper urtugBulananId : templateLainInputWrapper.getDaftarUrtugAtasan()) {
+                    for (UraianTugasPegawaiBulanan uraianTugasPegawaiBulanan : uraianTugasPegawaiBulananSKPDList) {
+                        LOGGER.error(
+                                urtugBulananId.getKdUrtug() + ";"
+                                        + urtugBulananId.getKdJabatan() + ";"
+                                        + urtugBulananId.getKdJenisUrtug() + ";"
+                                        + urtugBulananId.getBulanUrtug() + ";"
+                                        + urtugBulananId.getTahunUrtug() + ";"
+                                        + urtugBulananId.getNipPegawai() + ";");
+                        LOGGER.info(
+                                uraianTugasPegawaiBulanan.getUraianTugasPegawaiBulananId().getKdUrtug() + ";"
+                                        + uraianTugasPegawaiBulanan.getUraianTugasPegawaiBulananId().getKdJabatan() + ";"
+                                        + uraianTugasPegawaiBulanan.getUraianTugasPegawaiBulananId().getKdJenisUrtug() + ";"
+                                        + uraianTugasPegawaiBulanan.getUraianTugasPegawaiBulananId().getBulanUrtug() + ";"
+                                        + uraianTugasPegawaiBulanan.getUraianTugasPegawaiBulananId().getTahunUrtug() + ";"
+                                        + uraianTugasPegawaiBulanan.getUraianTugasPegawaiBulananId().getNipPegawai() + ";");
+
+                        if (uraianTugasPegawaiBulanan.getUraianTugasPegawaiBulananId().getKdUrtug()
+                                .equals(urtugBulananId.getKdUrtug())
+                                && uraianTugasPegawaiBulanan.getUraianTugasPegawaiBulananId().getKdJabatan()
+                                .equals(urtugBulananId.getKdJabatan())
+                                && uraianTugasPegawaiBulanan.getUraianTugasPegawaiBulananId().getKdJenisUrtug()
+                                .equals(urtugBulananId.getKdJenisUrtug())
+                                && uraianTugasPegawaiBulanan.getUraianTugasPegawaiBulananId().getBulanUrtug()
+                                .equals(urtugBulananId.getBulanUrtug())
+                                && uraianTugasPegawaiBulanan.getUraianTugasPegawaiBulananId().getTahunUrtug()
+                                .equals(urtugBulananId.getTahunUrtug())
+                                && uraianTugasPegawaiBulanan.getUraianTugasPegawaiBulananId().getNipPegawai()
+                                .equals(urtugBulananId.getNipPegawai())) {
+                            LOGGER.info("same success update reailisasi kuantitas");
+                            uraianTugasPegawaiBulanan.setRealisasiKuantitas(uraianTugasPegawaiBulanan.getRealisasiKuantitas() + 1);
+                            uraianTugasPegawaiBulananService.create(uraianTugasPegawaiBulanan);
+
+                            break;
+
+                        }
+                    }
+                }
+
+            }
         }
+        /** jika laporan dibuat untuk dpa**/
+        else {
+            Date date = new Date();
+            LocalDate localDate = date.toInstant().atZone(ZoneId.of("Asia/Jakarta")).toLocalDate();
+            int month = localDate.getMonthValue() - 1; //value getMonthValue LocalDate start from 1 to 12
+
+            List<KegiatanPegawaiBulanan> kegiatanPegawaiBulanans
+                    = kegiatanPegawaiBulananService.getKegiatanBulanan(templateLainInputWrapper.getKdUrusan(),
+                                                                        templateLainInputWrapper.getKdBidang(),
+                                                                        templateLainInputWrapper.getKdUnit(),
+                                                                        templateLainInputWrapper.getKdSub(),
+                                                                        templateLainInputWrapper.getTahun(),
+                                                                        templateLainInputWrapper.getKdProg(),
+                                                                        templateLainInputWrapper.getIdProg(),
+                                                                        templateLainInputWrapper.getKdKeg(),
+                                                                        month);
+            /**jika sebelumnya sudah ada realisasi tinggal tambah realisasi kuantitas +1 **/
+            if (!kegiatanPegawaiBulanans.isEmpty()) {
+                for (KegiatanPegawaiBulanan obj : kegiatanPegawaiBulanans) {
+                    obj.setTargetKuantitas(obj.getTargetKuantitas() + 1);
+                    obj.setRealisasiKuantitas(obj.getRealisasiKuantitas() + 1);
+
+                    kegiatanPegawaiBulananService.create(obj);
+                }
+            }
+            /**jika sebelumnya belum ada realisasi maka buat baru pada kegiatan pegawai bulanan **/
+            else {
+                List<PenanggungJawabKegiatan> penanggungJawabKegiatans
+                        = penanggungJawabKegiatanService.getByKegiatan(templateLainInputWrapper.getKdUrusan(),
+                                                                        templateLainInputWrapper.getKdBidang(),
+                                                                        templateLainInputWrapper.getKdUnit(),
+                                                                        templateLainInputWrapper.getKdSub(),
+                                                                        templateLainInputWrapper.getTahun(),
+                                                                        templateLainInputWrapper.getKdProg(),
+                                                                        templateLainInputWrapper.getIdProg(),
+                                                                        templateLainInputWrapper.getKdKeg());
+
+                for (PenanggungJawabKegiatan obj : penanggungJawabKegiatans) {
+                    KegiatanPegawaiBulananId id
+                            = new KegiatanPegawaiBulananId(obj.getPenanggungJawabKegiatanId().getKdUrusan(),
+                                                            obj.getPenanggungJawabKegiatanId().getKdBidang(),
+                                                            obj.getPenanggungJawabKegiatanId().getKdUnit(),
+                                                            obj.getPenanggungJawabKegiatanId().getKdSub(),
+                                                            obj.getPenanggungJawabKegiatanId().getTahun(),
+                                                            obj.getPenanggungJawabKegiatanId().getKdProg(),
+                                                            obj.getPenanggungJawabKegiatanId().getIdProg(),
+                                                            obj.getPenanggungJawabKegiatanId().getKdKeg(),
+                                                            obj.getPenanggungJawabKegiatanId().getNipPegawai(),
+                                                            obj.getPenanggungJawabKegiatanId().getKdStatusPenanggungJawab(),
+                                                            month);
+
+                    KegiatanPegawaiBulanan kegiatanPegawaiBulanan = new KegiatanPegawaiBulanan();
+                    kegiatanPegawaiBulanan.setKegiatanPegawaiBulananId(id);
+                    kegiatanPegawaiBulanan.setTargetKuantitas(1);
+                    kegiatanPegawaiBulanan.setTargetKualitas(100);
+                    kegiatanPegawaiBulanan.setTargetSatuanKuantitas("");
+                    kegiatanPegawaiBulanan.setRealisasiKuantitas(1);
+                    kegiatanPegawaiBulanan.setRealisasiKualitas(100);
+
+                    kegiatanPegawaiBulananService.create(kegiatanPegawaiBulanan);
+                }
+
+            }
+        }
+        /** proses penambahan realisasi dibedakan berdasarkan jenis tugas yang dikerjakan
+         * seperti urtug non dpa atau dpa selesai**/
 
         templateLainService.create(templateLain);
 

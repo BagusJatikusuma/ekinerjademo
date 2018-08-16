@@ -93,8 +93,8 @@ public class UraianTugasJabatanController {
                                         new UraianTugasWrapper(
                                                 uraianTugas.getKdUrtug(),
                                                 uraianTugas.getDeskripsi()),
-                                        uraianTugasJabatan.getKuantitas(),
-                                        uraianTugasJabatan.getSatuanKuantitas(),
+                                        uraianTugas.getVolume(),
+                                        uraianTugas.getSatuanVolume(),
                                         uraianTugasJabatan.getKualitas(),
                                         uraianTugasJabatan.getWaktu(),
                                         uraianTugasJabatan.getBiaya()

@@ -55,6 +55,20 @@ public class KegiatanPegawaiBulananServiceImpl
     }
 
     @Override
+    public List<KegiatanPegawaiBulanan> getKegiatanBulanan(Integer kdUrusan, Integer kdBidang, Integer kdUnit, Integer kdSub, Integer tahun, Integer kdProg, Integer idProg, Integer kdKeg, Integer bulan) {
+        return kegiatanPegawaiBulananDao
+                .findKegiatanByBulanTahun(kdUrusan,
+                                            kdBidang,
+                                            kdUnit,
+                                            kdSub,
+                                            tahun,
+                                            kdProg,
+                                            idProg,
+                                            kdKeg,
+                                            bulan);
+    }
+
+    @Override
     public List<KegiatanPegawaiBulanan> getKegiatanBulananUnitKerja(String kdUnitKerja) {
         return null;
     }

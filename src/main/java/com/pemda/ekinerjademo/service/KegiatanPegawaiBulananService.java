@@ -14,6 +14,7 @@ public interface KegiatanPegawaiBulananService {
     KegiatanPegawaiBulanan getKegiatanBulananPegawai(KegiatanPegawaiBulananId id);
     List<KegiatanPegawaiBulanan> getKegiatanBulananPegawai(String nipPegawai);
     List<KegiatanPegawaiBulanan> getKegiatanBulananPegawai(String nipPegawai, Integer bulan, Integer tahun);
+    List<KegiatanPegawaiBulanan> getKegiatanBulanan(Integer kdUrusan, Integer kdBidang, Integer kdUnit, Integer kdSub, Integer tahun, Integer kdProg, Integer idProg, Integer kdKeg, Integer bulan);
 
     List<KegiatanPegawaiBulanan> getKegiatanBulananUnitKerja(String kdUnitKerja);
     List<KegiatanPegawaiBulanan> getKegiatanBulananUnitKerja(String kdUnitKerja, Integer bulan, Integer tahun);
