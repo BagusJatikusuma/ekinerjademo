@@ -44,6 +44,8 @@ public class TemplateLainController {
     private KegiatanPegawaiBulananService kegiatanPegawaiBulananService;
     @Autowired
     private PenanggungJawabKegiatanService penanggungJawabKegiatanService;
+    @Autowired
+    private UraianTugasTemplateLainService uraianTugasTemplateLainService;
 
     @RequestMapping(value = "/create-template-lain",
             method = RequestMethod.POST,
@@ -192,11 +194,31 @@ public class TemplateLainController {
 //            templateLain.setApprovalSekretaris(1);
 //        }
 
+        templateLainService.create(templateLain);
+
+        QutPegawai pegawaiPembuat = qutPegawaiService.getQutPegawai(templateLainInputWrapper.getNipPegawai());
+
+        //jika pelaksana yang melaporkan
+        if (!akunPegawaiService.isPegawaiKasie(pegawaiPembuat)) {
+            UraianTugasTemplateLain obj = new UraianTugasTemplateLain();
+            obj.setUraianTugasTemplateLainId(
+                    new UraianTugasTemplateLainId(
+                            kdTemplateLain,
+                            templateLainInputWrapper.getKdUrtug(),
+                            templateLainInputWrapper.getKdJabatan(),
+                            templateLainInputWrapper.getTahunUrtug(),
+                            templateLainInputWrapper.getKdJenisUrtug(),
+                            templateLainInputWrapper.getBulanUrtug(),
+                            templateLainInputWrapper.getNipPegawai()));
+
+            uraianTugasTemplateLainService.create(obj);
+        }
+
         /** proses penambahan realisasi dibedakan berdasarkan jenis tugas yang dikerjakan
          * seperti urtug non dpa atau dpa**/
         if (!isLaporanDPA) {
             /**jika yang membuat atau melanjutkan adalah kasie maka ubah realisasi dirinya dengan atasan**/
-            QutPegawai pegawaiPembuat = qutPegawaiService.getQutPegawai(templateLainInputWrapper.getNipPegawai());
+            List<UraianTugasTemplateLain> uraianTugasTemplateLains = new ArrayList<>();
             if (akunPegawaiService.isPegawaiKasie(pegawaiPembuat)) {
                 LOGGER.info("pegawai melanjutkan is kasie");
                 templateLain.setStatusPenilaian(2);
@@ -223,6 +245,18 @@ public class TemplateLainController {
                         LOGGER.info("same urtug kasie");
                         uraianTugasPegawaiBulanan.setRealisasiKuantitas(uraianTugasPegawaiBulanan.getRealisasiKuantitas() + 1);
                         uraianTugasPegawaiBulananService.create(uraianTugasPegawaiBulanan);
+
+                        UraianTugasTemplateLain obj = new UraianTugasTemplateLain();
+                        obj.setUraianTugasTemplateLainId(
+                                new UraianTugasTemplateLainId(kdTemplateLain,
+                                        templateLainInputWrapper.getKdUrtug(),
+                                        templateLainInputWrapper.getKdJabatan(),
+                                        templateLainInputWrapper.getTahunUrtug(),
+                                        templateLainInputWrapper.getKdJenisUrtug(),
+                                        templateLainInputWrapper.getBulanUrtug(),
+                                        templateLainInputWrapper.getNipPegawai()));
+
+                        uraianTugasTemplateLainService.create(obj);
 
                         break;
 
@@ -266,6 +300,18 @@ public class TemplateLainController {
                             LOGGER.info("same success update reailisasi kuantitas");
                             uraianTugasPegawaiBulanan.setRealisasiKuantitas(uraianTugasPegawaiBulanan.getRealisasiKuantitas() + 1);
                             uraianTugasPegawaiBulananService.create(uraianTugasPegawaiBulanan);
+
+                            UraianTugasTemplateLain obj = new UraianTugasTemplateLain();
+                            obj.setUraianTugasTemplateLainId(
+                                    new UraianTugasTemplateLainId(kdTemplateLain,
+                                            urtugBulananId.getKdUrtug(),
+                                            urtugBulananId.getKdJabatan(),
+                                            urtugBulananId.getTahunUrtug(),
+                                            urtugBulananId.getKdJenisUrtug(),
+                                            urtugBulananId.getBulanUrtug(),
+                                            urtugBulananId.getNipPegawai()));
+
+                            uraianTugasTemplateLainService.create(obj);
 
                             break;
 
@@ -342,7 +388,7 @@ public class TemplateLainController {
         /** proses penambahan realisasi dibedakan berdasarkan jenis tugas yang dikerjakan
          * seperti urtug non dpa atau dpa selesai**/
 
-        templateLainService.create(templateLain);
+//        templateLainService.create(templateLain);
 
         return new ResponseEntity<Object>(
                 new CustomMessage(kdTemplateLain), HttpStatus.CREATED);
