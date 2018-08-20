@@ -38,6 +38,7 @@ public class UraianTugasPegawaiBulananController {
     //    @Autowired private TkdUnkDao tkdUnkDao;
     @Autowired private TkdUnkCloneDao tkdUnkDao;
     @Autowired private TemplateLainService templateLainService;
+    @Autowired private UraianTugasTemplateLainService uraianTugasTemplateLainService;
 
     /**
      *
@@ -407,6 +408,8 @@ public class UraianTugasPegawaiBulananController {
     public ResponseEntity<?> getProgressUrtugBulanan(@RequestBody UrtugBulananIdInputWrapper inputWrapper) {
         LOGGER.info("get progress urtug bulanan");
 
+        List<UraianTugasTemplateLain> uraianTugasTemplateLains
+                = new ArrayList<>();
         List<TemplateLain> progressByTemplateList
                 = new ArrayList<>();
         List<TemplateLainHistoryWrapper> progressByTemplateLainWrappers
@@ -415,14 +418,27 @@ public class UraianTugasPegawaiBulananController {
         //lakukan pencarian berdasarkan jenis urtug
         switch (inputWrapper.getKdJenisUrtug()) {
             case "KJU002" :
-                progressByTemplateList
-                        = templateLainService.getByUrtugNonDpa(
-                                new UraianTugasPegawaiBulananId(inputWrapper.getKdUrtug(),
-                                                                inputWrapper.getKdJabatan(),
-                                                                inputWrapper.getKdJenisUrtug(),
-                                                                inputWrapper.getTahunUrtug(),
-                                                                inputWrapper.getBulanUrtug(),
-                                                                inputWrapper.getNipPegawai()));
+                uraianTugasTemplateLains
+                        = uraianTugasTemplateLainService.get(
+                                inputWrapper.getKdUrtug(),
+                                inputWrapper.getKdJabatan(),
+                                inputWrapper.getTahunUrtug(),
+                                inputWrapper.getKdJenisUrtug(),
+                                inputWrapper.getBulanUrtug(),
+                                inputWrapper.getNipPegawai());
+
+                for (UraianTugasTemplateLain obj : uraianTugasTemplateLains) {
+                    progressByTemplateList.add(obj.getTemplateLain());
+                }
+//                progressByTemplateList
+//                        = templateLainService.getByUrtugNonDpa(
+//                                new UraianTugasPegawaiBulananId(inputWrapper.getKdUrtug(),
+//                                                                inputWrapper.getKdJabatan(),
+//                                                                inputWrapper.getKdJenisUrtug(),
+//                                                                inputWrapper.getTahunUrtug(),
+//                                                                inputWrapper.getBulanUrtug(),
+//                                                                inputWrapper.getNipPegawai()));
+
                 break;
             case "KJU001" :
                 break;

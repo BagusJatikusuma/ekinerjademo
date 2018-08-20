@@ -88,8 +88,8 @@ public class KegiatanPegawaiBulananController {
                                     kegiatanPegawai.getTargetSatuanKuantitas(),
                                     kegiatanPegawai.getTargetKualitas(),
                                     kegiatanPegawai.getWaktu(),
-                                    kegiatanPegawai.getBiaya(),
-                                    Long.valueOf(kegiatanPegawai.getTargetKuantitas() * kegiatanPegawai.getWaktu()),
+                                    taKegiatan.getPaguAnggaran().intValue(),
+                                    Long.valueOf(0),
                                     kegiatanPegawai.getRealisasiKuantitas(),
                                     kegiatanPegawai.getRealisasiKualitas(),
                                     kegiatanPegawai.getRealisasiBiaya()));
