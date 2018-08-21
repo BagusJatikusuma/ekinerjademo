@@ -168,6 +168,17 @@ public class UraianTugasJabatanController {
         return new ResponseEntity<Object>(new CustomMessage("urtug jabatan created"), HttpStatus.OK);
     }
 
+    @RequestMapping(value = "/add-daftar-uraian-tugas-jabatan", method = RequestMethod.POST)
+    ResponseEntity<?> addDaftarUraianTugasJabatan(@RequestBody List<UraianTugasJabatanInputWrapper> urtugJabatanWrappers) {
+        LOGGER.info("add urtug jabatan");
+
+        for (UraianTugasJabatanInputWrapper obj : urtugJabatanWrappers) {
+            uraianTugasJabatanService.createUrtugJabatan(obj);
+        }
+
+        return new ResponseEntity<Object>(new CustomMessage("urtug jabatan created"), HttpStatus.OK);
+    }
+
     @RequestMapping(value = "/update-uraian-tugas-jabatan", method = RequestMethod.PUT)
     @Transactional
     ResponseEntity<?> updateUraianTugasJabatan(@RequestBody UraianTugasJabatanInputWrapper urtugJabatanWrapper) {

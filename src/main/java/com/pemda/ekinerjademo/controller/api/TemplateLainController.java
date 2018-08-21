@@ -200,18 +200,20 @@ public class TemplateLainController {
 
         //jika pelaksana yang melaporkan
         if (!akunPegawaiService.isPegawaiKasie(pegawaiPembuat)) {
-            UraianTugasTemplateLain obj = new UraianTugasTemplateLain();
-            obj.setUraianTugasTemplateLainId(
-                    new UraianTugasTemplateLainId(
-                            kdTemplateLain,
-                            templateLainInputWrapper.getKdUrtug(),
-                            templateLainInputWrapper.getKdJabatan(),
-                            templateLainInputWrapper.getTahunUrtug(),
-                            templateLainInputWrapper.getKdJenisUrtug(),
-                            templateLainInputWrapper.getBulanUrtug(),
-                            templateLainInputWrapper.getNipPegawai()));
+            if (!isLaporanDPA) {
+                UraianTugasTemplateLain obj = new UraianTugasTemplateLain();
+                obj.setUraianTugasTemplateLainId(
+                        new UraianTugasTemplateLainId(
+                                kdTemplateLain,
+                                templateLainInputWrapper.getKdUrtug(),
+                                templateLainInputWrapper.getKdJabatan(),
+                                templateLainInputWrapper.getTahunUrtug(),
+                                templateLainInputWrapper.getKdJenisUrtug(),
+                                templateLainInputWrapper.getBulanUrtug(),
+                                templateLainInputWrapper.getNipPegawai()));
 
-            uraianTugasTemplateLainService.create(obj);
+                uraianTugasTemplateLainService.create(obj);
+            }
         }
 
         /** proses penambahan realisasi dibedakan berdasarkan jenis tugas yang dikerjakan
@@ -246,17 +248,19 @@ public class TemplateLainController {
                         uraianTugasPegawaiBulanan.setRealisasiKuantitas(uraianTugasPegawaiBulanan.getRealisasiKuantitas() + 1);
                         uraianTugasPegawaiBulananService.create(uraianTugasPegawaiBulanan);
 
-                        UraianTugasTemplateLain obj = new UraianTugasTemplateLain();
-                        obj.setUraianTugasTemplateLainId(
-                                new UraianTugasTemplateLainId(kdTemplateLain,
-                                        templateLainInputWrapper.getKdUrtug(),
-                                        templateLainInputWrapper.getKdJabatan(),
-                                        templateLainInputWrapper.getTahunUrtug(),
-                                        templateLainInputWrapper.getKdJenisUrtug(),
-                                        templateLainInputWrapper.getBulanUrtug(),
-                                        templateLainInputWrapper.getNipPegawai()));
+                        if (!isLaporanDPA) {
+                            UraianTugasTemplateLain obj = new UraianTugasTemplateLain();
+                            obj.setUraianTugasTemplateLainId(
+                                    new UraianTugasTemplateLainId(kdTemplateLain,
+                                            templateLainInputWrapper.getKdUrtug(),
+                                            templateLainInputWrapper.getKdJabatan(),
+                                            templateLainInputWrapper.getTahunUrtug(),
+                                            templateLainInputWrapper.getKdJenisUrtug(),
+                                            templateLainInputWrapper.getBulanUrtug(),
+                                            templateLainInputWrapper.getNipPegawai()));
 
-                        uraianTugasTemplateLainService.create(obj);
+                            uraianTugasTemplateLainService.create(obj);
+                        }
 
                         break;
 
@@ -301,17 +305,19 @@ public class TemplateLainController {
                             uraianTugasPegawaiBulanan.setRealisasiKuantitas(uraianTugasPegawaiBulanan.getRealisasiKuantitas() + 1);
                             uraianTugasPegawaiBulananService.create(uraianTugasPegawaiBulanan);
 
-                            UraianTugasTemplateLain obj = new UraianTugasTemplateLain();
-                            obj.setUraianTugasTemplateLainId(
-                                    new UraianTugasTemplateLainId(kdTemplateLain,
-                                            urtugBulananId.getKdUrtug(),
-                                            urtugBulananId.getKdJabatan(),
-                                            urtugBulananId.getTahunUrtug(),
-                                            urtugBulananId.getKdJenisUrtug(),
-                                            urtugBulananId.getBulanUrtug(),
-                                            urtugBulananId.getNipPegawai()));
+                            if (!isLaporanDPA) {
+                                UraianTugasTemplateLain obj = new UraianTugasTemplateLain();
+                                obj.setUraianTugasTemplateLainId(
+                                        new UraianTugasTemplateLainId(kdTemplateLain,
+                                                urtugBulananId.getKdUrtug(),
+                                                urtugBulananId.getKdJabatan(),
+                                                urtugBulananId.getTahunUrtug(),
+                                                urtugBulananId.getKdJenisUrtug(),
+                                                urtugBulananId.getBulanUrtug(),
+                                                urtugBulananId.getNipPegawai()));
 
-                            uraianTugasTemplateLainService.create(obj);
+                                uraianTugasTemplateLainService.create(obj);
+                            }
 
                             break;
 
