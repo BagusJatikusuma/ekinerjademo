@@ -9,6 +9,7 @@ public class UraianTugasWrapper {
     private Integer volume;
     private String satuanVolume;
     private String jabatan;
+    private String unitKerja;
 
     public UraianTugasWrapper() {}
     public UraianTugasWrapper(
@@ -35,6 +36,15 @@ public class UraianTugasWrapper {
         this.volume = volume;
         this.satuanVolume = satuanVolume;
         this.jabatan = jabatan;
+    }
+
+    public UraianTugasWrapper(String kdUrtug, String deskripsi, Integer volume, String satuanVolume, String jabatan, String unitKerja) {
+        this.kdUrtug = kdUrtug;
+        this.deskripsi = deskripsi;
+        this.volume = volume;
+        this.satuanVolume = satuanVolume;
+        this.jabatan = jabatan;
+        this.unitKerja = unitKerja;
     }
 
     public String getKdUrtug() {
@@ -75,5 +85,13 @@ public class UraianTugasWrapper {
 
     public void setJabatan(String jabatan) {
         this.jabatan = jabatan;
+    }
+
+    public String getUnitKerja() {
+        return unitKerja;
+    }
+
+    public void setUnitKerja(String unitKerja) {
+        this.unitKerja = unitKerja;
     }
 }

@@ -593,7 +593,22 @@ public class PenanggungJawabKegiatanController {
                 pptkExist = false,
                 timTeknisExist = false;
 
+        List<TaKegiatan> filteredKegiatanList = new ArrayList<>();
+        boolean alreadyExist = false;
         for (TaKegiatan taKegiatan : taKegiatanList) {
+            alreadyExist = false;
+            for (TaKegiatan taKegiatanTemp : filteredKegiatanList) {
+                if (compareTwoTaKegiatan(taKegiatan, taKegiatanTemp)) {
+                    alreadyExist = true;
+                    break;
+                }
+            }
+            if (!alreadyExist) {
+                filteredKegiatanList.add(taKegiatan);
+            }
+        }
+
+        for (TaKegiatan taKegiatan : filteredKegiatanList) {
             if (!taKegiatan.getKetKegiatan().equals("Non Kegiatan")) {
                 bendaharaExist = false;
                 ppbjExist = false;
@@ -1010,6 +1025,21 @@ public class PenanggungJawabKegiatanController {
         return false;
     }
 
+    private boolean compareTwoTaKegiatan(@NotNull TaKegiatan kegiatan,
+                                    @NotNull TaKegiatan taKegiatan) {
+        if (kegiatan.getTaKegiatanId().getKdUrusan().equals(taKegiatan.getTaKegiatanId().getKdUrusan())
+                && kegiatan.getTaKegiatanId().getKdBIdang().equals(taKegiatan.getTaKegiatanId().getKdBIdang())
+                && kegiatan.getTaKegiatanId().getKdUnit().equals(taKegiatan.getTaKegiatanId().getKdUnit())
+                && kegiatan.getTaKegiatanId().getKdSub().equals(taKegiatan.getTaKegiatanId().getKdSub())
+                && kegiatan.getTaKegiatanId().getTahun().equals(taKegiatan.getTaKegiatanId().getTahun())
+                && kegiatan.getTaKegiatanId().getKdProg().equals(taKegiatan.getTaKegiatanId().getKdProg())
+                && kegiatan.getTaKegiatanId().getIdProg().equals(taKegiatan.getTaKegiatanId().getIdProg())
+                && kegiatan.getTaKegiatanId().getKdKegiatan().equals(taKegiatan.getTaKegiatanId().getKdKegiatan())) {
+            return true;
+        }
+
+        return false;
+    }
 
 }
 

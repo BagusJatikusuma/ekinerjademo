@@ -17,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -162,6 +163,25 @@ public class UraianTugasJabatanController {
     @Transactional
     ResponseEntity<?> addUraianTugasJabatan(@RequestBody UraianTugasJabatanInputWrapper urtugJabatanWrapper) {
         LOGGER.info("add urtug jabatan");
+
+        uraianTugasJabatanService.createUrtugJabatan(urtugJabatanWrapper);
+
+        return new ResponseEntity<Object>(new CustomMessage("urtug jabatan created"), HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/add-uraian-tugas-jabatan-custom", method = RequestMethod.POST)
+    ResponseEntity<?> addUraianTugasJabatanCustom(@RequestBody UraianTugasJabatanInputWrapper urtugJabatanWrapper) {
+        LOGGER.info("add urtug jabatan custom");
+
+        UraianTugas uraianTugas = new UraianTugas();
+
+        String newKdUrtug = String.valueOf(new Date().getTime());
+
+        uraianTugas.setKdUrtug(newKdUrtug);
+        uraianTugas.setDeskripsi(urtugJabatanWrapper.getDeskripsiUrtug());
+        uraianTugas.setCreatedBy(new AkunPegawai(urtugJabatanWrapper.getCreatedBy()));
+
+        uraianTugasService.save(uraianTugas);
 
         uraianTugasJabatanService.createUrtugJabatan(urtugJabatanWrapper);
 

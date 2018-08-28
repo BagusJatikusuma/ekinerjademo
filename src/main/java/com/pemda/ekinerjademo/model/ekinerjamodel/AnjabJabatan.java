@@ -1,20 +1,17 @@
 package com.pemda.ekinerjademo.model.ekinerjamodel;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "anjab_jabatan")
 public class AnjabJabatan {
-
     @Id
     @Column(name = "id")
     private Integer id;
 
-    @Column(name = "id_instansi")
-    private Integer idInstansi;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_instansi")
+    private Instansi instansi;
 
     @Column(name = "id_jabatan")
     private Integer idJabatan;
@@ -72,12 +69,12 @@ public class AnjabJabatan {
         this.id = id;
     }
 
-    public Integer getIdInstansi() {
-        return idInstansi;
+    public Instansi getInstansi() {
+        return instansi;
     }
 
-    public void setIdInstansi(Integer idInstansi) {
-        this.idInstansi = idInstansi;
+    public void setInstansi(Instansi instansi) {
+        this.instansi = instansi;
     }
 
     public Integer getIdJabatan() {

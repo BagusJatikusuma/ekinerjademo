@@ -94,7 +94,8 @@ public class UraianTugasController {
                     uraianTugas.getDeskripsi(),
                     uraianTugas.getVolume(),
                     uraianTugas.getSatuanVolume(),
-                    uraianTugas.getJabatan()
+                    uraianTugas.getJabatan(),
+                    uraianTugas.getUnitKerja()
             ));
         }
         return new ResponseEntity<Object>(uraianTugasWrappers, HttpStatus.OK);
@@ -115,6 +116,29 @@ public class UraianTugasController {
             uraianTugas.setVolume(obj.getVolume());
             uraianTugas.setSatuanVolume(obj.getSatuanHasil());
             uraianTugas.setJabatan(obj.getAnjabJabatan().getNamaJabatan());
+
+            uraianTugasService.save(uraianTugas);
+        }
+
+        return new ResponseEntity<>(new CustomMessage("cloning selesai"), HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/clone-anjab-uraian-tugas-instansi/{idInstansi}", method = RequestMethod.GET)
+    ResponseEntity<?> cloneAnjabUraianTugasInstansi(@PathVariable("idInstansi") Integer idInstansi) {
+        LOGGER.info("anjab uraian tugas "+idInstansi);
+
+        List<AnjabUraianTugas> anjabUraianTugasList = anjabUraianTugasDao.findByUnitKerja(idInstansi);
+
+        for (AnjabUraianTugas obj : anjabUraianTugasList) {
+            UraianTugas uraianTugas = new UraianTugas();
+
+            uraianTugas.setKdUrtug(String.valueOf(obj.getId()));
+            uraianTugas.setDeskripsi(obj.getUraianTugas());
+            uraianTugas.setCreatedBy(new AkunPegawai("199401232015072001"));
+            uraianTugas.setVolume(obj.getVolume());
+            uraianTugas.setSatuanVolume(obj.getSatuanHasil());
+            uraianTugas.setJabatan(obj.getAnjabJabatan().getNamaJabatan());
+            uraianTugas.setUnitKerja(obj.getAnjabJabatan().getInstansi().getNama());
 
             uraianTugasService.save(uraianTugas);
         }

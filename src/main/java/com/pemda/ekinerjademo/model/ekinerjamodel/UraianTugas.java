@@ -25,6 +25,9 @@ public class UraianTugas {
     @Column(name = "jabatan")
     private String jabatan;
 
+    @Column(name = "unit_kerja")
+    private String unitKerja;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "created_by")
     private AkunPegawai createdBy;
@@ -104,5 +107,13 @@ public class UraianTugas {
 
     public void setJabatan(String jabatan) {
         this.jabatan = jabatan;
+    }
+
+    public String getUnitKerja() {
+        return unitKerja;
+    }
+
+    public void setUnitKerja(String unitKerja) {
+        this.unitKerja = unitKerja;
     }
 }

@@ -15,6 +15,8 @@ public class UraianTugasJabatanInputWrapper {
     private Integer biaya;
     private String createdBy;
 
+    private String deskripsiUrtug;
+
     public String getKdUrtug() {
         return kdUrtug;
     }
@@ -79,4 +81,11 @@ public class UraianTugasJabatanInputWrapper {
         this.biaya = biaya;
     }
 
+    public String getDeskripsiUrtug() {
+        return deskripsiUrtug;
+    }
+
+    public void setDeskripsiUrtug(String deskripsiUrtug) {
+        this.deskripsiUrtug = deskripsiUrtug;
+    }
 }

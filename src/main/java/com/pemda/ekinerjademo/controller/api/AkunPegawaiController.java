@@ -2469,48 +2469,50 @@ public class AkunPegawaiController {
             Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("Asia/Jakarta"));
             for (TemplateLain templateLainBawahan : templateLainList) {
                 calendar.setTimeInMillis(templateLainBawahan.getTanggalPembuatanMilis());
+                if (templateLainBawahan.getKdUrtug() != null) {
 
-                LOGGER.error(templateLainBawahan.getNipPegawai()
-                        +" -month- "+calendar.get(Calendar.MONTH)
-                        +" -year- "+calendar.get(Calendar.YEAR));
+                    LOGGER.error(templateLainBawahan.getNipPegawai()
+                            + " -month- " + calendar.get(Calendar.MONTH)
+                            + " -year- " + calendar.get(Calendar.YEAR));
 
-                if (calendar.get(Calendar.MONTH) == bulan
-                        && calendar.get(Calendar.YEAR) == tahun) {
+                    if (calendar.get(Calendar.MONTH) == bulan
+                            && calendar.get(Calendar.YEAR) == tahun) {
 
-                    pembuatLaporan = qutPegawaiService.getQutPegawai(templateLainBawahan.getNipPegawai());
+                        pembuatLaporan = qutPegawaiService.getQutPegawai(templateLainBawahan.getNipPegawai());
 
-                    UraianTugasPegawaiBulananWrapper wrapper = new UraianTugasPegawaiBulananWrapper();
-                    wrapper.setUrtug(
-                            uraianTugasPegawaiBulananService.getById(
-                                    new UraianTugasPegawaiBulananId(templateLainBawahan.getKdUrtug(),
-                                                                    templateLainBawahan.getKdJabatan(),
-                                                                    templateLainBawahan.getKdJenisUrtug(),
-                                                                    templateLainBawahan.getTahunUrtug(),
-                                                                    templateLainBawahan.getBulanUrtug(),
-                                                                    templateLainBawahan.getNipPegawai()))
-                                    .getUraianTugasJabatanJenisUrtug()
-                                    .getUraianTugasJabatan()
-                                    .getUraianTugas()
-                                    .getDeskripsi());
+                        UraianTugasPegawaiBulananWrapper wrapper = new UraianTugasPegawaiBulananWrapper();
+                        wrapper.setUrtug(
+                                uraianTugasPegawaiBulananService.getById(
+                                        new UraianTugasPegawaiBulananId(templateLainBawahan.getKdUrtug(),
+                                                templateLainBawahan.getKdJabatan(),
+                                                templateLainBawahan.getKdJenisUrtug(),
+                                                templateLainBawahan.getTahunUrtug(),
+                                                templateLainBawahan.getBulanUrtug(),
+                                                templateLainBawahan.getNipPegawai()))
+                                        .getUraianTugasJabatanJenisUrtug()
+                                        .getUraianTugasJabatan()
+                                        .getUraianTugas()
+                                        .getDeskripsi());
 
-                    laporanBawahanWrapperList
-                            .add(new LaporanBawahanWrapper(templateLainBawahan.getKdTemplateLain(),
-                                    "template lain",
-                                    pembuatLaporan.getNip(),
-                                    pembuatLaporan.getNama(),
-                                    templateLainBawahan.getStatusPenilaian(),
-                                    15,
-                                    0,
-                                    templateLainBawahan.getTanggalPembuatanMilis(),
-                                    true,
-                                    FilenameUtils.removeExtension(templateLainBawahan.getPathFile()),
-                                    FilenameUtils.getExtension(templateLainBawahan.getPathFile()),
-                                    null,
-                                    dariKabid,
-                                    templateLainBawahan.getApprovalPenandatangan(),
-                                    templateLainBawahan.getKeterangan(),
-                                    wrapper
-                            ));
+                        laporanBawahanWrapperList
+                                .add(new LaporanBawahanWrapper(templateLainBawahan.getKdTemplateLain(),
+                                        "template lain",
+                                        pembuatLaporan.getNip(),
+                                        pembuatLaporan.getNama(),
+                                        templateLainBawahan.getStatusPenilaian(),
+                                        15,
+                                        0,
+                                        templateLainBawahan.getTanggalPembuatanMilis(),
+                                        true,
+                                        FilenameUtils.removeExtension(templateLainBawahan.getPathFile()),
+                                        FilenameUtils.getExtension(templateLainBawahan.getPathFile()),
+                                        null,
+                                        dariKabid,
+                                        templateLainBawahan.getApprovalPenandatangan(),
+                                        templateLainBawahan.getKeterangan(),
+                                        wrapper
+                                ));
+                    }
                 }
             }
         }

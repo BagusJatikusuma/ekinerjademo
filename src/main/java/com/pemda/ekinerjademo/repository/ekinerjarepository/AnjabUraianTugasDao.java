@@ -16,4 +16,10 @@ public interface AnjabUraianTugasDao
     @Query("select aut from AnjabUraianTugas aut " +
             "left join fetch aut.anjabJabatan")
     List<AnjabUraianTugas> findAll();
+
+    @Query("select aut from AnjabUraianTugas aut " +
+            "left join fetch aut.anjabJabatan ajjb " +
+            "left join fetch ajjb.instansi ins " +
+            "where ins.id = ?1")
+    List<AnjabUraianTugas> findByUnitKerja(Integer idInstansi);
 }
