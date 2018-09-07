@@ -264,7 +264,7 @@ public class AkunPegawaiController {
                                     qutPegawai.getKdJabatan(),
                                     qutPegawai.getJabatan(),
                                     qutPegawai.getKdUnitKerja(),
-                                    null,
+                                    qutPegawai.getUnitKerja(),
                                     qutPegawai.getPangkat(),
                                     qutPegawai.getGol(),
                                     akunPegawai.getRole().getRole(),
@@ -278,16 +278,16 @@ public class AkunPegawaiController {
         }
 
         //get correct unit kerja
-        for (QutPegawaiWrapper qutPegawaiWrapper
-                : qutPegawaiWrappers) {
-            for (TkdUnk tkdUnk
-                    : tkdUnkList) {
-                if (tkdUnk.getKdUnK().equals(qutPegawaiWrapper.getKdUnitKerja())) {
-                    qutPegawaiWrapper.setUnitKerja(tkdUnk.getUnitKerja());
-                    break;
-                }
-            }
-        }
+//        for (QutPegawaiWrapper qutPegawaiWrapper
+//                : qutPegawaiWrappers) {
+//            for (TkdUnk tkdUnk
+//                    : tkdUnkList) {
+//                if (tkdUnk.getKdUnK().equals(qutPegawaiWrapper.getKdUnitKerja())) {
+//                    qutPegawaiWrapper.setUnitKerja(tkdUnk.getUnitKerja());
+//                    break;
+//                }
+//            }
+//        }
 
         LOGGER.info("finish");
 

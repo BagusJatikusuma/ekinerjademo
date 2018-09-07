@@ -77,7 +77,8 @@ public class UraianTugasJabatanController {
                                 uraianTugas.getDeskripsi(),
                                 uraianTugas.getVolume(),
                                 uraianTugas.getSatuanVolume(),
-                                uraianTugas.getJabatan()));
+                                uraianTugas.getJabatan(),
+                                uraianTugas.getUnitKerja()));
             }
 
         } else {
@@ -114,7 +115,8 @@ public class UraianTugasJabatanController {
                                     uraianTugas.getDeskripsi(),
                                     uraianTugas.getVolume(),
                                     uraianTugas.getSatuanVolume(),
-                                    uraianTugas.getJabatan()));
+                                    uraianTugas.getJabatan(),
+                                    uraianTugas.getUnitKerja()));
                 }
 
             }
@@ -175,13 +177,21 @@ public class UraianTugasJabatanController {
 
         UraianTugas uraianTugas = new UraianTugas();
 
+        TkdJabatan objJab = tkdJabatanService.getTkdJabatan(urtugJabatanWrapper.getKdJabatan());
+
         String newKdUrtug = String.valueOf(new Date().getTime());
 
         uraianTugas.setKdUrtug(newKdUrtug);
         uraianTugas.setDeskripsi(urtugJabatanWrapper.getDeskripsiUrtug());
         uraianTugas.setCreatedBy(new AkunPegawai(urtugJabatanWrapper.getCreatedBy()));
+        uraianTugas.setVolume(urtugJabatanWrapper.getKuantitas());
+        uraianTugas.setSatuanVolume(urtugJabatanWrapper.getSatuanKuantitas());
+        uraianTugas.setJabatan(objJab.getJabatan());
+        uraianTugas.setUnitKerja(objJab.getUnitKerja());
 
         uraianTugasService.save(uraianTugas);
+
+        urtugJabatanWrapper.setKdUrtug(newKdUrtug);
 
         uraianTugasJabatanService.createUrtugJabatan(urtugJabatanWrapper);
 

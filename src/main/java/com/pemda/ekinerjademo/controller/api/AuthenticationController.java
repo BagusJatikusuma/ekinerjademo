@@ -1,8 +1,10 @@
 package com.pemda.ekinerjademo.controller.api;
 
 import com.pemda.ekinerjademo.model.bismamodel.QutPegawai;
+import com.pemda.ekinerjademo.model.bismamodel.TkdJabatan;
 import com.pemda.ekinerjademo.model.ekinerjamodel.*;
 import com.pemda.ekinerjademo.repository.bismarepository.TkdUnkDao;
+import com.pemda.ekinerjademo.repository.ekinerjarepository.TkdJabatanCloneDao;
 import com.pemda.ekinerjademo.repository.ekinerjarepository.TkdUnkCloneDao;
 import com.pemda.ekinerjademo.service.*;
 import com.pemda.ekinerjademo.util.exception.AuthenticationCredentialsNotFoundExcecption;
@@ -46,6 +48,7 @@ public class AuthenticationController {
 
 //    @Autowired private TkdUnkDao tkdUnkDao; //test clone
     @Autowired private TkdUnkCloneDao tkdUnkDao;
+    @Autowired private TkdJabatanCloneDao tkdJabatanCloneDao;
 
     /**
      * this method used for receive pegawai authentication request
@@ -122,6 +125,7 @@ public class AuthenticationController {
         if (!kontrakKerjaBulanan.isEmpty())
             sudahMembuatKontrakKerja = true;
 
+        TkdJabatanClone obj = tkdJabatanCloneDao.findOne(qutPegawai.getKdJabatan());
         PegawaiCredential pegawaiCredential =
                 new PegawaiCredential(
                         akunPegawaiAuthenticated.getNipPegawai(),
@@ -129,8 +133,9 @@ public class AuthenticationController {
                         akunPegawaiAuthenticated.getRole(),
                         "IniTokenDUmmy",
                         qutPegawai.getJabatan(),
-                        tkdUnkDao.findOne(qutPegawai.getKdUnitKerja()).getUnitKerja(),
-                        qutPegawai.getKdUnitKerja(),
+//                        tkdUnkDao.findOne(qutPegawai.getKdUnitKerja()).getUnitKerja(),
+                        obj.getUnitKerja(),
+                        obj.getKdUnitKerja().getKdUnK(),
                         qutPegawai.getKdJabatan(),
                         qutPegawai.getPangkat(),
                         qutPegawai.getGol(),

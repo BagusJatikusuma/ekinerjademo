@@ -120,6 +120,12 @@ public class TemplateLainController {
     ResponseEntity<?> createTemplateLainData(@RequestBody TemplateLainInputWrapper templateLainInputWrapper) {
         LOGGER.info("create template lain data");
 
+        QutPegawai pegawaiPembuat = qutPegawaiService.getQutPegawai(templateLainInputWrapper.getNipPegawai());
+
+        boolean isKasie = false;
+        if (akunPegawaiService.isPegawaiKasie(pegawaiPembuat))
+            isKasie = true;
+
         boolean isLaporanDPA = false;
         if (templateLainInputWrapper.getKdUrtug() == null)
             isLaporanDPA = true;
@@ -168,6 +174,7 @@ public class TemplateLainController {
 //            templateLain.setPathFile(kdTemplateLain+"."+fileTemplateLain.getOriginalFilename().split("\\.")[1]);
             templateLain.setPathFile(kdTemplateLain+"."+ FilenameUtils.getExtension(templateLainInputWrapper.getNamaFile()));
             templateLain.setPathPenilaian(kdTemplateLain);
+
             /** khusus untuk laporan dpa**/
             if (isLaporanDPA) templateLain.setStatusPenilaian(2);
         }
@@ -193,10 +200,12 @@ public class TemplateLainController {
 //        if (akunPegawaiService.isPegawaiSekretaris(pegawaiPembuat)) {
 //            templateLain.setApprovalSekretaris(1);
 //        }
+        if (isKasie) {
+            templateLain.setStatusPenilaian(2);
+            templateLain.setApprovalPenandatangan(1);
+        }
 
         templateLainService.create(templateLain);
-
-        QutPegawai pegawaiPembuat = qutPegawaiService.getQutPegawai(templateLainInputWrapper.getNipPegawai());
 
         //jika pelaksana yang melaporkan
         if (!akunPegawaiService.isPegawaiKasie(pegawaiPembuat)) {

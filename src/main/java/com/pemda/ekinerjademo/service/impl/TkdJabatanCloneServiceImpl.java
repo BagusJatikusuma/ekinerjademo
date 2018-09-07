@@ -46,6 +46,11 @@ public class TkdJabatanCloneServiceImpl implements TkdJabatanService {
     }
 
     @Override
+    public List<TkdJabatanClone> getAllClone() {
+        return tkdJabatanCloneDao.findAll();
+    }
+
+    @Override
     public List<TkdJabatan> getJabatanByUnitKerja(String kdUnitKerja) {
         return convertFromCLonetoOriginal(tkdJabatanCloneDao.findByKdUnitKerja(kdUnitKerja));
     }
@@ -58,6 +63,11 @@ public class TkdJabatanCloneServiceImpl implements TkdJabatanService {
     @Override
     public TkdJabatan getCamatUnitKerja(String kdUnitKerja) {
         return convertFromCLonetoOriginal(tkdJabatanCloneDao.findCamatUnitkerja(kdUnitKerja));
+    }
+
+    @Override
+    public void createClone(TkdJabatanClone tkdJabatanClone) {
+        tkdJabatanCloneDao.save(tkdJabatanClone);
     }
 
     private TkdJabatan convertFromCLonetoOriginal(TkdJabatanClone obj) {

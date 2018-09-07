@@ -1,23 +1,34 @@
 package com.pemda.ekinerjademo.controller.api;
 
+import com.pemda.ekinerjademo.model.bismamodel.QutPegawai;
+import com.pemda.ekinerjademo.model.bismamodel.TkdJabatan;
 import com.pemda.ekinerjademo.model.ekinerjamodel.*;
 import com.pemda.ekinerjademo.model.simdamodel.TaKegiatan;
 import com.pemda.ekinerjademo.model.simdamodel.TaProgram;
 import com.pemda.ekinerjademo.repository.ekinerjarepository.AkunPegawaiDao;
+import com.pemda.ekinerjademo.repository.ekinerjarepository.TkdJabatanCloneDao;
+import com.pemda.ekinerjademo.repository.ekinerjarepository.TkdUnkCloneDao;
 import com.pemda.ekinerjademo.repository.ekinerjarepository.UnitKerjaKegiatanDao;
 import com.pemda.ekinerjademo.repository.simdarepository.TaKegiatanDao;
 import com.pemda.ekinerjademo.repository.simdarepository.TaProgramDao;
 import com.pemda.ekinerjademo.service.*;
+import com.pemda.ekinerjademo.service.impl.TkdJabatanServiceImpl;
+import com.pemda.ekinerjademo.util.CSVUtil;
+import com.pemda.ekinerjademo.wrapper.output.CustomMessage;
 import com.pemda.ekinerjademo.wrapper.output.TaKegiatanWrapper;
 import com.pemda.ekinerjademo.wrapper.output.TaProgramWrapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -44,6 +55,15 @@ public class TestServiceController {
     private TaProgramDao taProgramDao;
     @Autowired
     private UnitKerjaKegiatanDao unitKerjaKegiatanDao;
+    @Autowired
+    private TkdUnkCloneDao tkdUnkCloneDao;
+    @Autowired
+    private CSVUtil csvUtil;
+    @Autowired
+    @Qualifier("TkdJabatanCloneService")
+    private TkdJabatanService tkdJabatanCloneDao;
+    @Autowired
+    private QutPegawaiCloneService qutPegawaiCloneService;
 
     @Autowired
     public TestServiceController(
@@ -249,6 +269,155 @@ public class TestServiceController {
         return new ResponseEntity<Object>(taProgramWrappers, HttpStatus.OK);
     }
 
+    @RequestMapping(value = "/clone-jabatan-csv", method = RequestMethod.GET)
+    ResponseEntity<?> cloneTkdJabatanFromCSV() {
+        LOGGER.info("clone jabatan from csv");
 
+        String jabatanCSVPath = "/home/pemkab/project/temp_simpeg_importer/jabatan.csv";
+        List<TkdUnkClone> tkdUnkClones = tkdUnkCloneDao.findAll();
+
+        /** **/
+        String csvFile = jabatanCSVPath;
+        String line = "";
+        String cvsSplitBy = ";";
+
+        LOGGER.info("path of file "+csvFile);
+
+        List<TkdJabatanClone> tkdJabatanClones = new ArrayList<>();
+
+        try (BufferedReader br = new BufferedReader(new FileReader(csvFile))) {
+
+            while ((line = br.readLine()) != null) {
+                // use comma as separator
+                String[] country = line.split(cvsSplitBy);
+                TkdJabatanClone objJatan = new TkdJabatanClone();
+                LOGGER.error("size of line "+country.length + "with example first element "+country[0]);
+
+                for (TkdUnkClone objUnk : tkdUnkClones) {
+                    if (country.length > 3) {
+                        if (objUnk.getUnitKerja().equals(country[3])) {
+                            objJatan.setKdJabatan(country[0]);
+                            objJatan.setJabatan(country[1]);
+                            objJatan.setEselon(country[2]);
+                            objJatan.setUnitKerja(country[3]);
+                            objJatan.setKdUnitKerja(objUnk);
+
+                            tkdJabatanClones.add(objJatan);
+
+                            break;
+                        }
+                    }
+                    else {
+                        objJatan.setKdJabatan(country[0]);
+                        objJatan.setJabatan(country[1]);
+                        objJatan.setEselon(country[2]);
+
+                        tkdJabatanClones.add(objJatan);
+                    }
+                }
+
+//                System.out.println("Country [code= " + country[4] + " , name=" + country[5] + "]");
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        /** **/
+
+        for (TkdJabatanClone obj : tkdJabatanClones) {
+            tkdJabatanCloneDao.createClone(obj);
+        }
+
+        return new ResponseEntity<>(new CustomMessage("cloning jabatan from csv succes"), HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/clone-jabatan-csv/{kdJabatanAwal}", method = RequestMethod.GET)
+    ResponseEntity<?> cloneTkdJabatanFromCSVPerjabatan(@PathVariable("kdJabatanAwal") String kdJabatanAwal) {
+        LOGGER.info("clone jabatan from csv");
+
+        String jabatanCSVPath = "/home/pemkab/project/temp_simpeg_importer/jabatan.csv";
+        List<TkdUnkClone> tkdUnkClones = tkdUnkCloneDao.findAll();
+
+        /** **/
+        String csvFile = jabatanCSVPath;
+        String line = "";
+        String cvsSplitBy = ";";
+
+        LOGGER.info("path of file "+csvFile);
+
+        List<TkdJabatanClone> tkdJabatanClones = new ArrayList<>();
+
+        try (BufferedReader br = new BufferedReader(new FileReader(csvFile))) {
+
+            while ((line = br.readLine()) != null) {
+//                // use comma as separator
+//                LOGGER.info("line is "+line);
+                String[] country = line.split(cvsSplitBy);
+                TkdJabatanClone objJatan = new TkdJabatanClone();
+
+                if (country[0].startsWith(kdJabatanAwal)) {
+                    LOGGER.error("size of line " + country.length + "with example first element " + country[0]);
+
+                    for (TkdUnkClone objUnk : tkdUnkClones) {
+                        if (country.length > 3) {
+                            if (objUnk.getUnitKerja().equals(country[3])) {
+                                objJatan.setKdJabatan(country[0]);
+                                objJatan.setJabatan(country[1]);
+                                objJatan.setEselon(country[2]);
+                                objJatan.setUnitKerja(country[3]);
+                                objJatan.setKdUnitKerja(objUnk);
+
+                                tkdJabatanClones.add(objJatan);
+
+                                break;
+                            }
+                        } else {
+                            objJatan.setKdJabatan(country[0]);
+                            objJatan.setJabatan(country[1]);
+                            objJatan.setEselon(country[2]);
+
+                            tkdJabatanClones.add(objJatan);
+                        }
+                    }
+                }
+
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        /** **/
+
+        for (TkdJabatanClone obj : tkdJabatanClones) {
+            tkdJabatanCloneDao.createClone(obj);
+        }
+
+        return new ResponseEntity<>(new CustomMessage("cloning jabatan from csv succes"), HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/synchron", method = RequestMethod.GET)
+    ResponseEntity<?> synchron() {
+            LOGGER.info("synchron");
+
+            List<QutPegawaiClone> qutPegawaiClones = qutPegawaiCloneService.getQutPegawaiClone();
+            List<TkdJabatanClone> tkdJabatanClones = tkdJabatanCloneDao.getAllClone();
+
+            for (QutPegawaiClone objPeg : qutPegawaiClones) {
+                for (TkdJabatanClone objJab : tkdJabatanClones) {
+                    if (objPeg.getKdJabatan().equals(objJab.getKdJabatan())) {
+                        if (objJab.getKdUnitKerja() == null)
+                            LOGGER.error("jabatan "+objJab.getKdJabatan()+" tidak sinkron dengan unit kerja");
+                        else
+                            objPeg.setKdUnitKerja(objJab.getKdUnitKerja().getKdUnK());
+
+                        break;
+                    }
+                }
+            }
+
+            qutPegawaiCloneService.saveQutPegawaiList(qutPegawaiClones);
+
+            return new ResponseEntity<>(new CustomMessage("sinkronisasi kdunitkerja pegawai selesai"), HttpStatus.OK);
+    }
 
 }

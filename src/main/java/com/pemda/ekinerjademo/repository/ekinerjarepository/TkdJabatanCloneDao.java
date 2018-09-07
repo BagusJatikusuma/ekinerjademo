@@ -1,5 +1,6 @@
 package com.pemda.ekinerjademo.repository.ekinerjarepository;
 
+import com.pemda.ekinerjademo.model.bismamodel.TkdJabatan;
 import com.pemda.ekinerjademo.model.ekinerjamodel.TkdJabatanClone;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -8,9 +9,14 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface TkdJabatanCloneDao extends JpaRepository<TkdJabatanClone, Long> {
+public interface TkdJabatanCloneDao extends JpaRepository<TkdJabatanClone, String> {
+
     @Query("select tj from TkdJabatanClone tj " +
             "left join fetch tj.kdUnitKerja")
+    TkdJabatanClone findOne(TkdJabatanClone tkdJabatanClone);
+
+    @Query("select tj from TkdJabatanClone tj " +
+            "join fetch tj.kdUnitKerja")
     List<TkdJabatanClone> findAll();
     @Query("select tj from TkdJabatanClone tj " +
             "left join fetch tj.kdUnitKerja unk " +

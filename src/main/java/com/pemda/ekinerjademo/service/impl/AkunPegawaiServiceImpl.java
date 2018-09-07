@@ -43,7 +43,8 @@ public class AkunPegawaiServiceImpl implements AkunPegawaiService {
     public boolean isPegawaiSekretaris(QutPegawai qutPegawai) {
         boolean isSekretaris = false;
         if (qutPegawai.getKdUnitKerja().substring(0,1)
-                .equals("3")) {
+                .equals("3")
+                || qutPegawai.getKdUnitKerja().substring(0,1).equals("4")) {
             //eselon kadin II.b, eselon sekdin III.a
             if (qutPegawai.getEselon().contains("III.a")) {
                 isSekretaris = true;
@@ -64,7 +65,8 @@ public class AkunPegawaiServiceImpl implements AkunPegawaiService {
     public boolean isPegawaiSekretaris(QutPegawaiClone qutPegawai) {
         boolean isSekretaris = false;
         if (qutPegawai.getKdUnitKerja().substring(0,1)
-                .equals("3")) {
+                .equals("3")
+                || qutPegawai.getKdUnitKerja().substring(0,1).equals("4")) {
             //eselon kadin II.b, eselon sekdin III.a
             if (qutPegawai.getEselon().contains("III.a")) {
                 isSekretaris = true;
@@ -86,7 +88,8 @@ public class AkunPegawaiServiceImpl implements AkunPegawaiService {
         boolean isKasie = false;
         //untuk kedinasan
         if (qutPegawai.getKdUnitKerja().substring(0,1)
-                .equals("3")) {
+                .equals("3")
+                || qutPegawai.getKdUnitKerja().substring(0,1).equals("4")) {
             //eselon kasie dinas IV.a
             if (qutPegawai.getEselon().contains("IV.a")) {
                 isKasie = true;

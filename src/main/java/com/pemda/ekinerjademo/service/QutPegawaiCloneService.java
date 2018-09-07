@@ -12,6 +12,7 @@ import java.util.List;
 public interface QutPegawaiCloneService {
     QutPegawai getQutPegawai(String nip);
     List<QutPegawai> getQutPegawai();
+    List<QutPegawaiClone> getQutPegawaiClone();
     List<CustomPegawaiCredential> getCustomPegawaiCredentials();
     List<QutPegawai> getQutPegawaiByUnitKerja(String kdUnitKerja);
     List<QutPegawaiClone> getQutPegawaiByKdJabatan(String kdJabatan);

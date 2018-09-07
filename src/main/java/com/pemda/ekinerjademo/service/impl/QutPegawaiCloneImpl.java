@@ -1,9 +1,12 @@
 package com.pemda.ekinerjademo.service.impl;
 
 import com.pemda.ekinerjademo.model.bismamodel.QutPegawai;
+import com.pemda.ekinerjademo.model.bismamodel.TkdJabatan;
 import com.pemda.ekinerjademo.model.ekinerjamodel.QutPegawaiClone;
+import com.pemda.ekinerjademo.model.ekinerjamodel.TkdJabatanClone;
 import com.pemda.ekinerjademo.projection.ekinerjaprojection.CustomPegawaiCredential;
 import com.pemda.ekinerjademo.repository.ekinerjarepository.QutPegawaiCloneDao;
+import com.pemda.ekinerjademo.repository.ekinerjarepository.TkdJabatanCloneDao;
 import com.pemda.ekinerjademo.service.QutPegawaiCloneService;
 import com.pemda.ekinerjademo.service.QutPegawaiService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +23,7 @@ import java.util.List;
 @Transactional("ekinerjaTransactionManager")
 public class QutPegawaiCloneImpl implements QutPegawaiCloneService {
     @Autowired private QutPegawaiCloneDao qutPegawaiCloneDao;
-
+    @Autowired private TkdJabatanCloneDao tkdJabatanCloneDao;
 
     @Override
     public QutPegawai getQutPegawai(String nip) {
@@ -212,8 +215,58 @@ public class QutPegawaiCloneImpl implements QutPegawaiCloneService {
     }
 
     @Override
+    public List<QutPegawaiClone> getQutPegawaiClone() {
+        return qutPegawaiCloneDao.findAll();
+    }
+
+    @Override
     public List<CustomPegawaiCredential> getCustomPegawaiCredentials() {
-        return qutPegawaiCloneDao.findByCustomPegawaiCredential();
+        List<CustomPegawaiCredential> objList = new ArrayList<>();
+        List<QutPegawaiClone> qutPegawaiClones = qutPegawaiCloneDao.findAll();
+        List<TkdJabatanClone> tkdJabatanClones = tkdJabatanCloneDao.findAll();
+
+        for (QutPegawaiClone objPeg : qutPegawaiClones) {
+            CustomPegawaiCredential objResPeg = new CustomPegawaiCredential();
+            objResPeg.setNip(objPeg.getNip());
+            objResPeg.setUnitKerja(objPeg.getUnitKerja());
+            objResPeg.setNama(objPeg.getNama());
+            objResPeg.setGol(objPeg.getGol());
+            objResPeg.setPangkat(objPeg.getPangkat());
+            objResPeg.setKdJabatan(objPeg.getKdJabatan());
+            objResPeg.setJabatan(objPeg.getJabatan());
+            objResPeg.setKdUnitKerja(objPeg.getKdUnitKerja());
+            objResPeg.setGlrDpn(objPeg.getGlrDpn());
+            objResPeg.setGlrBlk(objPeg.getGlrBlk());
+            objResPeg.setAlRumah(objPeg.getAlRumah());
+
+            objList.add(objResPeg);
+//            for (TkdJabatanClone objJab : tkdJabatanClones) {
+//                if (objPeg.getKdJabatan()
+//                        .equals(objJab.getKdJabatan())) {
+//                    CustomPegawaiCredential objResPeg = new CustomPegawaiCredential();
+//                    objResPeg.setNip(objPeg.getNip());
+//                    objResPeg.setUnitKerja(objJab.getUnitKerja());
+//                    objResPeg.setNama(objPeg.getNama());
+//                    objResPeg.setGol(objPeg.getGol());
+//                    objResPeg.setPangkat(objPeg.getPangkat());
+//                    objResPeg.setKdJabatan(objPeg.getKdJabatan());
+//                    objResPeg.setJabatan(objPeg.getJabatan());
+//                    objResPeg.setKdUnitKerja(null);
+//                    objResPeg.setGlrDpn(objPeg.getGlrDpn());
+//                    objResPeg.setGlrBlk(objPeg.getGlrBlk());
+//                    objResPeg.setAlRumah(objPeg.getAlRumah());
+//
+//                    objList.add(objResPeg);
+//
+//                    break;
+//
+//                }
+//            }
+        }
+
+
+        return objList;
+//        return qutPegawaiCloneDao.findByCustomPegawaiCredential();
     }
 
     @Override

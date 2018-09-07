@@ -38,8 +38,20 @@ public class UraianTugasPegawaiBulanServiceImpl
     }
 
     @Override
+    //sepertinya logika harus sedikit diubah untuk memaksimalkan performa
     public void create(List<UraianTugasPegawaiBulananInputWrapper> inputWrappers, Integer statusApproval) {
         for (UraianTugasPegawaiBulananInputWrapper inputWrapper : inputWrappers) {
+            UraianTugasPegawaiBulanan obj
+                    = uraianTugasPegawaiBulananDao.findByUraianTugasPegawaiBulananId(
+                            new UraianTugasPegawaiBulananId(inputWrapper.getKdUrtug(),
+                                    inputWrapper.getKdJabatan(),
+                                    inputWrapper.getKdJenisUrtug(),
+                                    inputWrapper.getTahunUrtug(),
+                                    inputWrapper.getBulanUrtug(),
+                                    inputWrapper.getNipPegawai()));
+
+            if (obj != null)
+                inputWrapper.setTargetKuantitas(obj.getTargetKuantitas()+inputWrapper.getTargetKuantitas());
             save(inputWrapper, statusApproval);
         }
     }

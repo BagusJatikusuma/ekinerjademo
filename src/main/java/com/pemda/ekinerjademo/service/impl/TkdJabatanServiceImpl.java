@@ -1,6 +1,7 @@
 package com.pemda.ekinerjademo.service.impl;
 
 import com.pemda.ekinerjademo.model.bismamodel.TkdJabatan;
+import com.pemda.ekinerjademo.model.ekinerjamodel.TkdJabatanClone;
 import com.pemda.ekinerjademo.repository.bismarepository.TkdJabatanDao;
 import com.pemda.ekinerjademo.service.TkdJabatanService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,6 +44,11 @@ public class TkdJabatanServiceImpl implements TkdJabatanService {
     }
 
     @Override
+    public List<TkdJabatanClone> getAllClone() {
+        return null;
+    }
+
+    @Override
     public List<TkdJabatan> getJabatanByUnitKerja(String kdUnitKerja) {
         return tkdJabatanDao.findByKdUnitKerja(kdUnitKerja);
     }
@@ -55,5 +61,10 @@ public class TkdJabatanServiceImpl implements TkdJabatanService {
     @Override
     public TkdJabatan getCamatUnitKerja(String kdUnitKerja) {
         return tkdJabatanDao.findCamatUnitkerja(kdUnitKerja);
+    }
+
+    @Override
+    public void createClone(TkdJabatanClone tkdJabatanClone) {
+
     }
 }

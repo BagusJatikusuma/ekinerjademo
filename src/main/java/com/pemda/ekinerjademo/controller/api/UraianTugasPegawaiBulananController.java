@@ -148,6 +148,7 @@ public class UraianTugasPegawaiBulananController {
     /**
      *
      * gak pakai parameter tahun??
+     * 6 september 2018 : service ini digunakan juga oleh kasie untuk mengecek apakah dia sudah mengatur urtug atasannya
      *
      * @return
      */
