@@ -26,7 +26,8 @@ public interface UraianTugasPegawaiBulananDao
            "where utpb.uraianTugasPegawaiBulananId.nipPegawai = ?1")
    List<UraianTugasPegawaiBulanan> findByNip(String nip);
 
-   @Query("select utpb from UraianTugasPegawaiBulanan utpb "+
+   @Query("select distinct utpb from UraianTugasPegawaiBulanan utpb " +
+           "left join fetch utpb.uraianTugasPegawaiBulananAjuanList "+
            "left join fetch utpb.uraianTugasJabatanJenisUrtug utjj " +
            "left join fetch utjj.uraianTugasJabatan utj " +
            "left join fetch utj.uraianTugas " +

@@ -14,6 +14,7 @@ public class UraianTugasPegawaiBulananInputWrapper {
     private Integer biaya;
     private String alasan;
     private Integer statusApproval;
+    private String nipPengaju;
 
     public String getKdUrtug() {
         return kdUrtug;
@@ -117,5 +118,13 @@ public class UraianTugasPegawaiBulananInputWrapper {
 
     public void setStatusApproval(Integer statusApproval) {
         this.statusApproval = statusApproval;
+    }
+
+    public String getNipPengaju() {
+        return nipPengaju;
+    }
+
+    public void setNipPengaju(String nipPengaju) {
+        this.nipPengaju = nipPengaju;
     }
 }

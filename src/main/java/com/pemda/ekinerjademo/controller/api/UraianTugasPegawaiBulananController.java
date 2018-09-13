@@ -31,6 +31,8 @@ public class UraianTugasPegawaiBulananController {
     @Autowired
     private UraianTugasPegawaiBulananService urtugBulananService;
     @Autowired
+    private UraianTugasPegawaiBulananAjuanService uraianTugasPegawaiBulananAjuanService;
+    @Autowired
     private QutPegawaiCloneService qutPegawaiService;
     @Autowired private UraianTugasJabatanJenisUrtugService uraianTugasJabatanJenisUrtugService;
     @Autowired private PejabatPenilaiDinilaiService pejabatPenilaiDinilaiService;
@@ -50,7 +52,7 @@ public class UraianTugasPegawaiBulananController {
     @RequestMapping(value = "/create-daftar-urtug-pegawai-bulanan-segitiga", method = RequestMethod.POST)
     public ResponseEntity<?> createSegitiga(
             @RequestBody AjuanSKPKasieWrapper ajuanSKPKasieWrapper) {
-        LOGGER.info("create urtug pegawai bulanan");
+        LOGGER.info("create urtug pegawai bulanan segitiga");
 
 //        urtugBulananService.create(inputWrapperList, 0);
         /**
@@ -79,7 +81,42 @@ public class UraianTugasPegawaiBulananController {
             @RequestBody List<UraianTugasPegawaiBulananInputWrapper> inputWrapperList) {
         LOGGER.info("create urtug pegawai bulanan");
 
-        urtugBulananService.create(inputWrapperList, 1);
+        List<UraianTugasPegawaiBulananInputWrapper> inputUraianTugasBulananPegawaiList = new ArrayList<>();
+        for (UraianTugasPegawaiBulananInputWrapper objWrapper : inputWrapperList) {
+            UraianTugasPegawaiBulananInputWrapper objInputWrapper = new UraianTugasPegawaiBulananInputWrapper();
+            objInputWrapper.setKdUrtug(objWrapper.getKdUrtug());
+            objInputWrapper.setKdJabatan(objWrapper.getKdJabatan());
+            objInputWrapper.setKdJenisUrtug(objWrapper.getKdJenisUrtug());
+            objInputWrapper.setTahunUrtug(objWrapper.getTahunUrtug());
+            objInputWrapper.setBulanUrtug(objWrapper.getBulanUrtug());
+            objInputWrapper.setNipPegawai(objWrapper.getNipPegawai());
+            objInputWrapper.setNipPengaju(objWrapper.getNipPengaju());
+            objInputWrapper.setTargetKuantitas(objWrapper.getTargetKuantitas());
+            objInputWrapper.setSatuanKuantitas(objWrapper.getSatuanKuantitas());
+            objInputWrapper.setTargetKualitas(objWrapper.getTargetKualitas());
+            objInputWrapper.setWaktu(objWrapper.getWaktu());
+            objInputWrapper.setBiaya(objInputWrapper.getBulanUrtug());
+            objInputWrapper.setStatusApproval(objWrapper.getStatusApproval());
+
+            inputUraianTugasBulananPegawaiList.add(objInputWrapper);
+        }
+        urtugBulananService.create(inputUraianTugasBulananPegawaiList, 1);
+
+        for (UraianTugasPegawaiBulananInputWrapper objInput : inputWrapperList) {
+            UraianTugasPegawaiBulananAjuanId id
+                    = new UraianTugasPegawaiBulananAjuanId(objInput.getKdUrtug(),
+                                                            objInput.getKdJabatan(),
+                                                            objInput.getKdJenisUrtug(),
+                                                            objInput.getTahunUrtug(),
+                                                            objInput.getBulanUrtug(),
+                                                            objInput.getNipPegawai(),
+                                                            objInput.getNipPengaju());
+            UraianTugasPegawaiBulananAjuan obj = new UraianTugasPegawaiBulananAjuan();
+            obj.setUraianTugasPegawaiBulananAjuanId(id);
+            obj.setTargetKuantitasDiajukan(objInput.getTargetKuantitas());
+
+            uraianTugasPegawaiBulananAjuanService.create(obj);
+        }
 
         return new ResponseEntity<>(new CustomMessage("ajuan berhasil dibuat"), HttpStatus.OK);
     }
@@ -163,9 +200,17 @@ public class UraianTugasPegawaiBulananController {
         List<UraianTugasPegawaiBulananWrapper> uraianTugasPegawaiBulananWrapperList
                 = new ArrayList<>();
 
+        boolean sudahDiatur = false;
+        Integer targetKuantitas;
         for (UraianTugasPegawaiBulanan urtug
                 : uraianTugasPegawaiBulanans) {
+            targetKuantitas = 0;
+            sudahDiatur = false;
             if (urtug.getStatusApproval() == 1) {
+                for (UraianTugasPegawaiBulananAjuan objPengaju : urtug.getUraianTugasPegawaiBulananAjuanList()) {
+                    targetKuantitas += objPengaju.getTargetKuantitasDiajukan();
+                }
+
                 uraianTugasPegawaiBulananWrapperList
                         .add(new UraianTugasPegawaiBulananWrapper(
                                 urtug.getUraianTugasJabatanJenisUrtug().getUraianTugasJabatan().getUraianTugas().getDeskripsi(),
@@ -175,7 +220,7 @@ public class UraianTugasPegawaiBulananController {
                                 urtug.getUraianTugasPegawaiBulananId().getTahunUrtug(),
                                 bulanUrtug,
                                 urtug.getUraianTugasPegawaiBulananId().getNipPegawai(),
-                                urtug.getTargetKuantitas(),
+                                targetKuantitas,
                                 urtug.getTargetSatuanKuantitas(),
                                 urtug.getTargetKualitas(),
                                 urtug.getWaktu(),
@@ -185,7 +230,72 @@ public class UraianTugasPegawaiBulananController {
                                 urtug.getStatusApproval(),
                                 urtug.getRealisasiKuantitas(),
                                 urtug.getRealisasiKualitas(),
-                                urtug.getRealisasiWaktu()));
+                                urtug.getRealisasiWaktu(),
+                                sudahDiatur));
+            }
+
+        }
+
+        return new ResponseEntity<>(uraianTugasPegawaiBulananWrapperList, HttpStatus.OK);
+    }
+
+    /**
+     *
+     * gak pakai parameter tahun??
+     * 6 september 2018 : service ini digunakan juga oleh kasie untuk mengecek apakah dia sudah mengatur urtug atasannya
+     *
+     * @return
+     */
+    @RequestMapping(value = "/get-uraian-tugas-pegawai-bulanan-by-nip-pengaju/{nipPegawai}/{bulanUrtug}/{nipPengaju}", method = RequestMethod.GET)
+    public ResponseEntity<?> getUraianTugasPegawaiBulananByNipByPengaju(
+            @PathVariable("nipPegawai") String nipPegawai,
+            @PathVariable("bulanUrtug") Integer bulanUrtug,
+            @PathVariable("nipPengaju") String nipPengaju) {
+        LOGGER.info("get uraian tugas pegawai bulanan by nip pengaju : "+nipPegawai);
+
+        List<UraianTugasPegawaiBulanan> uraianTugasPegawaiBulanans
+                = urtugBulananService.getByNip(nipPegawai, bulanUrtug);
+        List<UraianTugasPegawaiBulananWrapper> uraianTugasPegawaiBulananWrapperList
+                = new ArrayList<>();
+
+        boolean sudahDiatur = false;
+        Integer targetKuantitas;
+        for (UraianTugasPegawaiBulanan urtug
+                : uraianTugasPegawaiBulanans) {
+            targetKuantitas = 0;
+            sudahDiatur = false;
+            if (urtug.getStatusApproval() == 1) {
+                for (UraianTugasPegawaiBulananAjuan objPengaju : urtug.getUraianTugasPegawaiBulananAjuanList()) {
+                    targetKuantitas += objPengaju.getTargetKuantitasDiajukan();
+
+                    if (nipPengaju != null) {
+                        if (objPengaju.getUraianTugasPegawaiBulananAjuanId().getNipPengaju()
+                                .equals(nipPengaju))
+                            sudahDiatur = true;
+                    }
+                }
+
+                uraianTugasPegawaiBulananWrapperList
+                        .add(new UraianTugasPegawaiBulananWrapper(
+                                urtug.getUraianTugasJabatanJenisUrtug().getUraianTugasJabatan().getUraianTugas().getDeskripsi(),
+                                urtug.getUraianTugasPegawaiBulananId().getKdUrtug(),
+                                urtug.getUraianTugasPegawaiBulananId().getKdJabatan(),
+                                urtug.getUraianTugasPegawaiBulananId().getKdJenisUrtug(),
+                                urtug.getUraianTugasPegawaiBulananId().getTahunUrtug(),
+                                bulanUrtug,
+                                urtug.getUraianTugasPegawaiBulananId().getNipPegawai(),
+                                targetKuantitas,
+                                urtug.getTargetSatuanKuantitas(),
+                                urtug.getTargetKualitas(),
+                                urtug.getWaktu(),
+                                Long.valueOf(urtug.getTargetKuantitas() * urtug.getWaktu()),
+                                urtug.getBiaya(),
+                                "",
+                                urtug.getStatusApproval(),
+                                urtug.getRealisasiKuantitas(),
+                                urtug.getRealisasiKualitas(),
+                                urtug.getRealisasiWaktu(),
+                                sudahDiatur));
             }
 
         }

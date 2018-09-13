@@ -1,6 +1,7 @@
 package com.pemda.ekinerjademo.model.ekinerjamodel;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "uraian_tugas_pegawai_bulanan")
@@ -67,6 +68,9 @@ public class UraianTugasPegawaiBulanan {
             updatable = false,
             referencedColumnName = "nip_pegawai")
     private AkunPegawai akunPegawai;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "uraianTugasPegawaiBulanan")
+    private List<UraianTugasPegawaiBulananAjuan> uraianTugasPegawaiBulananAjuanList;
 
     public UraianTugasPegawaiBulananId getUraianTugasPegawaiBulananId() {
         return uraianTugasPegawaiBulananId;
@@ -162,5 +166,13 @@ public class UraianTugasPegawaiBulanan {
 
     public void setAkunPegawai(AkunPegawai akunPegawai) {
         this.akunPegawai = akunPegawai;
+    }
+
+    public List<UraianTugasPegawaiBulananAjuan> getUraianTugasPegawaiBulananAjuanList() {
+        return uraianTugasPegawaiBulananAjuanList;
+    }
+
+    public void setUraianTugasPegawaiBulananAjuanList(List<UraianTugasPegawaiBulananAjuan> uraianTugasPegawaiBulananAjuanList) {
+        this.uraianTugasPegawaiBulananAjuanList = uraianTugasPegawaiBulananAjuanList;
     }
 }

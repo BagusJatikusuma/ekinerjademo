@@ -19,6 +19,7 @@ public class UraianTugasPegawaiBulananWrapper {
     private Integer realisasiKuantitas;
     private Integer realisasiKualitas;
     private Integer realisasiWaktu;
+    private boolean sudahDiatur;
 
     public UraianTugasPegawaiBulananWrapper() {
     }
@@ -42,6 +43,28 @@ public class UraianTugasPegawaiBulananWrapper {
         this.realisasiKuantitas = realisasiKuantitas;
         this.realisasiKualitas = realisasiKualitas;
         this.realisasiWaktu = realisasiWaktu;
+    }
+
+    public UraianTugasPegawaiBulananWrapper(String urtug, String kdUrtug, String kdJabatan, String kdJenisUrtug, Integer tahunUrtug, Integer bulanUrtug, String nipPegawai, Integer targetkuantitas, String satuanKuantitas, Integer targetkualitas, Integer waktu, Long bebanKerja, Integer biaya, String alasan, Integer statusApproval, Integer realisasiKuantitas, Integer realisasiKualitas, Integer realisasiWaktu, boolean sudahDiatur) {
+        this.urtug = urtug;
+        this.kdUrtug = kdUrtug;
+        this.kdJabatan = kdJabatan;
+        this.kdJenisUrtug = kdJenisUrtug;
+        this.tahunUrtug = tahunUrtug;
+        this.bulanUrtug = bulanUrtug;
+        this.nipPegawai = nipPegawai;
+        this.targetkuantitas = targetkuantitas;
+        this.satuanKuantitas = satuanKuantitas;
+        this.targetkualitas = targetkualitas;
+        this.waktu = waktu;
+        this.bebanKerja = bebanKerja;
+        this.biaya = biaya;
+        this.alasan = alasan;
+        this.statusApproval = statusApproval;
+        this.realisasiKuantitas = realisasiKuantitas;
+        this.realisasiKualitas = realisasiKualitas;
+        this.realisasiWaktu = realisasiWaktu;
+        this.sudahDiatur = sudahDiatur;
     }
 
     public String getUrtug() {
@@ -186,5 +209,13 @@ public class UraianTugasPegawaiBulananWrapper {
 
     public void setBulanUrtug(Integer bulanUrtug) {
         this.bulanUrtug = bulanUrtug;
+    }
+
+    public boolean isSudahDiatur() {
+        return sudahDiatur;
+    }
+
+    public void setSudahDiatur(boolean sudahDiatur) {
+        this.sudahDiatur = sudahDiatur;
     }
 }
