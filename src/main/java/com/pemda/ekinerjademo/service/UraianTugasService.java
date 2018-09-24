@@ -16,5 +16,7 @@ public interface UraianTugasService {
     void update(UpdateUraianTugasInputWrapper urtugWrapper);
     void delete(String kdUrtug);
     List<String> getJabatanUrtug();
+    List<String> getUnitKerjaUrtug(String jabatan);
     List<UraianTugas> getAllUraianTugas(String jabatan);
+    List<UraianTugas> getAllUraianTugas(String jabatan, String unitKerja);
 }

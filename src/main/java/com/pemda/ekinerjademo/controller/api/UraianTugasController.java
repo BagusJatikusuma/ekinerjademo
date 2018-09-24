@@ -174,6 +174,35 @@ public class UraianTugasController {
         return new ResponseEntity<>(uraianTugasWrappers, HttpStatus.OK);
     }
 
+    @RequestMapping(value = "/get-unitkerja-by-nama-jabatan/{namaJabatan}")
+    ResponseEntity<?> getUnitKerjaByNamajabatan(@PathVariable("namaJabatan") String namaJabatan) {
+        LOGGER.info("get unit kerja by jabatan "+namaJabatan);
+
+        return new ResponseEntity<>(uraianTugasService.getUnitKerjaUrtug(namaJabatan), HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/get-urtug-by-nama-jabatan-unitkerja/{namaJabatan}/{unitKerja}")
+    ResponseEntity<?> getUrtugbyNamaJabatanDanUnitKerja(@PathVariable("namaJabatan") String namaJabatan,
+                                                        @PathVariable("unitKerja") String unitKerja) {
+        LOGGER.info("get urtug by nama jabatan dan unit kerja");
+
+        List<UraianTugas> uraianTugases = uraianTugasService.getAllUraianTugas(namaJabatan, unitKerja);
+        List<UraianTugasWrapper> uraianTugasWrappers = new ArrayList<>();
+
+        for (UraianTugas uraianTugas : uraianTugases){
+            uraianTugasWrappers.add(new UraianTugasWrapper(
+                    uraianTugas.getKdUrtug(),
+                    uraianTugas.getDeskripsi(),
+                    uraianTugas.getVolume(),
+                    uraianTugas.getSatuanVolume(),
+                    uraianTugas.getJabatan(),
+                    uraianTugas.getUnitKerja()
+            ));
+        }
+
+        return new ResponseEntity<>(uraianTugasWrappers, HttpStatus.OK);
+    }
+
 //    @Autowired
 //    private QutPegawaiService qutPegawaiService;
 //    @Autowired

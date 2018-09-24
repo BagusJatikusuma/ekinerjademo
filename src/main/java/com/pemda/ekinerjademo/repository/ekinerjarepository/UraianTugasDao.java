@@ -19,6 +19,11 @@ public interface UraianTugasDao extends JpaRepository<UraianTugas, Long> {
 
     @Query("select distinct(ut.jabatan) from UraianTugas ut")
     List<String> findAllByDistinctJabatan();
+    @Query("select distinct(ut.unitKerja) from UraianTugas ut where ut.jabatan = ?1")
+    List<String> findAllByDistinctUnitKerja(String jabatan);
     @Query("select ut from UraianTugas ut where jabatan = ?1")
     List<UraianTugas> findAllByJabatan(String jabatan);
+    @Query("select ut from UraianTugas ut where ut.jabatan = ?1 and ut.unitKerja = ?2")
+    List<UraianTugas> findAllByJabatan(String jabatan, String unitKerja);
+
 }
