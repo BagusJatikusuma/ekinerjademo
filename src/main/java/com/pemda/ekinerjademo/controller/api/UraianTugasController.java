@@ -146,6 +146,34 @@ public class UraianTugasController {
         return new ResponseEntity<>(new CustomMessage("cloning selesai"), HttpStatus.OK);
     }
 
+    @RequestMapping(value = "/get-jabatan-uraian-tugas", method = RequestMethod.GET)
+    ResponseEntity<?> getJabatanUrtug() {
+        LOGGER.info("get jabatan urtug");
+
+        return new ResponseEntity<>(uraianTugasService.getJabatanUrtug(), HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/get-urtug-by-nama-jabatan/{namaJabatan}")
+    ResponseEntity<?> getUrtugbyNamaJabatan(@PathVariable("namaJabatan") String namaJabatan) {
+        LOGGER.info("get uraian tugas by nama jabatan : "+namaJabatan);
+
+        List<UraianTugas> uraianTugases = uraianTugasService.getAllUraianTugas(namaJabatan);
+        List<UraianTugasWrapper> uraianTugasWrappers = new ArrayList<>();
+
+        for (UraianTugas uraianTugas : uraianTugases){
+            uraianTugasWrappers.add(new UraianTugasWrapper(
+                    uraianTugas.getKdUrtug(),
+                    uraianTugas.getDeskripsi(),
+                    uraianTugas.getVolume(),
+                    uraianTugas.getSatuanVolume(),
+                    uraianTugas.getJabatan(),
+                    uraianTugas.getUnitKerja()
+            ));
+        }
+
+        return new ResponseEntity<>(uraianTugasWrappers, HttpStatus.OK);
+    }
+
 //    @Autowired
 //    private QutPegawaiService qutPegawaiService;
 //    @Autowired

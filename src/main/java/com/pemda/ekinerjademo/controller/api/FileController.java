@@ -55,18 +55,20 @@ public class FileController {
 
     }
 
-    @RequestMapping(value = "/get-template-lain-file-revisi/{namaFile}/{fileExtension}/{kdSurat}", method = RequestMethod.GET)
+    @RequestMapping(value = "/get-template-lain-file-revisi/{namaFile}/{fileExtension}/{kdSurat}/{nipRequest}", method = RequestMethod.GET)
     ResponseEntity<?> getTemplateLainFileRevisi(
             @PathVariable("namaFile") String namaFile,
             @PathVariable("fileExtension") String fileExtension,
             @PathVariable("kdSurat") String kdSurat,
+            @PathVariable("nipRequest") String nipRequest,
             HttpServletResponse response
             ) {
-        LOGGER.info("get template lain file");
+        LOGGER.info("get template lain file by "+nipRequest);
 
         TemplateLain templateLain
                 = templateLainService.getTemplateLain(kdSurat);
-        if (templateLain.getStatusPenilaian() == 0) {
+        if (templateLain.getStatusPenilaian() == 0
+                && !nipRequest.equals(templateLain.getNipPegawai())) {
             templateLain.setStatusPenilaian(1);
         }
 

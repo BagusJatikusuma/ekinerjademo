@@ -1,5 +1,6 @@
 package com.pemda.ekinerjademo.service.impl;
 
+import com.pemda.ekinerjademo.model.ekinerjamodel.JabatanUrtugDTO;
 import com.pemda.ekinerjademo.model.ekinerjamodel.UraianTugas;
 import com.pemda.ekinerjademo.repository.ekinerjarepository.UraianTugasDao;
 import com.pemda.ekinerjademo.service.UraianTugasService;
@@ -8,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -32,6 +34,16 @@ public class UraianTugasServiceImpl implements UraianTugasService {
     @Override
     public void delete(String kdUrtug) {
         uraianTugasDao.deleteByKdUrtug(kdUrtug);
+    }
+
+    @Override
+    public List<String> getJabatanUrtug() {
+        return uraianTugasDao.findAllByDistinctJabatan();
+    }
+
+    @Override
+    public List<UraianTugas> getAllUraianTugas(String jabatan) {
+        return uraianTugasDao.findAllByJabatan(jabatan);
     }
 
     @Override

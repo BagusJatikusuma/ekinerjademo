@@ -52,6 +52,30 @@ public class ImageController {
 
     }
 
+    @RequestMapping(value = "/get-logo-user", method = RequestMethod.GET)
+    ResponseEntity<?> getLogoUser() {
+        LOGGER.info("get logo user");
+
+        byte[] image;
+
+        File imgPath = new File("/home/pemkab/ekinerja_images/user.png");
+
+        try {
+            image = Files.readAllBytes(imgPath.toPath());
+        } catch (IOException e) {
+            LOGGER.error("cannot read image");
+            return new ResponseEntity<>(
+                    new CustomMessage("cannot read image"),
+                    HttpStatus.EXPECTATION_FAILED);
+        }
+
+        return new ResponseEntity<>(
+                image,
+                getImageHttpHeader(image),
+                HttpStatus.OK);
+
+    }
+
     @RequestMapping(value = "/get-barcode-example", method = RequestMethod.GET)
     ResponseEntity<?> getBarcodeExample() throws IOException {
         LOGGER.info("get logo bekasi");
