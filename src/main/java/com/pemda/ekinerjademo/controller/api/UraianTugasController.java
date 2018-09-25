@@ -153,6 +153,13 @@ public class UraianTugasController {
         return new ResponseEntity<>(uraianTugasService.getJabatanUrtug(), HttpStatus.OK);
     }
 
+    @RequestMapping(value = "/get-unitkerja-uraian-tugas", method = RequestMethod.GET)
+    ResponseEntity<?> getUnitKerjaUraianTugas() {
+        LOGGER.info("get unit kerja urtug");
+
+        return new ResponseEntity<>(uraianTugasService.getUnitKerjaUrtug(), HttpStatus.OK);
+    }
+
     @RequestMapping(value = "/get-urtug-by-nama-jabatan/{namaJabatan}")
     ResponseEntity<?> getUrtugbyNamaJabatan(@PathVariable("namaJabatan") String namaJabatan) {
         LOGGER.info("get uraian tugas by nama jabatan : "+namaJabatan);
@@ -179,6 +186,13 @@ public class UraianTugasController {
         LOGGER.info("get unit kerja by jabatan "+namaJabatan);
 
         return new ResponseEntity<>(uraianTugasService.getUnitKerjaUrtug(namaJabatan), HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/get-jabatan-by-unitkerja/{unitKerja}")
+    ResponseEntity<?> getJabatanByUnitkerja(@PathVariable("unitKerja") String unitKerja) {
+        LOGGER.info("get jabatan by unit kerja "+unitKerja);
+
+        return new ResponseEntity<>(uraianTugasService.getJabatanUrtug(unitKerja), HttpStatus.OK);
     }
 
     @RequestMapping(value = "/get-urtug-by-nama-jabatan-unitkerja/{namaJabatan}/{unitKerja}")

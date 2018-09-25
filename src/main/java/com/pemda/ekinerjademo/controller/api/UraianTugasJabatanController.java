@@ -126,7 +126,7 @@ public class UraianTugasJabatanController {
         uraianTugasJabatanWrapper.setKdJabatan(tkdJabatan.getKdJabatan());
         uraianTugasJabatanWrapper.setJabatan(tkdJabatan.getJabatan());
         uraianTugasJabatanWrapper.setJabatanUraianTugasList(jabatanUraianTugasWrapperList);
-        uraianTugasJabatanWrapper.setNotJabatanUraianTugasList(notJabatanUraianTugasWrapperList);
+//        uraianTugasJabatanWrapper.setNotJabatanUraianTugasList(notJabatanUraianTugasWrapperList);
 
         LOGGER.info("finish");
         return new ResponseEntity<Object>(uraianTugasJabatanWrapper, HttpStatus.OK);

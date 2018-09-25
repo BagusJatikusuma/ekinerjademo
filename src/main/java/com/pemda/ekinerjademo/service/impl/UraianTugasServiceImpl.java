@@ -42,8 +42,18 @@ public class UraianTugasServiceImpl implements UraianTugasService {
     }
 
     @Override
+    public List<String> getUnitKerjaUrtug() {
+        return uraianTugasDao.findAllByDistinctUnitKerja();
+    }
+
+    @Override
     public List<String> getUnitKerjaUrtug(String jabatan) {
         return uraianTugasDao.findAllByDistinctUnitKerja(jabatan);
+    }
+
+    @Override
+    public List<String> getJabatanUrtug(String unitKerja) {
+        return uraianTugasDao.findAllByDistinctJabatan(unitKerja);
     }
 
     @Override
