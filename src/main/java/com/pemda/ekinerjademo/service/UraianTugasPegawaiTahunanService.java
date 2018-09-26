@@ -1,5 +1,7 @@
 package com.pemda.ekinerjademo.service;
 
+import com.pemda.ekinerjademo.model.ekinerjamodel.UraianTugasJabatanJenisUrtug;
+import com.pemda.ekinerjademo.model.ekinerjamodel.UraianTugasJabatanJenisUrtugId;
 import com.pemda.ekinerjademo.model.ekinerjamodel.UraianTugasPegawaiTahunan;
 import com.pemda.ekinerjademo.model.ekinerjamodel.UraianTugasPegawaiTahunanId;
 import com.pemda.ekinerjademo.wrapper.input.UraianTugasPegawaiTahunanInputWrapper;
@@ -20,4 +22,5 @@ public interface UraianTugasPegawaiTahunanService {
     List<UraianTugasPegawaiTahunan> getByNipPegawai(String nipPegawai);
     List<UraianTugasPegawaiTahunan> getByUnitKerja(String kdUnitKerja);
     List<UraianTugasPegawaiTahunan> getUraianTugasPegawaiYangDiAjukan(String nipPegawai);
+    List<UraianTugasPegawaiTahunan> getAll(UraianTugasJabatanJenisUrtugId uraianTugasJabatanJenisUrtugId);
 }

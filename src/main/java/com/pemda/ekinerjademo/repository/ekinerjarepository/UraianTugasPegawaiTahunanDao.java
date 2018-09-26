@@ -35,6 +35,13 @@ public interface UraianTugasPegawaiTahunanDao extends JpaRepository<UraianTugasP
             "where utpt.uraianTugasPegawaiTahunanId.nipPegawai = ?1 and utpt.statusApproval = 1 ")
     List<UraianTugasPegawaiTahunan> findUraianTugasPegawaiYangDiAjukan(String nipPegawai);
 
+    @Query("select utpt from UraianTugasPegawaiTahunan utpt "+
+            "where utpt.uraianTugasPegawaiTahunanId.kdUrtug = ?1 " +
+            "and utpt.uraianTugasPegawaiTahunanId.kdJabatan = ?2 " +
+            "and utpt.uraianTugasPegawaiTahunanId.kdJenisUrtug = ?3 " +
+            "and utpt.uraianTugasPegawaiTahunanId.tahunUrtug = ?4")
+    List<UraianTugasPegawaiTahunan> findByUrtugJabatanJenis(String kdUrtug, String kdJabatan, String kdJenisUrtug, Integer tahunUrtug);
+
     void deleteByUraianTugasPegawaiTahunanId(UraianTugasPegawaiTahunanId urtugPegawaiTahunanId);
 
 }

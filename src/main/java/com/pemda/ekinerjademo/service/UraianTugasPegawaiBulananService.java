@@ -1,8 +1,6 @@
 package com.pemda.ekinerjademo.service;
 
-import com.pemda.ekinerjademo.model.ekinerjamodel.UraianTugas;
-import com.pemda.ekinerjademo.model.ekinerjamodel.UraianTugasPegawaiBulanan;
-import com.pemda.ekinerjademo.model.ekinerjamodel.UraianTugasPegawaiBulananId;
+import com.pemda.ekinerjademo.model.ekinerjamodel.*;
 import com.pemda.ekinerjademo.wrapper.input.UraianTugasPegawaiBulananInputWrapper;
 
 import java.util.Date;
@@ -28,4 +26,6 @@ public interface UraianTugasPegawaiBulananService {
     List<UraianTugasPegawaiBulanan> getAjuanUraianTugaspegawaiBulanan(String nipPegawai);
 
     List<UraianTugasPegawaiBulanan> getAjuanKontrakBulanByNipPegawai(String nipPegawai, int bulan, int tahun);
+    List<UraianTugasPegawaiBulanan> getAll(UraianTugasJabatanJenisUrtugId uraianTugasJabatanJenisUrtugId);
 }
+

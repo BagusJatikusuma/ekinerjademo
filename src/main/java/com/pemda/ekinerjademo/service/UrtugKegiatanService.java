@@ -1,8 +1,6 @@
 package com.pemda.ekinerjademo.service;
 
-import com.pemda.ekinerjademo.model.ekinerjamodel.UnitKerjaKegiatan;
-import com.pemda.ekinerjademo.model.ekinerjamodel.UrtugKegiatan;
-import com.pemda.ekinerjademo.model.ekinerjamodel.UrtugKegiatanId;
+import com.pemda.ekinerjademo.model.ekinerjamodel.*;
 
 import java.util.List;
 
@@ -27,4 +25,5 @@ public interface UrtugKegiatanService {
     List<UrtugKegiatan> findByPegawaiApproval(String nipPegawai, Integer tahunUrtug, String kdJabatan);
     List<UrtugKegiatan> findByUraianTugasJabatanAndNip(String kdUrtug, String kdJabatan, String kdJenisUrtug, Integer tahunUrtug, String nipPegawai);
     List<UrtugKegiatan> findByJabatan(String kdJabatan);
+    List<UrtugKegiatan> findAll(UraianTugasJabatanJenisUrtugId uraianTugasJabatanJenisUrtugId);
 }

@@ -2,6 +2,7 @@ package com.pemda.ekinerjademo.service.impl;
 
 import com.pemda.ekinerjademo.controller.api.UrtugKegiatanController;
 import com.pemda.ekinerjademo.model.ekinerjamodel.UnitKerjaKegiatan;
+import com.pemda.ekinerjademo.model.ekinerjamodel.UraianTugasJabatanJenisUrtugId;
 import com.pemda.ekinerjademo.model.ekinerjamodel.UrtugKegiatan;
 import com.pemda.ekinerjademo.model.ekinerjamodel.UrtugKegiatanId;
 import com.pemda.ekinerjademo.repository.ekinerjarepository.UrtugKegiatanDao;
@@ -117,5 +118,15 @@ public class UrtugKegiatanServiceImpl implements UrtugKegiatanService {
     @Override
     public List<UrtugKegiatan> findByJabatan(String kdJabatan) {
         return urtugKegiatanDao.findByUrtugKegiatanId_KdJabatan(kdJabatan);
+    }
+
+    @Override
+    public List<UrtugKegiatan> findAll(UraianTugasJabatanJenisUrtugId uraianTugasJabatanJenisUrtugId) {
+        return urtugKegiatanDao.
+                findByUrtugKegiatanId_KdUrtugAndUrtugKegiatanId_KdJabatanAndUrtugKegiatanId_KdJenisUrtugAndUrtugKegiatanId_TahunUrtug(
+                        uraianTugasJabatanJenisUrtugId.getKdUrtug(),
+                        uraianTugasJabatanJenisUrtugId.getKdJabatan(),
+                        uraianTugasJabatanJenisUrtugId.getKdJenisUrtug(),
+                        uraianTugasJabatanJenisUrtugId.getTahunUrtug());
     }
 }

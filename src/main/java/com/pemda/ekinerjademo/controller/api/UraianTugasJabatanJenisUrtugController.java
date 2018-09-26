@@ -2,10 +2,7 @@ package com.pemda.ekinerjademo.controller.api;
 
 import com.pemda.ekinerjademo.model.bismamodel.QutPegawai;
 import com.pemda.ekinerjademo.model.ekinerjamodel.*;
-import com.pemda.ekinerjademo.service.QutPegawaiCloneService;
-import com.pemda.ekinerjademo.service.UraianTugasJabatanJenisUrtugService;
-import com.pemda.ekinerjademo.service.UraianTugasPegawaiBulananService;
-import com.pemda.ekinerjademo.service.UraianTugasPegawaiTahunanService;
+import com.pemda.ekinerjademo.service.*;
 import com.pemda.ekinerjademo.wrapper.input.UraianTugasJabatanJenisUrtugInputWrapper;
 import com.pemda.ekinerjademo.wrapper.input.UraianTugasPegawaiTahunanInputWrapper;
 import com.pemda.ekinerjademo.wrapper.input.UrtugJabatanIdInputWrapper;
@@ -40,6 +37,8 @@ public class UraianTugasJabatanJenisUrtugController {
     private UraianTugasPegawaiTahunanService urtugPegawaiTahunanService;
     @Autowired
     private UraianTugasPegawaiBulananService uraianTugasPegawaiBulananService;
+    @Autowired
+    private UrtugKegiatanService urtugKegiatanService;
     @Autowired
     private QutPegawaiCloneService qutPegawaiService;
 
@@ -165,10 +164,64 @@ public class UraianTugasJabatanJenisUrtugController {
         return null;
     }
 
+    /**
+     *
+     * rules menghapus uraian tugas jabtatan jenis:
+     * 1. dapat menghapus jika belum ada realisasi ataupun ajuan terhadap uraian tugas jabatan jenis yang telah terpasang
+     *
+     * @param inputWrapper
+     * @return
+     */
     @RequestMapping(value = "/delete-urtug-jabatan-jenis", method = RequestMethod.POST)
     ResponseEntity<?> delete(@RequestBody UraianTugasJabatanJenisUrtugInputWrapper inputWrapper) {
         LOGGER.info("delete urtug jabatan jenis");
 
+        UraianTugasJabatanJenisUrtugId id
+                = new UraianTugasJabatanJenisUrtugId(inputWrapper.getKdUrtug(),
+                                                        inputWrapper.getKdJabatan(),
+                                                        inputWrapper.getKdJenisUrtug(),
+                                                        inputWrapper.getTahunUrtug());
+
+        List<UraianTugasPegawaiTahunan> uraianTugasPegawaiTahunans;
+        List<UrtugKegiatan> urtugKegiatans;
+        if (inputWrapper.getKdJenisUrtug().equals("KJU001")) {
+            urtugKegiatans
+                    = urtugKegiatanService.findAll(id);
+            if (!urtugKegiatans.isEmpty()) {
+                return new ResponseEntity<Object>(
+                        new CustomMessage("tidak dapat menghapus. uraian tugas sudah dipasangkan dengan kegiatan"),
+                        HttpStatus.EXPECTATION_FAILED);
+            }
+        }
+        else if (inputWrapper.getKdJenisUrtug().equals("KJU002")) {
+            //hapus data uraian tugas yang terdapat pada list uraian tugas pegawai bulanan dan tahunan jika memenuhi syarat
+            List<UraianTugasPegawaiBulanan> uraianTugasPegawaiBulanans
+                    = uraianTugasPegawaiBulananService.getAll(id);
+
+            if (uraianTugasPegawaiBulanans.isEmpty()) {
+                uraianTugasPegawaiTahunans
+                        = urtugPegawaiTahunanService.getAll(id);
+
+            } else {
+                return new ResponseEntity<Object>(
+                        new CustomMessage("tidak dapat menghapus. uraian tugas sudah diajukan oleh pegawai lain"),
+                        HttpStatus.EXPECTATION_FAILED);
+            }
+
+            //delete uraian tugas pegawai tahunan
+            for (UraianTugasPegawaiTahunan obj : uraianTugasPegawaiTahunans) {
+                urtugPegawaiTahunanService.
+                        deleteUraianTugasPegawaiTahunan(
+                                new UraianTugasPegawaiTahunanId(obj.getUraianTugasPegawaiTahunanId().getKdUrtug(),
+                                        obj.getUraianTugasPegawaiTahunanId().getKdJabatan(),
+                                        obj.getUraianTugasPegawaiTahunanId().getKdJenisUrtug(),
+                                        obj.getUraianTugasPegawaiTahunanId().getTahunUrtug(),
+                                        obj.getUraianTugasPegawaiTahunanId().getNipPegawai()));
+            }
+        }
+
+        //delete urtug kegiatan
+        //delete uraian tugas
         uraianTugasJabatanJenisUrtugService
                 .delete(new UraianTugasJabatanJenisUrtugId(
                         inputWrapper.getKdUrtug(),

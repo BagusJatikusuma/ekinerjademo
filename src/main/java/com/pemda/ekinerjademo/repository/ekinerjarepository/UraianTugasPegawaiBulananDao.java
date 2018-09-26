@@ -77,4 +77,11 @@ public interface UraianTugasPegawaiBulananDao
            "and utpb.uraianTugasPegawaiBulananId.bulanUrtug = ?2 " +
            "and utpb.uraianTugasPegawaiBulananId.tahunUrtug = ?3")
    List<UraianTugasPegawaiBulanan> findByUnitKerjaAndBulanAndTahun(String unitKerja, Integer bulan, Integer tahun);
+
+   @Query("select utpb from UraianTugasPegawaiBulanan utpb "+
+           "where utpb.uraianTugasPegawaiBulananId.kdUrtug = ?1 " +
+           "and utpb.uraianTugasPegawaiBulananId.kdJabatan = ?2 " +
+           "and utpb.uraianTugasPegawaiBulananId.kdJenisUrtug = ?3 " +
+           "and utpb.uraianTugasPegawaiBulananId.tahunUrtug = ?4")
+   List<UraianTugasPegawaiBulanan> findByUrtugJabatanJenis(String kdUrtug, String kdJabatan, String kdJenisUrtug, Integer tahunUrtug);
 }

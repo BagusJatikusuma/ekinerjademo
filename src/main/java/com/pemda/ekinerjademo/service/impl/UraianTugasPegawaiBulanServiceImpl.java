@@ -1,10 +1,7 @@
 package com.pemda.ekinerjademo.service.impl;
 
 import com.pemda.ekinerjademo.model.bismamodel.TkdJabatan;
-import com.pemda.ekinerjademo.model.ekinerjamodel.AkunPegawai;
-import com.pemda.ekinerjademo.model.ekinerjamodel.UraianTugas;
-import com.pemda.ekinerjademo.model.ekinerjamodel.UraianTugasPegawaiBulanan;
-import com.pemda.ekinerjademo.model.ekinerjamodel.UraianTugasPegawaiBulananId;
+import com.pemda.ekinerjademo.model.ekinerjamodel.*;
 import com.pemda.ekinerjademo.repository.ekinerjarepository.UraianTugasPegawaiBulananDao;
 import com.pemda.ekinerjademo.service.TkdJabatanService;
 import com.pemda.ekinerjademo.service.UraianTugasPegawaiBulananService;
@@ -50,9 +47,12 @@ public class UraianTugasPegawaiBulanServiceImpl
                                     inputWrapper.getBulanUrtug(),
                                     inputWrapper.getNipPegawai()));
 
-            if (obj != null)
-                inputWrapper.setTargetKuantitas(obj.getTargetKuantitas()+inputWrapper.getTargetKuantitas());
-            save(inputWrapper, statusApproval);
+            if (obj != null) {
+                obj.setTargetKuantitas(obj.getTargetKuantitas() + inputWrapper.getTargetKuantitas());
+                uraianTugasPegawaiBulananDao.save(obj);
+            } else {
+                save(inputWrapper, statusApproval);
+            }
         }
     }
 
@@ -156,6 +156,14 @@ public class UraianTugasPegawaiBulanServiceImpl
         return uraianTugasPegawaiBulananDao.findByNipBulanTahun(nipPegawai, bulan, tahun);
     }
 
+    @Override
+    public List<UraianTugasPegawaiBulanan> getAll(UraianTugasJabatanJenisUrtugId uraianTugasJabatanJenisUrtugId) {
+        return uraianTugasPegawaiBulananDao.findByUrtugJabatanJenis(uraianTugasJabatanJenisUrtugId.getKdUrtug(),
+                                                                    uraianTugasJabatanJenisUrtugId.getKdJabatan(),
+                                                                    uraianTugasJabatanJenisUrtugId.getKdJenisUrtug(),
+                                                                    uraianTugasJabatanJenisUrtugId.getTahunUrtug());
+    }
+
     private void save(UraianTugasPegawaiBulananInputWrapper inputWrapper, Integer statusApproval) {
         UraianTugasPegawaiBulanan uraianTugasPegawaiBulanan = new UraianTugasPegawaiBulanan();
 
@@ -183,4 +191,5 @@ public class UraianTugasPegawaiBulanServiceImpl
 
         uraianTugasPegawaiBulananDao.save(uraianTugasPegawaiBulanan);
     }
+
 }

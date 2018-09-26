@@ -2,6 +2,7 @@ package com.pemda.ekinerjademo.service.impl;
 
 import com.pemda.ekinerjademo.model.bismamodel.TkdJabatan;
 import com.pemda.ekinerjademo.model.ekinerjamodel.AkunPegawai;
+import com.pemda.ekinerjademo.model.ekinerjamodel.UraianTugasJabatanJenisUrtugId;
 import com.pemda.ekinerjademo.model.ekinerjamodel.UraianTugasPegawaiTahunan;
 import com.pemda.ekinerjademo.model.ekinerjamodel.UraianTugasPegawaiTahunanId;
 import com.pemda.ekinerjademo.repository.ekinerjarepository.UraianTugasPegawaiTahunanDao;
@@ -161,5 +162,13 @@ public class UraianTugasPegawaiTahunanServiceImpl implements UraianTugasPegawaiT
     @Override
     public List<UraianTugasPegawaiTahunan> getUraianTugasPegawaiYangDiAjukan(String nipPegawai) {
         return urtugPegawaiTahunanDao.findUraianTugasPegawaiYangDiAjukan(nipPegawai);
+    }
+
+    @Override
+    public List<UraianTugasPegawaiTahunan> getAll(UraianTugasJabatanJenisUrtugId uraianTugasJabatanJenisUrtugId) {
+        return urtugPegawaiTahunanDao.findByUrtugJabatanJenis(uraianTugasJabatanJenisUrtugId.getKdUrtug(),
+                                                                uraianTugasJabatanJenisUrtugId.getKdJabatan(),
+                                                                uraianTugasJabatanJenisUrtugId.getKdJenisUrtug(),
+                                                                uraianTugasJabatanJenisUrtugId.getTahunUrtug());
     }
 }
